@@ -35,12 +35,13 @@
  *   main -- Initial startup routine (preps library systems).                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#include	"function.h"
-#include	<conio.h>
-#include	<io.h>
-#include  "ccdde.h"
+#include "function.h"
+#include <conio.h>
+#include <io.h>
+#include "ccdde.h"
 
-const char* RULES_FILENAME = "TD_RULES.INI";
+auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
+auto DEFAULT_RULES_FILENAME = "RULES.INI";
 
 bool Read_Private_Config_Struct(char *profile, NewConfigType *config);
 void Delete_Swap_Files(void);
@@ -388,7 +389,8 @@ int DLL_Startup(const char * command_line_in)
 #endif
 		}
 
-		auto rulesFile = RawFileClass(RULES_FILENAME);
+		auto rulesFilename = Get_Env_Var_Or_Default(RULES_FILE_ENV_VAR, DEFAULT_RULES_FILENAME);
+		auto rulesFile = RawFileClass(rulesFilename);
 
 		Read_Rules_File(&rulesFile);
 
@@ -797,10 +799,10 @@ void Read_Rules_File(RawFileClass* config_file)
 		return;
 	}
 
-	char* buffer = new char[config_file->Size()];
+	char* configBuffer = new char[config_file->Size()];
 	char* msgBuffer = new char[64];
 
-	config_file->Read(buffer, config_file->Size());
+	config_file->Read(configBuffer, config_file->Size());
 
 	auto message = WWGetPrivateProfileString(
 		"Test",
@@ -808,13 +810,14 @@ void Read_Rules_File(RawFileClass* config_file)
 		"Message Not Found!",
 		msgBuffer,
 		64,
-		buffer
+		configBuffer
 	);
 
-	MessageBox(MainWindow, message, "New Construction Options", MB_ICONEXCLAMATION | MB_OK);
+	// Just a test of the config file below
+	//MessageBox(MainWindow, message, "New Construction Options", MB_ICONEXCLAMATION | MB_OK);
 
 	delete msgBuffer;
-	delete buffer;
+	delete configBuffer;
 }
 
 /***********************************************************************************************

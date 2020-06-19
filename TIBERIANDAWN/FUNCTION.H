@@ -969,8 +969,6 @@ void WWDOS_Shutdown(void);
 
 #endif
 
-
-
 /*
 ** Debug output. ST - 6/27/2019 10:00PM
 */
@@ -980,3 +978,5 @@ void GlyphX_Debug_Print(const char *debug_text);
 ** Achievement event. ST - 11/11/2019 11:39AM
 */
 void On_Achievement_Event(const HouseClass* player_ptr, const char *achievement_type, const char *achievement_reason);
+
+const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue);

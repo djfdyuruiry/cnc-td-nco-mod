@@ -408,6 +408,7 @@
     <ClCompile Include="DRIVE.CPP" />
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
+    <ClCompile Include="ENV.cpp" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />
     <ClCompile Include="FACING.CPP" />
