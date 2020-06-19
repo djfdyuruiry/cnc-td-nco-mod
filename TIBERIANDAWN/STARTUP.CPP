@@ -40,6 +40,8 @@
 #include	<io.h>
 #include  "ccdde.h"
 
+const char* RULES_FILENAME = "TD_RULES.INI";
+
 bool Read_Private_Config_Struct(char *profile, NewConfigType *config);
 void Delete_Swap_Files(void);
 void Print_Error_End_Exit(char *string);
@@ -48,6 +50,7 @@ WinTimerClass *WinTimer;
 extern void Create_Main_Window ( HANDLE instance , int command_show , int width , int height);
 
 extern bool ReadyToQuit;
+void Read_Rules_File(RawFileClass *config_file);
 void Read_Setup_Options(RawFileClass *config_file);
 
 bool VideoBackBufferAllowed = true;
@@ -203,10 +206,10 @@ int DLL_Startup(const char * command_line_in)
 
 	if (Ram_Free(MEM_NORMAL) < 5000000) {
 #ifdef GERMAN
-		printf("Zuwenig Hauptspeicher verfgbar.\n");
+		printf("Zuwenig Hauptspeicher verfï¿½gbar.\n");
 #else
 #ifdef FRENCH
-		printf("M‚moire vive (RAM) insuffisante.\n");
+		printf("Mï¿½moire vive (RAM) insuffisante.\n");
 #else
 		printf("Insufficient RAM available.\n");
 #endif
@@ -322,10 +325,10 @@ int DLL_Startup(const char * command_line_in)
 		Sleep (1000);
 		if (WindowsTimer->Get_System_Tick_Count() == time_test){
 #ifdef FRENCH
-			MessageBox(0, "Error - L'horloge systŠme n'a pas pu s'initialiser en raison de l'instabilit‚ du sytŠme. Vous devez red‚marrer Windows.",  "Command & Conquer" , MB_OK|MB_ICONSTOP);
+			MessageBox(0, "Error - L'horloge systï¿½me n'a pas pu s'initialiser en raison de l'instabilitï¿½ du sytï¿½me. Vous devez redï¿½marrer Windows.",  "Command & Conquer" , MB_OK|MB_ICONSTOP);
 #else
 #ifdef	GERMAN
-			MessageBox(0, "Fehler - das Timer-System konnte aufgrund einer Instabilit„t des Systems nicht initialisiert werden. Bitte starten Sie Windows neu.", "Command & Conquer", MB_OK|MB_ICONSTOP);
+			MessageBox(0, "Fehler - das Timer-System konnte aufgrund einer Instabilitï¿½t des Systems nicht initialisiert werden. Bitte starten Sie Windows neu.", "Command & Conquer", MB_OK|MB_ICONSTOP);
 #else
 			MessageBox(0, "Error - Timer system failed to start due to system instability. You need to restart Windows.", "Command & Conquer", MB_OK|MB_ICONSTOP);
 #endif	//GERMAN
@@ -359,7 +362,7 @@ int DLL_Startup(const char * command_line_in)
 		if (Disk_Space_Available() < INIT_FREE_DISK_SPACE) {
 #ifdef GERMAN
 			char	disk_space_message [512];
-			sprintf (disk_space_message, "Nicht genug Festplattenplatz fr Command & Conquer.\nSie brauchen %d MByte freien Platz auf der Festplatte.", (INIT_FREE_DISK_SPACE) / (1024 * 1024));
+			sprintf (disk_space_message, "Nicht genug Festplattenplatz fï¿½r Command & Conquer.\nSie brauchen %d MByte freien Platz auf der Festplatte.", (INIT_FREE_DISK_SPACE) / (1024 * 1024));
 			MessageBox(NULL, disk_space_message, "Command & Conquer", MB_ICONEXCLAMATION|MB_OK);
 			if ( WindowsTimer )
 				delete WindowsTimer;
@@ -384,6 +387,12 @@ int DLL_Startup(const char * command_line_in)
 
 #endif
 		}
+
+		auto rulesFile = RawFileClass(RULES_FILENAME);
+
+		Read_Rules_File(&rulesFile);
+
+		rulesFile.Close();
 
 #if (0)                                 // ST - 1/2/2019 5:50PM
 		CDFileClass::Set_CD_Drive (CDList.Get_First_CD_Drive());
@@ -782,12 +791,31 @@ void Print_Error_Exit(char *string)
 	}
 }
 
+void Read_Rules_File(RawFileClass* config_file)
+{
+	if (!config_file->Is_Available()) {
+		return;
+	}
 
+	char* buffer = new char[config_file->Size()];
+	char* msgBuffer = new char[64];
 
+	config_file->Read(buffer, config_file->Size());
 
+	auto message = WWGetPrivateProfileString(
+		"Test",
+		"Message",
+		"Message Not Found!",
+		msgBuffer,
+		64,
+		buffer
+	);
 
+	MessageBox(MainWindow, message, "New Construction Options", MB_ICONEXCLAMATION | MB_OK);
 
-
+	delete msgBuffer;
+	delete buffer;
+}
 
 /***********************************************************************************************
  * Read_Setup_Options -- Read stuff in from the INI file that we need to know sooner           *

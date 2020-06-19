@@ -105,6 +105,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/wd4005 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
