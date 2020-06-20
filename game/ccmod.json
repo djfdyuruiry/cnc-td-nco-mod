@@ -1,0 +1,9 @@
+{
+  "name": "New Construction Options",
+  "description": "RULES.INI for Tiberian Dawn",
+  "author": "djfdyuruiry",
+  "load_order": 1,
+  "version_low": 10,
+  "version_high": 1,
+  "game_type": "TD"
+}

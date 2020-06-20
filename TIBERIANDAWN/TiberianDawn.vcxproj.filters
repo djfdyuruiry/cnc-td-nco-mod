@@ -11,6 +11,15 @@
     <Filter Include="Source Files\Resources">
       <UniqueIdentifier>{7bd10c3e-67f3-4051-a861-06db6191bb48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{5a797fac-4a18-4dd9-a33c-d2dca5c5e940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\cfg">
+      <UniqueIdentifier>{47acf8c4-312a-4094-94a1-ac771c4af2a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\scripts">
+      <UniqueIdentifier>{f4238f29-9785-40e0-8d26-2ca235ce982b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="COORDA.ASM">
@@ -75,6 +84,15 @@
     </None>
     <None Include="win32lib\REMAP.ASM">
       <Filter>Source Files\Win32Lib</Filter>
+    </None>
+    <None Include="..\game\ccmod.json">
+      <Filter>game</Filter>
+    </None>
+    <None Include="..\game\cfg\RULES.INI">
+      <Filter>game\cfg</Filter>
+    </None>
+    <None Include="..\game\scripts\tiberian_dawn.bat">
+      <Filter>game\scripts</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1207,6 +1225,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ENV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RULES_INI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LOGGER.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FILE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

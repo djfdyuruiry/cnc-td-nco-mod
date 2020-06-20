@@ -40,9 +40,6 @@
 #include <io.h>
 #include "ccdde.h"
 
-auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
-auto DEFAULT_RULES_FILENAME = "RULES.INI";
-
 bool Read_Private_Config_Struct(char *profile, NewConfigType *config);
 void Delete_Swap_Files(void);
 void Print_Error_End_Exit(char *string);
@@ -51,7 +48,6 @@ WinTimerClass *WinTimer;
 extern void Create_Main_Window ( HANDLE instance , int command_show , int width , int height);
 
 extern bool ReadyToQuit;
-void Read_Rules_File(RawFileClass *config_file);
 void Read_Setup_Options(RawFileClass *config_file);
 
 bool VideoBackBufferAllowed = true;
@@ -388,13 +384,6 @@ int DLL_Startup(const char * command_line_in)
 
 #endif
 		}
-
-		auto rulesFilename = Get_Env_Var_Or_Default(RULES_FILE_ENV_VAR, DEFAULT_RULES_FILENAME);
-		auto rulesFile = RawFileClass(rulesFilename);
-
-		Read_Rules_File(&rulesFile);
-
-		rulesFile.Close();
 
 #if (0)                                 // ST - 1/2/2019 5:50PM
 		CDFileClass::Set_CD_Drive (CDList.Get_First_CD_Drive());
@@ -791,33 +780,6 @@ void Print_Error_Exit(char *string)
 	if (!RunningAsDLL) {
 		exit(1);
 	}
-}
-
-void Read_Rules_File(RawFileClass* config_file)
-{
-	if (!config_file->Is_Available()) {
-		return;
-	}
-
-	char* configBuffer = new char[config_file->Size()];
-	char* msgBuffer = new char[64];
-
-	config_file->Read(configBuffer, config_file->Size());
-
-	auto message = WWGetPrivateProfileString(
-		"Test",
-		"Message",
-		"Message Not Found!",
-		msgBuffer,
-		64,
-		configBuffer
-	);
-
-	// Just a test of the config file below
-	//MessageBox(MainWindow, message, "New Construction Options", MB_ICONEXCLAMATION | MB_OK);
-
-	delete msgBuffer;
-	delete configBuffer;
 }
 
 /***********************************************************************************************

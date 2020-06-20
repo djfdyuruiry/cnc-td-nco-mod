@@ -624,7 +624,6 @@ typedef enum MPHType: unsigned char {
 	MPH_LIGHT_SPEED=255
 } MPHType;
 
-
 /**********************************************************************
 **	General audio volume is enumerated by these identifiers. Since small
 **	volume variations are usually unnoticable when specifying the volume

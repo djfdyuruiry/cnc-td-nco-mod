@@ -979,4 +979,24 @@ void GlyphX_Debug_Print(const char *debug_text);
 */
 void On_Achievement_Event(const HouseClass* player_ptr, const char *achievement_type, const char *achievement_reason);
 
+/**
+ * New construction options utility functions
+ */
 const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue);
+
+void Append_To_File(const char* filename, char* data);
+
+void Log(const char* level, const char* messageFormat, va_list formatArgs);
+void Log_Error(const char* messageFormat, ...);
+void Log_Warn(const char* messageFormat, ...);
+void Log_Info(const char* messageFormat, ...);
+void Log_Debug(const char* messageFormat, ...);
+
+/**
+ * RULES.INI functions
+ */
+char* Read_Rules_Ini();
+
+int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultValue);
+int Read_Strength(const char* section, int defaultValue);
+MPHType Read_Max_Speed(const char* section, int defaultValue);

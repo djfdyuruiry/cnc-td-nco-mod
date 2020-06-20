@@ -43,10 +43,8 @@
  *   InfantryTypeClass::Who_Can_Build_Me -- Determines what can build the infantry object.     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#include	"function.h"
-#include	"type.h"
-
-
+#include "function.h"
+#include "type.h"
 
 /*
  * There were too many parameters for the InfantryTypeClass constructor so I have
@@ -99,7 +97,6 @@ int MiniGunnerDos [DO_COUNT][3]={
 	0,		1, 1					//	DO_PLEAD_DEATH		// N/A
 };
 
-
 static InfantryTypeClass const E1(
 	INFANTRY_E1,				// Infantry type number.
 	TXT_E1,						// Translate name number for infantry type.
@@ -118,7 +115,7 @@ static InfantryTypeClass const E1(
 	&MiniGunnerDos[0][0],	// Ptr to minigunner 'DO' table above
 	2,								// Frame of projectile launch.
 	2,								// Frame of projectile launch while prone.
-	50,							// Strength of infantry (in damage points).
+	Read_Strength("E1", 50),							// Strength of infantry (in damage points).
 	1,								// Sight range.
 	100,							// Cost of infantry (in credits).
 	1,								// Scenario when they first appear.
@@ -133,7 +130,7 @@ static InfantryTypeClass const E1(
  	HOUSEF_GOOD|
  	HOUSEF_BAD,					// Who can own this infantry unit.
  	WEAPON_M16,WEAPON_NONE,
-	MPH_SLOW						// Maximum speed of infantry.
+	Read_Max_Speed("E2", MPH_SLOW)						// Maximum speed of infantry.
 );
 
 
@@ -195,7 +192,7 @@ static InfantryTypeClass const E2(
 	&GrenadierDos[0][0],		// Ptr to grenadier DO table (above)
 	14,							// Frame of projectile launch.
 	6,								// Frame of projectile launch while prone.
-	50,							// Strength of infantry (in damage points).
+	Read_Strength("E2", 50),							// Strength of infantry (in damage points).
 	1,								// Sight range.
 	160,							// Cost of infantry (in credits).
 	3,								// Scenario when they first appear.
@@ -209,7 +206,7 @@ static InfantryTypeClass const E2(
 	HOUSEF_JP|
 	HOUSEF_GOOD,				// Who can own this infantry unit.
 	WEAPON_GRENADE,WEAPON_NONE,
-	MPH_SLOW_ISH			// Maximum speed of infantry.
+	Read_Max_Speed("E2", MPH_SLOW_ISH)			// Maximum speed of infantry.
 );
 
 
@@ -274,7 +271,7 @@ static InfantryTypeClass const E3(
 	&BazookaDos[0][0],		// Ptr to DO table (above)
 	3,								// Frame of projectile launch.
 	3,								// Frame of projectile launch while prone.
-	25,							// Strength of infantry (in damage points).
+	Read_Strength("E3", 25),							// Strength of infantry (in damage points).
 	2,								// Sight range.
 	300,							// Cost of infantry (in credits).
 	3,								// Scenario when they first appear.
@@ -289,7 +286,7 @@ static InfantryTypeClass const E3(
 	HOUSEF_GOOD|
 	HOUSEF_BAD,					// Who can own this infantry unit.
 	WEAPON_DRAGON,WEAPON_NONE,
-	MPH_KINDA_SLOW				// Maximum speed of infantry.
+	Read_Max_Speed("E3", MPH_KINDA_SLOW)				// Maximum speed of infantry.
 );
 
 // Flamethrower
