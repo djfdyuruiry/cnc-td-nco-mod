@@ -513,7 +513,7 @@ static InfantryTypeClass const E7(
 	HOUSEF_BAD|
 	HOUSEF_GOOD,				// Who can own this infantry unit.
 	Read_Primary_Weapon("E6", WEAPON_NONE),Read_Secondary_Weapon("E6", WEAPON_NONE),
-	Read_Max_Speed("E6", MPH_SLOW						// M)  // Maximum speed of infantry.aximum speed of infantry.
+	Read_Max_Speed("E6", MPH_SLOW)  // Maximum speed of infantry.aximum speed of infantry.
 );
 // Commandos
 

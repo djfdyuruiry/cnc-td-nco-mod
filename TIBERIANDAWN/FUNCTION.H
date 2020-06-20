@@ -1032,7 +1032,7 @@ bool Rules_Ini_Failed_Validation();
 #define RULE_MACROS
 
 #define Read_Build_Level(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, "BuildLevel", defaultValue, 1, 99)
-#define Read_Scenario_Level(section, defaultValue) Read_Int_From_Rules_Ini(section, "ScenarioLevel", defaultValue, 1, 15)
+#define Read_Scenario_Level(section, defaultValue) Read_Int_From_Rules_Ini(section, "ScenarioLevel", defaultValue, 1, 99)
 
 #define Read_Cost(section, defaultValue) Read_Int_From_Rules_Ini(section, "Cost", defaultValue, 0, INT_MAX)
 
