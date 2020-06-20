@@ -54,7 +54,7 @@ static UnitTypeClass const UnitVisceroid(
 	TXT_VISCEROID,							// NAME:			Text name of this unit type.
 	"VICE",									// NAME:			Text name of this unit type.
 	ANIM_NAPALM2,							// EXPLOSION:	Type of explosion when destroyed.
-	99,							// Build level.
+	Read_Build_Level("VICE", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -83,10 +83,10 @@ static UnitTypeClass const UnitVisceroid(
 		false,			// Is the unit capable of cloaking?
 		true,				// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	150,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("VICE", 150),										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
-	800,										// COST:			Cost to build (Credits).
-	1,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("VICE", 800),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("VICE", 1),											// SCENARIO:	Starting availability scenario.
 	80,20,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -98,10 +98,10 @@ static UnitTypeClass const UnitVisceroid(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL|
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_CHEMSPRAY,WEAPON_NONE,
+	Read_Primary_Weapon("VICE", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("VICE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM,								// SPEED:		Miles per hour.
+	Read_Max_Speed("VICE", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -113,7 +113,7 @@ static UnitTypeClass const UnitFTank(
 	TXT_FTANK,								// NAME:			Text name of this unit type.
 	"FTNK",									// NAME:			Text name of this unit type.
 	ANIM_NAPALM3,							// EXPLOSION:	Type of explosion when destroyed.
-	4,							// Build level.
+	Read_Build_Level("FTNK", 4),							// Build level.
 	STRUCTF_RADAR,			// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -142,10 +142,10 @@ static UnitTypeClass const UnitFTank(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	300,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("FTNK", 300),										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
-	800,										// COST:			Cost to build (Credits).
-	9,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("FTNK", 800),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("FTNK", 9),											// SCENARIO:	Starting availability scenario.
 	80,66,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -158,7 +158,7 @@ static UnitTypeClass const UnitFTank(
 	WEAPON_FLAME_TONGUE,WEAPON_NONE,
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM,								// SPEED:		Miles per hour.
+	Read_Max_Speed("FTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -170,7 +170,7 @@ static UnitTypeClass const UnitSTank(
 	TXT_STANK,								// NAME:			Text name of this unit type.
 	"STNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
-	5,								// Build level.
+	Read_Build_Level("STNK", 5),								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -199,10 +199,10 @@ static UnitTypeClass const UnitSTank(
 		true,				// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	110,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("STNK", 110),										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
-	900,										// COST:			Cost to build (Credits).
-	12,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("STNK", 900),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("STNK", 12),										// SCENARIO:	Starting availability scenario.
 	80,81,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -212,10 +212,10 @@ static UnitTypeClass const UnitSTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_DRAGON,WEAPON_NONE,
+	Read_Primary_Weapon("FTNK", WEAPON_DRAGON),Read_Secondary_Weapon("FTNK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
+	Read_Max_Speed("STNK", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -227,7 +227,7 @@ static UnitTypeClass const UnitLTank(
 	TXT_LTANK,								// NAME:			Text name of this unit type.
 	"LTNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
-	3,								// Build level.
+	Read_Build_Level("LTNK", 3),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -256,10 +256,10 @@ static UnitTypeClass const UnitLTank(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	300,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("LTNK", 300),										// STRENGTH:	Strength (in damage points).
 	3,											// SIGHTRANGE:	Range of sighting.
-	600,										// COST:			Cost to build (Credits).
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("LTNK", 600),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("LTNK", 5),											// SCENARIO:	Starting availability scenario.
 	80,56,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -272,7 +272,7 @@ static UnitTypeClass const UnitLTank(
 	WEAPON_75MM,WEAPON_NONE,
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM,								// SPEED:		Miles per hour.
+	Read_Max_Speed("LTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -284,7 +284,7 @@ static UnitTypeClass const UnitMTank(
 	TXT_MTANK,								// NAME:			Text name of this unit type.
 	"MTNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
-	3,								// Build level.
+	Read_Build_Level("MTNK", 3),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -313,10 +313,10 @@ static UnitTypeClass const UnitMTank(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	400,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("MTNK", 400),										// STRENGTH:	Strength (in damage points).
 	3,											// SIGHTRANGE:	Range of sighting.
-	800,										// COST:			Cost to build (Credits).
-	7,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("MTNK", 800),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("MTNK", 7),											// SCENARIO:	Starting availability scenario.
 	80,62,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -329,7 +329,7 @@ static UnitTypeClass const UnitMTank(
 	WEAPON_105MM,WEAPON_NONE,
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM,								// SPEED:		Miles per hour.
+	Read_Max_Speed("MTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -341,7 +341,7 @@ static UnitTypeClass const UnitHTank(
 	TXT_HTANK,								// NAME:			Text name of this unit type.
 	"HTNK",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
-	5,								// Build level.
+	Read_Build_Level("HTNK", 5),								// Build level.
 	STRUCTF_REPAIR,			// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -370,10 +370,10 @@ static UnitTypeClass const UnitHTank(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	600,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("HTNK", 600),										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
-	1500,										// COST:			Cost to build (Credits).
-	13,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("HTNK", 1500),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("HTNK", 13),										// SCENARIO:	Starting availability scenario.
 	80,80, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -386,7 +386,7 @@ static UnitTypeClass const UnitHTank(
 	WEAPON_120MM,WEAPON_MAMMOTH_TUSK,
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
+	Read_Max_Speed("HTNK", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -398,7 +398,7 @@ static UnitTypeClass const UnitMHQ(
 	TXT_MHQ,									// NAME:			Text name of this unit type.
 	"MHQ",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
-	99,							// Build level.
+	Read_Build_Level("MHQ", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
@@ -427,10 +427,10 @@ static UnitTypeClass const UnitMHQ(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	110,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("MHQ", 110),										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
-	600,										// COST:			Cost to build (Credits).
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("MHQ", 600),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("MHQ", 99),										// SCENARIO:	Starting availability scenario.
 	80,100,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -441,10 +441,10 @@ static UnitTypeClass const UnitMHQ(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("LTNK", WEAPON_NONE),Read_Secondary_Weapon("LTNK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM,								// SPEED:		Miles per hour.
+	Read_Max_Speed("MHQ", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -456,7 +456,7 @@ static UnitTypeClass const UnitHover(
 	TXT_HOVER,								// NAME:			Text name of this unit type.
 	"LST",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
-	99,							// Build level.
+	Read_Build_Level("LST", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
@@ -486,10 +486,10 @@ static UnitTypeClass const UnitHover(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	400,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("LST", 400),										// STRENGTH:	Strength (in damage points).
 	3,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to build (Credits).
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("LST", 300),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("LST", 99),										// SCENARIO:	Starting availability scenario.
 	80,40,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -500,10 +500,10 @@ static UnitTypeClass const UnitHover(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("LST", WEAPON_NONE),Read_Secondary_Weapon("LST", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_HOVER,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
+	Read_Max_Speed("LST", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
 	127,										// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -515,7 +515,7 @@ static UnitTypeClass const UnitSAM(
 	TXT_MSAM,								// NAME:			Text name of this unit type.
 	"MLRS",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
-	7,								// Build level.
+	Read_Build_Level("MLRS", 7),								// Build level.
 	STRUCTF_ATOWER,			// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -544,10 +544,10 @@ static UnitTypeClass const UnitSAM(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	2,											// AMMO:			Number of shots it has (default).
-	120,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("MLRS", 120),										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
-	750,										// COST:			Cost to build (Credits).
-	98,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("MLRS", 750),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("MLRS", 98),										// SCENARIO:	Starting availability scenario.
 	80,30,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -561,7 +561,7 @@ static UnitTypeClass const UnitSAM(
 	WEAPON_HONEST_JOHN,WEAPON_NONE,
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM,								// SPEED:		Miles per hour.
+	Read_Max_Speed("MLRS", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -573,7 +573,7 @@ static UnitTypeClass const UnitArty(
 	TXT_ARTY,								// NAME:			Text name of this unit type.
 	"ARTY",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
-	6,								// Build level.
+	Read_Build_Level("ARTY", 6),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -602,10 +602,10 @@ static UnitTypeClass const UnitArty(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	75,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("ARTY", 75),										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
-	450,										// COST:			Cost to build (Credits).
-	9,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("ARTY", 450),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("ARTY", 9),											// SCENARIO:	Starting availability scenario.
 	80,73,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -618,7 +618,7 @@ static UnitTypeClass const UnitArty(
 	WEAPON_155MM,WEAPON_NONE,
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
+	Read_Max_Speed("ARTY", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
 	2,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -630,7 +630,7 @@ static UnitTypeClass const UnitHarvester(
 	TXT_HARVESTER,							// NAME:			Text name of this unit type.
 	"HARV",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
-	2,								// Build level.
+	Read_Build_Level("HARV", 2),								// Build level.
 	STRUCTF_REFINERY,			// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
@@ -659,11 +659,11 @@ static UnitTypeClass const UnitHarvester(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	600,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("HARV", 600),										// STRENGTH:	Strength (in damage points).
 //	300,										// STRENGTH:	Strength (in damage points).
 	2,											// SIGHTRANGE:	Range of sighting.
-	1400,										// COST:			Cost to build (Credits).
-	7,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("HARV", 1400),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("HARV", 7),											// SCENARIO:	Starting availability scenario.
 	80,85,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -674,10 +674,10 @@ static UnitTypeClass const UnitHarvester(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("MLRS", WEAPON_NONE),Read_Secondary_Weapon("MLRS", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
+	Read_Max_Speed("HARV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HARVEST						// ORDERS:		Default order to give new unit.
@@ -689,7 +689,7 @@ static UnitTypeClass const UnitMCV(
 	TXT_MCV,									// NAME:			Text name of this unit type.
 	"MCV",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
-	7,							// Build level.
+	Read_Build_Level("MCV", 7),							// Build level.
 	STRUCTF_EYE,			// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
@@ -718,10 +718,10 @@ static UnitTypeClass const UnitMCV(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	600,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("MCV", 600),										// STRENGTH:	Strength (in damage points).
 	2,											// SIGHTRANGE:	Range of sighting.
-	5000,										// COST:			Cost to build (Credits).
-	15,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("MCV", 5000),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("MCV", 15),										// SCENARIO:	Starting availability scenario.
 	80,86,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -732,10 +732,10 @@ static UnitTypeClass const UnitMCV(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("MCV", WEAPON_NONE),Read_Secondary_Weapon("MCV", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
+	Read_Max_Speed("MCV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -747,7 +747,7 @@ static UnitTypeClass const UnitJeep(
 	TXT_JEEP,								// NAME:			Text name of this unit type.
 	"JEEP",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
-	2,								// Build level.
+	Read_Build_Level("JEEP", 2),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -776,10 +776,10 @@ static UnitTypeClass const UnitJeep(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	150,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("JEEP", 150),										// STRENGTH:	Strength (in damage points).
 	2,											// SIGHTRANGE:	Range of sighting.
-	400,										// COST:			Cost to build (Credits).
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("JEEP", 400),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("JEEP", 5),											// SCENARIO:	Starting availability scenario.
 	80,41,	 								// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -792,7 +792,7 @@ static UnitTypeClass const UnitJeep(
 	WEAPON_M60MG,WEAPON_NONE,
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
+	Read_Max_Speed("JEEP", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
 	10,										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -804,7 +804,7 @@ static UnitTypeClass const UnitBuggy(
 	TXT_DUNE_BUGGY,						// NAME:			Text name of this unit type.
 	"BGGY",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
-	4,								// Build level.
+	Read_Build_Level("BGGY", 4),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -833,10 +833,10 @@ static UnitTypeClass const UnitBuggy(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	140,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("BGGY", 140),										// STRENGTH:	Strength (in damage points).
 	2,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to build (Credits).
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("BGGY", 300),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("BGGY", 5),											// SCENARIO:	Starting availability scenario.
 	80,42, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -849,7 +849,7 @@ static UnitTypeClass const UnitBuggy(
 	WEAPON_M60MG,WEAPON_NONE,
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
+	Read_Max_Speed("BGGY", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
 	10,										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -861,7 +861,7 @@ static UnitTypeClass const UnitBike(
 	TXT_BIKE,								// NAME:			Text name of this unit type.
 	"BIKE",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
-	2,								// Build level.
+	Read_Build_Level("BIKE", 2),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -891,13 +891,13 @@ static UnitTypeClass const UnitBike(
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 #ifdef ADVANCED
-	90,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("BIKE", 90),										// STRENGTH:	Strength (in damage points).
 #else
 	160,										// STRENGTH:	Strength (in damage points).
 #endif
 	2,											// SIGHTRANGE:	Range of sighting.
-	500,										// COST:			Cost to build (Credits).
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("BIKE", 500),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("BIKE", 5),											// SCENARIO:	Starting availability scenario.
 	80,45, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -907,10 +907,10 @@ static UnitTypeClass const UnitBike(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_DRAGON,WEAPON_NONE,
+	Read_Primary_Weapon("JEEP", WEAPON_DRAGON),Read_Secondary_Weapon("JEEP", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_FAST,								// SPEED:		Miles per hour.
+	Read_Max_Speed("BIKE", MPH_FAST),								// SPEED:		Miles per hour.
 	10,										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -922,7 +922,7 @@ static UnitTypeClass const UnitMLRS(
 	TXT_MLRS,								// NAME:			Text name of this unit type.
 	"MSAM",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
-	7,								// Build level.
+	Read_Build_Level("MSAM", 7),								// Build level.
 	STRUCTF_EYE,				// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -951,10 +951,10 @@ static UnitTypeClass const UnitMLRS(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	100,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("MSAM", 100),										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
-	800,										// COST:			Cost to build (Credits).
-	11,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("MSAM", 800),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("MSAM", 11),										// SCENARIO:	Starting availability scenario.
 	80,72, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -965,10 +965,10 @@ static UnitTypeClass const UnitMLRS(
 	HOUSEF_JP|
 	HOUSEF_BAD|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_MLRS,WEAPON_NONE,
+	Read_Primary_Weapon("MSAM", WEAPON_MLRS),Read_Secondary_Weapon("MSAM", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM,								// SPEED:		Miles per hour.
+	Read_Max_Speed("MSAM", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -980,7 +980,7 @@ static UnitTypeClass const UnitAPC(
 	TXT_APC,									// NAME:			Text name of this unit type.
 	"APC",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
-	4,								// Build level.
+	Read_Build_Level("APC", 4),								// Build level.
 	STRUCTF_BARRACKS,			// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -1009,10 +1009,10 @@ static UnitTypeClass const UnitAPC(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	200,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("APC", 200),										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
-	700,										// COST:			Cost to build (Credits).
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("APC", 700),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("APC", 5),											// SCENARIO:	Starting availability scenario.
 	80,15,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1026,7 +1026,7 @@ static UnitTypeClass const UnitAPC(
 	WEAPON_M60MG,WEAPON_NONE,
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_FASTER,					// SPEED:		Miles per hour.
+	Read_Max_Speed("APC", MPH_MEDIUM_FASTER),					// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -1038,7 +1038,7 @@ static UnitTypeClass const UnitGunBoat(
 	TXT_GUNBOAT,							// NAME:			Text name of this unit type.
 	"BOAT",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
-	99,							// Build level.
+	Read_Build_Level("BOAT", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -1067,10 +1067,10 @@ static UnitTypeClass const UnitGunBoat(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	700,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("BOAT", 700),										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to build (Credits).
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("BOAT", 300),										// COST:			Cost to build (Credits).
+	Read_Scenario_Level("BOAT", 99),										// SCENARIO:	Starting availability scenario.
 	80,40,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1081,10 +1081,10 @@ static UnitTypeClass const UnitGunBoat(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_TOMAHAWK,WEAPON_NONE,
+	Read_Primary_Weapon("APC", WEAPON_TOMAHAWK),Read_Secondary_Weapon("APC", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_FLOAT,							// MOVE:			Locomotion type.
-	MPH_SLOW,								// SPEED:		Miles per hour.
+	Read_Max_Speed("BOAT", MPH_SLOW),								// SPEED:		Miles per hour.
 	1,											// ROT:			Rate of turn (degrees per tick).
 	14,										// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1096,7 +1096,7 @@ static UnitTypeClass const UnitTric(
 	TXT_TRIC,								// NAME:			Text name of this unit type.
 	"TRIC",									// NAME:			Text name of this unit type.
 	ANIM_TRIC_DIE,							// EXPLOSION:	Type of explosion when destroyed.
-	99,							// Build level.
+	Read_Build_Level("TRIC", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -1125,16 +1125,16 @@ static UnitTypeClass const UnitTric(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	700,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("TRIC", 700),										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to build (Credits).
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("TRIC", 0),											// COST:			Cost to build (Credits).
+	Read_Scenario_Level("TRIC", 99),										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_STEG,WEAPON_NONE,
+	Read_Primary_Weapon("TRIC", WEAPON_STEG),Read_Secondary_Weapon("TRIC", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_SLOW,								// SPEED:		Miles per hour.
+	Read_Max_Speed("TRIC", MPH_SLOW),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1146,7 +1146,7 @@ static UnitTypeClass const UnitTrex(
 	TXT_TREX,								// NAME:			Text name of this unit type.
 	"TREX",									// NAME:			Text name of this unit type.
 	ANIM_TREX_DIE,							// EXPLOSION:	Type of explosion when destroyed.
-	99,							// Build level.
+	Read_Build_Level("TREX", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -1175,16 +1175,16 @@ static UnitTypeClass const UnitTrex(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	750,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("TREX", 750),										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to build (Credits).
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("TREX", 0),											// COST:			Cost to build (Credits).
+	Read_Scenario_Level("TREX", 99),										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_TREX,WEAPON_NONE,
+	Read_Primary_Weapon("TREX", WEAPON_TREX),Read_Secondary_Weapon("TREX", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM,								// SPEED:		Miles per hour.
+	Read_Max_Speed("TREX", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1196,7 +1196,7 @@ static UnitTypeClass const UnitRapt(
 	TXT_RAPT,								// NAME:			Text name of this unit type.
 	"RAPT",									// NAME:			Text name of this unit type.
 	ANIM_RAPT_DIE,							// EXPLOSION:	Type of explosion when destroyed.
-	99,							// Build level.
+	Read_Build_Level("RAPT", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -1225,16 +1225,16 @@ static UnitTypeClass const UnitRapt(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	180,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("RAPT", 180),										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to build (Credits).
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("RAPT", 0),											// COST:			Cost to build (Credits).
+	Read_Scenario_Level("RAPT", 99),										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_TREX,WEAPON_NONE,
+	Read_Primary_Weapon("RAPT", WEAPON_TREX),Read_Secondary_Weapon("RAPT", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_FAST,								// SPEED:		Miles per hour.
+	Read_Max_Speed("RAPT", MPH_FAST),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1246,7 +1246,7 @@ static UnitTypeClass const UnitSteg(
 	TXT_STEG,								// NAME:			Text name of this unit type.
 	"STEG",									// NAME:			Text name of this unit type.
 	ANIM_STEG_DIE,							// EXPLOSION:	Type of explosion when destroyed.
-	99,							// Build level.
+	Read_Build_Level("STEG", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
@@ -1275,16 +1275,16 @@ static UnitTypeClass const UnitSteg(
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
-	600,										// STRENGTH:	Strength (in damage points).
+	Read_Strength("STEG", 600),										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to build (Credits).
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("STEG", 0),											// COST:			Cost to build (Credits).
+	Read_Scenario_Level("STEG", 99),										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_STEG,WEAPON_NONE,
+	Read_Primary_Weapon("STEG", WEAPON_STEG),Read_Secondary_Weapon("STEG", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_SLOW,								// SPEED:		Miles per hour.
+	Read_Max_Speed("STEG", MPH_SLOW),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
