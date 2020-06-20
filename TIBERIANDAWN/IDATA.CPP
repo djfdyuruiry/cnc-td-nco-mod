@@ -129,9 +129,9 @@ static InfantryTypeClass const E1(
  	HOUSEF_JP|
  	HOUSEF_GOOD|
  	HOUSEF_BAD,					// Who can own this infantry unit.
- 	WEAPON_M16,
-	WEAPON_NONE,
-	Read_Max_Speed("E2", MPH_SLOW)						// Maximum speed of infantry.
+	Read_Primary_Weapon("E1", WEAPON_M16),
+	Read_Secondary_Weapon("E1", WEAPON_NONE),
+	Read_Max_Speed("E1", MPH_SLOW)						// Maximum speed of infantry.
 );
 
 
@@ -206,8 +206,8 @@ static InfantryTypeClass const E2(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,				// Who can own this infantry unit.
-	WEAPON_GRENADE,
-	WEAPON_NONE,
+	Read_Primary_Weapon("E2", WEAPON_GRENADE),
+	Read_Secondary_Weapon("E2", WEAPON_NONE),
 	Read_Max_Speed("E2", MPH_SLOW_ISH)			// Maximum speed of infantry.
 );
 
@@ -287,7 +287,8 @@ static InfantryTypeClass const E3(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,					// Who can own this infantry unit.
-	WEAPON_DRAGON,WEAPON_NONE,
+	Read_Primary_Weapon("E2", WEAPON_DRAGON),
+	Read_Secondary_Weapon("E2", WEAPON_NONE),
 	Read_Max_Speed("E3", MPH_KINDA_SLOW)				// Maximum speed of infantry.
 );
 

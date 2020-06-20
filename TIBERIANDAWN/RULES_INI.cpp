@@ -6,6 +6,8 @@
 static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static auto DEFAULT_RULES_FILENAME = "RULES.INI";
 
+static auto MAX_SPEED_ENTRY = "MaxSpeed";
+
 static char* RULES_INI_BUFFER = NULL;
 
 /// <summary>
@@ -96,16 +98,45 @@ int Read_Strength(const char* section, int defaultValue)
 /// <returns>The value in rules ini section if present, otherwise the default value provided.</returns>
 MPHType Read_Max_Speed(const char* section, MPHType defaultValue)
 {
-	auto maxSpeed = Read_Int_From_Rules_Ini(section, "MaxSpeed", defaultValue);
+	auto maxSpeed = Read_Int_From_Rules_Ini(section, MAX_SPEED_ENTRY, defaultValue);
 
 	if (maxSpeed < 0 || maxSpeed > 255)
 	{
 		Error_And_Exit(
-			"Rule [%s -> MaxSpeed] must be between 0 and 255 (inclusive). Value provided: %d",
+			"Rule [%s -> %s] must be between 0 and 255 (inclusive). Value provided: %d",
 			section,
+			MAX_SPEED_ENTRY,
 			maxSpeed
 		);
 	}
 
 	return (MPHType)maxSpeed;
+}
+
+/// <summary>
+/// Read a Weapon entry from a rules ini section as an instance of <ref>WeaponType</ref>.
+/// Min value: <ref>WEAPON_RIFLE</ref>
+/// Max value: <ref>WEAPON_TREX</ref>
+/// </summary>
+/// <param name="section"/>
+/// <param name="entry"/>
+/// <param name="defaultValue"/>
+/// <returns>The value in rules ini section if present, otherwise the default value provided.</returns>
+WeaponType Read_Weapon(const char* section, const char* entry, WeaponType defaultValue)
+{
+	auto weapon = Read_Int_From_Rules_Ini(section, entry, defaultValue);
+
+	if (weapon != WEAPON_NONE && (weapon < WEAPON_RIFLE || weapon > WEAPON_TREX))
+	{
+		Error_And_Exit(
+			"Rule [%s -> %s] must be between %d and %d (inclusive). Value provided: %d",
+			section,
+			entry,
+			WEAPON_RIFLE,
+			WEAPON_TREX,
+			weapon
+		);
+	}
+
+	return (WeaponType)weapon;
 }

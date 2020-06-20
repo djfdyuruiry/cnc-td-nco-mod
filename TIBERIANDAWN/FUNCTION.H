@@ -998,6 +998,7 @@ const char* LogLevel_To_String(LogLevel level);
 void Log(LogLevel logLevel, const char* messageFormat, ...);
 
 #ifndef LOG_MACROS
+#define LOG_MACROS
 #define Log_Error(messageFormat, ...) Log(ERR, messageFormat, __VA_ARGS__)
 #define Log_Warn(messageFormat, ...) Log(WARN, messageFormat, __VA_ARGS__)
 #define Log_Info(messageFormat, ...) Log(INFO, messageFormat, __VA_ARGS__)
@@ -1010,5 +1011,12 @@ char* Read_Rules_Ini();
 int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultValue);
 int Read_Strength(const char* section, int defaultValue);
 MPHType Read_Max_Speed(const char* section, MPHType defaultValue);
+WeaponType Read_Weapon(const char* section, const char* entry, WeaponType defaultValue);
+
+#ifndef RULE_MACROS
+#define RULE_MACROS
+#define Read_Primary_Weapon(section, defaultValue) Read_Weapon(section, "PrimaryWeapon", defaultValue)
+#define Read_Secondary_Weapon(section, defaultValue) Read_Weapon(section, "SecondaryWeapon", defaultValue)
+#endif
 
 #endif
