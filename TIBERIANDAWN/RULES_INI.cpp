@@ -53,13 +53,26 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 }
 
 /// <summary>
-/// Read a single value from rules ini as an integer.
+/// Read a single value from rules ini as an integer. Resolved value
+/// is validated to make sure it is in the <ref>minValueInclusive</ref> to
+/// <ref>maxValueInclusive</ref> range; <ref>Error_And_Exit</ref> will be
+/// called if the value fails validation.
 /// </summary>
 /// <param name="section"/>
 /// <param name="entry"/>
 /// <param name="defaultValue"/>
+/// <param name="minValueInclusive"/>
+/// <param name="maxValueInclusive"/>
+/// <param name="valueToAllowAlways">Optional pointer to the value to ignore during validation.</param>
 /// <returns>The value in rules ini if present, otherwise the default value provided.</returns>
-int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultValue)
+static int Read_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	int defaultValue,
+	int minValueInclusive,
+	int maxValueInclusive,
+	int* valueToAllowAlways
+)
 {
 	Ensure_Rules_Ini_Buffer_Is_Loaded();
 
@@ -73,6 +86,21 @@ int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultV
 		RULES_INI_BUFFER
 	);
 
+	if (valueToAllowAlways == NULL || ruleValue != *valueToAllowAlways)
+	{
+		if (ruleValue < minValueInclusive || ruleValue > maxValueInclusive)
+		{
+			Error_And_Exit(
+				"Rule [%s -> %s] must be between %d and %d (inclusive). Value provided: %d",
+				section,
+				entry,
+				minValueInclusive,
+				maxValueInclusive,
+				ruleValue
+			);
+		}
+	}
+
 	Log_Debug("Resolved value: %d", ruleValue);
 	Log_Info("Setting rule [%s -> %s] = %d", section, entry, ruleValue);
 
@@ -80,63 +108,63 @@ int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultV
 }
 
 /// <summary>
-/// Read the 'Strength' entry from a rules ini section as an integer.
-/// </summary>
-/// <param name="section"/>
-/// <param name="defaultValue"/>
-/// <returns>The value in rules ini section if present, otherwise the default value provided.</returns>
-int Read_Strength(const char* section, int defaultValue)
-{
-	return Read_Int_From_Rules_Ini(section, "Strength", defaultValue);
-}
-
-/// <summary>
-/// Read the 'MaxSpeed' entry from a rules ini section as an instance of <ref>MPHType</ref>. Max value: 255.
-/// </summary>
-/// <param name="section"/>
-/// <param name="defaultValue"/>
-/// <returns>The value in rules ini section if present, otherwise the default value provided.</returns>
-MPHType Read_Max_Speed(const char* section, MPHType defaultValue)
-{
-	auto maxSpeed = Read_Int_From_Rules_Ini(section, MAX_SPEED_ENTRY, defaultValue);
-
-	if (maxSpeed < 0 || maxSpeed > 255)
-	{
-		Error_And_Exit(
-			"Rule [%s -> %s] must be between 0 and 255 (inclusive). Value provided: %d",
-			section,
-			MAX_SPEED_ENTRY,
-			maxSpeed
-		);
-	}
-
-	return (MPHType)maxSpeed;
-}
-
-/// <summary>
-/// Read a Weapon entry from a rules ini section as an instance of <ref>WeaponType</ref>.
-/// Min value: <ref>WEAPON_RIFLE</ref>
-/// Max value: <ref>WEAPON_TREX</ref>
+/// Read a single value from rules ini as an integer. Resolved value
+/// is validated to make sure it is in the <ref>minValueInclusive</ref> to
+/// <ref>maxValueInclusive</ref> range; <ref>Error_And_Exit</ref> will be
+/// called if the value fails validation.
 /// </summary>
 /// <param name="section"/>
 /// <param name="entry"/>
 /// <param name="defaultValue"/>
-/// <returns>The value in rules ini section if present, otherwise the default value provided.</returns>
-WeaponType Read_Weapon(const char* section, const char* entry, WeaponType defaultValue)
+/// <param name="minValueInclusive"/>
+/// <param name="maxValueInclusive"/>
+/// <param name="valueToAllowAlways">Value to ignore during validation.</param>
+/// <returns>The value in rules ini if present, otherwise the default value provided.</returns>
+int Read_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	int defaultValue,
+	int minValueInclusive,
+	int maxValueInclusive,
+	int valueToAllowAlways
+)
 {
-	auto weapon = Read_Int_From_Rules_Ini(section, entry, defaultValue);
+	return Read_Int_From_Rules_Ini(
+		section,
+		entry,
+		defaultValue,
+		minValueInclusive,
+		maxValueInclusive,
+		&valueToAllowAlways
+	);
+}
 
-	if (weapon != WEAPON_NONE && (weapon < WEAPON_RIFLE || weapon > WEAPON_TREX))
-	{
-		Error_And_Exit(
-			"Rule [%s -> %s] must be between %d and %d (inclusive). Value provided: %d",
-			section,
-			entry,
-			WEAPON_RIFLE,
-			WEAPON_TREX,
-			weapon
-		);
-	}
-
-	return (WeaponType)weapon;
+/// <summary>
+/// Read a single value from rules ini as an integer. Resolved value
+/// is validated to make sure it is in the <ref>minValueInclusive</ref> to
+/// <ref>maxValueInclusive</ref> range; <ref>Error_And_Exit</ref> will be
+/// called if the value fails validation.
+/// </summary>
+/// <param name="section"/>
+/// <param name="entry"/>
+/// <param name="defaultValue"/>
+/// <param name="minValueInclusive"/>
+/// <param name="maxValueInclusive"/>
+/// <returns>The value in rules ini if present, otherwise the default value provided.</returns>
+int Read_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	int defaultValue,
+	int minValueInclusive,
+	int maxValueInclusive
+)
+{
+	return Read_Int_From_Rules_Ini(
+		section,
+		entry,
+		defaultValue,
+		minValueInclusive,
+		maxValueInclusive,
+		NULL
+	);
 }

@@ -999,24 +999,43 @@ void Log(LogLevel logLevel, const char* messageFormat, ...);
 
 #ifndef LOG_MACROS
 #define LOG_MACROS
+
 #define Log_Error(messageFormat, ...) Log(ERR, messageFormat, __VA_ARGS__)
 #define Log_Warn(messageFormat, ...) Log(WARN, messageFormat, __VA_ARGS__)
 #define Log_Info(messageFormat, ...) Log(INFO, messageFormat, __VA_ARGS__)
 #define Log_Debug(messageFormat, ...) Log(DEBUG, messageFormat, __VA_ARGS__)
+
 #endif
 
 // rules.ini functions
 char* Read_Rules_Ini();
 
-int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultValue);
-int Read_Strength(const char* section, int defaultValue);
-MPHType Read_Max_Speed(const char* section, MPHType defaultValue);
-WeaponType Read_Weapon(const char* section, const char* entry, WeaponType defaultValue);
+int Read_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	int defaultValue,
+	int minValueInclusive,
+	int maxValueInclusive,
+	int valueToAllowAlways
+);
+int Read_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	int defaultValue,
+	int minValueInclusive,
+	int maxValueInclusive
+);
 
 #ifndef RULE_MACROS
 #define RULE_MACROS
+
+#define Read_Strength(section, defaultValue) (unsigned short)Read_Int_From_Rules_Ini(section, "Strength", defaultValue, 1, USHRT_MAX)
+#define Read_Max_Speed(section, defaultValue) (MPHType)Read_Int_From_Rules_Ini(section, "MaxSpeed", defaultValue, 1, UCHAR_MAX)
+
+#define Read_Weapon(section, entry, defaultValue) (WeaponType)Read_Int_From_Rules_Ini(section, entry, defaultValue, WEAPON_RIFLE, WEAPON_TREX, WEAPON_NONE)
 #define Read_Primary_Weapon(section, defaultValue) Read_Weapon(section, "PrimaryWeapon", defaultValue)
 #define Read_Secondary_Weapon(section, defaultValue) Read_Weapon(section, "SecondaryWeapon", defaultValue)
+
 #endif
 
 #endif
