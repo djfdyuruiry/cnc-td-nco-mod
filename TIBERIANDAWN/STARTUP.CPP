@@ -167,6 +167,10 @@ int DLL_Startup(const char * command_line_in)
 
 	CCDebugString ("C&C95 - Starting up.\n");
 
+	if (Rules_Ini_Failed_Validation())
+	{
+		return(EXIT_FAILURE);
+	}
 
 	//WindowsTimer = new WinTimerClass(60,FALSE);
 	//CD_Test();

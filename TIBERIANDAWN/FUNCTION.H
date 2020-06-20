@@ -39,74 +39,74 @@
 Map (screen) class heirarchy.
 
  MapeditClass (most derived class) -- scenario editor
-        ³
+        ï¿½
    MouseClass -- handles mouse animation and display control
-        ³
+        ï¿½
   ScrollClass -- map scroll handler
-        ³
+        ï¿½
     HelpClass -- pop-up help text handler
-        ³
+        ï¿½
      TabClass -- file folder tab screen mode control dispatcher
-        ³
+        ï¿½
  SidebarClass -- displays and controls construction list sidebar
-        ³
+        ï¿½
    PowerClass -- display power production/consumption bargraph
-        ³
+        ï¿½
    RadarClass -- displays and controls radar map
-        ³
+        ï¿½
  DisplayClass -- general tactical map display handler
-        ³
+        ï¿½
      MapClass -- general tactical map data handler
-        ³
+        ï¿½
  GScreenClass (pure virtual base class) -- generic screen control
 
                           AbstractClass
-                                  ³
-                                  ³
-                                  ³
-                                  ³
+                                  ï¿½
+                                  ï¿½
+                                  ï¿½
+                                  ï¿½
                             ObjectClass
-                                  ³
-       ÚÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄ¿
-   AnimClass  ³  TemplateClass    ³        ÃÄ FuseClass     ³    TerrainClass
-              ³                   ³        ÃÄ FlyClass      ³
-              ³                   ³  BulletClass            ³
+                                  ï¿½
+       ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
+   AnimClass  ï¿½  TemplateClass    ï¿½        ï¿½ï¿½ FuseClass     ï¿½    TerrainClass
+              ï¿½                   ï¿½        ï¿½ï¿½ FlyClass      ï¿½
+              ï¿½                   ï¿½  BulletClass            ï¿½
        OverlayClass        MissionClass               SmudgeClass
-                                  ³
+                                  ï¿½
                              RadioClass
-                                  ³
-                                  ÃÄ CrewClass
-                                  ÃÄ FlasherClass
-                                  ÃÄ StageClass
-                                  ÃÄ CargoClass
+                                  ï¿½
+                                  ï¿½ï¿½ CrewClass
+                                  ï¿½ï¿½ FlasherClass
+                                  ï¿½ï¿½ StageClass
+                                  ï¿½ï¿½ CargoClass
                             TechnoClass
-                                  ³
-         ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                                  ï¿½
+         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
      FootClass                                         BuildingClass
-         ³
-         ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-    DriveClass  InfantryClass         ÃÄ FlyClass
-         ³                      AircraftClass
+         ï¿½
+         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
+    DriveClass  InfantryClass         ï¿½ï¿½ FlyClass
+         ï¿½                      AircraftClass
    TurretClass
-         ³
+         ï¿½
    TarComClass
-         ³
+         ï¿½
      UnitClass
 
 
                             AbstractTypeClass
-                                    ³
+                                    ï¿½
                               ObjectTypeClass
-                                    ³
-             ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-             ³                      ³            ³                 ³
-       TechnoTypeClass              ³            ³                 ³
-             ³                BulletTypeClass    ³                 ³
-             ³                           TemplateTypeClass         ³
-    ÚÄÄÄÄÄÄÄÄÁÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿             TerrainTypeClass
-    ³              ³           ³              ³
-UnitTypeClass      ³   BuildingTypeClass      ³
-                   ³                  InfantryTypeClass
+                                    ï¿½
+             ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
+             ï¿½                      ï¿½            ï¿½                 ï¿½
+       TechnoTypeClass              ï¿½            ï¿½                 ï¿½
+             ï¿½                BulletTypeClass    ï¿½                 ï¿½
+             ï¿½                           TemplateTypeClass         ï¿½
+    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿             TerrainTypeClass
+    ï¿½              ï¿½           ï¿½              ï¿½
+UnitTypeClass      ï¿½   BuildingTypeClass      ï¿½
+                   ï¿½                  InfantryTypeClass
            AircraftTypeClass
 #endif
 
@@ -982,7 +982,7 @@ void On_Achievement_Event(const HouseClass* player_ptr, const char *achievement_
  */
 
 // utility functions
-void Error_And_Exit(char* messageFormat, ...);
+void Show_Error(char* messageFormat, ...);
 const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue);
 void Append_To_File(const char* filename, char* data);
 
@@ -1025,6 +1025,8 @@ int Read_Int_From_Rules_Ini(
 	int minValueInclusive,
 	int maxValueInclusive
 );
+
+bool Rules_Ini_Failed_Validation();
 
 #ifndef RULE_MACROS
 #define RULE_MACROS

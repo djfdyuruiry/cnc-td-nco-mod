@@ -19,7 +19,11 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 {
 	Configure_Console_Output();
 
-	// test code can go here
+	if (Rules_Ini_Failed_Validation())
+	{
+		printf("Rules INI file failed valiation steps");
+		exit(1);
+	}
 
 	exit(0);
 }

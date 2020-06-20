@@ -3,11 +3,11 @@
 static auto LOG_LINE_LENGTH = 1024;
 
 /// <summary>
-/// Log an error, show it in a user message box and exit the game
+/// Log an error then show it in a user message box.
 /// </summary>
 /// <param name="messageFormat">Message in <ref>sprintf</ref> format.</param>
 /// <param name="..."><ref>sprintf</ref> format arguments</param>
-void Error_And_Exit(char* messageFormat, ...)
+void Show_Error(char* messageFormat, ...)
 {
 	auto formattedMessageBuffer = new char[LOG_LINE_LENGTH];
 
@@ -28,6 +28,4 @@ void Error_And_Exit(char* messageFormat, ...)
 	);
 
 	delete formattedMessageBuffer;
-
-	exit(1);
 }

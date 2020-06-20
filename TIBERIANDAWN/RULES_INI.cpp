@@ -1,14 +1,10 @@
 #include "function.h"
-#include <conio.h>
-#include <io.h>
-#include "ccdde.h"
 
 static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static auto DEFAULT_RULES_FILENAME = "RULES.INI";
 
-static auto MAX_SPEED_ENTRY = "MaxSpeed";
-
 static char* RULES_INI_BUFFER = NULL;
+static bool RULES_VALID = true;
 
 /// <summary>
 /// Load the content of the rules ini file, the location is read from the env var pointed to by
@@ -55,7 +51,7 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 /// <summary>
 /// Read a single value from rules ini as an integer. Resolved value
 /// is validated to make sure it is in the <ref>minValueInclusive</ref> to
-/// <ref>maxValueInclusive</ref> range; <ref>Error_And_Exit</ref> will be
+/// <ref>maxValueInclusive</ref> range; <ref>Show_Error_And_Exit</ref> will be
 /// called if the value fails validation.
 /// </summary>
 /// <param name="section"/>
@@ -90,7 +86,9 @@ static int Read_Int_From_Rules_Ini(
 	{
 		if (ruleValue < minValueInclusive || ruleValue > maxValueInclusive)
 		{
-			Error_And_Exit(
+			RULES_VALID = false;
+
+			Show_Error(
 				"Rule [%s -> %s] must be between %d and %d (inclusive). Value provided: %d",
 				section,
 				entry,
@@ -110,7 +108,7 @@ static int Read_Int_From_Rules_Ini(
 /// <summary>
 /// Read a single value from rules ini as an integer. Resolved value
 /// is validated to make sure it is in the <ref>minValueInclusive</ref> to
-/// <ref>maxValueInclusive</ref> range; <ref>Error_And_Exit</ref> will be
+/// <ref>maxValueInclusive</ref> range; <ref>Show_Error_And_Exit</ref> will be
 /// called if the value fails validation.
 /// </summary>
 /// <param name="section"/>
@@ -142,7 +140,7 @@ int Read_Int_From_Rules_Ini(
 /// <summary>
 /// Read a single value from rules ini as an integer. Resolved value
 /// is validated to make sure it is in the <ref>minValueInclusive</ref> to
-/// <ref>maxValueInclusive</ref> range; <ref>Error_And_Exit</ref> will be
+/// <ref>maxValueInclusive</ref> range; <ref>Show_Error_And_Exit</ref> will be
 /// called if the value fails validation.
 /// </summary>
 /// <param name="section"/>
@@ -167,4 +165,9 @@ int Read_Int_From_Rules_Ini(
 		maxValueInclusive,
 		NULL
 	);
+}
+
+bool Rules_Ini_Failed_Validation()
+{
+	return !RULES_VALID;
 }
