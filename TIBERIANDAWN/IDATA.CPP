@@ -131,9 +131,8 @@ static InfantryTypeClass const E1(
  	HOUSEF_BAD,					// Who can own this infantry unit.
 	Read_Primary_Weapon("E1", WEAPON_M16),
 	Read_Secondary_Weapon("E1", WEAPON_NONE),
-	Read_Max_Speed("E1", MPH_SLOW)						// Maximum speed of infantry.
+	Read_Max_Speed("E1", MPH_SLOW)  // Maximum speed of infantry.
 );
-
 
 // Grenadiers
 
@@ -208,9 +207,8 @@ static InfantryTypeClass const E2(
 	HOUSEF_GOOD,				// Who can own this infantry unit.
 	Read_Primary_Weapon("E2", WEAPON_GRENADE),
 	Read_Secondary_Weapon("E2", WEAPON_NONE),
-	Read_Max_Speed("E2", MPH_SLOW_ISH)			// Maximum speed of infantry.
+	Read_Max_Speed("E2", MPH_SLOW_ISH)  // Maximum speed of infantry.
 );
-
 
 
 
@@ -289,9 +287,8 @@ static InfantryTypeClass const E3(
 	HOUSEF_BAD,					// Who can own this infantry unit.
 	Read_Primary_Weapon("E2", WEAPON_DRAGON),
 	Read_Secondary_Weapon("E2", WEAPON_NONE),
-	Read_Max_Speed("E3", MPH_KINDA_SLOW)				// Maximum speed of infantry.
+	Read_Max_Speed("E3", MPH_KINDA_SLOW)  // Maximum speed of infantry.
 );
-
 // Flamethrower
 
 int FlamethrowerDos [DO_COUNT][3]={
@@ -337,7 +334,7 @@ static InfantryTypeClass const E4(
 	INFANTRY_E4,				// Infantry type number.
 	TXT_E4,						// Translate name number for infantry type.
 	"E4",							// INI name for infantry.
-	1,								// Build level.
+	Read_Build_Level("E4", 1),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
@@ -351,10 +348,10 @@ static InfantryTypeClass const E4(
 	&FlamethrowerDos[0][0],	// ptr to DO table (above)
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	70,							// Strength of infantry (in damage points).
+	Read_Strength("E4", 70),							// Strength of infantry (in damage points).
 	1,								// Sight range.
-	200,							// Cost of infantry (in credits).
-	5,								// Scenario when they first appear.
+	Read_Cost("E4", 200),							// Cost of infantry (in credits).
+	Read_Scenario_Level("E4", 5),								// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -364,10 +361,9 @@ static InfantryTypeClass const E4(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,					// Who can own this infantry unit.
-	WEAPON_FLAMETHROWER,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("E4", WEAPON_FLAMETHROWER),Read_Secondary_Weapon("E4", WEAPON_NONE),
+	Read_Max_Speed("E4", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 // Chemwarrior
 
@@ -413,7 +409,7 @@ static InfantryTypeClass const E5(
 	INFANTRY_E5,				// Infantry type number.
 	TXT_E5,						// Translate name number for infantry type.
 	"E5",							// INI name for infantry.
-	7,								// Build level.
+	Read_Build_Level("E5", 7),								// Build level.
 	STRUCTF_EYE,				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
@@ -427,10 +423,10 @@ static InfantryTypeClass const E5(
 	&ChemwarriorDos[0][0],	// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	70,							// Strength of infantry (in damage points).
+	Read_Strength("E5", 70),							// Strength of infantry (in damage points).
 	1,								// Sight range.
-	300,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("E5", 300),							// Cost of infantry (in credits).
+	Read_Scenario_Level("E5", 99),							// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -441,10 +437,9 @@ static InfantryTypeClass const E5(
 	HOUSEF_JP|
 //	HOUSEF_GOOD|
 	HOUSEF_BAD,					// Who can own this infantry unit.
-	WEAPON_CHEMSPRAY,WEAPON_NONE,
-	MPH_SLOW
+	Read_Primary_Weapon("E5", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("E5", WEAPON_NONE),
+	Read_Max_Speed("E5", MPH_SLOW) // Maximum speed of infantry.
 );
-
 
 // Engineer
 
@@ -489,7 +484,7 @@ static InfantryTypeClass const E7(
 	INFANTRY_E7,				// Infantry type number.
 	TXT_E7,						// Translate name number for infantry type.
 	"E6",							// INI name for infantry.
-	3,								// Build level.
+	Read_Build_Level("E6", 3),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -503,10 +498,10 @@ static InfantryTypeClass const E7(
 	&EngineerDos[0][0],		// ptr to DO table
 	3,								// Frame of projectile launch.
 	3,								// Frame of projectile launch while prone.
-	25,							// Strength of infantry (in damage points).
+	Read_Strength("E6", 25),							// Strength of infantry (in damage points).
 	2,								// Sight range.
-	500,							// Cost of infantry (in credits).
-	2,								// Scenario when they first appear.
+	Read_Cost("E6", 500),							// Cost of infantry (in credits).
+	Read_Scenario_Level("E6", 2),								// Scenario when they first appear.
 	80,75,						// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -517,10 +512,9 @@ static InfantryTypeClass const E7(
 	HOUSEF_JP|
 	HOUSEF_BAD|
 	HOUSEF_GOOD,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW						// Maximum speed of infantry.
+	Read_Primary_Weapon("E6", WEAPON_NONE),Read_Secondary_Weapon("E6", WEAPON_NONE),
+	Read_Max_Speed("E6", MPH_SLOW						// M)  // Maximum speed of infantry.aximum speed of infantry.
 );
-
 // Commandos
 
 int CommandoDos[DO_COUNT][3]={
@@ -564,7 +558,7 @@ static InfantryTypeClass const Commando(
 	INFANTRY_RAMBO,			// Infantry type number.
 	TXT_RAMBO,					// Translate name number for infantry type.
 	"RMBO",						// INI name for infantry.
-	7,								// Build level.
+	Read_Build_Level("RMBO", 7),								// Build level.
 	STRUCTF_EYE,				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
@@ -578,10 +572,10 @@ static InfantryTypeClass const Commando(
 	&CommandoDos[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	2,								// Frame of projectile launch while prone.
-	80,							// Strength of infantry (in damage points).
+	Read_Strength("RMBO", 80),							// Strength of infantry (in damage points).
 	5,								// Sight range.
-	1000,							// Cost of infantry (in credits).
-	98,							// Scenario when they first appear.
+	Read_Cost("RMBO", 1000),							// Cost of infantry (in credits).
+	Read_Scenario_Level("RMBO", 98),							// Scenario when they first appear.
 	80,75,						// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -592,10 +586,9 @@ static InfantryTypeClass const Commando(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,					// Who can own this infantry unit.
-	WEAPON_RIFLE,WEAPON_NONE,
-	MPH_SLOW_ISH			// Maximum speed of infantry.
+	Read_Primary_Weapon("RMBO", WEAPON_RIFLE),Read_Secondary_Weapon("RMBO", WEAPON_NONE),
+	Read_Max_Speed("RMBO", MPH_SLOW_ISH)  // Maximum speed of infantry.Maximum speed of infantry.
 );
-
 // Civilians
 
 int CivilianDos1[DO_COUNT][3]={
@@ -639,7 +632,7 @@ static InfantryTypeClass const C1(
 	INFANTRY_C1,				// Infantry type number.
 	TXT_C1,						// Translate name number for infantry type.
 	"C1",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C1", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
@@ -653,10 +646,10 @@ static InfantryTypeClass const C1(
 	&CivilianDos1[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	25,							// Strength of infantry (in damage points).
+	Read_Strength("C1", 25),							// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C1", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C1", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -668,10 +661,9 @@ static InfantryTypeClass const C1(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_PISTOL,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C1", WEAPON_PISTOL),Read_Secondary_Weapon("C1", WEAPON_NONE),
+	Read_Max_Speed("C1", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int CivilianDos2[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -714,7 +706,7 @@ static InfantryTypeClass const C2(
 	INFANTRY_C2,				// Infantry type number.
 	TXT_C2,						// Translate name number for infantry type.
 	"C2",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C2", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -728,10 +720,10 @@ static InfantryTypeClass const C2(
 	&CivilianDos2[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	5,								// Strength of infantry (in damage points).
+	Read_Strength("C2", 5),								// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C2", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C2", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -743,10 +735,9 @@ static InfantryTypeClass const C2(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C2", WEAPON_NONE),Read_Secondary_Weapon("C2", WEAPON_NONE),
+	Read_Max_Speed("C2", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int CivilianDos3[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -790,7 +781,7 @@ static InfantryTypeClass const C3(
 	INFANTRY_C3,				// Infantry type number.
 	TXT_C3,						// Translate name number for infantry type.
 	"C3",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C3", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	true,							// Is this a female type?
 	false,						// Is a leader type?
@@ -804,10 +795,10 @@ static InfantryTypeClass const C3(
 	&CivilianDos3[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	5,								// Strength of infantry (in damage points).
+	Read_Strength("C3", 5),								// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C3", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C3", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -819,10 +810,9 @@ static InfantryTypeClass const C3(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C3", WEAPON_NONE),Read_Secondary_Weapon("C3", WEAPON_NONE),
+	Read_Max_Speed("C3", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int CivilianDos4[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -866,7 +856,7 @@ static InfantryTypeClass const C4(
 	INFANTRY_C4,				// Infantry type number.
 	TXT_C4,						// Translate name number for infantry type.
 	"C4",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C4", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	true,							// Is this a female type?
 	false,						// Is a leader type?
@@ -880,10 +870,10 @@ static InfantryTypeClass const C4(
 	&CivilianDos4[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	5,								// Strength of infantry (in damage points).
+	Read_Strength("C4", 5),								// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C4", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C4", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -895,10 +885,9 @@ static InfantryTypeClass const C4(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C4", WEAPON_NONE),Read_Secondary_Weapon("C4", WEAPON_NONE),
+	Read_Max_Speed("C4", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int CivilianDos5[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -941,7 +930,7 @@ static InfantryTypeClass const C5(
 	INFANTRY_C5,				// Infantry type number.
 	TXT_C5,						// Translate name number for infantry type.
 	"C5",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C5", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -955,10 +944,10 @@ static InfantryTypeClass const C5(
 	&CivilianDos5[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	5,								// Strength of infantry (in damage points).
+	Read_Strength("C5", 5),								// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C5", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C5", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -970,10 +959,9 @@ static InfantryTypeClass const C5(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C5", WEAPON_NONE),Read_Secondary_Weapon("C5", WEAPON_NONE),
+	Read_Max_Speed("C5", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int CivilianDos6[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1016,7 +1004,7 @@ static InfantryTypeClass const C6(
 	INFANTRY_C6,				// Infantry type number.
 	TXT_C6,						// Translate name number for infantry type.
 	"C6",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C6", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -1030,10 +1018,10 @@ static InfantryTypeClass const C6(
 	&CivilianDos6[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	5,								// Strength of infantry (in damage points).
+	Read_Strength("C6", 5),								// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C6", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C6", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1045,10 +1033,9 @@ static InfantryTypeClass const C6(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C6", WEAPON_NONE),Read_Secondary_Weapon("C6", WEAPON_NONE),
+	Read_Max_Speed("C6", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int CivilianDos7[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1091,7 +1078,7 @@ static InfantryTypeClass const C7(
 	INFANTRY_C7,				// Infantry type number.
 	TXT_C7,						// Translate name number for infantry type.
 	"C7",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C7", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
@@ -1105,10 +1092,10 @@ static InfantryTypeClass const C7(
 	&CivilianDos7[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	5,								// Strength of infantry (in damage points).
+	Read_Strength("C7", 5),								// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C7", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C7", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1120,10 +1107,9 @@ static InfantryTypeClass const C7(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_PISTOL,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C7", WEAPON_PISTOL),Read_Secondary_Weapon("C7", WEAPON_NONE),
+	Read_Max_Speed("C7", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 int CivilianDos8[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
 	0,			1,	1,				// DO_STAND_GUARD
@@ -1165,7 +1151,7 @@ static InfantryTypeClass const C8(
 	INFANTRY_C8,				// Infantry type number.
 	TXT_C8,						// Translate name number for infantry type.
 	"C8",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C8", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -1179,10 +1165,10 @@ static InfantryTypeClass const C8(
 	&CivilianDos8[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	5,								// Strength of infantry (in damage points).
+	Read_Strength("C8", 5),								// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C8", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C8", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1194,10 +1180,9 @@ static InfantryTypeClass const C8(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C8", WEAPON_NONE),Read_Secondary_Weapon("C8", WEAPON_NONE),
+	Read_Max_Speed("C8", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int CivilianDos9[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1240,7 +1225,7 @@ static InfantryTypeClass const C9(
 	INFANTRY_C9,				// Infantry type number.
 	TXT_C9,						// Translate name number for infantry type.
 	"C9",							// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C9", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -1254,10 +1239,10 @@ static InfantryTypeClass const C9(
 	&CivilianDos9[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	5,								// Strength of infantry (in damage points).
+	Read_Strength("C9", 5),								// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C9", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C9", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1269,10 +1254,9 @@ static InfantryTypeClass const C9(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C9", WEAPON_NONE),Read_Secondary_Weapon("C9", WEAPON_NONE),
+	Read_Max_Speed("C9", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int NikoombaDos[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1317,7 +1301,7 @@ static InfantryTypeClass const C10(
 	INFANTRY_C10,				// Infantry type number.
 	TXT_C10,						// Translate name number for infantry type.
 	"C10",						// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("C10", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -1331,10 +1315,10 @@ static InfantryTypeClass const C10(
 	&NikoombaDos[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	50,							// Strength of infantry (in damage points).
+	Read_Strength("C10", 50),							// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("C10", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("C10", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1346,10 +1330,9 @@ static InfantryTypeClass const C10(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("C10", WEAPON_NONE),Read_Secondary_Weapon("C10", WEAPON_NONE),
+	Read_Max_Speed("C10", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 int MoebiusDos[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
 	0,			1,	1,				// DO_STAND_GUARD
@@ -1391,7 +1374,7 @@ static InfantryTypeClass const Moebius(
 	INFANTRY_MOEBIUS,			// Infantry type number.
 	TXT_MOEBIUS,				// Translate name number for infantry type.
 	"MOEBIUS",					// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("MOEBIUS", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -1405,10 +1388,10 @@ static InfantryTypeClass const Moebius(
 	&MoebiusDos[0][0],		// ptr to DO table
 	0,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	50,							// Strength of infantry (in damage points).
+	Read_Strength("MOEBIUS", 50),							// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("MOEBIUS", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("MOEBIUS", 99),							// Scenario when they first appear.
 	0,10,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1420,10 +1403,9 @@ static InfantryTypeClass const Moebius(
 	HOUSEF_GOOD|
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("MOEBIUS", WEAPON_NONE),Read_Secondary_Weapon("MOEBIUS", WEAPON_NONE),
+	Read_Max_Speed("MOEBIUS", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 int DelphiDos[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
 	0,			1,	1,				// DO_STAND_GUARD
@@ -1465,7 +1447,7 @@ static InfantryTypeClass const Delphi(
 	INFANTRY_DELPHI,			// Infantry type number.
 	TXT_DELPHI,					// Translate name number for infantry type.
 	"DELPHI",					// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("DELPHI", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -1479,10 +1461,10 @@ static InfantryTypeClass const Delphi(
 	&DelphiDos[0][0],			// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	25,							// Strength of infantry (in damage points).
+	Read_Strength("DELPHI", 25),							// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("DELPHI", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("DELPHI", 99),							// Scenario when they first appear.
 	0,0,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1493,10 +1475,9 @@ static InfantryTypeClass const Delphi(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_PISTOL,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("DELPHI", WEAPON_PISTOL),Read_Secondary_Weapon("DELPHI", WEAPON_NONE),
+	Read_Max_Speed("DELPHI", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 int DrChanDos[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1539,7 +1520,7 @@ static InfantryTypeClass const DrChan(
 	INFANTRY_CHAN,				// Infantry type number.
 	TXT_CHAN,					// Translate name number for infantry type.
 	"CHAN",						// INI name for infantry.
-	99,							// Build level.
+	Read_Build_Level("CHAN", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
@@ -1553,10 +1534,10 @@ static InfantryTypeClass const DrChan(
 	&DrChanDos[0][0],			// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	25,							// Strength of infantry (in damage points).
+	Read_Strength("CHAN", 25),							// Strength of infantry (in damage points).
 	0,								// Sight range.
-	10,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	Read_Cost("CHAN", 10),							// Cost of infantry (in credits).
+	Read_Scenario_Level("CHAN", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1567,10 +1548,9 @@ static InfantryTypeClass const DrChan(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
-	WEAPON_NONE,WEAPON_NONE,
-	MPH_SLOW_ISH
+	Read_Primary_Weapon("CHAN", WEAPON_NONE),Read_Secondary_Weapon("CHAN", WEAPON_NONE),
+	Read_Max_Speed("CHAN", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
-
 
 
 /*
