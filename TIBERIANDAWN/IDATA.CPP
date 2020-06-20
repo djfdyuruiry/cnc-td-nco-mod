@@ -102,7 +102,7 @@ static InfantryTypeClass const E1(
 	TXT_E1,						// Translate name number for infantry type.
 	"E1",							// INI name for infantry.
 	Read_Build_Level("E1", 1),								// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("E1", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
 	true,							// Has crawling animation frames?
@@ -179,7 +179,7 @@ static InfantryTypeClass const E2(
 	TXT_E2,						// Translate name number for infantry type.
 	"E2",							// INI name for infantry.
 	Read_Build_Level("E2", 1),								// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("E2", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
 	true,							// Has crawling animation frames?
@@ -258,7 +258,7 @@ static InfantryTypeClass const E3(
 	TXT_E3,						// Translate name number for infantry type.
 	"E3",							// INI name for infantry.
 	Read_Build_Level("E3", 2),								// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("E3", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
 	true,							// Has crawling animation frames?
@@ -335,7 +335,7 @@ static InfantryTypeClass const E4(
 	TXT_E4,						// Translate name number for infantry type.
 	"E4",							// INI name for infantry.
 	Read_Build_Level("E4", 1),								// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("E4", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
 	true,							// Has crawling animation frames?
@@ -410,7 +410,7 @@ static InfantryTypeClass const E5(
 	TXT_E5,						// Translate name number for infantry type.
 	"E5",							// INI name for infantry.
 	Read_Build_Level("E5", 7),								// Build level.
-	STRUCTF_EYE,				// Building prerequisite.
+	Read_Prerequisite("E5", STRUCT_EYE),				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
 	true,							// Has crawling animation frames?
@@ -485,7 +485,7 @@ static InfantryTypeClass const E7(
 	TXT_E7,						// Translate name number for infantry type.
 	"E6",							// INI name for infantry.
 	Read_Build_Level("E6", 3),								// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("E6", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -559,7 +559,7 @@ static InfantryTypeClass const Commando(
 	TXT_RAMBO,					// Translate name number for infantry type.
 	"RMBO",						// INI name for infantry.
 	Read_Build_Level("RMBO", 7),								// Build level.
-	STRUCTF_EYE,				// Building prerequisite.
+	Read_Prerequisite("RMBO", STRUCT_EYE),				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
 	true,							// Has crawling animation frames?
@@ -633,7 +633,7 @@ static InfantryTypeClass const C1(
 	TXT_C1,						// Translate name number for infantry type.
 	"C1",							// INI name for infantry.
 	Read_Build_Level("C1", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C1", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -707,7 +707,7 @@ static InfantryTypeClass const C2(
 	TXT_C2,						// Translate name number for infantry type.
 	"C2",							// INI name for infantry.
 	Read_Build_Level("C2", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C2", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -782,7 +782,7 @@ static InfantryTypeClass const C3(
 	TXT_C3,						// Translate name number for infantry type.
 	"C3",							// INI name for infantry.
 	Read_Build_Level("C3", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C3", STRUCT_NONE),				// Building prerequisite.
 	true,							// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -857,7 +857,7 @@ static InfantryTypeClass const C4(
 	TXT_C4,						// Translate name number for infantry type.
 	"C4",							// INI name for infantry.
 	Read_Build_Level("C4", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C4", STRUCT_NONE),				// Building prerequisite.
 	true,							// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -931,7 +931,7 @@ static InfantryTypeClass const C5(
 	TXT_C5,						// Translate name number for infantry type.
 	"C5",							// INI name for infantry.
 	Read_Build_Level("C5", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C5", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -1005,7 +1005,7 @@ static InfantryTypeClass const C6(
 	TXT_C6,						// Translate name number for infantry type.
 	"C6",							// INI name for infantry.
 	Read_Build_Level("C6", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C6", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -1079,7 +1079,7 @@ static InfantryTypeClass const C7(
 	TXT_C7,						// Translate name number for infantry type.
 	"C7",							// INI name for infantry.
 	Read_Build_Level("C7", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C7", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -1152,7 +1152,7 @@ static InfantryTypeClass const C8(
 	TXT_C8,						// Translate name number for infantry type.
 	"C8",							// INI name for infantry.
 	Read_Build_Level("C8", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C8", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -1226,7 +1226,7 @@ static InfantryTypeClass const C9(
 	TXT_C9,						// Translate name number for infantry type.
 	"C9",							// INI name for infantry.
 	Read_Build_Level("C9", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C9", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -1302,7 +1302,7 @@ static InfantryTypeClass const C10(
 	TXT_C10,						// Translate name number for infantry type.
 	"C10",						// INI name for infantry.
 	Read_Build_Level("C10", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("C10", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -1375,7 +1375,7 @@ static InfantryTypeClass const Moebius(
 	TXT_MOEBIUS,				// Translate name number for infantry type.
 	"MOEBIUS",					// INI name for infantry.
 	Read_Build_Level("MOEBIUS", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("MOEBIUS", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -1448,7 +1448,7 @@ static InfantryTypeClass const Delphi(
 	TXT_DELPHI,					// Translate name number for infantry type.
 	"DELPHI",					// INI name for infantry.
 	Read_Build_Level("DELPHI", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("DELPHI", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
@@ -1521,7 +1521,7 @@ static InfantryTypeClass const DrChan(
 	TXT_CHAN,					// Translate name number for infantry type.
 	"CHAN",						// INI name for infantry.
 	Read_Build_Level("CHAN", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("CHAN", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?

@@ -1007,7 +1007,7 @@ void Log(LogLevel logLevel, const char* messageFormat, ...);
 
 #endif
 
-// rules.ini functions
+// rules.ini
 char* Read_Rules_Ini();
 
 int Read_Int_From_Rules_Ini(
@@ -1024,6 +1024,11 @@ int Read_Int_From_Rules_Ini(
 	int defaultValue,
 	int minValueInclusive,
 	int maxValueInclusive
+);
+
+int Read_Prerequisite(
+	const char* section,
+	StructType defaultValue
 );
 
 bool Rules_Ini_Failed_Validation();
@@ -1044,5 +1049,6 @@ bool Rules_Ini_Failed_Validation();
 #define Read_Secondary_Weapon(section, defaultValue) Read_Weapon(section, "SecondaryWeapon", defaultValue)
 
 #endif
+
 
 #endif

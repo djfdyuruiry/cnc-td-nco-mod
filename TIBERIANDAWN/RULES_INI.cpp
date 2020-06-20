@@ -167,6 +167,21 @@ int Read_Int_From_Rules_Ini(
 	);
 }
 
+int Read_Prerequisite(
+	const char* section,
+	StructType defaultValue
+)
+{
+	auto structValue = (StructType)Read_Int_From_Rules_Ini(section, "Prerequisite", defaultValue, STRUCT_WEAP, STRUCT_WOOD_WALL, STRUCT_NONE);
+
+	if (structValue == STRUCT_NONE)
+	{
+		return STRUCTF_NONE;
+	}
+
+	return 1L << structValue;
+}
+
 bool Rules_Ini_Failed_Validation()
 {
 	return !RULES_VALID;

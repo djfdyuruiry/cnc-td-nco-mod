@@ -172,7 +172,7 @@ static BuildingTypeClass const ClassTemple(
 	"TMPL",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("TMPL", 7),								// Build level.
-	STRUCTF_RADAR,				// Building prerequisite.
+	Read_Prerequisite("TMPL", STRUCT_RADAR),				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -227,7 +227,7 @@ static BuildingTypeClass const ClassEye(
 	"EYE",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("EYE", 7),								// Build level.
-	STRUCTF_RADAR,				// Building prerequisite.
+	Read_Prerequisite("EYE", STRUCT_RADAR),				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -282,7 +282,7 @@ static BuildingTypeClass const ClassWeapon(
 	"WEAP",									// NAME:			Short name of the structure.
 	XYP_COORD(10+(CELL_PIXEL_W/2), ((CELL_PIXEL_H*3)-(CELL_PIXEL_H/2))-21),			// Exit point for produced units.
 	Read_Build_Level("WEAP", 2),								// Build level.
-	STRUCTF_REFINERY,			// Building prerequisite.
+	Read_Prerequisite("WEAP", STRUCT_REFINERY),			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -309,7 +309,7 @@ static BuildingTypeClass const ClassWeapon(
 #ifdef ADVANCED
 	Read_Strength("WEAP", 500),										// STRNTH:		Full strength of building.
 #else
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("WEAP", 200),										// STRNTH:		Full strength of building.
 #endif
 	3,											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("WEAP", 2000),										// COST:			Cost to purchase.
@@ -341,7 +341,7 @@ static BuildingTypeClass const ClassGTower(
 	"GTWR",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("GTWR", 2),								// Build level.
-	STRUCTF_BARRACKS,			// Building prerequisite.
+	Read_Prerequisite("GTWR", STRUCT_BARRACKS),			// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -397,7 +397,7 @@ static BuildingTypeClass const ClassATower(
 	"ATWR",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ATWR", 4),								// Build level.
-	STRUCTF_RADAR,				// Building prerequisite.
+	Read_Prerequisite("ATWR", STRUCT_RADAR),				// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -453,7 +453,7 @@ static BuildingTypeClass const ClassObelisk(
 	"OBLI",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("OBLI", 4),								// Build level.
-	STRUCTF_RADAR,				// Building prerequisite.
+	Read_Prerequisite("ATWR", STRUCT_RADAR),				// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -508,7 +508,7 @@ static BuildingTypeClass const ClassTurret(
 	"GUN",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("GUN", 2),								// Build level.
-	STRUCTF_BARRACKS,			// Building prerequisite.
+	Read_Prerequisite("GUN", STRUCT_BARRACKS),			// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -538,9 +538,9 @@ static BuildingTypeClass const ClassTurret(
 	Read_Cost("GUN", 600),										// COST:			Cost to purchase.
 #else
 #ifdef PATCH
-	600,
+	Read_Cost("GUN", 600),
 #else
-	250,										// COST:			Cost to purchase.
+	Read_Cost("GUN", 250),										// COST:			Cost to purchase.
 #endif
 #endif
 	Read_Scenario_Level("GUN", 8),											// SCENARIO:	Starting availability scenario.
@@ -571,7 +571,7 @@ static BuildingTypeClass const ClassConst(
 	"FACT",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("FACT", 99),							// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("FACT", STRUCT_NONE),				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -627,7 +627,7 @@ static BuildingTypeClass const ClassRefinery(
 	"PROC",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("PROC", 1),								// Build level.
-	STRUCTF_POWER,				// Building prerequisite.
+	Read_Prerequisite("PROC", STRUCT_POWER),				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -683,7 +683,7 @@ static BuildingTypeClass const ClassStorage(
 	"SILO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SILO", 1),								// Build level.
-	STRUCTF_REFINERY,			// Building prerequisite.
+	Read_Prerequisite("SILO", STRUCT_REFINERY),			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -740,7 +740,7 @@ static BuildingTypeClass const ClassHelipad(
 	"HPAD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HPAD", 6),								// Build level.
-	STRUCTF_BARRACKS,			// Building prerequisite.
+	Read_Prerequisite("HPAD", STRUCT_BARRACKS),			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -796,7 +796,7 @@ static BuildingTypeClass const ClassCommand(
 	"HQ",										// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HQ", 2),								// Build level.
-	STRUCTF_REFINERY,			// Building prerequisite.
+	Read_Prerequisite("HQ", STRUCT_REFINERY),			// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -852,7 +852,7 @@ static BuildingTypeClass const ClassSAM(
 	"SAM",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SAM", 6),								// Build level.
-	STRUCTF_BARRACKS,			// Building prerequisite.
+	Read_Prerequisite("SAM", STRUCT_BARRACKS),			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -907,7 +907,7 @@ static BuildingTypeClass const ClassAirStrip(
 	"AFLD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("AFLD", 2),								// Build level.
-	STRUCTF_REFINERY,			// Building prerequisite.
+	Read_Prerequisite("AFLD", STRUCT_REFINERY),			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -962,7 +962,7 @@ static BuildingTypeClass const ClassPower(
 	"NUKE",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("NUKE", 0),								// Build level.
-	STRUCTF_NONE,				// Building prerequisite.
+	Read_Prerequisite("NUKE", STRUCT_NONE),				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -1186,7 +1186,7 @@ static BuildingTypeClass const ClassBarracks(
 	"PYLE",									// NAME:			Short name of the structure.
 	XYP_COORD(30,33),						// Exit point for produced units.
 	Read_Build_Level("PYLE", 0),								// Build level.
-	STRUCTF_POWER,				// Building prerequisite.
+	Read_Prerequisite("NUK2", STRUCT_POWER),				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -1241,7 +1241,7 @@ static BuildingTypeClass const ClassHand(
 	"HAND",									// NAME:			Short name of the structure.
 	XYP_COORD(36,63),						// Exit point for produced units.
 	Read_Build_Level("HAND", 0),								// Build level.
-	STRUCTF_POWER,				// Building prerequisite.
+	Read_Prerequisite("HAND", STRUCT_POWER),				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
