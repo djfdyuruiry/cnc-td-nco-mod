@@ -171,7 +171,7 @@ static BuildingTypeClass const ClassTemple(
 	TXT_TEMPLE,								// NAME:			Short name of the structure.
 	"TMPL",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	7,								// Build level.
+	Read_Build_Level("TMPL", 7),								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -196,10 +196,10 @@ static BuildingTypeClass const ClassTemple(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1000,										// STRNTH:		Full strength of building.
+	Read_Strength("TMPL", 1000),										// STRNTH:		Full strength of building.
 	4,											// SIGHTRANGE:	Range of sighting.
-	3000,										// COST:			Cost to purchase.
-	13,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("TMPL", 3000),										// COST:			Cost to purchase.
+	Read_Scenario_Level("TMPL", 13),										// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -209,7 +209,7 @@ static BuildingTypeClass const ClassTemple(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("TMPL", WEAPON_NONE),Read_Secondary_Weapon("TMPL", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -226,7 +226,7 @@ static BuildingTypeClass const ClassEye(
 	TXT_EYE,									// NAME:			Short name of the structure.
 	"EYE",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	7,								// Build level.
+	Read_Build_Level("EYE", 7),								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -251,10 +251,10 @@ static BuildingTypeClass const ClassEye(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
-	500,										// STRNTH:		Full strength of building.
+	Read_Strength("EYE", 500),										// STRNTH:		Full strength of building.
 	10,										// SIGHTRANGE:	Range of sighting.
-	2800,										// COST:			Cost to purchase.
-	13,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("EYE", 2800),										// COST:			Cost to purchase.
+	Read_Scenario_Level("EYE", 13),										// SCENARIO:	Starting availability scenario.
 	0,100,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -264,7 +264,7 @@ static BuildingTypeClass const ClassEye(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("EYE", WEAPON_NONE),Read_Secondary_Weapon("EYE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -281,7 +281,7 @@ static BuildingTypeClass const ClassWeapon(
 	TXT_WEAPON_FACTORY,					// NAME:			Short name of the structure.
 	"WEAP",									// NAME:			Short name of the structure.
 	XYP_COORD(10+(CELL_PIXEL_W/2), ((CELL_PIXEL_H*3)-(CELL_PIXEL_H/2))-21),			// Exit point for produced units.
-	2,								// Build level.
+	Read_Build_Level("WEAP", 2),								// Build level.
 	STRUCTF_REFINERY,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -307,13 +307,13 @@ static BuildingTypeClass const ClassWeapon(
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 #ifdef ADVANCED
-	500,										// STRNTH:		Full strength of building.
+	Read_Strength("WEAP", 500),										// STRNTH:		Full strength of building.
 #else
 	200,										// STRNTH:		Full strength of building.
 #endif
 	3,											// SIGHTRANGE:	Range of sighting.
-	2000,										// COST:			Cost to purchase.
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("WEAP", 2000),										// COST:			Cost to purchase.
+	Read_Scenario_Level("WEAP", 5),											// SCENARIO:	Starting availability scenario.
 	0,86,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -323,7 +323,7 @@ static BuildingTypeClass const ClassWeapon(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("WEAP", WEAPON_NONE),Read_Secondary_Weapon("WEAP", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -340,7 +340,7 @@ static BuildingTypeClass const ClassGTower(
 	TXT_GUARD_TOWER,						// NAME:			Short name of the structure.
 	"GTWR",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	2,								// Build level.
+	Read_Build_Level("GTWR", 2),								// Build level.
 	STRUCTF_BARRACKS,			// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -365,10 +365,10 @@ static BuildingTypeClass const ClassGTower(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("GTWR", 200),										// STRNTH:		Full strength of building.
 	3,											// SIGHTRANGE:	Range of sighting.
-	500,										// COST:			Cost to purchase.
-	7,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("GTWR", 500),										// COST:			Cost to purchase.
+	Read_Scenario_Level("GTWR", 7),											// SCENARIO:	Starting availability scenario.
 	100,25,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -378,7 +378,7 @@ static BuildingTypeClass const ClassGTower(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_CHAIN_GUN,WEAPON_NONE,
+	Read_Primary_Weapon("GTWR", WEAPON_CHAIN_GUN),Read_Secondary_Weapon("GTWR", WEAPON_NONE),
 //	WEAPON_M60MG,WEAPON_NONE,
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -396,7 +396,7 @@ static BuildingTypeClass const ClassATower(
 	TXT_AGUARD_TOWER,						// NAME:			Short name of the structure.
 	"ATWR",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	4,								// Build level.
+	Read_Build_Level("ATWR", 4),								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -421,10 +421,10 @@ static BuildingTypeClass const ClassATower(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	300,										// STRNTH:		Full strength of building.
+	Read_Strength("ATWR", 300),										// STRNTH:		Full strength of building.
 	4,											// SIGHTRANGE:	Range of sighting.
-	1000,										// COST:			Cost to purchase.
-	13,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("ATWR", 1000),										// COST:			Cost to purchase.
+	Read_Scenario_Level("ATWR", 13),										// SCENARIO:	Starting availability scenario.
 	100,30,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -434,7 +434,7 @@ static BuildingTypeClass const ClassATower(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_TOW_TWO,WEAPON_NONE,
+	Read_Primary_Weapon("ATWR", WEAPON_TOW_TWO),Read_Secondary_Weapon("ATWR", WEAPON_NONE),
 //	WEAPON_TOMAHAWK,WEAPON_NONE,
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -452,7 +452,7 @@ static BuildingTypeClass const ClassObelisk(
 	TXT_OBELISK,							// NAME:			Short name of the structure.
 	"OBLI",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	4,								// Build level.
+	Read_Build_Level("OBLI", 4),								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -477,10 +477,10 @@ static BuildingTypeClass const ClassObelisk(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("OBLI", 200),										// STRNTH:		Full strength of building.
 	5,											// SIGHTRANGE:	Range of sighting.
-	1500,										// COST:			Cost to purchase.
-	11,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("OBLI", 1500),										// COST:			Cost to purchase.
+	Read_Scenario_Level("OBLI", 11),										// SCENARIO:	Starting availability scenario.
 	100,35,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -490,7 +490,7 @@ static BuildingTypeClass const ClassObelisk(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_OBELISK_LASER,WEAPON_NONE,
+	Read_Primary_Weapon("OBLI", WEAPON_OBELISK_LASER),Read_Secondary_Weapon("OBLI", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -507,7 +507,7 @@ static BuildingTypeClass const ClassTurret(
 	TXT_TURRET,								// NAME:			Short name of the structure.
 	"GUN",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	2,								// Build level.
+	Read_Build_Level("GUN", 2),								// Build level.
 	STRUCTF_BARRACKS,			// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -532,10 +532,10 @@ static BuildingTypeClass const ClassTurret(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)208,							// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("GUN", 200),										// STRNTH:		Full strength of building.
 	5,											// SIGHTRANGE:	Range of sighting.
 #ifdef ADVANCED
-	600,										// COST:			Cost to purchase.
+	Read_Cost("GUN", 600),										// COST:			Cost to purchase.
 #else
 #ifdef PATCH
 	600,
@@ -543,7 +543,7 @@ static BuildingTypeClass const ClassTurret(
 	250,										// COST:			Cost to purchase.
 #endif
 #endif
-	8,											// SCENARIO:	Starting availability scenario.
+	Read_Scenario_Level("GUN", 8),											// SCENARIO:	Starting availability scenario.
 	300,26,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -553,7 +553,7 @@ static BuildingTypeClass const ClassTurret(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_TURRET_GUN,WEAPON_NONE,
+	Read_Primary_Weapon("GUN", WEAPON_TURRET_GUN),Read_Secondary_Weapon("GUN", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -570,7 +570,7 @@ static BuildingTypeClass const ClassConst(
 	TXT_CONST_YARD,						// NAME:			Short name of the structure.
 	"FACT",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("FACT", 99),							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -595,10 +595,10 @@ static BuildingTypeClass const ClassConst(
 		false,		// Does building care less if placed on concrete?
 	RTTI_BUILDINGTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
+	Read_Strength("FACT", 400),										// STRNTH:		Full strength of building.
 	3,											// SIGHTRANGE:	Range of sighting.
-	5000,										// COST:			Cost to purchase.
-	1,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("FACT", 5000),										// COST:			Cost to purchase.
+	Read_Scenario_Level("FACT", 1),											// SCENARIO:	Starting availability scenario.
 	0,70,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -609,7 +609,7 @@ static BuildingTypeClass const ClassConst(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("FACT", WEAPON_NONE),Read_Secondary_Weapon("FACT", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -626,7 +626,7 @@ static BuildingTypeClass const ClassRefinery(
 	TXT_REFINERY,							// NAME:			Short name of the structure.
 	"PROC",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	1,								// Build level.
+	Read_Build_Level("PROC", 1),								// Build level.
 	STRUCTF_POWER,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -651,10 +651,10 @@ static BuildingTypeClass const ClassRefinery(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	450,										// STRNTH:		Full strength of building.
+	Read_Strength("PROC", 450),										// STRNTH:		Full strength of building.
 	4,											// SIGHTRANGE:	Range of sighting.
-	2000,										// COST:			Cost to purchase.
-	2,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("PROC", 2000),										// COST:			Cost to purchase.
+	Read_Scenario_Level("PROC", 2),											// SCENARIO:	Starting availability scenario.
 	0,55,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -665,7 +665,7 @@ static BuildingTypeClass const ClassRefinery(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("PROC", WEAPON_NONE),Read_Secondary_Weapon("PROC", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	1000,										// CAPACITY:	Spice storage capacity.
@@ -682,7 +682,7 @@ static BuildingTypeClass const ClassStorage(
 	TXT_STORAGE,							// NAME:			Short name of the structure.
 	"SILO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	1,								// Build level.
+	Read_Build_Level("SILO", 1),								// Build level.
 	STRUCTF_REFINERY,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -707,11 +707,11 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	150,										// STRNTH:		Full strength of building.
+	Read_Strength("SILO", 150),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	150,										// COST:			Cost to purchase.
+	Read_Cost("SILO", 150),										// COST:			Cost to purchase.
 //	300,										// COST:			Cost to purchase.
-	2,											// SCENARIO:	Starting availability scenario.
+	Read_Scenario_Level("SILO", 2),											// SCENARIO:	Starting availability scenario.
 	0,16,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -722,7 +722,7 @@ static BuildingTypeClass const ClassStorage(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("SILO", WEAPON_NONE),Read_Secondary_Weapon("SILO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	1500,										// CAPACITY:	Spice storage capacity.
@@ -739,7 +739,7 @@ static BuildingTypeClass const ClassHelipad(
 	TXT_HELIPAD,							// NAME:			Short name of the structure.
 	"HPAD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	6,								// Build level.
+	Read_Build_Level("HPAD", 6),								// Build level.
 	STRUCTF_BARRACKS,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -764,10 +764,10 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Does building care less if placed on concrete?
 	RTTI_AIRCRAFTTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
+	Read_Strength("HPAD", 400),										// STRNTH:		Full strength of building.
 	3,											// SIGHTRANGE:	Range of sighting.
-	1500,										// COST:			Cost to purchase.
-	10,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("HPAD", 1500),										// COST:			Cost to purchase.
+	Read_Scenario_Level("HPAD", 10),										// SCENARIO:	Starting availability scenario.
 	0,65,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -778,7 +778,7 @@ static BuildingTypeClass const ClassHelipad(
 	HOUSEF_JP|
 	HOUSEF_BAD|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("HPAD", WEAPON_NONE),Read_Secondary_Weapon("HPAD", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -795,7 +795,7 @@ static BuildingTypeClass const ClassCommand(
 	TXT_COMMAND,							// NAME:			Short name of the structure.
 	"HQ",										// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	2,								// Build level.
+	Read_Build_Level("HQ", 2),								// Build level.
 	STRUCTF_REFINERY,			// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -820,10 +820,10 @@ static BuildingTypeClass const ClassCommand(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
-	500,										// STRNTH:		Full strength of building.
+	Read_Strength("HQ", 500),										// STRNTH:		Full strength of building.
 	10,										// SIGHTRANGE:	Range of sighting.
-	1000,										// COST:			Cost to purchase.
-	3,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("HQ", 1000),										// COST:			Cost to purchase.
+	Read_Scenario_Level("HQ", 3),											// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -834,7 +834,7 @@ static BuildingTypeClass const ClassCommand(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("HQ", WEAPON_NONE),Read_Secondary_Weapon("HQ", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -851,7 +851,7 @@ static BuildingTypeClass const ClassSAM(
 	TXT_SAM,									// NAME:			Short name of the structure.
 	"SAM",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	6,								// Build level.
+	Read_Build_Level("SAM", 6),								// Build level.
 	STRUCTF_BARRACKS,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -876,10 +876,10 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("SAM", 200),										// STRNTH:		Full strength of building.
 	3,											// SIGHTRANGE:	Range of sighting.
-	750,										// COST:			Cost to purchase.
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("SAM", 750),										// COST:			Cost to purchase.
+	Read_Scenario_Level("SAM", 5),											// SCENARIO:	Starting availability scenario.
 	300,40,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -889,7 +889,7 @@ static BuildingTypeClass const ClassSAM(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NIKE,WEAPON_NONE,
+	Read_Primary_Weapon("SAM", WEAPON_NIKE),Read_Secondary_Weapon("SAM", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -906,7 +906,7 @@ static BuildingTypeClass const ClassAirStrip(
 	TXT_AIRSTRIP,							// NAME:			Short name of the structure.
 	"AFLD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	2,								// Build level.
+	Read_Build_Level("AFLD", 2),								// Build level.
 	STRUCTF_REFINERY,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -931,10 +931,10 @@ static BuildingTypeClass const ClassAirStrip(
 		false,		// Does building care less if placed on concrete?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	500,										// STRNTH:		Full strength of building.
+	Read_Strength("AFLD", 500),										// STRNTH:		Full strength of building.
 	5,											// SIGHTRANGE:	Range of sighting.
-	2000,										// COST:			Cost to purchase.
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("AFLD", 2000),										// COST:			Cost to purchase.
+	Read_Scenario_Level("AFLD", 5),											// SCENARIO:	Starting availability scenario.
 	300,86,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -944,7 +944,7 @@ static BuildingTypeClass const ClassAirStrip(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("AFLD", WEAPON_NONE),Read_Secondary_Weapon("AFLD", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -961,7 +961,7 @@ static BuildingTypeClass const ClassPower(
 	TXT_POWER,								// NAME:			Short name of the structure.
 	"NUKE",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	0,								// Build level.
+	Read_Build_Level("NUKE", 0),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -986,10 +986,10 @@ static BuildingTypeClass const ClassPower(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("NUKE", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to purchase.
-	1,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("NUKE", 300),										// COST:			Cost to purchase.
+	Read_Scenario_Level("NUKE", 1),											// SCENARIO:	Starting availability scenario.
 	0,50,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1000,7 +1000,7 @@ static BuildingTypeClass const ClassPower(
 	HOUSEF_JP|
 	HOUSEF_BAD|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("NUKE", WEAPON_NONE),Read_Secondary_Weapon("NUKE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1017,7 +1017,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 	TXT_ADVANCED_POWER,					// NAME:			Short name of the structure.
 	"NUK2",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	5,											// Build level.
+	Read_Build_Level("NUK2", 5),											// Build level.
 	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1042,10 +1042,10 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	300,										// STRNTH:		Full strength of building.
+	Read_Strength("NUK2", 300),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	700,										// COST:			Cost to purchase.
-	13,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("NUK2", 700),										// COST:			Cost to purchase.
+	Read_Scenario_Level("NUK2", 13),										// SCENARIO:	Starting availability scenario.
 	0,75,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1056,7 +1056,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 	HOUSEF_JP|
 	HOUSEF_BAD|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("NUK2", WEAPON_NONE),Read_Secondary_Weapon("NUK2", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1073,7 +1073,7 @@ static BuildingTypeClass const ClassHospital(
 	TXT_HOSPITAL,							// NAME:			Short name of the structure.
 	"HOSP",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("HOSP", 99),							// Build level.
 	STRUCTF_BARRACKS,			// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1098,10 +1098,10 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("HOSP", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	500,										// COST:			Cost to purchase.
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("HOSP", 500),										// COST:			Cost to purchase.
+	Read_Scenario_Level("HOSP", 99),										// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1112,7 +1112,7 @@ static BuildingTypeClass const ClassHospital(
 	HOUSEF_JP|
 	HOUSEF_BAD|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("HOSP", WEAPON_NONE),Read_Secondary_Weapon("HOSP", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	100,										// CAPACITY:	Spice storage capacity.
@@ -1130,7 +1130,7 @@ static BuildingTypeClass const ClassBioLab(
 	TXT_BIO_LAB,							// NAME:			Short name of the structure.
 	"BIO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("BIO", 99),							// Build level.
 	STRUCTF_HOSPITAL,			// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1155,10 +1155,10 @@ static BuildingTypeClass const ClassBioLab(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	300,										// STRNTH:		Full strength of building.
+	Read_Strength("BIO", 300),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	500,										// COST:			Cost to purchase.
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("BIO", 500),										// COST:			Cost to purchase.
+	Read_Scenario_Level("BIO", 99),										// SCENARIO:	Starting availability scenario.
 	0,1,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1168,7 +1168,7 @@ static BuildingTypeClass const ClassBioLab(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("BIO", WEAPON_NONE),Read_Secondary_Weapon("BIO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	100,										// CAPACITY:	Spice storage capacity.
@@ -1185,7 +1185,7 @@ static BuildingTypeClass const ClassBarracks(
 	TXT_BARRACKS,							// NAME:			Short name of the structure.
 	"PYLE",									// NAME:			Short name of the structure.
 	XYP_COORD(30,33),						// Exit point for produced units.
-	0,								// Build level.
+	Read_Build_Level("PYLE", 0),								// Build level.
 	STRUCTF_POWER,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1210,10 +1210,10 @@ static BuildingTypeClass const ClassBarracks(
 		false,		// Does building care less if placed on concrete?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
+	Read_Strength("PYLE", 400),										// STRNTH:		Full strength of building.
 	3,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to purchase.
-	1,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("PYLE", 300),										// COST:			Cost to purchase.
+	Read_Scenario_Level("PYLE", 1),											// SCENARIO:	Starting availability scenario.
 	0,60,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1223,7 +1223,7 @@ static BuildingTypeClass const ClassBarracks(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("PYLE", WEAPON_NONE),Read_Secondary_Weapon("PYLE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1240,7 +1240,7 @@ static BuildingTypeClass const ClassHand(
 	TXT_HAND,								// NAME:			Short name of the structure.
 	"HAND",									// NAME:			Short name of the structure.
 	XYP_COORD(36,63),						// Exit point for produced units.
-	0,								// Build level.
+	Read_Build_Level("HAND", 0),								// Build level.
 	STRUCTF_POWER,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1265,10 +1265,10 @@ static BuildingTypeClass const ClassHand(
 		false,		// Does building care less if placed on concrete?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
+	Read_Strength("HAND", 400),										// STRNTH:		Full strength of building.
 	3,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to purchase.
-	2,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("HAND", 300),										// COST:			Cost to purchase.
+	Read_Scenario_Level("HAND", 2),											// SCENARIO:	Starting availability scenario.
 	0,61,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1278,7 +1278,7 @@ static BuildingTypeClass const ClassHand(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("HAND", WEAPON_NONE),Read_Secondary_Weapon("HAND", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1295,7 +1295,7 @@ static BuildingTypeClass const ClassTanker(
 	TXT_TANKER,								// NAME:			Short name of the structure.
 	"ARCO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("ARCO", 99),							// Build level.
 	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1320,10 +1320,10 @@ static BuildingTypeClass const ClassTanker(
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	100,										// STRNTH:		Full strength of building.
+	Read_Strength("ARCO", 100),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("ARCO", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("ARCO", 0),											// SCENARIO:	Starting availability scenario.
 	0,1, 										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1333,7 +1333,7 @@ static BuildingTypeClass const ClassTanker(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("ARCO", WEAPON_NONE),Read_Secondary_Weapon("ARCO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1350,7 +1350,7 @@ static BuildingTypeClass const ClassRepair(
 	TXT_FIX_IT,								// NAME:			Short name of the structure.
 	"FIX",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	5,								// Build level.
+	Read_Build_Level("FIX", 5),								// Build level.
 	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1375,10 +1375,10 @@ static BuildingTypeClass const ClassRepair(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
+	Read_Strength("FIX", 400),										// STRNTH:		Full strength of building.
 	3,											// SIGHTRANGE:	Range of sighting.
-	1200,										// COST:			Cost to purchase.
-	8,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("FIX", 1200),										// COST:			Cost to purchase.
+	Read_Scenario_Level("FIX", 8),											// SCENARIO:	Starting availability scenario.
 	0,46,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1389,7 +1389,7 @@ static BuildingTypeClass const ClassRepair(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("FIX", WEAPON_NONE),Read_Secondary_Weapon("FIX", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1408,7 +1408,7 @@ static BuildingTypeClass const ClassRoad(
 	"ROAD",									// NAME:			Short name of the structure.
 	STRUCTF_NONE,							// PREREQ:		Buildings that must exist first.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("ROAD", 99),							// Build level.
 	0,								// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -1433,10 +1433,10 @@ static BuildingTypeClass const ClassRoad(
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
+	Read_Strength("ROAD", 1),											// STRNTH:		Full strength of building.
 	0,											// SIGHTRANGE:	Range of sighting.
-	50,										// COST:			Cost to purchase.
-	99,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("ROAD", 50),										// COST:			Cost to purchase.
+	Read_Scenario_Level("ROAD", 99),										// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1447,7 +1447,7 @@ static BuildingTypeClass const ClassRoad(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("ROAD", WEAPON_NONE),Read_Secondary_Weapon("ROAD", WEAPON_NONE),
 	ARMOR_NONE,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1465,7 +1465,7 @@ static BuildingTypeClass const ClassV01(
 	TXT_CIV1,								// NAME:			Short name of the structure.
 	"V01",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V01", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1490,10 +1490,10 @@ static BuildingTypeClass const ClassV01(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V01", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V01", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V01", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1503,7 +1503,7 @@ static BuildingTypeClass const ClassV01(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V01", WEAPON_NONE),Read_Secondary_Weapon("V01", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1520,7 +1520,7 @@ static BuildingTypeClass const ClassV02(
 	TXT_CIV2,								// NAME:			Short name of the structure.
 	"V02",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V02", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1545,10 +1545,10 @@ static BuildingTypeClass const ClassV02(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V02", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V02", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V02", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1558,7 +1558,7 @@ static BuildingTypeClass const ClassV02(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V02", WEAPON_NONE),Read_Secondary_Weapon("V02", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1575,7 +1575,7 @@ static BuildingTypeClass const ClassV03(
 	TXT_CIV3,								// NAME:			Short name of the structure.
 	"V03",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V03", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1600,10 +1600,10 @@ static BuildingTypeClass const ClassV03(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V03", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V03", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V03", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1613,7 +1613,7 @@ static BuildingTypeClass const ClassV03(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V03", WEAPON_NONE),Read_Secondary_Weapon("V03", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1630,7 +1630,7 @@ static BuildingTypeClass const ClassV04(
 	TXT_CIV4,								// NAME:			Short name of the structure.
 	"V04",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V04", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1655,10 +1655,10 @@ static BuildingTypeClass const ClassV04(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V04", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V04", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V04", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1668,7 +1668,7 @@ static BuildingTypeClass const ClassV04(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V04", WEAPON_NONE),Read_Secondary_Weapon("V04", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1685,7 +1685,7 @@ static BuildingTypeClass const ClassV05(
 	TXT_CIV5,								// NAME:			Short name of the structure.
 	"V05",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V05", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1710,10 +1710,10 @@ static BuildingTypeClass const ClassV05(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V05", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V05", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V05", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1723,7 +1723,7 @@ static BuildingTypeClass const ClassV05(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V05", WEAPON_NONE),Read_Secondary_Weapon("V05", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1740,7 +1740,7 @@ static BuildingTypeClass const ClassV06(
 	TXT_CIV6,								// NAME:			Short name of the structure.
 	"V06",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V06", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1765,10 +1765,10 @@ static BuildingTypeClass const ClassV06(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V06", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V06", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V06", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1778,7 +1778,7 @@ static BuildingTypeClass const ClassV06(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V06", WEAPON_NONE),Read_Secondary_Weapon("V06", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1795,7 +1795,7 @@ static BuildingTypeClass const ClassV07(
 	TXT_CIV7,								// NAME:			Short name of the structure.
 	"V07",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V07", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1820,10 +1820,10 @@ static BuildingTypeClass const ClassV07(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V07", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V07", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V07", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1833,7 +1833,7 @@ static BuildingTypeClass const ClassV07(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V07", WEAPON_NONE),Read_Secondary_Weapon("V07", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1850,7 +1850,7 @@ static BuildingTypeClass const ClassV08(
 	TXT_CIV8,								// NAME:			Short name of the structure.
 	"V08",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V08", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1875,10 +1875,10 @@ static BuildingTypeClass const ClassV08(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V08", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V08", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V08", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1888,7 +1888,7 @@ static BuildingTypeClass const ClassV08(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V08", WEAPON_NONE),Read_Secondary_Weapon("V08", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1905,7 +1905,7 @@ static BuildingTypeClass const ClassV09(
 	TXT_CIV9,								// NAME:			Short name of the structure.
 	"V09",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V09", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1930,10 +1930,10 @@ static BuildingTypeClass const ClassV09(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V09", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V09", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V09", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1943,7 +1943,7 @@ static BuildingTypeClass const ClassV09(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V09", WEAPON_NONE),Read_Secondary_Weapon("V09", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -1960,7 +1960,7 @@ static BuildingTypeClass const ClassV10(
 	TXT_CIV10,								// NAME:			Short name of the structure.
 	"V10",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V10", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -1985,10 +1985,10 @@ static BuildingTypeClass const ClassV10(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V10", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V10", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V10", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1998,7 +1998,7 @@ static BuildingTypeClass const ClassV10(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V10", WEAPON_NONE),Read_Secondary_Weapon("V10", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2015,7 +2015,7 @@ static BuildingTypeClass const ClassV11(
 	TXT_CIV11,								// NAME:			Short name of the structure.
 	"V11",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V11", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2040,10 +2040,10 @@ static BuildingTypeClass const ClassV11(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V11", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V11", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V11", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2053,7 +2053,7 @@ static BuildingTypeClass const ClassV11(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V11", WEAPON_NONE),Read_Secondary_Weapon("V11", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2070,7 +2070,7 @@ static BuildingTypeClass const ClassV12(
 	TXT_CIV12,								// NAME:			Short name of the structure.
 	"V12",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V12", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2095,10 +2095,10 @@ static BuildingTypeClass const ClassV12(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V12", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V12", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V12", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2108,7 +2108,7 @@ static BuildingTypeClass const ClassV12(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V12", WEAPON_NONE),Read_Secondary_Weapon("V12", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2125,7 +2125,7 @@ static BuildingTypeClass const ClassV13(
 	TXT_CIV13,								// NAME:			Short name of the structure.
 	"V13",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V13", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2150,10 +2150,10 @@ static BuildingTypeClass const ClassV13(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V13", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V13", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V13", 0),											// SCENARIO:	Starting availability scenario.
 	0,2, 						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2163,7 +2163,7 @@ static BuildingTypeClass const ClassV13(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V13", WEAPON_NONE),Read_Secondary_Weapon("V13", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2180,7 +2180,7 @@ static BuildingTypeClass const ClassV14(
 	TXT_CIV14,								// NAME:			Short name of the structure.
 	"V14",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V14", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2205,10 +2205,10 @@ static BuildingTypeClass const ClassV14(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V14", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V14", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V14", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2218,7 +2218,7 @@ static BuildingTypeClass const ClassV14(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V14", WEAPON_NONE),Read_Secondary_Weapon("V14", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2235,7 +2235,7 @@ static BuildingTypeClass const ClassV15(
 	TXT_CIV15,								// NAME:			Short name of the structure.
 	"V15",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V15", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2260,10 +2260,10 @@ static BuildingTypeClass const ClassV15(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V15", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V15", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V15", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2273,7 +2273,7 @@ static BuildingTypeClass const ClassV15(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V15", WEAPON_NONE),Read_Secondary_Weapon("V15", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2290,7 +2290,7 @@ static BuildingTypeClass const ClassV16(
 	TXT_CIV16,								// NAME:			Short name of the structure.
 	"V16",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V16", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2315,10 +2315,10 @@ static BuildingTypeClass const ClassV16(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V16", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V16", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V16", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2328,7 +2328,7 @@ static BuildingTypeClass const ClassV16(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V16", WEAPON_NONE),Read_Secondary_Weapon("V16", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2345,7 +2345,7 @@ static BuildingTypeClass const ClassV17(
 	TXT_CIV17,								// NAME:			Short name of the structure.
 	"V17",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V17", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2370,10 +2370,10 @@ static BuildingTypeClass const ClassV17(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V17", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V17", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V17", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2383,7 +2383,7 @@ static BuildingTypeClass const ClassV17(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V17", WEAPON_NONE),Read_Secondary_Weapon("V17", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2400,7 +2400,7 @@ static BuildingTypeClass const ClassV18(
 	TXT_CIV18,								// NAME:			Short name of the structure.
 	"V18",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V18", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2425,10 +2425,10 @@ static BuildingTypeClass const ClassV18(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V18", 200),										// STRNTH:		Full strength of building.
 	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V18", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V18", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2438,7 +2438,7 @@ static BuildingTypeClass const ClassV18(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL,						// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V18", WEAPON_NONE),Read_Secondary_Weapon("V18", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2455,7 +2455,7 @@ static BuildingTypeClass const ClassV19(
 	TXT_PUMP,								// NAME:			Short name of the structure.
 	"V19",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V19", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2480,10 +2480,10 @@ static BuildingTypeClass const ClassV19(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V19", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V19", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V19", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2494,7 +2494,7 @@ static BuildingTypeClass const ClassV19(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V19", WEAPON_NONE),Read_Secondary_Weapon("V19", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2511,7 +2511,7 @@ static BuildingTypeClass const ClassV20(
 	TXT_CIV20,								// NAME:			Short name of the structure.
 	"V20",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V20", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2536,10 +2536,10 @@ static BuildingTypeClass const ClassV20(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V20", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V20", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V20", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2550,7 +2550,7 @@ static BuildingTypeClass const ClassV20(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V20", WEAPON_NONE),Read_Secondary_Weapon("V20", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2567,7 +2567,7 @@ static BuildingTypeClass const ClassV21(
 	TXT_CIV21,								// NAME:			Short name of the structure.
 	"V21",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V21", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2592,10 +2592,10 @@ static BuildingTypeClass const ClassV21(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V21", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V21", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V21", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2606,7 +2606,7 @@ static BuildingTypeClass const ClassV21(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V21", WEAPON_NONE),Read_Secondary_Weapon("V21", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2623,7 +2623,7 @@ static BuildingTypeClass const ClassV22(
 	TXT_CIV22,								// NAME:			Short name of the structure.
 	"V22",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V22", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2648,10 +2648,10 @@ static BuildingTypeClass const ClassV22(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V22", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V22", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V22", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2662,7 +2662,7 @@ static BuildingTypeClass const ClassV22(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V22", WEAPON_NONE),Read_Secondary_Weapon("V22", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2679,7 +2679,7 @@ static BuildingTypeClass const ClassV23(
 	TXT_CIV23,								// NAME:			Short name of the structure.
 	"V23",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V23", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2704,10 +2704,10 @@ static BuildingTypeClass const ClassV23(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V23", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V23", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V23", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2718,7 +2718,7 @@ static BuildingTypeClass const ClassV23(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V23", WEAPON_NONE),Read_Secondary_Weapon("V23", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2735,7 +2735,7 @@ static BuildingTypeClass const ClassV24(
 	TXT_CIV24,								// NAME:			Short name of the structure.
 	"V24",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V24", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2760,10 +2760,10 @@ static BuildingTypeClass const ClassV24(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V24", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V24", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V24", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2774,7 +2774,7 @@ static BuildingTypeClass const ClassV24(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V24", WEAPON_NONE),Read_Secondary_Weapon("V24", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2791,7 +2791,7 @@ static BuildingTypeClass const ClassV25(
 	TXT_CIV25,								// NAME:			Short name of the structure.
 	"V25",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V25", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2816,10 +2816,10 @@ static BuildingTypeClass const ClassV25(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V25", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V25", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V25", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2830,7 +2830,7 @@ static BuildingTypeClass const ClassV25(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V25", WEAPON_NONE),Read_Secondary_Weapon("V25", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2847,7 +2847,7 @@ static BuildingTypeClass const ClassV26(
 	TXT_CIV26,								// NAME:			Short name of the structure.
 	"V26",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V26", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2872,10 +2872,10 @@ static BuildingTypeClass const ClassV26(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V26", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V26", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V26", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2886,7 +2886,7 @@ static BuildingTypeClass const ClassV26(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V26", WEAPON_NONE),Read_Secondary_Weapon("V26", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2903,7 +2903,7 @@ static BuildingTypeClass const ClassV27(
 	TXT_CIV27,								// NAME:			Short name of the structure.
 	"V27",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V27", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2928,10 +2928,10 @@ static BuildingTypeClass const ClassV27(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V27", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V27", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V27", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2942,7 +2942,7 @@ static BuildingTypeClass const ClassV27(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V27", WEAPON_NONE),Read_Secondary_Weapon("V27", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -2959,7 +2959,7 @@ static BuildingTypeClass const ClassV28(
 	TXT_CIV28,								// NAME:			Short name of the structure.
 	"V28",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V28", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -2984,10 +2984,10 @@ static BuildingTypeClass const ClassV28(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V28", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V28", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V28", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2998,7 +2998,7 @@ static BuildingTypeClass const ClassV28(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V28", WEAPON_NONE),Read_Secondary_Weapon("V28", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3015,7 +3015,7 @@ static BuildingTypeClass const ClassV29(
 	TXT_CIV29,								// NAME:			Short name of the structure.
 	"V29",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V29", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3040,10 +3040,10 @@ static BuildingTypeClass const ClassV29(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V29", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V29", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V29", 0),											// SCENARIO:	Starting availability scenario.
 	0,2, 						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3054,7 +3054,7 @@ static BuildingTypeClass const ClassV29(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V29", WEAPON_NONE),Read_Secondary_Weapon("V29", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3071,7 +3071,7 @@ static BuildingTypeClass const ClassV30(
 	TXT_CIV30,								// NAME:			Short name of the structure.
 	"V30",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V30", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3096,10 +3096,10 @@ static BuildingTypeClass const ClassV30(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V30", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V30", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V30", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3110,7 +3110,7 @@ static BuildingTypeClass const ClassV30(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V30", WEAPON_NONE),Read_Secondary_Weapon("V30", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3127,7 +3127,7 @@ static BuildingTypeClass const ClassV31(
 	TXT_CIV31,								// NAME:			Short name of the structure.
 	"V31",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V31", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3152,10 +3152,10 @@ static BuildingTypeClass const ClassV31(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V31", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V31", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V31", 0),											// SCENARIO:	Starting availability scenario.
 	0,2, 						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3166,7 +3166,7 @@ static BuildingTypeClass const ClassV31(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V31", WEAPON_NONE),Read_Secondary_Weapon("V31", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3183,7 +3183,7 @@ static BuildingTypeClass const ClassV32(
 	TXT_CIV32,								// NAME:			Short name of the structure.
 	"V32",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V32", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3208,10 +3208,10 @@ static BuildingTypeClass const ClassV32(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V32", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V32", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V32", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3222,7 +3222,7 @@ static BuildingTypeClass const ClassV32(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V32", WEAPON_NONE),Read_Secondary_Weapon("V32", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3239,7 +3239,7 @@ static BuildingTypeClass const ClassV33(
 	TXT_CIV33,								// NAME:			Short name of the structure.
 	"V33",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V33", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3264,10 +3264,10 @@ static BuildingTypeClass const ClassV33(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V33", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V33", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V33", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3278,7 +3278,7 @@ static BuildingTypeClass const ClassV33(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V33", WEAPON_NONE),Read_Secondary_Weapon("V33", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3295,7 +3295,7 @@ static BuildingTypeClass const ClassV34(
 	TXT_CIV34,								// NAME:			Short name of the structure.
 	"V34",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V34", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3320,10 +3320,10 @@ static BuildingTypeClass const ClassV34(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V34", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V34", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V34", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3334,7 +3334,7 @@ static BuildingTypeClass const ClassV34(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V34", WEAPON_NONE),Read_Secondary_Weapon("V34", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3351,7 +3351,7 @@ static BuildingTypeClass const ClassV35(
 	TXT_CIV35,								// NAME:			Short name of the structure.
 	"V35",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V35", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3376,10 +3376,10 @@ static BuildingTypeClass const ClassV35(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V35", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V35", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V35", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3390,7 +3390,7 @@ static BuildingTypeClass const ClassV35(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V35", WEAPON_NONE),Read_Secondary_Weapon("V35", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3407,7 +3407,7 @@ static BuildingTypeClass const ClassV36(
 	TXT_CIV36,								// NAME:			Short name of the structure.
 	"V36",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V36", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3432,10 +3432,10 @@ static BuildingTypeClass const ClassV36(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("V36", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V36", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V36", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3446,7 +3446,7 @@ static BuildingTypeClass const ClassV36(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V36", WEAPON_NONE),Read_Secondary_Weapon("V36", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3462,7 +3462,7 @@ static BuildingTypeClass const ClassV37(
 	TXT_CIV37,								// NAME:			Short name of the structure.
 	"V37",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("V37", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3487,10 +3487,10 @@ static BuildingTypeClass const ClassV37(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	300,										// STRNTH:		Full strength of building.
+	Read_Strength("V37", 300),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("V37", 0),											// COST:			Cost to purchase.
+	Read_Scenario_Level("V37", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3501,7 +3501,7 @@ static BuildingTypeClass const ClassV37(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("V37", WEAPON_NONE),Read_Secondary_Weapon("V37", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3517,7 +3517,7 @@ static BuildingTypeClass const ClassMission(
 	TXT_CIVMISS,							// NAME:			Short name of the structure.
 	"MISS",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("MISS", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		true,			// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
@@ -3542,10 +3542,10 @@ static BuildingTypeClass const ClassMission(
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
+	Read_Strength("MISS", 200),										// STRNTH:		Full strength of building.
 	2,											// SIGHTRANGE:	Range of sighting.
-	1000,										// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("MISS", 1000),										// COST:			Cost to purchase.
+	Read_Scenario_Level("MISS", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3557,7 +3557,7 @@ static BuildingTypeClass const ClassMission(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("MISS", WEAPON_NONE),Read_Secondary_Weapon("MISS", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3575,7 +3575,7 @@ static BuildingTypeClass const Sandbag(
 	TXT_SANDBAG_WALL,						// NAME:			Short name of the structure.
 	"SBAG",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	2,								// Build level.
+	Read_Build_Level("SBAG", 2),								// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -3600,10 +3600,10 @@ static BuildingTypeClass const Sandbag(
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
+	Read_Strength("SBAG", 1),											// STRNTH:		Full strength of building.
 	0,											// SIGHTRANGE:	Range of sighting.
-	50,										// COST:			Cost to purchase.
-	5,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("SBAG", 50),										// COST:			Cost to purchase.
+	Read_Scenario_Level("SBAG", 5),											// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3614,7 +3614,7 @@ static BuildingTypeClass const Sandbag(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("SBAG", WEAPON_NONE),Read_Secondary_Weapon("SBAG", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3631,7 +3631,7 @@ static BuildingTypeClass const Cyclone(
 	TXT_CYCLONE_WALL,						// NAME:			Short name of the structure.
 	"CYCL",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	5,								// Build level.
+	Read_Build_Level("CYCL", 5),								// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -3656,10 +3656,10 @@ static BuildingTypeClass const Cyclone(
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
+	Read_Strength("CYCL", 1),											// STRNTH:		Full strength of building.
 	0,											// SIGHTRANGE:	Range of sighting.
-	75,										// COST:			Cost to purchase.
-	9,											// SCENARIO:	Starting availability scenario.
+	Read_Cost("CYCL", 75),										// COST:			Cost to purchase.
+	Read_Scenario_Level("CYCL", 9),											// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3670,7 +3670,7 @@ static BuildingTypeClass const Cyclone(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("CYCL", WEAPON_NONE),Read_Secondary_Weapon("CYCL", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3687,7 +3687,7 @@ static BuildingTypeClass const Brick(
 	TXT_BRICK_WALL,						// NAME:			Short name of the structure.
 	"BRIK",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	7,								// Build level.
+	Read_Build_Level("BRIK", 7),								// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -3712,10 +3712,10 @@ static BuildingTypeClass const Brick(
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
+	Read_Strength("BRIK", 1),											// STRNTH:		Full strength of building.
 	0,											// SIGHTRANGE:	Range of sighting.
-	100,										// COST:			Cost to purchase.
-	13,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("BRIK", 100),										// COST:			Cost to purchase.
+	Read_Scenario_Level("BRIK", 13),										// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3726,7 +3726,7 @@ static BuildingTypeClass const Brick(
 	HOUSEF_JP|
 	HOUSEF_BAD|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("BRIK", WEAPON_NONE),Read_Secondary_Weapon("BRIK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3743,7 +3743,7 @@ static BuildingTypeClass const Barbwire(
 	TXT_BARBWIRE_WALL,					// NAME:			Short name of the structure.
 	"BARB",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	98,							// Build level.
+	Read_Build_Level("BARB", 98),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -3768,10 +3768,10 @@ static BuildingTypeClass const Barbwire(
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
+	Read_Strength("BARB", 1),											// STRNTH:		Full strength of building.
 	0,											// SIGHTRANGE:	Range of sighting.
-	25,										// COST:			Cost to purchase.
-	98,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("BARB", 25),										// COST:			Cost to purchase.
+	Read_Scenario_Level("BARB", 98),										// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3783,7 +3783,7 @@ static BuildingTypeClass const Barbwire(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("BARB", WEAPON_NONE),Read_Secondary_Weapon("BARB", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
@@ -3800,7 +3800,7 @@ static BuildingTypeClass const Wood(
 	TXT_WOOD_WALL,							// NAME:			Short name of the structure.
 	"WOOD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
-	99,							// Build level.
+	Read_Build_Level("WOOD", 99),							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
@@ -3825,10 +3825,10 @@ static BuildingTypeClass const Wood(
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
+	Read_Strength("WOOD", 1),											// STRNTH:		Full strength of building.
 	0,											// SIGHTRANGE:	Range of sighting.
-	25,										// COST:			Cost to purchase.
-	98,										// SCENARIO:	Starting availability scenario.
+	Read_Cost("WOOD", 25),										// COST:			Cost to purchase.
+	Read_Scenario_Level("WOOD", 98),										// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3839,7 +3839,7 @@ static BuildingTypeClass const Wood(
 	HOUSEF_JP|
 	HOUSEF_NEUTRAL|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	Read_Primary_Weapon("WOOD", WEAPON_NONE),Read_Secondary_Weapon("WOOD", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	0,											// CAPACITY:	Spice storage capacity.
