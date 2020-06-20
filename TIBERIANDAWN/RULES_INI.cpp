@@ -3,14 +3,16 @@
 #include <io.h>
 #include "ccdde.h"
 
-auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
-auto DEFAULT_RULES_FILENAME = "RULES.INI";
+static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
+static auto DEFAULT_RULES_FILENAME = "RULES.INI";
 
-char* RULES_INI_BUFFER = NULL;
+static char* RULES_INI_BUFFER = NULL;
 
-char* Read_Rules_Ini();
-static void Ensure_Rules_Ini_Buffer_Is_Loaded();
-
+/// <summary>
+/// Load the content of the rules ini file, the location is read from the env var pointed to by
+/// <ref>RULES_FILE_ENV_VAR</ref> or defaults to <ref>DEFAULT_RULES_FILENAME</ref>.
+/// </summary>
+/// <returns>The text content of the ini file or a blank string if no file was found.</returns>
 char* Read_Rules_Ini() {
 	Log_Debug("Resolving rules ini file location using env var: %s", RULES_FILE_ENV_VAR);
 
@@ -48,6 +50,13 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 	RULES_INI_BUFFER = Read_Rules_Ini();
 }
 
+/// <summary>
+/// Read a single value from rules ini as an integer.
+/// </summary>
+/// <param name="section"/>
+/// <param name="entry"/>
+/// <param name="defaultValue"/>
+/// <returns>The value in rules ini if present, otherwise the default value provided.</returns>
 int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultValue)
 {
 	Ensure_Rules_Ini_Buffer_Is_Loaded();
@@ -68,12 +77,35 @@ int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultV
 	return ruleValue;
 }
 
+/// <summary>
+/// Read the 'Strength' entry from a rules ini section as an integer.
+/// </summary>
+/// <param name="section"/>
+/// <param name="defaultValue"/>
+/// <returns>The value in rules ini section if present, otherwise the default value provided.</returns>
 int Read_Strength(const char* section, int defaultValue)
 {
 	return Read_Int_From_Rules_Ini(section, "Strength", defaultValue);
 }
 
-MPHType Read_Max_Speed(const char* section, int defaultValue)
+/// <summary>
+/// Read the 'MaxSpeed' entry from a rules ini section as an instance of <ref>MPHType</ref>. Max value: 255.
+/// </summary>
+/// <param name="section"/>
+/// <param name="defaultValue"/>
+/// <returns>The value in rules ini section if present, otherwise the default value provided.</returns>
+MPHType Read_Max_Speed(const char* section, MPHType defaultValue)
 {
-	return (MPHType)Read_Int_From_Rules_Ini(section, "MaxSpeed", defaultValue);
+	auto maxSpeed = Read_Int_From_Rules_Ini(section, "MaxSpeed", defaultValue);
+
+	if (maxSpeed < 0 || maxSpeed > 255)
+	{
+		Error_And_Exit(
+			"Rule [%s -> MaxSpeed] must be between 0 and 255 (inclusive). Value provided: %d",
+			section,
+			maxSpeed
+		);
+	}
+
+	return (MPHType)maxSpeed;
 }

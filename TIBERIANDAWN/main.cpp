@@ -1,6 +1,6 @@
 #include "function.h"
 
-void Configure_Console_Output()
+static void Configure_Console_Output()
 {
 	if (!AttachConsole(ATTACH_PARENT_PROCESS))
 	{
@@ -12,6 +12,9 @@ void Configure_Console_Output()
 	freopen("CON", "w", stderr);
 }
 
+/// <summary>
+/// Test console app for the New Construction Options mod.
+/// </summary>
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
 	Configure_Console_Output();

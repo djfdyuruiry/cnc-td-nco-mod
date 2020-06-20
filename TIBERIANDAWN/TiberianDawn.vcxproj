@@ -484,6 +484,7 @@ mkdir ..\bin\$(PlatformName)\log
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="ENV.cpp" />
+    <ClCompile Include="ERROR.cpp" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />
     <ClCompile Include="FACING.CPP" />

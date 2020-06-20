@@ -134,15 +134,15 @@ typedef int bool;
 */
 #define NOMEMCHECK
 
-#include	"watcom.h"
+#include "watcom.h"
+
 #define FILE_H
 #define WWMEM_H
+
 #include "compat.h"
-#include	"rawfile.h"
+#include "rawfile.h"
 #include "wwlib32.h"
-#include	"jshell.h"
-
-
+#include "jshell.h"
 
 // Should be part of WWLIB.H. This is used in JSHELL.CPP.
 typedef struct {
@@ -967,8 +967,6 @@ inline CELL CellClass::Cell_Number(void) const
 
 void WWDOS_Shutdown(void);
 
-#endif
-
 /*
 ** Debug output. ST - 6/27/2019 10:00PM
 */
@@ -980,23 +978,37 @@ void GlyphX_Debug_Print(const char *debug_text);
 void On_Achievement_Event(const HouseClass* player_ptr, const char *achievement_type, const char *achievement_reason);
 
 /**
- * New construction options utility functions
+ * -- New construction options -- 
  */
-const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue);
 
+// utility functions
+void Error_And_Exit(char* messageFormat, ...);
+const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue);
 void Append_To_File(const char* filename, char* data);
 
-void Log(const char* level, const char* messageFormat, va_list formatArgs);
-void Log_Error(const char* messageFormat, ...);
-void Log_Warn(const char* messageFormat, ...);
-void Log_Info(const char* messageFormat, ...);
-void Log_Debug(const char* messageFormat, ...);
+// custom logger
+typedef enum LogLevel : unsigned char {
+	DEBUG,
+	WARN,
+	ERR,
+	INFO
+} LogLevel;
 
-/**
- * RULES.INI functions
- */
+const char* LogLevel_To_String(LogLevel level);
+void Log(LogLevel logLevel, const char* messageFormat, ...);
+
+#ifndef LOG_MACROS
+#define Log_Error(messageFormat, ...) Log(ERR, messageFormat, __VA_ARGS__)
+#define Log_Warn(messageFormat, ...) Log(WARN, messageFormat, __VA_ARGS__)
+#define Log_Info(messageFormat, ...) Log(INFO, messageFormat, __VA_ARGS__)
+#define Log_Debug(messageFormat, ...) Log(DEBUG, messageFormat, __VA_ARGS__)
+#endif
+
+// rules.ini functions
 char* Read_Rules_Ini();
 
 int Read_Int_From_Rules_Ini(const char* section, const char* entry, int defaultValue);
 int Read_Strength(const char* section, int defaultValue);
-MPHType Read_Max_Speed(const char* section, int defaultValue);
+MPHType Read_Max_Speed(const char* section, MPHType defaultValue);
+
+#endif

@@ -1,4 +1,4 @@
-cd %~dp0
+cd "%~dp0"
 
 Taskkill /IM InstanceServerG.exe /F
 Taskkill /IM ClientG.exe /F

@@ -10,13 +10,17 @@ This is a mod for the remastered version of Tiberian Dawn.
 
 ## Development
 
-**Quick Start**
+**Tools Quick Start**
 
 - Install Visual Sudio 2019 Community
     - Select `Desktop development with C++` in Installer Options
         - Select `MSVC v141 - VS 2017` option
         - Go to individual components and select `C++/CLI support for v141` option
 - Download and install Windows 8.1 SDK from [here](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
+- Add `msbuild` location to your path (default is `%PROGRAMFILES(X86)%\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin`)
+
+**Build Quick Start**
+
 - Open `sln` file in Visual Studio
 - Select `No Upgrade` for both the Windows SDK and VC++ version prompts (if this appears)
 - Select the `TestConsole` configuration
@@ -39,29 +43,33 @@ If you get a COM error when trying to open the solution/project, follow the belo
 
 ### Debugging
 
-- Open Visual Studio
-    - Build the project
-    - Copy the new `dll` to the mod `Data` directory
-- Copy the `game\scripts\tiberian_dawn.bat` file to the C&C Remastered install directory
-- Double click the `bat` file to start the game
+- Open a command prompt in the repo root
+- Run:
+    ```batch
+    scripts\run.bat
+    ```
+- Alt-tab out of the game menu once it loads
 - Open Visual Studio
     - Click `Debug`
     - Click `Attach to Process...`
     - Select `InstanceServerG.exe`
+- DLL will be loaded once you start a mission/skirmish
 
 # Installing
 
-- Build the project
-- Create a mod directory @ `%USERPROFILE%\Documents\CnCRemastered\Mods\Tiberian_Dawn\nco`
-    - Copy `game\ccmod.json` into the mod directory
-    - Create a `Data` directory
-    - Copy the `bin\Win32\TiberianDawn.dll` into `Data`
-- Copy `game\cfg\RULES.INI` to the C&C Remastered install directory
+- Open a command prompt in the repo root
+- Run:
+    ```batch
+    script\deploy.bat
+    ```
 
 # Progress Log
 
 - Added loading of rules file
 - Rules file location can be set using the `TD_RULES_FILE` env var (Default is `RULES.INI`)
 - Unit strength configurable for a few infantry unit types
+- Added custom logging to a new log file `nco.log`
 
-- Trying to set max speed but does not seem to work??
+## Problem Archive
+
+- ~Trying to set max speed but does not seem to work?~ (max value is 255 for that field - added validation logic)
