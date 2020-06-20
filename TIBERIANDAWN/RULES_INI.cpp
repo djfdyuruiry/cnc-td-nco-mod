@@ -7,6 +7,24 @@ static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
 static bool RULES_VALID = true;
 
+static void Read_Log_Level_From_Rules_Ini()
+{
+	Log_Info("Parsing Log Level from rules ini");
+
+	auto logLevelLength = Get_Log_Level_Length();
+	auto logLevelBuffer = new char[logLevelLength];
+
+	WWGetPrivateProfileString("NCO", "LogLevel", "INFO", logLevelBuffer, logLevelLength, RULES_INI_BUFFER);
+
+	printf("LOGGER: %s", logLevelBuffer);
+
+	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
+
+	Log_Info("Resolved Log Level: %s", Log_Level_To_String(LOG_LEVEL));
+
+	delete logLevelBuffer;
+}
+
 /// <summary>
 /// Load the content of the rules ini file, the location is read from the env var pointed to by
 /// <ref>RULES_FILE_ENV_VAR</ref> or defaults to <ref>DEFAULT_RULES_FILENAME</ref>.
@@ -36,21 +54,6 @@ char* Read_Rules_Ini() {
 
 	delete rulesFile;
 
-	Log_Info("Parsing Log Level from rules ini");
-
-	auto logLevelLength = Get_Log_Level_Length();
-	auto logLevelBuffer = new char[logLevelLength];
-	// TODO: fix this always returing default value...
-	WWGetPrivateProfileString("NCO", "LogLevel", "INFO", logLevelBuffer, logLevelLength, RULES_INI_BUFFER);
-
-	printf("LOGGER: %s", logLevelBuffer);
-
-	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
-
-	Log_Info("Resolved Log Level: %d", LOG_LEVEL);
-
-	delete logLevelBuffer;
-
 	Log_Debug("Returning rules ini content");
 
 	return rulesBuffer;
@@ -62,6 +65,7 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 	}
 
 	RULES_INI_BUFFER = Read_Rules_Ini();
+	Read_Log_Level_From_Rules_Ini();
 }
 
 /// <summary>
@@ -116,7 +120,7 @@ static int Read_Int_From_Rules_Ini(
 	}
 
 	Log_Debug("Resolved value: %d", ruleValue);
-	Log_Info("Setting rule [%s -> %s] = %d", section, entry, ruleValue);
+	Log_Debug("Setting rule [%s -> %s] = %d", section, entry, ruleValue);
 
 	return ruleValue;
 }
