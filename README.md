@@ -73,3 +73,15 @@ If you get a COM error when trying to open the solution/project, follow the belo
 ## Problem Archive
 
 - ~Trying to set max speed but does not seem to work?~ (max value is 255 for that field - added validation logic)
+
+Regex for modifying units
+
+```
+static InfantryTypeClass const ([\S\s\r]+?^\s+)(".+?")(.+\/\/ INI name for infantry[\S\s\r]+?^\s+)(\d+)(.+\/\/ Cost of infantry[\S\s\r]+?\);[\n\r])
+```
+
+Replace string
+
+```
+static InfantryTypeClass const $1$2$3Read_Cost($2, $4)$5
+```
