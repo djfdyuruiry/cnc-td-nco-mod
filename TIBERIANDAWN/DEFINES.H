@@ -34,9 +34,6 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-
-//#define PETROGLYPH_EXAMPLE_MOD
-
 /**********************************************************************
 **	If defined, then the advanced balancing features will be enabled
 **	for this version.
@@ -792,11 +789,6 @@ typedef enum BulletType : char {
 	BULLET_SPREADFIRE,	// Chain gun bullets.
 	BULLET_HEADBUTT,		// Stegosaurus, Triceratops head butt
 	BULLET_TREXBITE,		// Tyrannosaurus Rex's bite - especially bad for infantry
-
-#ifdef PETROGLYPH_EXAMPLE_MOD
-	BULLET_NUKE_LOB,		// Nuke projectile
-#endif //PETROGLYPH_EXAMPLE_MOD
-
 	BULLET_COUNT,
 	BULLET_FIRST=0
 } BulletType;
@@ -1028,11 +1020,6 @@ typedef enum UnitType : char{
 	UNIT_TREX,					//	Tyranosaurus Rex
 	UNIT_RAPT,					//	Velociraptor
 	UNIT_STEG,					//	Stegasaurus
-
-#ifdef PETROGLYPH_EXAMPLE_MOD
-	UNIT_NUKE_TANK,			// Mammoth with a nuke
-#endif			
-
 	UNIT_COUNT,
 	UNIT_FIRST=0
 } UnitType;
@@ -1824,11 +1811,6 @@ typedef enum WeaponType : char {
 	WEAPON_HONEST_JOHN,
 	WEAPON_STEG,
 	WEAPON_TREX,
-
-#ifdef PETROGLYPH_EXAMPLE_MOD
-	WEAPON_NUKE_LOB,
-#endif PETROGLYPH_EXAMPLE_MOD
-			
 	WEAPON_COUNT
 } WeaponType;
 
@@ -2303,11 +2285,6 @@ typedef enum VocType : char{
 	VOC_DINOYES,		// Yes Sir in dino-speak.
 	VOC_DINOATK1,		// Dino attack sound.
 	VOC_DINODIE1,		// Dino die sound.
-
-#ifdef PETROGLYPH_EXAMPLE_MOD
-	VOC_NUKE_LOB,		// Modded unit firing sound
-#endif
-			
 	VOC_COUNT,
 	VOC_BUILD_SELECT=VOC_TARGET,
 	VOC_FIRST=0

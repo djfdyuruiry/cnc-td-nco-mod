@@ -129,7 +129,8 @@ static InfantryTypeClass const E1(
  	HOUSEF_JP|
  	HOUSEF_GOOD|
  	HOUSEF_BAD,					// Who can own this infantry unit.
- 	WEAPON_M16,WEAPON_NONE,
+ 	WEAPON_M16,
+	WEAPON_NONE,
 	Read_Max_Speed("E2", MPH_SLOW)						// Maximum speed of infantry.
 );
 
@@ -205,7 +206,8 @@ static InfantryTypeClass const E2(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,				// Who can own this infantry unit.
-	WEAPON_GRENADE,WEAPON_NONE,
+	WEAPON_GRENADE,
+	WEAPON_NONE,
 	Read_Max_Speed("E2", MPH_SLOW_ISH)			// Maximum speed of infantry.
 );
 
