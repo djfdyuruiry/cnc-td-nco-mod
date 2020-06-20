@@ -101,7 +101,7 @@ static InfantryTypeClass const E1(
 	INFANTRY_E1,				// Infantry type number.
 	TXT_E1,						// Translate name number for infantry type.
 	"E1",							// INI name for infantry.
-	1,								// Build level.
+	Read_Build_Level("E1", 1),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
@@ -117,8 +117,8 @@ static InfantryTypeClass const E1(
 	2,								// Frame of projectile launch while prone.
 	Read_Strength("E1", 50),							// Strength of infantry (in damage points).
 	1,								// Sight range.
-	100,							// Cost of infantry (in credits).
-	1,								// Scenario when they first appear.
+	Read_Cost("E1", 100),							// Cost of infantry (in credits).
+	Read_Scenario_Level("E1", 1),								// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
  	HOUSEF_MULTI1|
  	HOUSEF_MULTI2|
@@ -179,7 +179,7 @@ static InfantryTypeClass const E2(
 	INFANTRY_E2,				// Infantry type number.
 	TXT_E2,						// Translate name number for infantry type.
 	"E2",							// INI name for infantry.
-	1,								// Build level.
+	Read_Build_Level("E2", 1),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
@@ -195,8 +195,8 @@ static InfantryTypeClass const E2(
 	6,								// Frame of projectile launch while prone.
 	Read_Strength("E2", 50),							// Strength of infantry (in damage points).
 	1,								// Sight range.
-	160,							// Cost of infantry (in credits).
-	3,								// Scenario when they first appear.
+	Read_Cost("E2", 160),							// Cost of infantry (in credits).
+	Read_Scenario_Level("E2", 3),								// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -259,7 +259,7 @@ static InfantryTypeClass const E3(
 	INFANTRY_E3,				// Infantry type number.
 	TXT_E3,						// Translate name number for infantry type.
 	"E3",							// INI name for infantry.
-	2,								// Build level.
+	Read_Build_Level("E3", 2),								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 	false,						// Is this a female type?
 	true,							// Is a leader type?
@@ -275,8 +275,8 @@ static InfantryTypeClass const E3(
 	3,								// Frame of projectile launch while prone.
 	Read_Strength("E3", 25),							// Strength of infantry (in damage points).
 	2,								// Sight range.
-	300,							// Cost of infantry (in credits).
-	3,								// Scenario when they first appear.
+	Read_Cost("E3", 300),							// Cost of infantry (in credits).
+	Read_Scenario_Level("E3", 3),								// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|

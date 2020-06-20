@@ -1031,6 +1031,11 @@ bool Rules_Ini_Failed_Validation();
 #ifndef RULE_MACROS
 #define RULE_MACROS
 
+#define Read_Build_Level(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, "BuildLevel", defaultValue, 1, 99)
+#define Read_Scenario_Level(section, defaultValue) Read_Int_From_Rules_Ini(section, "ScenarioLevel", defaultValue, 1, 15)
+
+#define Read_Cost(section, defaultValue) Read_Int_From_Rules_Ini(section, "Cost", defaultValue, 0, INT_MAX)
+
 #define Read_Strength(section, defaultValue) (unsigned short)Read_Int_From_Rules_Ini(section, "Strength", defaultValue, 1, USHRT_MAX)
 #define Read_Max_Speed(section, defaultValue) (MPHType)Read_Int_From_Rules_Ini(section, "MaxSpeed", defaultValue, 1, UCHAR_MAX)
 
