@@ -2,9 +2,9 @@
 
 static auto LOG_FILE_PATH = "log\\nco.log";
 static auto LOG_LINE_LENGTH = 1024;
-static auto LOG_LEVEL_LENGTH = 8;
+static auto LOG_LEVEL_LENGTH = 5;
 
-const char* LogLevel_To_String(LogLevel level)
+const char* Log_Level_To_String(LogLevel level)
 {
 	switch (level)
 	{
@@ -20,6 +20,30 @@ const char* LogLevel_To_String(LogLevel level)
 	}
 }
 
+LogLevel Parse_Log_Level(char* levelString)
+{
+	auto logLevel = INFO;
+
+	if (levelString == "DEBUG")
+	{
+		logLevel = DEBUG;
+	}
+	else if (levelString == "WARN")
+	{
+		logLevel = WARN;
+	}
+	else if (levelString == "ERROR")
+	{
+		logLevel = ERR;
+	}
+	else if (levelString == "OFF")
+	{
+		logLevel = OFF;
+	}
+
+	return logLevel;
+}
+
 /// <summary>
 /// Log a message to the file pointed to by <ref>LOG_FILE_PATH</ref>.
 /// </summary>
@@ -31,6 +55,11 @@ const char* LogLevel_To_String(LogLevel level)
 /// <param name="...">Arguments to pass to <ref>sprintf</ref></param>
 void Log(LogLevel logLevel, const char* messageFormat, ...)
 {
+	if (logLevel > Get_Current_Log_Level())
+	{
+		return;
+	}
+
 	auto messageBuffer = new char[LOG_LINE_LENGTH];
 	auto messageWithLevelBuffer = new char[LOG_LINE_LENGTH + LOG_LEVEL_LENGTH];
 
@@ -55,7 +84,7 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		now.wYear,
 		now.wHour,
 		now.wMinute,
-		LogLevel_To_String(logLevel),
+		Log_Level_To_String(logLevel),
 		messageBuffer
 	);
 
@@ -64,4 +93,14 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 
 	delete messageBuffer;
 	delete messageWithLevelBuffer;
+}
+
+int Get_Log_Line_Length()
+{
+	return LOG_LINE_LENGTH;
+}
+
+int Get_Log_Level_Length()
+{
+	return LOG_LEVEL_LENGTH;
 }

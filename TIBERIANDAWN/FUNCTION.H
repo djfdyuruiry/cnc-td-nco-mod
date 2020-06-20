@@ -987,14 +987,19 @@ const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultVa
 void Append_To_File(const char* filename, char* data);
 
 // custom logger
-typedef enum LogLevel : unsigned char {
-	DEBUG,
-	WARN,
-	ERR,
-	INFO
+typedef enum LogLevel : unsigned short {
+	DEBUG = 4,
+	INFO = 3,
+	WARN = 2,
+	ERR = 1,
+	OFF = 0
 } LogLevel;
 
-const char* LogLevel_To_String(LogLevel level);
+const char* Log_Level_To_String(LogLevel level);
+LogLevel Parse_Log_Level(char* levelString);
+int Get_Log_Line_Length();
+int Get_Log_Level_Length();
+
 void Log(LogLevel logLevel, const char* messageFormat, ...);
 
 #ifndef LOG_MACROS
@@ -1032,6 +1037,7 @@ int Read_Prerequisite(
 );
 
 bool Rules_Ini_Failed_Validation();
+LogLevel Get_Current_Log_Level();
 
 #ifndef RULE_MACROS
 #define RULE_MACROS

@@ -4,6 +4,7 @@ static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static auto DEFAULT_RULES_FILENAME = "RULES.INI";
 
 static char* RULES_INI_BUFFER = NULL;
+static auto LOG_LEVEL = INFO;
 static bool RULES_VALID = true;
 
 /// <summary>
@@ -34,6 +35,21 @@ char* Read_Rules_Ini() {
 	rulesFile->Close();
 
 	delete rulesFile;
+
+	Log_Info("Parsing Log Level from rules ini");
+
+	auto logLevelLength = Get_Log_Level_Length();
+	auto logLevelBuffer = new char[logLevelLength];
+	// TODO: fix this always returing default value...
+	WWGetPrivateProfileString("NCO", "LogLevel", "INFO", logLevelBuffer, logLevelLength, RULES_INI_BUFFER);
+
+	printf("LOGGER: %s", logLevelBuffer);
+
+	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
+
+	Log_Info("Resolved Log Level: %d", LOG_LEVEL);
+
+	delete logLevelBuffer;
 
 	Log_Debug("Returning rules ini content");
 
@@ -185,4 +201,9 @@ int Read_Prerequisite(
 bool Rules_Ini_Failed_Validation()
 {
 	return !RULES_VALID;
+}
+
+LogLevel Get_Current_Log_Level()
+{
+	return LOG_LEVEL;
 }
