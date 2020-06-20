@@ -155,7 +155,7 @@ static UnitTypeClass const UnitFTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_FLAME_TONGUE,WEAPON_NONE,
+	Read_Primary_Weapon("VICE", WEAPON_FLAME_TONGUE),Read_Secondary_Weapon("VICE", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	Read_Max_Speed("FTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
@@ -269,7 +269,7 @@ static UnitTypeClass const UnitLTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_75MM,WEAPON_NONE,
+	Read_Primary_Weapon("STNK", WEAPON_75MM),Read_Secondary_Weapon("STNK", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	Read_Max_Speed("LTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
@@ -326,7 +326,7 @@ static UnitTypeClass const UnitMTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_105MM,WEAPON_NONE,
+	Read_Primary_Weapon("MTNK", WEAPON_105MM),Read_Secondary_Weapon("MTNK", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	Read_Max_Speed("MTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
@@ -383,7 +383,7 @@ static UnitTypeClass const UnitHTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_120MM,WEAPON_MAMMOTH_TUSK,
+	Read_Primary_Weapon("HTNK", WEAPON_120MM),Read_Secondary_Weapon("HTNK", WEAPON_MAMMOTH_TUSK),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	Read_Max_Speed("HTNK", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
@@ -558,7 +558,7 @@ static UnitTypeClass const UnitSAM(
 	HOUSEF_JP|
 //	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_HONEST_JOHN,WEAPON_NONE,
+	Read_Primary_Weapon("MHQ", WEAPON_HONEST_JOHN),Read_Secondary_Weapon("MHQ", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	Read_Max_Speed("MLRS", MPH_MEDIUM),								// SPEED:		Miles per hour.
@@ -615,7 +615,7 @@ static UnitTypeClass const UnitArty(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_155MM,WEAPON_NONE,
+	Read_Primary_Weapon("ARTY", WEAPON_155MM),Read_Secondary_Weapon("ARTY", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	Read_Max_Speed("ARTY", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
@@ -789,7 +789,7 @@ static UnitTypeClass const UnitJeep(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_M60MG,WEAPON_NONE,
+	Read_Primary_Weapon("HARV", WEAPON_M60MG),Read_Secondary_Weapon("HARV", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
 	Read_Max_Speed("JEEP", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
@@ -846,7 +846,7 @@ static UnitTypeClass const UnitBuggy(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_M60MG,WEAPON_NONE,
+	Read_Primary_Weapon("BGGY", WEAPON_M60MG),Read_Secondary_Weapon("BGGY", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
 	Read_Max_Speed("BGGY", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
@@ -1023,7 +1023,7 @@ static UnitTypeClass const UnitAPC(
 	HOUSEF_BAD|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_M60MG,WEAPON_NONE,
+	Read_Primary_Weapon("BIKE", WEAPON_M60MG),Read_Secondary_Weapon("BIKE", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	Read_Max_Speed("APC", MPH_MEDIUM_FASTER),					// SPEED:		Miles per hour.
