@@ -1081,6 +1081,9 @@ LogLevel Get_Current_Log_Level();
 // building rules
 #define Read_Is_Capturable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Capturable", defaultValue)
 #define Read_Is_Flammable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Flammable", defaultValue)
+#define Read_Storage_Capacity(section, defaultValue) (unsigned)Read_Int_From_Rules_Ini(section, "StorageCapacity", defaultValue, 0, INT_MAX)
+#define Read_Power_Output(section, defaultValue) Read_Int_From_Rules_Ini(section, "PowerOutput", defaultValue, 0, INT_MAX)
+#define Read_Power_Input(section, defaultValue) Read_Int_From_Rules_Ini(section, "PowerInput", defaultValue, 0, INT_MAX)
 
 #endif
 

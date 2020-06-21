@@ -212,9 +212,9 @@ static BuildingTypeClass const ClassTemple(
 	Read_Primary_Weapon("TMPL", WEAPON_NONE),Read_Secondary_Weapon("TMPL", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points generated.
-	150,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("TMPL", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("TMPL", 0),											// POWER:		Power points generated.
+	Read_Power_Input("TMPL", 150),										// DRAIN:		Power points required.
 	BSIZE_33, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ListTmpl,		// OCCUPYLIST:	List of active foundation squares.
@@ -267,9 +267,9 @@ static BuildingTypeClass const ClassEye(
 	Read_Primary_Weapon("EYE", WEAPON_NONE),Read_Secondary_Weapon("EYE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	200,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("EYE", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("EYE", 0),											// POWER:		Power points required.
+	Read_Power_Input("EYE", 200),										// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ComList,		// OCCUPYLIST:	List of active foundation squares.
@@ -326,9 +326,9 @@ static BuildingTypeClass const ClassWeapon(
 	Read_Primary_Weapon("WEAP", WEAPON_NONE),Read_Secondary_Weapon("WEAP", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	30,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("WEAP", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("WEAP", 0),											// POWER:		Power points required.
+	Read_Power_Input("WEAP", 30),										// DRAIN:		Power points required.
 	BSIZE_33, 								// SIZE:			Building size.
 	(short const *)ExitWeap,		// Preferred exit cell list.
 	(short const *)ListWeap,		// OCCUPYLIST:	List of active foundation squares.
@@ -382,9 +382,9 @@ static BuildingTypeClass const ClassGTower(
 //	WEAPON_M60MG,WEAPON_NONE,
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	00,										// POWER:		Power points required.
-	10,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("GTWR", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("GTWR", 00),										// POWER:		Power points required.
+	Read_Power_Input("GTWR", 10),										// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,			// OCCUPYLIST:	List of active foundation squares.
@@ -438,9 +438,9 @@ static BuildingTypeClass const ClassATower(
 //	WEAPON_TOMAHAWK,WEAPON_NONE,
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	20,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("ATWR", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("ATWR", 0),											// POWER:		Power points required.
+	Read_Power_Input("ATWR", 20),										// DRAIN:		Power points required.
 	BSIZE_12, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List12,			// OCCUPYLIST:	List of active foundation squares.
@@ -493,9 +493,9 @@ static BuildingTypeClass const ClassObelisk(
 	Read_Primary_Weapon("OBLI", WEAPON_OBELISK_LASER),Read_Secondary_Weapon("OBLI", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	150,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("OBLI", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("OBLI", 0),											// POWER:		Power points required.
+	Read_Power_Input("OBLI", 150),										// DRAIN:		Power points required.
 	BSIZE_12, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List12,			// OCCUPYLIST:	List of active foundation squares.
@@ -556,9 +556,9 @@ static BuildingTypeClass const ClassTurret(
 	Read_Primary_Weapon("GUN", WEAPON_TURRET_GUN),Read_Secondary_Weapon("GUN", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	20,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("GUN", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("GUN", 0),											// POWER:		Power points required.
+	Read_Power_Input("GUN", 20),										// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,			// OCCUPYLIST:	List of active foundation squares.
@@ -612,9 +612,9 @@ static BuildingTypeClass const ClassConst(
 	Read_Primary_Weapon("FACT", WEAPON_NONE),Read_Secondary_Weapon("FACT", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	30,										// POWER:		Power points required.
-	15,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("FACT", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("FACT", 30),										// POWER:		Power points required.
+	Read_Power_Input("FACT", 15),										// DRAIN:		Power points required.
 	BSIZE_32, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List32,			// OCCUPYLIST:	List of active foundation squares.
@@ -668,9 +668,9 @@ static BuildingTypeClass const ClassRefinery(
 	Read_Primary_Weapon("PROC", WEAPON_NONE),Read_Secondary_Weapon("PROC", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	1000,										// CAPACITY:	Spice storage capacity.
-	10,										// POWER:		Power points required.
-	40,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("PROC", 1000),										// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("PROC", 10),										// POWER:		Power points required.
+	Read_Power_Input("PROC", 40),										// DRAIN:		Power points required.
 	BSIZE_33, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List010111000,		// OCCUPYLIST:	List of active foundation squares.
@@ -725,9 +725,9 @@ static BuildingTypeClass const ClassStorage(
 	Read_Primary_Weapon("SILO", WEAPON_NONE),Read_Secondary_Weapon("SILO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	1500,										// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	10,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("SILO", 1500),										// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("SILO", 0),											// POWER:		Power points required.
+	Read_Power_Input("SILO", 10),										// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)StoreList,			// OCCUPYLIST:	List of active foundation squares.
@@ -781,9 +781,9 @@ static BuildingTypeClass const ClassHelipad(
 	Read_Primary_Weapon("HPAD", WEAPON_NONE),Read_Secondary_Weapon("HPAD", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	10,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("HPAD", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("HPAD", 0),											// POWER:		Power points required.
+	Read_Power_Input("HPAD", 10),										// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List2,			// OCCUPYLIST:	List of active foundation squares.
@@ -837,9 +837,9 @@ static BuildingTypeClass const ClassCommand(
 	Read_Primary_Weapon("HQ", WEAPON_NONE),Read_Secondary_Weapon("HQ", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	40,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("HQ", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("HQ", 0),											// POWER:		Power points required.
+	Read_Power_Input("HQ", 40),										// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ComList,		// OCCUPYLIST:	List of active foundation squares.
@@ -892,9 +892,9 @@ static BuildingTypeClass const ClassSAM(
 	Read_Primary_Weapon("SAM", WEAPON_NIKE),Read_Secondary_Weapon("SAM", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	20,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("SAM", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("SAM", 0),											// POWER:		Power points required.
+	Read_Power_Input("SAM", 20),										// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21,				// OCCUPYLIST:	List of active foundation squares.
@@ -947,9 +947,9 @@ static BuildingTypeClass const ClassAirStrip(
 	Read_Primary_Weapon("AFLD", WEAPON_NONE),Read_Secondary_Weapon("AFLD", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	30,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("AFLD", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("AFLD", 0),											// POWER:		Power points required.
+	Read_Power_Input("AFLD", 30),										// DRAIN:		Power points required.
 	BSIZE_42, 								// SIZE:			Building size.
 	ExitAirstrip,							// Preferred exit cell list.
 	(short const *)List42,				// OCCUPYLIST:	List of active foundation squares.
@@ -1003,9 +1003,9 @@ static BuildingTypeClass const ClassPower(
 	Read_Primary_Weapon("NUKE", WEAPON_NONE),Read_Secondary_Weapon("NUKE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	100,										// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("NUKE", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("NUKE", 100),										// POWER:		Power points required.
+	Read_Power_Input("NUKE", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1011,			// OCCUPYLIST:	List of active foundation squares.
@@ -1059,9 +1059,9 @@ static BuildingTypeClass const ClassAdvancedPower(
 	Read_Primary_Weapon("NUK2", WEAPON_NONE),Read_Secondary_Weapon("NUK2", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	200,										// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("NUK2", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("NUK2", 200),										// POWER:		Power points required.
+	Read_Power_Input("NUK2", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1011,			// OCCUPYLIST:	List of active foundation squares.
@@ -1115,9 +1115,9 @@ static BuildingTypeClass const ClassHospital(
 	Read_Primary_Weapon("HOSP", WEAPON_NONE),Read_Secondary_Weapon("HOSP", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	100,										// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	20,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("HOSP", 100),										// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("HOSP", 0),											// POWER:		Power points required.
+	Read_Power_Input("HOSP", 20),										// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List2,			// OCCUPYLIST:	List of active foundation squares.
@@ -1171,9 +1171,9 @@ static BuildingTypeClass const ClassBioLab(
 	Read_Primary_Weapon("BIO", WEAPON_NONE),Read_Secondary_Weapon("BIO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	100,										// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	40,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("BIO", 100),										// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("BIO", 0),											// POWER:		Power points required.
+	Read_Power_Input("BIO", 40),										// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List2,			// OCCUPYLIST:	List of active foundation squares.
@@ -1226,9 +1226,9 @@ static BuildingTypeClass const ClassBarracks(
 	Read_Primary_Weapon("PYLE", WEAPON_NONE),Read_Secondary_Weapon("PYLE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	20,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("PYLE", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("PYLE", 0),											// POWER:		Power points required.
+	Read_Power_Input("PYLE", 20),										// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	(short const *)ExitPyle,			// Preferred exit cell list.
 	(short const *)List22_1100,		// OCCUPYLIST:	List of active foundation squares.
@@ -1281,9 +1281,9 @@ static BuildingTypeClass const ClassHand(
 	Read_Primary_Weapon("HAND", WEAPON_NONE),Read_Secondary_Weapon("HAND", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	20,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("HAND", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("HAND", 0),											// POWER:		Power points required.
+	Read_Power_Input("HAND", 20),										// DRAIN:		Power points required.
 	BSIZE_23, 								// SIZE:			Building size.
 	(short const *)ExitHand,		// Preferred exit cell list.
 	(short const *)ListHand,		// OCCUPYLIST:	List of active foundation squares.
@@ -1336,9 +1336,9 @@ static BuildingTypeClass const ClassTanker(
 	Read_Primary_Weapon("ARCO", WEAPON_NONE),Read_Secondary_Weapon("ARCO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("ARCO", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("ARCO", 0),											// POWER:		Power points required.
+	Read_Power_Input("ARCO", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21,			// OCCUPYLIST:	List of active foundation squares.
@@ -1392,9 +1392,9 @@ static BuildingTypeClass const ClassRepair(
 	Read_Primary_Weapon("FIX", WEAPON_NONE),Read_Secondary_Weapon("FIX", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	30,										// DRAIN:		Power points required.
+	Read_Storage_Capacity("FIX", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("FIX", 0),											// POWER:		Power points required.
+	Read_Power_Input("FIX", 30),										// DRAIN:		Power points required.
 	BSIZE_33, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ListFix,		// OCCUPYLIST:	List of active foundation squares.
@@ -1450,9 +1450,9 @@ static BuildingTypeClass const ClassRoad(
 	Read_Primary_Weapon("ROAD", WEAPON_NONE),Read_Secondary_Weapon("ROAD", WEAPON_NONE),
 	ARMOR_NONE,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("ROAD", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("ROAD", 0),											// POWER:		Power points required.
+	Read_Power_Input("ROAD", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,			// OCCUPYLIST:	List of active foundation squares.
@@ -1506,9 +1506,9 @@ static BuildingTypeClass const ClassV01(
 	Read_Primary_Weapon("V01", WEAPON_NONE),Read_Secondary_Weapon("V01", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V01", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V01", 0),											// POWER:		Power points required.
+	Read_Power_Input("V01", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
@@ -1561,9 +1561,9 @@ static BuildingTypeClass const ClassV02(
 	Read_Primary_Weapon("V02", WEAPON_NONE),Read_Secondary_Weapon("V02", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V02", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V02", 0),											// POWER:		Power points required.
+	Read_Power_Input("V02", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
@@ -1616,9 +1616,9 @@ static BuildingTypeClass const ClassV03(
 	Read_Primary_Weapon("V03", WEAPON_NONE),Read_Secondary_Weapon("V03", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V03", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V03", 0),											// POWER:		Power points required.
+	Read_Power_Input("V03", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0111,			// OCCUPYLIST:	List of active foundation squares.
@@ -1671,9 +1671,9 @@ static BuildingTypeClass const ClassV04(
 	Read_Primary_Weapon("V04", WEAPON_NONE),Read_Secondary_Weapon("V04", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V04", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V04", 0),											// POWER:		Power points required.
+	Read_Power_Input("V04", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
@@ -1726,9 +1726,9 @@ static BuildingTypeClass const ClassV05(
 	Read_Primary_Weapon("V05", WEAPON_NONE),Read_Secondary_Weapon("V05", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V05", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V05", 0),											// POWER:		Power points required.
+	Read_Power_Input("V05", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -1781,9 +1781,9 @@ static BuildingTypeClass const ClassV06(
 	Read_Primary_Weapon("V06", WEAPON_NONE),Read_Secondary_Weapon("V06", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V06", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V06", 0),											// POWER:		Power points required.
+	Read_Power_Input("V06", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -1836,9 +1836,9 @@ static BuildingTypeClass const ClassV07(
 	Read_Primary_Weapon("V07", WEAPON_NONE),Read_Secondary_Weapon("V07", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V07", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V07", 0),											// POWER:		Power points required.
+	Read_Power_Input("V07", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -1891,9 +1891,9 @@ static BuildingTypeClass const ClassV08(
 	Read_Primary_Weapon("V08", WEAPON_NONE),Read_Secondary_Weapon("V08", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V08", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V08", 0),											// POWER:		Power points required.
+	Read_Power_Input("V08", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -1946,9 +1946,9 @@ static BuildingTypeClass const ClassV09(
 	Read_Primary_Weapon("V09", WEAPON_NONE),Read_Secondary_Weapon("V09", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V09", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V09", 0),											// POWER:		Power points required.
+	Read_Power_Input("V09", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2001,9 +2001,9 @@ static BuildingTypeClass const ClassV10(
 	Read_Primary_Weapon("V10", WEAPON_NONE),Read_Secondary_Weapon("V10", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V10", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V10", 0),											// POWER:		Power points required.
+	Read_Power_Input("V10", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2056,9 +2056,9 @@ static BuildingTypeClass const ClassV11(
 	Read_Primary_Weapon("V11", WEAPON_NONE),Read_Secondary_Weapon("V11", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V11", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V11", 0),											// POWER:		Power points required.
+	Read_Power_Input("V11", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2111,9 +2111,9 @@ static BuildingTypeClass const ClassV12(
 	Read_Primary_Weapon("V12", WEAPON_NONE),Read_Secondary_Weapon("V12", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V12", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V12", 0),											// POWER:		Power points required.
+	Read_Power_Input("V12", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2166,9 +2166,9 @@ static BuildingTypeClass const ClassV13(
 	Read_Primary_Weapon("V13", WEAPON_NONE),Read_Secondary_Weapon("V13", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V13", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V13", 0),											// POWER:		Power points required.
+	Read_Power_Input("V13", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2221,9 +2221,9 @@ static BuildingTypeClass const ClassV14(
 	Read_Primary_Weapon("V14", WEAPON_NONE),Read_Secondary_Weapon("V14", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V14", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V14", 0),											// POWER:		Power points required.
+	Read_Power_Input("V14", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2276,9 +2276,9 @@ static BuildingTypeClass const ClassV15(
 	Read_Primary_Weapon("V15", WEAPON_NONE),Read_Secondary_Weapon("V15", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V15", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V15", 0),											// POWER:		Power points required.
+	Read_Power_Input("V15", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2331,9 +2331,9 @@ static BuildingTypeClass const ClassV16(
 	Read_Primary_Weapon("V16", WEAPON_NONE),Read_Secondary_Weapon("V16", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V16", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V16", 0),											// POWER:		Power points required.
+	Read_Power_Input("V16", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2386,9 +2386,9 @@ static BuildingTypeClass const ClassV17(
 	Read_Primary_Weapon("V17", WEAPON_NONE),Read_Secondary_Weapon("V17", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V17", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V17", 0),											// POWER:		Power points required.
+	Read_Power_Input("V17", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2441,9 +2441,9 @@ static BuildingTypeClass const ClassV18(
 	Read_Primary_Weapon("V18", WEAPON_NONE),Read_Secondary_Weapon("V18", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V18", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V18", 0),											// POWER:		Power points required.
+	Read_Power_Input("V18", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2497,9 +2497,9 @@ static BuildingTypeClass const ClassV19(
 	Read_Primary_Weapon("V19", WEAPON_NONE),Read_Secondary_Weapon("V19", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V19", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V19", 0),											// POWER:		Power points required.
+	Read_Power_Input("V19", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2553,9 +2553,9 @@ static BuildingTypeClass const ClassV20(
 	Read_Primary_Weapon("V20", WEAPON_NONE),Read_Secondary_Weapon("V20", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V20", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V20", 0),											// POWER:		Power points required.
+	Read_Power_Input("V20", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
@@ -2609,9 +2609,9 @@ static BuildingTypeClass const ClassV21(
 	Read_Primary_Weapon("V21", WEAPON_NONE),Read_Secondary_Weapon("V21", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V21", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V21", 0),											// POWER:		Power points required.
+	Read_Power_Input("V21", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1101,			// OCCUPYLIST:	List of active foundation squares.
@@ -2665,9 +2665,9 @@ static BuildingTypeClass const ClassV22(
 	Read_Primary_Weapon("V22", WEAPON_NONE),Read_Secondary_Weapon("V22", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V22", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V22", 0),											// POWER:		Power points required.
+	Read_Power_Input("V22", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -2721,9 +2721,9 @@ static BuildingTypeClass const ClassV23(
 	Read_Primary_Weapon("V23", WEAPON_NONE),Read_Secondary_Weapon("V23", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V23", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V23", 0),											// POWER:		Power points required.
+	Read_Power_Input("V23", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -2777,9 +2777,9 @@ static BuildingTypeClass const ClassV24(
 	Read_Primary_Weapon("V24", WEAPON_NONE),Read_Secondary_Weapon("V24", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V24", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V24", 0),											// POWER:		Power points required.
+	Read_Power_Input("V24", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
@@ -2833,9 +2833,9 @@ static BuildingTypeClass const ClassV25(
 	Read_Primary_Weapon("V25", WEAPON_NONE),Read_Secondary_Weapon("V25", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V25", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V25", 0),											// POWER:		Power points required.
+	Read_Power_Input("V25", 0),											// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0111,			// OCCUPYLIST:	List of active foundation squares.
@@ -2889,9 +2889,9 @@ static BuildingTypeClass const ClassV26(
 	Read_Primary_Weapon("V26", WEAPON_NONE),Read_Secondary_Weapon("V26", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V26", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V26", 0),											// POWER:		Power points required.
+	Read_Power_Input("V26", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -2945,9 +2945,9 @@ static BuildingTypeClass const ClassV27(
 	Read_Primary_Weapon("V27", WEAPON_NONE),Read_Secondary_Weapon("V27", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V27", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V27", 0),											// POWER:		Power points required.
+	Read_Power_Input("V27", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3001,9 +3001,9 @@ static BuildingTypeClass const ClassV28(
 	Read_Primary_Weapon("V28", WEAPON_NONE),Read_Secondary_Weapon("V28", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V28", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V28", 0),											// POWER:		Power points required.
+	Read_Power_Input("V28", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3057,9 +3057,9 @@ static BuildingTypeClass const ClassV29(
 	Read_Primary_Weapon("V29", WEAPON_NONE),Read_Secondary_Weapon("V29", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V29", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V29", 0),											// POWER:		Power points required.
+	Read_Power_Input("V29", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3113,9 +3113,9 @@ static BuildingTypeClass const ClassV30(
 	Read_Primary_Weapon("V30", WEAPON_NONE),Read_Secondary_Weapon("V30", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V30", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V30", 0),											// POWER:		Power points required.
+	Read_Power_Input("V30", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -3169,9 +3169,9 @@ static BuildingTypeClass const ClassV31(
 	Read_Primary_Weapon("V31", WEAPON_NONE),Read_Secondary_Weapon("V31", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V31", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V31", 0),											// POWER:		Power points required.
+	Read_Power_Input("V31", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -3225,9 +3225,9 @@ static BuildingTypeClass const ClassV32(
 	Read_Primary_Weapon("V32", WEAPON_NONE),Read_Secondary_Weapon("V32", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V32", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V32", 0),											// POWER:		Power points required.
+	Read_Power_Input("V32", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -3281,9 +3281,9 @@ static BuildingTypeClass const ClassV33(
 	Read_Primary_Weapon("V33", WEAPON_NONE),Read_Secondary_Weapon("V33", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V33", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V33", 0),											// POWER:		Power points required.
+	Read_Power_Input("V33", 0),											// DRAIN:		Power points required.
 	BSIZE_21, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
@@ -3337,9 +3337,9 @@ static BuildingTypeClass const ClassV34(
 	Read_Primary_Weapon("V34", WEAPON_NONE),Read_Secondary_Weapon("V34", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V34", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V34", 0),											// POWER:		Power points required.
+	Read_Power_Input("V34", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3393,9 +3393,9 @@ static BuildingTypeClass const ClassV35(
 	Read_Primary_Weapon("V35", WEAPON_NONE),Read_Secondary_Weapon("V35", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V35", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V35", 0),											// POWER:		Power points required.
+	Read_Power_Input("V35", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3449,9 +3449,9 @@ static BuildingTypeClass const ClassV36(
 	Read_Primary_Weapon("V36", WEAPON_NONE),Read_Secondary_Weapon("V36", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V36", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V36", 0),											// POWER:		Power points required.
+	Read_Power_Input("V36", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3504,9 +3504,9 @@ static BuildingTypeClass const ClassV37(
 	Read_Primary_Weapon("V37", WEAPON_NONE),Read_Secondary_Weapon("V37", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("V37", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("V37", 0),											// POWER:		Power points required.
+	Read_Power_Input("V37", 0),											// DRAIN:		Power points required.
 	BSIZE_42, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ListWestwood,		// OCCUPYLIST:	List of active foundation squares.
@@ -3560,9 +3560,9 @@ static BuildingTypeClass const ClassMission(
 	Read_Primary_Weapon("MISS", WEAPON_NONE),Read_Secondary_Weapon("MISS", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("MISS", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("MISS", 0),											// POWER:		Power points required.
+	Read_Power_Input("MISS", 0),											// DRAIN:		Power points required.
 	BSIZE_32, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List32,				// OCCUPYLIST:	List of active foundation squares.
@@ -3617,9 +3617,9 @@ static BuildingTypeClass const Sandbag(
 	Read_Primary_Weapon("SBAG", WEAPON_NONE),Read_Secondary_Weapon("SBAG", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("SBAG", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("SBAG", 0),											// POWER:		Power points required.
+	Read_Power_Input("SBAG", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3673,9 +3673,9 @@ static BuildingTypeClass const Cyclone(
 	Read_Primary_Weapon("CYCL", WEAPON_NONE),Read_Secondary_Weapon("CYCL", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("CYCL", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("CYCL", 0),											// POWER:		Power points required.
+	Read_Power_Input("CYCL", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3729,9 +3729,9 @@ static BuildingTypeClass const Brick(
 	Read_Primary_Weapon("BRIK", WEAPON_NONE),Read_Secondary_Weapon("BRIK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("BRIK", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("BRIK", 0),											// POWER:		Power points required.
+	Read_Power_Input("BRIK", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3786,9 +3786,9 @@ static BuildingTypeClass const Barbwire(
 	Read_Primary_Weapon("BARB", WEAPON_NONE),Read_Secondary_Weapon("BARB", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("BARB", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("BARB", 0),											// POWER:		Power points required.
+	Read_Power_Input("BARB", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
@@ -3842,9 +3842,9 @@ static BuildingTypeClass const Wood(
 	Read_Primary_Weapon("WOOD", WEAPON_NONE),Read_Secondary_Weapon("WOOD", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
-	0,											// CAPACITY:	Spice storage capacity.
-	0,											// POWER:		Power points required.
-	0,											// DRAIN:		Power points required.
+	Read_Storage_Capacity("WOOD", 0),											// CAPACITY:	Spice storage capacity.
+	Read_Power_Output("WOOD", 0),											// POWER:		Power points required.
+	Read_Power_Input("WOOD", 0),											// DRAIN:		Power points required.
 	BSIZE_11, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
