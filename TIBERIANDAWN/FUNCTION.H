@@ -985,6 +985,7 @@ void On_Achievement_Event(const HouseClass* player_ptr, const char *achievement_
 void Show_Error(char* messageFormat, ...);
 const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue);
 void Append_To_File(const char* filename, char* data);
+bool Strings_Are_Equal(char* subject, const char* expected);
 
 // custom logger
 typedef enum LogLevel : unsigned short {
@@ -1011,6 +1012,15 @@ void Log(LogLevel logLevel, const char* messageFormat, ...);
 #define Log_Debug(messageFormat, ...) Log(DEBUG, messageFormat, __VA_ARGS__)
 
 #endif
+
+// rule string parsers
+HousesType Parse_House_Type(char* houseTypeString);
+StructType Parse_Structure_Type(char* structTypeString);
+WeaponType Parse_Weapon_Type(char* weaponTypeString);
+
+char* Parse_House_Type(HousesType houseType);
+char* Structure_Type_To_String(StructType structType);
+char* Weapon_Type_To_String(WeaponType weaponType);
 
 // rules.ini
 char* Read_Rules_Ini();
@@ -1039,6 +1049,12 @@ char* Read_String_From_Rules_Ini(
 	int validValueCount
 );
 
+char* Read_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	const char* defaultValue
+);
+
 bool Read_Bool_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -1048,6 +1064,17 @@ bool Read_Bool_From_Rules_Ini(
 int Read_Prerequisite(
 	const char* section,
 	StructType defaultValue
+);
+
+int Read_House_List_From_Rules_Ini(
+	const char* section,
+	HouseClass defaultValue
+);
+
+WeaponType Read_Weapon_Type_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	WeaponType defaultValue
 );
 
 bool Rules_Ini_Failed_Validation();
@@ -1065,9 +1092,8 @@ LogLevel Get_Current_Log_Level();
 #define Read_Strength(section, defaultValue) (unsigned short)Read_Int_From_Rules_Ini(section, "Strength", defaultValue, 1, USHRT_MAX)
 #define Read_Max_Speed(section, defaultValue) (MPHType)Read_Int_From_Rules_Ini(section, "MaxSpeed", defaultValue, 1, UCHAR_MAX)
 
-#define Read_Weapon(section, entry, defaultValue) (WeaponType)Read_Int_From_Rules_Ini(section, entry, defaultValue, WEAPON_RIFLE, WEAPON_TREX, WEAPON_NONE)
-#define Read_Primary_Weapon(section, defaultValue) Read_Weapon(section, "PrimaryWeapon", defaultValue)
-#define Read_Secondary_Weapon(section, defaultValue) Read_Weapon(section, "SecondaryWeapon", defaultValue)
+#define Read_Primary_Weapon(section, defaultValue) Read_Weapon_Type_From_Rules_Ini(section, "PrimaryWeapon", defaultValue)
+#define Read_Secondary_Weapon(section, defaultValue) Read_Weapon_Type_From_Rules_Ini(section, "SecondaryWeapon", defaultValue)
 
 #define Read_Is_Buildable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Buildable", defaultValue)
 

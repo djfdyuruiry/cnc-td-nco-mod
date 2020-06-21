@@ -1242,6 +1242,12 @@
     <ClCompile Include="ERROR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PARSE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="STRINGS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="win32lib\FACINGFF.ASM">

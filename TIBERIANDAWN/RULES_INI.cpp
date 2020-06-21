@@ -83,19 +83,6 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 	Read_Log_Level_From_Rules_Ini();
 }
 
-/// <summary>
-/// Read a single value from rules ini as an integer. Resolved value
-/// is validated to make sure it is in the <ref>minValueInclusive</ref> to
-/// <ref>maxValueInclusive</ref> range; <ref>Show_Error_And_Exit</ref> will be
-/// called if the value fails validation.
-/// </summary>
-/// <param name="section"/>
-/// <param name="entry"/>
-/// <param name="defaultValue"/>
-/// <param name="minValueInclusive"/>
-/// <param name="maxValueInclusive"/>
-/// <param name="valueToAllowAlways">Optional pointer to the value to ignore during validation.</param>
-/// <returns>The value in rules ini if present, otherwise the default value provided.</returns>
 static int Read_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -140,19 +127,6 @@ static int Read_Int_From_Rules_Ini(
 	return ruleValue;
 }
 
-/// <summary>
-/// Read a single value from rules ini as an integer. Resolved value
-/// is validated to make sure it is in the <ref>minValueInclusive</ref> to
-/// <ref>maxValueInclusive</ref> range; <ref>Show_Error_And_Exit</ref> will be
-/// called if the value fails validation.
-/// </summary>
-/// <param name="section"/>
-/// <param name="entry"/>
-/// <param name="defaultValue"/>
-/// <param name="minValueInclusive"/>
-/// <param name="maxValueInclusive"/>
-/// <param name="valueToAllowAlways">Value to ignore during validation.</param>
-/// <returns>The value in rules ini if present, otherwise the default value provided.</returns>
 int Read_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -172,18 +146,6 @@ int Read_Int_From_Rules_Ini(
 	);
 }
 
-/// <summary>
-/// Read a single value from rules ini as an integer. Resolved value
-/// is validated to make sure it is in the <ref>minValueInclusive</ref> to
-/// <ref>maxValueInclusive</ref> range; <ref>Show_Error_And_Exit</ref> will be
-/// called if the value fails validation.
-/// </summary>
-/// <param name="section"/>
-/// <param name="entry"/>
-/// <param name="defaultValue"/>
-/// <param name="minValueInclusive"/>
-/// <param name="maxValueInclusive"/>
-/// <returns>The value in rules ini if present, otherwise the default value provided.</returns>
 int Read_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -213,7 +175,7 @@ char* Read_String_From_Rules_Ini(
 	Ensure_Rules_Ini_Buffer_Is_Loaded();
 
 	Log_Debug("Resolving rule value: %s -> %s", section, entry);
-	Log_Debug("Default value: %d", defaultValue);
+	Log_Debug("Default value: %s", defaultValue);
 
 	auto valueBuffer = new char[RULES_STRING_LENGTH];
 
@@ -227,6 +189,12 @@ char* Read_String_From_Rules_Ini(
 	);
 
 	auto valueIsValid = false;
+
+	if (validValues == NULL || validValueCount < 1)
+	{
+		// no validation enabled as no values passed
+		valueIsValid = true;
+	}
 
 	for (auto i = 0; i < validValueCount; i++)
 	{
@@ -270,26 +238,35 @@ char* Read_String_From_Rules_Ini(
 	return valueBuffer;
 }
 
+char* Read_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	const char* defaultValue
+)
+{
+	return Read_String_From_Rules_Ini(section, entry, defaultValue, NULL, 0);
+}
+
 bool Read_Bool_From_Rules_Ini(
 	const char* section,
 	const char* entry,
 	bool defaultValue
 )
 {
-	auto defaultValueStr = defaultValue ? "true" : "false";
+	auto defaultValueStr = defaultValue ? "TRUE" : "FALSE";
 
 	auto ruleValue = Read_String_From_Rules_Ini(
 		section,
 		entry,
 		defaultValueStr,
 		new const char* [2]{
-			"true",
-			"false"
+			"TRUE",
+			"FALSE"
 		},
 		2
 	);
 
-	return strcmp(ruleValue, "true") == 0;
+	return strcmp(ruleValue, "TRUE") == 0;
 }
 
 int Read_Prerequisite(
@@ -297,7 +274,16 @@ int Read_Prerequisite(
 	StructType defaultValue
 )
 {
-	auto structValue = (StructType)Read_Int_From_Rules_Ini(section, "Prerequisite", defaultValue, STRUCT_WEAP, STRUCT_WOOD_WALL, STRUCT_NONE);
+	// TODO: validation list
+	auto defaultString = Structure_Type_To_String(defaultValue);
+	auto structValueStr = Read_String_From_Rules_Ini(section, "Prerequisite", defaultString);
+
+	if (Strings_Are_Equal(structValueStr, defaultString))
+	{
+		return 1L << defaultValue;
+	}
+
+	auto structValue = Parse_Structure_Type(structValueStr);
 
 	if (structValue == STRUCT_NONE)
 	{
@@ -305,6 +291,51 @@ int Read_Prerequisite(
 	}
 
 	return 1L << structValue;
+}
+
+int Read_House_List_From_Rules_Ini(
+	const char* section,
+	HousesType defaultValue
+)
+{
+	// TODO: validation list
+	auto defaultString = Parse_House_Type(defaultValue);
+	auto hosueValueStr = Read_String_From_Rules_Ini(section, "Houses", defaultString);
+
+	// TODO LOOP TO GATHER CSV
+	if (Strings_Are_Equal(hosueValueStr, defaultString))
+	{
+		return 1L << defaultValue;
+	}
+
+	auto houseValue = Parse_House_Type(hosueValueStr);
+
+	if (houseValue == HOUSE_NONE)
+	{
+		return 0L;
+	}
+
+	return 1L << houseValue;
+}
+
+WeaponType Read_Weapon_Type_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	WeaponType defaultValue
+)
+{
+	// TODO: validation list
+	auto defaultString = Weapon_Type_To_String(defaultValue);
+	auto weaponTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	if (Strings_Are_Equal(weaponTypeStr, defaultString))
+	{
+		return defaultValue;
+	}
+
+	auto weaponType = Parse_Weapon_Type(weaponTypeStr);
+
+	return weaponType;
 }
 
 bool Rules_Ini_Failed_Validation()

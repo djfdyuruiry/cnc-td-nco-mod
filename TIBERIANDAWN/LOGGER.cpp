@@ -24,19 +24,19 @@ LogLevel Parse_Log_Level(char* levelString)
 {
 	auto logLevel = INFO;
 
-	if (levelString == "DEBUG")
+	if (Strings_Are_Equal(levelString, "DEBUG"))
 	{
 		logLevel = DEBUG;
 	}
-	else if (levelString == "WARN")
+	else if (Strings_Are_Equal(levelString, "WARN"))
 	{
 		logLevel = WARN;
 	}
-	else if (levelString == "ERROR")
+	else if (Strings_Are_Equal(levelString, "ERROR"))
 	{
 		logLevel = ERR;
 	}
-	else if (levelString == "OFF")
+	else if (Strings_Are_Equal(levelString, "OFF"))
 	{
 		logLevel = OFF;
 	}

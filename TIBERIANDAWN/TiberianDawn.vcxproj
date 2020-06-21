@@ -556,6 +556,7 @@ mkdir ..\bin\$(PlatformName)\log
     <ClCompile Include="OPTIONS.CPP" />
     <ClCompile Include="OVERLAY.CPP" />
     <ClCompile Include="PACKET.CPP" />
+    <ClCompile Include="PARSE.cpp" />
     <ClCompile Include="POWER.CPP" />
     <ClCompile Include="PROFILE.CPP" />
     <ClCompile Include="QUEUE.CPP" />
@@ -582,6 +583,7 @@ mkdir ..\bin\$(PlatformName)\log
     <ClCompile Include="SPECIAL.CPP" />
     <ClCompile Include="STARTUP.CPP" />
     <ClCompile Include="STATS.CPP" />
+    <ClCompile Include="STRINGS.cpp" />
     <ClCompile Include="SUPER.CPP" />
     <ClCompile Include="TAB.CPP" />
     <ClCompile Include="TARCOM.CPP" />
