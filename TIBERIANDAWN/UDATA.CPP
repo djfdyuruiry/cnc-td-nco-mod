@@ -88,16 +88,7 @@ static UnitTypeClass const UnitVisceroid(
 	Read_Cost("VICE", 800),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("VICE", 1),											// SCENARIO:	Starting availability scenario.
 	80,20,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_GOOD|
-	HOUSEF_BAD|
-	HOUSEF_NEUTRAL|
-	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("VICE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("VICE", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("VICE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -147,14 +138,7 @@ static UnitTypeClass const UnitFTank(
 	Read_Cost("FTNK", 800),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("FTNK", 9),											// SCENARIO:	Starting availability scenario.
 	80,66,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("FTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("VICE", WEAPON_FLAME_TONGUE),Read_Secondary_Weapon("VICE", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -204,14 +188,7 @@ static UnitTypeClass const UnitSTank(
 	Read_Cost("STNK", 900),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("STNK", 12),										// SCENARIO:	Starting availability scenario.
 	80,81,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("STNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("FTNK", WEAPON_DRAGON),Read_Secondary_Weapon("FTNK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -261,14 +238,7 @@ static UnitTypeClass const UnitLTank(
 	Read_Cost("LTNK", 600),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("LTNK", 5),											// SCENARIO:	Starting availability scenario.
 	80,56,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("LTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("STNK", WEAPON_75MM),Read_Secondary_Weapon("STNK", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -318,14 +288,7 @@ static UnitTypeClass const UnitMTank(
 	Read_Cost("MTNK", 800),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MTNK", 7),											// SCENARIO:	Starting availability scenario.
 	80,62,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("MTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("MTNK", WEAPON_105MM),Read_Secondary_Weapon("MTNK", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -375,14 +338,7 @@ static UnitTypeClass const UnitHTank(
 	Read_Cost("HTNK", 1500),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("HTNK", 13),										// SCENARIO:	Starting availability scenario.
 	80,80, 									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("HTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("HTNK", WEAPON_120MM),Read_Secondary_Weapon("HTNK", WEAPON_MAMMOTH_TUSK),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -432,15 +388,7 @@ static UnitTypeClass const UnitMHQ(
 	Read_Cost("MHQ", 600),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MHQ", 99),										// SCENARIO:	Starting availability scenario.
 	80,100,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("MHQ", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("LTNK", WEAPON_NONE),Read_Secondary_Weapon("LTNK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -491,15 +439,7 @@ static UnitTypeClass const UnitHover(
 	Read_Cost("LST", 300),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("LST", 99),										// SCENARIO:	Starting availability scenario.
 	80,40,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("LST", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("LST", WEAPON_NONE),Read_Secondary_Weapon("LST", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_HOVER,							// MOVE:			Locomotion type.
@@ -549,15 +489,7 @@ static UnitTypeClass const UnitSAM(
 	Read_Cost("MLRS", 750),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MLRS", 98),										// SCENARIO:	Starting availability scenario.
 	80,30,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-//	HOUSEF_GOOD|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("MLRS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("MHQ", WEAPON_HONEST_JOHN),Read_Secondary_Weapon("MHQ", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -607,14 +539,7 @@ static UnitTypeClass const UnitArty(
 	Read_Cost("ARTY", 450),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("ARTY", 9),											// SCENARIO:	Starting availability scenario.
 	80,73,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("ARTY", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("ARTY", WEAPON_155MM),Read_Secondary_Weapon("ARTY", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -665,15 +590,7 @@ static UnitTypeClass const UnitHarvester(
 	Read_Cost("HARV", 1400),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("HARV", 7),											// SCENARIO:	Starting availability scenario.
 	80,85,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("HARV", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("MLRS", WEAPON_NONE),Read_Secondary_Weapon("MLRS", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
@@ -723,15 +640,7 @@ static UnitTypeClass const UnitMCV(
 	Read_Cost("MCV", 5000),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MCV", 15),										// SCENARIO:	Starting availability scenario.
 	80,86,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("MCV", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("MCV", WEAPON_NONE),Read_Secondary_Weapon("MCV", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
@@ -781,14 +690,7 @@ static UnitTypeClass const UnitJeep(
 	Read_Cost("JEEP", 400),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("JEEP", 5),											// SCENARIO:	Starting availability scenario.
 	80,41,	 								// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("JEEP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("HARV", WEAPON_M60MG),Read_Secondary_Weapon("HARV", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
@@ -838,14 +740,7 @@ static UnitTypeClass const UnitBuggy(
 	Read_Cost("BGGY", 300),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("BGGY", 5),											// SCENARIO:	Starting availability scenario.
 	80,42, 									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("BGGY", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("BGGY", WEAPON_M60MG),Read_Secondary_Weapon("BGGY", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
@@ -899,14 +794,7 @@ static UnitTypeClass const UnitBike(
 	Read_Cost("BIKE", 500),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("BIKE", 5),											// SCENARIO:	Starting availability scenario.
 	80,45, 									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("BIKE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("JEEP", WEAPON_DRAGON),Read_Secondary_Weapon("JEEP", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
@@ -956,15 +844,7 @@ static UnitTypeClass const UnitMLRS(
 	Read_Cost("MSAM", 800),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MSAM", 11),										// SCENARIO:	Starting availability scenario.
 	80,72, 									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD|
-	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("MSAM", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("MSAM", WEAPON_MLRS),Read_Secondary_Weapon("MSAM", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -1014,15 +894,7 @@ static UnitTypeClass const UnitAPC(
 	Read_Cost("APC", 700),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("APC", 5),											// SCENARIO:	Starting availability scenario.
 	80,15,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_BAD|
-	HOUSEF_JP|
-	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("APC", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_BAD | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("BIKE", WEAPON_M60MG),Read_Secondary_Weapon("BIKE", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -1072,15 +944,7 @@ static UnitTypeClass const UnitGunBoat(
 	Read_Cost("BOAT", 300),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("BOAT", 99),										// SCENARIO:	Starting availability scenario.
 	80,40,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("BOAT", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("APC", WEAPON_TOMAHAWK),Read_Secondary_Weapon("APC", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_FLOAT,							// MOVE:			Locomotion type.
@@ -1130,7 +994,7 @@ static UnitTypeClass const UnitTric(
 	Read_Cost("TRIC", 0),											// COST:			Cost to build (Credits).
 	Read_Scenario_Level("TRIC", 99),										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("TRIC", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("TRIC", WEAPON_STEG),Read_Secondary_Weapon("TRIC", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -1180,7 +1044,7 @@ static UnitTypeClass const UnitTrex(
 	Read_Cost("TREX", 0),											// COST:			Cost to build (Credits).
 	Read_Scenario_Level("TREX", 99),										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("TREX", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("TREX", WEAPON_TREX),Read_Secondary_Weapon("TREX", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -1230,7 +1094,7 @@ static UnitTypeClass const UnitRapt(
 	Read_Cost("RAPT", 0),											// COST:			Cost to build (Credits).
 	Read_Scenario_Level("RAPT", 99),										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("RAPT", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("RAPT", WEAPON_TREX),Read_Secondary_Weapon("RAPT", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
@@ -1280,7 +1144,7 @@ static UnitTypeClass const UnitSteg(
 	Read_Cost("STEG", 0),											// COST:			Cost to build (Credits).
 	Read_Scenario_Level("STEG", 99),										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini("STEG", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("STEG", WEAPON_STEG),Read_Secondary_Weapon("STEG", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.

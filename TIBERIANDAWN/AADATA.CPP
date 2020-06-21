@@ -82,15 +82,7 @@ static AircraftTypeClass const AttackPlane(
 	Read_Cost("A10", 800),						// Credit cost to construct.
 	Read_Scenario_Level("A10", 0),							// The scenario this becomes available.
 	10,1,						// Risk, reward when calculating AI.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD|
-	HOUSEF_BAD,				// Who can own this aircraft type.
+	Read_House_List_From_Rules_Ini("A10", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this aircraft type.
 	Read_Primary_Weapon("A10", WEAPON_NAPALM), Read_Secondary_Weapon("A10", WEAPON_NONE),
 	ARMOR_ALUMINUM,		// Armor type of this aircraft.
 	Read_Max_Speed("A10", MPH_FAST),				// Maximum speed of aircraft.
@@ -128,15 +120,7 @@ static AircraftTypeClass const TransportHeli(
 	Read_Cost("TRAN", 1500),						// Credit cost to construct.
 	Read_Scenario_Level("TRAN", 98),						// The scenario this becomes available.
 	10,80,					// Risk, reward when calculating AI.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD|
-	HOUSEF_GOOD,			// Who can own this aircraft type.
+	Read_House_List_From_Rules_Ini("TRAN", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),			// Who can own this aircraft type.
 	Read_Primary_Weapon("TRAN", WEAPON_NONE), Read_Secondary_Weapon("TRAN", WEAPON_NONE),
 	ARMOR_ALUMINUM,		// Armor type of this aircraft.
 	Read_Max_Speed("TRAN", MPH_MEDIUM_FAST),		// Maximum speed of aircraft.
@@ -174,14 +158,7 @@ static AircraftTypeClass const AttackHeli(
 	Read_Cost("HELI", 1200),						// Credit cost to construct.
 	Read_Scenario_Level("HELI", 10),						// The scenario this becomes available.
 	10,80,					// Risk, reward when calculating AI.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD,				// Who can own this aircraft type.
+	Read_House_List_From_Rules_Ini("HELI", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),				// Who can own this aircraft type.
 	Read_Primary_Weapon("HELI", WEAPON_CHAIN_GUN), Read_Secondary_Weapon("HELI", WEAPON_NONE),
 	ARMOR_STEEL,			// Armor type of this aircraft.
 	Read_Max_Speed("HELI", MPH_FAST),				// Maximum speed of aircraft.
@@ -220,14 +197,7 @@ static AircraftTypeClass const OrcaHeli(
 	Read_Cost("ORCA", 1200),						// Credit cost to construct.
 	Read_Scenario_Level("ORCA", 10),						// The scenario this becomes available.
 	10,80,					// Risk, reward when calculating AI.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD,			// Who can own this aircraft type.
+	Read_House_List_From_Rules_Ini("ORCA", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),			// Who can own this aircraft type.
 	Read_Primary_Weapon("ORCA", WEAPON_DRAGON), Read_Secondary_Weapon("ORCA", WEAPON_NONE),
 	ARMOR_STEEL,			// Armor type of this aircraft.
 	Read_Max_Speed("ORCA", MPH_FAST),				// Maximum speed of aircraft.
@@ -266,15 +236,7 @@ static AircraftTypeClass const CargoPlane(
 	Read_Cost("C17", 800),						// Credit cost to construct.
 	Read_Scenario_Level("C17", 0),							// The scenario this becomes available.
 	10,1,						// Risk, reward when calculating AI.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_GOOD|
-	HOUSEF_BAD,				// Who can own this aircraft type.
+	Read_House_List_From_Rules_Ini("C17", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this aircraft type.
 	Read_Primary_Weapon("C17", WEAPON_NONE), Read_Secondary_Weapon("C17", WEAPON_NONE),
 	ARMOR_ALUMINUM,		// Armor type of this aircraft.
 	Read_Max_Speed("C17", MPH_FAST),				// Maximum speed of aircraft.
