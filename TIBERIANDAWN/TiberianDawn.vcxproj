@@ -73,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TestConsole|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(PlatformName)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)bin\$(PlatformName)\</OutDir>
+    <OutDir>..\bin\$(PlatformName)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,7 +116,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;..\lib\include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -131,7 +131,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>winmm.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;Ws2_32.lib;..\lib\lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers />
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>false</DataExecutionPrevention>
@@ -150,7 +150,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;..\lib\include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -165,7 +165,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>winmm.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;Ws2_32.lib;..\lib\lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>
       </ImageHasSafeExceptionHandlers>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -183,6 +183,15 @@ copy ..\game\cfg\RULES.INI ..\bin\$(PlatformName)\
 if exist ..\bin\$(PlatformName)\log rmdir /Q /S ..\bin\$(PlatformName)\log
 
 mkdir ..\bin\$(PlatformName)\log
+
+if exist ..\bin\$(PlatformName)\lua53.dll del ..\bin\$(PlatformName)\lua53.dll
+
+copy ..\lib\lua53.dll ..\bin\$(PlatformName)\
+
+if exist ..\bin\$(PlatformName)\lua53.lib del ..\bin\$(PlatformName)\lua53.lib
+
+copy ..\lib\lua53.lib ..\bin\$(PlatformName)\
+
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -529,6 +538,7 @@ mkdir ..\bin\$(PlatformName)\log
     <ClCompile Include="LOADDLG.CPP" />
     <ClCompile Include="LOGGER.cpp" />
     <ClCompile Include="LOGIC.CPP" />
+    <ClCompile Include="LUA.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.CPP" />
     <ClCompile Include="MAPEDDLG.CPP" />

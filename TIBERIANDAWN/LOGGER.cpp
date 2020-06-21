@@ -55,7 +55,7 @@ LogLevel Parse_Log_Level(char* levelString)
 /// <param name="...">Arguments to pass to <ref>sprintf</ref></param>
 void Log(LogLevel logLevel, const char* messageFormat, ...)
 {
-	if (logLevel > Get_Current_Log_Level())
+	if (logLevel > Current_Log_Level())
 	{
 		return;
 	}

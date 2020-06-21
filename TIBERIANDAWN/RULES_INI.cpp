@@ -6,6 +6,7 @@ static auto RULES_STRING_LENGTH = 512;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
+static bool LUA_IS_ENABLED = false;
 static bool RULES_VALID = true;
 
 char* Read_String_From_Rules_Ini(
@@ -80,7 +81,9 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 	}
 
 	RULES_INI_BUFFER = Read_Rules_Ini();
+
 	Read_Log_Level_From_Rules_Ini();
+	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini("NCO", "EnableLuaScripts", false);
 }
 
 static int Read_Int_From_Rules_Ini(
@@ -408,7 +411,12 @@ bool Rules_Ini_Failed_Validation()
 	return !RULES_VALID;
 }
 
-LogLevel Get_Current_Log_Level()
+LogLevel Current_Log_Level()
 {
 	return LOG_LEVEL;
+}
+
+bool Lua_Is_Enabled()
+{
+	return LUA_IS_ENABLED;
 }

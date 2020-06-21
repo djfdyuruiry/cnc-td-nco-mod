@@ -172,6 +172,15 @@ int DLL_Startup(const char * command_line_in)
 		return(EXIT_FAILURE);
 	}
 
+	if (Lua_Is_Enabled())
+	{
+		Initialise_Lua();
+	}
+	else
+	{
+		Log_Warn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
+	}
+
 	//WindowsTimer = new WinTimerClass(60,FALSE);
 	//CD_Test();
 

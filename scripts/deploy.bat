@@ -18,8 +18,13 @@ mkdir "%MOD_PATH%\Data"
 
 copy "game\ccmod.json" "%MOD_PATH%\ccmod.json"
 copy "bin\Win32\TiberianDawn.dll" "%MOD_PATH%\Data"
+copy "lib\lua53.dll" "%MOD_PATH%\Data"
 
-call "%~dp0lib\log.bat" "INFO" "Deploying RULES.INI and tiberian_dawn.bat to path: %CNC_PATH%"
+call "%~dp0lib\log.bat" "INFO" "Deploying Lua 5.3, RULES.INI and tiberian_dawn.bat to path: %CNC_PATH%"
+
+if exist "%CNC_PATH%\lua53.dll" (
+  del "%CNC_PATH%\lua53.dll"
+)
 
 if exist "%CNC_PATH%\RULES.INI" (
   del "%CNC_PATH%\RULES.INI"
@@ -29,5 +34,6 @@ if exist "%CNC_PATH%\tiberian_dawn.bat" (
   del "%CNC_PATH%\tiberian_dawn.bat"
 )
 
+copy "lib\lua53.dll" "%CNC_PATH%"
 copy "game\cfg\RULES.INI" "%CNC_PATH%"
 copy "game\scripts\tiberian_dawn.bat" "%CNC_PATH%"

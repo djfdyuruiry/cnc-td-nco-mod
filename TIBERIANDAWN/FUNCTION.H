@@ -1079,9 +1079,6 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 	WeaponType defaultValue
 );
 
-bool Rules_Ini_Failed_Validation();
-LogLevel Get_Current_Log_Level();
-
 #ifndef RULE_MACROS
 #define RULE_MACROS
 
@@ -1114,5 +1111,12 @@ LogLevel Get_Current_Log_Level();
 #define Read_Power_Input(section, defaultValue) Read_Int_From_Rules_Ini(section, "PowerInput", defaultValue, 0, INT_MAX)
 
 #endif
+
+bool Rules_Ini_Failed_Validation();
+bool Lua_Is_Enabled();
+LogLevel Current_Log_Level();
+
+// lua
+void Initialise_Lua();
 
 #endif
