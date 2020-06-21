@@ -1031,6 +1031,20 @@ int Read_Int_From_Rules_Ini(
 	int maxValueInclusive
 );
 
+char* Read_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	const char* defaultValue,
+	const char* validValues[],
+	int validValueCount
+);
+
+bool Read_Bool_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool defaultValue
+);
+
 int Read_Prerequisite(
 	const char* section,
 	StructType defaultValue
@@ -1042,6 +1056,7 @@ LogLevel Get_Current_Log_Level();
 #ifndef RULE_MACROS
 #define RULE_MACROS
 
+// shared rules
 #define Read_Build_Level(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, "BuildLevel", defaultValue, 1, 99)
 #define Read_Scenario_Level(section, defaultValue) Read_Int_From_Rules_Ini(section, "ScenarioLevel", defaultValue, 1, 99)
 
@@ -1054,7 +1069,19 @@ LogLevel Get_Current_Log_Level();
 #define Read_Primary_Weapon(section, defaultValue) Read_Weapon(section, "PrimaryWeapon", defaultValue)
 #define Read_Secondary_Weapon(section, defaultValue) Read_Weapon(section, "SecondaryWeapon", defaultValue)
 
-#endif
+#define Read_Is_Buildable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Buildable", defaultValue)
 
+// infantry rules
+#define Read_Is_Fraidy_Cat(section, defaultValue) Read_Bool_From_Rules_Ini(section, "FraidyCat", defaultValue)
+#define Read_Can_Capture_Buildings(section, defaultValue) Read_Bool_From_Rules_Ini(section, "CanCaptureBuildings", defaultValue)
+
+// unit rules
+#define Read_Can_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, "CanCloak", defaultValue)
+
+// building rules
+#define Read_Is_Capturable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Capturable", defaultValue)
+#define Read_Is_Flammable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Flammable", defaultValue)
+
+#endif
 
 #endif

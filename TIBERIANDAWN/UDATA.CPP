@@ -72,7 +72,7 @@ static UnitTypeClass const UnitVisceroid(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		false,			// Can the player construct or order this unit?
+		Read_Is_Buildable("VICE", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -80,7 +80,7 @@ static UnitTypeClass const UnitVisceroid(
 		false,			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("VICE", false),			// Is the unit capable of cloaking?
 		true,				// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("VICE", 150),										// STRENGTH:	Strength (in damage points).
@@ -131,7 +131,7 @@ static UnitTypeClass const UnitFTank(
 		false,			// Is it equipped with a combat turret?
 		true,				// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("FTNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -139,7 +139,7 @@ static UnitTypeClass const UnitFTank(
 		true,				// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("FTNK", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("FTNK", 300),										// STRENGTH:	Strength (in damage points).
@@ -188,7 +188,7 @@ static UnitTypeClass const UnitSTank(
 		false,			// Is it equipped with a combat turret?
 		true,				// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("STNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -196,7 +196,7 @@ static UnitTypeClass const UnitSTank(
 		true,				// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		true,				// Is the unit capable of cloaking?
+		Read_Can_Cloak("STNK", true),				// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("STNK", 110),										// STRENGTH:	Strength (in damage points).
@@ -245,7 +245,7 @@ static UnitTypeClass const UnitLTank(
 		true,				// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("LTNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -253,7 +253,7 @@ static UnitTypeClass const UnitLTank(
 		true,				// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("LTNK", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("LTNK", 300),										// STRENGTH:	Strength (in damage points).
@@ -302,7 +302,7 @@ static UnitTypeClass const UnitMTank(
 		true,				// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("MTNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -310,7 +310,7 @@ static UnitTypeClass const UnitMTank(
 		true,				// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("MTNK", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("MTNK", 400),										// STRENGTH:	Strength (in damage points).
@@ -359,7 +359,7 @@ static UnitTypeClass const UnitHTank(
 		true,				// Is it equipped with a combat turret?
 		true,				// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("HTNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -367,7 +367,7 @@ static UnitTypeClass const UnitHTank(
 		true,				// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("HTNK", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("HTNK", 600),										// STRENGTH:	Strength (in damage points).
@@ -416,7 +416,7 @@ static UnitTypeClass const UnitMHQ(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("MHQ", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		true,				// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -424,7 +424,7 @@ static UnitTypeClass const UnitMHQ(
 		true,				// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("MHQ", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("MHQ", 110),										// STRENGTH:	Strength (in damage points).
@@ -475,7 +475,7 @@ static UnitTypeClass const UnitHover(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		false,			// Can the player construct or order this unit?
+		Read_Is_Buildable("LST", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -483,7 +483,7 @@ static UnitTypeClass const UnitHover(
 		false,			// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		true,				// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("LST", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("LST", 400),										// STRENGTH:	Strength (in damage points).
@@ -533,7 +533,7 @@ static UnitTypeClass const UnitSAM(
 		true,				// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("MLRS", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -541,7 +541,7 @@ static UnitTypeClass const UnitSAM(
 		true,				// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("MLRS", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	2,											// AMMO:			Number of shots it has (default).
 	Read_Strength("MLRS", 120),										// STRENGTH:	Strength (in damage points).
@@ -591,7 +591,7 @@ static UnitTypeClass const UnitArty(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("ARTY", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -599,7 +599,7 @@ static UnitTypeClass const UnitArty(
 		true,				// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("ARTY", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("ARTY", 75),										// STRENGTH:	Strength (in damage points).
@@ -648,7 +648,7 @@ static UnitTypeClass const UnitHarvester(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("HARV", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -656,7 +656,7 @@ static UnitTypeClass const UnitHarvester(
 		true,				// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("HARV", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("HARV", 600),										// STRENGTH:	Strength (in damage points).
@@ -707,7 +707,7 @@ static UnitTypeClass const UnitMCV(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("MCV", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -715,7 +715,7 @@ static UnitTypeClass const UnitMCV(
 		true,				// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("MCV", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("MCV", 600),										// STRENGTH:	Strength (in damage points).
@@ -765,7 +765,7 @@ static UnitTypeClass const UnitJeep(
 		true,				// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("JEEP", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -773,7 +773,7 @@ static UnitTypeClass const UnitJeep(
 		true,				// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("JEEP", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("JEEP", 150),										// STRENGTH:	Strength (in damage points).
@@ -822,7 +822,7 @@ static UnitTypeClass const UnitBuggy(
 		true,				// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("BGGY", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -830,7 +830,7 @@ static UnitTypeClass const UnitBuggy(
 		false,			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("BGGY", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("BGGY", 140),										// STRENGTH:	Strength (in damage points).
@@ -879,7 +879,7 @@ static UnitTypeClass const UnitBike(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("BIKE", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -887,7 +887,7 @@ static UnitTypeClass const UnitBike(
 		false,			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("BIKE", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 #ifdef ADVANCED
@@ -940,7 +940,7 @@ static UnitTypeClass const UnitMLRS(
 		true,				// Is it equipped with a combat turret?
 		true,				// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("MSAM", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -948,7 +948,7 @@ static UnitTypeClass const UnitMLRS(
 		true,				// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("MSAM", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("MSAM", 100),										// STRENGTH:	Strength (in damage points).
@@ -998,7 +998,7 @@ static UnitTypeClass const UnitAPC(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		Read_Is_Buildable("APC", true),				// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -1006,7 +1006,7 @@ static UnitTypeClass const UnitAPC(
 		true,				// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("APC", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("APC", 200),										// STRENGTH:	Strength (in damage points).
@@ -1056,7 +1056,7 @@ static UnitTypeClass const UnitGunBoat(
 		true,				// Is it equipped with a combat turret?
 		true,				// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		false,			// Can the player construct or order this unit?
+		Read_Is_Buildable("BOAT", false),			// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
@@ -1064,7 +1064,7 @@ static UnitTypeClass const UnitGunBoat(
 		false,			// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		true,				// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("BOAT", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("BOAT", 700),										// STRENGTH:	Strength (in damage points).
@@ -1114,7 +1114,7 @@ static UnitTypeClass const UnitTric(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		false,			// Can the player construct or order this unit?
+		Read_Is_Buildable("TRIC", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		true,				// Is there an associated firing animation?
@@ -1122,7 +1122,7 @@ static UnitTypeClass const UnitTric(
 		false,			// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("TRIC", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("TRIC", 700),										// STRENGTH:	Strength (in damage points).
@@ -1164,7 +1164,7 @@ static UnitTypeClass const UnitTrex(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		false,			// Can the player construct or order this unit?
+		Read_Is_Buildable("TREX", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		true,				// Is there an associated firing animation?
@@ -1172,7 +1172,7 @@ static UnitTypeClass const UnitTrex(
 		false,			// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("TREX", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("TREX", 750),										// STRENGTH:	Strength (in damage points).
@@ -1214,7 +1214,7 @@ static UnitTypeClass const UnitRapt(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		false,			// Can the player construct or order this unit?
+		Read_Is_Buildable("RAPT", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		true,				// Is there an associated firing animation?
@@ -1222,7 +1222,7 @@ static UnitTypeClass const UnitRapt(
 		false,			// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("RAPT", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("RAPT", 180),										// STRENGTH:	Strength (in damage points).
@@ -1264,7 +1264,7 @@ static UnitTypeClass const UnitSteg(
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		false,			// Can the player construct or order this unit?
+		Read_Is_Buildable("STEG", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		true,				// Is there an associated firing animation?
@@ -1272,7 +1272,7 @@ static UnitTypeClass const UnitSteg(
 		false,			// Does it lay tracks while moving?
 		true,				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		false,			// Is the unit capable of cloaking?
+		Read_Can_Cloak("STEG", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
 	-1,										// AMMO:			Number of shots it has (default).
 	Read_Strength("STEG", 600),										// STRENGTH:	Strength (in damage points).

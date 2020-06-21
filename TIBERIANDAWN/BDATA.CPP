@@ -179,8 +179,8 @@ static BuildingTypeClass const ClassTemple(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("TMPL", false),		// Can this building be captured?
+		Read_Is_Flammable("TMPL", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -191,7 +191,7 @@ static BuildingTypeClass const ClassTemple(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("TMPL", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -234,8 +234,8 @@ static BuildingTypeClass const ClassEye(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("EYE", true),			// Can this building be captured?
+		Read_Is_Flammable("EYE", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -246,7 +246,7 @@ static BuildingTypeClass const ClassEye(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("EYE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -289,8 +289,8 @@ static BuildingTypeClass const ClassWeapon(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("WEAP", true),			// Can this building be captured?
+		Read_Is_Flammable("WEAP", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -301,7 +301,7 @@ static BuildingTypeClass const ClassWeapon(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("WEAP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
@@ -348,8 +348,8 @@ static BuildingTypeClass const ClassGTower(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("GTWR", false),		// Can this building be captured?
+		Read_Is_Flammable("GTWR", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -360,7 +360,7 @@ static BuildingTypeClass const ClassGTower(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("GTWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -404,8 +404,8 @@ static BuildingTypeClass const ClassATower(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("ATWR", false),		// Can this building be captured?
+		Read_Is_Flammable("ATWR", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -416,7 +416,7 @@ static BuildingTypeClass const ClassATower(
 		false,		// Does it have a rotating turret?
 		true,			// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("ATWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -460,8 +460,8 @@ static BuildingTypeClass const ClassObelisk(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("OBLI", false),		// Can this building be captured?
+		Read_Is_Flammable("OBLI", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -472,7 +472,7 @@ static BuildingTypeClass const ClassObelisk(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("OBLI", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -515,8 +515,8 @@ static BuildingTypeClass const ClassTurret(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("GUN", false),		// Can this building be captured?
+		Read_Is_Flammable("GUN", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -527,7 +527,7 @@ static BuildingTypeClass const ClassTurret(
 		true,			// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("GUN", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -578,8 +578,8 @@ static BuildingTypeClass const ClassConst(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("FACT", true),			// Can this building be captured?
+		Read_Is_Flammable("FACT", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -590,7 +590,7 @@ static BuildingTypeClass const ClassConst(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("FACT", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_BUILDINGTYPE,					// The object type produced at this factory.
@@ -634,8 +634,8 @@ static BuildingTypeClass const ClassRefinery(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("PROC", true),			// Can this building be captured?
+		Read_Is_Flammable("PROC", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -646,7 +646,7 @@ static BuildingTypeClass const ClassRefinery(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("PROC", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -690,8 +690,8 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("SILO", true),			// Can this building be captured?
+		Read_Is_Flammable("SILO", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -702,7 +702,7 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("SILO", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -747,8 +747,8 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("HPAD", true),			// Can this building be captured?
+		Read_Is_Flammable("HPAD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -759,7 +759,7 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("HPAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_AIRCRAFTTYPE,					// The object type produced at this factory.
@@ -803,8 +803,8 @@ static BuildingTypeClass const ClassCommand(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("HQ", true),			// Can this building be captured?
+		Read_Is_Flammable("HQ", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -815,7 +815,7 @@ static BuildingTypeClass const ClassCommand(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("HQ", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -859,8 +859,8 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("SAM", false),		// Can this building be captured?
+		Read_Is_Flammable("SAM", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -871,7 +871,7 @@ static BuildingTypeClass const ClassSAM(
 		true,			// Does it have a rotating turret?
 		true,			// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("SAM", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -914,8 +914,8 @@ static BuildingTypeClass const ClassAirStrip(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("AFLD", true),			// Can this building be captured?
+		Read_Is_Flammable("AFLD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -926,7 +926,7 @@ static BuildingTypeClass const ClassAirStrip(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("AFLD", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
@@ -969,8 +969,8 @@ static BuildingTypeClass const ClassPower(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("NUKE", true),			// Can this building be captured?
+		Read_Is_Flammable("NUKE", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -981,7 +981,7 @@ static BuildingTypeClass const ClassPower(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("NUKE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1025,8 +1025,8 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("NUK2", true),			// Can this building be captured?
+		Read_Is_Flammable("NUK2", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1037,7 +1037,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("NUK2", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1081,8 +1081,8 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("HOSP", true),			// Can this building be captured?
+		Read_Is_Flammable("HOSP", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1093,7 +1093,7 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("HOSP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1138,8 +1138,8 @@ static BuildingTypeClass const ClassBioLab(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("BIO", false),		// Can this building be captured?
+		Read_Is_Flammable("BIO", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1150,7 +1150,7 @@ static BuildingTypeClass const ClassBioLab(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("BIO", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1193,8 +1193,8 @@ static BuildingTypeClass const ClassBarracks(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("PYLE", true),			// Can this building be captured?
+		Read_Is_Flammable("PYLE", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1205,7 +1205,7 @@ static BuildingTypeClass const ClassBarracks(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("PYLE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
@@ -1248,8 +1248,8 @@ static BuildingTypeClass const ClassHand(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("HAND", true),			// Can this building be captured?
+		Read_Is_Flammable("HAND", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1260,7 +1260,7 @@ static BuildingTypeClass const ClassHand(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("HAND", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
@@ -1303,8 +1303,8 @@ static BuildingTypeClass const ClassTanker(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("ARCO", false),		// Can this building be captured?
+		Read_Is_Flammable("ARCO", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1315,7 +1315,7 @@ static BuildingTypeClass const ClassTanker(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("ARCO", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1358,8 +1358,8 @@ static BuildingTypeClass const ClassRepair(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("FIX", true),			// Can this building be captured?
+		Read_Is_Flammable("FIX", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1370,7 +1370,7 @@ static BuildingTypeClass const ClassRepair(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("FIX", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1416,8 +1416,8 @@ static BuildingTypeClass const ClassRoad(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("ROAD", false),		// Can this building be captured?
+		Read_Is_Flammable("ROAD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
@@ -1428,7 +1428,7 @@ static BuildingTypeClass const ClassRoad(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("ROAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1473,8 +1473,8 @@ static BuildingTypeClass const ClassV01(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V01", false),		// Can this building be captured?
+		Read_Is_Flammable("V01", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1485,7 +1485,7 @@ static BuildingTypeClass const ClassV01(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V01", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1528,8 +1528,8 @@ static BuildingTypeClass const ClassV02(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V02", false),		// Can this building be captured?
+		Read_Is_Flammable("V02", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1540,7 +1540,7 @@ static BuildingTypeClass const ClassV02(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V02", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1583,8 +1583,8 @@ static BuildingTypeClass const ClassV03(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V03", false),		// Can this building be captured?
+		Read_Is_Flammable("V03", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1595,7 +1595,7 @@ static BuildingTypeClass const ClassV03(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V03", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1638,8 +1638,8 @@ static BuildingTypeClass const ClassV04(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V04", false),		// Can this building be captured?
+		Read_Is_Flammable("V04", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1650,7 +1650,7 @@ static BuildingTypeClass const ClassV04(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V04", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1693,8 +1693,8 @@ static BuildingTypeClass const ClassV05(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V05", false),		// Can this building be captured?
+		Read_Is_Flammable("V05", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1705,7 +1705,7 @@ static BuildingTypeClass const ClassV05(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V05", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1748,8 +1748,8 @@ static BuildingTypeClass const ClassV06(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V06", false),		// Can this building be captured?
+		Read_Is_Flammable("V06", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1760,7 +1760,7 @@ static BuildingTypeClass const ClassV06(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V06", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1803,8 +1803,8 @@ static BuildingTypeClass const ClassV07(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V07", false),		// Can this building be captured?
+		Read_Is_Flammable("V07", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1815,7 +1815,7 @@ static BuildingTypeClass const ClassV07(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V07", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1858,8 +1858,8 @@ static BuildingTypeClass const ClassV08(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V08", false),		// Can this building be captured?
+		Read_Is_Flammable("V08", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1870,7 +1870,7 @@ static BuildingTypeClass const ClassV08(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V08", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1913,8 +1913,8 @@ static BuildingTypeClass const ClassV09(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V09", false),		// Can this building be captured?
+		Read_Is_Flammable("V09", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1925,7 +1925,7 @@ static BuildingTypeClass const ClassV09(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V09", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1968,8 +1968,8 @@ static BuildingTypeClass const ClassV10(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V10", false),		// Can this building be captured?
+		Read_Is_Flammable("V10", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -1980,7 +1980,7 @@ static BuildingTypeClass const ClassV10(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V10", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2023,8 +2023,8 @@ static BuildingTypeClass const ClassV11(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V11", false),		// Can this building be captured?
+		Read_Is_Flammable("V11", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2035,7 +2035,7 @@ static BuildingTypeClass const ClassV11(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V11", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2078,8 +2078,8 @@ static BuildingTypeClass const ClassV12(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V12", false),		// Can this building be captured?
+		Read_Is_Flammable("V12", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2090,7 +2090,7 @@ static BuildingTypeClass const ClassV12(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V12", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2133,8 +2133,8 @@ static BuildingTypeClass const ClassV13(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V13", false),		// Can this building be captured?
+		Read_Is_Flammable("V13", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2145,7 +2145,7 @@ static BuildingTypeClass const ClassV13(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V13", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2188,8 +2188,8 @@ static BuildingTypeClass const ClassV14(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V14", false),		// Can this building be captured?
+		Read_Is_Flammable("V14", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2200,7 +2200,7 @@ static BuildingTypeClass const ClassV14(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V14", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2243,8 +2243,8 @@ static BuildingTypeClass const ClassV15(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V15", false),		// Can this building be captured?
+		Read_Is_Flammable("V15", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2255,7 +2255,7 @@ static BuildingTypeClass const ClassV15(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V15", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2298,8 +2298,8 @@ static BuildingTypeClass const ClassV16(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V16", false),		// Can this building be captured?
+		Read_Is_Flammable("V16", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2310,7 +2310,7 @@ static BuildingTypeClass const ClassV16(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V16", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2353,8 +2353,8 @@ static BuildingTypeClass const ClassV17(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V17", false),		// Can this building be captured?
+		Read_Is_Flammable("V17", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2365,7 +2365,7 @@ static BuildingTypeClass const ClassV17(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V17", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2408,8 +2408,8 @@ static BuildingTypeClass const ClassV18(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V18", false),		// Can this building be captured?
+		Read_Is_Flammable("V18", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2420,7 +2420,7 @@ static BuildingTypeClass const ClassV18(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V18", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2463,8 +2463,8 @@ static BuildingTypeClass const ClassV19(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V19", false),		// Can this building be captured?
+		Read_Is_Flammable("V19", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2475,7 +2475,7 @@ static BuildingTypeClass const ClassV19(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V19", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2519,8 +2519,8 @@ static BuildingTypeClass const ClassV20(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V20", false),		// Can this building be captured?
+		Read_Is_Flammable("V20", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2531,7 +2531,7 @@ static BuildingTypeClass const ClassV20(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V20", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2575,8 +2575,8 @@ static BuildingTypeClass const ClassV21(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V21", false),		// Can this building be captured?
+		Read_Is_Flammable("V21", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2587,7 +2587,7 @@ static BuildingTypeClass const ClassV21(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V21", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2631,8 +2631,8 @@ static BuildingTypeClass const ClassV22(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V22", false),		// Can this building be captured?
+		Read_Is_Flammable("V22", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2643,7 +2643,7 @@ static BuildingTypeClass const ClassV22(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V22", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2687,8 +2687,8 @@ static BuildingTypeClass const ClassV23(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V23", false),		// Can this building be captured?
+		Read_Is_Flammable("V23", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2699,7 +2699,7 @@ static BuildingTypeClass const ClassV23(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V23", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2743,8 +2743,8 @@ static BuildingTypeClass const ClassV24(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V24", false),		// Can this building be captured?
+		Read_Is_Flammable("V24", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2755,7 +2755,7 @@ static BuildingTypeClass const ClassV24(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V24", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2799,8 +2799,8 @@ static BuildingTypeClass const ClassV25(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V25", false),		// Can this building be captured?
+		Read_Is_Flammable("V25", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2811,7 +2811,7 @@ static BuildingTypeClass const ClassV25(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V25", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2855,8 +2855,8 @@ static BuildingTypeClass const ClassV26(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V26", false),		// Can this building be captured?
+		Read_Is_Flammable("V26", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2867,7 +2867,7 @@ static BuildingTypeClass const ClassV26(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V26", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2911,8 +2911,8 @@ static BuildingTypeClass const ClassV27(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V27", false),		// Can this building be captured?
+		Read_Is_Flammable("V27", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2923,7 +2923,7 @@ static BuildingTypeClass const ClassV27(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V27", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -2967,8 +2967,8 @@ static BuildingTypeClass const ClassV28(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V28", false),		// Can this building be captured?
+		Read_Is_Flammable("V28", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -2979,7 +2979,7 @@ static BuildingTypeClass const ClassV28(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V28", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3023,8 +3023,8 @@ static BuildingTypeClass const ClassV29(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V29", false),		// Can this building be captured?
+		Read_Is_Flammable("V29", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3035,7 +3035,7 @@ static BuildingTypeClass const ClassV29(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V29", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3079,8 +3079,8 @@ static BuildingTypeClass const ClassV30(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V30", false),		// Can this building be captured?
+		Read_Is_Flammable("V30", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3091,7 +3091,7 @@ static BuildingTypeClass const ClassV30(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V30", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3135,8 +3135,8 @@ static BuildingTypeClass const ClassV31(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V31", false),		// Can this building be captured?
+		Read_Is_Flammable("V31", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3147,7 +3147,7 @@ static BuildingTypeClass const ClassV31(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V31", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3191,8 +3191,8 @@ static BuildingTypeClass const ClassV32(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V32", false),		// Can this building be captured?
+		Read_Is_Flammable("V32", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3203,7 +3203,7 @@ static BuildingTypeClass const ClassV32(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V32", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3247,8 +3247,8 @@ static BuildingTypeClass const ClassV33(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V33", false),		// Can this building be captured?
+		Read_Is_Flammable("V33", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3259,7 +3259,7 @@ static BuildingTypeClass const ClassV33(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V33", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3303,8 +3303,8 @@ static BuildingTypeClass const ClassV34(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V34", false),		// Can this building be captured?
+		Read_Is_Flammable("V34", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3315,7 +3315,7 @@ static BuildingTypeClass const ClassV34(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V34", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3359,8 +3359,8 @@ static BuildingTypeClass const ClassV35(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V35", false),		// Can this building be captured?
+		Read_Is_Flammable("V35", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3371,7 +3371,7 @@ static BuildingTypeClass const ClassV35(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V35", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3415,8 +3415,8 @@ static BuildingTypeClass const ClassV36(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V36", false),		// Can this building be captured?
+		Read_Is_Flammable("V36", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3427,7 +3427,7 @@ static BuildingTypeClass const ClassV36(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V36", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3470,8 +3470,8 @@ static BuildingTypeClass const ClassV37(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("V37", false),		// Can this building be captured?
+		Read_Is_Flammable("V37", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3482,7 +3482,7 @@ static BuildingTypeClass const ClassV37(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("V37", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3525,8 +3525,8 @@ static BuildingTypeClass const ClassMission(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		true,			// Does it catch fire?
+		Read_Is_Capturable("MISS", true),			// Can this building be captured?
+		Read_Is_Flammable("MISS", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
@@ -3537,7 +3537,7 @@ static BuildingTypeClass const ClassMission(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		true,			// Can it be repaired?
-		false,		// Can it be manufactured by the player?
+		Read_Is_Buildable("MISS", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3583,8 +3583,8 @@ static BuildingTypeClass const Sandbag(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("SBAG", false),		// Can this building be captured?
+		Read_Is_Flammable("SBAG", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
@@ -3595,7 +3595,7 @@ static BuildingTypeClass const Sandbag(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("SBAG", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3639,8 +3639,8 @@ static BuildingTypeClass const Cyclone(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("CYCL", false),		// Can this building be captured?
+		Read_Is_Flammable("CYCL", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
@@ -3651,7 +3651,7 @@ static BuildingTypeClass const Cyclone(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("CYCL", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3695,8 +3695,8 @@ static BuildingTypeClass const Brick(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("BRIK", false),		// Can this building be captured?
+		Read_Is_Flammable("BRIK", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
@@ -3707,7 +3707,7 @@ static BuildingTypeClass const Brick(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("BRIK", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3751,8 +3751,8 @@ static BuildingTypeClass const Barbwire(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("BARB", false),		// Can this building be captured?
+		Read_Is_Flammable("BARB", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
@@ -3763,7 +3763,7 @@ static BuildingTypeClass const Barbwire(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("BARB", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3808,8 +3808,8 @@ static BuildingTypeClass const Wood(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		Read_Is_Capturable("WOOD", false),		// Can this building be captured?
+		Read_Is_Flammable("WOOD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
@@ -3820,7 +3820,7 @@ static BuildingTypeClass const Wood(
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		Read_Is_Buildable("WOOD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 	RTTI_NONE,								// The object type produced at this factory.

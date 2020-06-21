@@ -2,27 +2,42 @@
 
 static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static auto DEFAULT_RULES_FILENAME = "RULES.INI";
+static auto RULES_STRING_LENGTH = 16;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
 static bool RULES_VALID = true;
+
+char* Read_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	const char* defaultValue,
+	const char* validValues[],
+	int validValueCount
+);
 
 static void Read_Log_Level_From_Rules_Ini()
 {
 	Log_Info("Parsing Log Level from rules ini");
 
 	auto logLevelLength = Get_Log_Level_Length();
-	auto logLevelBuffer = new char[logLevelLength];
-
-	WWGetPrivateProfileString("NCO", "LogLevel", "INFO", logLevelBuffer, logLevelLength, RULES_INI_BUFFER);
-
-	printf("LOGGER: %s", logLevelBuffer);
+	auto logLevelBuffer = Read_String_From_Rules_Ini(
+		"NCO",
+		"LogLevel",
+		"INFO", 
+		new const char* [5]{
+			Log_Level_To_String(OFF),
+			Log_Level_To_String(ERR),
+			Log_Level_To_String(WARN),
+			Log_Level_To_String(INFO),
+			Log_Level_To_String(DEBUG)
+		},
+		5
+	);
 
 	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
 
 	Log_Info("Resolved Log Level: %s", Log_Level_To_String(LOG_LEVEL));
-
-	delete logLevelBuffer;
 }
 
 /// <summary>
@@ -185,6 +200,96 @@ int Read_Int_From_Rules_Ini(
 		maxValueInclusive,
 		NULL
 	);
+}
+
+char* Read_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	const char* defaultValue,
+	const char* validValues[],
+	int validValueCount
+)
+{
+	Ensure_Rules_Ini_Buffer_Is_Loaded();
+
+	Log_Debug("Resolving rule value: %s -> %s", section, entry);
+	Log_Debug("Default value: %d", defaultValue);
+
+	auto valueBuffer = new char[RULES_STRING_LENGTH];
+
+	WWGetPrivateProfileString(
+		section,
+		entry,
+		defaultValue, 
+		valueBuffer,
+		RULES_STRING_LENGTH,
+		RULES_INI_BUFFER
+	);
+
+	auto valueIsValid = false;
+
+	for (auto i = 0; i < validValueCount; i++)
+	{
+		if (strcmp(valueBuffer, validValues[i]) == 0)
+		{
+			valueIsValid = true;
+			break;
+		}
+	}
+
+	if (!valueIsValid)
+	{
+		RULES_VALID = false;
+
+		auto validValuesCsv = new char[validValueCount * RULES_STRING_LENGTH];
+
+		for (auto i = 0; i < validValueCount; i++)
+		{
+			strcat(validValuesCsv, validValues[i]);
+
+			if (i != validValueCount - 1)
+			{
+				strcat(validValuesCsv, ", ");
+			}
+		}
+
+		Show_Error(
+			"Rule [%s -> %s] must be in the list (%s). Value provided: %s",
+			section,
+			entry,
+			validValuesCsv,
+			valueBuffer
+		);
+
+		delete validValuesCsv;
+	}
+
+	Log_Debug("Resolved value: %s", valueBuffer);
+	Log_Debug("Setting rule [%s -> %s] = %s", section, entry, valueBuffer);
+
+	return valueBuffer;
+}
+
+bool Read_Bool_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool defaultValue
+)
+{
+	auto defaultValueStr = defaultValue ? "true" : "false";
+
+	auto ruleValue = Read_String_From_Rules_Ini(
+		section,
+		entry,
+		defaultValueStr,
+		new const char* [2]{
+			"true",
+			"false"
+		},
+		2
+	);
+
+	return strcmp(ruleValue, "true") == 0;
 }
 
 int Read_Prerequisite(
