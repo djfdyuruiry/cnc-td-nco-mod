@@ -2,7 +2,7 @@
 
 static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static auto DEFAULT_RULES_FILENAME = "RULES.INI";
-static auto RULES_STRING_LENGTH = 16;
+static auto RULES_STRING_LENGTH = 64;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
@@ -188,6 +188,8 @@ char* Read_String_From_Rules_Ini(
 		RULES_INI_BUFFER
 	);
 
+	Convert_String_To_Upper_Case(valueBuffer);
+
 	auto valueIsValid = false;
 
 	if (validValues == NULL || validValueCount < 1)
@@ -277,13 +279,15 @@ int Read_Prerequisite(
 	// TODO: validation list
 	auto defaultString = Structure_Type_To_String(defaultValue);
 	auto structValueStr = Read_String_From_Rules_Ini(section, "Prerequisite", defaultString);
+	bool parseError = false;
+	auto structValue = Parse_Structure_Type(structValueStr, &parseError);
 
-	if (Strings_Are_Equal(structValueStr, defaultString))
+	if (parseError)
 	{
-		return 1L << defaultValue;
+		// unable to parse entry as a structure
+		RULES_VALID = false;
+		return STRUCT_NONE;
 	}
-
-	auto structValue = Parse_Structure_Type(structValueStr);
 
 	if (structValue == STRUCT_NONE)
 	{
@@ -293,29 +297,82 @@ int Read_Prerequisite(
 	return 1L << structValue;
 }
 
+static int Parse_House_List_Csv(char* houseListCsv)
+{
+	auto houseListCsvLength = strlen(houseListCsv);
+	auto houseList = 0L;
+	auto houseListInitialised = false;
+	auto currentHouse = new char[8];
+	auto currentHouseIdx = 0;
+
+	memset(currentHouse, 0, 8);
+
+	for (unsigned int i = 0; i < houseListCsvLength + 1; i++)
+	{
+		// if not at a comma and have not reached the end of the houses string
+		if (i != houseListCsvLength && houseListCsv[i] != ',')
+		{
+			currentHouse[currentHouseIdx] = houseListCsv[i];
+			currentHouseIdx++;
+
+			continue;
+		}
+
+		// harvest house value from csv entry
+		bool parseError = false;
+		auto house = Parse_House_Type(currentHouse, &parseError);
+
+		if (parseError)
+		{
+			// unable to parse entry as a house
+			RULES_VALID = false;
+			return HOUSEF_NONE;
+		}
+
+		if (house == HOUSE_NONE)
+		{
+			// none overrides all entries in csv
+			return HOUSEF_NONE;
+		}
+
+		auto houseBit = 1 << house;
+
+		if (!houseListInitialised)
+		{
+			houseList = houseBit;
+			houseListInitialised = true;
+		}
+		else
+		{
+			houseList = houseList | houseBit;
+		}
+
+		memset(currentHouse, 0, 8);
+		currentHouseIdx = 0;
+	}
+
+	delete currentHouse;
+
+	return houseList;
+}
+
 int Read_House_List_From_Rules_Ini(
 	const char* section,
-	HousesType defaultValue
+	int defaultValue,
+	const char* defaultValueAsString
 )
 {
 	// TODO: validation list
-	auto defaultString = Parse_House_Type(defaultValue);
-	auto hosueValueStr = Read_String_From_Rules_Ini(section, "Houses", defaultString);
+	auto houseListCsv = Read_String_From_Rules_Ini(section, "Houses", defaultValueAsString);
 
-	// TODO LOOP TO GATHER CSV
-	if (Strings_Are_Equal(hosueValueStr, defaultString))
+	if (Strings_Are_Equal(houseListCsv, defaultValueAsString))
 	{
-		return 1L << defaultValue;
+		return defaultValue;
 	}
 
-	auto houseValue = Parse_House_Type(hosueValueStr);
+	auto houseListBitField = Parse_House_List_Csv(houseListCsv);
 
-	if (houseValue == HOUSE_NONE)
-	{
-		return 0L;
-	}
-
-	return 1L << houseValue;
+	return houseListBitField;
 }
 
 WeaponType Read_Weapon_Type_From_Rules_Ini(
@@ -333,7 +390,15 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 		return defaultValue;
 	}
 
-	auto weaponType = Parse_Weapon_Type(weaponTypeStr);
+	bool parseError = false;
+	auto weaponType = Parse_Weapon_Type(weaponTypeStr, &parseError);
+
+	if (parseError)
+	{
+		// unable to parse entry as a weapon
+		RULES_VALID = false;
+		return WEAPON_NONE;
+	}
 
 	return weaponType;
 }

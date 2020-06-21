@@ -453,7 +453,7 @@ static BuildingTypeClass const ClassObelisk(
 	"OBLI",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("OBLI", 4),								// Build level.
-	Read_Prerequisite("ATWR", STRUCT_RADAR),				// Building prerequisite.
+	Read_Prerequisite("OBLI", STRUCT_RADAR),				// Building prerequisite.
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1018,7 +1018,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 	"NUK2",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("NUK2", 5),											// Build level.
-	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("NUK2", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -1074,7 +1074,7 @@ static BuildingTypeClass const ClassHospital(
 	"HOSP",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HOSP", 99),							// Build level.
-	STRUCTF_BARRACKS,			// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("HOSP", STRUCT_BARRACKS),			// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -1131,7 +1131,7 @@ static BuildingTypeClass const ClassBioLab(
 	"BIO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BIO", 99),							// Build level.
-	STRUCTF_HOSPITAL,			// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("BIO", STRUCT_HOSPITAL),			// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -1186,7 +1186,7 @@ static BuildingTypeClass const ClassBarracks(
 	"PYLE",									// NAME:			Short name of the structure.
 	XYP_COORD(30,33),						// Exit point for produced units.
 	Read_Build_Level("PYLE", 0),								// Build level.
-	Read_Prerequisite("NUK2", STRUCT_POWER),				// Building prerequisite.
+	Read_Prerequisite("PYLE", STRUCT_POWER),				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -1270,14 +1270,11 @@ static BuildingTypeClass const ClassHand(
 	Read_Cost("HAND", 300),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HAND", 2),											// SCENARIO:	Starting availability scenario.
 	0,61,										// RISK/RWRD:	Risk/reward rating values.
-	HOUSEF_MULTI1|
-	HOUSEF_MULTI2|
-	HOUSEF_MULTI3|
-	HOUSEF_MULTI4|
-	HOUSEF_MULTI5|
-	HOUSEF_MULTI6|
-	HOUSEF_JP|
-	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
+	Read_House_List_From_Rules_Ini(
+		"HAND",
+		HOUSEF_MULTI1 | HOUSEF_MULTI2| HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD,
+		"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"
+	),								// OWNABLE:		Ownable by house (bit field).
 	Read_Primary_Weapon("HAND", WEAPON_NONE),Read_Secondary_Weapon("HAND", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1296,7 +1293,7 @@ static BuildingTypeClass const ClassTanker(
 	"ARCO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ARCO", 99),							// Build level.
-	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("ARCO", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1351,7 +1348,7 @@ static BuildingTypeClass const ClassRepair(
 	"FIX",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("FIX", 5),								// Build level.
-	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("FIX", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -1406,7 +1403,7 @@ static BuildingTypeClass const ClassRoad(
 	STRUCT_ROAD,
 	TXT_ROAD,								// NAME:			Short name of the structure.
 	"ROAD",									// NAME:			Short name of the structure.
-	STRUCTF_NONE,							// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("ROAD", STRUCT_NONE),							// PREREQ:		Buildings that must exist first.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ROAD", 99),							// Build level.
 	0,								// Building prerequisite.
@@ -1466,7 +1463,7 @@ static BuildingTypeClass const ClassV01(
 	"V01",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V01", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V01", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1521,7 +1518,7 @@ static BuildingTypeClass const ClassV02(
 	"V02",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V02", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V02", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1576,7 +1573,7 @@ static BuildingTypeClass const ClassV03(
 	"V03",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V03", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V03", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1631,7 +1628,7 @@ static BuildingTypeClass const ClassV04(
 	"V04",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V04", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V04", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1686,7 +1683,7 @@ static BuildingTypeClass const ClassV05(
 	"V05",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V05", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V05", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1741,7 +1738,7 @@ static BuildingTypeClass const ClassV06(
 	"V06",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V06", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V06", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1796,7 +1793,7 @@ static BuildingTypeClass const ClassV07(
 	"V07",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V07", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V07", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1851,7 +1848,7 @@ static BuildingTypeClass const ClassV08(
 	"V08",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V08", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V08", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1906,7 +1903,7 @@ static BuildingTypeClass const ClassV09(
 	"V09",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V09", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V09", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -1961,7 +1958,7 @@ static BuildingTypeClass const ClassV10(
 	"V10",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V10", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V10", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2016,7 +2013,7 @@ static BuildingTypeClass const ClassV11(
 	"V11",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V11", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V11", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2071,7 +2068,7 @@ static BuildingTypeClass const ClassV12(
 	"V12",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V12", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V12", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2126,7 +2123,7 @@ static BuildingTypeClass const ClassV13(
 	"V13",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V13", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V13", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2181,7 +2178,7 @@ static BuildingTypeClass const ClassV14(
 	"V14",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V14", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V14", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2236,7 +2233,7 @@ static BuildingTypeClass const ClassV15(
 	"V15",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V15", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V15", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2291,7 +2288,7 @@ static BuildingTypeClass const ClassV16(
 	"V16",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V16", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V16", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2346,7 +2343,7 @@ static BuildingTypeClass const ClassV17(
 	"V17",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V17", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V17", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2401,7 +2398,7 @@ static BuildingTypeClass const ClassV18(
 	"V18",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V18", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V18", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2456,7 +2453,7 @@ static BuildingTypeClass const ClassV19(
 	"V19",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V19", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V19", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2512,7 +2509,7 @@ static BuildingTypeClass const ClassV20(
 	"V20",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V20", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V20", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2568,7 +2565,7 @@ static BuildingTypeClass const ClassV21(
 	"V21",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V21", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V21", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2624,7 +2621,7 @@ static BuildingTypeClass const ClassV22(
 	"V22",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V22", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V22", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2680,7 +2677,7 @@ static BuildingTypeClass const ClassV23(
 	"V23",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V23", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V23", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2736,7 +2733,7 @@ static BuildingTypeClass const ClassV24(
 	"V24",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V24", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V24", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2792,7 +2789,7 @@ static BuildingTypeClass const ClassV25(
 	"V25",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V25", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V25", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2848,7 +2845,7 @@ static BuildingTypeClass const ClassV26(
 	"V26",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V26", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V26", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2904,7 +2901,7 @@ static BuildingTypeClass const ClassV27(
 	"V27",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V27", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V27", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -2960,7 +2957,7 @@ static BuildingTypeClass const ClassV28(
 	"V28",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V28", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V28", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3016,7 +3013,7 @@ static BuildingTypeClass const ClassV29(
 	"V29",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V29", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V29", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3072,7 +3069,7 @@ static BuildingTypeClass const ClassV30(
 	"V30",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V30", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V30", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3128,7 +3125,7 @@ static BuildingTypeClass const ClassV31(
 	"V31",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V31", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V31", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3184,7 +3181,7 @@ static BuildingTypeClass const ClassV32(
 	"V32",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V32", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V32", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3240,7 +3237,7 @@ static BuildingTypeClass const ClassV33(
 	"V33",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V33", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V33", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3296,7 +3293,7 @@ static BuildingTypeClass const ClassV34(
 	"V34",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V34", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V34", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3352,7 +3349,7 @@ static BuildingTypeClass const ClassV35(
 	"V35",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V35", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V35", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3408,7 +3405,7 @@ static BuildingTypeClass const ClassV36(
 	"V36",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V36", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V36", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3463,7 +3460,7 @@ static BuildingTypeClass const ClassV37(
 	"V37",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V37", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("V37", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3518,7 +3515,7 @@ static BuildingTypeClass const ClassMission(
 	"MISS",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("MISS", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("MISS", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		true,			// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
@@ -3576,7 +3573,7 @@ static BuildingTypeClass const Sandbag(
 	"SBAG",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SBAG", 2),								// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("SBAG", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3632,7 +3629,7 @@ static BuildingTypeClass const Cyclone(
 	"CYCL",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("CYCL", 5),								// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("CYCL", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3688,7 +3685,7 @@ static BuildingTypeClass const Brick(
 	"BRIK",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BRIK", 7),								// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("BRIK", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3744,7 +3741,7 @@ static BuildingTypeClass const Barbwire(
 	"BARB",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BARB", 98),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("BARB", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
@@ -3801,7 +3798,7 @@ static BuildingTypeClass const Wood(
 	"WOOD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("WOOD", 99),							// Build level.
-	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
+	Read_Prerequisite("WOOD", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?

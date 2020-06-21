@@ -1,6 +1,6 @@
 #include "function.h"
 
-HousesType Parse_House_Type(char* houseTypeString)
+HousesType Parse_House_Type(char* houseTypeString, bool* parseError)
 {
     HousesType house;
 
@@ -30,33 +30,34 @@ HousesType Parse_House_Type(char* houseTypeString)
 	}
 	else if (Strings_Are_Equal(houseTypeString, "MULTI2"))
 	{
-		house = HOUSE_MULTI2;
+        house = HOUSE_MULTI2;
 	}
 	else if (Strings_Are_Equal(houseTypeString, "MULTI3"))
 	{
-		house = HOUSE_MULTI3;
+        house = HOUSE_MULTI3;
 	}
 	else if (Strings_Are_Equal(houseTypeString, "MULTI4"))
 	{
-		house = HOUSE_MULTI4;
+        house = HOUSE_MULTI4;
 	}
 	else if (Strings_Are_Equal(houseTypeString, "MULTI5"))
 	{
-		house = HOUSE_MULTI5;
+        house = HOUSE_MULTI5;
 	}
 	else if (Strings_Are_Equal(houseTypeString, "MULTI6"))
 	{
-		house = HOUSE_MULTI6;
+        house = HOUSE_MULTI6;
 	}
     else
     {
+        *parseError = true;
         Show_Error("Unable to parse house from string: %s", houseTypeString);
     }
 
 	return house;
 }
 
-char* Parse_House_Type(HousesType houseType)
+char* House_Type_To_String(HousesType houseType)
 {
     char* houseTypeString;
 
@@ -112,7 +113,7 @@ char* Parse_House_Type(HousesType houseType)
     return houseTypeString;
 }
 
-StructType Parse_Structure_Type(char* structTypeString)
+StructType Parse_Structure_Type(char* structTypeString, bool* parseError)
 {
     StructType structType;
 
@@ -382,6 +383,7 @@ StructType Parse_Structure_Type(char* structTypeString)
     }
     else
     {
+        *parseError = true;
         Show_Error("Unable to parse structure from string: %s", structTypeString);
     }
 
@@ -664,7 +666,7 @@ char* Structure_Type_To_String(StructType structType)
     return structTypeString;
 }
 
-WeaponType Parse_Weapon_Type(char* weaponTypeString)
+WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
 {
     WeaponType weaponType;
 
@@ -774,6 +776,7 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString)
     }
     else
     {
+        *parseError = true;
         Show_Error("Unable to parse weapon type from string: %s", weaponTypeString);
     }
 

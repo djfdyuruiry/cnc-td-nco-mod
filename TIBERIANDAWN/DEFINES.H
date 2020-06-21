@@ -668,6 +668,7 @@ typedef enum HousesType : char {
 
 //inline HousesType operator++(HousesType &, int);
 
+#define	HOUSEF_NONE		0L
 #define	HOUSEF_GOOD		(1<<HOUSE_GOOD)
 #define	HOUSEF_BAD		(1<<HOUSE_BAD)
 #define	HOUSEF_NEUTRAL	(1<<HOUSE_NEUTRAL)
