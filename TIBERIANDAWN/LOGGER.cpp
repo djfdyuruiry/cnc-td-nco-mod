@@ -4,6 +4,8 @@ static auto LOG_FILE_PATH = "log\\nco.log";
 static auto LOG_LINE_LENGTH = 1024;
 static auto LOG_LEVEL_LENGTH = 5;
 
+static HANDLE LOG_FILE_HANDLE = NULL;
+
 const char* Log_Level_To_String(LogLevel level)
 {
 	switch (level)
@@ -88,8 +90,19 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		messageBuffer
 	);
 
-	// output to log file and cleanup
-	Append_To_File(LOG_FILE_PATH, messageWithLevelBuffer);
+	if (LOG_FILE_HANDLE == NULL)
+	{
+		LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH);
+
+		if (LOG_FILE_HANDLE == NULL)
+		{
+			Show_Error("Failed to open log file - check env var path is correct and/or default `log` directory is present");
+		}
+	}
+
+	// output to log file and console
+	Append_To_File(LOG_FILE_HANDLE, messageWithLevelBuffer);
+	puts(messageWithLevelBuffer);
 
 	delete messageBuffer;
 	delete messageWithLevelBuffer;

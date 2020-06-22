@@ -982,11 +982,17 @@ void On_Achievement_Event(const HouseClass* player_ptr, const char *achievement_
  */
 
 // utility functions
-void Show_Error(char* messageFormat, ...);
+void Show_Error(const char* messageFormat, ...);
+
 const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue);
-void Append_To_File(const char* filename, char* data);
+
+HANDLE Open_File_For_Appending(const char* filename);
+void Append_To_File(HANDLE file, char* data);
+
 bool Strings_Are_Equal(char* subject, const char* expected);
 void Convert_String_To_Upper_Case(char* subject);
+char* Allocate_String(int length);
+char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCount);
 
 // custom logger
 typedef enum LogLevel : unsigned short {
@@ -1022,6 +1028,18 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError);
 char* House_Type_To_String(HousesType houseType);
 char* Structure_Type_To_String(StructType structType);
 char* Weapon_Type_To_String(WeaponType weaponType);
+
+// lua
+typedef struct LuaScripts {
+	int ScriptFileCount;
+	char** ScriptFiles;
+} LuaScripts;
+
+void Initialise_Lua();
+void Execute_Lua_Script(char* luaScript);
+
+// lua events
+void On_Scenario_Start(unsigned int scenarioNumber);
 
 // rules.ini
 char* Read_Rules_Ini();
@@ -1113,10 +1131,10 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 #endif
 
 bool Rules_Ini_Failed_Validation();
-bool Lua_Is_Enabled();
+
 LogLevel Current_Log_Level();
 
-// lua
-void Initialise_Lua();
+bool Lua_Is_Enabled();
+LuaScripts Rules_Get_Lua_Scripts();
 
 #endif

@@ -148,6 +148,8 @@ bool Start_Scenario(char *root, bool briefing)
 		((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA)).Primary = WEAPON_DRAGON;
 	}
 
+	On_Scenario_Start(Scenario);
+
 	/*
 	** Set the options values, since the palette has been initialized by Read_Scenario
 	*/

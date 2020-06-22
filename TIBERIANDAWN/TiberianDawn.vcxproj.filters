@@ -1251,6 +1251,9 @@
     <ClCompile Include="LUA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LUA_EVENTS.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="win32lib\FACINGFF.ASM">

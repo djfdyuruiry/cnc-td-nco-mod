@@ -146,7 +146,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -170,6 +170,8 @@
       </ImageHasSafeExceptionHandlers>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>false</DataExecutionPrevention>
+      <ShowProgress>
+      </ShowProgress>
     </Link>
     <PreLinkEvent>
       <Command>
@@ -192,6 +194,9 @@ if exist ..\bin\$(PlatformName)\lua53.lib del ..\bin\$(PlatformName)\lua53.lib
 
 copy ..\lib\lua53.lib ..\bin\$(PlatformName)\
 
+if exist ..\bin\$(PlatformName)\test.lua del ..\bin\$(PlatformName)\test.lua
+
+copy ..\lib\test.lua ..\bin\$(PlatformName)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -539,6 +544,7 @@ copy ..\lib\lua53.lib ..\bin\$(PlatformName)\
     <ClCompile Include="LOGGER.cpp" />
     <ClCompile Include="LOGIC.CPP" />
     <ClCompile Include="LUA.cpp" />
+    <ClCompile Include="LUA_EVENTS.CPP" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.CPP" />
     <ClCompile Include="MAPEDDLG.CPP" />

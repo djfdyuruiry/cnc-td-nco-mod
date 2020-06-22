@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="messageFormat">Message in <ref>sprintf</ref> format.</param>
 /// <param name="..."><ref>sprintf</ref> format arguments</param>
-void Show_Error(char* messageFormat, ...)
+void Show_Error(const char* messageFormat, ...)
 {
 	auto logLineLength = Get_Log_Line_Length();
 	auto formattedMessageBuffer = new char[logLineLength];

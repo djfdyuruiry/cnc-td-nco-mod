@@ -70,6 +70,8 @@ If you get a COM error when trying to open the solution/project, follow the belo
 - Unit strength configurable for a few infantry unit types
 - Added custom logging to a new log file `nco.log`
 
+- DLL crashes second time a scenario is loaded from main menu
+
 ## Problem Archive
 
 - ~Trying to set max speed but does not seem to work?~ (max value is 255 for that field - added validation logic)

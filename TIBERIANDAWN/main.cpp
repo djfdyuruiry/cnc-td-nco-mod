@@ -27,5 +27,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 
 	Initialise_Lua();
 
+	On_Scenario_Start(10);
+
 	exit(0);
 }

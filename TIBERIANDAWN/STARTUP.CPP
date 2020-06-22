@@ -125,6 +125,21 @@ BOOL WINAPI DllMain(HINSTANCE instance, unsigned int fdwReason, void *lpvReserve
 	switch (fdwReason) {
 		
 		case DLL_PROCESS_ATTACH:
+			// TODO: Figure out why second invocation of DLL fails
+			if (Rules_Ini_Failed_Validation())
+			{
+				return(EXIT_FAILURE);
+			}
+
+			if (Lua_Is_Enabled())
+			{
+				Initialise_Lua();
+			}
+			else
+			{
+				Log_Warn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
+			}
+
 			ProgramInstance = instance;
 			break;
 
@@ -166,20 +181,6 @@ int DLL_Startup(const char * command_line_in)
 	strcpy(command_line, command_line_in);
 
 	CCDebugString ("C&C95 - Starting up.\n");
-
-	if (Rules_Ini_Failed_Validation())
-	{
-		return(EXIT_FAILURE);
-	}
-
-	if (Lua_Is_Enabled())
-	{
-		Initialise_Lua();
-	}
-	else
-	{
-		Log_Warn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
-	}
 
 	//WindowsTimer = new WinTimerClass(60,FALSE);
 	//CD_Test();

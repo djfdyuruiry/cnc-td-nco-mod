@@ -30,10 +30,15 @@ if exist "%CNC_PATH%\RULES.INI" (
   del "%CNC_PATH%\RULES.INI"
 )
 
+if exist "%CNC_PATH%\test.lua" (
+  del "%CNC_PATH%\test.lua"
+)
+
 if exist "%CNC_PATH%\tiberian_dawn.bat" (
   del "%CNC_PATH%\tiberian_dawn.bat"
 )
 
 copy "lib\lua53.dll" "%CNC_PATH%"
+copy "game\lua\test.lua" "%CNC_PATH%"
 copy "game\cfg\RULES.INI" "%CNC_PATH%"
 copy "game\scripts\tiberian_dawn.bat" "%CNC_PATH%"

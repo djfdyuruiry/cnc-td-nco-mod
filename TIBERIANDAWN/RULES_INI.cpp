@@ -6,8 +6,10 @@ static auto RULES_STRING_LENGTH = 512;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
-static bool LUA_IS_ENABLED = false;
+
 static bool RULES_VALID = true;
+static bool LUA_IS_ENABLED = false;
+static LuaScripts RULES_LUA_SCRIPTS;
 
 char* Read_String_From_Rules_Ini(
 	const char* section,
@@ -16,6 +18,27 @@ char* Read_String_From_Rules_Ini(
 	const char* validValues[],
 	int validValueCount
 );
+
+char* Read_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	const char* defaultValue
+);
+
+static void Read_Lua_Scripts_From_Rules_Ini()
+{
+	Log_Info("Reading Lua scripts from rules ini");
+
+	RULES_LUA_SCRIPTS = {};
+
+	auto onScenarioLoadCsv = Read_String_From_Rules_Ini("NCO", "LuaScripts", "");
+
+	RULES_LUA_SCRIPTS.ScriptFiles = Parse_Csv_String(
+		onScenarioLoadCsv,
+		256,
+		&RULES_LUA_SCRIPTS.ScriptFileCount
+	);
+}
 
 static void Read_Log_Level_From_Rules_Ini()
 {
@@ -83,7 +106,9 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 	RULES_INI_BUFFER = Read_Rules_Ini();
 
 	Read_Log_Level_From_Rules_Ini();
+
 	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini("NCO", "EnableLuaScripts", false);
+	Read_Lua_Scripts_From_Rules_Ini();
 }
 
 static int Read_Int_From_Rules_Ini(
@@ -300,30 +325,17 @@ int Read_Prerequisite(
 	return 1L << structValue;
 }
 
-static int Parse_House_List_Csv(char* houseListCsv)
+static int Parse_House_Name_List_Csv(char* houseListCsv)
 {
-	auto houseListCsvLength = strlen(houseListCsv);
-	auto houseList = 0L;
+	auto houseNameListSize = 0;
+	auto houseNameList = Parse_Csv_String(houseListCsv, 8, &houseNameListSize);
 	auto houseListInitialised = false;
-	auto currentHouse = new char[8];
-	auto currentHouseIdx = 0;
+	auto houseList = 0;
 
-	memset(currentHouse, 0, 8);
-
-	for (unsigned int i = 0; i < houseListCsvLength + 1; i++)
+	for (auto i = 0; i < houseNameListSize; i++)
 	{
-		// if not at a comma and have not reached the end of the houses string
-		if (i != houseListCsvLength && houseListCsv[i] != ',')
-		{
-			currentHouse[currentHouseIdx] = houseListCsv[i];
-			currentHouseIdx++;
-
-			continue;
-		}
-
-		// harvest house value from csv entry
 		bool parseError = false;
-		auto house = Parse_House_Type(currentHouse, &parseError);
+		auto house = Parse_House_Type(houseNameList[i], &parseError);
 
 		if (parseError)
 		{
@@ -349,12 +361,9 @@ static int Parse_House_List_Csv(char* houseListCsv)
 		{
 			houseList = houseList | houseBit;
 		}
-
-		memset(currentHouse, 0, 8);
-		currentHouseIdx = 0;
 	}
 
-	delete currentHouse;
+	delete houseNameList;
 
 	return houseList;
 }
@@ -373,7 +382,7 @@ int Read_House_List_From_Rules_Ini(
 		return defaultValue;
 	}
 
-	auto houseListBitField = Parse_House_List_Csv(houseListCsv);
+	auto houseListBitField = Parse_House_Name_List_Csv(houseListCsv);
 
 	return houseListBitField;
 }
@@ -419,4 +428,9 @@ LogLevel Current_Log_Level()
 bool Lua_Is_Enabled()
 {
 	return LUA_IS_ENABLED;
+}
+
+LuaScripts Rules_Get_Lua_Scripts()
+{
+	return RULES_LUA_SCRIPTS;
 }
