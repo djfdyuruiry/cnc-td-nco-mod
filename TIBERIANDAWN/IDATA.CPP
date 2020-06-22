@@ -1459,6 +1459,7 @@ InfantryTypeClass::InfantryTypeClass	(
 	IsCapture = is_capture;
 	IsFraidyCat = is_fraidycat;
 	IsCivilian = is_civilian;
+	IsAvoidingTiberium = false;
 	Type = type;
 	FireLaunch = firelaunch;
 	ProneLaunch = pronelaunch;
