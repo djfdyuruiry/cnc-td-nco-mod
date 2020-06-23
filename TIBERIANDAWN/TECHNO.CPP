@@ -177,6 +177,7 @@ TechnoTypeClass::TechnoTypeClass(
 		int risk,
 		int reward,
 		int ownable,
+		const char* houseListCsv,
 		WeaponType primary,
 		WeaponType secondary,
 		ArmorType armor) :
@@ -212,6 +213,7 @@ TechnoTypeClass::TechnoTypeClass(
 	IsTurretEquipped= is_turret_equipped;
 	IsNominal = is_nominal;
 	Ownable = ownable;
+	HouseListCsv = strdup(houseListCsv);
 	Reward = reward;
 	Scenario = scenario;
 	SightRange = sightrange;

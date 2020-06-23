@@ -57,6 +57,17 @@ HousesType Parse_House_Type(char* houseTypeString, bool* parseError)
 	return house;
 }
 
+HousesType Parse_House_Type(const char* houseTypeString, bool* parseError)
+{
+    auto houseTypeStr = strdup(houseTypeString);
+
+    auto houseType = Parse_House_Type(houseTypeStr, parseError);
+
+    delete houseTypeStr;
+
+    return houseType;
+}
+
 char* House_Type_To_String(HousesType houseType)
 {
     char* houseTypeString;
@@ -910,20 +921,56 @@ char* Weapon_Type_To_String(WeaponType weaponType)
     return weaponTypeString;
 }
 
+
 InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
 {
     InfantryType infantryType = INFANTRY_NONE;
 
-    if (Strings_Are_Equal(infantryTypeString, "E1"))
+    if (Strings_Are_Equal(infantryTypeString, "NONE"))
     {
-        return INFANTRY_E1;
+        return INFANTRY_NONE;
     }
-    // TODO: add other infantry types
-    else
+    if (Strings_Are_Equal(infantryTypeString, "RAMBO"))
     {
-        *parseError = true;
-        Show_Error("Unable to parse infantry type from string: %s", infantryTypeString);
+        return INFANTRY_RAMBO;
     }
+    else if (Strings_Are_Equal(infantryTypeString, "C10"))
+    {
+        return INFANTRY_C10;
+    }
+    else if (Strings_Are_Equal(infantryTypeString, "MOEBIUS"))
+    {
+        return INFANTRY_MOEBIUS;
+    }
+    else if (Strings_Are_Equal(infantryTypeString, "DELPHI"))
+    {
+        return INFANTRY_DELPHI;
+    }
+    else if (Strings_Are_Equal(infantryTypeString, "CHAN"))
+    {
+        return INFANTRY_CHAN;
+    }
+    else if (infantryTypeString[0] == 'E')
+    {
+        auto number = Parse_Number(infantryTypeString[1]);
+
+        if (number != 6 && number > 0 && number < 8)
+        {
+            return (InfantryType)(number - 1);
+        }
+    }
+    else if (infantryTypeString[0] == 'C')
+    {
+        auto number = Parse_Number(infantryTypeString[1]);
+
+        if (number > 0 && number < 10)
+        {
+            return (InfantryType)(number + 6);
+        }
+    }
+
+    *parseError = true;
+    Show_Error("Unable to parse infantry type from string: %s", infantryTypeString);
 
     return infantryType;
 }
@@ -932,9 +979,61 @@ InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseErro
 {
     auto infantryTypeStr = strdup(infantryTypeString);
 
-    auto result = Parse_Infantry_Type(infantryTypeStr, parseError);
+    InfantryType result = Parse_Infantry_Type(infantryTypeStr, parseError);
 
     delete infantryTypeStr;
 
     return result;
+}
+
+char* Infantry_Type_To_String(InfantryType infantryType)
+{
+    char* infantryTypeString;
+
+    if (infantryType == INFANTRY_NONE)
+    {
+        infantryTypeString = "NONE";
+    }
+    else if (infantryType == INFANTRY_RAMBO)
+    {
+        infantryTypeString = "RAMBO";
+    }
+    else if (infantryType == INFANTRY_C10)
+    {
+        infantryTypeString = "C10";
+    }
+    else if (infantryType == INFANTRY_MOEBIUS)
+    {
+        infantryTypeString = "MOEBIUS";
+    }
+    else if (infantryType == INFANTRY_DELPHI)
+    {
+        infantryTypeString = "DELPHI";
+    }
+    else if (infantryType == INFANTRY_CHAN)
+    {
+        infantryTypeString = "CHAN";
+    }
+    else if (infantryType != 6 && infantryType > -1 && infantryType < 6)
+    {
+        auto index = infantryType + 1;
+
+        infantryTypeString = new char[2];
+
+        sprintf(infantryTypeString, "E%d", index);
+    }
+    else if (infantryType > 6 && infantryType < 17)
+    {
+        auto index = infantryType - 6;
+
+        infantryTypeString = new char[2];
+
+        sprintf(infantryTypeString, "C%d", index);
+    }
+    else
+    {
+        Show_Error("Unable to convert infantry type to string: %d", infantryType);
+    }
+
+    return infantryTypeString;
 }

@@ -1,5 +1,15 @@
 #include "function.h"
 
+char* Allocate_String(int length)
+{
+	auto stringSizeInBytes = length * sizeof(char);
+	auto string = new char[length];
+
+	memset(string, 0, stringSizeInBytes);
+
+	return string;
+}
+
 bool Strings_Are_Equal(char* subject, char* expected)
 {
 	return strcmp(subject, expected) == 0;
@@ -40,23 +50,83 @@ bool Strings_Are_Equal(const char* subject, const char* expected)
 	return result;
 }
 
-char * Convert_String_To_Upper_Case(const char* subject)
+bool Strings_Is_Empty(const char* subject)
+{
+	return Strings_Are_Equal(subject, "");
+}
+
+bool Strings_Is_Empty(char* subject)
+{
+	return Strings_Are_Equal(subject, "");
+}
+
+bool String_Starts_With(char* subject, char* expected)
+{
+	auto subjectLength = strlen(subject);
+	auto expectedLength = strlen(expected);
+
+	if (expectedLength > subjectLength)
+	{
+		return false;
+	}
+
+	if (Strings_Is_Empty(subject) || Strings_Is_Empty(expected))
+	{
+		return false;
+	}
+
+	for (unsigned int i = 0; i < expectedLength; i++)
+	{
+		if (subject[i] != expected[i])
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool String_Starts_With(const char* subject, char* expected)
+{
+	auto subjectStr = strdup(subject);
+
+	auto result = String_Starts_With(subjectStr, expected);
+
+	delete subjectStr;
+
+	return result;
+}
+bool String_Starts_With(char* subject, const char* expected)
+{
+	auto expectedStr = strdup(expected);
+
+	auto result = String_Starts_With(subject, expectedStr);
+
+	delete expectedStr;
+
+	return result;
+}
+
+bool String_Starts_With(const char* subject, const char* expected)
+{
+	auto subjectStr = strdup(subject);
+	auto expectedStr = strdup(expected);
+
+	auto result = String_Starts_With(subjectStr, expectedStr);
+
+	delete subjectStr;
+	delete expectedStr;
+
+	return result;
+}
+
+char* Convert_String_To_Upper_Case(const char* subject)
 {
 	auto uppercaseSubject = strdup(subject);
 
 	Convert_String_To_Upper_Case(uppercaseSubject);
 
 	return uppercaseSubject;
-}
-
-char* Allocate_String(int length)
-{
-	auto stringSizeInBytes = length * sizeof(char);
-	auto string = new char[length];
-
-	memset(string, 0, stringSizeInBytes);
-
-	return string;
 }
 
 char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCount)

@@ -959,34 +959,35 @@ typedef enum OverlayType : char {
 
 //inline OverlayType operator++(OverlayType &, int);
 
-
 /**********************************************************************
 **	This specifies the infantry in the game. The "E" designation is
 **	similar to the army classification of enlisted soldiers.
 */
 typedef enum InfantryType : char {
 	INFANTRY_NONE=-1,
-	INFANTRY_E1,				// Mini-gun armed.
-	INFANTRY_E2,				// Grenade thrower.
-	INFANTRY_E3,				// Rocket launcher.
-	INFANTRY_E4,				// Flame thrower equipped.
-	INFANTRY_E5,				// Chemical thrower equipped.
-	INFANTRY_E7,				// Engineer.
-	INFANTRY_RAMBO,			// Commando.
 
-	INFANTRY_C1,				// Civilian
-	INFANTRY_C2,				// Civilian
-	INFANTRY_C3,				// Civilian
-	INFANTRY_C4,				// Civilian
-	INFANTRY_C5,				// Civilian
-	INFANTRY_C6,				// Civilian
-	INFANTRY_C7,				// Civilian
-	INFANTRY_C8,				// Civilian
-	INFANTRY_C9,				// Civilian
-	INFANTRY_C10,				// Nikumba
-	INFANTRY_MOEBIUS,			// Dr. Moebius
-	INFANTRY_DELPHI,			// Agent "Delphi"
-	INFANTRY_CHAN,				// Dr. Chan
+	INFANTRY_E1=0,				// Mini-gun armed.
+	INFANTRY_E2=1,				// Grenade thrower.
+	INFANTRY_E3=2,				// Rocket launcher.
+	INFANTRY_E4=3,				// Flame thrower equipped.
+	INFANTRY_E5=4,				// Chemical thrower equipped.
+	INFANTRY_E7=5,				// Engineer.
+	INFANTRY_RAMBO=6,			// Commando.
+
+	INFANTRY_C1=7,				// Civilian
+	INFANTRY_C2=8,				// Civilian
+	INFANTRY_C3=9,				// Civilian
+	INFANTRY_C4=10,				// Civilian
+	INFANTRY_C5=11,				// Civilian
+	INFANTRY_C6=12,				// Civilian
+	INFANTRY_C7=13,				// Civilian
+	INFANTRY_C8=14,				// Civilian
+	INFANTRY_C9=15,				// Civilian
+	INFANTRY_C10=16,			// Nikumba
+
+	INFANTRY_MOEBIUS=17,		// Dr. Moebius
+	INFANTRY_DELPHI=18,			// Agent "Delphi"
+	INFANTRY_CHAN=19,			// Dr. Chan
 
 	INFANTRY_COUNT,
 	INFANTRY_FIRST=0

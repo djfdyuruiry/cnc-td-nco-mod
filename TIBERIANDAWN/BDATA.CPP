@@ -202,6 +202,7 @@ static BuildingTypeClass const ClassTemple(
 	Read_Scenario_Level("TMPL", 13),										// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("TMPL", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("TMPL", WEAPON_NONE),Read_Secondary_Weapon("TMPL", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -250,6 +251,7 @@ static BuildingTypeClass const ClassEye(
 	Read_Scenario_Level("EYE", 13),										// SCENARIO:	Starting availability scenario.
 	0,100,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("EYE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("EYE", WEAPON_NONE),Read_Secondary_Weapon("EYE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -302,6 +304,7 @@ static BuildingTypeClass const ClassWeapon(
 	Read_Scenario_Level("WEAP", 5),											// SCENARIO:	Starting availability scenario.
 	0,86,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("WEAP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("WEAP", WEAPON_NONE),Read_Secondary_Weapon("WEAP", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -350,6 +353,7 @@ static BuildingTypeClass const ClassGTower(
 	Read_Scenario_Level("GTWR", 7),											// SCENARIO:	Starting availability scenario.
 	100,25,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("GTWR", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("GTWR", WEAPON_CHAIN_GUN),Read_Secondary_Weapon("GTWR", WEAPON_NONE),
 //	WEAPON_M60MG,WEAPON_NONE,
 	ARMOR_WOOD,								// ARMOR:		Armor type
@@ -399,6 +403,7 @@ static BuildingTypeClass const ClassATower(
 	Read_Scenario_Level("ATWR", 13),										// SCENARIO:	Starting availability scenario.
 	100,30,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ATWR", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("ATWR", WEAPON_TOW_TWO),Read_Secondary_Weapon("ATWR", WEAPON_NONE),
 //	WEAPON_TOMAHAWK,WEAPON_NONE,
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
@@ -448,6 +453,7 @@ static BuildingTypeClass const ClassObelisk(
 	Read_Scenario_Level("OBLI", 11),										// SCENARIO:	Starting availability scenario.
 	100,35,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("OBLI", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("OBLI", WEAPON_OBELISK_LASER),Read_Secondary_Weapon("OBLI", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -504,6 +510,7 @@ static BuildingTypeClass const ClassTurret(
 	Read_Scenario_Level("GUN", 8),											// SCENARIO:	Starting availability scenario.
 	300,26,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("GUN", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("GUN", WEAPON_TURRET_GUN),Read_Secondary_Weapon("GUN", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -552,6 +559,7 @@ static BuildingTypeClass const ClassConst(
 	Read_Scenario_Level("FACT", 1),											// SCENARIO:	Starting availability scenario.
 	0,70,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("FACT", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("FACT", WEAPON_NONE),Read_Secondary_Weapon("FACT", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -600,6 +608,7 @@ static BuildingTypeClass const ClassRefinery(
 	Read_Scenario_Level("PROC", 2),											// SCENARIO:	Starting availability scenario.
 	0,55,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("PROC", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("PROC", WEAPON_NONE),Read_Secondary_Weapon("PROC", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -649,6 +658,7 @@ static BuildingTypeClass const ClassStorage(
 	Read_Scenario_Level("SILO", 2),											// SCENARIO:	Starting availability scenario.
 	0,16,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SILO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("SILO", WEAPON_NONE),Read_Secondary_Weapon("SILO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -697,6 +707,7 @@ static BuildingTypeClass const ClassHelipad(
 	Read_Scenario_Level("HPAD", 10),										// SCENARIO:	Starting availability scenario.
 	0,65,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HPAD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("HPAD", WEAPON_NONE),Read_Secondary_Weapon("HPAD", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -745,6 +756,7 @@ static BuildingTypeClass const ClassCommand(
 	Read_Scenario_Level("HQ", 3),											// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HQ", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("HQ", WEAPON_NONE),Read_Secondary_Weapon("HQ", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -793,6 +805,7 @@ static BuildingTypeClass const ClassSAM(
 	Read_Scenario_Level("SAM", 5),											// SCENARIO:	Starting availability scenario.
 	300,40,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SAM", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("SAM", WEAPON_NIKE),Read_Secondary_Weapon("SAM", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -841,6 +854,7 @@ static BuildingTypeClass const ClassAirStrip(
 	Read_Scenario_Level("AFLD", 5),											// SCENARIO:	Starting availability scenario.
 	300,86,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("AFLD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("AFLD", WEAPON_NONE),Read_Secondary_Weapon("AFLD", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -889,6 +903,7 @@ static BuildingTypeClass const ClassPower(
 	Read_Scenario_Level("NUKE", 1),											// SCENARIO:	Starting availability scenario.
 	0,50,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("NUKE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("NUKE", WEAPON_NONE),Read_Secondary_Weapon("NUKE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -937,6 +952,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 	Read_Scenario_Level("NUK2", 13),										// SCENARIO:	Starting availability scenario.
 	0,75,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("NUK2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("NUK2", WEAPON_NONE),Read_Secondary_Weapon("NUK2", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -985,6 +1001,7 @@ static BuildingTypeClass const ClassHospital(
 	Read_Scenario_Level("HOSP", 99),										// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HOSP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("HOSP", WEAPON_NONE),Read_Secondary_Weapon("HOSP", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1034,6 +1051,7 @@ static BuildingTypeClass const ClassBioLab(
 	Read_Scenario_Level("BIO", 99),										// SCENARIO:	Starting availability scenario.
 	0,1,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BIO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("BIO", WEAPON_NONE),Read_Secondary_Weapon("BIO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1082,6 +1100,7 @@ static BuildingTypeClass const ClassBarracks(
 	Read_Scenario_Level("PYLE", 1),											// SCENARIO:	Starting availability scenario.
 	0,60,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("PYLE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("PYLE", WEAPON_NONE),Read_Secondary_Weapon("PYLE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1130,6 +1149,7 @@ static BuildingTypeClass const ClassHand(
 	Read_Scenario_Level("HAND", 2),											// SCENARIO:	Starting availability scenario.
 	0,61,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HAND", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("HAND", WEAPON_NONE),Read_Secondary_Weapon("HAND", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1178,6 +1198,7 @@ static BuildingTypeClass const ClassTanker(
 	Read_Scenario_Level("ARCO", 0),											// SCENARIO:	Starting availability scenario.
 	0,1, 										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ARCO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("ARCO", WEAPON_NONE),Read_Secondary_Weapon("ARCO", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1226,6 +1247,7 @@ static BuildingTypeClass const ClassRepair(
 	Read_Scenario_Level("FIX", 8),											// SCENARIO:	Starting availability scenario.
 	0,46,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("FIX", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("FIX", WEAPON_NONE),Read_Secondary_Weapon("FIX", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1276,6 +1298,7 @@ static BuildingTypeClass const ClassRoad(
 	Read_Scenario_Level("ROAD", 99),										// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ROAD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("ROAD", WEAPON_NONE),Read_Secondary_Weapon("ROAD", WEAPON_NONE),
 	ARMOR_NONE,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1325,6 +1348,7 @@ static BuildingTypeClass const ClassV01(
 	Read_Scenario_Level("V01", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V01", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V01", WEAPON_NONE),Read_Secondary_Weapon("V01", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1373,6 +1397,7 @@ static BuildingTypeClass const ClassV02(
 	Read_Scenario_Level("V02", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V02", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V02", WEAPON_NONE),Read_Secondary_Weapon("V02", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1421,6 +1446,7 @@ static BuildingTypeClass const ClassV03(
 	Read_Scenario_Level("V03", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V03", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V03", WEAPON_NONE),Read_Secondary_Weapon("V03", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1469,6 +1495,7 @@ static BuildingTypeClass const ClassV04(
 	Read_Scenario_Level("V04", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V04", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V04", WEAPON_NONE),Read_Secondary_Weapon("V04", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1517,6 +1544,7 @@ static BuildingTypeClass const ClassV05(
 	Read_Scenario_Level("V05", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V05", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V05", WEAPON_NONE),Read_Secondary_Weapon("V05", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1565,6 +1593,7 @@ static BuildingTypeClass const ClassV06(
 	Read_Scenario_Level("V06", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V06", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V06", WEAPON_NONE),Read_Secondary_Weapon("V06", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1613,6 +1642,7 @@ static BuildingTypeClass const ClassV07(
 	Read_Scenario_Level("V07", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V07", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V07", WEAPON_NONE),Read_Secondary_Weapon("V07", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1661,6 +1691,7 @@ static BuildingTypeClass const ClassV08(
 	Read_Scenario_Level("V08", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V08", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V08", WEAPON_NONE),Read_Secondary_Weapon("V08", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1709,6 +1740,7 @@ static BuildingTypeClass const ClassV09(
 	Read_Scenario_Level("V09", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V09", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V09", WEAPON_NONE),Read_Secondary_Weapon("V09", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1757,6 +1789,7 @@ static BuildingTypeClass const ClassV10(
 	Read_Scenario_Level("V10", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V10", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V10", WEAPON_NONE),Read_Secondary_Weapon("V10", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1805,6 +1838,7 @@ static BuildingTypeClass const ClassV11(
 	Read_Scenario_Level("V11", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V11", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V11", WEAPON_NONE),Read_Secondary_Weapon("V11", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1853,6 +1887,7 @@ static BuildingTypeClass const ClassV12(
 	Read_Scenario_Level("V12", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V12", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V12", WEAPON_NONE),Read_Secondary_Weapon("V12", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1901,6 +1936,7 @@ static BuildingTypeClass const ClassV13(
 	Read_Scenario_Level("V13", 0),											// SCENARIO:	Starting availability scenario.
 	0,2, 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V13", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V13", WEAPON_NONE),Read_Secondary_Weapon("V13", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1949,6 +1985,7 @@ static BuildingTypeClass const ClassV14(
 	Read_Scenario_Level("V14", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V14", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V14", WEAPON_NONE),Read_Secondary_Weapon("V14", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -1997,6 +2034,7 @@ static BuildingTypeClass const ClassV15(
 	Read_Scenario_Level("V15", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V15", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V15", WEAPON_NONE),Read_Secondary_Weapon("V15", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2045,6 +2083,7 @@ static BuildingTypeClass const ClassV16(
 	Read_Scenario_Level("V16", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V16", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V16", WEAPON_NONE),Read_Secondary_Weapon("V16", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2093,6 +2132,7 @@ static BuildingTypeClass const ClassV17(
 	Read_Scenario_Level("V17", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V17", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V17", WEAPON_NONE),Read_Secondary_Weapon("V17", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2141,6 +2181,7 @@ static BuildingTypeClass const ClassV18(
 	Read_Scenario_Level("V18", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V18", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V18", WEAPON_NONE),Read_Secondary_Weapon("V18", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2189,6 +2230,7 @@ static BuildingTypeClass const ClassV19(
 	Read_Scenario_Level("V19", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V19", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V19", WEAPON_NONE),Read_Secondary_Weapon("V19", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2237,6 +2279,7 @@ static BuildingTypeClass const ClassV20(
 	Read_Scenario_Level("V20", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V20", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V20", WEAPON_NONE),Read_Secondary_Weapon("V20", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2285,6 +2328,7 @@ static BuildingTypeClass const ClassV21(
 	Read_Scenario_Level("V21", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V21", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V21", WEAPON_NONE),Read_Secondary_Weapon("V21", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2333,6 +2377,7 @@ static BuildingTypeClass const ClassV22(
 	Read_Scenario_Level("V22", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V22", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V22", WEAPON_NONE),Read_Secondary_Weapon("V22", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2381,6 +2426,7 @@ static BuildingTypeClass const ClassV23(
 	Read_Scenario_Level("V23", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V23", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V23", WEAPON_NONE),Read_Secondary_Weapon("V23", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2429,6 +2475,7 @@ static BuildingTypeClass const ClassV24(
 	Read_Scenario_Level("V24", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V24", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V24", WEAPON_NONE),Read_Secondary_Weapon("V24", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2477,6 +2524,7 @@ static BuildingTypeClass const ClassV25(
 	Read_Scenario_Level("V25", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V25", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V25", WEAPON_NONE),Read_Secondary_Weapon("V25", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2525,6 +2573,7 @@ static BuildingTypeClass const ClassV26(
 	Read_Scenario_Level("V26", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V26", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V26", WEAPON_NONE),Read_Secondary_Weapon("V26", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2573,6 +2622,7 @@ static BuildingTypeClass const ClassV27(
 	Read_Scenario_Level("V27", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V27", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V27", WEAPON_NONE),Read_Secondary_Weapon("V27", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2621,6 +2671,7 @@ static BuildingTypeClass const ClassV28(
 	Read_Scenario_Level("V28", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V28", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V28", WEAPON_NONE),Read_Secondary_Weapon("V28", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2669,6 +2720,7 @@ static BuildingTypeClass const ClassV29(
 	Read_Scenario_Level("V29", 0),											// SCENARIO:	Starting availability scenario.
 	0,2, 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V29", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V29", WEAPON_NONE),Read_Secondary_Weapon("V29", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2717,6 +2769,7 @@ static BuildingTypeClass const ClassV30(
 	Read_Scenario_Level("V30", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V30", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V30", WEAPON_NONE),Read_Secondary_Weapon("V30", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2765,6 +2818,7 @@ static BuildingTypeClass const ClassV31(
 	Read_Scenario_Level("V31", 0),											// SCENARIO:	Starting availability scenario.
 	0,2, 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V31", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V31", WEAPON_NONE),Read_Secondary_Weapon("V31", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2813,6 +2867,7 @@ static BuildingTypeClass const ClassV32(
 	Read_Scenario_Level("V32", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V32", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V32", WEAPON_NONE),Read_Secondary_Weapon("V32", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2861,6 +2916,7 @@ static BuildingTypeClass const ClassV33(
 	Read_Scenario_Level("V33", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V33", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V33", WEAPON_NONE),Read_Secondary_Weapon("V33", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2909,6 +2965,7 @@ static BuildingTypeClass const ClassV34(
 	Read_Scenario_Level("V34", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V34", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V34", WEAPON_NONE),Read_Secondary_Weapon("V34", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -2957,6 +3014,7 @@ static BuildingTypeClass const ClassV35(
 	Read_Scenario_Level("V35", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V35", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V35", WEAPON_NONE),Read_Secondary_Weapon("V35", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -3005,6 +3063,7 @@ static BuildingTypeClass const ClassV36(
 	Read_Scenario_Level("V36", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V36", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V36", WEAPON_NONE),Read_Secondary_Weapon("V36", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -3052,6 +3111,7 @@ static BuildingTypeClass const ClassV37(
 	Read_Scenario_Level("V37", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V37", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V37", WEAPON_NONE),Read_Secondary_Weapon("V37", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -3099,6 +3159,7 @@ static BuildingTypeClass const ClassMission(
 	Read_Scenario_Level("MISS", 0),											// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MISS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("MISS", WEAPON_NONE),Read_Secondary_Weapon("MISS", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -3148,6 +3209,7 @@ static BuildingTypeClass const Sandbag(
 	Read_Scenario_Level("SBAG", 5),											// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SBAG", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("SBAG", WEAPON_NONE),Read_Secondary_Weapon("SBAG", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -3196,6 +3258,7 @@ static BuildingTypeClass const Cyclone(
 	Read_Scenario_Level("CYCL", 9),											// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("CYCL", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("CYCL", WEAPON_NONE),Read_Secondary_Weapon("CYCL", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -3244,6 +3307,7 @@ static BuildingTypeClass const Brick(
 	Read_Scenario_Level("BRIK", 13),										// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BRIK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("BRIK", WEAPON_NONE),Read_Secondary_Weapon("BRIK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -3292,6 +3356,7 @@ static BuildingTypeClass const Barbwire(
 	Read_Scenario_Level("BARB", 98),										// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BARB", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_BAD | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("BARB", WEAPON_NONE),Read_Secondary_Weapon("BARB", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
@@ -3340,7 +3405,9 @@ static BuildingTypeClass const Wood(
 	Read_Scenario_Level("WOOD", 98),										// SCENARIO:	Starting availability scenario.
 	0,0,										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("WOOD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
-	Read_Primary_Weapon("WOOD", WEAPON_NONE),Read_Secondary_Weapon("WOOD", WEAPON_NONE),
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
+	Read_Primary_Weapon("WOOD", WEAPON_NONE),
+	Read_Secondary_Weapon("WOOD", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("WOOD", 0),											// CAPACITY:	Spice storage capacity.
@@ -3479,7 +3546,9 @@ BuildingTypeClass::BuildingTypeClass(
 						int risk,
 						int reward,
 						int ownable,
-						WeaponType primary, WeaponType secondary,
+						const char* houseListCsv,
+						WeaponType primary,
+						WeaponType secondary,
 						ArmorType armor,
 						unsigned long canenter,
 						unsigned capacity,
@@ -3490,7 +3559,7 @@ BuildingTypeClass::BuildingTypeClass(
 						short const *sizelist,
 						short const *overlap,
 						bool is_unsellable) :
-								TechnoTypeClass(name,
+									TechnoTypeClass(name,
 													ininame,
 													level,
 													pre,
@@ -3520,6 +3589,7 @@ BuildingTypeClass::BuildingTypeClass(
 													risk,
 													reward,
 													ownable,
+													houseListCsv,
 													primary,
 													secondary,
 													armor)

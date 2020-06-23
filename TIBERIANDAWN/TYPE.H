@@ -517,6 +517,15 @@ class TechnoTypeClass : public ObjectTypeClass
 		unsigned short Ownable;
 
 		/*
+		**	This is a csv string representing the houses that are allowed to
+		**	own (by normal means) this particular object type. This value is
+		**	typically used in production contexts. It is possible for a side
+		**	to take possession of an object type otherwise not normally allowed.
+		**	This event usually occurs as a result of capture.
+		*/
+		char * HouseListCsv;
+
+		/*
 		**	This is the small icon image that is used to display the object in
 		**	the sidebar for construction selection purposes.
 		*/
@@ -560,6 +569,7 @@ class TechnoTypeClass : public ObjectTypeClass
 				int risk,
 				int reward,
 				int ownable,
+				const char * houseListCsv,
 				WeaponType primary,
 				WeaponType secondary,
 				ArmorType armor);
@@ -775,6 +785,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 						int risk,
 						int reward,
 						int ownable,
+						const char* houseListCsv,
 						WeaponType primary,
 						WeaponType secondary,
 						ArmorType armor,
@@ -1026,6 +1037,7 @@ class UnitTypeClass : public TechnoTypeClass
 						int risk,
 						int reward,
 						int ownable,
+						const char* houseListCsv,
 						WeaponType primary,
 						WeaponType secondary,
 						ArmorType armor,
@@ -1164,6 +1176,7 @@ class InfantryTypeClass : public TechnoTypeClass
 						int risk,
 						int reward,
 						int ownable,
+						const char* houseListCsv,
 						WeaponType primary,
 						WeaponType secondary,
 						MPHType maxSpeed);
@@ -1785,6 +1798,7 @@ class AircraftTypeClass : public TechnoTypeClass
 				int risk,
 				int reward,
 				int ownable,
+				const char* houseListCsv,
 				WeaponType primary,
 				WeaponType secondary,
 				ArmorType armor,

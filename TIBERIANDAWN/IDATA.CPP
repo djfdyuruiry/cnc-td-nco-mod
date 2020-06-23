@@ -121,6 +121,7 @@ static InfantryTypeClass const E1(
 	Read_Scenario_Level("E1", 1),								// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
  	Read_House_List_From_Rules_Ini("E1", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("E1", WEAPON_M16),
 	Read_Secondary_Weapon("E1", WEAPON_NONE),
 	Read_Max_Speed("E1", MPH_SLOW)  // Maximum speed of infantry.
@@ -190,6 +191,7 @@ static InfantryTypeClass const E2(
 	Read_Scenario_Level("E2", 3),								// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("E2", WEAPON_GRENADE),
 	Read_Secondary_Weapon("E2", WEAPON_NONE),
 	Read_Max_Speed("E2", MPH_SLOW_ISH)  // Maximum speed of infantry.
@@ -262,6 +264,7 @@ static InfantryTypeClass const E3(
 	Read_Scenario_Level("E3", 3),								// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E3", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("E2", WEAPON_DRAGON),
 	Read_Secondary_Weapon("E2", WEAPON_NONE),
 	Read_Max_Speed("E3", MPH_KINDA_SLOW)  // Maximum speed of infantry.
@@ -331,6 +334,7 @@ static InfantryTypeClass const E4(
 	Read_Scenario_Level("E4", 5),								// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E4", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),					// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("E4", WEAPON_FLAMETHROWER),Read_Secondary_Weapon("E4", WEAPON_NONE),
 	Read_Max_Speed("E4", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -399,6 +403,7 @@ static InfantryTypeClass const E5(
 	Read_Scenario_Level("E5", 99),							// Scenario when they first appear.
 	80,10,						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E5", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP"),					// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
 	Read_Primary_Weapon("E5", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("E5", WEAPON_NONE),
 	Read_Max_Speed("E5", MPH_SLOW) // Maximum speed of infantry.
 );
@@ -466,6 +471,7 @@ static InfantryTypeClass const E7(
 	Read_Scenario_Level("E6", 2),								// Scenario when they first appear.
 	80,75,						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E6", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("E6", WEAPON_NONE),Read_Secondary_Weapon("E6", WEAPON_NONE),
 	Read_Max_Speed("E6", MPH_SLOW)  // Maximum speed of infantry.aximum speed of infantry.
 );
@@ -532,6 +538,7 @@ static InfantryTypeClass const Commando(
 	Read_Scenario_Level("RMBO", 98),							// Scenario when they first appear.
 	80,75,						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("RMBO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("RMBO", WEAPON_RIFLE),Read_Secondary_Weapon("RMBO", WEAPON_NONE),
 	Read_Max_Speed("RMBO", MPH_SLOW_ISH)  // Maximum speed of infantry.Maximum speed of infantry.
 );
@@ -598,6 +605,7 @@ static InfantryTypeClass const C1(
 	Read_Scenario_Level("C1", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C1", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C1", WEAPON_PISTOL),Read_Secondary_Weapon("C1", WEAPON_NONE),
 	Read_Max_Speed("C1", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -663,6 +671,7 @@ static InfantryTypeClass const C2(
 	Read_Scenario_Level("C2", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C2", WEAPON_NONE),Read_Secondary_Weapon("C2", WEAPON_NONE),
 	Read_Max_Speed("C2", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -729,6 +738,7 @@ static InfantryTypeClass const C3(
 	Read_Scenario_Level("C3", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C3", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C3", WEAPON_NONE),Read_Secondary_Weapon("C3", WEAPON_NONE),
 	Read_Max_Speed("C3", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -795,6 +805,7 @@ static InfantryTypeClass const C4(
 	Read_Scenario_Level("C4", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C4", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C4", WEAPON_NONE),Read_Secondary_Weapon("C4", WEAPON_NONE),
 	Read_Max_Speed("C4", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -860,6 +871,7 @@ static InfantryTypeClass const C5(
 	Read_Scenario_Level("C5", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C5", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C5", WEAPON_NONE),Read_Secondary_Weapon("C5", WEAPON_NONE),
 	Read_Max_Speed("C5", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -925,6 +937,7 @@ static InfantryTypeClass const C6(
 	Read_Scenario_Level("C6", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C6", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C6", WEAPON_NONE),Read_Secondary_Weapon("C6", WEAPON_NONE),
 	Read_Max_Speed("C6", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -990,6 +1003,7 @@ static InfantryTypeClass const C7(
 	Read_Scenario_Level("C7", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C7", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C7", WEAPON_PISTOL),Read_Secondary_Weapon("C7", WEAPON_NONE),
 	Read_Max_Speed("C7", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -1054,6 +1068,7 @@ static InfantryTypeClass const C8(
 	Read_Scenario_Level("C8", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C8", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C8", WEAPON_NONE),Read_Secondary_Weapon("C8", WEAPON_NONE),
 	Read_Max_Speed("C8", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -1119,6 +1134,7 @@ static InfantryTypeClass const C9(
 	Read_Scenario_Level("C9", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C9", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C9", WEAPON_NONE),Read_Secondary_Weapon("C9", WEAPON_NONE),
 	Read_Max_Speed("C9", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -1186,6 +1202,7 @@ static InfantryTypeClass const C10(
 	Read_Scenario_Level("C10", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C10", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C10", WEAPON_NONE),Read_Secondary_Weapon("C10", WEAPON_NONE),
 	Read_Max_Speed("C10", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -1250,6 +1267,7 @@ static InfantryTypeClass const Moebius(
 	Read_Scenario_Level("MOEBIUS", 99),							// Scenario when they first appear.
 	0,10,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("MOEBIUS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("MOEBIUS", WEAPON_NONE),Read_Secondary_Weapon("MOEBIUS", WEAPON_NONE),
 	Read_Max_Speed("MOEBIUS", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -1314,6 +1332,7 @@ static InfantryTypeClass const Delphi(
 	Read_Scenario_Level("DELPHI", 99),							// Scenario when they first appear.
 	0,0,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("DELPHI", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL",
 	Read_Primary_Weapon("DELPHI", WEAPON_PISTOL),Read_Secondary_Weapon("DELPHI", WEAPON_NONE),
 	Read_Max_Speed("DELPHI", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -1379,6 +1398,7 @@ static InfantryTypeClass const DrChan(
 	Read_Scenario_Level("CHAN", 99),							// Scenario when they first appear.
 	0,1,							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("CHAN", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL"),				// Who can own this infantry unit.
+	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL",
 	Read_Primary_Weapon("CHAN", WEAPON_NONE),Read_Secondary_Weapon("CHAN", WEAPON_NONE),
 	Read_Max_Speed("CHAN", MPH_SLOW_ISH) // Maximum speed of infantry.
 );
@@ -1443,14 +1463,19 @@ InfantryTypeClass::InfantryTypeClass	(
 						int *do_table,
 						int firelaunch, int pronelaunch,
 						unsigned short strength, int sightrange,
-						int cost, int scenario, int risk, int reward, int ownable,
+						int cost,
+						int scenario,
+						int risk,
+						int reward,
+						int ownable,
+						const char* houseListCsv,
 						WeaponType primary, WeaponType secondary,
 						MPHType maxspeed)
 	: TechnoTypeClass(name, ininame, level, pre,
 							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
 							is_theater, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,
-							scenario, risk, reward, ownable,
+							scenario, risk, reward, ownable, houseListCsv,
 							primary, secondary,
 							ARMOR_NONE)
 {

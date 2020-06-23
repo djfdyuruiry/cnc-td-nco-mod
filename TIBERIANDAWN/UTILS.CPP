@@ -45,3 +45,8 @@ const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultVa
 
 	return envVarValue;
 }
+
+int Parse_Number(char character)
+{
+	return character - '0';
+}
