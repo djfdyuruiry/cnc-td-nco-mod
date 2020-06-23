@@ -1,38 +1,50 @@
 #include "function.h"
 
-bool Strings_Are_Equal(const char* subject, const char* expected)
+bool Strings_Are_Equal(char* subject, char* expected)
 {
 	return strcmp(subject, expected) == 0;
 }
 
-bool Strings_Are_Equal(char* subject, const char* expected)
-{
-	return Strings_Are_Equal((const char*) subject, expected);
-}
-
 bool Strings_Are_Equal(const char* subject, char* expected)
 {
-	return Strings_Are_Equal(subject, (const char*)expected);
+	auto subjectStr = strdup(subject);
+
+	auto result = Strings_Are_Equal(subjectStr, expected);
+
+	delete subjectStr;
+
+	return result;
 }
 
-void Convert_String_To_Upper_Case(char* subject)
+bool Strings_Are_Equal(char* subject, const char* expected)
 {
-	auto subjectLength = strlen(subject);
+	auto expectedStr = strdup(expected);
 
-	for (unsigned int i = 0; i < subjectLength; i++)
-	{
-		subject[i] = toupper(subject[i]);
-	}
+	auto result = Strings_Are_Equal(subject, expectedStr);
+	
+	delete expectedStr;
+
+	return result;
 }
 
-char * Convert_String_To_Upper_Case(const char* subject, unsigned int subjectLength)
+bool Strings_Are_Equal(const char* subject, const char* expected)
 {
-	auto uppercaseSubject = new char[subjectLength];
+	auto subjectStr = strdup(subject);
+	auto expectedStr = strdup(expected);
 
-	for (unsigned int i = 0; i < subjectLength; i++)
-	{
-		uppercaseSubject[i] = toupper(subject[i]);
-	}
+	auto result = Strings_Are_Equal(subjectStr, expectedStr);
+	
+	delete subjectStr;
+	delete expectedStr;
+
+	return result;
+}
+
+char * Convert_String_To_Upper_Case(const char* subject)
+{
+	auto uppercaseSubject = strdup(subject);
+
+	Convert_String_To_Upper_Case(uppercaseSubject);
 
 	return uppercaseSubject;
 }
@@ -40,7 +52,7 @@ char * Convert_String_To_Upper_Case(const char* subject, unsigned int subjectLen
 char* Allocate_String(int length)
 {
 	auto stringSizeInBytes = length * sizeof(char);
-	auto string = (char*)malloc(stringSizeInBytes);
+	auto string = new char[length];
 
 	memset(string, 0, stringSizeInBytes);
 

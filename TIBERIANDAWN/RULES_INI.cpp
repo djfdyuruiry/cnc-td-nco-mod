@@ -86,7 +86,7 @@ char* Read_Rules_Ini() {
 
 	Log_Info("Reading rules ini from file: %s", rulesFilename);
 
-	auto rulesBuffer = new char[rulesFile->Size()];
+	auto rulesBuffer = Allocate_String(rulesFile->Size());
 
 	rulesFile->Read(rulesBuffer, rulesFile->Size());
 	rulesFile->Close();
@@ -205,7 +205,7 @@ char* Read_String_From_Rules_Ini(
 	Log_Debug("Resolving rule value: %s -> %s", section, entry);
 	Log_Debug("Default value: %s", defaultValue);
 
-	auto valueBuffer = new char[RULES_STRING_LENGTH];
+	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 
 	WWGetPrivateProfileString(
 		section,
@@ -216,7 +216,7 @@ char* Read_String_From_Rules_Ini(
 		RULES_INI_BUFFER
 	);
 
-	Convert_String_To_Upper_Case(valueBuffer);
+	strupr(valueBuffer);
 
 	auto valueIsValid = false;
 
@@ -239,7 +239,7 @@ char* Read_String_From_Rules_Ini(
 	{
 		RULES_VALID = false;
 
-		auto validValuesCsv = new char[validValueCount * RULES_STRING_LENGTH];
+		auto validValuesCsv = Allocate_String(validValueCount * RULES_STRING_LENGTH);
 
 		for (auto i = 0; i < validValueCount; i++)
 		{

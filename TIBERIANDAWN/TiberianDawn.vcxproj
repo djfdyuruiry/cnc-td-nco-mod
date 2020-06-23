@@ -146,7 +146,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -383,7 +383,7 @@ copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="SOUNDDLG.H" />
     <ClInclude Include="SPECIAL.H" />
     <ClInclude Include="STAGE.H" />
-    <ClInclude Include="STRING.H" />
+    <ClInclude Include="STRINGS.H" />
     <ClInclude Include="SUPER.H" />
     <ClInclude Include="TAB.H" />
     <ClInclude Include="TARCOM.H" />

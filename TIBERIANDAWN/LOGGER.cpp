@@ -53,8 +53,8 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		return;
 	}
 
-	auto messageBuffer = new char[LOG_LINE_LENGTH];
-	auto messageWithLevelBuffer = new char[LOG_LINE_LENGTH + LOG_LEVEL_LENGTH];
+	auto messageBuffer = Allocate_String(LOG_LINE_LENGTH);
+	auto messageWithLevelBuffer = Allocate_String(LOG_LINE_LENGTH + LOG_LEVEL_LENGTH);
 
 	// format message using sprintf
 	va_list formatArgs;

@@ -6,13 +6,13 @@ static bool API_INITIALISED = false;
 static InfantryType ParseInfantryType(lua_State* lua, LuaString infantryTypeName, bool* parseError)
 {
     auto infantryType = Parse_Infantry_Type(
-        Convert_String_To_Upper_Case(infantryTypeName.value, infantryTypeName.length),
+        Convert_String_To_Upper_Case(infantryTypeName.value),
         parseError
     );
 
     if (*parseError)
     {
-        luaL_error(lua, "infantry type passed was not recognised: %s", infantryType);
+        luaL_error(lua, "infantry type passed was not recognised: %s", infantryTypeName.value);
         return INFANTRY_NONE;
     }
 
@@ -39,7 +39,7 @@ static int Lua_Get_Infantry_Rule(lua_State* lua)
 
     auto ruleName = Read_Lua_String(2);
 
-    if (Strings_Are_Equal(Convert_String_To_Upper_Case(ruleName.value, ruleName.length), PRIMARY_WEAPON_RULE_UPPER))
+    if (Strings_Are_Equal(Convert_String_To_Upper_Case(ruleName.value), PRIMARY_WEAPON_RULE_UPPER))
     {
         auto infantry = ((InfantryTypeClass&)InfantryTypeClass::As_Reference(infantryType));
         auto weaponName = Weapon_Type_To_String(infantry.Primary);
@@ -48,7 +48,7 @@ static int Lua_Get_Infantry_Rule(lua_State* lua)
     }
     else
     {
-        luaL_error(lua, "rule name type passed getInfantryRule was not recognised: %s", ruleName);
+        luaL_error(lua, "rule name type passed getInfantryRule was not recognised: %s", ruleName.value);
     }
 
     return 1;
@@ -76,14 +76,14 @@ static int Lua_Set_Infantry_Rule(lua_State* lua)
     auto ruleName = Read_Lua_String(2);
     auto ruleValue = Read_Lua_String(3);
 
-    if (Strings_Are_Equal(Convert_String_To_Upper_Case(ruleName.value, ruleName.length), PRIMARY_WEAPON_RULE_UPPER))
+    if (Strings_Are_Equal(Convert_String_To_Upper_Case(ruleName.value), PRIMARY_WEAPON_RULE_UPPER))
     {
         parseError = false;
-        auto weapon = Parse_Weapon_Type(Convert_String_To_Upper_Case(ruleValue.value, ruleValue.length), &parseError);
+        auto weapon = Parse_Weapon_Type(Convert_String_To_Upper_Case(ruleValue.value), &parseError);
 
         if (parseError)
         {
-            luaL_error(lua, "weapon type passed to setInfantryRule was not recognised: %s", ruleValue);
+            luaL_error(lua, "weapon type passed to setInfantryRule was not recognised: %s", ruleValue.value);
             return 0;
         }
 
@@ -91,7 +91,7 @@ static int Lua_Set_Infantry_Rule(lua_State* lua)
     }
     else
     {
-        luaL_error(lua, "rule name type passed setInfantryRule was not recognised: %s", ruleName);
+        luaL_error(lua, "rule name type passed setInfantryRule was not recognised: %s", ruleName.value);
         return 0;
     }
 

@@ -3,7 +3,7 @@
 void Show_Error(const char* messageFormat, ...)
 {
 	auto logLineLength = Get_Log_Line_Length();
-	auto formattedMessageBuffer = new char[logLineLength];
+	auto formattedMessageBuffer = Allocate_String(logLineLength);
 
 	va_list formatArgs;
 	va_start(formatArgs, messageFormat);
@@ -36,7 +36,7 @@ const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultVa
 		return defaultValue;
 	}
 
-	auto envVarValue = new char[requiredSize];
+	auto envVarValue = Allocate_String(requiredSize);
 
 	// Get the value of the LIB environment variable.
 	GetEnvironmentVariable(envVarName, envVarValue, requiredSize);

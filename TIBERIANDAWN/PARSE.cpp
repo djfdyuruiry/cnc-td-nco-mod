@@ -666,7 +666,7 @@ char* Structure_Type_To_String(StructType structType)
     return structTypeString;
 }
 
-WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError)
+WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
 {
     WeaponType weaponType;
 
@@ -783,9 +783,15 @@ WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError)
     return weaponType;
 }
 
-WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
+WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError)
 {
-    return Parse_Weapon_Type((const char*) weaponTypeString, parseError);
+    auto weaponTypeStr = strdup(weaponTypeString);
+
+    auto weaponType = Parse_Weapon_Type(weaponTypeStr, parseError);
+
+    delete weaponTypeStr;
+
+    return weaponType;
 }
 
 char* Weapon_Type_To_String(WeaponType weaponType)
@@ -904,7 +910,7 @@ char* Weapon_Type_To_String(WeaponType weaponType)
     return weaponTypeString;
 }
 
-InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError)
+InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
 {
     InfantryType infantryType = INFANTRY_NONE;
 
@@ -922,7 +928,13 @@ InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseErro
     return infantryType;
 }
 
-InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
+InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError)
 {
-    return Parse_Infantry_Type((const char*)infantryTypeString, parseError);
+    auto infantryTypeStr = strdup(infantryTypeString);
+
+    auto result = Parse_Infantry_Type(infantryTypeStr, parseError);
+
+    delete infantryTypeStr;
+
+    return result;
 }

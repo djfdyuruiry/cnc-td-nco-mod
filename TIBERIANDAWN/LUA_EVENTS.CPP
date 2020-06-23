@@ -38,7 +38,7 @@ static void Fire_Lua_Event(LuaEvent name, const char* argumentFormat, ...)
         return;
     }
 
-    auto argumentsBuffer = new char[1024];
+    auto argumentsBuffer = Allocate_String(1024);
 
     va_list formatArgs;
     va_start(formatArgs, argumentFormat);
@@ -47,7 +47,7 @@ static void Fire_Lua_Event(LuaEvent name, const char* argumentFormat, ...)
 
     va_end(formatArgs);
 
-    auto scriptBuffer = new char[1024];
+    auto scriptBuffer = Allocate_String(2048);
 
     sprintf(scriptBuffer, FIRE_EVENT_FORMAT, name, argumentsBuffer);
 
@@ -70,7 +70,7 @@ boolean Initialise_Events()
     }
 
     auto executionOK = true;
-    auto initEventScriptBuffer = new char[1024];
+    auto initEventScriptBuffer = Allocate_String(1024);
 
     for (auto i = 0; i < LUA_EVENT_COUNT; i++)
     {

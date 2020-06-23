@@ -672,13 +672,13 @@
     <ClInclude Include="RULES_INI.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="STRING.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="UTILS.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="LUA_API.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="STRINGS.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
   </ItemGroup>

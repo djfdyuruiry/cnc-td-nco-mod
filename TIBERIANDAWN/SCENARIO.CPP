@@ -74,6 +74,8 @@ bool Start_Scenario(char *root, bool briefing)
 	}
 	CCDebugString ("C&C95 - Scenario read OK.\n");
 
+	On_Scenario_Start(Scenario);
+
 #ifdef DEMO
 
 	if (briefing) {
