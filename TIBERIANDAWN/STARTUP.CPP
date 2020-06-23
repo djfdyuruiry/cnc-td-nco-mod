@@ -197,7 +197,6 @@ int DLL_Startup(const char * command_line_in)
 		return (EXIT_SUCCESS);
 	}
 
-	// TODO: Figure out why DLLs load fails with version error
 	// TODO: Figure out why second invocation of DLL fails
 	if (Rules_Ini_Failed_Validation())
 	{

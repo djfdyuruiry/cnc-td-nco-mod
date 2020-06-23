@@ -26,7 +26,7 @@ struct CarryoverObjectStruct;
 ** DLL Interface version
 ** 
 ** 
-** 
+** TODO: ensure this is up-to-date as time goes on 
 */
 #define CNC_DLL_API_VERSION		0x101
 

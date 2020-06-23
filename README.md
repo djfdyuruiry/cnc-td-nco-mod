@@ -55,6 +55,17 @@ If you get a COM error when trying to open the solution/project, follow the belo
     - Select `InstanceServerG.exe`
 - DLL will be loaded once you start a mission/skirmish
 
+### Updating Tiberian Dawn
+
+EA release patches for the C&C Remastered collection which will cause this mod to fail loading due to a version number conflict. To fix this you must cherry-pick from the EA [github repo](https://github.com/electronicarts/CnC_Remastered_Collection). Once you have identified the commit hash of the latest patch, run:
+
+```batch
+git fetch ea
+git cherry-pick UPDATE_COMMIT_HASH
+```
+
+You will need to remove `REDALERT` files and fix merge conflicts. Build and install after this, the mod should load correctly.
+
 # Installing
 
 - Open a command prompt in the repo root
@@ -62,6 +73,10 @@ If you get a COM error when trying to open the solution/project, follow the belo
     ```batch
     script\deploy.bat
     ```
+
+## Troubleshooting
+
+If you get an error on load of a scenario complaining the dll version is different than what the game expects, check the `CNC_DLL_API_VERSION` define in the `TIBERIANDAWN\DLLInterface.h` file. If it is less than what the game asked for you will need to cherry-pick latest changes from EA.
 
 # Progress Log
 
