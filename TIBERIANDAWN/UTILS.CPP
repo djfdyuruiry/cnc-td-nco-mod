@@ -1,11 +1,29 @@
 #include "function.h"
 
-/// <summary>
-/// Get the value of an environment variable
-/// </summary>
-/// <param name="envVarName"/>
-/// <param name="defaultValue"/>
-/// <returns>Variable value if present and not empty, otherwise the default value provided</returns>
+void Show_Error(const char* messageFormat, ...)
+{
+	auto logLineLength = Get_Log_Line_Length();
+	auto formattedMessageBuffer = new char[logLineLength];
+
+	va_list formatArgs;
+	va_start(formatArgs, messageFormat);
+
+	vsnprintf(formattedMessageBuffer, logLineLength, messageFormat, formatArgs);
+
+	va_end(formatArgs);
+
+	Log_Error(formattedMessageBuffer);
+
+	MessageBox(
+		NULL,
+		formattedMessageBuffer,
+		"Command & Conquer",
+		MB_OK | MB_ICONSTOP
+	);
+
+	delete formattedMessageBuffer;
+}
+
 const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue) {
 	Log_Debug("Attempting to get value of env var: %s", envVarName);
 

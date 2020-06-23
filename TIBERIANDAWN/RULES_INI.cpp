@@ -2,7 +2,7 @@
 
 static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static auto DEFAULT_RULES_FILENAME = "RULES.INI";
-static auto RULES_STRING_LENGTH = 512;
+static const int RULES_STRING_LENGTH = 512;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;

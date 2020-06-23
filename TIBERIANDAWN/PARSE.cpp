@@ -666,7 +666,7 @@ char* Structure_Type_To_String(StructType structType)
     return structTypeString;
 }
 
-WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
+WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError)
 {
     WeaponType weaponType;
 
@@ -783,6 +783,11 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
     return weaponType;
 }
 
+WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
+{
+    return Parse_Weapon_Type((const char*) weaponTypeString, parseError);
+}
+
 char* Weapon_Type_To_String(WeaponType weaponType)
 {
     char* weaponTypeString;
@@ -897,4 +902,27 @@ char* Weapon_Type_To_String(WeaponType weaponType)
     }
 
     return weaponTypeString;
+}
+
+InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError)
+{
+    InfantryType infantryType = INFANTRY_NONE;
+
+    if (Strings_Are_Equal(infantryTypeString, "E1"))
+    {
+        return INFANTRY_E1;
+    }
+    // TODO: add other infantry types
+    else
+    {
+        *parseError = true;
+        Show_Error("Unable to parse infantry type from string: %s", infantryTypeString);
+    }
+
+    return infantryType;
+}
+
+InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
+{
+    return Parse_Infantry_Type((const char*)infantryTypeString, parseError);
 }

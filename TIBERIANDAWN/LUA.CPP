@@ -1,91 +1,49 @@
 #include "function.h"
 
-#include "lua.hpp"
+static char * INIT_GAME_STATE = "_G.Game = {}";
 
 static lua_State* LUA = NULL;
 
-static int Lua_Log(lua_State* _)
+static bool Load_Lua_Scripts()
 {
-    int argCount = lua_gettop(LUA);
-
-    if (argCount > 0)
+    auto executionOK = true;
+        
+    if (!Execute_Lua_Script(INIT_GAME_STATE))
     {
-        auto logMessage = lua_tostring(LUA, 1);
-
-        Log_Info("Lua => %s", logMessage);
+        return false;
     }
 
-    return 0;
-}
-
-static int Lua_Show_Error(lua_State * _)
-{
-    int argCount = lua_gettop(LUA);
-
-    if (argCount > 0)
+    if (!Initialise_Lua_Api())
     {
-        auto logMessage = lua_tostring(LUA, 1);
-
-        Show_Error(logMessage);
+        return false;
+    }
+    
+    if (!Initialise_Events())
+    {
+        return false;
     }
 
-    return 0;
-}
-
-static void Load_Lua_Scripts()
-{
     auto scripts = Rules_Get_Lua_Scripts();
-
-    // init global game state
-    Execute_Lua_Script("\
-      _G.Game =                           \
-      {                                   \
-        ScenarioStartEventHandlers = {}   \
-      }                                   \
-    ");
-
-    // wire up utility native functions
-    lua_pushcfunction(LUA, Lua_Show_Error);
-    lua_setglobal(LUA, "showError");
-
-    lua_pushcfunction(LUA, Lua_Log);
-    lua_setglobal(LUA, "log");
-
-    // declare event handler functions
-    Execute_Lua_Script("\
-      _G.onScenarioStart = function (h)      \n\
-        table.insert(                        \
-          Game.ScenarioStartEventHandlers,   \
-          h                                  \
-        )                                    \n\
-      end                                    \
-    ");
 
     for (auto i = 0; i < scripts.ScriptFileCount; i++)
     {
         auto scriptFile = scripts.ScriptFiles[i];
 
-        Log_Info("Attempting to loadLua script: %s", scriptFile);
-
-        auto scriptError = luaL_dofile(LUA, scriptFile);
-
-        // todo store LUA_HAS_ERRORS somewhere and exit if this is true in startup
-        if (scriptError)
+        if (!Execute_Lua_File(scriptFile))
         {
-            Show_Error("Error loading Lua script: %s\nCheck the file is present and the syntax is correct", scriptFile);
-            continue;
+            executionOK = false;
         }
-
-        Log_Info("Loaded Lua script: %s", scriptFile);
     }
+
+    return executionOK;
 }
 
-void Initialise_Lua()
+bool Initialise_Lua()
 {
     if (LUA != NULL)
     {
         Log_Warn("Attempted to initialise %s more than once, ignoring", LUA_VERSION);
-        return;
+        return true;
     }
 
     Log_Info("Attempting to initialise %s", LUA_VERSION);
@@ -95,15 +53,53 @@ void Initialise_Lua()
 
     Log_Info("%s Initialised", LUA_VERSION);
 
-    Load_Lua_Scripts();
+    return Load_Lua_Scripts();
 }
 
-void Execute_Lua_Script(char* luaScript)
+void Register_Lua_Function(const char* name, lua_CFunction function)
 {
-    auto scriptError = luaL_dostring(LUA, luaScript);
+    lua_pushcfunction(LUA, function);
+    lua_setglobal(LUA, name);
+}
 
-    if (scriptError)
+bool Execute_Lua_Script(char* luaScript)
+{
+    auto executionOK = !luaL_dostring(LUA, luaScript);
+
+    Log_Debug("Executing Lua snippet: `%s`", luaScript);
+    
+    if (!executionOK)
     {
-        Show_Error("Error executing Lua snippet: `%s`", luaScript);
+        Show_Error("Error executing Lua snippet: `%s`\nCheck the syntax is correct", luaScript);
     }
+
+    return executionOK;
+}
+
+bool Execute_Lua_File(char* scriptFile)
+{
+    Log_Info("Attempting to loadLua script: %s", scriptFile);
+
+    auto executionOK = !luaL_dofile(LUA, scriptFile);
+
+    if (executionOK)
+    {
+        Log_Info("Loaded Lua script: %s", scriptFile);
+    }
+    else
+    {
+        Show_Error("Error loading Lua script: %s\nCheck the file is present and the syntax is correct", scriptFile);
+    }
+
+    return executionOK;
+}
+
+struct LuaString Read_Lua_String(int index)
+{
+    LuaString luaString = {
+        lua_rawlen(LUA, index),
+        lua_tostring(LUA, index)
+    };
+
+    return luaString;
 }

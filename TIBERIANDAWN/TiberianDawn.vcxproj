@@ -146,7 +146,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -196,7 +196,7 @@ copy ..\lib\lua53.lib ..\bin\$(PlatformName)\
 
 if exist ..\bin\$(PlatformName)\test.lua del ..\bin\$(PlatformName)\test.lua
 
-copy ..\lib\test.lua ..\bin\$(PlatformName)\
+copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -212,6 +212,7 @@ copy ..\lib\test.lua ..\bin\$(PlatformName)\
     </MASM>
     <None Include="..\game\ccmod.json" />
     <None Include="..\game\cfg\RULES.INI" />
+    <None Include="..\game\lua\test.lua" />
     <None Include="..\game\scripts\tiberian_dawn.bat" />
     <None Include="COORDA.ASM" />
     <MASM Include="KEYFBUFF.ASM">
@@ -305,6 +306,7 @@ copy ..\lib\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="FACING.H" />
     <ClInclude Include="FACTORY.H" />
     <ClInclude Include="FIELD.H" />
+    <ClInclude Include="FILE.H" />
     <ClInclude Include="FLASHER.H" />
     <ClInclude Include="FLY.H" />
     <ClInclude Include="FOOT.H" />
@@ -333,7 +335,11 @@ copy ..\lib\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="LINK.H" />
     <ClInclude Include="LIST.H" />
     <ClInclude Include="LOADDLG.H" />
+    <ClInclude Include="LOGGER.H" />
     <ClInclude Include="LOGIC.H" />
+    <ClInclude Include="LUA.H" />
+    <ClInclude Include="LUA_API.H" />
+    <ClInclude Include="LUA_EVENTS.H" />
     <ClInclude Include="MAP.H" />
     <ClInclude Include="MAPEDIT.H" />
     <ClInclude Include="MEMCHECK.H" />
@@ -351,6 +357,7 @@ copy ..\lib\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="OPTIONS.H" />
     <ClInclude Include="OVERLAY.H" />
     <ClInclude Include="PACKET.H" />
+    <ClInclude Include="PARSE.H" />
     <ClInclude Include="PHONE.H" />
     <ClInclude Include="POWER.H" />
     <ClInclude Include="QUEUE.H" />
@@ -361,6 +368,7 @@ copy ..\lib\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
     <ClInclude Include="RULES.H" />
+    <ClInclude Include="RULES_INI.H" />
     <ClInclude Include="SAVEDLG.H" />
     <ClInclude Include="SCORE.H" />
     <ClInclude Include="SCREEN.H" />
@@ -375,6 +383,7 @@ copy ..\lib\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="SOUNDDLG.H" />
     <ClInclude Include="SPECIAL.H" />
     <ClInclude Include="STAGE.H" />
+    <ClInclude Include="STRING.H" />
     <ClInclude Include="SUPER.H" />
     <ClInclude Include="TAB.H" />
     <ClInclude Include="TARCOM.H" />
@@ -394,6 +403,7 @@ copy ..\lib\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="TXTLABEL.H" />
     <ClInclude Include="TYPE.H" />
     <ClInclude Include="UNIT.H" />
+    <ClInclude Include="UTILS.H" />
     <ClInclude Include="UTRACKER.H" />
     <ClInclude Include="VECTOR.H" />
     <ClInclude Include="VISUDLG.H" />
@@ -497,8 +507,8 @@ copy ..\lib\test.lua ..\bin\$(PlatformName)\
     <ClCompile Include="DRIVE.CPP" />
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
-    <ClCompile Include="ENV.cpp" />
-    <ClCompile Include="ERROR.cpp" />
+    <ClCompile Include="LUA_API.CPP" />
+    <ClCompile Include="UTILS.CPP" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />
     <ClCompile Include="FACING.CPP" />

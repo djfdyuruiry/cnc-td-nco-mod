@@ -1,8 +1,18 @@
 #include "function.h"
 
-bool Strings_Are_Equal(char* subject, const char* expected)
+bool Strings_Are_Equal(const char* subject, const char* expected)
 {
 	return strcmp(subject, expected) == 0;
+}
+
+bool Strings_Are_Equal(char* subject, const char* expected)
+{
+	return Strings_Are_Equal((const char*) subject, expected);
+}
+
+bool Strings_Are_Equal(const char* subject, char* expected)
+{
+	return Strings_Are_Equal(subject, (const char*)expected);
 }
 
 void Convert_String_To_Upper_Case(char* subject)
@@ -13,6 +23,18 @@ void Convert_String_To_Upper_Case(char* subject)
 	{
 		subject[i] = toupper(subject[i]);
 	}
+}
+
+char * Convert_String_To_Upper_Case(const char* subject, unsigned int subjectLength)
+{
+	auto uppercaseSubject = new char[subjectLength];
+
+	for (unsigned int i = 0; i < subjectLength; i++)
+	{
+		uppercaseSubject[i] = toupper(subject[i]);
+	}
+
+	return uppercaseSubject;
 }
 
 char* Allocate_String(int length)

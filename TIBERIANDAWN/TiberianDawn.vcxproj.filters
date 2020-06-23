@@ -20,6 +20,12 @@
     <Filter Include="game\scripts">
       <UniqueIdentifier>{f4238f29-9785-40e0-8d26-2ca235ce982b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game\lua">
+      <UniqueIdentifier>{69072ba7-705b-47d4-b4b4-498027c3dfaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NCO">
+      <UniqueIdentifier>{cd1a7065-eb59-4357-b828-e14139c1768b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="COORDA.ASM">
@@ -93,6 +99,9 @@
     </None>
     <None Include="..\game\scripts\tiberian_dawn.bat">
       <Filter>game\scripts</Filter>
+    </None>
+    <None Include="..\game\lua\test.lua">
+      <Filter>game\lua</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -644,6 +653,33 @@
     </ClInclude>
     <ClInclude Include="RULES.H">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FILE.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_EVENTS.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LOGGER.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="PARSE.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RULES_INI.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="STRING.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="UTILS.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API.H">
+      <Filter>Source Files\NCO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1224,35 +1260,35 @@
     <ClCompile Include="RULES.CPP">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ENV.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RULES_INI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LOGGER.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FILE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ERROR.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PARSE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="STRINGS.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="LUA.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="LUA_EVENTS.CPP">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LOGGER.cpp">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="PARSE.cpp">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="RULES_INI.cpp">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="STRINGS.cpp">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="UTILS.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API.CPP">
+      <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

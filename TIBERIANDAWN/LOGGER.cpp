@@ -46,15 +46,6 @@ LogLevel Parse_Log_Level(char* levelString)
 	return logLevel;
 }
 
-/// <summary>
-/// Log a message to the file pointed to by <ref>LOG_FILE_PATH</ref>.
-/// </summary>
-/// <param name="logLevel"/>
-/// <param name="messageFormat">
-///   Log message in <ref>sprintf</ref> style format.
-///   The resulting string after format should be no longer than <ref>LOG_LINE_LENGTH</ref> chars long.
-/// </param>
-/// <param name="...">Arguments to pass to <ref>sprintf</ref></param>
 void Log(LogLevel logLevel, const char* messageFormat, ...)
 {
 	if (logLevel > Current_Log_Level())

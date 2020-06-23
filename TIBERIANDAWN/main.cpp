@@ -1,5 +1,16 @@
 #include "function.h"
 
+static void Test_Lua_Events()
+{
+	if (!Initialise_Lua())
+	{
+		printf("Error occurred during Lua initialisation");
+		exit(1);
+	}
+
+	On_Scenario_Start(10);
+}
+
 static void Configure_Console_Output()
 {
 	if (!AttachConsole(ATTACH_PARENT_PROCESS))
@@ -21,13 +32,11 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 
 	if (Rules_Ini_Failed_Validation())
 	{
-		printf("Rules INI file failed valiation steps");
+		printf("Rules INI file valiation failed");
 		exit(1);
 	}
 
-	Initialise_Lua();
-
-	On_Scenario_Start(10);
+	Test_Lua_Events();
 
 	exit(0);
 }

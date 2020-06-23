@@ -125,21 +125,6 @@ BOOL WINAPI DllMain(HINSTANCE instance, unsigned int fdwReason, void *lpvReserve
 	switch (fdwReason) {
 		
 		case DLL_PROCESS_ATTACH:
-			// TODO: Figure out why second invocation of DLL fails
-			if (Rules_Ini_Failed_Validation())
-			{
-				return(EXIT_FAILURE);
-			}
-
-			if (Lua_Is_Enabled())
-			{
-				Initialise_Lua();
-			}
-			else
-			{
-				Log_Warn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
-			}
-
 			ProgramInstance = instance;
 			break;
 
@@ -210,6 +195,27 @@ int DLL_Startup(const char * command_line_in)
     	}
 
 		return (EXIT_SUCCESS);
+	}
+
+	// TODO: Figure out why DLLs load fails with version error
+	// TODO: Figure out why second invocation of DLL fails
+	if (Rules_Ini_Failed_Validation())
+	{
+		Log_Error("Aborting game launch as their validation errors in the rules INI");
+		return(EXIT_FAILURE);
+	}
+
+	if (Lua_Is_Enabled())
+	{
+		if (!Initialise_Lua())
+		{
+			Log_Error("Aborting game launch as their were errors initialising Lua");
+			return(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		Log_Warn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
 	}
 
 	// ST - 3/6/2019 1:36PM
