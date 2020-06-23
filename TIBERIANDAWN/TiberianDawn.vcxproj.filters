@@ -681,6 +681,9 @@
     <ClInclude Include="STRINGS.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="NCO.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
@@ -1288,6 +1291,9 @@
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="NCO.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>

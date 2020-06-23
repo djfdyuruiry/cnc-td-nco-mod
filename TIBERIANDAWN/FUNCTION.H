@@ -987,6 +987,7 @@ void On_Achievement_Event(const HouseClass* player_ptr, const char *achievement_
 #include "./lua.h"
 #include "./lua_api.h"
 #include "./lua_events.h"
+#include "./nco.h"
 #include "./parse.h"
 #include "./rules_ini.h"
 #include "./strings.h"

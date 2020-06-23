@@ -350,6 +350,7 @@ copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="MOUSE.H" />
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
+    <ClInclude Include="NCO.H" />
     <ClInclude Include="NOSEQCON.H" />
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />
@@ -508,6 +509,7 @@ copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="LUA_API.CPP" />
+    <ClCompile Include="NCO.cpp" />
     <ClCompile Include="UTILS.CPP" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />

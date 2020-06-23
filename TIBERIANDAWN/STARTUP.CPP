@@ -139,6 +139,8 @@ BOOL WINAPI DllMain(HINSTANCE instance, unsigned int fdwReason, void *lpvReserve
 
 			Uninit_Game();
 
+			NCO_Shutdown();
+
 			break;
 			
 		case DLL_THREAD_ATTACH:
@@ -197,24 +199,10 @@ int DLL_Startup(const char * command_line_in)
 		return (EXIT_SUCCESS);
 	}
 
-	// TODO: Figure out why second invocation of DLL fails
-	if (Rules_Ini_Failed_Validation())
+	if (!NCO_Startup())
 	{
-		Log_Error("Aborting game launch as their validation errors in the rules INI");
+		NCO_Shutdown();
 		return(EXIT_FAILURE);
-	}
-
-	if (Lua_Is_Enabled())
-	{
-		if (!Initialise_Lua())
-		{
-			Log_Error("Aborting game launch as their were errors initialising Lua");
-			return(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		Log_Warn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
 	}
 
 	// ST - 3/6/2019 1:36PM

@@ -1,13 +1,19 @@
+function printMinigunnerWeapon()
+    local weapon = getInfantryRule("E1", "PrimaryWeapon")
+
+    log(string.format("E1 primary weapon is: %s", weapon))
+end
+
 onScenarioStart(function (scenarioNumber)
     log(string.format("Scenario number received: %d", scenarioNumber))
 
-    local weapon = getInfantryRule("E1", "PrimaryWeapon")
+    printMinigunnerWeapon()
 
-    log(string.format("E1 primary weapon is currently: %s", weapon))
+    if scenarioNumber ~= 4 then
+      return
+    end
 
     setInfantryRule("E1", "PrimaryWeapon", "obelisk_laser")
 
-    local newWeapon = getInfantryRule("E1", "PrimaryWeapon")
-
-    log(string.format("E1 primary weapon is now: %s", newWeapon))
+    printMinigunnerWeapon()
 end)

@@ -66,11 +66,11 @@ bool Execute_Lua_Script(char* luaScript)
 {
     auto executionOK = !luaL_dostring(LUA, luaScript);
 
-    Log_Debug("Executing Lua snippet: `%s`", luaScript);
+    Log_Debug("Executing Lua snippet: \n%s\n", luaScript);
     
     if (!executionOK)
     {
-        Show_Error("Error executing Lua snippet: `%s`\nCheck the syntax is correct", luaScript);
+        Show_Error("Error executing Lua snippet: \n<<\n%s\n>>\nCheck the syntax is correct", luaScript);
     }
 
     return executionOK;

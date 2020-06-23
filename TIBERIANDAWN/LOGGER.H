@@ -27,4 +27,6 @@ void Log(LogLevel logLevel, const char* messageFormat, ...);
 
 #define Log_Debug(messageFormat, ...) Log(DEBUG, messageFormat, __VA_ARGS__)
 
+void Close_Log_File_If_Open();
+
 #endif

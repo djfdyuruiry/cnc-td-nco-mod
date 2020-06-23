@@ -5,6 +5,7 @@ static auto LOG_LINE_LENGTH = 1024;
 static auto LOG_LEVEL_LENGTH = 5;
 
 static HANDLE LOG_FILE_HANDLE = NULL;
+static bool FAILED_TO_OPEN_LOG_FILE = false;
 
 const char* Log_Level_To_String(LogLevel level)
 {
@@ -81,18 +82,23 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		messageBuffer
 	);
 
-	if (LOG_FILE_HANDLE == NULL)
+	if (!FAILED_TO_OPEN_LOG_FILE && LOG_FILE_HANDLE == NULL)
 	{
 		LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH);
 
 		if (LOG_FILE_HANDLE == NULL)
 		{
+			FAILED_TO_OPEN_LOG_FILE = true;
 			Show_Error("Failed to open log file - check env var path is correct and/or default `log` directory is present");
 		}
 	}
 
 	// output to log file and console
-	Append_To_File(LOG_FILE_HANDLE, messageWithLevelBuffer);
+	if (!FAILED_TO_OPEN_LOG_FILE)
+	{
+		Append_To_File(LOG_FILE_HANDLE, messageWithLevelBuffer);
+	}
+
 	puts(messageWithLevelBuffer);
 
 	delete messageBuffer;
@@ -107,4 +113,19 @@ int Get_Log_Line_Length()
 int Get_Log_Level_Length()
 {
 	return LOG_LEVEL_LENGTH;
+}
+
+void Close_Log_File_If_Open()
+{
+	if (LOG_FILE_HANDLE != NULL)
+	{
+		Log_Debug("Closing handle for log file: %s", LOG_FILE_PATH);
+
+		if (!CloseHandle(LOG_FILE_HANDLE))
+		{
+			printf("ERROR: Failed to close handle for log file: %s\n", LOG_FILE_PATH);
+		}
+
+		LOG_FILE_HANDLE = NULL;
+	}
 }

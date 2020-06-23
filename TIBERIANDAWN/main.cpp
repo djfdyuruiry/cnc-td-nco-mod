@@ -2,13 +2,11 @@
 
 static void Test_Lua_Events()
 {
-	if (!Initialise_Lua())
-	{
-		printf("Error occurred during Lua initialisation");
-		exit(1);
-	}
+	Log_Info("Testing setting rules from scenario start event handler");
+	On_Scenario_Start(4);
 
-	On_Scenario_Start(10);
+	Log_Info("Testing returning early from scenario start event handler");
+	On_Scenario_Start(1);
 }
 
 static void Configure_Console_Output()
@@ -30,13 +28,15 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 {
 	Configure_Console_Output();
 
-	if (Rules_Ini_Failed_Validation())
+	if (!NCO_Startup())
 	{
-		printf("Rules INI file valiation failed");
-		exit(1);
+		NCO_Shutdown();
+		return 1;
 	}
 
 	Test_Lua_Events();
 
-	exit(0);
+	NCO_Shutdown();
+
+	return 0;
 }
