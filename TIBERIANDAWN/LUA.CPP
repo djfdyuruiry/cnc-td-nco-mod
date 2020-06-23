@@ -93,13 +93,3 @@ bool Execute_Lua_File(char* scriptFile)
 
     return executionOK;
 }
-
-struct LuaString Read_Lua_String(int index)
-{
-    LuaString luaString = {
-        lua_rawlen(LUA, index),
-        lua_tostring(LUA, index)
-    };
-
-    return luaString;
-}

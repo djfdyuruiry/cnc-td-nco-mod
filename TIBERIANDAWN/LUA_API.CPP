@@ -113,16 +113,16 @@ static bool Read_TechnoType_Rule(lua_State * lua, TechnoTypeClass * type, const 
     return true;
 }
 
-static InfantryType ParseInfantryType(lua_State* lua, LuaString infantryTypeName, bool* parseError)
+static InfantryType ParseInfantryType(lua_State* lua, const char* infantryTypeName, bool* parseError)
 {
     auto infantryType = Parse_Infantry_Type(
-        Convert_String_To_Upper_Case(infantryTypeName.value),
+        Convert_String_To_Upper_Case(infantryTypeName),
         parseError
     );
 
     if (*parseError)
     {
-        luaL_error(lua, "infantry type passed was not recognised: %s", infantryTypeName.value);
+        luaL_error(lua, "infantry type passed was not recognised: %s", infantryTypeName);
         return INFANTRY_NONE;
     }
 
@@ -139,7 +139,7 @@ static int Lua_Set_Infantry_Rule(lua_State* lua)
         return 0;
     }
 
-    auto infantryTypeName = Read_Lua_String(1);
+    auto infantryTypeName = lua_tostring(lua, 1);
 
     bool parseError = false;
     auto infantryType = ParseInfantryType(lua, infantryTypeName, &parseError);
@@ -150,19 +150,19 @@ static int Lua_Set_Infantry_Rule(lua_State* lua)
     }
 
     auto infantry = (InfantryTypeClass*)&InfantryTypeClass::As_Reference(infantryType);
-    auto ruleName = Read_Lua_String(2);
-    auto ruleValue = Read_Lua_String(3);
+    auto ruleName = lua_tostring(lua, 2);
+    auto ruleValue = lua_tostring(lua, 3);
 
     auto ruleMatched = Write_TechnoType_Rule(
         infantry,
-        Convert_String_To_Upper_Case(ruleName.value),
-        Convert_String_To_Upper_Case(ruleValue.value),
+        Convert_String_To_Upper_Case(ruleName),
+        Convert_String_To_Upper_Case(ruleValue),
         &parseError
     );
 
     if (parseError)
     {
-        luaL_error(lua, "value for rule `%s` passed to setInfantryRule was not valid: %s", ruleName.value, ruleValue.value);
+        luaL_error(lua, "value for rule `%s` passed to setInfantryRule was not valid: %s", ruleName, ruleValue);
 
         return 0;
     }
@@ -172,7 +172,7 @@ static int Lua_Set_Infantry_Rule(lua_State* lua)
         return 1;
     }
 
-    luaL_error(lua, "rule name type passed setInfantryRule was not recognised: %s", ruleName.value);
+    luaL_error(lua, "rule name type passed setInfantryRule was not recognised: %s", ruleName);
 
     return 0;
 }
@@ -186,7 +186,7 @@ static int Lua_Get_Infantry_Rule(lua_State* lua)
         luaL_error(lua, "getInfantryRule requires exactly two arguments");
     }
 
-    auto infantryTypeName = Read_Lua_String(1);
+    auto infantryTypeName = lua_tostring(lua, 1);
 
     bool parseError = false;
     auto infantryType = ParseInfantryType(lua, infantryTypeName, &parseError);
@@ -197,16 +197,16 @@ static int Lua_Get_Infantry_Rule(lua_State* lua)
     }
 
     auto infantry = (InfantryTypeClass*)&InfantryTypeClass::As_Reference(infantryType);
-    auto ruleName = Read_Lua_String(2);
+    auto ruleName = lua_tostring(lua, 2);
 
-    auto ruleMatched = Read_TechnoType_Rule(lua, infantry, Convert_String_To_Upper_Case(ruleName.value));
+    auto ruleMatched = Read_TechnoType_Rule(lua, infantry, Convert_String_To_Upper_Case(ruleName));
 
     if (ruleMatched)
     {
         return 1;
     }
 
-    luaL_error(lua, "rule name type passed getInfantryRule was not recognised: %s", ruleName.value);
+    luaL_error(lua, "rule name type passed getInfantryRule was not recognised: %s", ruleName);
 
     return 0;
 }
@@ -226,9 +226,9 @@ static int Lua_Log(lua_State* lua)
 
     if (argCount > 0)
     {
-        auto logMessage = Read_Lua_String(1);
+        auto logMessage = lua_tostring(lua, 1);
 
-        Log_Info("Lua => %s", logMessage.value);
+        Log_Info("Lua => %s", logMessage);
     }
 
     return 0;
@@ -240,9 +240,9 @@ static int Lua_Show_Error(lua_State* lua)
 
     if (argCount > 0)
     {
-        auto logMessage = Read_Lua_String(1);
+        auto logMessage = lua_tostring(lua, 1);
 
-        Show_Error(logMessage.value);
+        Show_Error(logMessage);
     }
 
     return 0;

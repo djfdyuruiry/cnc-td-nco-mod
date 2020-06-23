@@ -21,6 +21,4 @@ bool Execute_Lua_Script(char* luaScript);
 
 bool Execute_Lua_File(char* luaScriptPath);
 
-struct LuaString Read_Lua_String(int index);
-
 #endif
