@@ -8,5 +8,5 @@ if "%msg%"=="" (
   set msg=%~1
 )
 
-echo ^>^> %date%%time% - %level% - %msg%
+echo ^>^> %date% %time% - %level% - %msg%
 echo.

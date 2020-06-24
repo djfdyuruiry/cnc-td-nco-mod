@@ -46,4 +46,4 @@ jobs:
 
       - name: Run Test App
         working-directory: bin\Win32 
-        run: TiberianDawn.exe
+        run: ./TiberianDawn.exe
