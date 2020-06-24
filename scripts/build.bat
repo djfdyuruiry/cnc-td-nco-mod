@@ -10,7 +10,6 @@ MSBuild.exe ^
   /p:configuration=%config% ^
   /t:clean ^
   /t:build ^
-  /verbosity:quiet ^
   "%~dp0..\TIBERIANDAWN\TiberianDawn.vcxproj"
 
 if errorlevel 1 (
