@@ -23,9 +23,11 @@ jobs:
             -property installationPath
 
           Write-Host "::set-env name=VS_PATH::${vsPath}"
+          
+          Write-Host "Visual Studio Path: ${vsPath}"
 
           if ($vsPath) {
-            $msBuildPath = join-path $vsPath "MSBuild\Current\Bin\"
+            $msBuildPath = join-path $vsPath "MSBuild\Current\Bin"
 
             if (-not (test-path $msBuildPath)) {
               $msBuildPath = join-path $msBuildPath "MSBuild\15.0\Bin"
@@ -37,7 +39,7 @@ jobs:
 
             Write-Host "::add-path::${msBuildPath}"
           } else {
-            throw "Failed to find MSBuild"
+            throw "Failed to find Visual Studio"
           }
 
       - name: Build TiberianDawn.dll
