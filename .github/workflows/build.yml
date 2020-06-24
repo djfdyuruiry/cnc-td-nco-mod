@@ -11,10 +11,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout Repo
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.0
 
       - name: Build TiberianDawn.dll
-      - run: scripts/build-test.bat
+        run: scripts/build-test.bat
