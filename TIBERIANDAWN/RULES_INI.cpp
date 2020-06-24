@@ -283,7 +283,7 @@ bool Read_Bool_From_Rules_Ini(
 	bool defaultValue
 )
 {
-	auto defaultValueStr = defaultValue ? "TRUE" : "FALSE";
+	auto defaultValueStr = Convert_Boolean_To_String(defaultValue);
 
 	auto ruleValue = Read_String_From_Rules_Ini(
 		section,
@@ -296,7 +296,7 @@ bool Read_Bool_From_Rules_Ini(
 		2
 	);
 
-	return strcmp(ruleValue, "TRUE") == 0;
+	return Strings_Are_Equal(ruleValue, "TRUE");
 }
 
 int Read_Prerequisite(
@@ -306,7 +306,7 @@ int Read_Prerequisite(
 {
 	// TODO: validation list
 	auto defaultString = Structure_Type_To_String(defaultValue);
-	auto structValueStr = Read_String_From_Rules_Ini(section, "Prerequisite", defaultString);
+	auto structValueStr = Read_String_From_Rules_Ini(section, PREREQUISITE_RULE, defaultString);
 	bool parseError = false;
 	auto structValue = Parse_Structure_Type(structValueStr, &parseError);
 
@@ -375,7 +375,7 @@ int Read_House_List_From_Rules_Ini(
 )
 {
 	// TODO: validation list
-	auto houseListCsv = Read_String_From_Rules_Ini(section, "Houses", defaultValueAsString);
+	auto houseListCsv = Read_String_From_Rules_Ini(section, HOUSES_RULE, defaultValueAsString);
 
 	if (Strings_Are_Equal(houseListCsv, defaultValueAsString))
 	{

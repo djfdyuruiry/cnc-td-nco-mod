@@ -21,4 +21,6 @@ bool Execute_Lua_Script(char* luaScript);
 
 bool Execute_Lua_File(char* luaScriptPath);
 
+const char* Get_Lua_Value_As_String(unsigned int index);
+
 #endif

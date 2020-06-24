@@ -93,7 +93,7 @@ static UnitTypeClass const UnitVisceroid(
 	Read_Primary_Weapon("VICE", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("VICE", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("VICE", MPH_MEDIUM),								// SPEED:		Miles per hour.
+	Read_Speed("VICE", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -144,7 +144,7 @@ static UnitTypeClass const UnitFTank(
 	Read_Primary_Weapon("VICE", WEAPON_FLAME_TONGUE),Read_Secondary_Weapon("VICE", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("FTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
+	Read_Speed("FTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -195,7 +195,7 @@ static UnitTypeClass const UnitSTank(
 	Read_Primary_Weapon("FTNK", WEAPON_DRAGON),Read_Secondary_Weapon("FTNK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("STNK", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
+	Read_Speed("STNK", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -246,7 +246,7 @@ static UnitTypeClass const UnitLTank(
 	Read_Primary_Weapon("STNK", WEAPON_75MM),Read_Secondary_Weapon("STNK", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("LTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
+	Read_Speed("LTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -297,7 +297,7 @@ static UnitTypeClass const UnitMTank(
 	Read_Primary_Weapon("MTNK", WEAPON_105MM),Read_Secondary_Weapon("MTNK", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("MTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
+	Read_Speed("MTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -348,7 +348,7 @@ static UnitTypeClass const UnitHTank(
 	Read_Primary_Weapon("HTNK", WEAPON_120MM),Read_Secondary_Weapon("HTNK", WEAPON_MAMMOTH_TUSK),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("HTNK", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
+	Read_Speed("HTNK", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -399,7 +399,7 @@ static UnitTypeClass const UnitMHQ(
 	Read_Primary_Weapon("LTNK", WEAPON_NONE),Read_Secondary_Weapon("LTNK", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("MHQ", MPH_MEDIUM),								// SPEED:		Miles per hour.
+	Read_Speed("MHQ", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -451,7 +451,7 @@ static UnitTypeClass const UnitHover(
 	Read_Primary_Weapon("LST", WEAPON_NONE),Read_Secondary_Weapon("LST", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_HOVER,							// MOVE:			Locomotion type.
-	Read_Max_Speed("LST", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
+	Read_Speed("LST", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
 	127,										// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -502,7 +502,7 @@ static UnitTypeClass const UnitSAM(
 	Read_Primary_Weapon("MHQ", WEAPON_HONEST_JOHN),Read_Secondary_Weapon("MHQ", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("MLRS", MPH_MEDIUM),								// SPEED:		Miles per hour.
+	Read_Speed("MLRS", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -553,7 +553,7 @@ static UnitTypeClass const UnitArty(
 	Read_Primary_Weapon("ARTY", WEAPON_155MM),Read_Secondary_Weapon("ARTY", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("ARTY", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
+	Read_Speed("ARTY", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
 	2,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -605,7 +605,7 @@ static UnitTypeClass const UnitHarvester(
 	Read_Primary_Weapon("MLRS", WEAPON_NONE),Read_Secondary_Weapon("MLRS", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	Read_Max_Speed("HARV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
+	Read_Speed("HARV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HARVEST						// ORDERS:		Default order to give new unit.
@@ -656,7 +656,7 @@ static UnitTypeClass const UnitMCV(
 	Read_Primary_Weapon("MCV", WEAPON_NONE),Read_Secondary_Weapon("MCV", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	Read_Max_Speed("MCV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
+	Read_Speed("MCV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -707,7 +707,7 @@ static UnitTypeClass const UnitJeep(
 	Read_Primary_Weapon("HARV", WEAPON_M60MG),Read_Secondary_Weapon("HARV", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	Read_Max_Speed("JEEP", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
+	Read_Speed("JEEP", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
 	10,										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -758,7 +758,7 @@ static UnitTypeClass const UnitBuggy(
 	Read_Primary_Weapon("BGGY", WEAPON_M60MG),Read_Secondary_Weapon("BGGY", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	Read_Max_Speed("BGGY", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
+	Read_Speed("BGGY", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
 	10,										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -813,7 +813,7 @@ static UnitTypeClass const UnitBike(
 	Read_Primary_Weapon("JEEP", WEAPON_DRAGON),Read_Secondary_Weapon("JEEP", WEAPON_NONE),
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	Read_Max_Speed("BIKE", MPH_FAST),								// SPEED:		Miles per hour.
+	Read_Speed("BIKE", MPH_FAST),								// SPEED:		Miles per hour.
 	10,										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -864,7 +864,7 @@ static UnitTypeClass const UnitMLRS(
 	Read_Primary_Weapon("MSAM", WEAPON_MLRS),Read_Secondary_Weapon("MSAM", WEAPON_NONE),
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("MSAM", MPH_MEDIUM),								// SPEED:		Miles per hour.
+	Read_Speed("MSAM", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -915,7 +915,7 @@ static UnitTypeClass const UnitAPC(
 	Read_Primary_Weapon("BIKE", WEAPON_M60MG),Read_Secondary_Weapon("BIKE", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("APC", MPH_MEDIUM_FASTER),					// SPEED:		Miles per hour.
+	Read_Speed("APC", MPH_MEDIUM_FASTER),					// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -966,7 +966,7 @@ static UnitTypeClass const UnitGunBoat(
 	Read_Primary_Weapon("APC", WEAPON_TOMAHAWK),Read_Secondary_Weapon("APC", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_FLOAT,							// MOVE:			Locomotion type.
-	Read_Max_Speed("BOAT", MPH_SLOW),								// SPEED:		Miles per hour.
+	Read_Speed("BOAT", MPH_SLOW),								// SPEED:		Miles per hour.
 	1,											// ROT:			Rate of turn (degrees per tick).
 	14,										// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1017,7 +1017,7 @@ static UnitTypeClass const UnitTric(
 	Read_Primary_Weapon("TRIC", WEAPON_STEG),Read_Secondary_Weapon("TRIC", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("TRIC", MPH_SLOW),								// SPEED:		Miles per hour.
+	Read_Speed("TRIC", MPH_SLOW),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1068,7 +1068,7 @@ static UnitTypeClass const UnitTrex(
 	Read_Primary_Weapon("TREX", WEAPON_TREX),Read_Secondary_Weapon("TREX", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("TREX", MPH_MEDIUM),								// SPEED:		Miles per hour.
+	Read_Speed("TREX", MPH_MEDIUM),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1119,7 +1119,7 @@ static UnitTypeClass const UnitRapt(
 	Read_Primary_Weapon("RAPT", WEAPON_TREX),Read_Secondary_Weapon("RAPT", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("RAPT", MPH_FAST),								// SPEED:		Miles per hour.
+	Read_Speed("RAPT", MPH_FAST),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1170,7 +1170,7 @@ static UnitTypeClass const UnitSteg(
 	Read_Primary_Weapon("STEG", WEAPON_STEG),Read_Secondary_Weapon("STEG", WEAPON_NONE),
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	Read_Max_Speed("STEG", MPH_SLOW),								// SPEED:		Miles per hour.
+	Read_Speed("STEG", MPH_SLOW),								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.

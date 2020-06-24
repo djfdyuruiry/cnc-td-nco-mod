@@ -81,13 +81,29 @@ If you get an error on load of a scenario complaining the dll version is differe
 # Progress Log
 
 - Added loading of rules file
+    - Rules available for all units, infantry, aircraft and buildings
+    - Mod config embedded in rules
 - Rules file location can be set using the `TD_RULES_FILE` env var (Default is `RULES.INI`)
-- Unit strength configurable for a few infantry unit types
 - Added custom logging to a new log file `nco.log`
+- Lua events and event handler loading form Lua scripts 
+    - One event currently: `onScenarioStart`
+- Lua API for modifiying rules and getting current rule values
+    - `infantry` rules only for now
 
-- DLL crashes second time a scenario is loaded from main menu
+## Ideas
+
+- Add more events for different situations (Can_Capture, Scenario_End, On_Win, On_Fail, On_Startup, On_Shutdown)
+- Add rules to toggle certain logic for specific scenarios (can build certain units etc.)
+- Add rules to toggle hard-wired truths (can't build temple or laser as GDI with nod con yard etc.)
+- Use new base/infantry functions created for Lua API to read more rules from file
+
+## Problems
+
+- Can't build engineer in mission 1 regardless of rules
 
 ## Problem Archive
+
+- DLL crashes second time a scenario is loaded from main menu (needed to close log file handle before DLL exit)
 
 - ~Trying to set max speed but does not seem to work?~ (max value is 255 for that field - added validation logic)
 

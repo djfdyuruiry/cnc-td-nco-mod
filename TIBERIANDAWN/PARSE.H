@@ -17,6 +17,8 @@ char* Weapon_Type_To_String(WeaponType weaponType);
 
 StructType Parse_Structure_Type(char* structTypeString, bool* parseError);
 
+StructType Parse_Structure_Type(const char* structTypeString, bool* parseError);
+
 char* Structure_Type_To_String(StructType structType);
 
 InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError);

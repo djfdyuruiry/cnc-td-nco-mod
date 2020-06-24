@@ -1121,7 +1121,7 @@ class InfantryTypeClass : public TechnoTypeClass
 		**	civilian uses different voice responses, has less ammunition,
 		**	and runs from danger more often.
 		*/
-		unsigned IsCivilian:1;
+		unsigned IsCivilian : 1;
 
 		/*
 		**	For "fraidycat" infantry types that will run away from any damage causing

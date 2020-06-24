@@ -13,15 +13,21 @@ static bool Load_Lua_Scripts()
         return false;
     }
 
+    Log_Debug("Lua game state intialised");
+
     if (!Initialise_Lua_Api())
     {
         return false;
     }
-    
+
+    Log_Debug("Lua API intialised");
+
     if (!Initialise_Events())
     {
         return false;
     }
+
+    Log_Debug("Lua events system initialised");
 
     auto scripts = Rules_Get_Lua_Scripts();
 
@@ -58,6 +64,8 @@ bool Initialise_Lua()
 
 void Register_Lua_Function(const char* name, lua_CFunction function)
 {
+    Log_Debug("Registering load C function: %s", name);
+
     lua_pushcfunction(LUA, function);
     lua_setglobal(LUA, name);
 }
@@ -78,7 +86,7 @@ bool Execute_Lua_Script(char* luaScript)
 
 bool Execute_Lua_File(char* scriptFile)
 {
-    Log_Info("Attempting to loadLua script: %s", scriptFile);
+    Log_Info("Attempting to load Lua script: %s", scriptFile);
 
     auto executionOK = !luaL_dofile(LUA, scriptFile);
 
@@ -92,4 +100,14 @@ bool Execute_Lua_File(char* scriptFile)
     }
 
     return executionOK;
+}
+
+const char * Get_Lua_Value_As_String(unsigned int index)
+{
+    if (lua_isboolean(LUA, index))
+    {
+        return Convert_Boolean_To_String(lua_toboolean(LUA, index));
+    }
+
+    return lua_tostring(LUA, index);
 }

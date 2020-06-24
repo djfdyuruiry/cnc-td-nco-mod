@@ -7,4 +7,10 @@ const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultVa
 
 int Parse_Number(char character);
 
+bool Parse_Boolean(char* booleanValue);
+
+bool Parse_Boolean(const char* booleanValue);
+
+char * Convert_Boolean_To_String(bool booleanValue);
+
 #endif

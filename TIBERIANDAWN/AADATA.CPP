@@ -86,7 +86,7 @@ static AircraftTypeClass const AttackPlane(
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("A10", WEAPON_NAPALM), Read_Secondary_Weapon("A10", WEAPON_NONE),
 	ARMOR_ALUMINUM,		// Armor type of this aircraft.
-	Read_Max_Speed("A10", MPH_FAST),				// Maximum speed of aircraft.
+	Read_Speed("A10", MPH_FAST),				// Maximum speed of aircraft.
 	5,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
@@ -125,7 +125,7 @@ static AircraftTypeClass const TransportHeli(
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("TRAN", WEAPON_NONE), Read_Secondary_Weapon("TRAN", WEAPON_NONE),
 	ARMOR_ALUMINUM,		// Armor type of this aircraft.
-	Read_Max_Speed("TRAN", MPH_MEDIUM_FAST),		// Maximum speed of aircraft.
+	Read_Speed("TRAN", MPH_MEDIUM_FAST),		// Maximum speed of aircraft.
 	5,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
@@ -164,7 +164,7 @@ static AircraftTypeClass const AttackHeli(
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("HELI", WEAPON_CHAIN_GUN), Read_Secondary_Weapon("HELI", WEAPON_NONE),
 	ARMOR_STEEL,			// Armor type of this aircraft.
-	Read_Max_Speed("HELI", MPH_FAST),				// Maximum speed of aircraft.
+	Read_Speed("HELI", MPH_FAST),				// Maximum speed of aircraft.
 	4,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
@@ -204,7 +204,7 @@ static AircraftTypeClass const OrcaHeli(
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("ORCA", WEAPON_DRAGON), Read_Secondary_Weapon("ORCA", WEAPON_NONE),
 	ARMOR_STEEL,			// Armor type of this aircraft.
-	Read_Max_Speed("ORCA", MPH_FAST),				// Maximum speed of aircraft.
+	Read_Speed("ORCA", MPH_FAST),				// Maximum speed of aircraft.
 	4,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
@@ -244,7 +244,7 @@ static AircraftTypeClass const CargoPlane(
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("C17", WEAPON_NONE), Read_Secondary_Weapon("C17", WEAPON_NONE),
 	ARMOR_ALUMINUM,		// Armor type of this aircraft.
-	Read_Max_Speed("C17", MPH_FAST),				// Maximum speed of aircraft.
+	Read_Speed("C17", MPH_FAST),				// Maximum speed of aircraft.
 	5,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );

@@ -401,6 +401,17 @@ StructType Parse_Structure_Type(char* structTypeString, bool* parseError)
 	return structType;
 }
 
+StructType Parse_Structure_Type(const char* structTypeString, bool* parseError)
+{
+    auto structTypeStr = strdup(structTypeString);
+
+    auto structType = Parse_Structure_Type(structTypeStr, parseError);
+
+    delete structTypeStr;
+
+    return structType;
+}
+
 char* Structure_Type_To_String(StructType structType)
 {
     char* structTypeString;
@@ -921,7 +932,6 @@ char* Weapon_Type_To_String(WeaponType weaponType)
     return weaponTypeString;
 }
 
-
 InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
 {
     InfantryType infantryType = INFANTRY_NONE;
@@ -930,7 +940,7 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
     {
         return INFANTRY_NONE;
     }
-    if (Strings_Are_Equal(infantryTypeString, "RAMBO"))
+    else if (Strings_Are_Equal(infantryTypeString, "RMBO"))
     {
         return INFANTRY_RAMBO;
     }
@@ -950,11 +960,15 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
     {
         return INFANTRY_CHAN;
     }
+    else if (Strings_Are_Equal(infantryTypeString, "E7"))
+    {
+        return INFANTRY_E7;
+    }
     else if (infantryTypeString[0] == 'E')
     {
         auto number = Parse_Number(infantryTypeString[1]);
 
-        if (number != 6 && number > 0 && number < 8)
+        if (number > 0 && number < 6)
         {
             return (InfantryType)(number - 1);
         }
@@ -996,7 +1010,7 @@ char* Infantry_Type_To_String(InfantryType infantryType)
     }
     else if (infantryType == INFANTRY_RAMBO)
     {
-        infantryTypeString = "RAMBO";
+        infantryTypeString = "RMBO";
     }
     else if (infantryType == INFANTRY_C10)
     {
@@ -1014,7 +1028,11 @@ char* Infantry_Type_To_String(InfantryType infantryType)
     {
         infantryTypeString = "CHAN";
     }
-    else if (infantryType != 6 && infantryType > -1 && infantryType < 6)
+    else if (infantryType == INFANTRY_E7)
+    {
+        infantryTypeString = "E7";
+    }
+    else if (infantryType > -1 && infantryType < 7)
     {
         auto index = infantryType + 1;
 

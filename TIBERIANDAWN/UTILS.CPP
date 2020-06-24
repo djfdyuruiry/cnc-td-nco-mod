@@ -50,3 +50,24 @@ int Parse_Number(char character)
 {
 	return character - '0';
 }
+
+bool Parse_Boolean(char* booleanValue)
+{
+	return Strings_Are_Equal(booleanValue, "TRUE");
+}
+
+bool Parse_Boolean(const char* booleanValue)
+{
+	auto booleanValueStr = strdup(booleanValue);
+
+	auto result = Parse_Boolean(booleanValueStr);
+
+	delete booleanValueStr;
+
+	return result;
+}
+
+char* Convert_Boolean_To_String(bool booleanValue)
+{
+	return booleanValue ? "TRUE" : "FALSE";
+}
