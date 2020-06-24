@@ -13,8 +13,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: Add MSBuild to Path
-        run: echo "::add-path::C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\Current\Bin"
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.0
+        with:
+          vs-version: [ 15.9 ]
 
       - name: Build TiberianDawn.dll
         run: scripts/build-test.bat
