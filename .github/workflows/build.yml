@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-2016
     steps:
       - name: Checkout Repo
@@ -22,23 +22,28 @@ jobs:
             -requires Microsoft.Component.MSBuild `
             -property installationPath
 
-          Write-Host "::set-env name=VS_PATH::${vsPath}"
-
-          if ($vsPath) {
-            $msBuildPath = join-path $vsPath "MSBuild\Current\Bin"
-
-            if (-not (test-path $msBuildPath)) {
-              $msBuildPath = join-path $vsPath "MSBuild\15.0\Bin"
-
-              if (-not (test-path $msBuildPath)) {
-                throw "Failed to find MSBuild"
-              }
-            }
-
-            Write-Host "::add-path::${msBuildPath}"
-          } else {
+          if (!$vsPath) {
             throw "Failed to find Visual Studio"
           }
 
-      - name: Build TiberianDawn.dll
-        run: scripts/build-test.bat
+          $msBuildPath = join-path $vsPath "MSBuild\Current\Bin"
+
+          if (!(test-path $msBuildPath)) {
+            $msBuildPath = join-path $vsPath "MSBuild\15.0\Bin"
+
+            if (!(test-path $msBuildPath)) {
+              throw "Failed to find MSBuild"
+            }
+          }
+
+          Write-Host "::set-env name=VS_PATH::${vsPath}"
+          Write-Host "::set-env name=MSBUILD_PATH::${msBuildPath}"
+
+          Write-Host "::add-path::${msBuildPath}"
+
+      - name: Build Tiberian Dawn Test App
+        run: scripts\build-test.bat
+
+      - name: Run Test App
+        working-directory: bin\Win32 
+        run: TiberianDawn.exe
