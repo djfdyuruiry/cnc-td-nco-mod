@@ -26,6 +26,8 @@ jobs:
           
           Write-Host "Visual Studio Path: ${vsPath}"
 
+          tree "${vsPath}"
+
           if ($vsPath) {
             $msBuildPath = join-path $vsPath "MSBuild\Current\Bin"
 
