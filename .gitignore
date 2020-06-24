@@ -360,3 +360,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 BIN
+
+!TiberianDawn.vcxproj.user

@@ -2,7 +2,7 @@
 
 cd "%~dp0.."
 
-call "%~dp0build.bat"
+call "%~dp0build-release.bat"
 
 set MOD_PATH=%USERPROFILE%\Documents\CnCRemastered\Mods\Tiberian_Dawn\nco
 set CNC_PATH=C:\Program Files (x86)\Steam\steamapps\common\CnCRemastered

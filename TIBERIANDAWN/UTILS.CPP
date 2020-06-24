@@ -46,6 +46,70 @@ const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultVa
 	return envVarValue;
 }
 
+char* Get_Win32_Error_Message()
+{
+	return Get_Win32_Error_Message(
+		GetLastError()
+	);
+}
+
+char* Get_Win32_Error_Message(DWORD error)
+{
+	LPSTR messageBuffer = nullptr;
+
+	FormatMessageA(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		error,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		(LPSTR)&messageBuffer,
+		0,
+		NULL
+	);
+
+	return messageBuffer;
+}
+
+HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
+{
+	auto file = CreateFile(
+		filename,  // name of the write
+		FILE_APPEND_DATA,          // open for appending
+		FILE_SHARE_READ,           // share for reading only
+		NULL,                      // default security
+		OPEN_ALWAYS,               // open existing file or create new file 
+		FILE_ATTRIBUTE_NORMAL,     // normal file
+		NULL
+	);
+
+	if (file == INVALID_HANDLE_VALUE || file == NULL)
+	{
+		*errorOccured = true;
+
+		return NULL;
+	}
+
+	return file;
+}
+
+void Append_To_File(HANDLE file, char* data)
+{
+	if (file == NULL || file == INVALID_HANDLE_VALUE)
+	{
+		return;
+	}
+
+	auto dwBytesToWrite = strlen(data);
+
+	WriteFile(
+		file,              // open file handle
+		data,               // start of data to write
+		dwBytesToWrite,     // number of bytes to write
+		NULL,    // number of bytes that were written
+		NULL
+	);              // no overlapped structure
+}
+
 int Parse_Number(char character)
 {
 	return character - '0';

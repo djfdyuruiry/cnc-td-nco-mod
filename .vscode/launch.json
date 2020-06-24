@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [  
+        {
+            "name": "Test Console",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Win32/TiberianDawn.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/Win32",
+            "environment": {
+                "TD_RULES_FILE": "${workspaceFolder}/bin/Win32/RULES.INI"
+            },
+            "externalConsole": false,
+            "preLaunchTask": "Build TestConsole"
+        }
+    ]
+}

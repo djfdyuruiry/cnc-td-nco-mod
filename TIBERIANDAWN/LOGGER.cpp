@@ -84,12 +84,16 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 
 	if (!FAILED_TO_OPEN_LOG_FILE && LOG_FILE_HANDLE == NULL)
 	{
-		LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH);
+		bool errorOccurred = false;
+		LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH, &errorOccurred);
 
-		if (LOG_FILE_HANDLE == NULL)
+		if (errorOccurred || LOG_FILE_HANDLE == NULL)
 		{
 			FAILED_TO_OPEN_LOG_FILE = true;
-			Show_Error("Failed to open log file - check env var path is correct and/or default `log` directory is present");
+			Show_Error(
+				"Failed to open log file:\n\n%s\nCheck env var path is correct and/or default `log` directory is present.",
+				Get_Win32_Error_Message()
+			);
 		}
 	}
 

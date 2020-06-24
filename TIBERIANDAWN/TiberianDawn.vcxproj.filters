@@ -654,9 +654,6 @@
     <ClInclude Include="RULES.H">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="FILE.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="LUA.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
@@ -1265,9 +1262,6 @@
     <ClCompile Include="DLLInterfaceEditor.cpp" />
     <ClCompile Include="RULES.CPP">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FILE.cpp">
-      <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="LUA.cpp">
       <Filter>Source Files\NCO</Filter>
