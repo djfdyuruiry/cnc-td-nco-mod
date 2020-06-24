@@ -23,16 +23,12 @@ jobs:
             -property installationPath
 
           Write-Host "::set-env name=VS_PATH::${vsPath}"
-          
-          Write-Host "Visual Studio Path: ${vsPath}"
-
-          tree "${vsPath}"
 
           if ($vsPath) {
             $msBuildPath = join-path $vsPath "MSBuild\Current\Bin"
 
             if (-not (test-path $msBuildPath)) {
-              $msBuildPath = join-path $msBuildPath "MSBuild\15.0\Bin"
+              $msBuildPath = join-path $vsPath "MSBuild\15.0\Bin"
 
               if (-not (test-path $msBuildPath)) {
                 throw "Failed to find MSBuild"
