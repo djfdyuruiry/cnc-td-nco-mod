@@ -18,10 +18,10 @@ jobs:
 
       - name: Setup Build Tools
         uses: ilammy/msvc-dev-cmd@v1
-          with:
-            arch: x86
-            sdk: "8.1"
-            toolset: "15.5"
+        with:
+          arch: x86
+          sdk: "8.1"
+          toolset: "15.5"
 
       - name: Build TiberianDawn.dll
         run: scripts/build-test.bat
