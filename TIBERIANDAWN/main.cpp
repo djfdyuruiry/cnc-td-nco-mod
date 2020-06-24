@@ -2,6 +2,8 @@
 
 #include "function.h"
 
+static bool IS_RUNNING_IN_CI_ENV = false;
+
 static void Test_Lua_Events()
 {
 	Log_Info("Testing setting rules from scenario start event handler");
@@ -11,8 +13,24 @@ static void Test_Lua_Events()
 	On_Scenario_Start(1);
 }
 
+static void Enter_Lua_Repl()
+{
+	if (IS_RUNNING_IN_CI_ENV)
+	{
+		puts("ERROR: CI environment detected - Lua REPL not supported");
+		exit(1);
+	}
+
+}
+
 static void Configure_Console_Output()
 {
+	if (IS_RUNNING_IN_CI_ENV)
+	{
+		puts("WARNING: CI environment detected - skipped windows console allocation");
+		return;
+	}
+
 	if (!AttachConsole(ATTACH_PARENT_PROCESS))
 	{
 		AllocConsole();
@@ -28,11 +46,15 @@ static void Configure_Console_Output()
 /// </summary>
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
+	IS_RUNNING_IN_CI_ENV = Parse_Boolean(
+		Get_Env_Var_Or_Default("CI", "false")
+	);
+
+	Configure_Console_Output();
+
 	puts("========================");
 	puts("  NCO Mod: Test Console  ");
 	puts("=========================");
-
-	Configure_Console_Output();
 
 	if (!NCO_Startup())
 	{
