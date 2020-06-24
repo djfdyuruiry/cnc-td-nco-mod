@@ -31,6 +31,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 	if (!NCO_Startup())
 	{
 		NCO_Shutdown();
+
+		puts("ERROR: NCO_Startup failed - bailing out!");
+
 		return 1;
 	}
 
