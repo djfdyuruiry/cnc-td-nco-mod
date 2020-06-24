@@ -1,3 +1,5 @@
+#ifdef TEST_CONSOLE
+
 #include "function.h"
 
 static void Test_Lua_Events()
@@ -26,20 +28,30 @@ static void Configure_Console_Output()
 /// </summary>
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
+	puts("========================");
+	puts("  NCO Mod: Test Console  ");
+	puts("=========================");
+
 	Configure_Console_Output();
 
 	if (!NCO_Startup())
 	{
 		NCO_Shutdown();
 
-		puts("ERROR: NCO_Startup failed - bailing out!");
+		puts("Test Console: ERROR! NCO_Startup failed - bailing out!");
 
 		return 1;
 	}
+
+	Log_Debug("Test Console: Testing Lua Events");
 
 	Test_Lua_Events();
 
 	NCO_Shutdown();
 
+	puts("Test Console: finishing normally");
+
 	return 0;
 }
+
+#endif

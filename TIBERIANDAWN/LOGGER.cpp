@@ -103,7 +103,7 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		Append_To_File(LOG_FILE_HANDLE, messageWithLevelBuffer);
 	}
 
-	puts(messageWithLevelBuffer);
+	printf(messageWithLevelBuffer);
 
 	delete messageBuffer;
 	delete messageWithLevelBuffer;
