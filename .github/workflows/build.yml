@@ -14,9 +14,31 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.0
-        with:
-          vs-version: 15.9
+        shell: powershell
+        run: |
+          $vsPath = vswhere -latest `
+            -prerelease `
+            -products * `
+            -requires Microsoft.Component.MSBuild `
+            -property installationPath
+
+          Write-Host "::set-env name=VS_PATH::${vsPath}"
+
+          if ($vsPath) {
+            $msBuildPath = join-path $vsPath "MSBuild\Current\Bin\"
+
+            if (-not (test-path $msBuildPath)) {
+              $msBuildPath = join-path $msBuildPath "MSBuild\15.0\Bin"
+
+              if (-not (test-path $msBuildPath)) {
+                throw "Failed to find MSBuild"
+              }
+            }
+
+            Write-Host "::add-path::${msBuildPath}"
+          } else {
+            throw "Failed to find MSBuild"
+          }
 
       - name: Build TiberianDawn.dll
         run: scripts/build-test.bat
