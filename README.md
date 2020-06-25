@@ -89,6 +89,8 @@ If you get an error on load of a scenario complaining the dll version is differe
     - One event currently: `onScenarioStart`
 - Lua API for modifiying rules and getting current rule values
     - `infantry` rules only for now
+- Built a LUA REPL (test app cli option) for handy debugging without having to rerun/rebuild
+- Added GitHub actions Workflow for building project and running test app on push
 
 ## Ideas
 
