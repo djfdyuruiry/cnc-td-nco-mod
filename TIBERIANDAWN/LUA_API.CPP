@@ -43,6 +43,7 @@ static void Load_Utility_Functions()
     Log_Debug("Initialising Lua API utility functions");
 
     Register_Lua_Function("log", Lua_Log);
+    Register_Lua_Function("print", Lua_Log);
     Register_Lua_Function("showError", Lua_Show_Error);
 }
 
@@ -51,17 +52,15 @@ bool Initialise_Lua_Api()
     if (API_INITIALISED)
     {
         Log_Warn("Attempted to initialise Lua API more than once, ignoring");
-        return true;
+        return API_INITIALISED;
     }
 
-    auto executionOK = true;
-    
     Log_Info("Initialising Lua API");
 
     Load_Utility_Functions();
     Load_Infantry_Functions();
 
-    API_INITIALISED = executionOK;
+    API_INITIALISED = true;
 
-    return executionOK;
+    return API_INITIALISED;
 }

@@ -340,6 +340,7 @@ copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
     <ClInclude Include="LUA_API.H" />
     <ClInclude Include="LUA_API_FUNCTIONS.H" />
     <ClInclude Include="LUA_EVENTS.H" />
+    <ClInclude Include="LUA_REPL.H" />
     <ClInclude Include="MAP.H" />
     <ClInclude Include="MAPEDIT.H" />
     <ClInclude Include="MEMCHECK.H" />
@@ -510,6 +511,7 @@ copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS.CPP" />
+    <ClCompile Include="LUA_REPL.CPP" />
     <ClCompile Include="NCO.cpp" />
     <ClCompile Include="UTILS.CPP" />
     <ClCompile Include="EVENT.CPP" />

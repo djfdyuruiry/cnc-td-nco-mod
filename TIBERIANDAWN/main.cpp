@@ -1,6 +1,7 @@
 #ifdef TEST_CONSOLE
 
 #include "function.h"
+#include "lua_repl.h"
 
 static bool IS_RUNNING_IN_CI_ENV = false;
 
@@ -13,16 +14,6 @@ static void Test_Lua_Events()
 	On_Scenario_Start(1);
 }
 
-static void Enter_Lua_Repl()
-{
-	if (IS_RUNNING_IN_CI_ENV)
-	{
-		puts("ERROR: CI environment detected - Lua REPL not supported");
-		exit(1);
-	}
-
-}
-
 static void Configure_Console_Output()
 {
 	if (IS_RUNNING_IN_CI_ENV)
@@ -31,20 +22,43 @@ static void Configure_Console_Output()
 		return;
 	}
 
-	if (!AttachConsole(ATTACH_PARENT_PROCESS))
+	if (!AttachConsole(ATTACH_PARENT_PROCESS) 
+		&& !AllocConsole()
+		&& !AttachConsole(GetCurrentProcessId()))
 	{
-		AllocConsole();
-		AttachConsole(GetCurrentProcessId());
+		Log_Error("Error opening Win32 console: %s", Get_Win32_Error_Message());
+
+		exit(1);
 	}
 
 	freopen("CON", "w", stdout);
 	freopen("CON", "w", stderr);
+	freopen("CON", "w", stdin);
+}
+
+static void Parse_Command_Line(const char* commandLine)
+{
+	if (!String_Starts_With(commandLine, "--lua-repl"))
+	{
+		return;
+	}
+
+	if (IS_RUNNING_IN_CI_ENV)
+	{
+		puts("ERROR: CI environment detected - Lua REPL not supported");
+
+		exit(1);
+	}
+
+	Enter_Lua_Repl();
+
+	exit(0);
 }
 
 /// <summary>
 /// Test console app for the New Construction Options mod.
 /// </summary>
-int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
+int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int windowState)
 {
 	IS_RUNNING_IN_CI_ENV = Parse_Boolean(
 		Get_Env_Var_Or_Default("CI", "false")
@@ -55,6 +69,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 	puts("========================");
 	puts("  NCO Mod: Test Console  ");
 	puts("=========================");
+
+	Parse_Command_Line(commandLine);
 
 	if (!NCO_Startup())
 	{
@@ -72,6 +88,11 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 	NCO_Shutdown();
 
 	puts("Test Console: finishing normally");
+
+	if (!IS_RUNNING_IN_CI_ENV)
+	{
+		system("pause");
+	}
 
 	return 0;
 }

@@ -365,7 +365,7 @@ int Lua_Set_Infantry_Rule(lua_State* lua)
         return 0;
     }
 
-    luaL_error(lua, "rule name type passed setInfantryRule was not recognised: %s", ruleName);
+    luaL_error(lua, "rule name passed setInfantryRule was not recognised: %s", ruleName);
 
     return 0;
 }

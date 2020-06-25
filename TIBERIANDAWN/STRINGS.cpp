@@ -52,25 +52,25 @@ bool Strings_Are_Equal(const char* subject, const char* expected)
 
 bool Strings_Is_Empty(const char* subject)
 {
-	return Strings_Are_Equal(subject, "");
+	return subject == NULL || Strings_Are_Equal(subject, "");
 }
 
 bool Strings_Is_Empty(char* subject)
 {
-	return Strings_Are_Equal(subject, "");
+	return subject == NULL || Strings_Are_Equal(subject, "");
 }
 
 bool String_Starts_With(char* subject, char* expected)
 {
-	auto subjectLength = strlen(subject);
-	auto expectedLength = strlen(expected);
-
-	if (expectedLength > subjectLength)
+	if (Strings_Is_Empty(subject) || Strings_Is_Empty(expected))
 	{
 		return false;
 	}
 
-	if (Strings_Is_Empty(subject) || Strings_Is_Empty(expected))
+	auto subjectLength = strlen(subject);
+	auto expectedLength = strlen(expected);
+
+	if (expectedLength > subjectLength)
 	{
 		return false;
 	}

@@ -70,18 +70,58 @@ void Register_Lua_Function(const char* name, lua_CFunction function)
     lua_setglobal(LUA, name);
 }
 
-bool Execute_Lua_Script(char* luaScript)
+bool Execute_Lua_Script(char* luaScript, bool beQuiet)
 {
     auto executionOK = !luaL_dostring(LUA, luaScript);
 
-    Log_Debug("Executing Lua snippet: \n%s\n", luaScript);
-    
+    if (!beQuiet)
+    {
+        Log_Debug("Executing Lua snippet: \n%s\n", luaScript);
+    }
+
     if (!executionOK)
     {
-        Show_Error("Error executing Lua snippet: \n<<\n%s\n>>\nCheck the syntax is correct", luaScript);
+        auto luaError = lua_tostring(LUA, -1);
+        auto errorMessageFormat = "Error executing Lua snippet: \n<<\n%s\n>>\n\n%s";
+
+        if (!beQuiet)
+        {
+            Show_Error(errorMessageFormat, luaScript, luaError);
+        }
+        else
+        {
+            Log_Error(errorMessageFormat, luaScript, luaError);
+        }
     }
 
     return executionOK;
+}
+
+bool Execute_Lua_Script(const char* luaScript, bool beQuiet)
+{
+    auto luaScriptStr = strdup(luaScript);
+
+    auto result = Execute_Lua_Script(luaScriptStr, beQuiet);
+
+    delete luaScriptStr;
+
+    return result;
+}
+
+bool Execute_Lua_Script(char* luaScript)
+{
+    return Execute_Lua_Script(luaScript, false);
+}
+
+bool Execute_Lua_Script(const char* luaScript)
+{
+    auto luaScriptStr = strdup(luaScript);
+
+    auto result = Execute_Lua_Script(luaScriptStr, false);
+
+    delete luaScriptStr;
+
+    return result;
 }
 
 bool Execute_Lua_File(char* scriptFile)
@@ -96,13 +136,14 @@ bool Execute_Lua_File(char* scriptFile)
     }
     else
     {
-        Show_Error("Error loading Lua script: %s\nCheck the file is present and the syntax is correct", scriptFile);
+        auto luaError = lua_tostring(LUA, -1);
+        Show_Error("Error loading Lua script: %s\n\n%s", scriptFile, luaError);
     }
 
     return executionOK;
 }
 
-const char * Get_Lua_Value_As_String(unsigned int index)
+const char * Get_Lua_Value_As_String(int index)
 {
     if (lua_isboolean(LUA, index))
     {
@@ -110,4 +151,14 @@ const char * Get_Lua_Value_As_String(unsigned int index)
     }
 
     return lua_tostring(LUA, index);
+}
+
+const char* Get_Lua_Value_Type(int index)
+{
+    return lua_typename(LUA, lua_type(LUA, index));
+}
+
+void Clear_Lua_Stack()
+{
+    lua_settop(LUA, 0);
 }
