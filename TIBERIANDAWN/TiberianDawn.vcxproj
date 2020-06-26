@@ -186,10 +186,6 @@ if exist ..\bin\$(PlatformName)\log rmdir /Q /S ..\bin\$(PlatformName)\log
 
 mkdir ..\bin\$(PlatformName)\log
 
-if exist ..\bin\$(PlatformName)\lua53.dll del ..\bin\$(PlatformName)\lua53.dll
-
-copy ..\lib\lua53.dll ..\bin\$(PlatformName)\
-
 if exist ..\bin\$(PlatformName)\lua53.lib del ..\bin\$(PlatformName)\lua53.lib
 
 copy ..\lib\lua53.lib ..\bin\$(PlatformName)\
