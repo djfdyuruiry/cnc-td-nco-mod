@@ -8,6 +8,8 @@ static void Load_Infantry_Functions()
 
     Register_Lua_Function("getInfantryRule", Lua_Get_Infantry_Rule);
     Register_Lua_Function("setInfantryRule", Lua_Set_Infantry_Rule);
+    Register_Lua_Function("getUnitRule", Lua_Get_Unit_Rule);
+    Register_Lua_Function("setUnitRule", Lua_Set_Unit_Rule);
 }
 
 static int Lua_Log(lua_State* lua)

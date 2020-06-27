@@ -4,16 +4,23 @@ function printMinigunnerWeapon()
   log(string.format("E1 primary weapon is: %s", weapon))
 end
 
-onScenarioStart(function (scenarioNumber)
-  log(string.format("Scenario number received: %d", scenarioNumber))
+onScenarioStart(function (house, scenarioNumber, buildLevel)
+  log(string.format("Scenario received: %s %d", house, scenarioNumber))
+  log(string.format("Scenario build level: %d", buildLevel))
 
   printMinigunnerWeapon()
-  
+ 
+  setInfantryRule("E1", "CanCapture", true)
+
   setInfantryRule("E3", "ScenarioLevel", 1)
   setInfantryRule("E3", "BuildLevel", 1)
   
   setInfantryRule("E6", "ScenarioLevel", 1)
   setInfantryRule("E6", "BuildLevel", 1)
+  
+  setUnitRule("JEEP", "CanCrushInfantry", true)
+
+  setUnitRule("MCV", "CanCloak", true)
 
   if scenarioNumber ~= 4 then
     return

@@ -438,6 +438,8 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	TerrainClass::Read_INI(buffer);
 	Call_Back();
 
+	On_Scenario_Load(PlayerPtr->Class->House, Scenario, BuildLevel);
+
 	/*
 	**	Read in and place the units (all sides).
 	*/

@@ -8,10 +8,12 @@ static bool IS_RUNNING_IN_CI_ENV = false;
 static void Test_Lua_Events()
 {
 	Log_Info("Testing setting rules from scenario start event handler");
-	On_Scenario_Start(4);
+
+	On_Scenario_Load(HOUSE_GOOD, 4, 4);
 
 	Log_Info("Testing returning early from scenario start event handler");
-	On_Scenario_Start(1);
+
+	On_Scenario_Load(HOUSE_BAD, 1, 1);
 }
 
 static void Pause()

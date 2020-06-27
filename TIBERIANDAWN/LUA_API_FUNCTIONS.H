@@ -6,9 +6,12 @@
 #include "defines.h"
 #include "type.h"
 
-// infantry rule functions
 int Lua_Set_Infantry_Rule(lua_State* lua);
 
 int Lua_Get_Infantry_Rule(lua_State* lua);
+
+int Lua_Get_Unit_Rule(lua_State* lua);
+
+int Lua_Set_Unit_Rule(lua_State* lua);
 
 #endif

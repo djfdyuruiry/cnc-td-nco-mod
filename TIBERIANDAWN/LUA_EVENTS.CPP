@@ -94,8 +94,13 @@ boolean Initialise_Events()
     return executionOK;
 };
 
-void On_Scenario_Start(unsigned int scenarioNumber)
+void On_Scenario_Load(HousesType player, unsigned int scenarioNumber, unsigned int buildLevel)
 {
-    Fire_Lua_Event(ON_SCENARIO_START_EVENT, "%u", scenarioNumber);
+    Fire_Lua_Event(
+        ON_SCENARIO_START_EVENT,
+        "'%s', %u, %u",
+        House_Type_To_String(player),
+        scenarioNumber,
+        buildLevel
+    );
 }
-
