@@ -1,3 +1,5 @@
+#include <Shlwapi.h>
+
 #include "function.h"
 
 static auto USER_PROFILE_ENV_VAR = "USERPROFILE";
@@ -140,28 +142,31 @@ char* Convert_Boolean_To_String(bool booleanValue)
 
 char* Get_Mod_Data_Path()
 {
-	auto userProfile = Get_Env_Var_Or_Default(USER_PROFILE_ENV_VAR, NULL);
-
-	if (String_Is_Empty(userProfile))
-	{
-		Show_Error("Unable to find home directory using env var '%s'\nThis should never happen...", USER_PROFILE_ENV_VAR);
-		exit(1);
-	}
-
 	auto modPath = Allocate_String(MAX_PATH);
 
-	#ifndef TEST_CONSOLE
-	sprintf(modPath, "%s\\Documents\\CnCRemastered\\Mods\\Tiberian_Dawn\\nco\\Data", userProfile);
-	#else
-	// use the cwd for test test console app
-	if (!GetCurrentDirectory(MAX_PATH, modPath))
+	HMODULE moduleHandle;
+
+	if (!GetModuleHandleEx(
+		GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+		#ifndef TEST_CONSOLE
+		(LPCSTR)&NCO_Startup,
+		#else
+		(LPCSTR)&WinMain,
+		#endif
+		&moduleHandle
+	))
 	{
-		Show_Error("Unable to lookup current working directory: %s", Get_Win32_Error_Message());
+		Show_Error("Unable to get handle on module: %s", Get_Win32_Error_Message());
 		exit(1);
 	}
-	#endif
 
-	delete userProfile;
+	if (!GetModuleFileName(moduleHandle, modPath, MAX_PATH))
+	{
+		Show_Error("Unable to get mod data path: %s", Get_Win32_Error_Message());
+		exit(1);
+	}
+
+	PathRemoveFileSpec(modPath);
 
 	return modPath;
 }

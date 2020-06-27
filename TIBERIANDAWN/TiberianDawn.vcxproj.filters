@@ -26,6 +26,9 @@
     <Filter Include="Source Files\NCO">
       <UniqueIdentifier>{cd1a7065-eb59-4357-b828-e14139c1768b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="output">
+      <UniqueIdentifier>{e1a5a49a-47c3-4ec3-9728-68060898ae27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="COORDA.ASM">
@@ -1327,5 +1330,10 @@
     <ResourceCompile Include="Resource\TiberianDawn.rc">
       <Filter>Source Files\Resources</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\bin\Win32\log\nco.log">
+      <Filter>output</Filter>
+    </Text>
   </ItemGroup>
 </Project>
