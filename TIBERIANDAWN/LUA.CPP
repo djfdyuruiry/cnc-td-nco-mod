@@ -72,7 +72,7 @@ bool Initialise_Lua()
 
 void Register_Lua_Function(const char* name, lua_CFunction function)
 {
-    Log_Debug("Registering load C function: %s", name);
+    Log_Debug("Registering Lua C function: %s", name);
 
     lua_pushcfunction(LUA, function);
     lua_setglobal(LUA, name);

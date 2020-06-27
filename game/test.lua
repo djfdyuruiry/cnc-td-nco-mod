@@ -12,10 +12,8 @@ onScenarioStart(function (scenarioNumber)
   setInfantryRule("E3", "ScenarioLevel", 1)
   setInfantryRule("E3", "BuildLevel", 1)
   
-  -- Does not actually make engineer buildable in GDI 1 - why?
-  setInfantryRule("E7", "Buildable", true)
-  setInfantryRule("E7", "ScenarioLevel", 1)
-  setInfantryRule("E7", "BuildLevel", 1)
+  setInfantryRule("E6", "ScenarioLevel", 1)
+  setInfantryRule("E6", "BuildLevel", 1)
 
   if scenarioNumber ~= 4 then
     return

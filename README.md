@@ -93,6 +93,7 @@ If you get an error on load of a scenario complaining the dll version is differe
 - Added GitHub actions Workflow for building project and running test app on push
 - Used embedded Lua library to workaround the need to deploy extra content to the game directory
 - Moving all data files into mod `Data` directory to make mod easier to one click install
+- Dynamically resolving mod `Data` directory using module handle
 
 ## Ideas
 
@@ -103,10 +104,9 @@ If you get an error on load of a scenario complaining the dll version is differe
 
 ## Problems
 
-- Can't build engineer in mission 1 regardless of rules
-
 ## Problem Archive
 
+- Can't build engineer in mission 1 regardless of rules (STRUTF parsing was wrong - fixed, also E6 is code for engineer even though E7 is the reference in code)
 - DLL crashes second time a scenario is loaded from main menu (needed to close log file handle before DLL exit)
 
 - ~Trying to set max speed but does not seem to work?~ (max value is 255 for that field - added validation logic)

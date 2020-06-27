@@ -1068,15 +1068,11 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
     {
         return INFANTRY_CHAN;
     }
-    else if (Strings_Are_Equal(infantryTypeString, "E7"))
-    {
-        return INFANTRY_E7;
-    }
     else if (infantryTypeString[0] == 'E')
     {
         auto number = Parse_Number(infantryTypeString[1]);
 
-        if (number > 0 && number < 6)
+        if (number > 0 && number < 7)
         {
             return (InfantryType)(number - 1);
         }
@@ -1136,11 +1132,7 @@ char* Infantry_Type_To_String(InfantryType infantryType)
     {
         infantryTypeString = "CHAN";
     }
-    else if (infantryType == INFANTRY_E7)
-    {
-        infantryTypeString = "E7";
-    }
-    else if (infantryType > -1 && infantryType < 7)
+    else if (infantryType > -1 && infantryType < 6)
     {
         auto index = infantryType + 1;
 

@@ -4,27 +4,57 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 {
     if (Strings_Are_Equal(ruleName, FEMALE_RULE_UPPER))
     {
-        type->IsFemale = Parse_Boolean(value);
+        auto isFemale = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsFemale = isFemale;
+        }
     }
     else if(Strings_Are_Equal(ruleName, CRAWLING_RULE_UPPER))
     {
-        type->IsCrawling = Parse_Boolean(value);
+        auto isCrawling = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsCrawling = isCrawling;
+        }
     }
     else if (Strings_Are_Equal(ruleName, CAN_CAPTURE_RULE_UPPER))
     {
-        type->IsCapture = Parse_Boolean(value);
+        auto isCapture = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsCapture = isCapture;
+        }
     }
     else if (Strings_Are_Equal(ruleName, FRAIDY_CAT_RULE_UPPER))
     {
-        type->IsFraidyCat = Parse_Boolean(value);
+        auto isFraidyCat = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsFraidyCat = isFraidyCat;
+        }
     }
     else if (Strings_Are_Equal(ruleName, CIVILIAN_RULE_UPPER))
     {
-        type->IsCivilian = Parse_Boolean(value);
+        auto isCivilian = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsCivilian = isCivilian;
+        }
     }
     else if (Strings_Are_Equal(ruleName, AVOIDS_TIBERIUM_RULE_UPPER))
     {
-        type->IsAvoidingTiberium = Parse_Boolean(value);
+        auto isAvoidingTiberium = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsAvoidingTiberium = isAvoidingTiberium;
+        }
     }
     else
     {
@@ -117,11 +147,21 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, BUILDABLE_RULE_UPPER))
     {
-        type->IsBuildable = value == "TRUE";
+        auto isBuildable = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsBuildable = isBuildable;
+        }
     }
     else if (Strings_Are_Equal(ruleName, FLAMMABLE_RULE_UPPER))
     {
-        type->IsFlammable = value == "TRUE";
+        auto isFlammable = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsFlammable = isFlammable;
+        }
     }
     else if (Strings_Are_Equal(ruleName, SPEED_RULE_UPPER))
     {

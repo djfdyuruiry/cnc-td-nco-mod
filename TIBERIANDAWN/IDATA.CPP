@@ -447,33 +447,34 @@ int EngineerDos[DO_COUNT][3]={
 	0,		1, 1					//	DO_PLEAD_DEATH		// N/A
 };
 
+// this unit is `E6` even though the instance is named `E7`
 static InfantryTypeClass const E7(
 	INFANTRY_E7,				// Infantry type number.
 	TXT_E7,						// Translate name number for infantry type.
-	"E7",							// INI name for infantry.
-	Read_Build_Level("E7", 3),								// Build level.
-	Read_Prerequisite("E7", STRUCT_NONE),				// Building prerequisite.
+	"E6",							// INI name for infantry.
+	Read_Build_Level("E6", 3),								// Build level.
+	Read_Prerequisite("E6", STRUCT_NONE),				// Building prerequisite.
 	false,						// Is this a female type?
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("E7", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("E7", true),							// Can this infantry type capture a building?
+	Read_Is_Fraidy_Cat("E6", false),						// Is this a "fraidycat" run-away type infantry?
+	Read_Can_Capture_Buildings("E6", true),							// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
 	-1,							// Number of shots it has (default).
 	&EngineerDos[0][0],		// ptr to DO table
 	3,								// Frame of projectile launch.
 	3,								// Frame of projectile launch while prone.
-	Read_Strength("E7", 25),							// Strength of infantry (in damage points).
+	Read_Strength("E6", 25),							// Strength of infantry (in damage points).
 	2,								// Sight range.
-	Read_Cost("E7", 500),							// Cost of infantry (in credits).
-	Read_Scenario_Level("E7", 2),								// Scenario when they first appear.
+	Read_Cost("E6", 500),							// Cost of infantry (in credits).
+	Read_Scenario_Level("E6", 2),								// Scenario when they first appear.
 	80,75,						// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("E7", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this infantry unit.
+	Read_House_List_From_Rules_Ini("E6", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("E7", WEAPON_NONE),Read_Secondary_Weapon("E7", WEAPON_NONE),
-	Read_Speed("E7", MPH_SLOW)  // Maximum speed of infantry.aximum speed of infantry.
+	Read_Primary_Weapon("E6", WEAPON_NONE),Read_Secondary_Weapon("E6", WEAPON_NONE),
+	Read_Speed("E6", MPH_SLOW)  // Maximum speed of infantry.aximum speed of infantry.
 );
 // Commandos
 

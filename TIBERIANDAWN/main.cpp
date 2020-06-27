@@ -68,10 +68,11 @@ static void Parse_Command_Line(const char* commandLine)
 /// </summary>
 int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int windowState)
 {
-	IS_RUNNING_IN_CI_ENV = Parse_Boolean(
+	IS_RUNNING_IN_CI_ENV = Parse_Boolean_Or_Default(
 		Convert_String_To_Upper_Case(
 			Get_Env_Var_Or_Default("CI", "false")
-		)
+		),
+		false
 	);
 
 	Configure_Console_Output();

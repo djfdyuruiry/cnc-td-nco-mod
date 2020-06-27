@@ -106,6 +106,13 @@
     <None Include="..\game\test.lua">
       <Filter>game</Filter>
     </None>
+    <None Include="..\README.md" />
+    <None Include="..\bin\Win32\test.lua">
+      <Filter>output</Filter>
+    </None>
+    <None Include="..\bin\Win32\RULES.INI">
+      <Filter>output</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABSTRACT.H">

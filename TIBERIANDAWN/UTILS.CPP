@@ -119,16 +119,49 @@ int Parse_Number(char character)
 	return character - '0';
 }
 
-bool Parse_Boolean(char* booleanValue)
+bool Parse_Boolean(char* booleanValue, bool* parseError)
 {
+	if (String_Is_Empty(booleanValue)
+		|| (!Strings_Are_Equal(booleanValue, "TRUE") && !Strings_Are_Equal(booleanValue, "FALSE")))
+	{
+		*parseError = true;
+
+		return false;
+	}
+
 	return Strings_Are_Equal(booleanValue, "TRUE");
 }
 
-bool Parse_Boolean(const char* booleanValue)
+bool Parse_Boolean(const char* booleanValue, bool* parseError)
 {
 	auto booleanValueStr = strdup(booleanValue);
 
-	auto result = Parse_Boolean(booleanValueStr);
+	auto result = Parse_Boolean(booleanValueStr, parseError);
+
+	delete booleanValueStr;
+
+	return result;
+}
+
+bool Parse_Boolean_Or_Default(char* booleanValue, bool default)
+{
+	bool parseError = false;
+
+	auto value = Parse_Boolean(booleanValue, &parseError);
+
+	if (parseError)
+	{
+		return default;
+	}
+
+	return value;
+}
+
+bool Parse_Boolean_Or_Default(const char* booleanValue, bool default)
+{
+	auto booleanValueStr = strdup(booleanValue);
+
+	auto result = Parse_Boolean_Or_Default(booleanValueStr, default);
 
 	delete booleanValueStr;
 
