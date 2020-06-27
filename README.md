@@ -83,14 +83,16 @@ If you get an error on load of a scenario complaining the dll version is differe
 - Added loading of rules file
     - Rules available for all units, infantry, aircraft and buildings
     - Mod config embedded in rules
-- Rules file location can be set using the `TD_RULES_FILE` env var (Default is `RULES.INI`)
+- Rules file is loaded from mod `Data` directory (`RULES.INI`)
 - Added custom logging to a new log file `nco.log`
-- Lua events and event handler loading form Lua scripts 
+- Lua events and event handler loading form Lua scripts (stored in mod `Data` directory)
     - One event currently: `onScenarioStart`
 - Lua API for modifiying rules and getting current rule values
     - `infantry` rules only for now
 - Built a LUA REPL (test app cli option) for handy debugging without having to rerun/rebuild
 - Added GitHub actions Workflow for building project and running test app on push
+- Used embedded Lua library to workaround the need to deploy extra content to the game directory
+- Moving all data files into mod `Data` directory to make mod easier to one click install
 
 ## Ideas
 

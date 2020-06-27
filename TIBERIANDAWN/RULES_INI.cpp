@@ -66,19 +66,26 @@ static void Read_Log_Level_From_Rules_Ini()
 
 /// <summary>
 /// Load the content of the rules ini file, the location is read from the env var pointed to by
-/// <ref>RULES_FILE_ENV_VAR</ref> or defaults to <ref>DEFAULT_RULES_FILENAME</ref>.
+/// <ref>RULES_FILE_ENV_VAR</ref> or defaults to <ref>DEFAULT_RULES_FILENAME</ref> stored in the
+/// mod path.
 /// </summary>
 /// <returns>The text content of the ini file or a blank string if no file was found.</returns>
 char* Read_Rules_Ini() {
-	Log_Debug("Resolving rules ini file location using env var: %s", RULES_FILE_ENV_VAR);
+	auto modPath = Get_Mod_Data_Path();
 
-	auto rulesFilename = Get_Env_Var_Or_Default(RULES_FILE_ENV_VAR, DEFAULT_RULES_FILENAME);
+	Log_Info("Attempting to load rules ini from mod path: %s", modPath);
 
-	Log_Debug("Resolved rules file location: %s", rulesFilename);
+	auto rulesFilename = Allocate_String(MAX_PATH);
+
+	sprintf(rulesFilename, "%s\\%s", modPath, DEFAULT_RULES_FILENAME);
 
 	auto rulesFile = new RawFileClass(rulesFilename);
 
 	if (!rulesFile->Is_Available()) {
+		delete rulesFile;
+		delete rulesFilename;
+		delete modPath;
+
 		Log_Warn("Rules ini not found, default rules will be used");
 
 		return "";
@@ -92,6 +99,8 @@ char* Read_Rules_Ini() {
 	rulesFile->Close();
 
 	delete rulesFile;
+	delete rulesFilename;
+	delete modPath;
 
 	Log_Debug("Returning rules ini content");
 

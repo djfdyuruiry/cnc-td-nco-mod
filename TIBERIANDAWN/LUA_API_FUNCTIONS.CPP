@@ -194,9 +194,9 @@ static bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const ch
     }
     else if (Strings_Are_Equal(ruleName, PREREQUISITE_RULE_UPPER))
     {
-        auto scructType = (StructType)(1L >> type->Pre);
+        auto scructType = Prerequisite_To_Structure_Type(type->Pre);
         auto scrutTypeStr = Structure_Type_To_String(scructType);
-        
+
         Log_Debug("Read_TechnoType_Rule => Rule value: %s", scrutTypeStr);
 
         lua_pushstring(lua, scrutTypeStr);

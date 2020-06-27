@@ -50,19 +50,19 @@ bool Strings_Are_Equal(const char* subject, const char* expected)
 	return result;
 }
 
-bool Strings_Is_Empty(const char* subject)
+bool String_Is_Empty(const char* subject)
 {
 	return subject == NULL || Strings_Are_Equal(subject, "");
 }
 
-bool Strings_Is_Empty(char* subject)
+bool String_Is_Empty(char* subject)
 {
 	return subject == NULL || Strings_Are_Equal(subject, "");
 }
 
 bool String_Starts_With(char* subject, char* expected)
 {
-	if (Strings_Is_Empty(subject) || Strings_Is_Empty(expected))
+	if (String_Is_Empty(subject) || String_Is_Empty(expected))
 	{
 		return false;
 	}

@@ -14,6 +14,14 @@ static void Test_Lua_Events()
 	On_Scenario_Start(1);
 }
 
+static void Pause()
+{
+	if (!IS_RUNNING_IN_CI_ENV)
+	{
+		system("pause");
+	}
+}
+
 static void Configure_Console_Output()
 {
 	if (IS_RUNNING_IN_CI_ENV)
@@ -79,6 +87,7 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 		NCO_Shutdown();
 
 		puts("Test Console: ERROR! NCO_Startup failed - bailing out!");
+		Pause();
 
 		return 1;
 	}
@@ -91,10 +100,7 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 	puts("Test Console: finishing normally");
 
-	if (!IS_RUNNING_IN_CI_ENV)
-	{
-		system("pause");
-	}
+	Pause();
 
 	return 0;
 }

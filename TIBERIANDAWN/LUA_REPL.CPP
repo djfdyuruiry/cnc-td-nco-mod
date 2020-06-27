@@ -83,7 +83,7 @@ void Enter_Lua_Repl()
 			continue;
 		}
 
-		if (Strings_Is_Empty(input))
+		if (String_Is_Empty(input))
 		{
 			continue;
 		}

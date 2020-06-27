@@ -1,5 +1,7 @@
 #include "function.h"
 
+static auto USER_PROFILE_ENV_VAR = "USERPROFILE";
+
 void Show_Error(const char* messageFormat, ...)
 {
 	auto logLineLength = Get_Log_Line_Length();
@@ -27,7 +29,7 @@ void Show_Error(const char* messageFormat, ...)
 	delete formattedMessageBuffer;
 }
 
-const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultValue) {
+const char* Get_Env_Var_Or_Default(const char* envVarName, char* defaultValue) {
 	Log_Debug("Attempting to get value of env var: %s", envVarName);
 
 	auto requiredSize = GetEnvironmentVariable(envVarName, NULL, 0);
@@ -41,10 +43,7 @@ const char* Get_Env_Var_Or_Default(const char* envVarName, const char* defaultVa
 
 	auto envVarValue = Allocate_String(requiredSize);
 
-	// Get the value of the LIB environment variable.
 	GetEnvironmentVariable(envVarName, envVarValue, requiredSize);
-
-	Log_Info("Env var value: %s", envVarValue);
 
 	return envVarValue;
 }
@@ -137,4 +136,32 @@ bool Parse_Boolean(const char* booleanValue)
 char* Convert_Boolean_To_String(bool booleanValue)
 {
 	return booleanValue ? "TRUE" : "FALSE";
+}
+
+char* Get_Mod_Data_Path()
+{
+	auto userProfile = Get_Env_Var_Or_Default(USER_PROFILE_ENV_VAR, NULL);
+
+	if (String_Is_Empty(userProfile))
+	{
+		Show_Error("Unable to find home directory using env var '%s'\nThis should never happen...", USER_PROFILE_ENV_VAR);
+		exit(1);
+	}
+
+	auto modPath = Allocate_String(MAX_PATH);
+
+	#ifndef TEST_CONSOLE
+	sprintf(modPath, "%s\\Documents\\CnCRemastered\\Mods\\Tiberian_Dawn\\nco\\Data", userProfile);
+	#else
+	// use the cwd for test test console app
+	if (!GetCurrentDirectory(MAX_PATH, modPath))
+	{
+		Show_Error("Unable to lookup current working directory: %s", Get_Win32_Error_Message());
+		exit(1);
+	}
+	#endif
+
+	delete userProfile;
+
+	return modPath;
 }

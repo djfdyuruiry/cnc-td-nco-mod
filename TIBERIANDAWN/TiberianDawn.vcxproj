@@ -180,7 +180,7 @@
     <PostBuildEvent>
       <Command>if exist ..\bin\$(PlatformName)\RULES.INI del ..\bin\$(PlatformName)\RULES.INI
 
-copy ..\game\cfg\RULES.INI ..\bin\$(PlatformName)\
+copy ..\game\RULES.INI ..\bin\$(PlatformName)\
 
 if exist ..\bin\$(PlatformName)\log rmdir /Q /S ..\bin\$(PlatformName)\log
 
@@ -192,7 +192,7 @@ copy ..\lib\lua53.lib ..\bin\$(PlatformName)\
 
 if exist ..\bin\$(PlatformName)\test.lua del ..\bin\$(PlatformName)\test.lua
 
-copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
+copy ..\game\test.lua ..\bin\$(PlatformName)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -207,8 +207,8 @@ copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
       <PreserveIdentifierCase Condition="'$(Configuration)|$(Platform)'=='TestConsole|Win32'">1</PreserveIdentifierCase>
     </MASM>
     <None Include="..\game\ccmod.json" />
-    <None Include="..\game\cfg\RULES.INI" />
-    <None Include="..\game\lua\test.lua" />
+    <None Include="..\game\RULES.INI" />
+    <None Include="..\game\test.lua" />
     <None Include="..\game\scripts\tiberian_dawn.bat" />
     <None Include="COORDA.ASM" />
     <MASM Include="KEYFBUFF.ASM">

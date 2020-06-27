@@ -688,6 +688,114 @@ char* Structure_Type_To_String(StructType structType)
     return structTypeString;
 }
 
+StructType Prerequisite_To_Structure_Type(long prerequisite)
+{
+    auto structType = STRUCT_NONE;
+    
+    if (prerequisite == STRUCTF_NONE)
+    {
+        structType = STRUCT_NONE;
+    }
+    else if (prerequisite == STRUCTF_ADVANCED_POWER)
+    {
+        structType = STRUCT_ADVANCED_POWER;
+    }
+    else if (prerequisite == STRUCTF_REPAIR)
+    {
+        structType = STRUCT_REPAIR;
+    }
+    else if (prerequisite == STRUCTF_EYE)
+    {
+        structType = STRUCT_EYE;
+    }
+    else if (prerequisite == STRUCTF_TEMPLE)
+    {
+        structType = STRUCT_TEMPLE;
+    }
+    else if (prerequisite == STRUCTF_HAND)
+    {
+        structType = STRUCT_HAND;
+    }
+    else if (prerequisite == STRUCTF_BIO_LAB)
+    {
+        structType = STRUCT_BIO_LAB;
+    }
+    else if (prerequisite == STRUCTF_OBELISK)
+    {
+        structType = STRUCT_OBELISK;
+    }
+    else if (prerequisite == STRUCTF_ATOWER)
+    {
+        structType = STRUCT_ATOWER;
+    }
+    else if (prerequisite == STRUCTF_WEAP)
+    {
+        structType = STRUCT_WEAP;
+    }
+    else if (prerequisite == STRUCTF_GTOWER)
+    {
+        structType = STRUCT_GTOWER;
+    }
+    else if (prerequisite == STRUCTF_RADAR)
+    {
+        structType = STRUCT_RADAR;
+    }
+    else if (prerequisite == STRUCTF_TURRET)
+    {
+        structType = STRUCT_TURRET;
+    }
+    else if (prerequisite == STRUCTF_CONST)
+    {
+        structType = STRUCT_CONST;
+    }
+    else if (prerequisite == STRUCTF_REFINERY)
+    {
+        structType = STRUCT_REFINERY;
+    }
+    else if (prerequisite == STRUCTF_STORAGE)
+    {
+        structType = STRUCT_STORAGE;
+    }
+    else if (prerequisite == STRUCTF_HELIPAD)
+    {
+        structType = STRUCT_HELIPAD;
+    }
+    else if (prerequisite == STRUCTF_SAM)
+    {
+        structType = STRUCT_SAM;
+    }
+    else if (prerequisite == STRUCTF_AIRSTRIP)
+    {
+        structType = STRUCT_AIRSTRIP;
+    }
+    else if (prerequisite == STRUCTF_POWER)
+    {
+        structType = STRUCT_POWER;
+    }
+    else if (prerequisite == STRUCTF_HOSPITAL)
+    {
+        structType = STRUCT_HOSPITAL;
+    }
+    else if (prerequisite == STRUCTF_BARRACKS)
+    {
+        structType = STRUCT_BARRACKS;
+    }
+    else if (prerequisite == STRUCTF_TANKER)
+    {
+        structType = STRUCT_TANKER;
+    }
+    else if (prerequisite == STRUCTF_MISSION)
+    {
+        structType = STRUCT_MISSION;
+    }
+    else
+    {
+        Show_Error("Unable to convert structure type to string: %d", structType);
+    }
+
+    return structType;
+}
+
 WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
 {
     WeaponType weaponType;

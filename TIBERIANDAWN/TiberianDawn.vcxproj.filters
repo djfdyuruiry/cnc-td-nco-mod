@@ -14,13 +14,13 @@
     <Filter Include="game">
       <UniqueIdentifier>{5a797fac-4a18-4dd9-a33c-d2dca5c5e940}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game\cfg">
+    <Filter Include="game">
       <UniqueIdentifier>{47acf8c4-312a-4094-94a1-ac771c4af2a2}</UniqueIdentifier>
     </Filter>
     <Filter Include="game\scripts">
       <UniqueIdentifier>{f4238f29-9785-40e0-8d26-2ca235ce982b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game\lua">
+    <Filter Include="game">
       <UniqueIdentifier>{69072ba7-705b-47d4-b4b4-498027c3dfaf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\NCO">
@@ -94,14 +94,14 @@
     <None Include="..\game\ccmod.json">
       <Filter>game</Filter>
     </None>
-    <None Include="..\game\cfg\RULES.INI">
-      <Filter>game\cfg</Filter>
+    <None Include="..\game\RULES.INI">
+      <Filter>game</Filter>
     </None>
     <None Include="..\game\scripts\tiberian_dawn.bat">
       <Filter>game\scripts</Filter>
     </None>
-    <None Include="..\game\lua\test.lua">
-      <Filter>game\lua</Filter>
+    <None Include="..\game\test.lua">
+      <Filter>game</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

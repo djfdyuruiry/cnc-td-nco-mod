@@ -21,6 +21,8 @@ StructType Parse_Structure_Type(const char* structTypeString, bool* parseError);
 
 char* Structure_Type_To_String(StructType structType);
 
+StructType Prerequisite_To_Structure_Type(long prerequisite);
+
 InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError);
 
 InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError);

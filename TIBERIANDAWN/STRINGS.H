@@ -9,9 +9,9 @@ bool Strings_Are_Equal(const char* subject, char* expected);
 
 bool Strings_Are_Equal(char* subject, const char* expected);
 
-bool Strings_Is_Empty(char* subject);
+bool String_Is_Empty(char* subject);
 
-bool Strings_Is_Empty(const char* subject);
+bool String_Is_Empty(const char* subject);
 
 bool String_Starts_With(char* subject, char* expected);
 

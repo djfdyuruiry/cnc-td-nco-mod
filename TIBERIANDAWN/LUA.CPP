@@ -29,17 +29,25 @@ static bool Load_Lua_Scripts()
 
     Log_Debug("Lua events system initialised");
 
+    auto modPath = Get_Mod_Data_Path();
     auto scripts = Rules_Get_Lua_Scripts();
 
     for (auto i = 0; i < scripts.ScriptFileCount; i++)
     {
         auto scriptFile = scripts.ScriptFiles[i];
+        auto scriptFilePath = Allocate_String(MAX_PATH);
 
-        if (!Execute_Lua_File(scriptFile))
+        sprintf(scriptFilePath, "%s\\%s", modPath, scriptFile);
+
+        if (!Execute_Lua_File(scriptFilePath))
         {
             executionOK = false;
         }
+
+        delete scriptFilePath;
     }
+
+    delete modPath;
 
     return executionOK;
 }
