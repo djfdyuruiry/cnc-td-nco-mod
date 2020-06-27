@@ -97,12 +97,15 @@ If you get an error on load of a scenario complaining the dll version is differe
 
 ## Ideas
 
+- Write method in test console to dump a default RULES INI
 - Add more events for different situations (Can_Capture, Scenario_End, On_Win, On_Fail, On_Startup, On_Shutdown)
 - Add rules to toggle certain logic for specific scenarios (can build certain units etc.)
 - Add rules to toggle hard-wired truths (can't build temple or laser as GDI with nod con yard etc.)
 - Use new base/infantry functions created for Lua API to read more rules from file
 
 ## Problems
+
+- All clear :)
 
 ## Problem Archive
 

@@ -1002,28 +1002,28 @@ typedef enum InfantryType : char {
 */
 typedef enum UnitType : char{
 	UNIT_NONE=-1,
-	UNIT_HTANK,					// Heavy tank (Mammoth).
-	UNIT_MTANK,					// Medium tank (M1).
-	UNIT_LTANK,					// Light tank ('Bradly').
-	UNIT_STANK,					// Stealth tank (Romulan).
-	UNIT_FTANK,					// Flame thrower tank.
-	UNIT_VICE,					// Visceroid
-	UNIT_APC,					// APC.
-	UNIT_MLRS,					// MLRS rocket launcher.
-	UNIT_JEEP,					// 4x4 jeep replacement.
-	UNIT_BUGGY,					// Rat patrol dune buggy type.
-	UNIT_HARVESTER,			// Resource gathering vehicle.
-	UNIT_ARTY,					// Artillery unit.
-	UNIT_MSAM,					// Anti-Aircraft vehicle.
-	UNIT_HOVER,					// Hovercraft.
-	UNIT_MHQ,					// Mobile Head Quarters.
-	UNIT_GUNBOAT,				// Gunboat
-	UNIT_MCV,					// Mobile construction vehicle.
-	UNIT_BIKE,					// Nod recon motor-bike.
-	UNIT_TRIC,					// Triceratops
-	UNIT_TREX,					//	Tyranosaurus Rex
-	UNIT_RAPT,					//	Velociraptor
-	UNIT_STEG,					//	Stegasaurus
+	UNIT_HTANK=0,					// Heavy tank (Mammoth).
+	UNIT_MTANK=1,					// Medium tank (M1).
+	UNIT_LTANK=2,					// Light tank ('Bradly').
+	UNIT_STANK=3,					// Stealth tank (Romulan).
+	UNIT_FTANK=4, 				// Flame thrower tank.
+	UNIT_VICE=5,					// Visceroid
+	UNIT_APC=6,					// APC.
+	UNIT_MLRS=7,					// MLRS rocket launcher.
+	UNIT_JEEP=8,					// 4x4 jeep replacement.
+	UNIT_BUGGY=9,					// Rat patrol dune buggy type.
+	UNIT_HARVESTER=10,			// Resource gathering vehicle.
+	UNIT_ARTY=11,					// Artillery unit.
+	UNIT_MSAM=12,					// Anti-Aircraft vehicle.
+	UNIT_HOVER=13,					// Hovercraft.
+	UNIT_MHQ=14,					// Mobile Head Quarters.
+	UNIT_GUNBOAT=15,				// Gunboat
+	UNIT_MCV=16,					// Mobile construction vehicle.
+	UNIT_BIKE=17,					// Nod recon motor-bike.
+	UNIT_TRIC=18,					// Triceratops
+	UNIT_TREX=19,					//	Tyranosaurus Rex
+	UNIT_RAPT=20,					//	Velociraptor
+	UNIT_STEG=21,					//	Stegasaurus
 	UNIT_COUNT,
 	UNIT_FIRST=0
 } UnitType;
@@ -2147,12 +2147,12 @@ typedef enum SpeedType : char {
 	SPEED_NONE=-1,
 
 	SPEED_FOOT=0,					// Bipedal.
-	SPEED_TRACK,				// Tracked locomotion.
-	SPEED_HARVESTER,			// Harvester speed rating.
-	SPEED_WHEEL,				// Balloon tires.
-	SPEED_WINGED,				// Lifter's, 'thopters, and rockets.
-	SPEED_HOVER,				// Typical hovercraft logic.
-	SPEED_FLOAT,				// Ships.
+	SPEED_TRACK=1,				// Tracked locomotion.
+	SPEED_HARVESTER=2,			// Harvester speed rating.
+	SPEED_WHEEL=3,				// Balloon tires.
+	SPEED_WINGED=4,				// Lifter's, 'thopters, and rockets.
+	SPEED_HOVER=5,				// Typical hovercraft logic.
+	SPEED_FLOAT=6,				// Ships.
 
 	SPEED_COUNT,
 	SPEED_FIRST=SPEED_FOOT

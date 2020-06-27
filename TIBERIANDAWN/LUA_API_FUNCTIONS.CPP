@@ -1,5 +1,254 @@
 #include "function.h"
 
+static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
+{
+    if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE_UPPER))
+    {
+        auto isCrateGoodie = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsCrateGoodie = isCrateGoodie;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, LIMITED_FACINGS_RULE_UPPER))
+    {
+        auto isPieceOfEight = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsPieceOfEight = isPieceOfEight;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_CRUSH_INFANTRY_RULE_UPPER))
+    {
+        auto isCrusher = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsCrusher = isCrusher;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_HARVEST_RULE_UPPER))
+    {
+        auto isHarvester = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsToHarvest = isHarvester;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CHUNKY_SHAPE_RULE_UPPER))
+    {
+        auto isChunky = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsChunkyShape = isChunky;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE_UPPER))
+    {
+        auto isRadarEquipped = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsRadarEquipped = isRadarEquipped;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, HAS_FIRE_ANIMATION_RULE_UPPER))
+    {
+        auto hasFireAnim = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsFireAnim = hasFireAnim;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, LOCK_TURRET_RULE_UPPER))
+    {
+        auto lockTurret = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsLockTurret = lockTurret;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, HAS_TRACKS_RULE_UPPER))
+    {
+        auto hasTracks = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsTracked = hasTracks;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, HUGE_RULE_UPPER))
+    {
+        auto isHuge = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsGigundo = isHuge;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_CLOAK_RULE_UPPER))
+    {
+        auto canCloak = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsCloakable = canCloak;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CONSTANT_ANIMATION_RULE_UPPER))
+    {
+        auto constAnim = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsAnimating = constAnim;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, UNIT_SPEED_RULE_UPPER))
+    {
+        auto speed = Parse_Unit_Speed_Type(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->Speed = speed;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    {
+        auto rot = (unsigned char) atoi(value);
+        *valueParseError = rot < 0 || rot > UCHAR_MAX;
+
+        if (!*valueParseError)
+        {
+            type->ROT = rot;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, MAX_SIZE_RULE_UPPER))
+    {
+        auto maxSize = atoi(value);
+        *valueParseError = maxSize < 1;
+
+        if (!*valueParseError)
+        {
+            type->MaxSize = maxSize;
+        }
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
+static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* ruleName)
+{
+    if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrateGoodie));
+
+        lua_pushboolean(lua, type->IsCrateGoodie);
+    }
+    else if (Strings_Are_Equal(ruleName, LIMITED_FACINGS_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsPieceOfEight));
+
+        lua_pushboolean(lua, type->IsPieceOfEight);
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_CRUSH_INFANTRY_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrusher));
+
+        lua_pushboolean(lua, type->IsCrusher);
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_HARVEST_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsToHarvest));
+
+        lua_pushboolean(lua, type->IsToHarvest);
+    }
+    else if (Strings_Are_Equal(ruleName, CHUNKY_SHAPE_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsChunkyShape));
+
+        lua_pushboolean(lua, type->IsChunkyShape);
+    }
+    else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRadarEquipped));
+
+        lua_pushboolean(lua, type->IsRadarEquipped);
+    }
+    else if (Strings_Are_Equal(ruleName, HAS_FIRE_ANIMATION_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFireAnim));
+
+        lua_pushboolean(lua, type->IsFireAnim);
+    }
+    else if (Strings_Are_Equal(ruleName, LOCK_TURRET_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsLockTurret));
+
+        lua_pushboolean(lua, type->IsLockTurret);
+    }
+    else if (Strings_Are_Equal(ruleName, HAS_TRACKS_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTracked));
+
+        lua_pushboolean(lua, type->IsTracked);
+    }
+    else if (Strings_Are_Equal(ruleName, HUGE_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsGigundo));
+
+        lua_pushboolean(lua, type->IsGigundo);
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_CLOAK_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCloakable));
+
+        lua_pushboolean(lua, type->IsCloakable);
+    }
+    else if (Strings_Are_Equal(ruleName, CONSTANT_ANIMATION_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsAnimating));
+
+        lua_pushboolean(lua, type->IsAnimating);
+    }
+    else if (Strings_Are_Equal(ruleName, UNIT_SPEED_RULE_UPPER))
+    {
+        auto unitSpeed = Unit_Speed_Type_To_String(type->Speed);
+     
+        Log_Debug("Read_Unit_Rule => Rule value: %s", unitSpeed);
+
+        lua_pushstring(lua, unitSpeed);
+    }
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %u", type->ROT);
+
+        lua_pushnumber(lua, type->ROT);
+    }
+    else if (Strings_Are_Equal(ruleName, MAX_SIZE_RULE_UPPER))
+    {
+        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->MaxSize));
+
+        lua_pushnumber(lua, type->MaxSize);
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
 static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
 {
     if (Strings_Are_Equal(ruleName, FEMALE_RULE_UPPER))
@@ -301,6 +550,37 @@ static bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const ch
     return true;
 }
 
+static UnitType ParseUnitType(lua_State* lua, const char* unitTypeName, bool* parseError)
+{
+    auto unitType = Parse_Unit_Type(
+        Convert_String_To_Upper_Case(unitTypeName),
+        parseError
+    );
+
+    if (*parseError)
+    {
+        luaL_error(lua, "unit type passed was not recognised: %s", unitTypeName);
+        return UNIT_NONE;
+    }
+
+    return unitType;
+}
+
+static UnitTypeClass* ResolveUnit(lua_State* lua, const char* unitTypeName)
+{
+    bool parseError = false;
+    auto unitType = ParseUnitType(lua, unitTypeName, &parseError);
+
+    if (parseError)
+    {
+        return NULL;
+    }
+
+    Log_Debug("unit type parsed: %s", Unit_Type_To_String(unitType));
+
+    return (UnitTypeClass*)&UnitTypeClass::As_Reference(unitType);
+}
+
 static InfantryType ParseInfantryType(lua_State* lua, const char* infantryTypeName, bool* parseError)
 {
     auto infantryType = Parse_Infantry_Type(
@@ -315,6 +595,21 @@ static InfantryType ParseInfantryType(lua_State* lua, const char* infantryTypeNa
     }
 
     return infantryType;
+}
+
+static InfantryTypeClass* ResolveInfantry(lua_State* lua, const char* infantryTypeName)
+{
+    bool parseError = false;
+    auto infantryType = ParseInfantryType(lua, infantryTypeName, &parseError);
+
+    if (parseError)
+    {
+        return NULL;
+    }
+
+    Log_Debug("infantry type parsed: %s", Infantry_Type_To_String(infantryType));
+
+    return (InfantryTypeClass*)&InfantryTypeClass::As_Reference(infantryType);
 }
 
 int Lua_Set_Infantry_Rule(lua_State* lua)
@@ -337,17 +632,13 @@ int Lua_Set_Infantry_Rule(lua_State* lua)
         return 0;
     }
 
-    bool parseError = false;
-    auto infantryType = ParseInfantryType(lua, infantryTypeName, &parseError);
+    auto infantry = ResolveInfantry(lua, infantryTypeName);
 
-    if (parseError)
+    if (infantry == NULL)
     {
         return 0;
     }
 
-    Log_Debug("Lua_Set_Infantry_Rule => infantry type parsed: %s", Infantry_Type_To_String(infantryType));
-
-    auto infantry = (InfantryTypeClass*)&InfantryTypeClass::As_Reference(infantryType);
     auto ruleName = Get_Lua_Value_As_String(2);
     auto ruleValue = Get_Lua_Value_As_String(3);
 
@@ -367,6 +658,7 @@ int Lua_Set_Infantry_Rule(lua_State* lua)
 
     Log_Debug("Lua_Set_Infantry_Rule => looking for rule in Techno Type");
 
+    bool parseError = false;
     auto ruleMatched = Write_TechnoType_Rule(
         infantry,
         Convert_String_To_Upper_Case(ruleName),
@@ -429,17 +721,13 @@ int Lua_Get_Infantry_Rule(lua_State* lua)
         return 0;
     }
 
-    bool parseError = false;
-    auto infantryType = ParseInfantryType(lua, infantryTypeName, &parseError);
+    auto infantry = ResolveInfantry(lua, infantryTypeName);
 
-    if (parseError)
+    if (infantry == NULL)
     {
         return 0;
     }
 
-    Log_Debug("Lua_Get_Infantry_Rule => infantry type parsed: %s", Infantry_Type_To_String(infantryType));
-
-    auto infantry = (InfantryTypeClass*)&InfantryTypeClass::As_Reference(infantryType);
     auto ruleName = Get_Lua_Value_As_String(2);
 
     if (ruleName == NULL)
@@ -467,6 +755,154 @@ int Lua_Get_Infantry_Rule(lua_State* lua)
     }
 
     luaL_error(lua, "rule name type passed getInfantryRule was not recognised: %s", ruleName);
+
+    return 0;
+}
+
+int Lua_Set_Unit_Rule(lua_State* lua)
+{
+    Log_Debug("Lua_Set_Unit_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 3)
+    {
+        luaL_error(lua, "setUnitRule requires exactly three arguments");
+        return 0;
+    }
+
+    auto unitTypeName = Get_Lua_Value_As_String(1);
+
+    if (unitTypeName == NULL)
+    {
+        luaL_error(lua, "setUnitRule argument `infantryTypeName` was nil");
+        return 0;
+    }
+
+    auto unit = ResolveUnit(lua, unitTypeName);
+
+    if (unit == NULL)
+    {
+        return 0;
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(2);
+    auto ruleValue = Get_Lua_Value_As_String(3);
+
+    if (ruleName == NULL)
+    {
+        luaL_error(lua, "setUnitRule argument `ruleName` was nil");
+        return 0;
+    }
+
+    if (ruleValue == NULL)
+    {
+        luaL_error(lua, "setUnitRule argument `ruleValue` was nil");
+        return 0;
+    }
+
+    Log_Debug("Lua_Set_Unit_Rule => attempting to set rule '%s' to value: %s", ruleName, ruleValue);
+
+    Log_Debug("Lua_Set_Unit_Rule => looking for rule in Techno Type");
+
+    bool parseError = false;
+    auto ruleMatched = Write_TechnoType_Rule(
+        unit,
+        Convert_String_To_Upper_Case(ruleName),
+        Convert_String_To_Upper_Case(ruleValue),
+        &parseError
+    );
+
+    if (ruleMatched && !parseError)
+    {
+        Log_Debug("Lua_Set_Unit_Rule => Rule matched in Techno Type");
+        return 1;
+    }
+
+    if (!parseError)
+    {
+        Log_Debug("Lua_Set_Unit_Rule => looking for rule in Unit Type");
+
+        ruleMatched = Write_Unit_Rule(
+            unit,
+            Convert_String_To_Upper_Case(ruleName),
+            Convert_String_To_Upper_Case(ruleValue),
+            &parseError
+        );
+
+        if (ruleMatched && !parseError)
+        {
+            Log_Debug("Lua_Set_Unit_Rule => Rule matched in Unit Type");
+            return 1;
+        }
+    }
+
+    if (parseError)
+    {
+        luaL_error(lua, "value for rule `%s` passed to setUnitRule was not valid: %s", ruleName, ruleValue);
+
+        return 0;
+    }
+
+    luaL_error(lua, "rule name passed setUnitRule was not recognised: %s", ruleName);
+
+    return 0;
+}
+
+int Lua_Get_Unit_Rule(lua_State* lua)
+{
+    Log_Debug("Lua_Get_Unit_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 2)
+    {
+        luaL_error(lua, "getUnitRule requires exactly two arguments");
+    }
+
+    auto unitTypeName = Get_Lua_Value_As_String(1);
+
+    if (unitTypeName == NULL)
+    {
+        luaL_error(lua, "getUnitRule argument `unitTypeName` was nil");
+        return 0;
+    }
+
+
+    auto unit = ResolveUnit(lua, unitTypeName);
+
+    if (unit == NULL)
+    {
+        return 0;
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(2);
+
+    if (ruleName == NULL)
+    {
+        luaL_error(lua, "getUnitRule argument `ruleName` was nil");
+        return 0;
+    }
+
+    Log_Debug("Lua_Get_Unit_Rule => looking for rule '%s' in Techno Type", ruleName);
+
+    auto ruleMatched = Read_TechnoType_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
+
+    if (ruleMatched)
+    {
+        Log_Debug("Lua_Get_Unit_Rule => Rule matched in Techno Type");
+        return 1;
+    }
+
+    ruleMatched = Read_Unit_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
+
+    if (ruleMatched)
+    {
+        Log_Debug("Lua_Get_Unit_Rule => Rule matched in Unit Type");
+        return 1;
+    }
+
+    luaL_error(lua, "rule name type passed getUnitRule was not recognised: %s", ruleName);
 
     return 0;
 }

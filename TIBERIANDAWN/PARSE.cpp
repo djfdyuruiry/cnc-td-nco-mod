@@ -124,570 +124,6 @@ char* House_Type_To_String(HousesType houseType)
     return houseTypeString;
 }
 
-StructType Parse_Structure_Type(char* structTypeString, bool* parseError)
-{
-    StructType structType;
-
-    if (Strings_Are_Equal(structTypeString, "NONE"))
-    {
-        structType = STRUCT_NONE;
-    }
-    else if (Strings_Are_Equal(structTypeString, "WEAP"))
-    {
-        structType = STRUCT_WEAP;
-    }
-    else if (Strings_Are_Equal(structTypeString, "GTWR"))
-    {
-        structType = STRUCT_GTOWER;
-    }
-    else if (Strings_Are_Equal(structTypeString, "ATWR"))
-    {
-        structType = STRUCT_ATOWER;
-    }
-    else if (Strings_Are_Equal(structTypeString, "OBLI"))
-    {
-        structType = STRUCT_OBELISK;
-    }
-    else if (Strings_Are_Equal(structTypeString, "HQ"))
-    {
-        structType = STRUCT_RADAR;
-    }
-    else if (Strings_Are_Equal(structTypeString, "GUN"))
-    {
-        structType = STRUCT_TURRET;
-    }
-    else if (Strings_Are_Equal(structTypeString, "FACT"))
-    {
-        structType = STRUCT_CONST;
-    }
-    else if (Strings_Are_Equal(structTypeString, "PROC"))
-    {
-        structType = STRUCT_REFINERY;
-    }
-    else if (Strings_Are_Equal(structTypeString, "SILO"))
-    {
-        structType = STRUCT_STORAGE;
-    }
-    else if (Strings_Are_Equal(structTypeString, "HPAD"))
-    {
-        structType = STRUCT_HELIPAD;
-    }
-    else if (Strings_Are_Equal(structTypeString, "SAM"))
-    {
-        structType = STRUCT_SAM;
-    }
-    else if (Strings_Are_Equal(structTypeString, "AFLD"))
-    {
-        structType = STRUCT_AIRSTRIP;
-    }
-    else if (Strings_Are_Equal(structTypeString, "NUKE"))
-    {
-        structType = STRUCT_POWER;
-    }
-    else if (Strings_Are_Equal(structTypeString, "NUK2"))
-    {
-        structType = STRUCT_ADVANCED_POWER;
-    }
-    else if (Strings_Are_Equal(structTypeString, "HOSP"))
-    {
-        structType = STRUCT_HOSPITAL;
-    }
-    else if (Strings_Are_Equal(structTypeString, "PYLE"))
-    {
-        structType = STRUCT_BARRACKS;
-    }
-    else if (Strings_Are_Equal(structTypeString, "ARCO"))
-    {
-        structType = STRUCT_TANKER;
-    }
-    else if (Strings_Are_Equal(structTypeString, "FIX"))
-    {
-        structType = STRUCT_REPAIR;
-    }
-    else if (Strings_Are_Equal(structTypeString, "BIO"))
-    {
-        structType = STRUCT_BIO_LAB;
-    }
-    else if (Strings_Are_Equal(structTypeString, "HAND"))
-    {
-        structType = STRUCT_HAND;
-    }
-    else if (Strings_Are_Equal(structTypeString, "TMPL"))
-    {
-        structType = STRUCT_TEMPLE;
-    }
-    else if (Strings_Are_Equal(structTypeString, "EYE"))
-    {
-        structType = STRUCT_EYE;
-    }
-    else if (Strings_Are_Equal(structTypeString, "MISS"))
-    {
-        structType = STRUCT_MISSION;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V01"))
-    {
-        structType = STRUCT_V01;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V02"))
-    {
-        structType = STRUCT_V02;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V03"))
-    {
-        structType = STRUCT_V03;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V04"))
-    {
-        structType = STRUCT_V04;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V05"))
-    {
-        structType = STRUCT_V05;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V06"))
-    {
-        structType = STRUCT_V06;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V07"))
-    {
-        structType = STRUCT_V07;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V08"))
-    {
-        structType = STRUCT_V08;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V09"))
-    {
-        structType = STRUCT_V09;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V10"))
-    {
-        structType = STRUCT_V10;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V11"))
-    {
-        structType = STRUCT_V11;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V12"))
-    {
-        structType = STRUCT_V12;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V13"))
-    {
-        structType = STRUCT_V13;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V14"))
-    {
-        structType = STRUCT_V14;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V15"))
-    {
-        structType = STRUCT_V15;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V16"))
-    {
-        structType = STRUCT_V16;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V17"))
-    {
-        structType = STRUCT_V17;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V18"))
-    {
-        structType = STRUCT_V18;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V19"))
-    {
-        structType = STRUCT_PUMP;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V20"))
-    {
-        structType = STRUCT_V20;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V21"))
-    {
-        structType = STRUCT_V21;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V22"))
-    {
-        structType = STRUCT_V22;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V23"))
-    {
-        structType = STRUCT_V23;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V24"))
-    {
-        structType = STRUCT_V24;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V25"))
-    {
-        structType = STRUCT_V25;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V26"))
-    {
-        structType = STRUCT_V26;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V27"))
-    {
-        structType = STRUCT_V27;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V28"))
-    {
-        structType = STRUCT_V28;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V29"))
-    {
-        structType = STRUCT_V29;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V30"))
-    {
-        structType = STRUCT_V30;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V31"))
-    {
-        structType = STRUCT_V31;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V32"))
-    {
-        structType = STRUCT_V32;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V33"))
-    {
-        structType = STRUCT_V33;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V34"))
-    {
-        structType = STRUCT_V34;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V35"))
-    {
-        structType = STRUCT_V35;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V36"))
-    {
-        structType = STRUCT_V36;
-    }
-    else if (Strings_Are_Equal(structTypeString, "V37"))
-    {
-        structType = STRUCT_V37;
-    }
-    else if (Strings_Are_Equal(structTypeString, "SBAG"))
-    {
-        structType = STRUCT_SANDBAG_WALL;
-    }
-    else if (Strings_Are_Equal(structTypeString, "CYCL"))
-    {
-        structType = STRUCT_CYCLONE_WALL;
-    }
-    else if (Strings_Are_Equal(structTypeString, "BRIK"))
-    {
-        structType = STRUCT_BRICK_WALL;
-    }
-    else if (Strings_Are_Equal(structTypeString, "BARB"))
-    {
-        structType = STRUCT_BARBWIRE_WALL;
-    }
-    else if (Strings_Are_Equal(structTypeString, "WOOD"))
-    {
-        structType = STRUCT_WOOD_WALL;
-    }
-    else
-    {
-        *parseError = true;
-        Show_Error("Unable to parse structure from string: %s", structTypeString);
-    }
-
-	return structType;
-}
-
-StructType Parse_Structure_Type(const char* structTypeString, bool* parseError)
-{
-    auto structTypeStr = strdup(structTypeString);
-
-    auto structType = Parse_Structure_Type(structTypeStr, parseError);
-
-    delete structTypeStr;
-
-    return structType;
-}
-
-char* Structure_Type_To_String(StructType structType)
-{
-    char* structTypeString;
- 
-    if (structType == STRUCT_NONE)
-    {
-        structTypeString = "NONE";
-    }
-    else if (structType == STRUCT_WEAP)
-    {
-        structTypeString = "WEAP";
-    }
-    else if (structType == STRUCT_GTOWER)
-    {
-        structTypeString = "GTWR";
-    }
-    else if (structType == STRUCT_ATOWER)
-    {
-        structTypeString = "ATWR";
-    }
-    else if (structType == STRUCT_OBELISK)
-    {
-        structTypeString = "OBLI";
-    }
-    else if (structType == STRUCT_RADAR)
-    {
-        structTypeString = "HQ";
-    }
-    else if (structType == STRUCT_TURRET)
-    {
-        structTypeString = "GUN";
-    }
-    else if (structType == STRUCT_CONST)
-    {
-        structTypeString = "FACT";
-    }
-    else if (structType == STRUCT_REFINERY)
-    {
-        structTypeString = "PROC";
-    }
-    else if (structType == STRUCT_STORAGE)
-    {
-        structTypeString = "SILO";
-    }
-    else if (structType == STRUCT_HELIPAD)
-    {
-        structTypeString = "HPAD";
-    }
-    else if (structType == STRUCT_SAM)
-    {
-        structTypeString = "SAM";
-    }
-    else if (structType == STRUCT_AIRSTRIP)
-    {
-        structTypeString = "AFLD";
-    }
-    else if (structType == STRUCT_POWER)
-    {
-        structTypeString = "NUKE";
-    }
-    else if (structType == STRUCT_ADVANCED_POWER)
-    {
-        structTypeString = "NUK2";
-    }
-    else if (structType == STRUCT_HOSPITAL)
-    {
-        structTypeString = "HOSP";
-    }
-    else if (structType == STRUCT_BARRACKS)
-    {
-        structTypeString = "PYLE";
-    }
-    else if (structType == STRUCT_TANKER)
-    {
-        structTypeString = "ARCO";
-    }
-    else if (structType == STRUCT_REPAIR)
-    {
-        structTypeString = "FIX";
-    }
-    else if (structType == STRUCT_BIO_LAB)
-    {
-        structTypeString = "BIO";
-    }
-    else if (structType == STRUCT_HAND)
-    {
-        structTypeString = "HAND";
-    }
-    else if (structType == STRUCT_TEMPLE)
-    {
-        structTypeString = "TMPL";
-    }
-    else if (structType == STRUCT_EYE)
-    {
-        structTypeString = "EYE";
-    }
-    else if (structType == STRUCT_MISSION)
-    {
-        structTypeString = "MISS";
-    }
-    else if (structType == STRUCT_V01)
-    {
-        structTypeString = "V01";
-    }
-    else if (structType == STRUCT_V02)
-    {
-        structTypeString = "V02";
-    }
-    else if (structType == STRUCT_V03)
-    {
-        structTypeString = "V03";
-    }
-    else if (structType == STRUCT_V04)
-    {
-        structTypeString = "V04";
-    }
-    else if (structType == STRUCT_V05)
-    {
-        structTypeString = "V05";
-    }
-    else if (structType == STRUCT_V06)
-    {
-        structTypeString = "V06";
-    }
-    else if (structType == STRUCT_V07)
-    {
-        structTypeString = "V07";
-    }
-    else if (structType == STRUCT_V08)
-    {
-        structTypeString = "V08";
-    }
-    else if (structType == STRUCT_V09)
-    {
-        structTypeString = "V09";
-    }
-    else if (structType == STRUCT_V10)
-    {
-        structTypeString = "V10";
-    }
-    else if (structType == STRUCT_V11)
-    {
-        structTypeString = "V11";
-    }
-    else if (structType == STRUCT_V12)
-    {
-        structTypeString = "V12";
-    }
-    else if (structType == STRUCT_V13)
-    {
-        structTypeString = "V13";
-    }
-    else if (structType == STRUCT_V14)
-    {
-        structTypeString = "V14";
-    }
-    else if (structType == STRUCT_V15)
-    {
-        structTypeString = "V15";
-    }
-    else if (structType == STRUCT_V16)
-    {
-        structTypeString = "V16";
-    }
-    else if (structType == STRUCT_V17)
-    {
-        structTypeString = "V17";
-    }
-    else if (structType == STRUCT_V18)
-    {
-        structTypeString = "V18";
-    }
-    else if (structType == STRUCT_PUMP)
-    {
-        structTypeString = "V19";
-    }
-    else if (structType == STRUCT_V20)
-    {
-        structTypeString = "V20";
-    }
-    else if (structType == STRUCT_V21)
-    {
-        structTypeString = "V21";
-    }
-    else if (structType == STRUCT_V22)
-    {
-        structTypeString = "V22";
-    }
-    else if (structType == STRUCT_V23)
-    {
-        structTypeString = "V23";
-    }
-    else if (structType == STRUCT_V24)
-    {
-        structTypeString = "V24";
-    }
-    else if (structType == STRUCT_V25)
-    {
-        structTypeString = "V25";
-    }
-    else if (structType == STRUCT_V26)
-    {
-        structTypeString = "V26";
-    }
-    else if (structType == STRUCT_V27)
-    {
-        structTypeString = "V27";
-    }
-    else if (structType == STRUCT_V28)
-    {
-        structTypeString = "V28";
-    }
-    else if (structType == STRUCT_V29)
-    {
-        structTypeString = "V29";
-    }
-    else if (structType == STRUCT_V30)
-    {
-        structTypeString = "V30";
-    }
-    else if (structType == STRUCT_V31)
-    {
-        structTypeString = "V31";
-    }
-    else if (structType == STRUCT_V32)
-    {
-        structTypeString = "V32";
-    }
-    else if (structType == STRUCT_V33)
-    {
-        structTypeString = "V33";
-    }
-    else if (structType == STRUCT_V34)
-    {
-        structTypeString = "V34";
-    }
-    else if (structType == STRUCT_V35)
-    {
-        structTypeString = "V35";
-    }
-    else if (structType == STRUCT_V36)
-    {
-        structTypeString = "V36";
-    }
-    else if (structType == STRUCT_V37)
-    {
-        structTypeString = "V37";
-    }
-    else if (structType == STRUCT_SANDBAG_WALL)
-    {
-        structTypeString = "SBAG";
-    }
-    else if (structType == STRUCT_CYCLONE_WALL)
-    {
-        structTypeString = "CYCL";
-    }
-    else if (structType == STRUCT_BRICK_WALL)
-    {
-        structTypeString = "BRIK";
-    }
-    else if (structType == STRUCT_BARBWIRE_WALL)
-    {
-        structTypeString = "BARB";
-    }
-    else if (structType == STRUCT_WOOD_WALL)
-    {
-        structTypeString = "WOOD";
-    }
-    else
-    {
-        Show_Error("Unable to convert structure type to string: %d", structType);
-    }
-
-    return structTypeString;
-}
-
 StructType Prerequisite_To_Structure_Type(long prerequisite)
 {
     auto structType = STRUCT_NONE;
@@ -1040,6 +476,106 @@ char* Weapon_Type_To_String(WeaponType weaponType)
     return weaponTypeString;
 }
 
+SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError)
+{
+    SpeedType speedType = SPEED_NONE;
+
+    if (Strings_Are_Equal(unitSpeedTypeString, "NONE"))
+    {
+        speedType = SPEED_NONE;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "FOOT"))
+    {
+        speedType = SPEED_FOOT;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "TRACK"))
+    {
+        speedType = SPEED_TRACK;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "HARVESTER"))
+    {
+        speedType = SPEED_HARVESTER;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "WHEEL"))
+    {
+        speedType = SPEED_WHEEL;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "WINGED"))
+    {
+        speedType = SPEED_WINGED;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "HOVER"))
+    {
+        speedType = SPEED_HOVER;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "FLOAT"))
+    {
+        speedType = SPEED_FLOAT;
+    }
+    else
+    {
+        *parseError = true;
+        Show_Error("Unable to parse unit speed type from string: %s", unitSpeedTypeString);
+    }
+
+    return speedType;
+}
+
+SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError)
+{
+    auto unitSpeedTypeStr = strdup(unitSpeedTypeString);
+
+    auto unitSpeedType = Parse_Unit_Speed_Type(unitSpeedTypeStr, parseError);
+
+    delete unitSpeedTypeStr;
+
+    return unitSpeedType;
+}
+
+char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
+{
+    char* unitSpeedTypeString;
+
+    if (unitSpeedType == SPEED_NONE)
+    {
+        unitSpeedTypeString = "NONE";
+    }
+    else if (unitSpeedType == SPEED_FOOT)
+    {
+        unitSpeedTypeString = "FOOT";
+    }
+    else if (unitSpeedType == SPEED_TRACK)
+    {
+        unitSpeedTypeString = "TRACK";
+    }
+    else if (unitSpeedType == SPEED_HARVESTER)
+    {
+        unitSpeedTypeString = "HARVESTER";
+    }
+    else if (unitSpeedType == SPEED_WHEEL)
+    {
+        unitSpeedTypeString = "WHEEL";
+    }
+    else if (unitSpeedType == SPEED_WINGED)
+    {
+        unitSpeedTypeString = "WINGED";
+    }
+    else if (unitSpeedType == SPEED_HOVER)
+    {
+        unitSpeedTypeString = "HOVER";
+    }
+    else if (unitSpeedType == SPEED_FLOAT)
+    {
+        unitSpeedTypeString = "FLOAT";
+    }
+    else
+    {
+        Show_Error("Unable to convert unit speed type to string: %d", unitSpeedType);
+    }
+
+    return unitSpeedTypeString;
+}
+
 InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
 {
     InfantryType infantryType = INFANTRY_NONE;
@@ -1154,4 +690,788 @@ char* Infantry_Type_To_String(InfantryType infantryType)
     }
 
     return infantryTypeString;
+}
+
+UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
+{
+    UnitType unitType = UNIT_NONE;
+
+    if (Strings_Are_Equal(unitTypeString, "NONE"))
+    {
+        unitType = UNIT_NONE;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "HTANK"))
+    {
+        unitType = UNIT_HTANK;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "MTANK"))
+    {
+        unitType = UNIT_MTANK;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "LTANK"))
+    {
+        unitType = UNIT_LTANK;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "STANK"))
+    {
+        unitType = UNIT_STANK;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "FTANK"))
+    {
+        unitType = UNIT_FTANK;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "VICE"))
+    {
+        unitType = UNIT_VICE;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "APC"))
+    {
+        unitType = UNIT_APC;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "MLRS"))
+    {
+        unitType = UNIT_MLRS;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "JEEP"))
+    {
+        unitType = UNIT_JEEP;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "BUGGY"))
+    {
+        unitType = UNIT_BUGGY;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "HARVESTER"))
+    {
+        unitType = UNIT_HARVESTER;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "ARTY"))
+    {
+        unitType = UNIT_ARTY;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "MSAM"))
+    {
+        unitType = UNIT_MSAM;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "HOVER"))
+    {
+        unitType = UNIT_HOVER;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "MHQ"))
+    {
+        unitType = UNIT_MHQ;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "GUNBOAT"))
+    {
+        unitType = UNIT_GUNBOAT;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "MCV"))
+    {
+        unitType = UNIT_MCV;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "BIKE"))
+    {
+        unitType = UNIT_BIKE;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "TRIC"))
+    {
+        unitType = UNIT_TRIC;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "TREX"))
+    {
+        unitType = UNIT_TREX;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "RAPT"))
+    {
+        unitType = UNIT_RAPT;
+    }
+    else if (Strings_Are_Equal(unitTypeString, "STEG"))
+    {
+        unitType = UNIT_STEG;
+    }
+    else
+    {
+        *parseError = true;
+        Show_Error("Unable to parse unit type from string: %s", unitTypeString);
+    }
+
+    return unitType;
+}
+
+UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError)
+{
+    auto unitTypeStr = strdup(unitTypeString);
+
+    UnitType result = Parse_Unit_Type(unitTypeStr, parseError);
+
+    delete unitTypeStr;
+
+    return result;
+}
+
+char* Unit_Type_To_String(UnitType unitType)
+{
+    char* unitTypeString;
+
+    if (unitType == UNIT_NONE)
+    {
+        unitTypeString = "NONE";
+    }
+    else if (unitType == UNIT_HTANK)
+    {
+        unitTypeString = "HTANK";
+    }
+    else if (unitType == UNIT_MTANK)
+    {
+        unitTypeString = "MTANK";
+    }
+    else if (unitType == UNIT_LTANK)
+    {
+        unitTypeString = "LTANK";
+    }
+    else if (unitType == UNIT_STANK)
+    {
+        unitTypeString = "STANK";
+    }
+    else if (unitType == UNIT_FTANK)
+    {
+        unitTypeString = "FTANK";
+    }
+    else if (unitType == UNIT_VICE)
+    {
+        unitTypeString = "VICE";
+    }
+    else if (unitType == UNIT_APC)
+    {
+        unitTypeString = "APC";
+    }
+    else if (unitType == UNIT_MLRS)
+    {
+        unitTypeString = "MLRS";
+    }
+    else if (unitType == UNIT_JEEP)
+    {
+        unitTypeString = "JEEP";
+    }
+    else if (unitType == UNIT_BUGGY)
+    {
+        unitTypeString = "BUGGY";
+    }
+    else if (unitType == UNIT_HARVESTER)
+    {
+        unitTypeString = "HARVESTER";
+    }
+    else if (unitType == UNIT_ARTY)
+    {
+        unitTypeString = "ARTY";
+    }
+    else if (unitType == UNIT_MSAM)
+    {
+        unitTypeString = "MSAM";
+    }
+    else if (unitType == UNIT_HOVER)
+    {
+        unitTypeString = "HOVER";
+    }
+    else if (unitType == UNIT_MHQ)
+    {
+        unitTypeString = "MHQ";
+    }
+    else if (unitType == UNIT_GUNBOAT)
+    {
+        unitTypeString = "GUNBOAT";
+    }
+    else if (unitType == UNIT_MCV)
+    {
+        unitTypeString = "MCV";
+    }
+    else if (unitType == UNIT_BIKE)
+    {
+        unitTypeString = "BIKE";
+    }
+    else if (unitType == UNIT_TRIC)
+    {
+        unitTypeString = "TRIC";
+    }
+    else if (unitType == UNIT_TREX)
+    {
+        unitTypeString = "TREX";
+    }
+    else if (unitType == UNIT_RAPT)
+    {
+        unitTypeString = "RAPT";
+    }
+    else if (unitType == UNIT_STEG)
+    {
+        unitTypeString = "STEG";
+    }
+    else
+    {
+        Show_Error("Unable to convert unit type to string: %d", unitType);
+    }
+
+    return unitTypeString;
+}
+
+StructType Parse_Structure_Type(char* structTypeString, bool* parseError)
+{
+    StructType structType;
+
+    if (Strings_Are_Equal(structTypeString, "NONE"))
+    {
+        structType = STRUCT_NONE;
+    }
+    else if (Strings_Are_Equal(structTypeString, "WEAP"))
+    {
+        structType = STRUCT_WEAP;
+    }
+    else if (Strings_Are_Equal(structTypeString, "GTWR"))
+    {
+        structType = STRUCT_GTOWER;
+    }
+    else if (Strings_Are_Equal(structTypeString, "ATWR"))
+    {
+        structType = STRUCT_ATOWER;
+    }
+    else if (Strings_Are_Equal(structTypeString, "OBLI"))
+    {
+        structType = STRUCT_OBELISK;
+    }
+    else if (Strings_Are_Equal(structTypeString, "HQ"))
+    {
+        structType = STRUCT_RADAR;
+    }
+    else if (Strings_Are_Equal(structTypeString, "GUN"))
+    {
+        structType = STRUCT_TURRET;
+    }
+    else if (Strings_Are_Equal(structTypeString, "FACT"))
+    {
+        structType = STRUCT_CONST;
+    }
+    else if (Strings_Are_Equal(structTypeString, "PROC"))
+    {
+        structType = STRUCT_REFINERY;
+    }
+    else if (Strings_Are_Equal(structTypeString, "SILO"))
+    {
+        structType = STRUCT_STORAGE;
+    }
+    else if (Strings_Are_Equal(structTypeString, "HPAD"))
+    {
+        structType = STRUCT_HELIPAD;
+    }
+    else if (Strings_Are_Equal(structTypeString, "SAM"))
+    {
+        structType = STRUCT_SAM;
+    }
+    else if (Strings_Are_Equal(structTypeString, "AFLD"))
+    {
+        structType = STRUCT_AIRSTRIP;
+    }
+    else if (Strings_Are_Equal(structTypeString, "NUKE"))
+    {
+        structType = STRUCT_POWER;
+    }
+    else if (Strings_Are_Equal(structTypeString, "NUK2"))
+    {
+        structType = STRUCT_ADVANCED_POWER;
+    }
+    else if (Strings_Are_Equal(structTypeString, "HOSP"))
+    {
+        structType = STRUCT_HOSPITAL;
+    }
+    else if (Strings_Are_Equal(structTypeString, "PYLE"))
+    {
+        structType = STRUCT_BARRACKS;
+    }
+    else if (Strings_Are_Equal(structTypeString, "ARCO"))
+    {
+        structType = STRUCT_TANKER;
+    }
+    else if (Strings_Are_Equal(structTypeString, "FIX"))
+    {
+        structType = STRUCT_REPAIR;
+    }
+    else if (Strings_Are_Equal(structTypeString, "BIO"))
+    {
+        structType = STRUCT_BIO_LAB;
+    }
+    else if (Strings_Are_Equal(structTypeString, "HAND"))
+    {
+        structType = STRUCT_HAND;
+    }
+    else if (Strings_Are_Equal(structTypeString, "TMPL"))
+    {
+        structType = STRUCT_TEMPLE;
+    }
+    else if (Strings_Are_Equal(structTypeString, "EYE"))
+    {
+        structType = STRUCT_EYE;
+    }
+    else if (Strings_Are_Equal(structTypeString, "MISS"))
+    {
+        structType = STRUCT_MISSION;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V01"))
+    {
+        structType = STRUCT_V01;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V02"))
+    {
+        structType = STRUCT_V02;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V03"))
+    {
+        structType = STRUCT_V03;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V04"))
+    {
+        structType = STRUCT_V04;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V05"))
+    {
+        structType = STRUCT_V05;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V06"))
+    {
+        structType = STRUCT_V06;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V07"))
+    {
+        structType = STRUCT_V07;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V08"))
+    {
+        structType = STRUCT_V08;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V09"))
+    {
+        structType = STRUCT_V09;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V10"))
+    {
+        structType = STRUCT_V10;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V11"))
+    {
+        structType = STRUCT_V11;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V12"))
+    {
+        structType = STRUCT_V12;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V13"))
+    {
+        structType = STRUCT_V13;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V14"))
+    {
+        structType = STRUCT_V14;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V15"))
+    {
+        structType = STRUCT_V15;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V16"))
+    {
+        structType = STRUCT_V16;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V17"))
+    {
+        structType = STRUCT_V17;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V18"))
+    {
+        structType = STRUCT_V18;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V19"))
+    {
+        structType = STRUCT_PUMP;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V20"))
+    {
+        structType = STRUCT_V20;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V21"))
+    {
+        structType = STRUCT_V21;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V22"))
+    {
+        structType = STRUCT_V22;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V23"))
+    {
+        structType = STRUCT_V23;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V24"))
+    {
+        structType = STRUCT_V24;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V25"))
+    {
+        structType = STRUCT_V25;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V26"))
+    {
+        structType = STRUCT_V26;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V27"))
+    {
+        structType = STRUCT_V27;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V28"))
+    {
+        structType = STRUCT_V28;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V29"))
+    {
+        structType = STRUCT_V29;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V30"))
+    {
+        structType = STRUCT_V30;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V31"))
+    {
+        structType = STRUCT_V31;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V32"))
+    {
+        structType = STRUCT_V32;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V33"))
+    {
+        structType = STRUCT_V33;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V34"))
+    {
+        structType = STRUCT_V34;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V35"))
+    {
+        structType = STRUCT_V35;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V36"))
+    {
+        structType = STRUCT_V36;
+    }
+    else if (Strings_Are_Equal(structTypeString, "V37"))
+    {
+        structType = STRUCT_V37;
+    }
+    else if (Strings_Are_Equal(structTypeString, "SBAG"))
+    {
+        structType = STRUCT_SANDBAG_WALL;
+    }
+    else if (Strings_Are_Equal(structTypeString, "CYCL"))
+    {
+        structType = STRUCT_CYCLONE_WALL;
+    }
+    else if (Strings_Are_Equal(structTypeString, "BRIK"))
+    {
+        structType = STRUCT_BRICK_WALL;
+    }
+    else if (Strings_Are_Equal(structTypeString, "BARB"))
+    {
+        structType = STRUCT_BARBWIRE_WALL;
+    }
+    else if (Strings_Are_Equal(structTypeString, "WOOD"))
+    {
+        structType = STRUCT_WOOD_WALL;
+    }
+    else
+    {
+        *parseError = true;
+        Show_Error("Unable to parse structure from string: %s", structTypeString);
+    }
+
+    return structType;
+}
+
+StructType Parse_Structure_Type(const char* structTypeString, bool* parseError)
+{
+    auto structTypeStr = strdup(structTypeString);
+
+    auto structType = Parse_Structure_Type(structTypeStr, parseError);
+
+    delete structTypeStr;
+
+    return structType;
+}
+
+char* Structure_Type_To_String(StructType structType)
+{
+    char* structTypeString;
+
+    if (structType == STRUCT_NONE)
+    {
+        structTypeString = "NONE";
+    }
+    else if (structType == STRUCT_WEAP)
+    {
+        structTypeString = "WEAP";
+    }
+    else if (structType == STRUCT_GTOWER)
+    {
+        structTypeString = "GTWR";
+    }
+    else if (structType == STRUCT_ATOWER)
+    {
+        structTypeString = "ATWR";
+    }
+    else if (structType == STRUCT_OBELISK)
+    {
+        structTypeString = "OBLI";
+    }
+    else if (structType == STRUCT_RADAR)
+    {
+        structTypeString = "HQ";
+    }
+    else if (structType == STRUCT_TURRET)
+    {
+        structTypeString = "GUN";
+    }
+    else if (structType == STRUCT_CONST)
+    {
+        structTypeString = "FACT";
+    }
+    else if (structType == STRUCT_REFINERY)
+    {
+        structTypeString = "PROC";
+    }
+    else if (structType == STRUCT_STORAGE)
+    {
+        structTypeString = "SILO";
+    }
+    else if (structType == STRUCT_HELIPAD)
+    {
+        structTypeString = "HPAD";
+    }
+    else if (structType == STRUCT_SAM)
+    {
+        structTypeString = "SAM";
+    }
+    else if (structType == STRUCT_AIRSTRIP)
+    {
+        structTypeString = "AFLD";
+    }
+    else if (structType == STRUCT_POWER)
+    {
+        structTypeString = "NUKE";
+    }
+    else if (structType == STRUCT_ADVANCED_POWER)
+    {
+        structTypeString = "NUK2";
+    }
+    else if (structType == STRUCT_HOSPITAL)
+    {
+        structTypeString = "HOSP";
+    }
+    else if (structType == STRUCT_BARRACKS)
+    {
+        structTypeString = "PYLE";
+    }
+    else if (structType == STRUCT_TANKER)
+    {
+        structTypeString = "ARCO";
+    }
+    else if (structType == STRUCT_REPAIR)
+    {
+        structTypeString = "FIX";
+    }
+    else if (structType == STRUCT_BIO_LAB)
+    {
+        structTypeString = "BIO";
+    }
+    else if (structType == STRUCT_HAND)
+    {
+        structTypeString = "HAND";
+    }
+    else if (structType == STRUCT_TEMPLE)
+    {
+        structTypeString = "TMPL";
+    }
+    else if (structType == STRUCT_EYE)
+    {
+        structTypeString = "EYE";
+    }
+    else if (structType == STRUCT_MISSION)
+    {
+        structTypeString = "MISS";
+    }
+    else if (structType == STRUCT_V01)
+    {
+        structTypeString = "V01";
+    }
+    else if (structType == STRUCT_V02)
+    {
+        structTypeString = "V02";
+    }
+    else if (structType == STRUCT_V03)
+    {
+        structTypeString = "V03";
+    }
+    else if (structType == STRUCT_V04)
+    {
+        structTypeString = "V04";
+    }
+    else if (structType == STRUCT_V05)
+    {
+        structTypeString = "V05";
+    }
+    else if (structType == STRUCT_V06)
+    {
+        structTypeString = "V06";
+    }
+    else if (structType == STRUCT_V07)
+    {
+        structTypeString = "V07";
+    }
+    else if (structType == STRUCT_V08)
+    {
+        structTypeString = "V08";
+    }
+    else if (structType == STRUCT_V09)
+    {
+        structTypeString = "V09";
+    }
+    else if (structType == STRUCT_V10)
+    {
+        structTypeString = "V10";
+    }
+    else if (structType == STRUCT_V11)
+    {
+        structTypeString = "V11";
+    }
+    else if (structType == STRUCT_V12)
+    {
+        structTypeString = "V12";
+    }
+    else if (structType == STRUCT_V13)
+    {
+        structTypeString = "V13";
+    }
+    else if (structType == STRUCT_V14)
+    {
+        structTypeString = "V14";
+    }
+    else if (structType == STRUCT_V15)
+    {
+        structTypeString = "V15";
+    }
+    else if (structType == STRUCT_V16)
+    {
+        structTypeString = "V16";
+    }
+    else if (structType == STRUCT_V17)
+    {
+        structTypeString = "V17";
+    }
+    else if (structType == STRUCT_V18)
+    {
+        structTypeString = "V18";
+    }
+    else if (structType == STRUCT_PUMP)
+    {
+        structTypeString = "V19";
+    }
+    else if (structType == STRUCT_V20)
+    {
+        structTypeString = "V20";
+    }
+    else if (structType == STRUCT_V21)
+    {
+        structTypeString = "V21";
+    }
+    else if (structType == STRUCT_V22)
+    {
+        structTypeString = "V22";
+    }
+    else if (structType == STRUCT_V23)
+    {
+        structTypeString = "V23";
+    }
+    else if (structType == STRUCT_V24)
+    {
+        structTypeString = "V24";
+    }
+    else if (structType == STRUCT_V25)
+    {
+        structTypeString = "V25";
+    }
+    else if (structType == STRUCT_V26)
+    {
+        structTypeString = "V26";
+    }
+    else if (structType == STRUCT_V27)
+    {
+        structTypeString = "V27";
+    }
+    else if (structType == STRUCT_V28)
+    {
+        structTypeString = "V28";
+    }
+    else if (structType == STRUCT_V29)
+    {
+        structTypeString = "V29";
+    }
+    else if (structType == STRUCT_V30)
+    {
+        structTypeString = "V30";
+    }
+    else if (structType == STRUCT_V31)
+    {
+        structTypeString = "V31";
+    }
+    else if (structType == STRUCT_V32)
+    {
+        structTypeString = "V32";
+    }
+    else if (structType == STRUCT_V33)
+    {
+        structTypeString = "V33";
+    }
+    else if (structType == STRUCT_V34)
+    {
+        structTypeString = "V34";
+    }
+    else if (structType == STRUCT_V35)
+    {
+        structTypeString = "V35";
+    }
+    else if (structType == STRUCT_V36)
+    {
+        structTypeString = "V36";
+    }
+    else if (structType == STRUCT_V37)
+    {
+        structTypeString = "V37";
+    }
+    else if (structType == STRUCT_SANDBAG_WALL)
+    {
+        structTypeString = "SBAG";
+    }
+    else if (structType == STRUCT_CYCLONE_WALL)
+    {
+        structTypeString = "CYCL";
+    }
+    else if (structType == STRUCT_BRICK_WALL)
+    {
+        structTypeString = "BRIK";
+    }
+    else if (structType == STRUCT_BARBWIRE_WALL)
+    {
+        structTypeString = "BARB";
+    }
+    else if (structType == STRUCT_WOOD_WALL)
+    {
+        structTypeString = "WOOD";
+    }
+    else
+    {
+        Show_Error("Unable to convert structure type to string: %d", structType);
+    }
+
+    return structTypeString;
 }
