@@ -17,9 +17,6 @@
     <Filter Include="game">
       <UniqueIdentifier>{47acf8c4-312a-4094-94a1-ac771c4af2a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game\scripts">
-      <UniqueIdentifier>{f4238f29-9785-40e0-8d26-2ca235ce982b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="game">
       <UniqueIdentifier>{69072ba7-705b-47d4-b4b4-498027c3dfaf}</UniqueIdentifier>
     </Filter>
@@ -99,9 +96,6 @@
     </None>
     <None Include="..\game\RULES.INI">
       <Filter>game</Filter>
-    </None>
-    <None Include="..\game\scripts\tiberian_dawn.bat">
-      <Filter>game\scripts</Filter>
     </None>
     <None Include="..\game\test.lua">
       <Filter>game</Filter>

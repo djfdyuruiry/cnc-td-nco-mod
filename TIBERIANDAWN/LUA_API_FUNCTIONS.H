@@ -6,12 +6,16 @@
 #include "defines.h"
 #include "type.h"
 
-int Lua_Set_Infantry_Rule(lua_State* lua);
-
 int Lua_Get_Infantry_Rule(lua_State* lua);
+
+int Lua_Set_Infantry_Rule(lua_State* lua);
 
 int Lua_Get_Unit_Rule(lua_State* lua);
 
 int Lua_Set_Unit_Rule(lua_State* lua);
+
+int Lua_Get_Building_Rule(lua_State* lua);
+
+int Lua_Set_Building_Rule(lua_State* lua);
 
 #endif

@@ -555,6 +555,8 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	Validate();
 	if (!type || !type->IsBuildable || !((1L << house) & type->Ownable)) return(false);
 
+	// todo: add lua event and rule entries for all the non-generic logic in here
+
 	/*
 	**	The computer can always build everthing.
 	*/

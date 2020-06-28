@@ -31,7 +31,7 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 
 	RULES_LUA_SCRIPTS = {};
 
-	auto onScenarioLoadCsv = Read_String_From_Rules_Ini("NCO", "LuaScripts", "");
+	auto onScenarioLoadCsv = Read_String_From_Rules_Ini(NCO_RULES_SECTION, LUA_SCRIPTS_RULE, "");
 
 	RULES_LUA_SCRIPTS.ScriptFiles = Parse_Csv_String(
 		onScenarioLoadCsv,
@@ -46,7 +46,7 @@ static void Read_Log_Level_From_Rules_Ini()
 
 	auto logLevelLength = Get_Log_Level_Length();
 	auto logLevelBuffer = Read_String_From_Rules_Ini(
-		"NCO",
+		NCO_RULES_SECTION,
 		"LogLevel",
 		"INFO", 
 		new const char* [5]{
@@ -116,7 +116,7 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 
 	Read_Log_Level_From_Rules_Ini();
 
-	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini("NCO", "EnableLuaScripts", false);
+	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION, ENABLE_LUA_SCRIPTS_RULE, false);
 	Read_Lua_Scripts_From_Rules_Ini();
 }
 

@@ -4,6 +4,21 @@
 #include "defines.h"
 #include "logger.h"
 
+// rules ini sections
+#define NCO_RULES_SECTION "NCO"
+#define GAME_RULES_SECTION "Game"
+
+// nco config
+#define ENABLE_LUA_SCRIPTS_RULE "EnableLuaScripts"
+#define ENABLE_LUA_SCRIPTS_RULE_UPPER "ENABLELUASCRIPTS"
+
+#define LUA_SCRIPTS_RULE "LuaScripts"
+#define LUA_SCRIPTS_RULE_UPPER "LUASCRIPTS"
+
+// game rules (often scenario or techno type specific)
+#define RENAME_TECH_CENTER_TO_PRISON_RULE "RenameTechCenterToPrision"
+#define RENAME_TECH_CENTER_TO_PRISON_RULE_UPPER "RENAMETECHCENTERTOPRISION"
+
 // generic rules - apply to all types
 #define BUILD_LEVEL_RULE "BuildLevel"
 #define BUILD_LEVEL_RULE_UPPER "BUILDLEVEL"
@@ -37,6 +52,12 @@
 
 #define SECONDARY_WEAPON_RULE "SecondaryWeapon"
 #define SECONDARY_WEAPON_RULE_UPPER "SECONDARYWEAPON"
+
+#define AMMO_RULE "Ammo"
+#define AMMO_RULE_UPPER "AMMO"
+
+#define SHOW_NAME_RULE "ShowName"
+#define SHOW_NAME_RULE_UPPER "SHOWNAME"
 
 // infantry rules
 #define FEMALE_RULE "Female"
@@ -102,6 +123,46 @@
 
 #define MAX_SIZE_RULE "MaxSize"
 #define MAX_SIZE_RULE_UPPER "MAXSIZE"
+
+// building rules
+#define BIDDED_RULE "Bibbed"
+#define BIDDED_RULE_UPPER "BIBBED"
+
+#define WALL_RULE "Wall"
+#define WALL_RULE_UPPER "WALL"
+
+#define FACTORY_RULE "Factory"
+#define FACTORY_RULE_UPPER "FACTORY"
+
+#define SIMPLE_DAMAGE_RULE "SimpleDamage"
+#define SIMPLE_DAMAGE_RULE_UPPER "SIMPLEDAMAGE"
+
+#define STURDY_RULE "Sturdy"
+#define STURDY_RULE_UPPER "STURDY"
+
+#define CAPTUREABLE_RULE "Captureable"
+#define CAPTUREABLE_RULE_UPPER "CAPTUREABLE"
+
+#define FIXED_SPEED_ANIMATION_RULE "FixedSpeedAnimation"
+#define FIXED_SPEED_ANIMATION_RULE_UPPER "FIXEDSPEEDANIMATION"
+
+#define UNSELLABLE_RULE "Unsellable"
+#define UNSELLABLE_RULE_UPPER "UNSELLABLE"
+
+#define FACTORY_TYPE_RULE "FactoryType"
+#define FACTORY_TYPE_RULE_UPPER "FACTORYTYPE"
+
+#define CAN_BE_ENTERED_RULE "CanBeEntered"
+#define CAN_BE_ENTERED_RULE_UPPER "CANBEENTERED"
+
+#define STORAGE_CAPACITY_RULE "StorageCapacity"
+#define STORAGE_CAPACITY_RULE_UPPER "STORAGECAPACITY"
+
+#define POWER_OUTPUT_RULE "PowerOutput"
+#define POWER_OUTPUT_RULE_UPPER "POWEROUTPUT"
+
+#define POWER_INPUT_RULE "PowerInput"
+#define POWER_INPUT_RULE_UPPER "POWERINPUT"
 
 char* Read_Rules_Ini();
 
@@ -194,7 +255,7 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 #define Read_Can_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, "CanCloak", defaultValue)
 
 // building rules
-#define Read_Is_Capturable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Capturable", defaultValue)
+#define Read_Is_Captureable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Captureable", defaultValue)
 
 #define Read_Storage_Capacity(section, defaultValue) (unsigned)Read_Int_From_Rules_Ini(section, "StorageCapacity", defaultValue, 0, INT_MAX)
 

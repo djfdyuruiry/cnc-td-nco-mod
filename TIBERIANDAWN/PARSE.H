@@ -3,6 +3,7 @@
 
 #include "defines.h"
 
+// generic parsers
 HousesType Parse_House_Type(char* houseTypeString, bool* parseError);
 
 HousesType Parse_House_Type(const char* houseTypeString, bool* parseError);
@@ -14,7 +15,22 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError);
 WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError);
 
 char* Weapon_Type_To_String(WeaponType weaponType);
+
 StructType Prerequisite_To_Structure_Type(long prerequisite);
+
+// infantry specific
+InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError);
+
+InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError);
+
+char* Infantry_Type_To_String(InfantryType infantryType);
+
+// unit specific
+UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError);
+
+UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError);
+
+char* Unit_Type_To_String(UnitType unitType);
 
 SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError);
 
@@ -22,17 +38,16 @@ SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseErro
 
 char* Unit_Speed_Type_To_String(SpeedType unitSpeedType);
 
-InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError);
+// building specific
 
-InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError);
-
-char* Infantry_Type_To_String(InfantryType infantryType);
-
-UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError);
-
-UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError);
-
-char* Unit_Type_To_String(UnitType unitType);
+// subset of RTTIType values
+typedef enum FactoryType : unsigned char {
+	FACTORY_TYPE_NONE = RTTI_NONE,
+	FACTORY_TYPE_INFANTRY = RTTI_INFANTRYTYPE,
+	FACTORY_TYPE_UNIT = RTTI_UNITTYPE,
+	FACTORY_TYPE_AIRCRAFT = RTTI_AIRCRAFTTYPE,
+	FACTORY_TYPE_BUILDING = RTTI_BUILDINGTYPE
+} FactoryType;
 
 StructType Parse_Structure_Type(char* structTypeString, bool* parseError);
 
@@ -40,5 +55,10 @@ StructType Parse_Structure_Type(const char* structTypeString, bool* parseError);
 
 char* Structure_Type_To_String(StructType structType);
 
+FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError);
+
+FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError);
+
+char* Factory_Type_To_String(FactoryType factoryType);
 
 #endif

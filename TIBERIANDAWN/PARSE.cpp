@@ -700,23 +700,23 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
     {
         unitType = UNIT_NONE;
     }
-    else if (Strings_Are_Equal(unitTypeString, "HTANK"))
+    else if (Strings_Are_Equal(unitTypeString, "HTNK"))
     {
         unitType = UNIT_HTANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "MTANK"))
+    else if (Strings_Are_Equal(unitTypeString, "MTNK"))
     {
         unitType = UNIT_MTANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "LTANK"))
+    else if (Strings_Are_Equal(unitTypeString, "LTNK"))
     {
         unitType = UNIT_LTANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "STANK"))
+    else if (Strings_Are_Equal(unitTypeString, "STNK"))
     {
         unitType = UNIT_STANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "FTANK"))
+    else if (Strings_Are_Equal(unitTypeString, "FTNK"))
     {
         unitType = UNIT_FTANK;
     }
@@ -736,11 +736,11 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
     {
         unitType = UNIT_JEEP;
     }
-    else if (Strings_Are_Equal(unitTypeString, "BUGGY"))
+    else if (Strings_Are_Equal(unitTypeString, "BGGY"))
     {
         unitType = UNIT_BUGGY;
     }
-    else if (Strings_Are_Equal(unitTypeString, "HARVESTER"))
+    else if (Strings_Are_Equal(unitTypeString, "HARV"))
     {
         unitType = UNIT_HARVESTER;
     }
@@ -748,11 +748,11 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
     {
         unitType = UNIT_ARTY;
     }
-    else if (Strings_Are_Equal(unitTypeString, "MSAM"))
+    else if (Strings_Are_Equal(unitTypeString, "MLRS"))
     {
         unitType = UNIT_MSAM;
     }
-    else if (Strings_Are_Equal(unitTypeString, "HOVER"))
+    else if (Strings_Are_Equal(unitTypeString, "LST"))
     {
         unitType = UNIT_HOVER;
     }
@@ -760,7 +760,7 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
     {
         unitType = UNIT_MHQ;
     }
-    else if (Strings_Are_Equal(unitTypeString, "GUNBOAT"))
+    else if (Strings_Are_Equal(unitTypeString, "BOAT"))
     {
         unitType = UNIT_GUNBOAT;
     }
@@ -1474,4 +1474,79 @@ char* Structure_Type_To_String(StructType structType)
     }
 
     return structTypeString;
+}
+
+FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError)
+{
+    FactoryType factoryType;
+
+    if (Strings_Are_Equal(factoryTypeString, "NONE"))
+    {
+        factoryType = FACTORY_TYPE_NONE;
+    }
+    else if (Strings_Are_Equal(factoryTypeString, "INFANTRY"))
+    {
+        factoryType = FACTORY_TYPE_INFANTRY;
+    }
+    else if (Strings_Are_Equal(factoryTypeString, "UNIT"))
+    {
+        factoryType = FACTORY_TYPE_UNIT;
+    }
+    else if (Strings_Are_Equal(factoryTypeString, "AIRCRAFT"))
+    {
+        factoryType = FACTORY_TYPE_AIRCRAFT;
+    }
+    else if (Strings_Are_Equal(factoryTypeString, "BUILDING"))
+    {
+        factoryType = FACTORY_TYPE_BUILDING;
+    }
+    else
+    {
+        Show_Error("Unable to parse factory type from string: %s", factoryTypeString);
+    }
+
+    return factoryType;
+}
+
+FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError)
+{
+    auto factoryTypeStr = strdup(factoryTypeString);
+
+    auto factoryType = Parse_Factory_Type(factoryTypeStr, parseError);
+
+    delete factoryTypeStr;
+
+    return factoryType;
+}
+
+char* Factory_Type_To_String(FactoryType factoryType)
+{
+    char* factoryTypeString;
+
+    if (factoryType == FACTORY_TYPE_NONE)
+    {
+        factoryTypeString = "NONE";
+    }
+    else if (factoryType == FACTORY_TYPE_INFANTRY)
+    {
+        factoryTypeString = "INFANTRY";
+    }
+    else if (factoryType == FACTORY_TYPE_UNIT)
+    {
+        factoryTypeString = "UNIT";
+    }
+    else if (factoryType == FACTORY_TYPE_AIRCRAFT)
+    {
+        factoryTypeString = "AIRCRAFT";
+    }
+    else if (factoryType == FACTORY_TYPE_BUILDING)
+    {
+        factoryTypeString = "BUILDING";
+    }
+    else
+    {
+        Show_Error("Unable to convert factory type to string: %d", factoryType);
+    }
+
+    return factoryTypeString;
 }

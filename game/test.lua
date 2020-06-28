@@ -12,15 +12,29 @@ onScenarioStart(function (house, scenarioNumber, buildLevel)
  
   setInfantryRule("E1", "CanCapture", true)
 
-  setInfantryRule("E3", "ScenarioLevel", 1)
-  setInfantryRule("E3", "BuildLevel", 1)
+  setInfantryRule("E3", "ScenarioLevel", scenarioNumber)
+  setInfantryRule("E3", "BuildLevel", buildLevel)
   
-  setInfantryRule("E6", "ScenarioLevel", 1)
-  setInfantryRule("E6", "BuildLevel", 1)
+  setInfantryRule("E6", "ScenarioLevel", scenarioNumber)
+  setInfantryRule("E6", "BuildLevel", buildLevel)
   
-  setUnitRule("JEEP", "CanCrushInfantry", true)
-
+  setUnitRule("JEEP", "Speed", 100)
+  
+  setUnitRule("FTNK", "ScenarioLevel", scenarioNumber)
+  setUnitRule("FTNK", "BuildLevel", buildLevel)
+  
   setUnitRule("MCV", "CanCloak", true)
+ 
+  setUnitRule("BOAT", "CanCloak", true)
+ 
+  setBuildingRule("BIO", "Buildable", true)
+  setBuildingRule("BIO", "ScenarioLevel", scenarioNumber)
+  setBuildingRule("BIO", "BuildLevel", buildLevel)
+  setBuildingRule("BIO", "Prerequisite", "none")
+  
+  setBuildingRule("HAND", "FactoryType", "Unit")
+
+  setBuildingRule("NUKE", "Bibbed", false)
 
   if scenarioNumber ~= 4 then
     return

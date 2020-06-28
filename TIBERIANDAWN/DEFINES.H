@@ -189,6 +189,8 @@
 */
 typedef enum RTTIType : unsigned char {
 	RTTI_NONE=0,
+	
+	// factory types
 	RTTI_INFANTRY,
 	RTTI_INFANTRYTYPE,
 	RTTI_UNIT,

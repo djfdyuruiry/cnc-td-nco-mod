@@ -1,5 +1,225 @@
 #include "function.h"
 
+static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
+{
+    if (Strings_Are_Equal(ruleName, BIDDED_RULE_UPPER))
+    {
+        auto isBibbed = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsBibbed = isBibbed;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, WALL_RULE_UPPER))
+    {
+        auto isWall = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsWall = isWall;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, FACTORY_RULE_UPPER))
+    {
+        auto isFactory = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsFactory = isFactory;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, SIMPLE_DAMAGE_RULE_UPPER))
+    {
+        auto isSimpleDamage = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsSimpleDamage = isSimpleDamage;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, STURDY_RULE_UPPER))
+    {
+        auto isSturdy = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsSturdy = isSturdy;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CAPTUREABLE_RULE_UPPER))
+    {
+        auto isCaptureable = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsCaptureable = isCaptureable;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, FIXED_SPEED_ANIMATION_RULE_UPPER))
+    {
+        auto isRegulated = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsRegulated = isRegulated;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, UNSELLABLE_RULE_UPPER))
+    {
+        auto isUnsellable = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsUnsellable = isUnsellable;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, FACTORY_TYPE_RULE_UPPER))
+    {
+        auto factoryType = Parse_Factory_Type(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->ToBuild = (RTTIType)factoryType;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_BE_ENTERED_RULE_UPPER))
+    {
+        auto canEnter = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->CanEnter = canEnter;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
+    {
+        auto capacity = (unsigned)atoi(value);
+        *valueParseError = capacity < 0 || capacity > UINT_MAX;
+
+        if (!*valueParseError)
+        {
+            type->Capacity = capacity;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE_UPPER))
+    {
+        auto power = (unsigned) atoi(value);
+        *valueParseError = power < 0 || power > INT_MAX;
+
+        if (!*valueParseError)
+        {
+            type->Power = power;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE_UPPER))
+    {
+        auto drain = (unsigned)atoi(value);
+        *valueParseError = drain < 0 || drain > INT_MAX;
+
+        if (!*valueParseError)
+        {
+            type->Drain = drain;
+        }
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
+static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const char* ruleName)
+{
+    if (Strings_Are_Equal(ruleName, BIDDED_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsBibbed));
+
+        lua_pushboolean(lua, type->IsBibbed);
+    }
+    else if (Strings_Are_Equal(ruleName, WALL_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsWall));
+
+        lua_pushboolean(lua, type->IsWall);
+    }
+    else if (Strings_Are_Equal(ruleName, FACTORY_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFactory));
+
+        lua_pushboolean(lua, type->IsFactory);
+    }
+    else if (Strings_Are_Equal(ruleName, SIMPLE_DAMAGE_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsSimpleDamage));
+
+        lua_pushboolean(lua, type->IsSimpleDamage);
+    }
+    else if (Strings_Are_Equal(ruleName, STURDY_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsSturdy));
+
+        lua_pushboolean(lua, type->IsSturdy);
+    }
+    else if (Strings_Are_Equal(ruleName, CAPTUREABLE_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCaptureable));
+
+        lua_pushboolean(lua, type->IsCaptureable);
+    }
+    else if (Strings_Are_Equal(ruleName, FIXED_SPEED_ANIMATION_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRegulated));
+
+        lua_pushboolean(lua, type->IsRegulated);
+    }
+    else if (Strings_Are_Equal(ruleName, UNSELLABLE_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsUnsellable));
+
+        lua_pushboolean(lua, type->IsUnsellable);
+    }
+    else if (Strings_Are_Equal(ruleName, FACTORY_TYPE_RULE_UPPER))
+    {
+        auto factoryType = Factory_Type_To_String((FactoryType)type->ToBuild);
+
+        Log_Debug("Read_Building_Rule => Rule value: %s", factoryType);
+
+        lua_pushstring(lua, factoryType);
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_BE_ENTERED_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->CanEnter));
+
+        lua_pushboolean(lua, type->CanEnter);
+    }
+    else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %u", type->Capacity);
+
+        lua_pushnumber(lua, type->Capacity);
+    }
+    else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %d", type->Power);
+
+        lua_pushnumber(lua, type->Power);
+    }
+    else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE_UPPER))
+    {
+        Log_Debug("Read_Building_Rule => Rule value: %d", type->Drain);
+
+        lua_pushnumber(lua, type->Drain);
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
 static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
 {
     if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE_UPPER))
@@ -459,6 +679,16 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
             type->Secondary = weapon;
         }
     }
+    else if (Strings_Are_Equal(ruleName, AMMO_RULE_UPPER))
+    {
+        auto numValue = atoi(value);
+        *valueParseError = numValue < -1 && numValue > INT_MAX;
+
+        if (!*valueParseError)
+        {
+            type->MaxAmmo = numValue;
+        }
+    }
     else
     {
         return false;
@@ -542,12 +772,49 @@ static bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const ch
 
         lua_pushstring(lua, weaponStr);
     }
+    else if (Strings_Are_Equal(ruleName, AMMO_RULE_UPPER))
+    {
+        Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
+
+        lua_pushnumber(lua, type->MaxAmmo);
+    }
     else
     {
         return false;
     }
 
     return true;
+}
+
+static StructType ParseBuildingType(lua_State* lua, const char* buildingTypeName, bool* parseError)
+{
+    auto buildingType = Parse_Structure_Type(
+        Convert_String_To_Upper_Case(buildingTypeName),
+        parseError
+    );
+
+    if (*parseError)
+    {
+        luaL_error(lua, "building type passed was not recognised: %s", buildingTypeName);
+        return STRUCT_NONE;
+    }
+
+    return buildingType;
+}
+
+static BuildingTypeClass* ResolveBuilding(lua_State* lua, const char* buildingTypeName)
+{
+    bool parseError = false;
+    auto buildingType = ParseBuildingType(lua, buildingTypeName, &parseError);
+
+    if (parseError)
+    {
+        return NULL;
+    }
+
+    Log_Debug("unit type parsed: %s", Structure_Type_To_String(buildingType));
+
+    return (BuildingTypeClass*)&BuildingTypeClass::As_Reference(buildingType);
 }
 
 static UnitType ParseUnitType(lua_State* lua, const char* unitTypeName, bool* parseError)
@@ -610,6 +877,65 @@ static InfantryTypeClass* ResolveInfantry(lua_State* lua, const char* infantryTy
     Log_Debug("infantry type parsed: %s", Infantry_Type_To_String(infantryType));
 
     return (InfantryTypeClass*)&InfantryTypeClass::As_Reference(infantryType);
+}
+
+int Lua_Get_Infantry_Rule(lua_State* lua)
+{
+    Log_Debug("Lua_Get_Infantry_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 2)
+    {
+        luaL_error(lua, "getInfantryRule requires exactly two arguments");
+    }
+
+    auto infantryTypeName = Get_Lua_Value_As_String(1);
+
+    if (infantryTypeName == NULL)
+    {
+        luaL_error(lua, "getInfantryRule argument `infantryTypeName` was nil");
+        return 0;
+    }
+
+    auto infantry = ResolveInfantry(lua, infantryTypeName);
+
+    if (infantry == NULL)
+    {
+        return 0;
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(2);
+
+    if (ruleName == NULL)
+    {
+        luaL_error(lua, "getInfantryRule argument `ruleName` was nil");
+        return 0;
+    }
+
+    Log_Debug("Lua_Get_Infantry_Rule => looking for rule '%s' in Techno Type", ruleName);
+
+    auto ruleMatched = Read_TechnoType_Rule(lua, infantry, Convert_String_To_Upper_Case(ruleName));
+
+    if (ruleMatched)
+    {
+        Log_Debug("Lua_Get_Infantry_Rule => Rule matched in Techno Type");
+        return 1;
+    }
+
+    Log_Debug("Lua_Get_Infantry_Rule => looking for rule in Infantry Type");
+
+    ruleMatched = Read_Infantry_Rule(lua, infantry, Convert_String_To_Upper_Case(ruleName));
+
+    if (ruleMatched)
+    {
+        Log_Debug("Lua_Get_Infantry_Rule => Rule matched in Infantry Type");
+        return 1;
+    }
+
+    luaL_error(lua, "rule name type passed getInfantryRule was not recognised: %s", ruleName);
+
+    return 0;
 }
 
 int Lua_Set_Infantry_Rule(lua_State* lua)
@@ -702,28 +1028,29 @@ int Lua_Set_Infantry_Rule(lua_State* lua)
     return 0;
 }
 
-int Lua_Get_Infantry_Rule(lua_State* lua)
+int Lua_Get_Unit_Rule(lua_State* lua)
 {
-    Log_Debug("Lua_Get_Infantry_Rule called from Lua");
+    Log_Debug("Lua_Get_Unit_Rule called from Lua");
 
     int argCount = lua_gettop(lua);
 
     if (argCount < 2)
     {
-        luaL_error(lua, "getInfantryRule requires exactly two arguments");
+        luaL_error(lua, "getUnitRule requires exactly two arguments");
     }
 
-    auto infantryTypeName = Get_Lua_Value_As_String(1);
+    auto unitTypeName = Get_Lua_Value_As_String(1);
 
-    if (infantryTypeName == NULL)
+    if (unitTypeName == NULL)
     {
-        luaL_error(lua, "getInfantryRule argument `infantryTypeName` was nil");
+        luaL_error(lua, "getUnitRule argument `unitTypeName` was nil");
         return 0;
     }
 
-    auto infantry = ResolveInfantry(lua, infantryTypeName);
 
-    if (infantry == NULL)
+    auto unit = ResolveUnit(lua, unitTypeName);
+
+    if (unit == NULL)
     {
         return 0;
     }
@@ -732,29 +1059,31 @@ int Lua_Get_Infantry_Rule(lua_State* lua)
 
     if (ruleName == NULL)
     {
-        luaL_error(lua, "getInfantryRule argument `ruleName` was nil");
+        luaL_error(lua, "getUnitRule argument `ruleName` was nil");
         return 0;
     }
 
-    Log_Debug("Lua_Get_Infantry_Rule => looking for rule '%s' in Techno Type", ruleName);
+    Log_Debug("Lua_Get_Unit_Rule => looking for rule '%s' in Techno Type", ruleName);
 
-    auto ruleMatched = Read_TechnoType_Rule(lua, infantry, Convert_String_To_Upper_Case(ruleName));
-
-    if (ruleMatched)
-    {
-        Log_Debug("Lua_Get_Infantry_Rule => Rule matched in Techno Type");
-        return 1;
-    }
-
-    ruleMatched = Read_Infantry_Rule(lua, infantry, Convert_String_To_Upper_Case(ruleName));
+    auto ruleMatched = Read_TechnoType_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
 
     if (ruleMatched)
     {
-        Log_Debug("Lua_Get_Infantry_Rule => Rule matched in Infantry Type");
+        Log_Debug("Lua_Get_Unit_Rule => Rule matched in Techno Type");
         return 1;
     }
 
-    luaL_error(lua, "rule name type passed getInfantryRule was not recognised: %s", ruleName);
+    Log_Debug("Lua_Get_Unit_Rule => looking for rule in Unit Type");
+
+    ruleMatched = Read_Unit_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
+
+    if (ruleMatched)
+    {
+        Log_Debug("Lua_Get_Unit_Rule => Rule matched in Unit Type");
+        return 1;
+    }
+
+    luaL_error(lua, "rule name type passed getUnitRule was not recognised: %s", ruleName);
 
     return 0;
 }
@@ -849,29 +1178,29 @@ int Lua_Set_Unit_Rule(lua_State* lua)
     return 0;
 }
 
-int Lua_Get_Unit_Rule(lua_State* lua)
+int Lua_Get_Building_Rule(lua_State* lua)
 {
-    Log_Debug("Lua_Get_Unit_Rule called from Lua");
+    Log_Debug("Lua_Get_Building_Rule called from Lua");
 
     int argCount = lua_gettop(lua);
 
     if (argCount < 2)
     {
-        luaL_error(lua, "getUnitRule requires exactly two arguments");
+        luaL_error(lua, "getBuildingRule requires exactly two arguments");
     }
 
-    auto unitTypeName = Get_Lua_Value_As_String(1);
+    auto buildingTypeName = Get_Lua_Value_As_String(1);
 
-    if (unitTypeName == NULL)
+    if (buildingTypeName == NULL)
     {
-        luaL_error(lua, "getUnitRule argument `unitTypeName` was nil");
+        luaL_error(lua, "getBuildingRule argument `buildingTypeName` was nil");
         return 0;
     }
 
 
-    auto unit = ResolveUnit(lua, unitTypeName);
+    auto building = ResolveBuilding(lua, buildingTypeName);
 
-    if (unit == NULL)
+    if (building == NULL)
     {
         return 0;
     }
@@ -880,29 +1209,121 @@ int Lua_Get_Unit_Rule(lua_State* lua)
 
     if (ruleName == NULL)
     {
-        luaL_error(lua, "getUnitRule argument `ruleName` was nil");
+        luaL_error(lua, "getBuildingRule argument `ruleName` was nil");
         return 0;
     }
 
-    Log_Debug("Lua_Get_Unit_Rule => looking for rule '%s' in Techno Type", ruleName);
+    Log_Debug("Lua_Get_Building_Rule => looking for rule '%s' in Techno Type", ruleName);
 
-    auto ruleMatched = Read_TechnoType_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
-
-    if (ruleMatched)
-    {
-        Log_Debug("Lua_Get_Unit_Rule => Rule matched in Techno Type");
-        return 1;
-    }
-
-    ruleMatched = Read_Unit_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
+    auto ruleMatched = Read_TechnoType_Rule(lua, building, Convert_String_To_Upper_Case(ruleName));
 
     if (ruleMatched)
     {
-        Log_Debug("Lua_Get_Unit_Rule => Rule matched in Unit Type");
+        Log_Debug("Lua_Get_Building_Rule => Rule matched in Techno Type");
         return 1;
     }
 
-    luaL_error(lua, "rule name type passed getUnitRule was not recognised: %s", ruleName);
+    Log_Debug("Lua_Get_Building_Rule => looking for rule in Building Type");
+
+    ruleMatched = Read_Building_Rule(lua, building, Convert_String_To_Upper_Case(ruleName));
+
+    if (ruleMatched)
+    {
+        Log_Debug("Lua_Get_Building_Rule => Rule matched in Building Type");
+        return 1;
+    }
+
+    luaL_error(lua, "rule name type passed getBuildingRule was not recognised: %s", ruleName);
+
+    return 0;
+}
+
+int Lua_Set_Building_Rule(lua_State* lua)
+{
+    Log_Debug("Lua_Set_Building_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 3)
+    {
+        luaL_error(lua, "setUnitRule requires exactly three arguments");
+        return 0;
+    }
+
+    auto buildingTypeName = Get_Lua_Value_As_String(1);
+
+    if (buildingTypeName == NULL)
+    {
+        luaL_error(lua, "setBuildingRule argument `buildingTypeName` was nil");
+        return 0;
+    }
+
+    auto building= ResolveBuilding(lua, buildingTypeName);
+
+    if (building == NULL)
+    {
+        return 0;
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(2);
+    auto ruleValue = Get_Lua_Value_As_String(3);
+
+    if (ruleName == NULL)
+    {
+        luaL_error(lua, "setBuildingRule argument `ruleName` was nil");
+        return 0;
+    }
+
+    if (ruleValue == NULL)
+    {
+        luaL_error(lua, "setBuildingRule argument `ruleValue` was nil");
+        return 0;
+    }
+
+    Log_Debug("Lua_Set_Building_Rule => attempting to set rule '%s' to value: %s", ruleName, ruleValue);
+
+    Log_Debug("Lua_Set_Building_Rule => looking for rule in Techno Type");
+
+    bool parseError = false;
+    auto ruleMatched = Write_TechnoType_Rule(
+        building,
+        Convert_String_To_Upper_Case(ruleName),
+        Convert_String_To_Upper_Case(ruleValue),
+        &parseError
+    );
+
+    if (ruleMatched && !parseError)
+    {
+        Log_Debug("Lua_Set_Building_Rule => Rule matched in Techno Type");
+        return 1;
+    }
+
+    if (!parseError)
+    {
+        Log_Debug("Lua_Set_Building_Rule => looking for rule in Building Type");
+
+        ruleMatched = Write_Building_Rule(
+            building,
+            Convert_String_To_Upper_Case(ruleName),
+            Convert_String_To_Upper_Case(ruleValue),
+            &parseError
+        );
+
+        if (ruleMatched && !parseError)
+        {
+            Log_Debug("Lua_Set_Building_Rule => Rule matched in Building Type");
+            return 1;
+        }
+    }
+
+    if (parseError)
+    {
+        luaL_error(lua, "value for rule `%s` passed to setBuildingRule was not valid: %s", ruleName, ruleValue);
+
+        return 0;
+    }
+
+    luaL_error(lua, "rule name passed setBuildingRule was not recognised: %s", ruleName);
 
     return 0;
 }

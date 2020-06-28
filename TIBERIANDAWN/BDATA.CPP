@@ -179,7 +179,7 @@ static BuildingTypeClass const ClassTemple(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("TMPL", false),		// Can this building be captured?
+		Read_Is_Captureable("TMPL", false),		// Can this building be captured?
 		Read_Is_Flammable("TMPL", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -228,7 +228,7 @@ static BuildingTypeClass const ClassEye(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("EYE", true),			// Can this building be captured?
+		Read_Is_Captureable("EYE", true),			// Can this building be captured?
 		Read_Is_Flammable("EYE", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -277,7 +277,7 @@ static BuildingTypeClass const ClassWeapon(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		Read_Is_Capturable("WEAP", true),			// Can this building be captured?
+		Read_Is_Captureable("WEAP", true),			// Can this building be captured?
 		Read_Is_Flammable("WEAP", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -330,7 +330,7 @@ static BuildingTypeClass const ClassGTower(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("GTWR", false),		// Can this building be captured?
+		Read_Is_Captureable("GTWR", false),		// Can this building be captured?
 		Read_Is_Flammable("GTWR", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -380,7 +380,7 @@ static BuildingTypeClass const ClassATower(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("ATWR", false),		// Can this building be captured?
+		Read_Is_Captureable("ATWR", false),		// Can this building be captured?
 		Read_Is_Flammable("ATWR", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -430,7 +430,7 @@ static BuildingTypeClass const ClassObelisk(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("OBLI", false),		// Can this building be captured?
+		Read_Is_Captureable("OBLI", false),		// Can this building be captured?
 		Read_Is_Flammable("OBLI", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -479,7 +479,7 @@ static BuildingTypeClass const ClassTurret(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("GUN", false),		// Can this building be captured?
+		Read_Is_Captureable("GUN", false),		// Can this building be captured?
 		Read_Is_Flammable("GUN", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -536,7 +536,7 @@ static BuildingTypeClass const ClassConst(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		Read_Is_Capturable("FACT", true),			// Can this building be captured?
+		Read_Is_Captureable("FACT", true),			// Can this building be captured?
 		Read_Is_Flammable("FACT", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -585,7 +585,7 @@ static BuildingTypeClass const ClassRefinery(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("PROC", true),			// Can this building be captured?
+		Read_Is_Captureable("PROC", true),			// Can this building be captured?
 		Read_Is_Flammable("PROC", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -634,7 +634,7 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("SILO", true),			// Can this building be captured?
+		Read_Is_Captureable("SILO", true),			// Can this building be captured?
 		Read_Is_Flammable("SILO", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -684,7 +684,7 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,		// Is it a factory type building?
-		Read_Is_Capturable("HPAD", true),			// Can this building be captured?
+		Read_Is_Captureable("HPAD", true),			// Can this building be captured?
 		Read_Is_Flammable("HPAD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -733,7 +733,7 @@ static BuildingTypeClass const ClassCommand(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("HQ", true),			// Can this building be captured?
+		Read_Is_Captureable("HQ", true),			// Can this building be captured?
 		Read_Is_Flammable("HQ", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -782,7 +782,7 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("SAM", false),		// Can this building be captured?
+		Read_Is_Captureable("SAM", false),		// Can this building be captured?
 		Read_Is_Flammable("SAM", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -831,7 +831,7 @@ static BuildingTypeClass const ClassAirStrip(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		Read_Is_Capturable("AFLD", true),			// Can this building be captured?
+		Read_Is_Captureable("AFLD", true),			// Can this building be captured?
 		Read_Is_Flammable("AFLD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -880,7 +880,7 @@ static BuildingTypeClass const ClassPower(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("NUKE", true),			// Can this building be captured?
+		Read_Is_Captureable("NUKE", true),			// Can this building be captured?
 		Read_Is_Flammable("NUKE", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -929,7 +929,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("NUK2", true),			// Can this building be captured?
+		Read_Is_Captureable("NUK2", true),			// Can this building be captured?
 		Read_Is_Flammable("NUK2", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -978,7 +978,7 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("HOSP", true),			// Can this building be captured?
+		Read_Is_Captureable("HOSP", true),			// Can this building be captured?
 		Read_Is_Flammable("HOSP", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -1028,7 +1028,7 @@ static BuildingTypeClass const ClassBioLab(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("BIO", false),		// Can this building be captured?
+		Read_Is_Captureable("BIO", false),		// Can this building be captured?
 		Read_Is_Flammable("BIO", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -1077,7 +1077,7 @@ static BuildingTypeClass const ClassBarracks(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		Read_Is_Capturable("PYLE", true),			// Can this building be captured?
+		Read_Is_Captureable("PYLE", true),			// Can this building be captured?
 		Read_Is_Flammable("PYLE", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -1126,7 +1126,7 @@ static BuildingTypeClass const ClassHand(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
-		Read_Is_Capturable("HAND", true),			// Can this building be captured?
+		Read_Is_Captureable("HAND", true),			// Can this building be captured?
 		Read_Is_Flammable("HAND", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -1175,7 +1175,7 @@ static BuildingTypeClass const ClassTanker(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("ARCO", false),		// Can this building be captured?
+		Read_Is_Captureable("ARCO", false),		// Can this building be captured?
 		Read_Is_Flammable("ARCO", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -1224,7 +1224,7 @@ static BuildingTypeClass const ClassRepair(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("FIX", true),			// Can this building be captured?
+		Read_Is_Captureable("FIX", true),			// Can this building be captured?
 		Read_Is_Flammable("FIX", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -1275,7 +1275,7 @@ static BuildingTypeClass const ClassRoad(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("ROAD", false),		// Can this building be captured?
+		Read_Is_Captureable("ROAD", false),		// Can this building be captured?
 		Read_Is_Flammable("ROAD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -1325,7 +1325,7 @@ static BuildingTypeClass const ClassV01(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V01", false),		// Can this building be captured?
+		Read_Is_Captureable("V01", false),		// Can this building be captured?
 		Read_Is_Flammable("V01", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1374,7 +1374,7 @@ static BuildingTypeClass const ClassV02(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V02", false),		// Can this building be captured?
+		Read_Is_Captureable("V02", false),		// Can this building be captured?
 		Read_Is_Flammable("V02", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1423,7 +1423,7 @@ static BuildingTypeClass const ClassV03(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V03", false),		// Can this building be captured?
+		Read_Is_Captureable("V03", false),		// Can this building be captured?
 		Read_Is_Flammable("V03", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1472,7 +1472,7 @@ static BuildingTypeClass const ClassV04(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V04", false),		// Can this building be captured?
+		Read_Is_Captureable("V04", false),		// Can this building be captured?
 		Read_Is_Flammable("V04", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1521,7 +1521,7 @@ static BuildingTypeClass const ClassV05(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V05", false),		// Can this building be captured?
+		Read_Is_Captureable("V05", false),		// Can this building be captured?
 		Read_Is_Flammable("V05", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1570,7 +1570,7 @@ static BuildingTypeClass const ClassV06(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V06", false),		// Can this building be captured?
+		Read_Is_Captureable("V06", false),		// Can this building be captured?
 		Read_Is_Flammable("V06", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1619,7 +1619,7 @@ static BuildingTypeClass const ClassV07(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V07", false),		// Can this building be captured?
+		Read_Is_Captureable("V07", false),		// Can this building be captured?
 		Read_Is_Flammable("V07", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1668,7 +1668,7 @@ static BuildingTypeClass const ClassV08(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V08", false),		// Can this building be captured?
+		Read_Is_Captureable("V08", false),		// Can this building be captured?
 		Read_Is_Flammable("V08", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1717,7 +1717,7 @@ static BuildingTypeClass const ClassV09(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V09", false),		// Can this building be captured?
+		Read_Is_Captureable("V09", false),		// Can this building be captured?
 		Read_Is_Flammable("V09", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1766,7 +1766,7 @@ static BuildingTypeClass const ClassV10(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V10", false),		// Can this building be captured?
+		Read_Is_Captureable("V10", false),		// Can this building be captured?
 		Read_Is_Flammable("V10", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1815,7 +1815,7 @@ static BuildingTypeClass const ClassV11(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V11", false),		// Can this building be captured?
+		Read_Is_Captureable("V11", false),		// Can this building be captured?
 		Read_Is_Flammable("V11", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1864,7 +1864,7 @@ static BuildingTypeClass const ClassV12(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V12", false),		// Can this building be captured?
+		Read_Is_Captureable("V12", false),		// Can this building be captured?
 		Read_Is_Flammable("V12", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1913,7 +1913,7 @@ static BuildingTypeClass const ClassV13(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V13", false),		// Can this building be captured?
+		Read_Is_Captureable("V13", false),		// Can this building be captured?
 		Read_Is_Flammable("V13", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -1962,7 +1962,7 @@ static BuildingTypeClass const ClassV14(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V14", false),		// Can this building be captured?
+		Read_Is_Captureable("V14", false),		// Can this building be captured?
 		Read_Is_Flammable("V14", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -2011,7 +2011,7 @@ static BuildingTypeClass const ClassV15(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V15", false),		// Can this building be captured?
+		Read_Is_Captureable("V15", false),		// Can this building be captured?
 		Read_Is_Flammable("V15", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -2060,7 +2060,7 @@ static BuildingTypeClass const ClassV16(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V16", false),		// Can this building be captured?
+		Read_Is_Captureable("V16", false),		// Can this building be captured?
 		Read_Is_Flammable("V16", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -2109,7 +2109,7 @@ static BuildingTypeClass const ClassV17(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V17", false),		// Can this building be captured?
+		Read_Is_Captureable("V17", false),		// Can this building be captured?
 		Read_Is_Flammable("V17", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -2158,7 +2158,7 @@ static BuildingTypeClass const ClassV18(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V18", false),		// Can this building be captured?
+		Read_Is_Captureable("V18", false),		// Can this building be captured?
 		Read_Is_Flammable("V18", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		true,			// Is it invisible to radar?
@@ -2207,7 +2207,7 @@ static BuildingTypeClass const ClassV19(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V19", false),		// Can this building be captured?
+		Read_Is_Captureable("V19", false),		// Can this building be captured?
 		Read_Is_Flammable("V19", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2256,7 +2256,7 @@ static BuildingTypeClass const ClassV20(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V20", false),		// Can this building be captured?
+		Read_Is_Captureable("V20", false),		// Can this building be captured?
 		Read_Is_Flammable("V20", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2305,7 +2305,7 @@ static BuildingTypeClass const ClassV21(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V21", false),		// Can this building be captured?
+		Read_Is_Captureable("V21", false),		// Can this building be captured?
 		Read_Is_Flammable("V21", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2354,7 +2354,7 @@ static BuildingTypeClass const ClassV22(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V22", false),		// Can this building be captured?
+		Read_Is_Captureable("V22", false),		// Can this building be captured?
 		Read_Is_Flammable("V22", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2403,7 +2403,7 @@ static BuildingTypeClass const ClassV23(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V23", false),		// Can this building be captured?
+		Read_Is_Captureable("V23", false),		// Can this building be captured?
 		Read_Is_Flammable("V23", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2452,7 +2452,7 @@ static BuildingTypeClass const ClassV24(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V24", false),		// Can this building be captured?
+		Read_Is_Captureable("V24", false),		// Can this building be captured?
 		Read_Is_Flammable("V24", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2501,7 +2501,7 @@ static BuildingTypeClass const ClassV25(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V25", false),		// Can this building be captured?
+		Read_Is_Captureable("V25", false),		// Can this building be captured?
 		Read_Is_Flammable("V25", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2550,7 +2550,7 @@ static BuildingTypeClass const ClassV26(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V26", false),		// Can this building be captured?
+		Read_Is_Captureable("V26", false),		// Can this building be captured?
 		Read_Is_Flammable("V26", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2599,7 +2599,7 @@ static BuildingTypeClass const ClassV27(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V27", false),		// Can this building be captured?
+		Read_Is_Captureable("V27", false),		// Can this building be captured?
 		Read_Is_Flammable("V27", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2648,7 +2648,7 @@ static BuildingTypeClass const ClassV28(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V28", false),		// Can this building be captured?
+		Read_Is_Captureable("V28", false),		// Can this building be captured?
 		Read_Is_Flammable("V28", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2697,7 +2697,7 @@ static BuildingTypeClass const ClassV29(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V29", false),		// Can this building be captured?
+		Read_Is_Captureable("V29", false),		// Can this building be captured?
 		Read_Is_Flammable("V29", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2746,7 +2746,7 @@ static BuildingTypeClass const ClassV30(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V30", false),		// Can this building be captured?
+		Read_Is_Captureable("V30", false),		// Can this building be captured?
 		Read_Is_Flammable("V30", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2795,7 +2795,7 @@ static BuildingTypeClass const ClassV31(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V31", false),		// Can this building be captured?
+		Read_Is_Captureable("V31", false),		// Can this building be captured?
 		Read_Is_Flammable("V31", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2844,7 +2844,7 @@ static BuildingTypeClass const ClassV32(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V32", false),		// Can this building be captured?
+		Read_Is_Captureable("V32", false),		// Can this building be captured?
 		Read_Is_Flammable("V32", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2893,7 +2893,7 @@ static BuildingTypeClass const ClassV33(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V33", false),		// Can this building be captured?
+		Read_Is_Captureable("V33", false),		// Can this building be captured?
 		Read_Is_Flammable("V33", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2942,7 +2942,7 @@ static BuildingTypeClass const ClassV34(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V34", false),		// Can this building be captured?
+		Read_Is_Captureable("V34", false),		// Can this building be captured?
 		Read_Is_Flammable("V34", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -2991,7 +2991,7 @@ static BuildingTypeClass const ClassV35(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V35", false),		// Can this building be captured?
+		Read_Is_Captureable("V35", false),		// Can this building be captured?
 		Read_Is_Flammable("V35", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -3040,7 +3040,7 @@ static BuildingTypeClass const ClassV36(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V36", false),		// Can this building be captured?
+		Read_Is_Captureable("V36", false),		// Can this building be captured?
 		Read_Is_Flammable("V36", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -3088,7 +3088,7 @@ static BuildingTypeClass const ClassV37(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("V37", false),		// Can this building be captured?
+		Read_Is_Captureable("V37", false),		// Can this building be captured?
 		Read_Is_Flammable("V37", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -3136,7 +3136,7 @@ static BuildingTypeClass const ClassMission(
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("MISS", true),			// Can this building be captured?
+		Read_Is_Captureable("MISS", true),			// Can this building be captured?
 		Read_Is_Flammable("MISS", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -3186,7 +3186,7 @@ static BuildingTypeClass const Sandbag(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("SBAG", false),		// Can this building be captured?
+		Read_Is_Captureable("SBAG", false),		// Can this building be captured?
 		Read_Is_Flammable("SBAG", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -3235,7 +3235,7 @@ static BuildingTypeClass const Cyclone(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("CYCL", false),		// Can this building be captured?
+		Read_Is_Captureable("CYCL", false),		// Can this building be captured?
 		Read_Is_Flammable("CYCL", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -3284,7 +3284,7 @@ static BuildingTypeClass const Brick(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("BRIK", false),		// Can this building be captured?
+		Read_Is_Captureable("BRIK", false),		// Can this building be captured?
 		Read_Is_Flammable("BRIK", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -3333,7 +3333,7 @@ static BuildingTypeClass const Barbwire(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("BARB", false),		// Can this building be captured?
+		Read_Is_Captureable("BARB", false),		// Can this building be captured?
 		Read_Is_Flammable("BARB", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -3382,7 +3382,7 @@ static BuildingTypeClass const Wood(
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		Read_Is_Capturable("WOOD", false),		// Can this building be captured?
+		Read_Is_Captureable("WOOD", false),		// Can this building be captured?
 		Read_Is_Flammable("WOOD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -4455,12 +4455,28 @@ int BuildingTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Full_Name(void) const
 {
-	if (::Scenario == 3 && Type == STRUCT_MISSION) {
+	auto renameAsPrison = Read_Bool_From_Rules_Ini(
+		GAME_RULES_SECTION,
+		RENAME_TECH_CENTER_TO_PRISON_RULE,
+		true
+	);
+
+	if (renameAsPrison && (::Scenario == 3 && Type == STRUCT_MISSION))
+	{
+		Log_Debug("Renaming %s to TXT_PRISON", Structure_Type_To_String(STRUCT_MISSION));
 		return(TXT_PRISON);
 	}
-	if (!IsNominal || Special.IsNamed || IsWall || Debug_Map || Type == STRUCT_V23 || Type == STRUCT_V30 || Type == STRUCT_MISSION || Type == STRUCT_BIO_LAB) {
+
+	auto showName = Read_Bool_From_Rules_Ini(
+		IniName,
+		SHOW_NAME_RULE,
+		(Type == STRUCT_V23 || Type == STRUCT_V30 || Type == STRUCT_MISSION || Type == STRUCT_BIO_LAB)
+	);
+
+	if (!IsNominal || Special.IsNamed || IsWall || Debug_Map || showName) {
 		return(TechnoTypeClass::Full_Name());
 	}
+
 	return(TXT_CIVILIAN_BUILDING);
 }
 
