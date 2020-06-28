@@ -116,9 +116,6 @@
 #define CAN_HARVEST_RULE "CanHarvest"
 #define CAN_HARVEST_RULE_UPPER "CANHARVEST"
 
-#define CHUNKY_SHAPE_RULE "ChunkyShape"
-#define CHUNKY_SHAPE_RULE_UPPER "CHUNKYSHAPE"
-
 #define RADAR_EQUIPPED_RULE "RadarEquipped"
 #define RADAR_EQUIPPED_RULE_UPPER "RADAREQUIPPED"
 
@@ -142,9 +139,6 @@
 
 #define UNIT_SPEED_RULE "UnitSpeed"
 #define UNIT_SPEED_RULE_UPPER "UNITSPEED"
-
-#define MAX_SIZE_RULE "MaxSize"
-#define MAX_SIZE_RULE_UPPER "MAXSIZE"
 
 // aircraft rules
 #define CANT_HOVER_RULE "CantHover"
@@ -254,6 +248,12 @@ ArmorType Read_Armor_Type_From_Rules_Ini(
 	ArmorType defaultValue
 );
 
+SpeedType Read_Unit_Speed_Type_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	SpeedType defaultValue
+);
+
 FactoryType Read_Factory_Type_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -281,7 +281,7 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 
 #define Read_Armor(section, defaultValue) Read_Armor_Type_From_Rules_Ini(section, ARMOR_RULE, defaultValue)
 
-#define Read_Ammo(section, defaultValue) Read_Int_From_Rules_Ini(section, AMMO_RULE, defaultValue, 0, INT_MAX)
+#define Read_Ammo(section, defaultValue) Read_Int_From_Rules_Ini(section, AMMO_RULE, defaultValue, -1, INT_MAX)
 
 #define Read_Sight_Range(section, defaultValue) Read_Int_From_Rules_Ini(section, SIGHT_RANGE_RULE, defaultValue, 0, INT_MAX)
 
@@ -312,6 +312,28 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 
 // unit rules
 #define Read_Can_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_CLOAK_RULE, defaultValue)
+
+#define Read_Can_Be_Found_In_Crate(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_BE_FOUND_IN_CRATE_RULE, defaultValue)
+
+#define Read_Limited_Facings(section, defaultValue) Read_Bool_From_Rules_Ini(section, LIMITED_FACINGS_RULE, defaultValue)
+
+#define Read_Can_Crush_Infantry(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_CRUSH_INFANTRY_RULE, defaultValue)
+
+#define Read_Can_Harvest(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_HARVEST_RULE, defaultValue)
+
+#define Read_Radar_Equipped(section, defaultValue) Read_Bool_From_Rules_Ini(section, RADAR_EQUIPPED_RULE, defaultValue)
+
+#define Read_Has_Fire_Animation(section, defaultValue) Read_Bool_From_Rules_Ini(section, HAS_FIRE_ANIMATION_RULE, defaultValue)
+
+#define Read_Lock_Turret(section, defaultValue) Read_Bool_From_Rules_Ini(section, LOCK_TURRET_RULE, defaultValue)
+
+#define Read_Has_Tracks(section, defaultValue) Read_Bool_From_Rules_Ini(section, HAS_TRACKS_RULE, defaultValue)
+
+#define Read_Is_Huge(section, defaultValue) Read_Bool_From_Rules_Ini(section, HUGE_RULE, defaultValue)
+
+#define Read_Has_Constant_Animation(section, defaultValue) Read_Bool_From_Rules_Ini(section, CONSTANT_ANIMATION_RULE, defaultValue)
+
+#define Read_Unit_Speed(section, defaultValue) Read_Unit_Speed_Type_From_Rules_Ini(section, UNIT_SPEED_RULE, defaultValue)
 
 // aircraft rules
 #define Read_Cant_Hover(section, defaultValue) Read_Bool_From_Rules_Ini(section, CANT_HOVER_RULE, defaultValue)

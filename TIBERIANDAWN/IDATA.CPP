@@ -1478,7 +1478,7 @@ InfantryTypeClass::InfantryTypeClass	(
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable, houseListCsv,
 							primary, secondary,
-							ARMOR_NONE)
+							Read_Armor(ininame, ARMOR_NONE))
 {
 	IsFemale = is_female;
 	IsCrawling = is_crawling;

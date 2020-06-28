@@ -102,6 +102,7 @@ If you get an error on load of a scenario complaining the dll version is differe
 - Add rules to toggle certain logic for specific scenarios (can build certain units etc.)
 - Add rules to toggle hard-wired truths (can't build temple or laser as GDI with nod con yard etc.)
 - Use new base/infantry functions created for Lua API to read more rules from file
+- Add default mission type for units/infantry and can be repaired for units
 
 ## Path to v1
 

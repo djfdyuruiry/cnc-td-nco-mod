@@ -325,15 +325,6 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsToHarvest = isHarvester;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CHUNKY_SHAPE_RULE_UPPER))
-    {
-        auto isChunky = Parse_Boolean(value, valueParseError);
-
-        if (!*valueParseError)
-        {
-            type->IsChunkyShape = isChunky;
-        }
-    }
     else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE_UPPER))
     {
         auto isRadarEquipped = Parse_Boolean(value, valueParseError);
@@ -416,16 +407,6 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->ROT = rot;
         }
     }
-    else if (Strings_Are_Equal(ruleName, MAX_SIZE_RULE_UPPER))
-    {
-        auto maxSize = atoi(value);
-        *valueParseError = maxSize < 1;
-
-        if (!*valueParseError)
-        {
-            type->MaxSize = maxSize;
-        }
-    }
     else
     {
         return false;
@@ -459,12 +440,6 @@ static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* rule
         Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsToHarvest));
 
         lua_pushboolean(lua, type->IsToHarvest);
-    }
-    else if (Strings_Are_Equal(ruleName, CHUNKY_SHAPE_RULE_UPPER))
-    {
-        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsChunkyShape));
-
-        lua_pushboolean(lua, type->IsChunkyShape);
     }
     else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE_UPPER))
     {
@@ -521,12 +496,6 @@ static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* rule
         Log_Debug("Read_Unit_Rule => Rule value: %u", type->ROT);
 
         lua_pushnumber(lua, type->ROT);
-    }
-    else if (Strings_Are_Equal(ruleName, MAX_SIZE_RULE_UPPER))
-    {
-        Log_Debug("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->MaxSize));
-
-        lua_pushnumber(lua, type->MaxSize);
     }
     else
     {

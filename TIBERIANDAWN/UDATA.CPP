@@ -56,14 +56,14 @@ static UnitTypeClass const UnitVisceroid(
 	ANIM_NAPALM2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("VICE", 99),							// Build level.
 	Read_Prerequisite("VICE", STRUCT_NONE),				// Building prerequisite.
-		false,			// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("VICE", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("VICE", false),			// Only has eight facings?
 		true,				// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("VICE", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("VICE", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("VICE", false),			// Does this unit harvest Tiberium?
 		true,				// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -74,14 +74,14 @@ static UnitTypeClass const UnitVisceroid(
 		false,			// Can it be repaired in a repair facility?
 		Read_Is_Buildable("VICE", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("VICE", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("VICE", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("VICE", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("VICE", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("VICE", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("VICE", false),			// Is the unit capable of cloaking?
-		true,				// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("VICE", true),				// Does the unit have a constant animation?
 	Read_Ammo("VICE", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("VICE", 150),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("VICE", 4),											// SIGHTRANGE:	Range of sighting.
@@ -91,10 +91,10 @@ static UnitTypeClass const UnitVisceroid(
 	Read_House_List_From_Rules_Ini("VICE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("VICE", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("VICE", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("VICE", ARMOR_WOOD),								// ARMOR:		Armor type
+	Read_Unit_Speed("VICE", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("VICE", MPH_MEDIUM),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("VICE", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -107,14 +107,14 @@ static UnitTypeClass const UnitFTank(
 	ANIM_NAPALM3,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("FTNK", 4),							// Build level.
 	Read_Prerequisite("FTNK", STRUCT_RADAR),			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("FTNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("FTNK", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("FTNK", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("FTNK", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("FTNK", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -125,14 +125,14 @@ static UnitTypeClass const UnitFTank(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("FTNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("FTNK", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("FTNK", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("FTNK", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("FTNK", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("FTNK", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("FTNK", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("FTNK", false),			// Does the unit have a constant animation?
 	Read_Ammo("FTNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("FTNK", 300),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("FTNK", 4),											// SIGHTRANGE:	Range of sighting.
@@ -142,10 +142,10 @@ static UnitTypeClass const UnitFTank(
 	Read_House_List_From_Rules_Ini("FTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("VICE", WEAPON_FLAME_TONGUE),Read_Secondary_Weapon("VICE", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("FTNK", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("FTNK", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("FTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("FTNK", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -158,14 +158,14 @@ static UnitTypeClass const UnitSTank(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("STNK", 5),								// Build level.
 	Read_Prerequisite("STNK", STRUCT_RADAR),				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("STNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("STNK", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("STNK", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("STNK", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("STNK", false),			// Does this unit harvest Tiberium?
 		true,				// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -176,14 +176,14 @@ static UnitTypeClass const UnitSTank(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("STNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("STNK", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("STNK", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("STNK", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("STNK", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("STNK", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("STNK", true),				// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("STNK", false),			// Does the unit have a constant animation?
 	Read_Ammo("STNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("STNK", 110),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("STNK", 4),											// SIGHTRANGE:	Range of sighting.
@@ -193,10 +193,10 @@ static UnitTypeClass const UnitSTank(
 	Read_House_List_From_Rules_Ini("STNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("FTNK", WEAPON_DRAGON),Read_Secondary_Weapon("FTNK", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("STNK", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("STNK", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("STNK", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("STNK", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -209,14 +209,14 @@ static UnitTypeClass const UnitLTank(
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("LTNK", 3),								// Build level.
 	Read_Prerequisite("LTNK", STRUCT_NONE),				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("LTNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("LTNK", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("LTNK", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("LTNK", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("LTNK", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -227,14 +227,14 @@ static UnitTypeClass const UnitLTank(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("LTNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("LTNK", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("LTNK", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("LTNK", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("LTNK", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("LTNK", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("LTNK", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("LTNK", false),			// Does the unit have a constant animation?
 	Read_Ammo("LTNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("LTNK", 300),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("LTNK", 3),											// SIGHTRANGE:	Range of sighting.
@@ -244,10 +244,10 @@ static UnitTypeClass const UnitLTank(
 	Read_House_List_From_Rules_Ini("LTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("STNK", WEAPON_75MM),Read_Secondary_Weapon("STNK", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("LTNK", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("LTNK", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("LTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("LTNK", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -260,14 +260,14 @@ static UnitTypeClass const UnitMTank(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MTNK", 3),								// Build level.
 	Read_Prerequisite("MTNK", STRUCT_NONE),				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("MTNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("MTNK", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("MTNK", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("MTNK", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("MTNK", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -278,14 +278,14 @@ static UnitTypeClass const UnitMTank(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("MTNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("MTNK", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("MTNK", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("MTNK", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("MTNK", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("MTNK", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MTNK", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("MTNK", false),			// Does the unit have a constant animation?
 	Read_Ammo("MTNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("MTNK", 400),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("MTNK", 3),											// SIGHTRANGE:	Range of sighting.
@@ -295,10 +295,10 @@ static UnitTypeClass const UnitMTank(
 	Read_House_List_From_Rules_Ini("MTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("MTNK", WEAPON_105MM),Read_Secondary_Weapon("MTNK", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("MTNK", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("MTNK", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("MTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("MTNK", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -311,14 +311,14 @@ static UnitTypeClass const UnitHTank(
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("HTNK", 5),								// Build level.
 	Read_Prerequisite("HTNK", STRUCT_REPAIR),			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("HTNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("HTNK", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("HTNK", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("HTNK", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("HTNK", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -329,14 +329,14 @@ static UnitTypeClass const UnitHTank(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("HTNK", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("HTNK", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("HTNK", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("HTNK", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("HTNK", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("HTNK", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("HTNK", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("HTNK", false),			// Does the unit have a constant animation?
 	Read_Ammo("HTNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("HTNK", 600),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("HTNK", 4),											// SIGHTRANGE:	Range of sighting.
@@ -346,10 +346,10 @@ static UnitTypeClass const UnitHTank(
 	Read_House_List_From_Rules_Ini("HTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("HTNK", WEAPON_120MM),Read_Secondary_Weapon("HTNK", WEAPON_MAMMOTH_TUSK),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("HTNK", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("HTNK", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("HTNK", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("HTNK", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -362,14 +362,14 @@ static UnitTypeClass const UnitMHQ(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MHQ", 99),							// Build level.
 	Read_Prerequisite("MHQ", STRUCT_NONE),				// Building prerequisite.
-		false,			// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("MHQ", false),			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("MHQ", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("MHQ", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("MHQ", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("MHQ", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -380,14 +380,14 @@ static UnitTypeClass const UnitMHQ(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("MHQ", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		true,				// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("MHQ", true),				// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("MHQ", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("MHQ", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("MHQ", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("MHQ", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MHQ", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("MHQ", false),			// Does the unit have a constant animation?
 	Read_Ammo("MHQ", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("MHQ", 110),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("MHQ", 5),											// SIGHTRANGE:	Range of sighting.
@@ -397,10 +397,10 @@ static UnitTypeClass const UnitMHQ(
 	Read_House_List_From_Rules_Ini("MHQ", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("LTNK", WEAPON_NONE),Read_Secondary_Weapon("LTNK", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("MHQ", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("MHQ", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("MHQ", MPH_MEDIUM),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("MHQ", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -413,14 +413,14 @@ static UnitTypeClass const UnitHover(
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("LST", 99),							// Build level.
 	Read_Prerequisite("LST", STRUCT_NONE),				// Building prerequisite.
-		false,			// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("LST", false),			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("LST", false),			// Only has eight facings?
 		true,				// Always use the given name for the vehicle?
-		true,				//	Is this a typical transport vehicle?
+		Read_Is_Transport("LST", true),				//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("LST", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("LST", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 //		true,			// Is selectable by player?
 		false,			// Is selectable by player?
@@ -432,14 +432,14 @@ static UnitTypeClass const UnitHover(
 		false,			// Can it be repaired in a repair facility?
 		Read_Is_Buildable("LST", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("LST", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("LST", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("LST", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("LST", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("LST", true),				// Is this a gigundo-rotund-enormous unit?
 		true,				// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("LST", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("LST", false),			// Does the unit have a constant animation?
 	Read_Ammo("LST", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("LST", 400),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("LST", 3),											// SIGHTRANGE:	Range of sighting.
@@ -449,10 +449,10 @@ static UnitTypeClass const UnitHover(
 	Read_House_List_From_Rules_Ini("LST", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("LST", WEAPON_NONE),Read_Secondary_Weapon("LST", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_HOVER,							// MOVE:			Locomotion type.
+	Read_Armor("LST", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("LST", SPEED_HOVER),							// MOVE:			Locomotion type.
 	Read_Speed("LST", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
-	127,										// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("LST", 127),										// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -465,14 +465,14 @@ static UnitTypeClass const UnitSAM(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MLRS", 7),								// Build level.
 	Read_Prerequisite("MLRS", STRUCT_ATOWER),			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("MLRS", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("MLRS", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("MLRS", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("MLRS", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("MLRS", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -483,14 +483,14 @@ static UnitTypeClass const UnitSAM(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("MLRS", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		true,				// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("MLRS", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("MLRS", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("MLRS", true),				// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("MLRS", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("MLRS", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MLRS", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("MLRS", false),			// Does the unit have a constant animation?
 	Read_Ammo("MLRS", 2),											// AMMO:			Number of shots it has (default).
 	Read_Strength("MLRS", 120),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("MLRS", 4),											// SIGHTRANGE:	Range of sighting.
@@ -500,10 +500,10 @@ static UnitTypeClass const UnitSAM(
 	Read_House_List_From_Rules_Ini("MLRS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
 	Read_Primary_Weapon("MHQ", WEAPON_HONEST_JOHN),Read_Secondary_Weapon("MHQ", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("MLRS", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("MLRS", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("MLRS", MPH_MEDIUM),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("MLRS", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -516,14 +516,14 @@ static UnitTypeClass const UnitArty(
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("ARTY", 6),								// Build level.
 	Read_Prerequisite("ARTY", STRUCT_NONE),				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("ARTY", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("ARTY", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("ARTY", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("ARTY", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("ARTY", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -534,14 +534,14 @@ static UnitTypeClass const UnitArty(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("ARTY", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("ARTY", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("ARTY", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("ARTY", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("ARTY", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("ARTY", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("ARTY", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("ARTY", false),			// Does the unit have a constant animation?
 	Read_Ammo("ARTY", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("ARTY", 75),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("ARTY", 4),											// SIGHTRANGE:	Range of sighting.
@@ -551,10 +551,10 @@ static UnitTypeClass const UnitArty(
 	Read_House_List_From_Rules_Ini("ARTY", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("ARTY", WEAPON_155MM),Read_Secondary_Weapon("ARTY", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("ARTY", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("ARTY", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("ARTY", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
-	2,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("ARTY", 2),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -567,14 +567,14 @@ static UnitTypeClass const UnitHarvester(
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("HARV", 2),								// Build level.
 	Read_Prerequisite("HARV", STRUCT_REFINERY),			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("HARV", true),				// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("HARV", false),			// Only has eight facings?
 		true,				// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("HARV", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		true,				// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("HARV", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("HARV", true),				// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -585,14 +585,14 @@ static UnitTypeClass const UnitHarvester(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("HARV", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("HARV", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("HARV", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("HARV", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("HARV", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("HARV", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("HARV", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("HARV", false),			// Does the unit have a constant animation?
 	Read_Ammo("HARV", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("HARV", 600),										// STRENGTH:	Strength (in damage points).
 //	300,										// STRENGTH:	Strength (in damage points).
@@ -603,10 +603,10 @@ static UnitTypeClass const UnitHarvester(
 	Read_House_List_From_Rules_Ini("HARV", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("MLRS", WEAPON_NONE),Read_Secondary_Weapon("MLRS", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_WHEEL,							// MOVE:			Locomotion type.
+	Read_Armor("HARV", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("HARV", SPEED_WHEEL),							// MOVE:			Locomotion type.
 	Read_Speed("HARV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("HARV", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HARVEST						// ORDERS:		Default order to give new unit.
 );
@@ -619,14 +619,14 @@ static UnitTypeClass const UnitMCV(
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MCV", 7),							// Build level.
 	Read_Prerequisite("MCV", STRUCT_EYE),			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("MCV", true),				// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("MCV", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("MCV", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("MCV", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("MCV", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -637,14 +637,14 @@ static UnitTypeClass const UnitMCV(
 		false,			// Can it be repaired in a repair facility?
 		Read_Is_Buildable("MCV", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("MCV", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("MCV", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("MCV", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("MCV", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("MCV", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MCV", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("MCV", false),			// Does the unit have a constant animation?
 	Read_Ammo("MCV", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("MCV", 600),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("MCV", 2),											// SIGHTRANGE:	Range of sighting.
@@ -654,10 +654,10 @@ static UnitTypeClass const UnitMCV(
 	Read_House_List_From_Rules_Ini("MCV", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("MCV", WEAPON_NONE),Read_Secondary_Weapon("MCV", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_WHEEL,							// MOVE:			Locomotion type.
+	Read_Armor("MCV", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("MCV", SPEED_WHEEL),							// MOVE:			Locomotion type.
 	Read_Speed("MCV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("MCV", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -670,14 +670,14 @@ static UnitTypeClass const UnitJeep(
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("JEEP", 2),								// Build level.
 	Read_Prerequisite("JEEP", STRUCT_NONE),				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("JEEP", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("JEEP", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("JEEP", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("JEEP", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("JEEP", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -688,14 +688,14 @@ static UnitTypeClass const UnitJeep(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("JEEP", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("JEEP", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("JEEP", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("JEEP", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("JEEP", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("JEEP", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("JEEP", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("JEEP", false),			// Does the unit have a constant animation?
 	Read_Ammo("JEEP", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("JEEP", 150),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("JEEP", 2),											// SIGHTRANGE:	Range of sighting.
@@ -705,10 +705,10 @@ static UnitTypeClass const UnitJeep(
 	Read_House_List_From_Rules_Ini("JEEP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("HARV", WEAPON_M60MG),Read_Secondary_Weapon("HARV", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_WHEEL,							// MOVE:			Locomotion type.
+	Read_Armor("JEEP", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("JEEP", SPEED_WHEEL),							// MOVE:			Locomotion type.
 	Read_Speed("JEEP", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
-	10,										// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("JEEP", 10),										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -721,14 +721,14 @@ static UnitTypeClass const UnitBuggy(
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BGGY", 4),								// Build level.
 	Read_Prerequisite("BGGY", STRUCT_NONE),				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("BGGY", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("BGGY", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("BGGY", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("BGGY", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("BGGY", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -739,14 +739,14 @@ static UnitTypeClass const UnitBuggy(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("BGGY", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("BGGY", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("BGGY", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("BGGY", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("BGGY", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("BGGY", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("BGGY", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("BGGY", false),			// Does the unit have a constant animation?
 	Read_Ammo("BGGY", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("BGGY", 140),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("BGGY", 2),											// SIGHTRANGE:	Range of sighting.
@@ -756,10 +756,10 @@ static UnitTypeClass const UnitBuggy(
 	Read_House_List_From_Rules_Ini("BGGY", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("BGGY", WEAPON_M60MG),Read_Secondary_Weapon("BGGY", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_WHEEL,							// MOVE:			Locomotion type.
+	Read_Armor("BGGY", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("BGGY", SPEED_WHEEL),							// MOVE:			Locomotion type.
 	Read_Speed("BGGY", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
-	10,										// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("BGGY", 10),										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -772,14 +772,14 @@ static UnitTypeClass const UnitBike(
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BIKE", 2),								// Build level.
 	Read_Prerequisite("BIKE", STRUCT_NONE),				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("BIKE", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("BIKE", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("BIKE", false),			//	Is this a typical transport vehicle?
 		false/*true*/,	// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("BIKE", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("BIKE", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -790,14 +790,14 @@ static UnitTypeClass const UnitBike(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("BIKE", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("BIKE", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("BIKE", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("BIKE", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("BIKE", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("BIKE", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("BIKE", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("BIKE", false),			// Does the unit have a constant animation?
 	Read_Ammo("BIKE", -1),										// AMMO:			Number of shots it has (default).
 #ifdef ADVANCED
 	Read_Strength("BIKE", 90),										// STRENGTH:	Strength (in damage points).
@@ -811,10 +811,10 @@ static UnitTypeClass const UnitBike(
 	Read_House_List_From_Rules_Ini("BIKE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("JEEP", WEAPON_DRAGON),Read_Secondary_Weapon("JEEP", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
-	SPEED_WHEEL,							// MOVE:			Locomotion type.
+	Read_Armor("BIKE", ARMOR_WOOD),								// ARMOR:		Armor type
+	Read_Unit_Speed("BIKE", SPEED_WHEEL),							// MOVE:			Locomotion type.
 	Read_Speed("BIKE", MPH_FAST),								// SPEED:		Miles per hour.
-	10,										// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("BIKE", 10),										// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -827,14 +827,14 @@ static UnitTypeClass const UnitMLRS(
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MSAM", 7),								// Build level.
 	Read_Prerequisite("MSAM", STRUCT_EYE),				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("MSAM", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("MSAM", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("MSAM", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("MSAM", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("MSAM", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -845,14 +845,14 @@ static UnitTypeClass const UnitMLRS(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("MSAM", true),				// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		true,				// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("MSAM", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("MSAM", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("MSAM", true),				// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("MSAM", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("MSAM", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MSAM", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("MSAM", false),			// Does the unit have a constant animation?
 	Read_Ammo("MSAM", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("MSAM", 100),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("MSAM", 4),											// SIGHTRANGE:	Range of sighting.
@@ -862,10 +862,10 @@ static UnitTypeClass const UnitMLRS(
 	Read_House_List_From_Rules_Ini("MSAM", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("MSAM", WEAPON_MLRS),Read_Secondary_Weapon("MSAM", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("MSAM", ARMOR_ALUMINUM),						// ARMOR:		Armor type
+	Read_Unit_Speed("MSAM", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("MSAM", MPH_MEDIUM),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("MSAM", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
@@ -878,14 +878,14 @@ static UnitTypeClass const UnitAPC(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("APC", 4),								// Build level.
 	Read_Prerequisite("APC", STRUCT_BARRACKS),			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("APC", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("APC", false),			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		true,				//	Is this a typical transport vehicle?
+		Read_Is_Transport("APC", true),				//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("APC", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("APC", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -896,14 +896,14 @@ static UnitTypeClass const UnitAPC(
 		true,				// Can it be repaired in a repair facility?
 		Read_Is_Buildable("APC", true),				// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("APC", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("APC", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("APC", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("APC", true),				// Does it lay tracks while moving?
+		Read_Is_Huge("APC", false),			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("APC", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("APC", false),			// Does the unit have a constant animation?
 	Read_Ammo("APC", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("APC", 200),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("APC", 4),											// SIGHTRANGE:	Range of sighting.
@@ -913,10 +913,10 @@ static UnitTypeClass const UnitAPC(
 	Read_House_List_From_Rules_Ini("APC", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_BAD | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("BIKE", WEAPON_M60MG),Read_Secondary_Weapon("BIKE", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("APC", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("APC", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("APC", MPH_MEDIUM_FASTER),					// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("APC", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
@@ -929,14 +929,14 @@ static UnitTypeClass const UnitGunBoat(
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BOAT", 99),							// Build level.
 	Read_Prerequisite("BOAT", STRUCT_NONE),				// Building prerequisite.
-		false,			// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("BOAT", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		false,			// Only has eight facings?
+		Read_Limited_Facings("BOAT", false),			// Only has eight facings?
 		true,				// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("BOAT", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("BOAT", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("BOAT", false),			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -947,14 +947,14 @@ static UnitTypeClass const UnitGunBoat(
 		false,			// Can it be repaired in a repair facility?
 		Read_Is_Buildable("BOAT", false),			// Can the player construct or order this unit?
 		true,				// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		false,			// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("BOAT", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("BOAT", false),			// Is there an associated firing animation?
+		Read_Lock_Turret("BOAT", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("BOAT", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("BOAT", true),				// Is this a gigundo-rotund-enormous unit?
 		true,				// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("BOAT", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("BOAT", false),			// Does the unit have a constant animation?
 	Read_Ammo("BOAT", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("BOAT", 700),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("BOAT", 5),											// SIGHTRANGE:	Range of sighting.
@@ -964,10 +964,10 @@ static UnitTypeClass const UnitGunBoat(
 	Read_House_List_From_Rules_Ini("BOAT", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("APC", WEAPON_TOMAHAWK),Read_Secondary_Weapon("APC", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_FLOAT,							// MOVE:			Locomotion type.
+	Read_Armor("BOAT", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("BOAT", SPEED_FLOAT),							// MOVE:			Locomotion type.
 	Read_Speed("BOAT", MPH_SLOW),								// SPEED:		Miles per hour.
-	1,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("BOAT", 1),											// ROT:			Rate of turn (degrees per tick).
 	14,										// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
@@ -980,14 +980,14 @@ static UnitTypeClass const UnitTric(
 	ANIM_TRIC_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("TRIC", 99),							// Build level.
 	Read_Prerequisite("TRIC", STRUCT_NONE),				// Building prerequisite.
-		false,			// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("TRIC", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		true,				// Only has eight facings?
+		Read_Limited_Facings("TRIC", true),				// Only has eight facings?
 		true,				// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("TRIC", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("TRIC", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("TRIC", false),			// Does this unit harvest Tiberium?
 		true,				// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -998,14 +998,14 @@ static UnitTypeClass const UnitTric(
 		false,			// Can it be repaired in a repair facility?
 		Read_Is_Buildable("TRIC", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		true,				// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("TRIC", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("TRIC", true),				// Is there an associated firing animation?
+		Read_Lock_Turret("TRIC", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("TRIC", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("TRIC", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("TRIC", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("TRIC", false),			// Does the unit have a constant animation?
 	Read_Ammo("TRIC", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("TRIC", 700),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("TRIC", 5),											// SIGHTRANGE:	Range of sighting.
@@ -1015,10 +1015,10 @@ static UnitTypeClass const UnitTric(
 	Read_House_List_From_Rules_Ini("TRIC", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	"JP",
 	Read_Primary_Weapon("TRIC", WEAPON_STEG),Read_Secondary_Weapon("TRIC", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("TRIC", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("TRIC", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("TRIC", MPH_SLOW),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("TRIC", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
@@ -1031,14 +1031,14 @@ static UnitTypeClass const UnitTrex(
 	ANIM_TREX_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("TREX", 99),							// Build level.
 	Read_Prerequisite("TREX", STRUCT_NONE),				// Building prerequisite.
-		false,			// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("TREX", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		true,				// Only has eight facings?
+		Read_Limited_Facings("TREX", true),				// Only has eight facings?
 		true,				// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("TREX", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("TREX", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("TREX", false),			// Does this unit harvest Tiberium?
 		true,				// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -1049,14 +1049,14 @@ static UnitTypeClass const UnitTrex(
 		false,			// Can it be repaired in a repair facility?
 		Read_Is_Buildable("TREX", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		true,				// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("TREX", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("TREX", true),				// Is there an associated firing animation?
+		Read_Lock_Turret("TREX", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("TREX", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("TREX", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("TREX", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("TREX", false),			// Does the unit have a constant animation?
 	Read_Ammo("TREX", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("TREX", 750),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("TREX", 5),											// SIGHTRANGE:	Range of sighting.
@@ -1066,10 +1066,10 @@ static UnitTypeClass const UnitTrex(
 	Read_House_List_From_Rules_Ini("TREX", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	"JP",
 	Read_Primary_Weapon("TREX", WEAPON_TREX),Read_Secondary_Weapon("TREX", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("TREX", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("TREX", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("TREX", MPH_MEDIUM),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("TREX", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
@@ -1082,14 +1082,14 @@ static UnitTypeClass const UnitRapt(
 	ANIM_RAPT_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("RAPT", 99),							// Build level.
 	Read_Prerequisite("RAPT", STRUCT_NONE),				// Building prerequisite.
-		false,			// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("RAPT", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		true,				// Only has eight facings?
+		Read_Limited_Facings("RAPT", true),				// Only has eight facings?
 		true,				// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("RAPT", false),			//	Is this a typical transport vehicle?
 		false/*true*/,	// Can it be crushed by a heavy vehicle?
-		false,			// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("RAPT", false),			// Can this unit squash infantry?
+		Read_Can_Harvest("RAPT", false),			// Does this unit harvest Tiberium?
 		true,				// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -1100,14 +1100,14 @@ static UnitTypeClass const UnitRapt(
 		false,			// Can it be repaired in a repair facility?
 		Read_Is_Buildable("RAPT", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		true,				// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("RAPT", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("RAPT", true),				// Is there an associated firing animation?
+		Read_Lock_Turret("RAPT", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("RAPT", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("RAPT", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("RAPT", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("RAPT", false),			// Does the unit have a constant animation?
 	Read_Ammo("RAPT", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("RAPT", 180),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("RAPT", 5),											// SIGHTRANGE:	Range of sighting.
@@ -1117,10 +1117,10 @@ static UnitTypeClass const UnitRapt(
 	Read_House_List_From_Rules_Ini("RAPT", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	"JP",
 	Read_Primary_Weapon("RAPT", WEAPON_TREX),Read_Secondary_Weapon("RAPT", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("RAPT", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("RAPT", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("RAPT", MPH_FAST),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("RAPT", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
@@ -1133,14 +1133,14 @@ static UnitTypeClass const UnitSteg(
 	ANIM_STEG_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("STEG", 99),							// Build level.
 	Read_Prerequisite("STEG", STRUCT_NONE),				// Building prerequisite.
-		false,			// Can this be a goodie surprise from a crate?
+		Read_Can_Be_Found_In_Crate("STEG", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
-		true,				// Only has eight facings?
+		Read_Limited_Facings("STEG", true),				// Only has eight facings?
 		true,				// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		Read_Is_Transport("STEG", false),			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		false,			// Does this unit harvest Tiberium?
+		Read_Can_Crush_Infantry("STEG", true),				// Can this unit squash infantry?
+		Read_Can_Harvest("STEG", false),			// Does this unit harvest Tiberium?
 		true,				// Is invisible to radar?
 		true,				// Is selectable by player?
 		true,				// Can it be a target for attack or move?
@@ -1151,14 +1151,14 @@ static UnitTypeClass const UnitSteg(
 		false,			// Can it be repaired in a repair facility?
 		Read_Is_Buildable("STEG", false),			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
-		false,			// Does it have a rotating radar dish?
-		true,				// Is there an associated firing animation?
-		false,			// Must the turret be in a locked down position while moving?
-		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		Read_Radar_Equipped("STEG", false),			// Does it have a rotating radar dish?
+		Read_Has_Fire_Animation("STEG", true),				// Is there an associated firing animation?
+		Read_Lock_Turret("STEG", false),			// Must the turret be in a locked down position while moving?
+		Read_Has_Tracks("STEG", false),			// Does it lay tracks while moving?
+		Read_Is_Huge("STEG", true),				// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("STEG", false),			// Is the unit capable of cloaking?
-		false,			// Does the unit have a constant animation?
+		Read_Has_Constant_Animation("STEG", false),			// Does the unit have a constant animation?
 	Read_Ammo("STEG", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("STEG", 600),										// STRENGTH:	Strength (in damage points).
 	Read_Sight_Range("STEG", 5),											// SIGHTRANGE:	Range of sighting.
@@ -1168,10 +1168,10 @@ static UnitTypeClass const UnitSteg(
 	Read_House_List_From_Rules_Ini("STEG", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	"JP",
 	Read_Primary_Weapon("STEG", WEAPON_STEG),Read_Secondary_Weapon("STEG", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
-	SPEED_TRACK,							// MOVE:			Locomotion type.
+	Read_Armor("STEG", ARMOR_STEEL),							// ARMOR:		Armor type
+	Read_Unit_Speed("STEG", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("STEG", MPH_SLOW),								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
+	Read_Rate_Of_Turn("STEG", 5),											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );

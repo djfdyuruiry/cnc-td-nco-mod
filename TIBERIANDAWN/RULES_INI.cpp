@@ -448,6 +448,33 @@ ArmorType Read_Armor_Type_From_Rules_Ini(
 	return armorType;
 }
 
+SpeedType Read_Unit_Speed_Type_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	SpeedType defaultValue
+)
+{
+	auto defaultString = Unit_Speed_Type_To_String(defaultValue);
+	auto unitSpeedTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	if (Strings_Are_Equal(unitSpeedTypeStr, defaultString))
+	{
+		return defaultValue;
+	}
+
+	bool parseError = false;
+	auto unitSpeedType = Parse_Unit_Speed_Type(unitSpeedTypeStr, &parseError);
+
+	if (parseError)
+	{
+		// unable to parse entry as a unit speed type
+		RULES_VALID = false;
+		return SPEED_NONE;
+	}
+
+	return unitSpeedType;
+}
+
 FactoryType Read_Factory_Type_From_Rules_Ini(
 	const char* section,
 	const char* entry,

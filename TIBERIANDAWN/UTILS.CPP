@@ -26,6 +26,8 @@ void Show_Error(const char* messageFormat, ...)
 		"Command & Conquer",
 		MB_OK | MB_ICONSTOP
 	);
+	#else
+	system("cls");
 	#endif
 
 	delete formattedMessageBuffer;
