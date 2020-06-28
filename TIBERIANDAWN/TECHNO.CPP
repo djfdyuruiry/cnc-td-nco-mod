@@ -224,11 +224,19 @@ TechnoTypeClass::TechnoTypeClass(
 	*/
 	risk = risk;
 	Risk = 0;
+
 	if (primary != WEAPON_NONE) {
-		Risk = (Weapons[primary].Attack * (Weapons[primary].Range >> 4)) / Weapons[primary].ROF;
+		Calculate_Risk();
 	}
 }
 
+void TechnoTypeClass::Calculate_Risk(void) const
+{
+	auto ref = (TechnoTypeClass*)this;
+
+	// TODO: read some `Game` rule to allow modifying the outcome of this calculation
+	ref->Risk = (Weapons[Primary].Attack * (Weapons[Primary].Range >> 4)) / Weapons[Primary].ROF;
+}
 
 /***********************************************************************************************
  * TechnoTypeClass::Raw_Cost -- Fetches the raw (base) cost of the object.                     *

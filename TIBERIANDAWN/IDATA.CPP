@@ -119,7 +119,7 @@ static InfantryTypeClass const E1(
 	Read_Sight_Range("E1", 1),								// Sight range.
 	Read_Cost("E1", 100),							// Cost of infantry (in credits).
 	Read_Scenario_Level("E1", 1),								// Scenario when they first appear.
-	Read_Risk_Reward("E1", 80,10),						// Risk/Reward of this infantry unit.
+	80, Read_Reward("E1", 10),						// Risk/Reward of this infantry unit.
  	Read_House_List_From_Rules_Ini("E1", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("E1", WEAPON_M16),
@@ -189,7 +189,7 @@ static InfantryTypeClass const E2(
 	Read_Sight_Range("E2", 1),								// Sight range.
 	Read_Cost("E2", 160),							// Cost of infantry (in credits).
 	Read_Scenario_Level("E2", 3),								// Scenario when they first appear.
-	Read_Risk_Reward("E2", 80,10),						// Risk/Reward of this infantry unit.
+	80, Read_Reward("E2", 10),						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("E2", WEAPON_GRENADE),
@@ -262,7 +262,7 @@ static InfantryTypeClass const E3(
 	Read_Sight_Range("E3", 2),								// Sight range.
 	Read_Cost("E3", 300),							// Cost of infantry (in credits).
 	Read_Scenario_Level("E3", 3),								// Scenario when they first appear.
-	Read_Risk_Reward("E3", 80,10),						// Risk/Reward of this infantry unit.
+	80, Read_Reward("E3", 10),						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E3", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("E2", WEAPON_DRAGON),
@@ -332,7 +332,7 @@ static InfantryTypeClass const E4(
 	Read_Sight_Range("E4", 1),								// Sight range.
 	Read_Cost("E4", 200),							// Cost of infantry (in credits).
 	Read_Scenario_Level("E4", 5),								// Scenario when they first appear.
-	Read_Risk_Reward("E4", 80,10),						// Risk/Reward of this infantry unit.
+	80, Read_Reward("E4", 10),						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E4", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("E4", WEAPON_FLAMETHROWER),Read_Secondary_Weapon("E4", WEAPON_NONE),
@@ -401,7 +401,7 @@ static InfantryTypeClass const E5(
 	Read_Sight_Range("E5", 1),								// Sight range.
 	Read_Cost("E5", 300),							// Cost of infantry (in credits).
 	Read_Scenario_Level("E5", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("E5", 80,10),						// Risk/Reward of this infantry unit.
+	80, Read_Reward("E5", 10),						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E5", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP"),					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
 	Read_Primary_Weapon("E5", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("E5", WEAPON_NONE),
@@ -470,7 +470,7 @@ static InfantryTypeClass const E7(
 	Read_Sight_Range("E6", 2),								// Sight range.
 	Read_Cost("E6", 500),							// Cost of infantry (in credits).
 	Read_Scenario_Level("E6", 2),								// Scenario when they first appear.
-	Read_Risk_Reward("E6", 80,75),						// Risk/Reward of this infantry unit.
+	80, Read_Reward("E6", 75),						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E6", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("E6", WEAPON_NONE),Read_Secondary_Weapon("E6", WEAPON_NONE),
@@ -537,7 +537,7 @@ static InfantryTypeClass const Commando(
 	Read_Sight_Range("RMBO", 5),								// Sight range.
 	Read_Cost("RMBO", 1000),							// Cost of infantry (in credits).
 	Read_Scenario_Level("RMBO", 98),							// Scenario when they first appear.
-	Read_Risk_Reward("RMBO", 80,75),						// Risk/Reward of this infantry unit.
+	80, Read_Reward("RMBO", 75),						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("RMBO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("RMBO", WEAPON_RIFLE),Read_Secondary_Weapon("RMBO", WEAPON_NONE),
@@ -604,7 +604,7 @@ static InfantryTypeClass const C1(
 	Read_Sight_Range("C1", 0),								// Sight range.
 	Read_Cost("C1", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C1", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C1", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C1", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C1", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C1", WEAPON_PISTOL),Read_Secondary_Weapon("C1", WEAPON_NONE),
@@ -670,7 +670,7 @@ static InfantryTypeClass const C2(
 	Read_Sight_Range("C2", 0),								// Sight range.
 	Read_Cost("C2", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C2", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C2", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C2", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C2", WEAPON_NONE),Read_Secondary_Weapon("C2", WEAPON_NONE),
@@ -737,7 +737,7 @@ static InfantryTypeClass const C3(
 	Read_Sight_Range("C3", 0),								// Sight range.
 	Read_Cost("C3", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C3", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C3", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C3", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C3", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C3", WEAPON_NONE),Read_Secondary_Weapon("C3", WEAPON_NONE),
@@ -804,7 +804,7 @@ static InfantryTypeClass const C4(
 	Read_Sight_Range("C4", 0),								// Sight range.
 	Read_Cost("C4", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C4", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C4", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C4", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C4", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C4", WEAPON_NONE),Read_Secondary_Weapon("C4", WEAPON_NONE),
@@ -870,7 +870,7 @@ static InfantryTypeClass const C5(
 	Read_Sight_Range("C5", 0),								// Sight range.
 	Read_Cost("C5", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C5", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C5", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C5", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C5", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C5", WEAPON_NONE),Read_Secondary_Weapon("C5", WEAPON_NONE),
@@ -936,7 +936,7 @@ static InfantryTypeClass const C6(
 	Read_Sight_Range("C6", 0),								// Sight range.
 	Read_Cost("C6", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C6", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C6", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C6", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C6", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C6", WEAPON_NONE),Read_Secondary_Weapon("C6", WEAPON_NONE),
@@ -1002,7 +1002,7 @@ static InfantryTypeClass const C7(
 	Read_Sight_Range("C7", 0),								// Sight range.
 	Read_Cost("C7", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C7", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C7", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C7", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C7", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C7", WEAPON_PISTOL),Read_Secondary_Weapon("C7", WEAPON_NONE),
@@ -1067,7 +1067,7 @@ static InfantryTypeClass const C8(
 	Read_Sight_Range("C8", 0),								// Sight range.
 	Read_Cost("C8", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C8", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C8", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C8", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C8", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C8", WEAPON_NONE),Read_Secondary_Weapon("C8", WEAPON_NONE),
@@ -1133,7 +1133,7 @@ static InfantryTypeClass const C9(
 	Read_Sight_Range("C9", 0),								// Sight range.
 	Read_Cost("C9", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C9", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C9", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C9", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C9", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C9", WEAPON_NONE),Read_Secondary_Weapon("C9", WEAPON_NONE),
@@ -1201,7 +1201,7 @@ static InfantryTypeClass const C10(
 	Read_Sight_Range("C10", 0),								// Sight range.
 	Read_Cost("C10", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("C10", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("C10", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("C10", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("C10", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("C10", WEAPON_NONE),Read_Secondary_Weapon("C10", WEAPON_NONE),
@@ -1266,7 +1266,7 @@ static InfantryTypeClass const Moebius(
 	Read_Sight_Range("MOEBIUS", 0),								// Sight range.
 	Read_Cost("MOEBIUS", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("MOEBIUS", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("MOEBIUS", 0,10),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("MOEBIUS", 10),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("MOEBIUS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
 	Read_Primary_Weapon("MOEBIUS", WEAPON_NONE),Read_Secondary_Weapon("MOEBIUS", WEAPON_NONE),
@@ -1331,7 +1331,7 @@ static InfantryTypeClass const Delphi(
 	Read_Sight_Range("DELPHI", 0),								// Sight range.
 	Read_Cost("DELPHI", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("DELPHI", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("DELPHI", 0,0),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("DELPHI", 0),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("DELPHI", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL",
 	Read_Primary_Weapon("DELPHI", WEAPON_PISTOL),Read_Secondary_Weapon("DELPHI", WEAPON_NONE),
@@ -1397,7 +1397,7 @@ static InfantryTypeClass const DrChan(
 	Read_Sight_Range("CHAN", 0),								// Sight range.
 	Read_Cost("CHAN", 10),							// Cost of infantry (in credits).
 	Read_Scenario_Level("CHAN", 99),							// Scenario when they first appear.
-	Read_Risk_Reward("CHAN", 0,1),							// Risk/Reward of this infantry unit.
+	0, Read_Reward("CHAN", 1),							// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("CHAN", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL"),				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL",
 	Read_Primary_Weapon("CHAN", WEAPON_NONE),Read_Secondary_Weapon("CHAN", WEAPON_NONE),

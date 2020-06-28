@@ -200,7 +200,7 @@ static BuildingTypeClass const ClassTemple(
 	Read_Sight_Range("TMPL", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("TMPL", 3000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("TMPL", 13),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("TMPL", 0,20), 									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("TMPL", 20), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("TMPL", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("TMPL", WEAPON_NONE),Read_Secondary_Weapon("TMPL", WEAPON_NONE),
@@ -249,7 +249,7 @@ static BuildingTypeClass const ClassEye(
 	Read_Sight_Range("EYE", 10),										// SIGHTRANGE:	Range of sighting.
 	Read_Cost("EYE", 2800),										// COST:			Cost to purchase.
 	Read_Scenario_Level("EYE", 13),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("EYE", 0,100),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("EYE", 100),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("EYE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("EYE", WEAPON_NONE),Read_Secondary_Weapon("EYE", WEAPON_NONE),
@@ -302,7 +302,7 @@ static BuildingTypeClass const ClassWeapon(
 	Read_Sight_Range("WEAP", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("WEAP", 2000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("WEAP", 5),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("WEAP", 0,86),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("WEAP", 86),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("WEAP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("WEAP", WEAPON_NONE),Read_Secondary_Weapon("WEAP", WEAPON_NONE),
@@ -351,7 +351,7 @@ static BuildingTypeClass const ClassGTower(
 	Read_Sight_Range("GTWR", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("GTWR", 500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("GTWR", 7),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("GTWR", 100,25),									// RISK/RWRD:	Risk/reward rating values.
+	100, Read_Reward("GTWR", 25),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("GTWR", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("GTWR", WEAPON_CHAIN_GUN),Read_Secondary_Weapon("GTWR", WEAPON_NONE),
@@ -401,7 +401,7 @@ static BuildingTypeClass const ClassATower(
 	Read_Sight_Range("ATWR", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("ATWR", 1000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("ATWR", 13),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("ATWR", 100,30),									// RISK/RWRD:	Risk/reward rating values.
+	100, Read_Reward("ATWR", 30),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ATWR", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("ATWR", WEAPON_TOW_TWO),Read_Secondary_Weapon("ATWR", WEAPON_NONE),
@@ -451,7 +451,7 @@ static BuildingTypeClass const ClassObelisk(
 	Read_Sight_Range("OBLI", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("OBLI", 1500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("OBLI", 11),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("OBLI", 100,35),									// RISK/RWRD:	Risk/reward rating values.
+	100, Read_Reward("OBLI", 35),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("OBLI", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("OBLI", WEAPON_OBELISK_LASER),Read_Secondary_Weapon("OBLI", WEAPON_NONE),
@@ -508,7 +508,7 @@ static BuildingTypeClass const ClassTurret(
 #endif
 #endif
 	Read_Scenario_Level("GUN", 8),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("GUN", 300,26),									// RISK/RWRD:	Risk/reward rating values.
+	300, Read_Reward("GUN", 26),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("GUN", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("GUN", WEAPON_TURRET_GUN),Read_Secondary_Weapon("GUN", WEAPON_NONE),
@@ -557,7 +557,7 @@ static BuildingTypeClass const ClassConst(
 	Read_Sight_Range("FACT", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("FACT", 5000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("FACT", 1),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("FACT", 0,70),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("FACT", 70),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("FACT", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("FACT", WEAPON_NONE),Read_Secondary_Weapon("FACT", WEAPON_NONE),
@@ -606,7 +606,7 @@ static BuildingTypeClass const ClassRefinery(
 	Read_Sight_Range("PROC", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("PROC", 2000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("PROC", 2),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("PROC", 0,55),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("PROC", 55),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("PROC", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("PROC", WEAPON_NONE),Read_Secondary_Weapon("PROC", WEAPON_NONE),
@@ -656,7 +656,7 @@ static BuildingTypeClass const ClassStorage(
 	Read_Cost("SILO", 150),										// COST:			Cost to purchase.
 //	300,										// COST:			Cost to purchase.
 	Read_Scenario_Level("SILO", 2),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("SILO", 0,16),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("SILO", 16),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SILO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("SILO", WEAPON_NONE),Read_Secondary_Weapon("SILO", WEAPON_NONE),
@@ -705,7 +705,7 @@ static BuildingTypeClass const ClassHelipad(
 	Read_Sight_Range("HPAD", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HPAD", 1500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HPAD", 10),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("HPAD", 0,65),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("HPAD", 65),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HPAD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("HPAD", WEAPON_NONE),Read_Secondary_Weapon("HPAD", WEAPON_NONE),
@@ -754,7 +754,7 @@ static BuildingTypeClass const ClassCommand(
 	Read_Sight_Range("HQ", 10),										// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HQ", 1000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HQ", 3),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("HQ", 0,20), 									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("HQ", 20), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HQ", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("HQ", WEAPON_NONE),Read_Secondary_Weapon("HQ", WEAPON_NONE),
@@ -803,7 +803,7 @@ static BuildingTypeClass const ClassSAM(
 	Read_Sight_Range("SAM", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("SAM", 750),										// COST:			Cost to purchase.
 	Read_Scenario_Level("SAM", 5),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("SAM", 300,40),									// RISK/RWRD:	Risk/reward rating values.
+	300, Read_Reward("SAM", 40),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SAM", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("SAM", WEAPON_NIKE),Read_Secondary_Weapon("SAM", WEAPON_NONE),
@@ -852,7 +852,7 @@ static BuildingTypeClass const ClassAirStrip(
 	Read_Sight_Range("AFLD", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("AFLD", 2000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("AFLD", 5),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("AFLD", 300,86),									// RISK/RWRD:	Risk/reward rating values.
+	300, Read_Reward("AFLD", 86),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("AFLD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("AFLD", WEAPON_NONE),Read_Secondary_Weapon("AFLD", WEAPON_NONE),
@@ -901,7 +901,7 @@ static BuildingTypeClass const ClassPower(
 	Read_Sight_Range("NUKE", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("NUKE", 300),										// COST:			Cost to purchase.
 	Read_Scenario_Level("NUKE", 1),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("NUKE", 0,50),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("NUKE", 50),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("NUKE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("NUKE", WEAPON_NONE),Read_Secondary_Weapon("NUKE", WEAPON_NONE),
@@ -950,7 +950,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 	Read_Sight_Range("NUK2", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("NUK2", 700),										// COST:			Cost to purchase.
 	Read_Scenario_Level("NUK2", 13),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("NUK2", 0,75),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("NUK2", 75),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("NUK2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("NUK2", WEAPON_NONE),Read_Secondary_Weapon("NUK2", WEAPON_NONE),
@@ -999,7 +999,7 @@ static BuildingTypeClass const ClassHospital(
 	Read_Sight_Range("HOSP", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HOSP", 500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HOSP", 99),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("HOSP", 0,20), 									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("HOSP", 20), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HOSP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("HOSP", WEAPON_NONE),Read_Secondary_Weapon("HOSP", WEAPON_NONE),
@@ -1049,7 +1049,7 @@ static BuildingTypeClass const ClassBioLab(
 	Read_Sight_Range("BIO", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BIO", 500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("BIO", 99),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("BIO", 0,1),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("BIO", 1),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BIO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("BIO", WEAPON_NONE),Read_Secondary_Weapon("BIO", WEAPON_NONE),
@@ -1098,7 +1098,7 @@ static BuildingTypeClass const ClassBarracks(
 	Read_Sight_Range("PYLE", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("PYLE", 300),										// COST:			Cost to purchase.
 	Read_Scenario_Level("PYLE", 1),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("PYLE", 0,60),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("PYLE", 60),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("PYLE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("PYLE", WEAPON_NONE),Read_Secondary_Weapon("PYLE", WEAPON_NONE),
@@ -1147,7 +1147,7 @@ static BuildingTypeClass const ClassHand(
 	Read_Sight_Range("HAND", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HAND", 300),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HAND", 2),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("HAND", 0,61),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("HAND", 61),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HAND", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("HAND", WEAPON_NONE),Read_Secondary_Weapon("HAND", WEAPON_NONE),
@@ -1196,7 +1196,7 @@ static BuildingTypeClass const ClassTanker(
 	Read_Sight_Range("ARCO", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("ARCO", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("ARCO", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("ARCO", 0,1), 										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("ARCO", 1), 										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ARCO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("ARCO", WEAPON_NONE),Read_Secondary_Weapon("ARCO", WEAPON_NONE),
@@ -1245,7 +1245,7 @@ static BuildingTypeClass const ClassRepair(
 	Read_Sight_Range("FIX", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("FIX", 1200),										// COST:			Cost to purchase.
 	Read_Scenario_Level("FIX", 8),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("FIX", 0,46),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("FIX", 46),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("FIX", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("FIX", WEAPON_NONE),Read_Secondary_Weapon("FIX", WEAPON_NONE),
@@ -1296,7 +1296,7 @@ static BuildingTypeClass const ClassRoad(
 	Read_Sight_Range("ROAD", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("ROAD", 50),										// COST:			Cost to purchase.
 	Read_Scenario_Level("ROAD", 99),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("ROAD", 0,0),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("ROAD", 0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ROAD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("ROAD", WEAPON_NONE),Read_Secondary_Weapon("ROAD", WEAPON_NONE),
@@ -1346,7 +1346,7 @@ static BuildingTypeClass const ClassV01(
 	Read_Sight_Range("V01", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V01", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V01", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V01", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V01", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V01", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V01", WEAPON_NONE),Read_Secondary_Weapon("V01", WEAPON_NONE),
@@ -1395,7 +1395,7 @@ static BuildingTypeClass const ClassV02(
 	Read_Sight_Range("V02", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V02", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V02", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V02", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V02", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V02", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V02", WEAPON_NONE),Read_Secondary_Weapon("V02", WEAPON_NONE),
@@ -1444,7 +1444,7 @@ static BuildingTypeClass const ClassV03(
 	Read_Sight_Range("V03", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V03", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V03", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V03", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V03", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V03", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V03", WEAPON_NONE),Read_Secondary_Weapon("V03", WEAPON_NONE),
@@ -1493,7 +1493,7 @@ static BuildingTypeClass const ClassV04(
 	Read_Sight_Range("V04", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V04", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V04", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V04", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V04", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V04", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V04", WEAPON_NONE),Read_Secondary_Weapon("V04", WEAPON_NONE),
@@ -1542,7 +1542,7 @@ static BuildingTypeClass const ClassV05(
 	Read_Sight_Range("V05", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V05", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V05", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V05", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V05", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V05", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V05", WEAPON_NONE),Read_Secondary_Weapon("V05", WEAPON_NONE),
@@ -1591,7 +1591,7 @@ static BuildingTypeClass const ClassV06(
 	Read_Sight_Range("V06", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V06", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V06", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V06", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V06", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V06", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V06", WEAPON_NONE),Read_Secondary_Weapon("V06", WEAPON_NONE),
@@ -1640,7 +1640,7 @@ static BuildingTypeClass const ClassV07(
 	Read_Sight_Range("V07", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V07", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V07", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V07", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V07", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V07", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V07", WEAPON_NONE),Read_Secondary_Weapon("V07", WEAPON_NONE),
@@ -1689,7 +1689,7 @@ static BuildingTypeClass const ClassV08(
 	Read_Sight_Range("V08", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V08", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V08", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V08", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V08", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V08", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V08", WEAPON_NONE),Read_Secondary_Weapon("V08", WEAPON_NONE),
@@ -1738,7 +1738,7 @@ static BuildingTypeClass const ClassV09(
 	Read_Sight_Range("V09", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V09", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V09", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V09", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V09", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V09", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V09", WEAPON_NONE),Read_Secondary_Weapon("V09", WEAPON_NONE),
@@ -1787,7 +1787,7 @@ static BuildingTypeClass const ClassV10(
 	Read_Sight_Range("V10", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V10", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V10", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V10", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V10", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V10", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V10", WEAPON_NONE),Read_Secondary_Weapon("V10", WEAPON_NONE),
@@ -1836,7 +1836,7 @@ static BuildingTypeClass const ClassV11(
 	Read_Sight_Range("V11", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V11", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V11", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V11", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V11", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V11", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V11", WEAPON_NONE),Read_Secondary_Weapon("V11", WEAPON_NONE),
@@ -1885,7 +1885,7 @@ static BuildingTypeClass const ClassV12(
 	Read_Sight_Range("V12", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V12", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V12", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V12", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V12", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V12", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V12", WEAPON_NONE),Read_Secondary_Weapon("V12", WEAPON_NONE),
@@ -1934,7 +1934,7 @@ static BuildingTypeClass const ClassV13(
 	Read_Sight_Range("V13", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V13", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V13", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V13", 0,2), 						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V13", 2), 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V13", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V13", WEAPON_NONE),Read_Secondary_Weapon("V13", WEAPON_NONE),
@@ -1983,7 +1983,7 @@ static BuildingTypeClass const ClassV14(
 	Read_Sight_Range("V14", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V14", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V14", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V14", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V14", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V14", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V14", WEAPON_NONE),Read_Secondary_Weapon("V14", WEAPON_NONE),
@@ -2032,7 +2032,7 @@ static BuildingTypeClass const ClassV15(
 	Read_Sight_Range("V15", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V15", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V15", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V15", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V15", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V15", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V15", WEAPON_NONE),Read_Secondary_Weapon("V15", WEAPON_NONE),
@@ -2081,7 +2081,7 @@ static BuildingTypeClass const ClassV16(
 	Read_Sight_Range("V16", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V16", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V16", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V16", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V16", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V16", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V16", WEAPON_NONE),Read_Secondary_Weapon("V16", WEAPON_NONE),
@@ -2130,7 +2130,7 @@ static BuildingTypeClass const ClassV17(
 	Read_Sight_Range("V17", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V17", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V17", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V17", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V17", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V17", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V17", WEAPON_NONE),Read_Secondary_Weapon("V17", WEAPON_NONE),
@@ -2179,7 +2179,7 @@ static BuildingTypeClass const ClassV18(
 	Read_Sight_Range("V18", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V18", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V18", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V18", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V18", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V18", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V18", WEAPON_NONE),Read_Secondary_Weapon("V18", WEAPON_NONE),
@@ -2228,7 +2228,7 @@ static BuildingTypeClass const ClassV19(
 	Read_Sight_Range("V19", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V19", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V19", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V19", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V19", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V19", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V19", WEAPON_NONE),Read_Secondary_Weapon("V19", WEAPON_NONE),
@@ -2277,7 +2277,7 @@ static BuildingTypeClass const ClassV20(
 	Read_Sight_Range("V20", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V20", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V20", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V20", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V20", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V20", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V20", WEAPON_NONE),Read_Secondary_Weapon("V20", WEAPON_NONE),
@@ -2326,7 +2326,7 @@ static BuildingTypeClass const ClassV21(
 	Read_Sight_Range("V21", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V21", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V21", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V21", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V21", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V21", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V21", WEAPON_NONE),Read_Secondary_Weapon("V21", WEAPON_NONE),
@@ -2375,7 +2375,7 @@ static BuildingTypeClass const ClassV22(
 	Read_Sight_Range("V22", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V22", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V22", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V22", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V22", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V22", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V22", WEAPON_NONE),Read_Secondary_Weapon("V22", WEAPON_NONE),
@@ -2424,7 +2424,7 @@ static BuildingTypeClass const ClassV23(
 	Read_Sight_Range("V23", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V23", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V23", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V23", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V23", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V23", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V23", WEAPON_NONE),Read_Secondary_Weapon("V23", WEAPON_NONE),
@@ -2473,7 +2473,7 @@ static BuildingTypeClass const ClassV24(
 	Read_Sight_Range("V24", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V24", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V24", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V24", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V24", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V24", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V24", WEAPON_NONE),Read_Secondary_Weapon("V24", WEAPON_NONE),
@@ -2522,7 +2522,7 @@ static BuildingTypeClass const ClassV25(
 	Read_Sight_Range("V25", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V25", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V25", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V25", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V25", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V25", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V25", WEAPON_NONE),Read_Secondary_Weapon("V25", WEAPON_NONE),
@@ -2571,7 +2571,7 @@ static BuildingTypeClass const ClassV26(
 	Read_Sight_Range("V26", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V26", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V26", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V26", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V26", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V26", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V26", WEAPON_NONE),Read_Secondary_Weapon("V26", WEAPON_NONE),
@@ -2620,7 +2620,7 @@ static BuildingTypeClass const ClassV27(
 	Read_Sight_Range("V27", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V27", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V27", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V27", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V27", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V27", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V27", WEAPON_NONE),Read_Secondary_Weapon("V27", WEAPON_NONE),
@@ -2669,7 +2669,7 @@ static BuildingTypeClass const ClassV28(
 	Read_Sight_Range("V28", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V28", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V28", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V28", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V28", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V28", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V28", WEAPON_NONE),Read_Secondary_Weapon("V28", WEAPON_NONE),
@@ -2718,7 +2718,7 @@ static BuildingTypeClass const ClassV29(
 	Read_Sight_Range("V29", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V29", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V29", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V29", 0,2), 						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V29", 2), 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V29", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V29", WEAPON_NONE),Read_Secondary_Weapon("V29", WEAPON_NONE),
@@ -2767,7 +2767,7 @@ static BuildingTypeClass const ClassV30(
 	Read_Sight_Range("V30", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V30", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V30", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V30", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V30", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V30", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V30", WEAPON_NONE),Read_Secondary_Weapon("V30", WEAPON_NONE),
@@ -2816,7 +2816,7 @@ static BuildingTypeClass const ClassV31(
 	Read_Sight_Range("V31", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V31", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V31", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V31", 0,2), 						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V31", 2), 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V31", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V31", WEAPON_NONE),Read_Secondary_Weapon("V31", WEAPON_NONE),
@@ -2865,7 +2865,7 @@ static BuildingTypeClass const ClassV32(
 	Read_Sight_Range("V32", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V32", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V32", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V32", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V32", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V32", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V32", WEAPON_NONE),Read_Secondary_Weapon("V32", WEAPON_NONE),
@@ -2914,7 +2914,7 @@ static BuildingTypeClass const ClassV33(
 	Read_Sight_Range("V33", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V33", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V33", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V33", 0,2),						// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V33", 2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V33", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V33", WEAPON_NONE),Read_Secondary_Weapon("V33", WEAPON_NONE),
@@ -2963,7 +2963,7 @@ static BuildingTypeClass const ClassV34(
 	Read_Sight_Range("V34", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V34", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V34", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V34", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V34", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V34", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V34", WEAPON_NONE),Read_Secondary_Weapon("V34", WEAPON_NONE),
@@ -3012,7 +3012,7 @@ static BuildingTypeClass const ClassV35(
 	Read_Sight_Range("V35", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V35", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V35", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V35", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V35", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V35", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V35", WEAPON_NONE),Read_Secondary_Weapon("V35", WEAPON_NONE),
@@ -3061,7 +3061,7 @@ static BuildingTypeClass const ClassV36(
 	Read_Sight_Range("V36", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V36", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V36", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V36", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V36", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V36", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V36", WEAPON_NONE),Read_Secondary_Weapon("V36", WEAPON_NONE),
@@ -3109,7 +3109,7 @@ static BuildingTypeClass const ClassV37(
 	Read_Sight_Range("V37", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V37", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V37", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("V37", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("V37", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V37", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V37", WEAPON_NONE),Read_Secondary_Weapon("V37", WEAPON_NONE),
@@ -3157,7 +3157,7 @@ static BuildingTypeClass const ClassMission(
 	Read_Sight_Range("MISS", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("MISS", 1000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("MISS", 0),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("MISS", 0,2),									// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("MISS", 2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MISS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("MISS", WEAPON_NONE),Read_Secondary_Weapon("MISS", WEAPON_NONE),
@@ -3207,7 +3207,7 @@ static BuildingTypeClass const Sandbag(
 	Read_Sight_Range("SBAG", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("SBAG", 50),										// COST:			Cost to purchase.
 	Read_Scenario_Level("SBAG", 5),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("SBAG", 0,0),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("SBAG", 0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SBAG", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("SBAG", WEAPON_NONE),Read_Secondary_Weapon("SBAG", WEAPON_NONE),
@@ -3256,7 +3256,7 @@ static BuildingTypeClass const Cyclone(
 	Read_Sight_Range("CYCL", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("CYCL", 75),										// COST:			Cost to purchase.
 	Read_Scenario_Level("CYCL", 9),											// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("CYCL", 0,0),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("CYCL", 0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("CYCL", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("CYCL", WEAPON_NONE),Read_Secondary_Weapon("CYCL", WEAPON_NONE),
@@ -3305,7 +3305,7 @@ static BuildingTypeClass const Brick(
 	Read_Sight_Range("BRIK", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BRIK", 100),										// COST:			Cost to purchase.
 	Read_Scenario_Level("BRIK", 13),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("BRIK", 0,0),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("BRIK", 0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BRIK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("BRIK", WEAPON_NONE),Read_Secondary_Weapon("BRIK", WEAPON_NONE),
@@ -3354,7 +3354,7 @@ static BuildingTypeClass const Barbwire(
 	Read_Sight_Range("BARB", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BARB", 25),										// COST:			Cost to purchase.
 	Read_Scenario_Level("BARB", 98),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("BARB", 0,0),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("BARB", 0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BARB", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_BAD | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("BARB", WEAPON_NONE),Read_Secondary_Weapon("BARB", WEAPON_NONE),
@@ -3403,7 +3403,7 @@ static BuildingTypeClass const Wood(
 	Read_Sight_Range("WOOD", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("WOOD", 25),										// COST:			Cost to purchase.
 	Read_Scenario_Level("WOOD", 98),										// SCENARIO:	Starting availability scenario.
-	Read_Risk_Reward("WOOD", 0,0),										// RISK/RWRD:	Risk/reward rating values.
+	0, Read_Reward("WOOD", 0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("WOOD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("WOOD", WEAPON_NONE),

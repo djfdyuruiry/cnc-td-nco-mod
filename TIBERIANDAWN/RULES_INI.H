@@ -62,9 +62,6 @@
 #define SIGHT_RANGE_RULE "SightRange"
 #define SIGHT_RANGE_RULE_UPPER "SIGHTRANGE"
 
-#define RISK_RULE "Risk"
-#define RISK_RULE_UPPER "RISK"
-
 #define REWARD_RULE "Reward"
 #define REWARD_RULE_UPPER "REWARD"
 
@@ -95,13 +92,12 @@
     ARMOR_RULE, \
     AMMO_RULE, \
     SIGHT_RANGE_RULE, \
-    RISK_RULE, \
     REWARD_RULE, \
     CRUSHABLE_RULE, \
     DETECT_CLOAKED_OBJECTS_RULE, \
     TRANSPORTER_RULE
 
-#define SHARED_RULE_COUNT (unsigned) 19
+#define SHARED_RULE_COUNT (unsigned) 18
 
 // infantry rules
 #define FEMALE_RULE "Female"
@@ -363,8 +359,7 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 
 #define Read_Sight_Range(section, defaultValue) Read_Int_From_Rules_Ini(section, SIGHT_RANGE_RULE, defaultValue, 0, INT_MAX)
 
-#define Read_Risk_Reward(section, defaultRiskValue, defaultRewardValue) Read_Int_From_Rules_Ini(section, RISK_RULE, defaultRiskValue, 0, INT_MAX), \
- Read_Int_From_Rules_Ini(section, REWARD_RULE, defaultRewardValue, 0, INT_MAX)
+#define Read_Reward(section, defaultRewardValue) Read_Int_From_Rules_Ini(section, REWARD_RULE, defaultRewardValue, 0, INT_MAX)
 
 #define Read_Detects_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, DETECT_CLOAKED_OBJECTS_RULE, defaultValue)
 

@@ -574,6 +574,7 @@ class TechnoTypeClass : public ObjectTypeClass
 				WeaponType secondary,
 				ArmorType armor);
 
+		virtual void Calculate_Risk(void) const;
 		virtual int  Raw_Cost(void) const;
 		virtual int  Max_Passengers(void) const;
 		virtual int  Repair_Cost(void) const;

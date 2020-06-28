@@ -720,6 +720,7 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
         if (!*valueParseError)
         {
             type->Primary = weapon;
+            type->Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
         }
     }
     else if (Strings_Are_Equal(ruleName, SECONDARY_WEAPON_RULE_UPPER))
@@ -758,16 +759,6 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
         if (!*valueParseError)
         {
             type->SightRange = numValue;
-        }
-    }
-    else if (Strings_Are_Equal(ruleName, RISK_RULE_UPPER))
-    {
-        auto numValue = atoi(value);
-        *valueParseError = numValue < -1 && numValue > INT_MAX;
-
-        if (!*valueParseError)
-        {
-            type->Risk = numValue;
         }
     }
     else if (Strings_Are_Equal(ruleName, REWARD_RULE_UPPER))
@@ -909,12 +900,6 @@ static bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const ch
         Log_Debug("Read_TechnoType_Rule => Rule value: %d", type->SightRange);
 
         lua_pushnumber(lua, type->SightRange);
-    }
-    else if (Strings_Are_Equal(ruleName, RISK_RULE_UPPER))
-    {
-        Log_Debug("Read_TechnoType_Rule => Rule value: %d", type->Risk);
-
-        lua_pushnumber(lua, type->Risk);
     }
     else if (Strings_Are_Equal(ruleName, REWARD_RULE_UPPER))
     {
