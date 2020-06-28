@@ -728,7 +728,7 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
     {
         unitType = UNIT_APC;
     }
-    else if (Strings_Are_Equal(unitTypeString, "MLRS"))
+    else if (Strings_Are_Equal(unitTypeString, "MSAM"))
     {
         unitType = UNIT_MLRS;
     }
@@ -818,23 +818,23 @@ char* Unit_Type_To_String(UnitType unitType)
     }
     else if (unitType == UNIT_HTANK)
     {
-        unitTypeString = "HTANK";
+        unitTypeString = "HTNK";
     }
     else if (unitType == UNIT_MTANK)
     {
-        unitTypeString = "MTANK";
+        unitTypeString = "MTNK";
     }
     else if (unitType == UNIT_LTANK)
     {
-        unitTypeString = "LTANK";
+        unitTypeString = "LTNK";
     }
     else if (unitType == UNIT_STANK)
     {
-        unitTypeString = "STANK";
+        unitTypeString = "STNK";
     }
     else if (unitType == UNIT_FTANK)
     {
-        unitTypeString = "FTANK";
+        unitTypeString = "FTNK";
     }
     else if (unitType == UNIT_VICE)
     {
@@ -854,11 +854,11 @@ char* Unit_Type_To_String(UnitType unitType)
     }
     else if (unitType == UNIT_BUGGY)
     {
-        unitTypeString = "BUGGY";
+        unitTypeString = "BGGY";
     }
     else if (unitType == UNIT_HARVESTER)
     {
-        unitTypeString = "HARVESTER";
+        unitTypeString = "HARV";
     }
     else if (unitType == UNIT_ARTY)
     {
@@ -870,7 +870,7 @@ char* Unit_Type_To_String(UnitType unitType)
     }
     else if (unitType == UNIT_HOVER)
     {
-        unitTypeString = "HOVER";
+        unitTypeString = "LST";
     }
     else if (unitType == UNIT_MHQ)
     {
@@ -878,7 +878,7 @@ char* Unit_Type_To_String(UnitType unitType)
     }
     else if (unitType == UNIT_GUNBOAT)
     {
-        unitTypeString = "GUNBOAT";
+        unitTypeString = "BOAT";
     }
     else if (unitType == UNIT_MCV)
     {
