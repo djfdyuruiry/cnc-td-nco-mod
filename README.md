@@ -1,4 +1,4 @@
-# C&C Tiberian Dawn: New Contruction Options
+﻿# C&C Tiberian Dawn: New Contruction Options
 
 This is a mod for the remastered version of Tiberian Dawn.
 
@@ -102,6 +102,25 @@ If you get an error on load of a scenario complaining the dll version is differe
 - Add rules to toggle certain logic for specific scenarios (can build certain units etc.)
 - Add rules to toggle hard-wired truths (can't build temple or laser as GDI with nod con yard etc.)
 - Use new base/infantry functions created for Lua API to read more rules from file
+
+## Path to v1
+
+- ⚠ add armour and other missing rules
+- ⚠ add lookups for all rules in object definitions
+- ⚠ generate rules ini by reading defaults
+- ✓ test on non-dev machine
+- ⚠ create publish script
+- ⚠ publish alpha to steam workshop
+- ⚠ test workshop item on non-dev machine
+- ⚠ write full docs
+  - rules ini structure
+  - rule names
+  - valid rule values
+  - lua scripting api
+  - use id of workshop item in any path hints
+  - add weapon wiki links in docs
+- ⚠ publish v1 to steam workshop
+- ⚠ test v1 workshop item on non-dev machine
 
 ## Problems
 
