@@ -99,6 +99,10 @@
 #define AVOIDS_TIBERIUM_RULE "AvoidsTiberium"
 #define AVOIDS_TIBERIUM_RULE_UPPER "AVOIDSTIBERIUM"
 
+// shared unit/aircraft rules
+#define RATE_OF_TURN_RULE "RateOfTurn"
+#define RATE_OF_TURN_RULE_UPPER "RATEOFTURN"
+
 // unit rules
 #define CAN_BE_FOUND_IN_CRATE_RULE "CanBeFoundInCrate"
 #define CAN_BE_FOUND_IN_CRATE_RULE_UPPER "CANBEFOUNDINCRATE"
@@ -138,9 +142,6 @@
 
 #define UNIT_SPEED_RULE "UnitSpeed"
 #define UNIT_SPEED_RULE_UPPER "UNITSPEED"
-
-#define RATE_OF_TURN_RULE "RateOfTurn"
-#define RATE_OF_TURN_RULE_UPPER "RATEOFTURN"
 
 #define MAX_SIZE_RULE "MaxSize"
 #define MAX_SIZE_RULE_UPPER "MAXSIZE"
@@ -291,6 +292,8 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 
 #define Read_Is_Crushable(section, defaultValue) Read_Bool_From_Rules_Ini(section, CRUSHABLE_RULE, defaultValue)
 
+#define Read_Is_Transport(section, defaultValue) Read_Bool_From_Rules_Ini(section, TRANSPORTER_RULE, defaultValue)
+
 // infantry rules
 #define Read_Is_Female(section, defaultValue) Read_Bool_From_Rules_Ini(section, FEMALE_RULE, defaultValue)
 
@@ -304,8 +307,18 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 
 #define Read_Avoids_Tiberium(section, defaultValue) Read_Bool_From_Rules_Ini(section, AVOIDS_TIBERIUM_RULE, defaultValue)
 
+// unit/aircraft shared rules
+#define Read_Rate_Of_Turn(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, RATE_OF_TURN_RULE, defaultValue, 0, UCHAR_MAX)
+
 // unit rules
 #define Read_Can_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_CLOAK_RULE, defaultValue)
+
+// aircraft rules
+#define Read_Cant_Hover(section, defaultValue) Read_Bool_From_Rules_Ini(section, CANT_HOVER_RULE, defaultValue)
+
+#define Read_Has_Rotor(section, defaultValue) Read_Bool_From_Rules_Ini(section, HAS_ROTOR_RULE, defaultValue)
+
+#define Read_Can_Land(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_LAND_RULE, defaultValue)
 
 // building rules
 #define Read_Is_Bibbed(section, defaultValue) Read_Bool_From_Rules_Ini(section, BIBBED_RULE, defaultValue)

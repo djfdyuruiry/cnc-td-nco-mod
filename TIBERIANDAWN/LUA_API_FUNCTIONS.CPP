@@ -85,7 +85,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
     {
-        auto capacity = (unsigned)atoi(value);
+        auto capacity = atoi(value);
         *valueParseError = capacity < 0 || capacity > UINT_MAX;
 
         if (!*valueParseError)
@@ -95,7 +95,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE_UPPER))
     {
-        auto power = (unsigned) atoi(value);
+        auto power = atoi(value);
         *valueParseError = power < 0 || power > INT_MAX;
 
         if (!*valueParseError)
@@ -105,7 +105,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE_UPPER))
     {
-        auto drain = (unsigned)atoi(value);
+        auto drain = atoi(value);
         *valueParseError = drain < 0 || drain > INT_MAX;
 
         if (!*valueParseError)
@@ -235,6 +235,16 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
             type->IsRotorEquipped = hasRotor;
         }
     }
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    {
+        auto rot = atoi(value);
+        *valueParseError = rot < 0 || rot > UCHAR_MAX;
+
+        if (!*valueParseError)
+        {
+            type->ROT = rot;
+        }
+    }
     else
     {
         return false;
@@ -262,6 +272,12 @@ static bool Read_Aircraft_Rule(lua_State* lua, AircraftTypeClass* type, const ch
         Log_Debug("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRotorEquipped));
 
         lua_pushboolean(lua, type->IsRotorEquipped);
+    }
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    {
+        Log_Debug("Read_Aircraft_Rule => Rule value: %u", type->ROT);
+
+        lua_pushnumber(lua, type->ROT);
     }
     else
     {
@@ -392,7 +408,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
     }
     else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
     {
-        auto rot = (unsigned char) atoi(value);
+        auto rot = atoi(value);
         *valueParseError = rot < 0 || rot > UCHAR_MAX;
 
         if (!*valueParseError)
@@ -634,7 +650,7 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 {
     if (Strings_Are_Equal(ruleName, BUILD_LEVEL_RULE_UPPER))
     {
-        auto numValue = (unsigned char)atoi(value);
+        auto numValue = atoi(value);
         *valueParseError = numValue < 1 && numValue > 99;
 
         if (!*valueParseError)
@@ -644,7 +660,7 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, SCENARIO_LEVEL_RULE_UPPER))
     {
-        auto numValue = (unsigned char)atoi(value);
+        auto numValue = atoi(value);
         *valueParseError = numValue < 1 && numValue > 99;
 
         if (!*valueParseError)
@@ -685,7 +701,7 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, SPEED_RULE_UPPER))
     {
-        auto numValue = (unsigned short)atoi(value);
+        auto numValue = atoi(value);
         *valueParseError = numValue < 0 && numValue > UCHAR_MAX;
 
         if (!*valueParseError)
@@ -695,7 +711,7 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, STRENGTH_RULE_UPPER))
     {
-        auto numValue = (unsigned short)atoi(value);
+        auto numValue = atoi(value);
         *valueParseError = numValue < 0 && numValue > USHRT_MAX;
 
         if (!*valueParseError)

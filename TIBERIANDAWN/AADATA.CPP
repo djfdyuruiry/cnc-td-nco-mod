@@ -61,11 +61,11 @@ static AircraftTypeClass const AttackPlane(
 	Read_Prerequisite("A10", STRUCT_NONE),			// Building prerequisite.
 		false,				// Is a leader type?
 		false,				// Does it fire a pair of shots in quick succession?
-		false,				//	Is this a typical transport vehicle?
-		true,					// Fixed wing aircraft?
-		false,				// Equipped with a rotor?
+		Read_Is_Transport("A10", false),				//	Is this a typical transport vehicle?
+		Read_Cant_Hover("A10", true),					// Fixed wing aircraft?
+		Read_Has_Rotor("A10", false),				// Equipped with a rotor?
 		false,				// Custom rotor sets for each facing?
-		false,				// Can this aircraft land on clear terrain?
+		Read_Can_Land("A10", false),				// Can this aircraft land on clear terrain?
 		false,				// Can the aircraft be crushed by a tracked vehicle?
 		true,					// Is it invisible on radar?
 		false,				// Can the player select it so as to give it orders?
@@ -87,7 +87,7 @@ static AircraftTypeClass const AttackPlane(
 	Read_Primary_Weapon("A10", WEAPON_NAPALM), Read_Secondary_Weapon("A10", WEAPON_NONE),
 	Read_Armor("A10", ARMOR_ALUMINUM),		// Armor type of this aircraft.
 	Read_Speed("A10", MPH_FAST),				// Maximum speed of aircraft.
-	5,							// Rate of turn.
+	Read_Rate_Of_Turn("A10", 5),							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
 
@@ -100,11 +100,11 @@ static AircraftTypeClass const TransportHeli(
 	Read_Prerequisite("TRAN", STRUCT_HELIPAD),		// Building prerequisite.
 		false,				// Is a leader type?
 		false,				// Does it fire a pair of shots in quick succession?
-		true,					//	Is this a typical transport vehicle?
-		false,				// Fixed wing aircraft?
-		true,					// Equipped with a rotor?
+		Read_Is_Transport("TRAN", true),					//	Is this a typical transport vehicle?
+		Read_Cant_Hover("TRAN", false),				// Fixed wing aircraft?
+		Read_Has_Rotor("TRAN", true),					// Equipped with a rotor?
 		true,					// Custom rotor sets for each facing?
-		true,					// Can this aircraft land on clear terrain?
+		Read_Can_Land("TRAN", true),					// Can this aircraft land on clear terrain?
 		false,				// Can the aircraft be crushed by a tracked vehicle?
 		true,					// Is it invisible on radar?
 		true,					// Can the player select it so as to give it orders?
@@ -126,7 +126,7 @@ static AircraftTypeClass const TransportHeli(
 	Read_Primary_Weapon("TRAN", WEAPON_NONE), Read_Secondary_Weapon("TRAN", WEAPON_NONE),
 	Read_Armor("TRAN", ARMOR_ALUMINUM),		// Armor type of this aircraft.
 	Read_Speed("TRAN", MPH_MEDIUM_FAST),		// Maximum speed of aircraft.
-	5,							// Rate of turn.
+	Read_Rate_Of_Turn("TRAN", 5),							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
 
@@ -139,11 +139,11 @@ static AircraftTypeClass const AttackHeli(
 	Read_Prerequisite("HELI", STRUCT_HELIPAD),		// Building prerequisite.
 		true,					// Is a leader type?
 		true,					// Does it fire a pair of shots in quick succession?
-		false,				//	Is this a typical transport vehicle?
-		false,				// Fixed wing aircraft?
-		true,					// Equipped with a rotor?
+		Read_Is_Transport("HELI", false),				//	Is this a typical transport vehicle?
+		Read_Cant_Hover("HELI", false),				// Fixed wing aircraft?
+		Read_Has_Rotor("HELI", true),					// Equipped with a rotor?
 		false,				// Custom rotor sets for each facing?
-		false,				// Can this aircraft land on clear terrain?
+		Read_Can_Land("HELI", false),				// Can this aircraft land on clear terrain?
 		false,				// Can the aircraft be crushed by a tracked vehicle?
 		true,					// Is it invisible on radar?
 		true,					// Can the player select it so as to give it orders?
@@ -165,7 +165,7 @@ static AircraftTypeClass const AttackHeli(
 	Read_Primary_Weapon("HELI", WEAPON_CHAIN_GUN), Read_Secondary_Weapon("HELI", WEAPON_NONE),
 	Read_Armor("HELI", ARMOR_STEEL),			// Armor type of this aircraft.
 	Read_Speed("HELI", MPH_FAST),				// Maximum speed of aircraft.
-	4,							// Rate of turn.
+	Read_Rate_Of_Turn("HELI", 4),							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
 
@@ -179,11 +179,11 @@ static AircraftTypeClass const OrcaHeli(
 	Read_Prerequisite("ORCA", STRUCT_HELIPAD),		// Building prerequisite.
 		true,					// Is a leader type?
 		true,					// Does it fire a pair of shots in quick succession?
-		false,				//	Is this a typical transport vehicle?
-		false,				// Fixed wing aircraft?
-		false,				// Equipped with a rotor?
+		Read_Is_Transport("ORCA", false),				//	Is this a typical transport vehicle?
+		Read_Cant_Hover("ORCA", false),				// Fixed wing aircraft?
+		Read_Has_Rotor("ORCA", false),				// Equipped with a rotor?
 		false,				// Custom rotor sets for each facing?
-		false,				// Can this aircraft land on clear terrain?
+		Read_Can_Land("ORCA", false),				// Can this aircraft land on clear terrain?
 		false,				// Can the aircraft be crushed by a tracked vehicle?
 		true,					// Is it invisible on radar?
 		true,					// Can the player select it so as to give it orders?
@@ -205,7 +205,7 @@ static AircraftTypeClass const OrcaHeli(
 	Read_Primary_Weapon("ORCA", WEAPON_DRAGON), Read_Secondary_Weapon("ORCA", WEAPON_NONE),
 	Read_Armor("ORCA", ARMOR_STEEL),			// Armor type of this aircraft.
 	Read_Speed("ORCA", MPH_FAST),				// Maximum speed of aircraft.
-	4,							// Rate of turn.
+	Read_Rate_Of_Turn("ORCA", 4),							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
 
@@ -219,11 +219,11 @@ static AircraftTypeClass const CargoPlane(
 	Read_Prerequisite("C17", STRUCT_NONE),			// Building prerequisite.
 		false,				// Is a leader type?
 		false,				// Does it fire a pair of shots in quick succession?
-		true,					//	Is this a typical transport vehicle?
-		true,					// Fixed wing aircraft?
-		false,				// Equipped with a rotor?
+		Read_Is_Transport("HELI", true),					//	Is this a typical transport vehicle?
+		Read_Cant_Hover("C17", true),					// Fixed wing aircraft?
+		Read_Has_Rotor("C17", false),				// Equipped with a rotor?
 		false,				// Custom rotor sets for each facing?
-		false,				// Can this aircraft land on clear terrain?
+		Read_Can_Land("C17", false),				// Can this aircraft land on clear terrain?
 		false,				// Can the aircraft be crushed by a tracked vehicle?
 		true,					// Is it invisible on radar?
 		false,				// Can the player select it so as to give it orders?
@@ -245,7 +245,7 @@ static AircraftTypeClass const CargoPlane(
 	Read_Primary_Weapon("C17", WEAPON_NONE), Read_Secondary_Weapon("C17", WEAPON_NONE),
 	Read_Armor("C17", ARMOR_ALUMINUM),		// Armor type of this aircraft.
 	Read_Speed("C17", MPH_FAST),				// Maximum speed of aircraft.
-	5,							// Rate of turn.
+	Read_Rate_Of_Turn("C17", 5),							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
 );
 

@@ -29,19 +29,16 @@ const INT_RULE_CAPTURE = "([-]*\\d+)"
 const ARMOR_RULE_CAPTURE = "(ARMOR_.+?)"
 
 const RULES = [
-  ["Read_Is_Wall", BOOLEAN_RULE_CAPTURE, "Is this a wall type"],
-  ["Read_Is_Factory", BOOLEAN_RULE_CAPTURE, "Is it a factory type"],
-  ["Read_Use_Simple_Damage", BOOLEAN_RULE_CAPTURE, "Simple (one frame) damage"],
-  ["Read_Is_Fixed_Speed", BOOLEAN_RULE_CAPTURE, "Animation rate is regulated"]
+  ["Read_Is_Transport", BOOLEAN_RULE_CAPTURE, "Is this a typical transport vehicle?"]
 ]
 
 function main() {
   RULES.forEach(i =>
     rewriteRule(
-      "BDATA",
-      "BuildingTypeClass",
+      "AADATA",
+      "AircraftTypeClass",
       i[0],
-      "NAME:",
+      "INI name ",
       i[1],
       i[2]
     )
