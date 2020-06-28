@@ -56,6 +56,15 @@
 #define AMMO_RULE "Ammo"
 #define AMMO_RULE_UPPER "AMMO"
 
+#define SIGHT_RANGE_RULE "SightRange"
+#define SIGHT_RANGE_RULE_UPPER "SightRange"
+
+#define RISK_RULE "Risk"
+#define RISK_RULE_UPPER "RISK"
+
+#define REWARD_RULE "Reward"
+#define REWARD_RULE_UPPER "REWARD"
+
 #define SHOW_NAME_RULE "ShowName"
 #define SHOW_NAME_RULE_UPPER "SHOWNAME"
 
@@ -237,6 +246,11 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 #define Read_Primary_Weapon(section, defaultValue) Read_Weapon_Type_From_Rules_Ini(section, PRIMARY_WEAPON_RULE, defaultValue)
 
 #define Read_Secondary_Weapon(section, defaultValue) Read_Weapon_Type_From_Rules_Ini(section, SECONDARY_WEAPON_RULE, defaultValue)
+
+#define Read_Sight_Range(section, defaultValue) Read_Int_From_Rules_Ini(section, SIGHT_RANGE_RULE, defaultValue, 0, INT_MAX)
+
+#define Read_Risk_Reward(section, defaultRiskValue, defaultRewardValue) Read_Int_From_Rules_Ini(section, RISK_RULE, defaultRiskValue, 0, INT_MAX), \
+ Read_Int_From_Rules_Ini(section, REWARD_RULE, defaultRewardValue, 0, INT_MAX)
 
 // infantry rules
 #define Read_Is_Female(section, defaultValue) Read_Bool_From_Rules_Ini(section, FEMALE_RULE, defaultValue)
