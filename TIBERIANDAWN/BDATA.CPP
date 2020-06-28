@@ -292,7 +292,7 @@ static BuildingTypeClass const ClassWeapon(
 		Read_Is_Buildable("WEAP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("TMPL", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
+	Read_Factory_Type("WEAP", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 #ifdef ADVANCED
 	Read_Strength("WEAP", 500),										// STRNTH:		Full strength of building.
@@ -345,7 +345,7 @@ static BuildingTypeClass const ClassGTower(
 		Read_Is_Buildable("GTWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("WEAP", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	Read_Factory_Type("GTWR", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("GTWR", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("GTWR", 3),											// SIGHTRANGE:	Range of sighting.
@@ -551,7 +551,7 @@ static BuildingTypeClass const ClassConst(
 		Read_Is_Buildable("FACT", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("GTWR", FACTORY_TYPE_BUILDING),					// The object type produced at this factory.
+	Read_Factory_Type("FACT", FACTORY_TYPE_BUILDING),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("FACT", 400),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("FACT", 3),											// SIGHTRANGE:	Range of sighting.
@@ -600,7 +600,7 @@ static BuildingTypeClass const ClassRefinery(
 		Read_Is_Buildable("PROC", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("FACT", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	Read_Factory_Type("PROC", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("PROC", 450),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("PROC", 4),											// SIGHTRANGE:	Range of sighting.
@@ -699,7 +699,7 @@ static BuildingTypeClass const ClassHelipad(
 		Read_Is_Buildable("HPAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("PROC", FACTORY_TYPE_AIRCRAFT),					// The object type produced at this factory.
+	Read_Factory_Type("HPAD", FACTORY_TYPE_AIRCRAFT),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HPAD", 400),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("HPAD", 3),											// SIGHTRANGE:	Range of sighting.
@@ -748,7 +748,7 @@ static BuildingTypeClass const ClassCommand(
 		Read_Is_Buildable("HQ", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("HPAD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	Read_Factory_Type("HQ", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	Read_Strength("HQ", 500),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("HQ", 10),										// SIGHTRANGE:	Range of sighting.
@@ -846,7 +846,7 @@ static BuildingTypeClass const ClassAirStrip(
 		Read_Is_Buildable("AFLD", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("HQ", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
+	Read_Factory_Type("AFLD", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("AFLD", 500),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("AFLD", 5),											// SIGHTRANGE:	Range of sighting.
@@ -895,7 +895,7 @@ static BuildingTypeClass const ClassPower(
 		Read_Is_Buildable("NUKE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("AFLD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	Read_Factory_Type("NUKE", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("NUKE", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("NUKE", 2),											// SIGHTRANGE:	Range of sighting.
@@ -1092,7 +1092,7 @@ static BuildingTypeClass const ClassBarracks(
 		Read_Is_Buildable("PYLE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	Read_Factory_Type("NUKE", FACTORY_TYPE_INFANTRY),					// The object type produced at this factory.
+	Read_Factory_Type("PYLE", FACTORY_TYPE_INFANTRY),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("PYLE", 400),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("PYLE", 3),											// SIGHTRANGE:	Range of sighting.
@@ -1190,7 +1190,7 @@ static BuildingTypeClass const ClassTanker(
 		Read_Is_Buildable("ARCO", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
-	Read_Factory_Type("PYLE", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	Read_Factory_Type("ARCO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ARCO", 100),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("ARCO", 2),											// SIGHTRANGE:	Range of sighting.

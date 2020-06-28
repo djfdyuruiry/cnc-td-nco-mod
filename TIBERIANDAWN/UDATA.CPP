@@ -141,7 +141,7 @@ static UnitTypeClass const UnitFTank(
 	80, Read_Reward("FTNK", 66),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("FTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
-	Read_Primary_Weapon("VICE", WEAPON_FLAME_TONGUE),Read_Secondary_Weapon("VICE", WEAPON_NONE),
+	Read_Primary_Weapon("FTNK", WEAPON_FLAME_TONGUE),Read_Secondary_Weapon("FTNK", WEAPON_NONE),
 	Read_Armor("FTNK", ARMOR_STEEL),							// ARMOR:		Armor type
 	Read_Unit_Speed("FTNK", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("FTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
@@ -192,7 +192,7 @@ static UnitTypeClass const UnitSTank(
 	80, Read_Reward("STNK", 81),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("STNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
-	Read_Primary_Weapon("FTNK", WEAPON_DRAGON),Read_Secondary_Weapon("FTNK", WEAPON_NONE),
+	Read_Primary_Weapon("STNK", WEAPON_DRAGON),Read_Secondary_Weapon("STNK", WEAPON_NONE),
 	Read_Armor("STNK", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	Read_Unit_Speed("STNK", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("STNK", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
@@ -243,7 +243,7 @@ static UnitTypeClass const UnitLTank(
 	80, Read_Reward("LTNK", 56),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("LTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
-	Read_Primary_Weapon("STNK", WEAPON_75MM),Read_Secondary_Weapon("STNK", WEAPON_NONE),
+	Read_Primary_Weapon("LTNK", WEAPON_75MM),Read_Secondary_Weapon("LTNK", WEAPON_NONE),
 	Read_Armor("LTNK", ARMOR_STEEL),							// ARMOR:		Armor type
 	Read_Unit_Speed("LTNK", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("LTNK", MPH_MEDIUM),								// SPEED:		Miles per hour.
@@ -396,7 +396,7 @@ static UnitTypeClass const UnitMHQ(
 	80, Read_Reward("MHQ", 100),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MHQ", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("LTNK", WEAPON_NONE),Read_Secondary_Weapon("LTNK", WEAPON_NONE),
+	Read_Primary_Weapon("MHQ", WEAPON_NONE),Read_Secondary_Weapon("MHQ", WEAPON_NONE),
 	Read_Armor("MHQ", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	Read_Unit_Speed("MHQ", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("MHQ", MPH_MEDIUM),								// SPEED:		Miles per hour.
@@ -499,7 +499,7 @@ static UnitTypeClass const UnitSAM(
 	80, Read_Reward("MLRS", 30),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MLRS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
-	Read_Primary_Weapon("MHQ", WEAPON_HONEST_JOHN),Read_Secondary_Weapon("MHQ", WEAPON_NONE),
+	Read_Primary_Weapon("MLRS", WEAPON_HONEST_JOHN),Read_Secondary_Weapon("MLRS", WEAPON_NONE),
 	Read_Armor("MLRS", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	Read_Unit_Speed("MLRS", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("MLRS", MPH_MEDIUM),								// SPEED:		Miles per hour.
@@ -602,7 +602,7 @@ static UnitTypeClass const UnitHarvester(
 	80, Read_Reward("HARV", 85),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HARV", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("MLRS", WEAPON_NONE),Read_Secondary_Weapon("MLRS", WEAPON_NONE),
+	Read_Primary_Weapon("HARV", WEAPON_NONE),Read_Secondary_Weapon("HARV", WEAPON_NONE),
 	Read_Armor("HARV", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	Read_Unit_Speed("HARV", SPEED_WHEEL),							// MOVE:			Locomotion type.
 	Read_Speed("HARV", MPH_MEDIUM_SLOW),						// SPEED:		Miles per hour.
@@ -704,7 +704,7 @@ static UnitTypeClass const UnitJeep(
 	80, Read_Reward("JEEP", 41),	 								// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("JEEP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
-	Read_Primary_Weapon("HARV", WEAPON_M60MG),Read_Secondary_Weapon("HARV", WEAPON_NONE),
+	Read_Primary_Weapon("JEEP", WEAPON_M60MG),Read_Secondary_Weapon("JEEP", WEAPON_NONE),
 	Read_Armor("JEEP", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	Read_Unit_Speed("JEEP", SPEED_WHEEL),							// MOVE:			Locomotion type.
 	Read_Speed("JEEP", MPH_MEDIUM_FAST),						// SPEED:		Miles per hour.
@@ -810,7 +810,7 @@ static UnitTypeClass const UnitBike(
 	80, Read_Reward("BIKE", 45), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BIKE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
-	Read_Primary_Weapon("JEEP", WEAPON_DRAGON),Read_Secondary_Weapon("JEEP", WEAPON_NONE),
+	Read_Primary_Weapon("BIKE", WEAPON_DRAGON),Read_Secondary_Weapon("BIKE", WEAPON_NONE),
 	Read_Armor("BIKE", ARMOR_WOOD),								// ARMOR:		Armor type
 	Read_Unit_Speed("BIKE", SPEED_WHEEL),							// MOVE:			Locomotion type.
 	Read_Speed("BIKE", MPH_FAST),								// SPEED:		Miles per hour.
@@ -912,7 +912,7 @@ static UnitTypeClass const UnitAPC(
 	80, Read_Reward("APC", 15),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("APC", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_BAD | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
-	Read_Primary_Weapon("BIKE", WEAPON_M60MG),Read_Secondary_Weapon("BIKE", WEAPON_NONE),
+	Read_Primary_Weapon("APC", WEAPON_M60MG),Read_Secondary_Weapon("APC", WEAPON_NONE),
 	Read_Armor("APC", ARMOR_STEEL),							// ARMOR:		Armor type
 	Read_Unit_Speed("APC", SPEED_TRACK),							// MOVE:			Locomotion type.
 	Read_Speed("APC", MPH_MEDIUM_FASTER),					// SPEED:		Miles per hour.
@@ -963,7 +963,7 @@ static UnitTypeClass const UnitGunBoat(
 	80, Read_Reward("BOAT", 40),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BOAT", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("APC", WEAPON_TOMAHAWK),Read_Secondary_Weapon("APC", WEAPON_NONE),
+	Read_Primary_Weapon("BOAT", WEAPON_TOMAHAWK),Read_Secondary_Weapon("BOAT", WEAPON_NONE),
 	Read_Armor("BOAT", ARMOR_STEEL),							// ARMOR:		Armor type
 	Read_Unit_Speed("BOAT", SPEED_FLOAT),							// MOVE:			Locomotion type.
 	Read_Speed("BOAT", MPH_SLOW),								// SPEED:		Miles per hour.
