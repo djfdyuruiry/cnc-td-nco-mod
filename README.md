@@ -106,8 +106,8 @@ If you get an error on load of a scenario complaining the dll version is differe
 
 ## Path to v1
 
-- ⚠ add armour and other missing rules
-- ⚠ add lookups for all rules in object definitions
+- ✓ add armour and other missing rules
+- ✓ add lookups for all rules in object definitions
 - ⚠ generate rules ini by reading defaults
 - ✓ test on non-dev machine
 - ⚠ create publish script
