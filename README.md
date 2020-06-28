@@ -129,6 +129,7 @@ If you get an error on load of a scenario complaining the dll version is differe
 
 ## Problem Archive
 
+- Risk not working: this is a dummy var/val, calculated using primary weapon - added update logic when primary weapon value is set from Lua to ensure the calculate risk is correct 
 - Prison text logic never gets called (Building get name)
 - Can't build engineer in mission 1 regardless of rules (STRUTF parsing was wrong - fixed, also E6 is code for engineer even though E7 is the reference in code)
 - DLL crashes second time a scenario is loaded from main menu (needed to close log file handle before DLL exit)
