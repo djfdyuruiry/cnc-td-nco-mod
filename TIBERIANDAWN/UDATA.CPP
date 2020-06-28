@@ -82,12 +82,12 @@ static UnitTypeClass const UnitVisceroid(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("VICE", false),			// Is the unit capable of cloaking?
 		true,				// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("VICE", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("VICE", 150),										// STRENGTH:	Strength (in damage points).
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("VICE", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("VICE", 800),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("VICE", 1),											// SCENARIO:	Starting availability scenario.
-	80,20,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("VICE", 80,20),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("VICE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("VICE", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("VICE", WEAPON_NONE),
@@ -133,12 +133,12 @@ static UnitTypeClass const UnitFTank(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("FTNK", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("FTNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("FTNK", 300),										// STRENGTH:	Strength (in damage points).
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("FTNK", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("FTNK", 800),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("FTNK", 9),											// SCENARIO:	Starting availability scenario.
-	80,66,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("FTNK", 80,66),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("FTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("VICE", WEAPON_FLAME_TONGUE),Read_Secondary_Weapon("VICE", WEAPON_NONE),
@@ -184,12 +184,12 @@ static UnitTypeClass const UnitSTank(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("STNK", true),				// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("STNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("STNK", 110),										// STRENGTH:	Strength (in damage points).
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("STNK", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("STNK", 900),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("STNK", 12),										// SCENARIO:	Starting availability scenario.
-	80,81,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("STNK", 80,81),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("STNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("FTNK", WEAPON_DRAGON),Read_Secondary_Weapon("FTNK", WEAPON_NONE),
@@ -235,12 +235,12 @@ static UnitTypeClass const UnitLTank(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("LTNK", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("LTNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("LTNK", 300),										// STRENGTH:	Strength (in damage points).
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("LTNK", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("LTNK", 600),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("LTNK", 5),											// SCENARIO:	Starting availability scenario.
-	80,56,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("LTNK", 80,56),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("LTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("STNK", WEAPON_75MM),Read_Secondary_Weapon("STNK", WEAPON_NONE),
@@ -286,12 +286,12 @@ static UnitTypeClass const UnitMTank(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MTNK", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("MTNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("MTNK", 400),										// STRENGTH:	Strength (in damage points).
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("MTNK", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("MTNK", 800),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MTNK", 7),											// SCENARIO:	Starting availability scenario.
-	80,62,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("MTNK", 80,62),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("MTNK", WEAPON_105MM),Read_Secondary_Weapon("MTNK", WEAPON_NONE),
@@ -337,12 +337,12 @@ static UnitTypeClass const UnitHTank(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("HTNK", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("HTNK", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("HTNK", 600),										// STRENGTH:	Strength (in damage points).
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("HTNK", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HTNK", 1500),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("HTNK", 13),										// SCENARIO:	Starting availability scenario.
-	80,80, 									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("HTNK", 80,80), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HTNK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("HTNK", WEAPON_120MM),Read_Secondary_Weapon("HTNK", WEAPON_MAMMOTH_TUSK),
@@ -388,12 +388,12 @@ static UnitTypeClass const UnitMHQ(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MHQ", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("MHQ", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("MHQ", 110),										// STRENGTH:	Strength (in damage points).
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("MHQ", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("MHQ", 600),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MHQ", 99),										// SCENARIO:	Starting availability scenario.
-	80,100,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("MHQ", 80,100),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MHQ", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("LTNK", WEAPON_NONE),Read_Secondary_Weapon("LTNK", WEAPON_NONE),
@@ -440,12 +440,12 @@ static UnitTypeClass const UnitHover(
 		true,				// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("LST", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("LST", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("LST", 400),										// STRENGTH:	Strength (in damage points).
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("LST", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("LST", 300),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("LST", 99),										// SCENARIO:	Starting availability scenario.
-	80,40,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("LST", 80,40),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("LST", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("LST", WEAPON_NONE),Read_Secondary_Weapon("LST", WEAPON_NONE),
@@ -491,12 +491,12 @@ static UnitTypeClass const UnitSAM(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MLRS", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	2,											// AMMO:			Number of shots it has (default).
+	Read_Ammo("MLRS", 2),											// AMMO:			Number of shots it has (default).
 	Read_Strength("MLRS", 120),										// STRENGTH:	Strength (in damage points).
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("MLRS", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("MLRS", 750),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MLRS", 98),										// SCENARIO:	Starting availability scenario.
-	80,30,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("MLRS", 80,30),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MLRS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
 	Read_Primary_Weapon("MHQ", WEAPON_HONEST_JOHN),Read_Secondary_Weapon("MHQ", WEAPON_NONE),
@@ -542,12 +542,12 @@ static UnitTypeClass const UnitArty(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("ARTY", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("ARTY", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("ARTY", 75),										// STRENGTH:	Strength (in damage points).
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("ARTY", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("ARTY", 450),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("ARTY", 9),											// SCENARIO:	Starting availability scenario.
-	80,73,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("ARTY", 80,73),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ARTY", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("ARTY", WEAPON_155MM),Read_Secondary_Weapon("ARTY", WEAPON_NONE),
@@ -593,13 +593,13 @@ static UnitTypeClass const UnitHarvester(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("HARV", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("HARV", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("HARV", 600),										// STRENGTH:	Strength (in damage points).
 //	300,										// STRENGTH:	Strength (in damage points).
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("HARV", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HARV", 1400),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("HARV", 7),											// SCENARIO:	Starting availability scenario.
-	80,85,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("HARV", 80,85),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HARV", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("MLRS", WEAPON_NONE),Read_Secondary_Weapon("MLRS", WEAPON_NONE),
@@ -645,12 +645,12 @@ static UnitTypeClass const UnitMCV(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MCV", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("MCV", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("MCV", 600),										// STRENGTH:	Strength (in damage points).
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("MCV", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("MCV", 5000),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MCV", 15),										// SCENARIO:	Starting availability scenario.
-	80,86,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("MCV", 80,86),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MCV", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("MCV", WEAPON_NONE),Read_Secondary_Weapon("MCV", WEAPON_NONE),
@@ -696,12 +696,12 @@ static UnitTypeClass const UnitJeep(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("JEEP", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("JEEP", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("JEEP", 150),										// STRENGTH:	Strength (in damage points).
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("JEEP", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("JEEP", 400),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("JEEP", 5),											// SCENARIO:	Starting availability scenario.
-	80,41,	 								// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("JEEP", 80,41),	 								// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("JEEP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("HARV", WEAPON_M60MG),Read_Secondary_Weapon("HARV", WEAPON_NONE),
@@ -747,12 +747,12 @@ static UnitTypeClass const UnitBuggy(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("BGGY", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("BGGY", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("BGGY", 140),										// STRENGTH:	Strength (in damage points).
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("BGGY", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BGGY", 300),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("BGGY", 5),											// SCENARIO:	Starting availability scenario.
-	80,42, 									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("BGGY", 80,42), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BGGY", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("BGGY", WEAPON_M60MG),Read_Secondary_Weapon("BGGY", WEAPON_NONE),
@@ -798,16 +798,16 @@ static UnitTypeClass const UnitBike(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("BIKE", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("BIKE", -1),										// AMMO:			Number of shots it has (default).
 #ifdef ADVANCED
 	Read_Strength("BIKE", 90),										// STRENGTH:	Strength (in damage points).
 #else
 	Read_Strength("BIKE", 160),										// STRENGTH:	Strength (in damage points).
 #endif
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("BIKE", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BIKE", 500),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("BIKE", 5),											// SCENARIO:	Starting availability scenario.
-	80,45, 									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("BIKE", 80,45), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BIKE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("JEEP", WEAPON_DRAGON),Read_Secondary_Weapon("JEEP", WEAPON_NONE),
@@ -853,12 +853,12 @@ static UnitTypeClass const UnitMLRS(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("MSAM", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("MSAM", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("MSAM", 100),										// STRENGTH:	Strength (in damage points).
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("MSAM", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("MSAM", 800),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("MSAM", 11),										// SCENARIO:	Starting availability scenario.
-	80,72, 									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("MSAM", 80,72), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MSAM", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("MSAM", WEAPON_MLRS),Read_Secondary_Weapon("MSAM", WEAPON_NONE),
@@ -904,12 +904,12 @@ static UnitTypeClass const UnitAPC(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("APC", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("APC", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("APC", 200),										// STRENGTH:	Strength (in damage points).
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("APC", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("APC", 700),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("APC", 5),											// SCENARIO:	Starting availability scenario.
-	80,15,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("APC", 80,15),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("APC", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_BAD | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("BIKE", WEAPON_M60MG),Read_Secondary_Weapon("BIKE", WEAPON_NONE),
@@ -955,12 +955,12 @@ static UnitTypeClass const UnitGunBoat(
 		true,				// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("BOAT", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("BOAT", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("BOAT", 700),										// STRENGTH:	Strength (in damage points).
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("BOAT", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BOAT", 300),										// COST:			Cost to build (Credits).
 	Read_Scenario_Level("BOAT", 99),										// SCENARIO:	Starting availability scenario.
-	80,40,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("BOAT", 80,40),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BOAT", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("APC", WEAPON_TOMAHAWK),Read_Secondary_Weapon("APC", WEAPON_NONE),
@@ -1006,12 +1006,12 @@ static UnitTypeClass const UnitTric(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("TRIC", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("TRIC", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("TRIC", 700),										// STRENGTH:	Strength (in damage points).
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("TRIC", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("TRIC", 0),											// COST:			Cost to build (Credits).
 	Read_Scenario_Level("TRIC", 99),										// SCENARIO:	Starting availability scenario.
-	50,50,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("TRIC", 50,50),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("TRIC", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	"JP",
 	Read_Primary_Weapon("TRIC", WEAPON_STEG),Read_Secondary_Weapon("TRIC", WEAPON_NONE),
@@ -1057,12 +1057,12 @@ static UnitTypeClass const UnitTrex(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("TREX", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("TREX", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("TREX", 750),										// STRENGTH:	Strength (in damage points).
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("TREX", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("TREX", 0),											// COST:			Cost to build (Credits).
 	Read_Scenario_Level("TREX", 99),										// SCENARIO:	Starting availability scenario.
-	50,50,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("TREX", 50,50),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("TREX", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	"JP",
 	Read_Primary_Weapon("TREX", WEAPON_TREX),Read_Secondary_Weapon("TREX", WEAPON_NONE),
@@ -1108,12 +1108,12 @@ static UnitTypeClass const UnitRapt(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("RAPT", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("RAPT", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("RAPT", 180),										// STRENGTH:	Strength (in damage points).
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("RAPT", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("RAPT", 0),											// COST:			Cost to build (Credits).
 	Read_Scenario_Level("RAPT", 99),										// SCENARIO:	Starting availability scenario.
-	50,50,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("RAPT", 50,50),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("RAPT", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	"JP",
 	Read_Primary_Weapon("RAPT", WEAPON_TREX),Read_Secondary_Weapon("RAPT", WEAPON_NONE),
@@ -1159,12 +1159,12 @@ static UnitTypeClass const UnitSteg(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		Read_Can_Cloak("STEG", false),			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
-	-1,										// AMMO:			Number of shots it has (default).
+	Read_Ammo("STEG", -1),										// AMMO:			Number of shots it has (default).
 	Read_Strength("STEG", 600),										// STRENGTH:	Strength (in damage points).
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("STEG", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("STEG", 0),											// COST:			Cost to build (Credits).
 	Read_Scenario_Level("STEG", 99),										// SCENARIO:	Starting availability scenario.
-	50,50,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("STEG", 50,50),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("STEG", HOUSEF_JP, "JP"),								// OWNABLE:		Ownable by house (bit field).
 	"JP",
 	Read_Primary_Weapon("STEG", WEAPON_STEG),Read_Secondary_Weapon("STEG", WEAPON_NONE),
@@ -1279,7 +1279,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										false,
 										is_nominal,
 										is_transporter,
-										false,
+										Read_Is_Flammable(ininame, false),
 										is_crushable,
 										is_stealthy,
 										is_selectable,

@@ -111,7 +111,7 @@ static InfantryTypeClass const E1(
 	Read_Is_Fraidy_Cat("E1", false),						// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("E1", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	-1,							// Number of shots it has (default).
+	Read_Ammo("E1", -1),							// Number of shots it has (default).
 	&MiniGunnerDos[0][0],	// Ptr to minigunner 'DO' table above
 	2,								// Frame of projectile launch.
 	2,								// Frame of projectile launch while prone.
@@ -181,7 +181,7 @@ static InfantryTypeClass const E2(
 	Read_Is_Fraidy_Cat("E2", false),						// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("E2", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	-1,							// Number of shots it has (default).
+	Read_Ammo("E2", -1),							// Number of shots it has (default).
 	&GrenadierDos[0][0],		// Ptr to grenadier DO table (above)
 	14,							// Frame of projectile launch.
 	6,								// Frame of projectile launch while prone.
@@ -254,7 +254,7 @@ static InfantryTypeClass const E3(
 	Read_Is_Fraidy_Cat("E3", false),						// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("E3", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	-1,							// Number of shots it has (default).
+	Read_Ammo("E3", -1),							// Number of shots it has (default).
 	&BazookaDos[0][0],		// Ptr to DO table (above)
 	3,								// Frame of projectile launch.
 	3,								// Frame of projectile launch while prone.
@@ -324,7 +324,7 @@ static InfantryTypeClass const E4(
 	Read_Is_Fraidy_Cat("E4", false),						// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("E4", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	-1,							// Number of shots it has (default).
+	Read_Ammo("E4", -1),							// Number of shots it has (default).
 	&FlamethrowerDos[0][0],	// ptr to DO table (above)
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -393,7 +393,7 @@ static InfantryTypeClass const E5(
 	Read_Is_Fraidy_Cat("E5", false),						// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("E5", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	-1,							// Number of shots it has (default).
+	Read_Ammo("E5", -1),							// Number of shots it has (default).
 	&ChemwarriorDos[0][0],	// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -462,7 +462,7 @@ static InfantryTypeClass const E7(
 	Read_Is_Fraidy_Cat("E6", false),						// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("E6", true),							// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	-1,							// Number of shots it has (default).
+	Read_Ammo("E6", -1),							// Number of shots it has (default).
 	&EngineerDos[0][0],		// ptr to DO table
 	3,								// Frame of projectile launch.
 	3,								// Frame of projectile launch while prone.
@@ -529,7 +529,7 @@ static InfantryTypeClass const Commando(
 	Read_Is_Fraidy_Cat("RMBO", false),						// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("RMBO", true),							// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	-1,							// Number of shots it has (default).
+	Read_Ammo("RMBO", -1),							// Number of shots it has (default).
 	&CommandoDos[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	2,								// Frame of projectile launch while prone.
@@ -596,7 +596,7 @@ static InfantryTypeClass const C1(
 	Read_Is_Fraidy_Cat("C1", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C1", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	10,							// Number of shots it has (default).
+	Read_Ammo("E1", 10),							// Number of shots it has (default).
 	&CivilianDos1[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -662,7 +662,7 @@ static InfantryTypeClass const C2(
 	Read_Is_Fraidy_Cat("C2", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C2", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("C2", 0),								// Number of shots it has (default).
 	&CivilianDos2[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -729,7 +729,7 @@ static InfantryTypeClass const C3(
 	Read_Is_Fraidy_Cat("C3", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C3", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("C3", 0),								// Number of shots it has (default).
 	&CivilianDos3[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -796,7 +796,7 @@ static InfantryTypeClass const C4(
 	Read_Is_Fraidy_Cat("C4", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C4", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("C4", 0),								// Number of shots it has (default).
 	&CivilianDos4[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -862,7 +862,7 @@ static InfantryTypeClass const C5(
 	Read_Is_Fraidy_Cat("C5", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C5", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("C5", 0),								// Number of shots it has (default).
 	&CivilianDos5[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -928,7 +928,7 @@ static InfantryTypeClass const C6(
 	Read_Is_Fraidy_Cat("C6", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C6", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("C6", 0),								// Number of shots it has (default).
 	&CivilianDos6[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -994,7 +994,7 @@ static InfantryTypeClass const C7(
 	Read_Is_Fraidy_Cat("C7", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C7", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	10,							// Number of shots it has (default).
+	Read_Ammo("C7", 10),							// Number of shots it has (default).
 	&CivilianDos7[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -1059,7 +1059,7 @@ static InfantryTypeClass const C8(
 	Read_Is_Fraidy_Cat("C8", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C8", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("C8", 0),								// Number of shots it has (default).
 	&CivilianDos8[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -1125,7 +1125,7 @@ static InfantryTypeClass const C9(
 	Read_Is_Fraidy_Cat("C9", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C9", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("C9", 0),								// Number of shots it has (default).
 	&CivilianDos9[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -1193,7 +1193,7 @@ static InfantryTypeClass const C10(
 	Read_Is_Fraidy_Cat("C10", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("C10", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("C10", 0),								// Number of shots it has (default).
 	&NikoombaDos[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -1258,7 +1258,7 @@ static InfantryTypeClass const Moebius(
 	Read_Is_Fraidy_Cat("MOEBIUS", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("MOEBIUS", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	0,								// Number of shots it has (default).
+	Read_Ammo("MOEBIUS", 0),								// Number of shots it has (default).
 	&MoebiusDos[0][0],		// ptr to DO table
 	0,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -1323,7 +1323,7 @@ static InfantryTypeClass const Delphi(
 	Read_Is_Fraidy_Cat("DELPHI", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("DELPHI", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	10,							// Number of shots it has (default).
+	Read_Ammo("DELPHI", 10),							// Number of shots it has (default).
 	&DelphiDos[0][0],			// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -1389,7 +1389,7 @@ static InfantryTypeClass const DrChan(
 	Read_Is_Fraidy_Cat("CHAN", true),							// Is this a "fraidycat" run-away type infantry?
 	Read_Can_Capture_Buildings("CHAN", false),						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	10,							// Number of shots it has (default).
+	Read_Ammo("CHAN", 10),							// Number of shots it has (default).
 	&DrChanDos[0][0],			// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
@@ -1473,7 +1473,7 @@ InfantryTypeClass::InfantryTypeClass	(
 						WeaponType primary, WeaponType secondary,
 						MPHType maxspeed)
 	: TechnoTypeClass(name, ininame, level, pre,
-							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
+							is_leader, true, is_nominal, false, Read_Is_Flammable(ininame, false), Read_Is_Crushable(ininame, true), true, true, true, false, false,
 							is_theater, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable, houseListCsv,

@@ -25,18 +25,23 @@ function rewriteRule(
 }
 
 const BOOLEAN_RULE_CAPTURE = "(true|false)"
-const INT_RULE_CAPTURE = "(\\d+)"
+const INT_RULE_CAPTURE = "([-]*\\d+)"
+const ARMOR_RULE_CAPTURE = "(ARMOR_.+?)"
+
 const RULES = [
-  ["Read_Risk_Reward", "(\\d+,\\d+)",  "Risk/Reward of this infantry unit."]
+  ["Read_Is_Wall", BOOLEAN_RULE_CAPTURE, "Is this a wall type"],
+  ["Read_Is_Factory", BOOLEAN_RULE_CAPTURE, "Is it a factory type"],
+  ["Read_Use_Simple_Damage", BOOLEAN_RULE_CAPTURE, "Simple (one frame) damage"],
+  ["Read_Is_Fixed_Speed", BOOLEAN_RULE_CAPTURE, "Animation rate is regulated"]
 ]
 
 function main() {
   RULES.forEach(i =>
     rewriteRule(
-      "IDATA",
-      "InfantryTypeClass",
+      "BDATA",
+      "BuildingTypeClass",
       i[0],
-      "INI name for infantry",
+      "NAME:",
       i[1],
       i[2]
     )

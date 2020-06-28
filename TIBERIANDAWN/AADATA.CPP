@@ -74,18 +74,18 @@ static AircraftTypeClass const AttackPlane(
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
 		false,				// Can it be repaired in a repair facility?
-		false,				// Can the player construct or order this unit?
+		Read_Is_Buildable("A10", false),				// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
-	3,							// Number of shots it has (default).
+	Read_Ammo("A10", 3),							// Number of shots it has (default).
 	Read_Strength("A10", 60),						// The strength of this unit.
-	0,							// The range that it reveals terrain around itself.
+	Read_Sight_Range("A10", 0),							// The range that it reveals terrain around itself.
 	Read_Cost("A10", 800),						// Credit cost to construct.
 	Read_Scenario_Level("A10", 0),							// The scenario this becomes available.
-	10,1,						// Risk, reward when calculating AI.
+	Read_Risk_Reward("A10", 10,1),						// Risk, reward when calculating AI.
 	Read_House_List_From_Rules_Ini("A10", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this aircraft type.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("A10", WEAPON_NAPALM), Read_Secondary_Weapon("A10", WEAPON_NONE),
-	ARMOR_ALUMINUM,		// Armor type of this aircraft.
+	Read_Armor("A10", ARMOR_ALUMINUM),		// Armor type of this aircraft.
 	Read_Speed("A10", MPH_FAST),				// Maximum speed of aircraft.
 	5,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
@@ -113,18 +113,18 @@ static AircraftTypeClass const TransportHeli(
 		false,				// Theater specific graphic image?
 		false,				// Is it equipped with a combat turret?
 		false,				// Can it be repaired in a repair facility?
-		true,					// Can the player construct or order this unit?
+		Read_Is_Buildable("TRAN", true),					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
-	0,							// Number of shots it has (default).
+	Read_Ammo("TRAN", 0),							// Number of shots it has (default).
 	Read_Strength("TRAN", 90),						// The strength of this unit.
-	0,							// The range that it reveals terrain around itself.
+	Read_Sight_Range("TRAN", 0),							// The range that it reveals terrain around itself.
 	Read_Cost("TRAN", 1500),						// Credit cost to construct.
 	Read_Scenario_Level("TRAN", 98),						// The scenario this becomes available.
-	10,80,					// Risk, reward when calculating AI.
+	Read_Risk_Reward("TRAN", 10,80),					// Risk, reward when calculating AI.
 	Read_House_List_From_Rules_Ini("TRAN", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),			// Who can own this aircraft type.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("TRAN", WEAPON_NONE), Read_Secondary_Weapon("TRAN", WEAPON_NONE),
-	ARMOR_ALUMINUM,		// Armor type of this aircraft.
+	Read_Armor("TRAN", ARMOR_ALUMINUM),		// Armor type of this aircraft.
 	Read_Speed("TRAN", MPH_MEDIUM_FAST),		// Maximum speed of aircraft.
 	5,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
@@ -152,18 +152,18 @@ static AircraftTypeClass const AttackHeli(
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
 		false,				// Can it be repaired in a repair facility?
-		true,					// Can the player construct or order this unit?
+		Read_Is_Buildable("HELI", true),					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
-	15,						// Number of shots it has (default).
+	Read_Ammo("HELI", 15),						// Number of shots it has (default).
 	Read_Strength("HELI", 125),						// The strength of this unit.
-	0,							// The range that it reveals terrain around itself.
+	Read_Sight_Range("HELI", 0),							// The range that it reveals terrain around itself.
 	Read_Cost("HELI", 1200),						// Credit cost to construct.
 	Read_Scenario_Level("HELI", 10),						// The scenario this becomes available.
-	10,80,					// Risk, reward when calculating AI.
+	Read_Risk_Reward("HELI", 10,80),					// Risk, reward when calculating AI.
 	Read_House_List_From_Rules_Ini("HELI", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),				// Who can own this aircraft type.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("HELI", WEAPON_CHAIN_GUN), Read_Secondary_Weapon("HELI", WEAPON_NONE),
-	ARMOR_STEEL,			// Armor type of this aircraft.
+	Read_Armor("HELI", ARMOR_STEEL),			// Armor type of this aircraft.
 	Read_Speed("HELI", MPH_FAST),				// Maximum speed of aircraft.
 	4,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
@@ -192,18 +192,18 @@ static AircraftTypeClass const OrcaHeli(
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
 		false,				// Can it be repaired in a repair facility?
-		true,					// Can the player construct or order this unit?
+		Read_Is_Buildable("ORCA", true),					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
-	6,							// Number of shots it has (default).
+	Read_Ammo("ORCA", 6),							// Number of shots it has (default).
 	Read_Strength("ORCA", 125),						// The strength of this unit.
-	0,							// The range that it reveals terrain around itself.
+	Read_Sight_Range("ORCA", 0),							// The range that it reveals terrain around itself.
 	Read_Cost("ORCA", 1200),						// Credit cost to construct.
 	Read_Scenario_Level("ORCA", 10),						// The scenario this becomes available.
-	10,80,					// Risk, reward when calculating AI.
+	Read_Risk_Reward("ORCA", 10,80),					// Risk, reward when calculating AI.
 	Read_House_List_From_Rules_Ini("ORCA", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),			// Who can own this aircraft type.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("ORCA", WEAPON_DRAGON), Read_Secondary_Weapon("ORCA", WEAPON_NONE),
-	ARMOR_STEEL,			// Armor type of this aircraft.
+	Read_Armor("ORCA", ARMOR_STEEL),			// Armor type of this aircraft.
 	Read_Speed("ORCA", MPH_FAST),				// Maximum speed of aircraft.
 	4,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
@@ -232,18 +232,18 @@ static AircraftTypeClass const CargoPlane(
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
 		false,				// Can it be repaired in a repair facility?
-		false,				// Can the player construct or order this unit?
+		Read_Is_Buildable("C17", false),				// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
-	0,							// Number of shots it has (default).
+	Read_Ammo("C17", 0),							// Number of shots it has (default).
 	Read_Strength("C17", 25),						// The strength of this unit.
-	0,							// The range that it reveals terrain around itself.
+	Read_Sight_Range("C17", 0),							// The range that it reveals terrain around itself.
 	Read_Cost("C17", 800),						// Credit cost to construct.
 	Read_Scenario_Level("C17", 0),							// The scenario this becomes available.
-	10,1,						// Risk, reward when calculating AI.
+	Read_Risk_Reward("C17", 10,1),						// Risk, reward when calculating AI.
 	Read_House_List_From_Rules_Ini("C17", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this aircraft type.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("C17", WEAPON_NONE), Read_Secondary_Weapon("C17", WEAPON_NONE),
-	ARMOR_ALUMINUM,		// Armor type of this aircraft.
+	Read_Armor("C17", ARMOR_ALUMINUM),		// Armor type of this aircraft.
 	Read_Speed("C17", MPH_FAST),				// Maximum speed of aircraft.
 	5,							// Rate of turn.
 	MISSION_HUNT			// Default mission for aircraft.
@@ -319,7 +319,7 @@ AircraftTypeClass::AircraftTypeClass(
 										false,
 										false,
 										is_transporter,
-										false,
+										Read_Is_Flammable(ininame, false),
 										is_crushable,
 										is_stealthy,
 										is_selectable,

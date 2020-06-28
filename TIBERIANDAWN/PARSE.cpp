@@ -476,104 +476,80 @@ char* Weapon_Type_To_String(WeaponType weaponType)
     return weaponTypeString;
 }
 
-SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError)
+ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError)
 {
-    SpeedType speedType = SPEED_NONE;
+    ArmorType armor;
 
-    if (Strings_Are_Equal(unitSpeedTypeString, "NONE"))
+    if (Strings_Are_Equal(armorTypeString, "NONE"))
     {
-        speedType = SPEED_NONE;
+        armor = ARMOR_NONE;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "FOOT"))
+    else if (Strings_Are_Equal(armorTypeString, "WOOD"))
     {
-        speedType = SPEED_FOOT;
+        armor = ARMOR_WOOD;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "TRACK"))
+    else if (Strings_Are_Equal(armorTypeString, "ALUMINUM"))
     {
-        speedType = SPEED_TRACK;
+        armor = ARMOR_ALUMINUM;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "HARVESTER"))
+    else if (Strings_Are_Equal(armorTypeString, "STEEL"))
     {
-        speedType = SPEED_HARVESTER;
+        armor = ARMOR_STEEL;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "WHEEL"))
+    else if (Strings_Are_Equal(armorTypeString, "CONCRETE"))
     {
-        speedType = SPEED_WHEEL;
-    }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "WINGED"))
-    {
-        speedType = SPEED_WINGED;
-    }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "HOVER"))
-    {
-        speedType = SPEED_HOVER;
-    }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "FLOAT"))
-    {
-        speedType = SPEED_FLOAT;
+        armor = ARMOR_CONCRETE;
     }
     else
     {
         *parseError = true;
-        Show_Error("Unable to parse unit speed type from string: %s", unitSpeedTypeString);
+        Show_Error("Unable to parse armor type from string: %s", armorTypeString);
     }
 
-    return speedType;
+    return armor;
 }
 
-SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError)
+ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError)
 {
-    auto unitSpeedTypeStr = strdup(unitSpeedTypeString);
+    auto armorTypeStr = strdup(armorTypeString);
 
-    auto unitSpeedType = Parse_Unit_Speed_Type(unitSpeedTypeStr, parseError);
+    auto armorType = Parse_Armor_Type(armorTypeStr, parseError);
 
-    delete unitSpeedTypeStr;
+    delete armorTypeStr;
 
-    return unitSpeedType;
+    return armorType;
 }
 
-char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
+char* Armor_Type_To_String(ArmorType armorType)
 {
-    char* unitSpeedTypeString;
+    char* armorTypeString;
 
-    if (unitSpeedType == SPEED_NONE)
+    if (armorType == ARMOR_NONE)
     {
-        unitSpeedTypeString = "NONE";
+        armorTypeString = "NONE";
     }
-    else if (unitSpeedType == SPEED_FOOT)
+    else if (armorType == ARMOR_WOOD)
     {
-        unitSpeedTypeString = "FOOT";
+        armorTypeString = "WOOD";
     }
-    else if (unitSpeedType == SPEED_TRACK)
+    else if (armorType == ARMOR_ALUMINUM)
     {
-        unitSpeedTypeString = "TRACK";
+        armorTypeString = "ALUMINUM";
     }
-    else if (unitSpeedType == SPEED_HARVESTER)
+    else if (armorType == ARMOR_STEEL)
     {
-        unitSpeedTypeString = "HARVESTER";
+        armorTypeString = "STEEL";
     }
-    else if (unitSpeedType == SPEED_WHEEL)
+    else if (armorType == ARMOR_CONCRETE)
     {
-        unitSpeedTypeString = "WHEEL";
-    }
-    else if (unitSpeedType == SPEED_WINGED)
-    {
-        unitSpeedTypeString = "WINGED";
-    }
-    else if (unitSpeedType == SPEED_HOVER)
-    {
-        unitSpeedTypeString = "HOVER";
-    }
-    else if (unitSpeedType == SPEED_FLOAT)
-    {
-        unitSpeedTypeString = "FLOAT";
+        armorTypeString = "CONCRETE";
     }
     else
     {
-        Show_Error("Unable to convert unit speed type to string: %d", unitSpeedType);
+        Show_Error("Unable to convert armor type to string: %d", armorType);
     }
 
-    return unitSpeedTypeString;
+    return armorTypeString;
 }
 
 InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
@@ -910,6 +886,190 @@ char* Unit_Type_To_String(UnitType unitType)
     }
 
     return unitTypeString;
+}
+
+SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError)
+{
+    SpeedType speedType = SPEED_NONE;
+
+    if (Strings_Are_Equal(unitSpeedTypeString, "NONE"))
+    {
+        speedType = SPEED_NONE;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "FOOT"))
+    {
+        speedType = SPEED_FOOT;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "TRACK"))
+    {
+        speedType = SPEED_TRACK;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "HARVESTER"))
+    {
+        speedType = SPEED_HARVESTER;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "WHEEL"))
+    {
+        speedType = SPEED_WHEEL;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "WINGED"))
+    {
+        speedType = SPEED_WINGED;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "HOVER"))
+    {
+        speedType = SPEED_HOVER;
+    }
+    else if (Strings_Are_Equal(unitSpeedTypeString, "FLOAT"))
+    {
+        speedType = SPEED_FLOAT;
+    }
+    else
+    {
+        *parseError = true;
+        Show_Error("Unable to parse unit speed type from string: %s", unitSpeedTypeString);
+    }
+
+    return speedType;
+}
+
+SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError)
+{
+    auto unitSpeedTypeStr = strdup(unitSpeedTypeString);
+
+    auto unitSpeedType = Parse_Unit_Speed_Type(unitSpeedTypeStr, parseError);
+
+    delete unitSpeedTypeStr;
+
+    return unitSpeedType;
+}
+
+char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
+{
+    char* unitSpeedTypeString;
+
+    if (unitSpeedType == SPEED_NONE)
+    {
+        unitSpeedTypeString = "NONE";
+    }
+    else if (unitSpeedType == SPEED_FOOT)
+    {
+        unitSpeedTypeString = "FOOT";
+    }
+    else if (unitSpeedType == SPEED_TRACK)
+    {
+        unitSpeedTypeString = "TRACK";
+    }
+    else if (unitSpeedType == SPEED_HARVESTER)
+    {
+        unitSpeedTypeString = "HARVESTER";
+    }
+    else if (unitSpeedType == SPEED_WHEEL)
+    {
+        unitSpeedTypeString = "WHEEL";
+    }
+    else if (unitSpeedType == SPEED_WINGED)
+    {
+        unitSpeedTypeString = "WINGED";
+    }
+    else if (unitSpeedType == SPEED_HOVER)
+    {
+        unitSpeedTypeString = "HOVER";
+    }
+    else if (unitSpeedType == SPEED_FLOAT)
+    {
+        unitSpeedTypeString = "FLOAT";
+    }
+    else
+    {
+        Show_Error("Unable to convert unit speed type to string: %d", unitSpeedType);
+    }
+
+    return unitSpeedTypeString;
+}
+
+AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError)
+{
+    AircraftType aircraftType = AIRCRAFT_NONE;
+
+    if (Strings_Are_Equal(aircraftTypeString, "NONE"))
+    {
+        aircraftType = AIRCRAFT_NONE;
+    }
+    else if (Strings_Are_Equal(aircraftTypeString, "A10"))
+    {
+        aircraftType = AIRCRAFT_A10;
+    }
+    else if (Strings_Are_Equal(aircraftTypeString, "C17"))
+    {
+        aircraftType = AIRCRAFT_CARGO;
+    }
+    else if (Strings_Are_Equal(aircraftTypeString, "HELI"))
+    {
+        aircraftType = AIRCRAFT_HELICOPTER;
+    }
+    else if (Strings_Are_Equal(aircraftTypeString, "ORCA"))
+    {
+        aircraftType = AIRCRAFT_ORCA;
+    }
+    else if (Strings_Are_Equal(aircraftTypeString, "TRAN"))
+    {
+        aircraftType = AIRCRAFT_TRANSPORT;
+    }
+    else
+    {
+        *parseError = true;
+        Show_Error("Unable to parse aircraft type from string: %s", aircraftTypeString);
+    }
+
+    return aircraftType;
+}
+
+AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseError)
+{
+    auto aircraftTypeStr = strdup(aircraftTypeString);
+
+    auto aircraftType = Parse_Aircraft_Type(aircraftTypeStr, parseError);
+
+    delete aircraftTypeStr;
+
+    return aircraftType;
+}
+
+char* Aircraft_Type_To_String(AircraftType aircraftType)
+{
+    char* aircraftTypeString;
+
+    if (aircraftType == AIRCRAFT_NONE)
+    {
+        aircraftTypeString = "NONE";
+    }
+    else if (aircraftType == AIRCRAFT_TRANSPORT)
+    {
+        aircraftTypeString = "TRAN";
+    }
+    else if (aircraftType == AIRCRAFT_A10)
+    {
+        aircraftTypeString = "A10";
+    }
+    else if (aircraftType == AIRCRAFT_HELICOPTER)
+    {
+        aircraftTypeString = "HELI";
+    }
+    else if (aircraftType == AIRCRAFT_CARGO)
+    {
+        aircraftTypeString = "C17";
+    }
+    else if (aircraftType == AIRCRAFT_ORCA)
+    {
+        aircraftTypeString = "ORCA";
+    }
+    else
+    {
+        Show_Error("Unable to convert aircraft type to string: %d", aircraftType);
+    }
+
+    return aircraftTypeString;
 }
 
 StructType Parse_Structure_Type(char* structTypeString, bool* parseError)

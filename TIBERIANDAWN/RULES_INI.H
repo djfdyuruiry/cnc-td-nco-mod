@@ -53,6 +53,9 @@
 #define SECONDARY_WEAPON_RULE "SecondaryWeapon"
 #define SECONDARY_WEAPON_RULE_UPPER "SECONDARYWEAPON"
 
+#define ARMOR_RULE "Armor"
+#define ARMOR_RULE_UPPER "ARMOR"
+
 #define AMMO_RULE "Ammo"
 #define AMMO_RULE_UPPER "AMMO"
 
@@ -64,6 +67,15 @@
 
 #define REWARD_RULE "Reward"
 #define REWARD_RULE_UPPER "REWARD"
+
+#define CRUSHABLE_RULE "Crushable"
+#define CRUSHABLE_RULE_UPPER "CRUSHABLE"
+
+#define DETECT_CLOAKED_OBJECTS_RULE "DetectCloakedObjects"
+#define DETECT_CLOAKED_OBJECTS_RULE_UPPER "DETECTCLOAKEDOBJECTS"
+
+#define TRANSPORTER_RULE "CanTransportInfantry"
+#define TRANSPORTER_RULE_UPPER "CANTRANSPORTINFANTRY"
 
 #define SHOW_NAME_RULE "ShowName"
 #define SHOW_NAME_RULE_UPPER "SHOWNAME"
@@ -133,9 +145,19 @@
 #define MAX_SIZE_RULE "MaxSize"
 #define MAX_SIZE_RULE_UPPER "MAXSIZE"
 
+// aircraft rules
+#define CANT_HOVER_RULE "CantHover"
+#define CANT_HOVER_RULE_UPPER "CANTHOVER"
+
+#define CAN_LAND_RULE "CanLand"
+#define CAN_LAND_RULE_UPPER "CANLAND"
+
+#define HAS_ROTOR_RULE "HasRotor"
+#define HAS_ROTOR_RULE_UPPER "HASROTOR"
+
 // building rules
-#define BIDDED_RULE "Bibbed"
-#define BIDDED_RULE_UPPER "BIBBED"
+#define BIBBED_RULE "Bibbed"
+#define BIBBED_RULE_UPPER "BIBBED"
 
 #define WALL_RULE "Wall"
 #define WALL_RULE_UPPER "WALL"
@@ -160,9 +182,6 @@
 
 #define FACTORY_TYPE_RULE "FactoryType"
 #define FACTORY_TYPE_RULE_UPPER "FACTORYTYPE"
-
-#define CAN_BE_ENTERED_RULE "CanBeEntered"
-#define CAN_BE_ENTERED_RULE_UPPER "CANBEENTERED"
 
 #define STORAGE_CAPACITY_RULE "StorageCapacity"
 #define STORAGE_CAPACITY_RULE_UPPER "STORAGECAPACITY"
@@ -228,6 +247,18 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 	WeaponType defaultValue
 );
 
+ArmorType Read_Armor_Type_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	ArmorType defaultValue
+);
+
+FactoryType Read_Factory_Type_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	FactoryType defaultValue
+);
+
 // shared rules
 #define Read_Build_Level(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, BUILD_LEVEL_RULE, defaultValue, 1, 99)
 
@@ -247,10 +278,18 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 
 #define Read_Secondary_Weapon(section, defaultValue) Read_Weapon_Type_From_Rules_Ini(section, SECONDARY_WEAPON_RULE, defaultValue)
 
+#define Read_Armor(section, defaultValue) Read_Armor_Type_From_Rules_Ini(section, ARMOR_RULE, defaultValue)
+
+#define Read_Ammo(section, defaultValue) Read_Int_From_Rules_Ini(section, AMMO_RULE, defaultValue, 0, INT_MAX)
+
 #define Read_Sight_Range(section, defaultValue) Read_Int_From_Rules_Ini(section, SIGHT_RANGE_RULE, defaultValue, 0, INT_MAX)
 
 #define Read_Risk_Reward(section, defaultRiskValue, defaultRewardValue) Read_Int_From_Rules_Ini(section, RISK_RULE, defaultRiskValue, 0, INT_MAX), \
  Read_Int_From_Rules_Ini(section, REWARD_RULE, defaultRewardValue, 0, INT_MAX)
+
+#define Read_Detects_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, DETECT_CLOAKED_OBJECTS_RULE, defaultValue)
+
+#define Read_Is_Crushable(section, defaultValue) Read_Bool_From_Rules_Ini(section, CRUSHABLE_RULE, defaultValue)
 
 // infantry rules
 #define Read_Is_Female(section, defaultValue) Read_Bool_From_Rules_Ini(section, FEMALE_RULE, defaultValue)
@@ -266,16 +305,30 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 #define Read_Avoids_Tiberium(section, defaultValue) Read_Bool_From_Rules_Ini(section, AVOIDS_TIBERIUM_RULE, defaultValue)
 
 // unit rules
-#define Read_Can_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, "CanCloak", defaultValue)
+#define Read_Can_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_CLOAK_RULE, defaultValue)
 
 // building rules
-#define Read_Is_Captureable(section, defaultValue) Read_Bool_From_Rules_Ini(section, "Captureable", defaultValue)
+#define Read_Is_Bibbed(section, defaultValue) Read_Bool_From_Rules_Ini(section, BIBBED_RULE, defaultValue)
 
-#define Read_Storage_Capacity(section, defaultValue) (unsigned)Read_Int_From_Rules_Ini(section, "StorageCapacity", defaultValue, 0, INT_MAX)
+#define Read_Is_Captureable(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAPTUREABLE_RULE, defaultValue)
 
-#define Read_Power_Output(section, defaultValue) Read_Int_From_Rules_Ini(section, "PowerOutput", defaultValue, 0, INT_MAX)
+#define Read_Storage_Capacity(section, defaultValue) (unsigned)Read_Int_From_Rules_Ini(section, STORAGE_CAPACITY_RULE, defaultValue, 0, INT_MAX)
 
-#define Read_Power_Input(section, defaultValue) Read_Int_From_Rules_Ini(section, "PowerInput", defaultValue, 0, INT_MAX)
+#define Read_Power_Output(section, defaultValue) Read_Int_From_Rules_Ini(section, POWER_OUTPUT_RULE, defaultValue, 0, INT_MAX)
+
+#define Read_Power_Input(section, defaultValue) Read_Int_From_Rules_Ini(section, POWER_INPUT_RULE, defaultValue, 0, INT_MAX)
+
+#define Read_Factory_Type(section, defaultValue) (RTTIType)Read_Factory_Type_From_Rules_Ini(section, FACTORY_TYPE_RULE, defaultValue)
+
+#define Read_Is_Wall(section, defaultValue) Read_Bool_From_Rules_Ini(section, WALL_RULE, defaultValue)
+
+#define Read_Is_Factory(section, defaultValue) Read_Bool_From_Rules_Ini(section, FACTORY_RULE, defaultValue)
+
+#define Read_Use_Simple_Damage(section, defaultValue) Read_Bool_From_Rules_Ini(section, SIMPLE_DAMAGE_RULE, defaultValue)
+
+#define Read_Is_Fixed_Speed(section, defaultValue) Read_Bool_From_Rules_Ini(section, FIXED_SPEED_ANIMATION_RULE, defaultValue)
+
+#define Read_Is_Unsellable(section, defaultValue) Read_Bool_From_Rules_Ini(section, UNSELLABLE_RULE, defaultValue)
 
 // NCO config
 bool Rules_Ini_Failed_Validation();

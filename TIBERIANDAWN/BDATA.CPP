@@ -173,12 +173,12 @@ static BuildingTypeClass const ClassTemple(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("TMPL", 7),								// Build level.
 	Read_Prerequisite("TMPL", STRUCT_RADAR),				// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("TMPL", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("TMPL", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("TMPL", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("TMPL", false),		// Is this a wall type structure?
+		Read_Is_Factory("TMPL", false),		// Is it a factory type building?
 		Read_Is_Captureable("TMPL", false),		// Can this building be captured?
 		Read_Is_Flammable("TMPL", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -194,17 +194,17 @@ static BuildingTypeClass const ClassTemple(
 		Read_Is_Buildable("TMPL", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("TMPL", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("TMPL", 1000),										// STRNTH:		Full strength of building.
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("TMPL", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("TMPL", 3000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("TMPL", 13),										// SCENARIO:	Starting availability scenario.
-	0,20, 									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("TMPL", 0,20), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("TMPL", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("TMPL", WEAPON_NONE),Read_Secondary_Weapon("TMPL", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("TMPL", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("TMPL", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("TMPL", 0),											// POWER:		Power points generated.
@@ -222,12 +222,12 @@ static BuildingTypeClass const ClassEye(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("EYE", 7),								// Build level.
 	Read_Prerequisite("EYE", STRUCT_RADAR),				// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("EYE", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("EYE", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("EYE", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("EYE", false),		// Is this a wall type structure?
+		Read_Is_Factory("EYE", false),		// Is it a factory type building?
 		Read_Is_Captureable("EYE", true),			// Can this building be captured?
 		Read_Is_Flammable("EYE", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -243,17 +243,17 @@ static BuildingTypeClass const ClassEye(
 		Read_Is_Buildable("EYE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("EYE", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	Read_Strength("EYE", 500),										// STRNTH:		Full strength of building.
-	10,										// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("EYE", 10),										// SIGHTRANGE:	Range of sighting.
 	Read_Cost("EYE", 2800),										// COST:			Cost to purchase.
 	Read_Scenario_Level("EYE", 13),										// SCENARIO:	Starting availability scenario.
-	0,100,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("EYE", 0,100),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("EYE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("EYE", WEAPON_NONE),Read_Secondary_Weapon("EYE", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("EYE", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("EYE", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("EYE", 0),											// POWER:		Power points required.
@@ -271,12 +271,12 @@ static BuildingTypeClass const ClassWeapon(
 	XYP_COORD(10+(CELL_PIXEL_W/2), ((CELL_PIXEL_H*3)-(CELL_PIXEL_H/2))-21),			// Exit point for produced units.
 	Read_Build_Level("WEAP", 2),								// Build level.
 	Read_Prerequisite("WEAP", STRUCT_REFINERY),			// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("WEAP", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("WEAP", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("WEAP", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
+		Read_Is_Wall("WEAP", false),		// Is this a wall type structure?
+		Read_Is_Factory("WEAP", true),			// Is it a factory type building?
 		Read_Is_Captureable("WEAP", true),			// Can this building be captured?
 		Read_Is_Flammable("WEAP", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -292,21 +292,21 @@ static BuildingTypeClass const ClassWeapon(
 		Read_Is_Buildable("WEAP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_UNITTYPE,							// The object type produced at this factory.
+	Read_Factory_Type("TMPL", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 #ifdef ADVANCED
 	Read_Strength("WEAP", 500),										// STRNTH:		Full strength of building.
 #else
 	Read_Strength("WEAP", 200),										// STRNTH:		Full strength of building.
 #endif
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("WEAP", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("WEAP", 2000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("WEAP", 5),											// SCENARIO:	Starting availability scenario.
-	0,86,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("WEAP", 0,86),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("WEAP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("WEAP", WEAPON_NONE),Read_Secondary_Weapon("WEAP", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("WEAP", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("WEAP", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("WEAP", 0),											// POWER:		Power points required.
@@ -324,12 +324,12 @@ static BuildingTypeClass const ClassGTower(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("GTWR", 2),								// Build level.
 	Read_Prerequisite("GTWR", STRUCT_BARRACKS),			// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("GTWR", true),			// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("GTWR", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("GTWR", false),		// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("GTWR", false),		// Is this a wall type structure?
+		Read_Is_Factory("GTWR", false),		// Is it a factory type building?
 		Read_Is_Captureable("GTWR", false),		// Can this building be captured?
 		Read_Is_Flammable("GTWR", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -345,18 +345,18 @@ static BuildingTypeClass const ClassGTower(
 		Read_Is_Buildable("GTWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("WEAP", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("GTWR", 200),										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("GTWR", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("GTWR", 500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("GTWR", 7),											// SCENARIO:	Starting availability scenario.
-	100,25,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("GTWR", 100,25),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("GTWR", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("GTWR", WEAPON_CHAIN_GUN),Read_Secondary_Weapon("GTWR", WEAPON_NONE),
 //	WEAPON_M60MG,WEAPON_NONE,
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("GTWR", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("GTWR", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("GTWR", 00),										// POWER:		Power points required.
@@ -374,12 +374,12 @@ static BuildingTypeClass const ClassATower(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ATWR", 4),								// Build level.
 	Read_Prerequisite("ATWR", STRUCT_RADAR),				// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("ATWR", true),			// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("ATWR", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("ATWR", false),		// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("ATWR", false),		// Is this a wall type structure?
+		Read_Is_Factory("ATWR", false),		// Is it a factory type building?
 		Read_Is_Captureable("ATWR", false),		// Can this building be captured?
 		Read_Is_Flammable("ATWR", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -395,18 +395,18 @@ static BuildingTypeClass const ClassATower(
 		Read_Is_Buildable("ATWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("ATWR", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ATWR", 300),										// STRNTH:		Full strength of building.
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("ATWR", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("ATWR", 1000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("ATWR", 13),										// SCENARIO:	Starting availability scenario.
-	100,30,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("ATWR", 100,30),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ATWR", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("ATWR", WEAPON_TOW_TWO),Read_Secondary_Weapon("ATWR", WEAPON_NONE),
 //	WEAPON_TOMAHAWK,WEAPON_NONE,
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("ATWR", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("ATWR", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("ATWR", 0),											// POWER:		Power points required.
@@ -424,12 +424,12 @@ static BuildingTypeClass const ClassObelisk(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("OBLI", 4),								// Build level.
 	Read_Prerequisite("OBLI", STRUCT_RADAR),				// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("OBLI", true),			// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("OBLI", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("OBLI", false),		// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("OBLI", false),		// Is this a wall type structure?
+		Read_Is_Factory("OBLI", false),		// Is it a factory type building?
 		Read_Is_Captureable("OBLI", false),		// Can this building be captured?
 		Read_Is_Flammable("OBLI", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -445,17 +445,17 @@ static BuildingTypeClass const ClassObelisk(
 		Read_Is_Buildable("OBLI", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("OBLI", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("OBLI", 200),										// STRNTH:		Full strength of building.
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("OBLI", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("OBLI", 1500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("OBLI", 11),										// SCENARIO:	Starting availability scenario.
-	100,35,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("OBLI", 100,35),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("OBLI", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("OBLI", WEAPON_OBELISK_LASER),Read_Secondary_Weapon("OBLI", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("OBLI", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("OBLI", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("OBLI", 0),											// POWER:		Power points required.
@@ -473,12 +473,12 @@ static BuildingTypeClass const ClassTurret(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("GUN", 2),								// Build level.
 	Read_Prerequisite("GUN", STRUCT_BARRACKS),			// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("GUN", true),			// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("GUN", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("GUN", false),		// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("GUN", false),		// Is this a wall type structure?
+		Read_Is_Factory("GUN", false),		// Is it a factory type building?
 		Read_Is_Captureable("GUN", false),		// Can this building be captured?
 		Read_Is_Flammable("GUN", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -494,10 +494,10 @@ static BuildingTypeClass const ClassTurret(
 		Read_Is_Buildable("GUN", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("GUN", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	(DirType)208,							// Starting idle frame to match construction.
 	Read_Strength("GUN", 200),										// STRNTH:		Full strength of building.
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("GUN", 5),											// SIGHTRANGE:	Range of sighting.
 #ifdef ADVANCED
 	Read_Cost("GUN", 600),										// COST:			Cost to purchase.
 #else
@@ -508,11 +508,11 @@ static BuildingTypeClass const ClassTurret(
 #endif
 #endif
 	Read_Scenario_Level("GUN", 8),											// SCENARIO:	Starting availability scenario.
-	300,26,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("GUN", 300,26),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("GUN", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("GUN", WEAPON_TURRET_GUN),Read_Secondary_Weapon("GUN", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
+	Read_Armor("GUN", ARMOR_STEEL),							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("GUN", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("GUN", 0),											// POWER:		Power points required.
@@ -530,12 +530,12 @@ static BuildingTypeClass const ClassConst(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("FACT", 99),							// Build level.
 	Read_Prerequisite("FACT", STRUCT_NONE),				// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("FACT", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("FACT", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("FACT", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
+		Read_Is_Wall("FACT", false),		// Is this a wall type structure?
+		Read_Is_Factory("FACT", true),			// Is it a factory type building?
 		Read_Is_Captureable("FACT", true),			// Can this building be captured?
 		Read_Is_Flammable("FACT", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -551,17 +551,17 @@ static BuildingTypeClass const ClassConst(
 		Read_Is_Buildable("FACT", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_BUILDINGTYPE,					// The object type produced at this factory.
+	Read_Factory_Type("GTWR", FACTORY_TYPE_BUILDING),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("FACT", 400),										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("FACT", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("FACT", 5000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("FACT", 1),											// SCENARIO:	Starting availability scenario.
-	0,70,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("FACT", 0,70),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("FACT", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("FACT", WEAPON_NONE),Read_Secondary_Weapon("FACT", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("FACT", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("FACT", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("FACT", 30),										// POWER:		Power points required.
@@ -579,12 +579,12 @@ static BuildingTypeClass const ClassRefinery(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("PROC", 1),								// Build level.
 	Read_Prerequisite("PROC", STRUCT_POWER),				// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("PROC", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("PROC", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("PROC", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("PROC", false),		// Is this a wall type structure?
+		Read_Is_Factory("PROC", false),		// Is it a factory type building?
 		Read_Is_Captureable("PROC", true),			// Can this building be captured?
 		Read_Is_Flammable("PROC", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -600,17 +600,17 @@ static BuildingTypeClass const ClassRefinery(
 		Read_Is_Buildable("PROC", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("FACT", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("PROC", 450),										// STRNTH:		Full strength of building.
-	4,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("PROC", 4),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("PROC", 2000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("PROC", 2),											// SCENARIO:	Starting availability scenario.
-	0,55,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("PROC", 0,55),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("PROC", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("PROC", WEAPON_NONE),Read_Secondary_Weapon("PROC", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("PROC", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("PROC", 1000),										// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("PROC", 10),										// POWER:		Power points required.
@@ -628,12 +628,12 @@ static BuildingTypeClass const ClassStorage(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SILO", 1),								// Build level.
 	Read_Prerequisite("SILO", STRUCT_REFINERY),			// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("SILO", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("SILO", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("SILO", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("SILO", false),		// Is this a wall type structure?
+		Read_Is_Factory("SILO", false),		// Is it a factory type building?
 		Read_Is_Captureable("SILO", true),			// Can this building be captured?
 		Read_Is_Flammable("SILO", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -649,18 +649,18 @@ static BuildingTypeClass const ClassStorage(
 		Read_Is_Buildable("SILO", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("SILO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SILO", 150),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("SILO", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("SILO", 150),										// COST:			Cost to purchase.
 //	300,										// COST:			Cost to purchase.
 	Read_Scenario_Level("SILO", 2),											// SCENARIO:	Starting availability scenario.
-	0,16,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("SILO", 0,16),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SILO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("SILO", WEAPON_NONE),Read_Secondary_Weapon("SILO", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("SILO", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("SILO", 1500),										// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("SILO", 0),											// POWER:		Power points required.
@@ -678,12 +678,12 @@ static BuildingTypeClass const ClassHelipad(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HPAD", 6),								// Build level.
 	Read_Prerequisite("HPAD", STRUCT_BARRACKS),			// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("HPAD", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("HPAD", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("HPAD", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		true,		// Is it a factory type building?
+		Read_Is_Wall("HPAD", false),		// Is this a wall type structure?
+		Read_Is_Factory("HPAD", true),		// Is it a factory type building?
 		Read_Is_Captureable("HPAD", true),			// Can this building be captured?
 		Read_Is_Flammable("HPAD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -699,17 +699,17 @@ static BuildingTypeClass const ClassHelipad(
 		Read_Is_Buildable("HPAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_AIRCRAFTTYPE,					// The object type produced at this factory.
+	Read_Factory_Type("PROC", FACTORY_TYPE_AIRCRAFT),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HPAD", 400),										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("HPAD", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HPAD", 1500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HPAD", 10),										// SCENARIO:	Starting availability scenario.
-	0,65,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("HPAD", 0,65),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HPAD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("HPAD", WEAPON_NONE),Read_Secondary_Weapon("HPAD", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("HPAD", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("HPAD", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("HPAD", 0),											// POWER:		Power points required.
@@ -727,12 +727,12 @@ static BuildingTypeClass const ClassCommand(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HQ", 2),								// Build level.
 	Read_Prerequisite("HQ", STRUCT_REFINERY),			// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("HQ", true),			// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("HQ", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("HQ", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("HQ", false),		// Is this a wall type structure?
+		Read_Is_Factory("HQ", false),		// Is it a factory type building?
 		Read_Is_Captureable("HQ", true),			// Can this building be captured?
 		Read_Is_Flammable("HQ", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -748,17 +748,17 @@ static BuildingTypeClass const ClassCommand(
 		Read_Is_Buildable("HQ", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("HPAD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	Read_Strength("HQ", 500),										// STRNTH:		Full strength of building.
-	10,										// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("HQ", 10),										// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HQ", 1000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HQ", 3),											// SCENARIO:	Starting availability scenario.
-	0,20, 									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("HQ", 0,20), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HQ", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("HQ", WEAPON_NONE),Read_Secondary_Weapon("HQ", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("HQ", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("HQ", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("HQ", 0),											// POWER:		Power points required.
@@ -776,12 +776,12 @@ static BuildingTypeClass const ClassSAM(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SAM", 6),								// Build level.
 	Read_Prerequisite("SAM", STRUCT_BARRACKS),			// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("SAM", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("SAM", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("SAM", false),		// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("SAM", false),		// Is this a wall type structure?
+		Read_Is_Factory("SAM", false),		// Is it a factory type building?
 		Read_Is_Captureable("SAM", false),		// Can this building be captured?
 		Read_Is_Flammable("SAM", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -797,17 +797,17 @@ static BuildingTypeClass const ClassSAM(
 		Read_Is_Buildable("SAM", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("SAM", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SAM", 200),										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("SAM", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("SAM", 750),										// COST:			Cost to purchase.
 	Read_Scenario_Level("SAM", 5),											// SCENARIO:	Starting availability scenario.
-	300,40,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("SAM", 300,40),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SAM", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("SAM", WEAPON_NIKE),Read_Secondary_Weapon("SAM", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
+	Read_Armor("SAM", ARMOR_STEEL),							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("SAM", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("SAM", 0),											// POWER:		Power points required.
@@ -825,12 +825,12 @@ static BuildingTypeClass const ClassAirStrip(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("AFLD", 2),								// Build level.
 	Read_Prerequisite("AFLD", STRUCT_REFINERY),			// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("AFLD", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("AFLD", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("AFLD", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
+		Read_Is_Wall("AFLD", false),		// Is this a wall type structure?
+		Read_Is_Factory("AFLD", true),			// Is it a factory type building?
 		Read_Is_Captureable("AFLD", true),			// Can this building be captured?
 		Read_Is_Flammable("AFLD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -846,17 +846,17 @@ static BuildingTypeClass const ClassAirStrip(
 		Read_Is_Buildable("AFLD", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_UNITTYPE,							// The object type produced at this factory.
+	Read_Factory_Type("HQ", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("AFLD", 500),										// STRNTH:		Full strength of building.
-	5,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("AFLD", 5),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("AFLD", 2000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("AFLD", 5),											// SCENARIO:	Starting availability scenario.
-	300,86,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("AFLD", 300,86),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("AFLD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("AFLD", WEAPON_NONE),Read_Secondary_Weapon("AFLD", WEAPON_NONE),
-	ARMOR_STEEL,							// ARMOR:		Armor type
+	Read_Armor("AFLD", ARMOR_STEEL),							// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("AFLD", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("AFLD", 0),											// POWER:		Power points required.
@@ -874,12 +874,12 @@ static BuildingTypeClass const ClassPower(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("NUKE", 0),								// Build level.
 	Read_Prerequisite("NUKE", STRUCT_NONE),				// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("NUKE", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("NUKE", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("NUKE", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("NUKE", false),		// Is this a wall type structure?
+		Read_Is_Factory("NUKE", false),		// Is it a factory type building?
 		Read_Is_Captureable("NUKE", true),			// Can this building be captured?
 		Read_Is_Flammable("NUKE", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -895,17 +895,17 @@ static BuildingTypeClass const ClassPower(
 		Read_Is_Buildable("NUKE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("AFLD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("NUKE", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("NUKE", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("NUKE", 300),										// COST:			Cost to purchase.
 	Read_Scenario_Level("NUKE", 1),											// SCENARIO:	Starting availability scenario.
-	0,50,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("NUKE", 0,50),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("NUKE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("NUKE", WEAPON_NONE),Read_Secondary_Weapon("NUKE", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("NUKE", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("NUKE", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("NUKE", 100),										// POWER:		Power points required.
@@ -923,12 +923,12 @@ static BuildingTypeClass const ClassAdvancedPower(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("NUK2", 5),											// Build level.
 	Read_Prerequisite("NUK2", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("NUK2", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("NUK2", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("NUK2", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("NUK2", false),		// Is this a wall type structure?
+		Read_Is_Factory("NUK2", false),		// Is it a factory type building?
 		Read_Is_Captureable("NUK2", true),			// Can this building be captured?
 		Read_Is_Flammable("NUK2", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -944,17 +944,17 @@ static BuildingTypeClass const ClassAdvancedPower(
 		Read_Is_Buildable("NUK2", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("NUK2", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("NUK2", 300),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("NUK2", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("NUK2", 700),										// COST:			Cost to purchase.
 	Read_Scenario_Level("NUK2", 13),										// SCENARIO:	Starting availability scenario.
-	0,75,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("NUK2", 0,75),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("NUK2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("NUK2", WEAPON_NONE),Read_Secondary_Weapon("NUK2", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("NUK2", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("NUK2", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("NUK2", 200),										// POWER:		Power points required.
@@ -972,12 +972,12 @@ static BuildingTypeClass const ClassHospital(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HOSP", 99),							// Build level.
 	Read_Prerequisite("HOSP", STRUCT_BARRACKS),			// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("HOSP", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("HOSP", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("HOSP", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("HOSP", false),		// Is this a wall type structure?
+		Read_Is_Factory("HOSP", false),		// Is it a factory type building?
 		Read_Is_Captureable("HOSP", true),			// Can this building be captured?
 		Read_Is_Flammable("HOSP", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -993,17 +993,17 @@ static BuildingTypeClass const ClassHospital(
 		Read_Is_Buildable("HOSP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("HOSP", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HOSP", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("HOSP", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HOSP", 500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HOSP", 99),										// SCENARIO:	Starting availability scenario.
-	0,20, 									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("HOSP", 0,20), 									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HOSP", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("HOSP", WEAPON_NONE),Read_Secondary_Weapon("HOSP", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("HOSP", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("HOSP", 100),										// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("HOSP", 0),											// POWER:		Power points required.
@@ -1022,12 +1022,12 @@ static BuildingTypeClass const ClassBioLab(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BIO", 99),							// Build level.
 	Read_Prerequisite("BIO", STRUCT_HOSPITAL),			// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("BIO", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("BIO", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("BIO", true),			// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("BIO", false),		// Is this a wall type structure?
+		Read_Is_Factory("BIO", false),		// Is it a factory type building?
 		Read_Is_Captureable("BIO", false),		// Can this building be captured?
 		Read_Is_Flammable("BIO", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -1043,17 +1043,17 @@ static BuildingTypeClass const ClassBioLab(
 		Read_Is_Buildable("BIO", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("BIO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BIO", 300),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("BIO", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BIO", 500),										// COST:			Cost to purchase.
 	Read_Scenario_Level("BIO", 99),										// SCENARIO:	Starting availability scenario.
-	0,1,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("BIO", 0,1),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BIO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("BIO", WEAPON_NONE),Read_Secondary_Weapon("BIO", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("BIO", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("BIO", 100),										// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("BIO", 0),											// POWER:		Power points required.
@@ -1071,12 +1071,12 @@ static BuildingTypeClass const ClassBarracks(
 	XYP_COORD(30,33),						// Exit point for produced units.
 	Read_Build_Level("PYLE", 0),								// Build level.
 	Read_Prerequisite("PYLE", STRUCT_POWER),				// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("PYLE", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("PYLE", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("PYLE", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
+		Read_Is_Wall("PYLE", false),		// Is this a wall type structure?
+		Read_Is_Factory("PYLE", true),			// Is it a factory type building?
 		Read_Is_Captureable("PYLE", true),			// Can this building be captured?
 		Read_Is_Flammable("PYLE", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -1092,17 +1092,17 @@ static BuildingTypeClass const ClassBarracks(
 		Read_Is_Buildable("PYLE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
+	Read_Factory_Type("NUKE", FACTORY_TYPE_INFANTRY),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("PYLE", 400),										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("PYLE", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("PYLE", 300),										// COST:			Cost to purchase.
 	Read_Scenario_Level("PYLE", 1),											// SCENARIO:	Starting availability scenario.
-	0,60,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("PYLE", 0,60),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("PYLE", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	Read_Primary_Weapon("PYLE", WEAPON_NONE),Read_Secondary_Weapon("PYLE", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("PYLE", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("PYLE", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("PYLE", 0),											// POWER:		Power points required.
@@ -1120,12 +1120,12 @@ static BuildingTypeClass const ClassHand(
 	XYP_COORD(36,63),						// Exit point for produced units.
 	Read_Build_Level("HAND", 0),								// Build level.
 	Read_Prerequisite("HAND", STRUCT_POWER),				// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("HAND", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("HAND", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("HAND", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
+		Read_Is_Wall("HAND", false),		// Is this a wall type structure?
+		Read_Is_Factory("HAND", true),			// Is it a factory type building?
 		Read_Is_Captureable("HAND", true),			// Can this building be captured?
 		Read_Is_Flammable("HAND", false),		// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1141,17 +1141,17 @@ static BuildingTypeClass const ClassHand(
 		Read_Is_Buildable("HAND", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
+	Read_Factory_Type("HAND", FACTORY_TYPE_INFANTRY),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HAND", 400),										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("HAND", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("HAND", 300),										// COST:			Cost to purchase.
 	Read_Scenario_Level("HAND", 2),											// SCENARIO:	Starting availability scenario.
-	0,61,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("HAND", 0,61),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("HAND", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	Read_Primary_Weapon("HAND", WEAPON_NONE),Read_Secondary_Weapon("HAND", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("HAND", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("HAND", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("HAND", 0),											// POWER:		Power points required.
@@ -1169,12 +1169,12 @@ static BuildingTypeClass const ClassTanker(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ARCO", 99),							// Build level.
 	Read_Prerequisite("ARCO", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("ARCO", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("ARCO", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("ARCO", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("ARCO", false),		// Is this a wall type structure?
+		Read_Is_Factory("ARCO", false),		// Is it a factory type building?
 		Read_Is_Captureable("ARCO", false),		// Can this building be captured?
 		Read_Is_Flammable("ARCO", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1190,17 +1190,17 @@ static BuildingTypeClass const ClassTanker(
 		Read_Is_Buildable("ARCO", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("PYLE", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ARCO", 100),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("ARCO", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("ARCO", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("ARCO", 0),											// SCENARIO:	Starting availability scenario.
-	0,1, 										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("ARCO", 0,1), 										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ARCO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("ARCO", WEAPON_NONE),Read_Secondary_Weapon("ARCO", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("ARCO", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("ARCO", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("ARCO", 0),											// POWER:		Power points required.
@@ -1218,12 +1218,12 @@ static BuildingTypeClass const ClassRepair(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("FIX", 5),								// Build level.
 	Read_Prerequisite("FIX", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("FIX", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("FIX", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("FIX", true),			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("FIX", false),		// Is this a wall type structure?
+		Read_Is_Factory("FIX", false),		// Is it a factory type building?
 		Read_Is_Captureable("FIX", true),			// Can this building be captured?
 		Read_Is_Flammable("FIX", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -1239,17 +1239,17 @@ static BuildingTypeClass const ClassRepair(
 		Read_Is_Buildable("FIX", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("FIX", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("FIX", 400),										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("FIX", 3),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("FIX", 1200),										// COST:			Cost to purchase.
 	Read_Scenario_Level("FIX", 8),											// SCENARIO:	Starting availability scenario.
-	0,46,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("FIX", 0,46),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("FIX", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("FIX", WEAPON_NONE),Read_Secondary_Weapon("FIX", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("FIX", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("FIX", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("FIX", 0),											// POWER:		Power points required.
@@ -1269,12 +1269,12 @@ static BuildingTypeClass const ClassRoad(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ROAD", 99),							// Build level.
 	0,								// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("ROAD", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("ROAD", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("ROAD", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("ROAD", false),		// Is this a wall type structure?
+		Read_Is_Factory("ROAD", false),		// Is it a factory type building?
 		Read_Is_Captureable("ROAD", false),		// Can this building be captured?
 		Read_Is_Flammable("ROAD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -1290,17 +1290,17 @@ static BuildingTypeClass const ClassRoad(
 		Read_Is_Buildable("ROAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("ROAD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ROAD", 1),											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("ROAD", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("ROAD", 50),										// COST:			Cost to purchase.
 	Read_Scenario_Level("ROAD", 99),										// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("ROAD", 0,0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("ROAD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("ROAD", WEAPON_NONE),Read_Secondary_Weapon("ROAD", WEAPON_NONE),
-	ARMOR_NONE,								// ARMOR:		Armor type
+	Read_Armor("ROAD", ARMOR_NONE),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("ROAD", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("ROAD", 0),											// POWER:		Power points required.
@@ -1319,12 +1319,12 @@ static BuildingTypeClass const ClassV01(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V01", 99),							// Build level.
 	Read_Prerequisite("V01", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V01", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V01", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V01", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V01", false),		// Is this a wall type structure?
+		Read_Is_Factory("V01", false),		// Is it a factory type building?
 		Read_Is_Captureable("V01", false),		// Can this building be captured?
 		Read_Is_Flammable("V01", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1340,17 +1340,17 @@ static BuildingTypeClass const ClassV01(
 		Read_Is_Buildable("V01", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V01", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V01", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V01", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V01", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V01", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V01", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V01", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V01", WEAPON_NONE),Read_Secondary_Weapon("V01", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V01", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V01", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V01", 0),											// POWER:		Power points required.
@@ -1368,12 +1368,12 @@ static BuildingTypeClass const ClassV02(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V02", 99),							// Build level.
 	Read_Prerequisite("V02", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V02", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V02", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V02", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V02", false),		// Is this a wall type structure?
+		Read_Is_Factory("V02", false),		// Is it a factory type building?
 		Read_Is_Captureable("V02", false),		// Can this building be captured?
 		Read_Is_Flammable("V02", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1389,17 +1389,17 @@ static BuildingTypeClass const ClassV02(
 		Read_Is_Buildable("V02", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V02", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V02", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V02", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V02", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V02", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V02", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V02", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V02", WEAPON_NONE),Read_Secondary_Weapon("V02", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V02", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V02", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V02", 0),											// POWER:		Power points required.
@@ -1417,12 +1417,12 @@ static BuildingTypeClass const ClassV03(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V03", 99),							// Build level.
 	Read_Prerequisite("V03", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V03", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V03", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V03", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V03", false),		// Is this a wall type structure?
+		Read_Is_Factory("V03", false),		// Is it a factory type building?
 		Read_Is_Captureable("V03", false),		// Can this building be captured?
 		Read_Is_Flammable("V03", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1438,17 +1438,17 @@ static BuildingTypeClass const ClassV03(
 		Read_Is_Buildable("V03", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V03", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V03", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V03", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V03", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V03", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V03", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V03", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V03", WEAPON_NONE),Read_Secondary_Weapon("V03", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V03", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V03", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V03", 0),											// POWER:		Power points required.
@@ -1466,12 +1466,12 @@ static BuildingTypeClass const ClassV04(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V04", 99),							// Build level.
 	Read_Prerequisite("V04", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V04", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V04", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V04", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V04", false),		// Is this a wall type structure?
+		Read_Is_Factory("V04", false),		// Is it a factory type building?
 		Read_Is_Captureable("V04", false),		// Can this building be captured?
 		Read_Is_Flammable("V04", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1487,17 +1487,17 @@ static BuildingTypeClass const ClassV04(
 		Read_Is_Buildable("V04", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V04", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V04", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V04", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V04", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V04", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V04", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V04", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V04", WEAPON_NONE),Read_Secondary_Weapon("V04", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V04", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V04", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V04", 0),											// POWER:		Power points required.
@@ -1515,12 +1515,12 @@ static BuildingTypeClass const ClassV05(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V05", 99),							// Build level.
 	Read_Prerequisite("V05", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V05", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V05", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V05", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V05", false),		// Is this a wall type structure?
+		Read_Is_Factory("V05", false),		// Is it a factory type building?
 		Read_Is_Captureable("V05", false),		// Can this building be captured?
 		Read_Is_Flammable("V05", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1536,17 +1536,17 @@ static BuildingTypeClass const ClassV05(
 		Read_Is_Buildable("V05", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V05", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V05", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V05", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V05", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V05", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V05", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V05", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V05", WEAPON_NONE),Read_Secondary_Weapon("V05", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V05", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V05", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V05", 0),											// POWER:		Power points required.
@@ -1564,12 +1564,12 @@ static BuildingTypeClass const ClassV06(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V06", 99),							// Build level.
 	Read_Prerequisite("V06", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V06", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V06", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V06", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V06", false),		// Is this a wall type structure?
+		Read_Is_Factory("V06", false),		// Is it a factory type building?
 		Read_Is_Captureable("V06", false),		// Can this building be captured?
 		Read_Is_Flammable("V06", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1585,17 +1585,17 @@ static BuildingTypeClass const ClassV06(
 		Read_Is_Buildable("V06", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V06", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V06", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V06", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V06", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V06", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V06", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V06", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V06", WEAPON_NONE),Read_Secondary_Weapon("V06", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V06", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V06", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V06", 0),											// POWER:		Power points required.
@@ -1613,12 +1613,12 @@ static BuildingTypeClass const ClassV07(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V07", 99),							// Build level.
 	Read_Prerequisite("V07", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V07", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V07", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V07", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V07", false),		// Is this a wall type structure?
+		Read_Is_Factory("V07", false),		// Is it a factory type building?
 		Read_Is_Captureable("V07", false),		// Can this building be captured?
 		Read_Is_Flammable("V07", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1634,17 +1634,17 @@ static BuildingTypeClass const ClassV07(
 		Read_Is_Buildable("V07", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V07", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V07", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V07", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V07", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V07", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V07", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V07", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V07", WEAPON_NONE),Read_Secondary_Weapon("V07", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V07", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V07", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V07", 0),											// POWER:		Power points required.
@@ -1662,12 +1662,12 @@ static BuildingTypeClass const ClassV08(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V08", 99),							// Build level.
 	Read_Prerequisite("V08", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V08", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V08", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V08", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V08", false),		// Is this a wall type structure?
+		Read_Is_Factory("V08", false),		// Is it a factory type building?
 		Read_Is_Captureable("V08", false),		// Can this building be captured?
 		Read_Is_Flammable("V08", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1683,17 +1683,17 @@ static BuildingTypeClass const ClassV08(
 		Read_Is_Buildable("V08", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V08", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V08", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V08", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V08", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V08", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V08", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V08", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V08", WEAPON_NONE),Read_Secondary_Weapon("V08", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V08", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V08", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V08", 0),											// POWER:		Power points required.
@@ -1711,12 +1711,12 @@ static BuildingTypeClass const ClassV09(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V09", 99),							// Build level.
 	Read_Prerequisite("V09", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V09", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V09", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V09", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V09", false),		// Is this a wall type structure?
+		Read_Is_Factory("V09", false),		// Is it a factory type building?
 		Read_Is_Captureable("V09", false),		// Can this building be captured?
 		Read_Is_Flammable("V09", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1732,17 +1732,17 @@ static BuildingTypeClass const ClassV09(
 		Read_Is_Buildable("V09", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V09", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V09", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V09", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V09", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V09", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V09", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V09", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V09", WEAPON_NONE),Read_Secondary_Weapon("V09", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V09", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V09", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V09", 0),											// POWER:		Power points required.
@@ -1760,12 +1760,12 @@ static BuildingTypeClass const ClassV10(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V10", 99),							// Build level.
 	Read_Prerequisite("V10", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V10", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V10", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V10", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V10", false),		// Is this a wall type structure?
+		Read_Is_Factory("V10", false),		// Is it a factory type building?
 		Read_Is_Captureable("V10", false),		// Can this building be captured?
 		Read_Is_Flammable("V10", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1781,17 +1781,17 @@ static BuildingTypeClass const ClassV10(
 		Read_Is_Buildable("V10", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V10", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V10", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V10", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V10", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V10", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V10", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V10", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V10", WEAPON_NONE),Read_Secondary_Weapon("V10", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V10", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V10", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V10", 0),											// POWER:		Power points required.
@@ -1809,12 +1809,12 @@ static BuildingTypeClass const ClassV11(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V11", 99),							// Build level.
 	Read_Prerequisite("V11", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V11", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V11", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V11", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V11", false),		// Is this a wall type structure?
+		Read_Is_Factory("V11", false),		// Is it a factory type building?
 		Read_Is_Captureable("V11", false),		// Can this building be captured?
 		Read_Is_Flammable("V11", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1830,17 +1830,17 @@ static BuildingTypeClass const ClassV11(
 		Read_Is_Buildable("V11", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V11", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V11", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V11", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V11", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V11", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V11", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V11", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V11", WEAPON_NONE),Read_Secondary_Weapon("V11", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V11", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V11", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V11", 0),											// POWER:		Power points required.
@@ -1858,12 +1858,12 @@ static BuildingTypeClass const ClassV12(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V12", 99),							// Build level.
 	Read_Prerequisite("V12", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V12", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V12", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V12", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V12", false),		// Is this a wall type structure?
+		Read_Is_Factory("V12", false),		// Is it a factory type building?
 		Read_Is_Captureable("V12", false),		// Can this building be captured?
 		Read_Is_Flammable("V12", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1879,17 +1879,17 @@ static BuildingTypeClass const ClassV12(
 		Read_Is_Buildable("V12", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V12", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V12", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V12", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V12", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V12", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V12", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V12", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V12", WEAPON_NONE),Read_Secondary_Weapon("V12", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V12", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V12", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V12", 0),											// POWER:		Power points required.
@@ -1907,12 +1907,12 @@ static BuildingTypeClass const ClassV13(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V13", 99),							// Build level.
 	Read_Prerequisite("V13", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V13", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V13", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V13", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V13", false),		// Is this a wall type structure?
+		Read_Is_Factory("V13", false),		// Is it a factory type building?
 		Read_Is_Captureable("V13", false),		// Can this building be captured?
 		Read_Is_Flammable("V13", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1928,17 +1928,17 @@ static BuildingTypeClass const ClassV13(
 		Read_Is_Buildable("V13", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V13", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V13", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V13", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V13", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V13", 0),											// SCENARIO:	Starting availability scenario.
-	0,2, 						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V13", 0,2), 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V13", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V13", WEAPON_NONE),Read_Secondary_Weapon("V13", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V13", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V13", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V13", 0),											// POWER:		Power points required.
@@ -1956,12 +1956,12 @@ static BuildingTypeClass const ClassV14(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V14", 99),							// Build level.
 	Read_Prerequisite("V14", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V14", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V14", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V14", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V14", false),		// Is this a wall type structure?
+		Read_Is_Factory("V14", false),		// Is it a factory type building?
 		Read_Is_Captureable("V14", false),		// Can this building be captured?
 		Read_Is_Flammable("V14", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -1977,17 +1977,17 @@ static BuildingTypeClass const ClassV14(
 		Read_Is_Buildable("V14", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V14", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V14", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V14", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V14", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V14", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V14", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V14", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V14", WEAPON_NONE),Read_Secondary_Weapon("V14", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V14", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V14", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V14", 0),											// POWER:		Power points required.
@@ -2005,12 +2005,12 @@ static BuildingTypeClass const ClassV15(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V15", 99),							// Build level.
 	Read_Prerequisite("V15", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V15", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V15", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V15", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V15", false),		// Is this a wall type structure?
+		Read_Is_Factory("V15", false),		// Is it a factory type building?
 		Read_Is_Captureable("V15", false),		// Can this building be captured?
 		Read_Is_Flammable("V15", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2026,17 +2026,17 @@ static BuildingTypeClass const ClassV15(
 		Read_Is_Buildable("V15", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V15", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V15", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V15", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V15", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V15", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V15", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V15", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V15", WEAPON_NONE),Read_Secondary_Weapon("V15", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V15", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V15", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V15", 0),											// POWER:		Power points required.
@@ -2054,12 +2054,12 @@ static BuildingTypeClass const ClassV16(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V16", 99),							// Build level.
 	Read_Prerequisite("V16", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V16", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V16", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V16", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V16", false),		// Is this a wall type structure?
+		Read_Is_Factory("V16", false),		// Is it a factory type building?
 		Read_Is_Captureable("V16", false),		// Can this building be captured?
 		Read_Is_Flammable("V16", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2075,17 +2075,17 @@ static BuildingTypeClass const ClassV16(
 		Read_Is_Buildable("V16", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V16", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V16", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V16", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V16", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V16", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V16", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V16", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V16", WEAPON_NONE),Read_Secondary_Weapon("V16", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V16", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V16", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V16", 0),											// POWER:		Power points required.
@@ -2103,12 +2103,12 @@ static BuildingTypeClass const ClassV17(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V17", 99),							// Build level.
 	Read_Prerequisite("V17", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V17", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V17", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V17", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V17", false),		// Is this a wall type structure?
+		Read_Is_Factory("V17", false),		// Is it a factory type building?
 		Read_Is_Captureable("V17", false),		// Can this building be captured?
 		Read_Is_Flammable("V17", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2124,17 +2124,17 @@ static BuildingTypeClass const ClassV17(
 		Read_Is_Buildable("V17", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V17", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V17", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V17", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V17", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V17", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V17", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V17", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V17", WEAPON_NONE),Read_Secondary_Weapon("V17", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V17", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V17", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V17", 0),											// POWER:		Power points required.
@@ -2152,12 +2152,12 @@ static BuildingTypeClass const ClassV18(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V18", 99),							// Build level.
 	Read_Prerequisite("V18", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V18", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V18", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V18", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V18", false),		// Is this a wall type structure?
+		Read_Is_Factory("V18", false),		// Is it a factory type building?
 		Read_Is_Captureable("V18", false),		// Can this building be captured?
 		Read_Is_Flammable("V18", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2173,17 +2173,17 @@ static BuildingTypeClass const ClassV18(
 		Read_Is_Buildable("V18", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V18", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V18", 200),										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V18", 1),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V18", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V18", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V18", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V18", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL"),						// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL",
 	Read_Primary_Weapon("V18", WEAPON_NONE),Read_Secondary_Weapon("V18", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V18", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V18", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V18", 0),											// POWER:		Power points required.
@@ -2201,12 +2201,12 @@ static BuildingTypeClass const ClassV19(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V19", 99),							// Build level.
 	Read_Prerequisite("V19", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V19", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V19", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V19", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V19", false),		// Is this a wall type structure?
+		Read_Is_Factory("V19", false),		// Is it a factory type building?
 		Read_Is_Captureable("V19", false),		// Can this building be captured?
 		Read_Is_Flammable("V19", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -2222,17 +2222,17 @@ static BuildingTypeClass const ClassV19(
 		Read_Is_Buildable("V19", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V19", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V19", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V19", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V19", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V19", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V19", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V19", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V19", WEAPON_NONE),Read_Secondary_Weapon("V19", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V19", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V19", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V19", 0),											// POWER:		Power points required.
@@ -2250,12 +2250,12 @@ static BuildingTypeClass const ClassV20(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V20", 99),							// Build level.
 	Read_Prerequisite("V20", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V20", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V20", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V20", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V20", false),		// Is this a wall type structure?
+		Read_Is_Factory("V20", false),		// Is it a factory type building?
 		Read_Is_Captureable("V20", false),		// Can this building be captured?
 		Read_Is_Flammable("V20", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -2271,17 +2271,17 @@ static BuildingTypeClass const ClassV20(
 		Read_Is_Buildable("V20", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V20", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V20", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V20", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V20", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V20", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V20", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V20", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V20", WEAPON_NONE),Read_Secondary_Weapon("V20", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V20", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V20", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V20", 0),											// POWER:		Power points required.
@@ -2299,12 +2299,12 @@ static BuildingTypeClass const ClassV21(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V21", 99),							// Build level.
 	Read_Prerequisite("V21", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V21", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V21", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V21", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V21", false),		// Is this a wall type structure?
+		Read_Is_Factory("V21", false),		// Is it a factory type building?
 		Read_Is_Captureable("V21", false),		// Can this building be captured?
 		Read_Is_Flammable("V21", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -2320,17 +2320,17 @@ static BuildingTypeClass const ClassV21(
 		Read_Is_Buildable("V21", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V21", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V21", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V21", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V21", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V21", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V21", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V21", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V21", WEAPON_NONE),Read_Secondary_Weapon("V21", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V21", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V21", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V21", 0),											// POWER:		Power points required.
@@ -2348,12 +2348,12 @@ static BuildingTypeClass const ClassV22(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V22", 99),							// Build level.
 	Read_Prerequisite("V22", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V22", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V22", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V22", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V22", false),		// Is this a wall type structure?
+		Read_Is_Factory("V22", false),		// Is it a factory type building?
 		Read_Is_Captureable("V22", false),		// Can this building be captured?
 		Read_Is_Flammable("V22", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -2369,17 +2369,17 @@ static BuildingTypeClass const ClassV22(
 		Read_Is_Buildable("V22", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V22", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V22", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V22", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V22", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V22", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V22", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V22", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V22", WEAPON_NONE),Read_Secondary_Weapon("V22", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V22", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V22", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V22", 0),											// POWER:		Power points required.
@@ -2397,12 +2397,12 @@ static BuildingTypeClass const ClassV23(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V23", 99),							// Build level.
 	Read_Prerequisite("V23", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V23", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V23", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V23", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V23", false),		// Is this a wall type structure?
+		Read_Is_Factory("V23", false),		// Is it a factory type building?
 		Read_Is_Captureable("V23", false),		// Can this building be captured?
 		Read_Is_Flammable("V23", true),			// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -2418,17 +2418,17 @@ static BuildingTypeClass const ClassV23(
 		Read_Is_Buildable("V23", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V23", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V23", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V23", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V23", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V23", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V23", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V23", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V23", WEAPON_NONE),Read_Secondary_Weapon("V23", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V23", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V23", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V23", 0),											// POWER:		Power points required.
@@ -2446,12 +2446,12 @@ static BuildingTypeClass const ClassV24(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V24", 99),							// Build level.
 	Read_Prerequisite("V24", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V24", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V24", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V24", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V24", false),		// Is this a wall type structure?
+		Read_Is_Factory("V24", false),		// Is it a factory type building?
 		Read_Is_Captureable("V24", false),		// Can this building be captured?
 		Read_Is_Flammable("V24", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2467,17 +2467,17 @@ static BuildingTypeClass const ClassV24(
 		Read_Is_Buildable("V24", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V24", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V24", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V24", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V24", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V24", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V24", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V24", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V24", WEAPON_NONE),Read_Secondary_Weapon("V24", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V24", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V24", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V24", 0),											// POWER:		Power points required.
@@ -2495,12 +2495,12 @@ static BuildingTypeClass const ClassV25(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V25", 99),							// Build level.
 	Read_Prerequisite("V25", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V25", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V25", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V25", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V25", false),		// Is this a wall type structure?
+		Read_Is_Factory("V25", false),		// Is it a factory type building?
 		Read_Is_Captureable("V25", false),		// Can this building be captured?
 		Read_Is_Flammable("V25", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2516,17 +2516,17 @@ static BuildingTypeClass const ClassV25(
 		Read_Is_Buildable("V25", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V25", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V25", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V25", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V25", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V25", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V25", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V25", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V25", WEAPON_NONE),Read_Secondary_Weapon("V25", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V25", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V25", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V25", 0),											// POWER:		Power points required.
@@ -2544,12 +2544,12 @@ static BuildingTypeClass const ClassV26(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V26", 99),							// Build level.
 	Read_Prerequisite("V26", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V26", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V26", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V26", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V26", false),		// Is this a wall type structure?
+		Read_Is_Factory("V26", false),		// Is it a factory type building?
 		Read_Is_Captureable("V26", false),		// Can this building be captured?
 		Read_Is_Flammable("V26", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2565,17 +2565,17 @@ static BuildingTypeClass const ClassV26(
 		Read_Is_Buildable("V26", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V26", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V26", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V26", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V26", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V26", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V26", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V26", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V26", WEAPON_NONE),Read_Secondary_Weapon("V26", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V26", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V26", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V26", 0),											// POWER:		Power points required.
@@ -2593,12 +2593,12 @@ static BuildingTypeClass const ClassV27(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V27", 99),							// Build level.
 	Read_Prerequisite("V27", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V27", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V27", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V27", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V27", false),		// Is this a wall type structure?
+		Read_Is_Factory("V27", false),		// Is it a factory type building?
 		Read_Is_Captureable("V27", false),		// Can this building be captured?
 		Read_Is_Flammable("V27", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2614,17 +2614,17 @@ static BuildingTypeClass const ClassV27(
 		Read_Is_Buildable("V27", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V27", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V27", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V27", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V27", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V27", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V27", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V27", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V27", WEAPON_NONE),Read_Secondary_Weapon("V27", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V27", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V27", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V27", 0),											// POWER:		Power points required.
@@ -2642,12 +2642,12 @@ static BuildingTypeClass const ClassV28(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V28", 99),							// Build level.
 	Read_Prerequisite("V28", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V28", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V28", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V28", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V28", false),		// Is this a wall type structure?
+		Read_Is_Factory("V28", false),		// Is it a factory type building?
 		Read_Is_Captureable("V28", false),		// Can this building be captured?
 		Read_Is_Flammable("V28", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2663,17 +2663,17 @@ static BuildingTypeClass const ClassV28(
 		Read_Is_Buildable("V28", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V28", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V28", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V28", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V28", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V28", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V28", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V28", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V28", WEAPON_NONE),Read_Secondary_Weapon("V28", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V28", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V28", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V28", 0),											// POWER:		Power points required.
@@ -2691,12 +2691,12 @@ static BuildingTypeClass const ClassV29(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V29", 99),							// Build level.
 	Read_Prerequisite("V29", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V29", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V29", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V29", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V29", false),		// Is this a wall type structure?
+		Read_Is_Factory("V29", false),		// Is it a factory type building?
 		Read_Is_Captureable("V29", false),		// Can this building be captured?
 		Read_Is_Flammable("V29", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2712,17 +2712,17 @@ static BuildingTypeClass const ClassV29(
 		Read_Is_Buildable("V29", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V29", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V29", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V29", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V29", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V29", 0),											// SCENARIO:	Starting availability scenario.
-	0,2, 						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V29", 0,2), 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V29", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V29", WEAPON_NONE),Read_Secondary_Weapon("V29", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V29", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V29", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V29", 0),											// POWER:		Power points required.
@@ -2740,12 +2740,12 @@ static BuildingTypeClass const ClassV30(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V30", 99),							// Build level.
 	Read_Prerequisite("V30", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V30", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V30", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V30", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V30", false),		// Is this a wall type structure?
+		Read_Is_Factory("V30", false),		// Is it a factory type building?
 		Read_Is_Captureable("V30", false),		// Can this building be captured?
 		Read_Is_Flammable("V30", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2761,17 +2761,17 @@ static BuildingTypeClass const ClassV30(
 		Read_Is_Buildable("V30", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V30", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V30", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V30", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V30", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V30", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V30", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V30", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V30", WEAPON_NONE),Read_Secondary_Weapon("V30", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V30", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V30", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V30", 0),											// POWER:		Power points required.
@@ -2789,12 +2789,12 @@ static BuildingTypeClass const ClassV31(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V31", 99),							// Build level.
 	Read_Prerequisite("V31", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V31", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V31", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V31", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V31", false),		// Is this a wall type structure?
+		Read_Is_Factory("V31", false),		// Is it a factory type building?
 		Read_Is_Captureable("V31", false),		// Can this building be captured?
 		Read_Is_Flammable("V31", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2810,17 +2810,17 @@ static BuildingTypeClass const ClassV31(
 		Read_Is_Buildable("V31", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V31", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V31", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V31", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V31", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V31", 0),											// SCENARIO:	Starting availability scenario.
-	0,2, 						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V31", 0,2), 						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V31", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V31", WEAPON_NONE),Read_Secondary_Weapon("V31", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V31", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V31", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V31", 0),											// POWER:		Power points required.
@@ -2838,12 +2838,12 @@ static BuildingTypeClass const ClassV32(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V32", 99),							// Build level.
 	Read_Prerequisite("V32", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V32", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V32", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V32", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V32", false),		// Is this a wall type structure?
+		Read_Is_Factory("V32", false),		// Is it a factory type building?
 		Read_Is_Captureable("V32", false),		// Can this building be captured?
 		Read_Is_Flammable("V32", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2859,17 +2859,17 @@ static BuildingTypeClass const ClassV32(
 		Read_Is_Buildable("V32", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V32", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V32", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V32", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V32", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V32", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V32", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V32", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V32", WEAPON_NONE),Read_Secondary_Weapon("V32", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V32", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V32", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V32", 0),											// POWER:		Power points required.
@@ -2887,12 +2887,12 @@ static BuildingTypeClass const ClassV33(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V33", 99),							// Build level.
 	Read_Prerequisite("V33", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V33", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V33", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V33", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V33", false),		// Is this a wall type structure?
+		Read_Is_Factory("V33", false),		// Is it a factory type building?
 		Read_Is_Captureable("V33", false),		// Can this building be captured?
 		Read_Is_Flammable("V33", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2908,17 +2908,17 @@ static BuildingTypeClass const ClassV33(
 		Read_Is_Buildable("V33", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V33", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V33", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V33", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V33", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V33", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V33", 0,2),						// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V33", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V33", WEAPON_NONE),Read_Secondary_Weapon("V33", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V33", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V33", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V33", 0),											// POWER:		Power points required.
@@ -2936,12 +2936,12 @@ static BuildingTypeClass const ClassV34(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V34", 99),							// Build level.
 	Read_Prerequisite("V34", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V34", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V34", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V34", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V34", false),		// Is this a wall type structure?
+		Read_Is_Factory("V34", false),		// Is it a factory type building?
 		Read_Is_Captureable("V34", false),		// Can this building be captured?
 		Read_Is_Flammable("V34", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -2957,17 +2957,17 @@ static BuildingTypeClass const ClassV34(
 		Read_Is_Buildable("V34", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V34", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V34", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V34", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V34", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V34", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V34", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V34", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V34", WEAPON_NONE),Read_Secondary_Weapon("V34", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V34", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V34", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V34", 0),											// POWER:		Power points required.
@@ -2985,12 +2985,12 @@ static BuildingTypeClass const ClassV35(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V35", 99),							// Build level.
 	Read_Prerequisite("V35", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V35", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V35", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V35", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V35", false),		// Is this a wall type structure?
+		Read_Is_Factory("V35", false),		// Is it a factory type building?
 		Read_Is_Captureable("V35", false),		// Can this building be captured?
 		Read_Is_Flammable("V35", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -3006,17 +3006,17 @@ static BuildingTypeClass const ClassV35(
 		Read_Is_Buildable("V35", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V35", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V35", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V35", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V35", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V35", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V35", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V35", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V35", WEAPON_NONE),Read_Secondary_Weapon("V35", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V35", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V35", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V35", 0),											// POWER:		Power points required.
@@ -3034,12 +3034,12 @@ static BuildingTypeClass const ClassV36(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V36", 99),							// Build level.
 	Read_Prerequisite("V36", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V36", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V36", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V36", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V36", false),		// Is this a wall type structure?
+		Read_Is_Factory("V36", false),		// Is it a factory type building?
 		Read_Is_Captureable("V36", false),		// Can this building be captured?
 		Read_Is_Flammable("V36", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -3055,17 +3055,17 @@ static BuildingTypeClass const ClassV36(
 		Read_Is_Buildable("V36", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V36", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V36", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V36", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V36", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V36", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V36", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V36", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V36", WEAPON_NONE),Read_Secondary_Weapon("V36", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V36", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V36", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V36", 0),											// POWER:		Power points required.
@@ -3082,12 +3082,12 @@ static BuildingTypeClass const ClassV37(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V37", 99),							// Build level.
 	Read_Prerequisite("V37", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("V37", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("V37", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("V37", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("V37", false),		// Is this a wall type structure?
+		Read_Is_Factory("V37", false),		// Is it a factory type building?
 		Read_Is_Captureable("V37", false),		// Can this building be captured?
 		Read_Is_Flammable("V37", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -3103,17 +3103,17 @@ static BuildingTypeClass const ClassV37(
 		Read_Is_Buildable("V37", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("V37", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V37", 300),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("V37", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("V37", 0),											// COST:			Cost to purchase.
 	Read_Scenario_Level("V37", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("V37", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("V37", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("V37", WEAPON_NONE),Read_Secondary_Weapon("V37", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("V37", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("V37", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("V37", 0),											// POWER:		Power points required.
@@ -3130,12 +3130,12 @@ static BuildingTypeClass const ClassMission(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("MISS", 99),							// Build level.
 	Read_Prerequisite("MISS", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		true,			// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		Read_Detects_Cloak("MISS", true),			// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("MISS", true),			// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("MISS", true),			// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("MISS", false),		// Is this a wall type structure?
+		Read_Is_Factory("MISS", false),		// Is it a factory type building?
 		Read_Is_Captureable("MISS", true),			// Can this building be captured?
 		Read_Is_Flammable("MISS", true),			// Does it catch fire?
 		true,			// Simple (one frame) damage imagery?
@@ -3151,17 +3151,17 @@ static BuildingTypeClass const ClassMission(
 		Read_Is_Buildable("MISS", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("MISS", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("MISS", 200),										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("MISS", 2),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("MISS", 1000),										// COST:			Cost to purchase.
 	Read_Scenario_Level("MISS", 0),											// SCENARIO:	Starting availability scenario.
-	0,2,									// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("MISS", 0,2),									// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("MISS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("MISS", WEAPON_NONE),Read_Secondary_Weapon("MISS", WEAPON_NONE),
-	ARMOR_WOOD,								// ARMOR:		Armor type
+	Read_Armor("MISS", ARMOR_WOOD),								// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("MISS", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("MISS", 0),											// POWER:		Power points required.
@@ -3180,12 +3180,12 @@ static BuildingTypeClass const Sandbag(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SBAG", 2),								// Build level.
 	Read_Prerequisite("SBAG", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("SBAG", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("SBAG", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("SBAG", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("SBAG", true),			// Is this a wall type structure?
+		Read_Is_Factory("SBAG", false),		// Is it a factory type building?
 		Read_Is_Captureable("SBAG", false),		// Can this building be captured?
 		Read_Is_Flammable("SBAG", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -3201,17 +3201,17 @@ static BuildingTypeClass const Sandbag(
 		Read_Is_Buildable("SBAG", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("SBAG", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SBAG", 1),											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("SBAG", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("SBAG", 50),										// COST:			Cost to purchase.
 	Read_Scenario_Level("SBAG", 5),											// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("SBAG", 0,0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("SBAG", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("SBAG", WEAPON_NONE),Read_Secondary_Weapon("SBAG", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("SBAG", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("SBAG", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("SBAG", 0),											// POWER:		Power points required.
@@ -3229,12 +3229,12 @@ static BuildingTypeClass const Cyclone(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("CYCL", 5),								// Build level.
 	Read_Prerequisite("CYCL", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("CYCL", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("CYCL", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("CYCL", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("CYCL", true),			// Is this a wall type structure?
+		Read_Is_Factory("CYCL", false),		// Is it a factory type building?
 		Read_Is_Captureable("CYCL", false),		// Can this building be captured?
 		Read_Is_Flammable("CYCL", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -3250,17 +3250,17 @@ static BuildingTypeClass const Cyclone(
 		Read_Is_Buildable("CYCL", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("CYCL", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("CYCL", 1),											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("CYCL", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("CYCL", 75),										// COST:			Cost to purchase.
 	Read_Scenario_Level("CYCL", 9),											// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("CYCL", 0,0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("CYCL", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),								// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("CYCL", WEAPON_NONE),Read_Secondary_Weapon("CYCL", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("CYCL", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("CYCL", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("CYCL", 0),											// POWER:		Power points required.
@@ -3278,12 +3278,12 @@ static BuildingTypeClass const Brick(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BRIK", 7),								// Build level.
 	Read_Prerequisite("BRIK", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("BRIK", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("BRIK", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("BRIK", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("BRIK", true),			// Is this a wall type structure?
+		Read_Is_Factory("BRIK", false),		// Is it a factory type building?
 		Read_Is_Captureable("BRIK", false),		// Can this building be captured?
 		Read_Is_Flammable("BRIK", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -3299,17 +3299,17 @@ static BuildingTypeClass const Brick(
 		Read_Is_Buildable("BRIK", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("BRIK", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BRIK", 1),											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("BRIK", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BRIK", 100),										// COST:			Cost to purchase.
 	Read_Scenario_Level("BRIK", 13),										// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("BRIK", 0,0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BRIK", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,GOODGUY",
 	Read_Primary_Weapon("BRIK", WEAPON_NONE),Read_Secondary_Weapon("BRIK", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("BRIK", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("BRIK", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("BRIK", 0),											// POWER:		Power points required.
@@ -3327,12 +3327,12 @@ static BuildingTypeClass const Barbwire(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BARB", 98),							// Build level.
 	Read_Prerequisite("BARB", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("BARB", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("BARB", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("BARB", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("BARB", true),			// Is this a wall type structure?
+		Read_Is_Factory("BARB", false),		// Is it a factory type building?
 		Read_Is_Captureable("BARB", false),		// Can this building be captured?
 		Read_Is_Flammable("BARB", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -3348,17 +3348,17 @@ static BuildingTypeClass const Barbwire(
 		Read_Is_Buildable("BARB", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("BARB", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BARB", 1),											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("BARB", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("BARB", 25),										// COST:			Cost to purchase.
 	Read_Scenario_Level("BARB", 98),										// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("BARB", 0,0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("BARB", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_BAD | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("BARB", WEAPON_NONE),Read_Secondary_Weapon("BARB", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("BARB", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("BARB", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("BARB", 0),											// POWER:		Power points required.
@@ -3376,12 +3376,12 @@ static BuildingTypeClass const Wood(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("WOOD", 99),							// Build level.
 	Read_Prerequisite("WOOD", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
-		false,		// Has ability to detect adjacent cloaked objects?
-		false,		// Animation rate is regulated for constant speed?
-		false,		// Requires a bib dirt patch?
+		Read_Detects_Cloak("WOOD", false),		// Has ability to detect adjacent cloaked objects?
+		Read_Is_Fixed_Speed("WOOD", false),		// Animation rate is regulated for constant speed?
+		Read_Is_Bibbed("WOOD", false),		// Requires a bib dirt patch?
 		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		Read_Is_Wall("WOOD", true),			// Is this a wall type structure?
+		Read_Is_Factory("WOOD", false),		// Is it a factory type building?
 		Read_Is_Captureable("WOOD", false),		// Can this building be captured?
 		Read_Is_Flammable("WOOD", false),		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -3397,18 +3397,18 @@ static BuildingTypeClass const Wood(
 		Read_Is_Buildable("WOOD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
-	RTTI_NONE,								// The object type produced at this factory.
+	Read_Factory_Type("WOOD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("WOOD", 1),											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
+	Read_Sight_Range("WOOD", 0),											// SIGHTRANGE:	Range of sighting.
 	Read_Cost("WOOD", 25),										// COST:			Cost to purchase.
 	Read_Scenario_Level("WOOD", 98),										// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	Read_Risk_Reward("WOOD", 0,0),										// RISK/RWRD:	Risk/reward rating values.
 	Read_House_List_From_Rules_Ini("WOOD", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_NEUTRAL | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY"),							// OWNABLE:		Ownable by house (bit field).
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,NEUTRAL,GOODGUY",
 	Read_Primary_Weapon("WOOD", WEAPON_NONE),
 	Read_Secondary_Weapon("WOOD", WEAPON_NONE),
-	ARMOR_ALUMINUM,						// ARMOR:		Armor type
+	Read_Armor("WOOD", ARMOR_ALUMINUM),						// ARMOR:		Armor type
 	0,											// CANENTER:	Units that can enter building.
 	Read_Storage_Capacity("WOOD", 0),											// CAPACITY:	Spice storage capacity.
 	Read_Power_Output("WOOD", 0),											// POWER:		Power points required.
@@ -3580,7 +3580,7 @@ BuildingTypeClass::BuildingTypeClass(
 													is_repairable,
 													is_buildable,
 													is_crew,
-													-1,
+													Read_Ammo(ininame, -1),
 													strength*2,
 													MPH_IMMOBILE,
 													sightrange,
@@ -3603,7 +3603,7 @@ BuildingTypeClass::BuildingTypeClass(
 	IsCaptureable = is_captureable;
 	IsFactory = is_factory;
 	IsRegulated = is_regulated;
-	IsUnsellable = is_unsellable;
+	IsUnsellable = Read_Is_Unsellable(ininame, is_unsellable);
 	IsSimpleDamage = is_simpledamage;
 	IsSturdy = is_sturdy;
 	IsWall = is_wall;

@@ -2,7 +2,7 @@
 
 static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, BIDDED_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, BIBBED_RULE_UPPER))
     {
         auto isBibbed = Parse_Boolean(value, valueParseError);
 
@@ -83,15 +83,6 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->ToBuild = (RTTIType)factoryType;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CAN_BE_ENTERED_RULE_UPPER))
-    {
-        auto canEnter = Parse_Boolean(value, valueParseError);
-
-        if (!*valueParseError)
-        {
-            type->CanEnter = canEnter;
-        }
-    }
     else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
     {
         auto capacity = (unsigned)atoi(value);
@@ -132,7 +123,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
 static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, BIDDED_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, BIBBED_RULE_UPPER))
     {
         Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsBibbed));
 
@@ -188,12 +179,6 @@ static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const ch
 
         lua_pushstring(lua, factoryType);
     }
-    else if (Strings_Are_Equal(ruleName, CAN_BE_ENTERED_RULE_UPPER))
-    {
-        Log_Debug("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->CanEnter));
-
-        lua_pushboolean(lua, type->CanEnter);
-    }
     else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
     {
         Log_Debug("Read_Building_Rule => Rule value: %u", type->Capacity);
@@ -211,6 +196,72 @@ static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const ch
         Log_Debug("Read_Building_Rule => Rule value: %d", type->Drain);
 
         lua_pushnumber(lua, type->Drain);
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
+static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
+{
+
+    if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE_UPPER))
+    {
+        auto isFixedWing = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsFixedWing = isFixedWing;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_LAND_RULE_UPPER))
+    {
+        auto isLandable = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsLandable = isLandable;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, HAS_ROTOR_RULE_UPPER))
+    {
+        auto hasRotor = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsRotorEquipped = hasRotor;
+        }
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
+static bool Read_Aircraft_Rule(lua_State* lua, AircraftTypeClass* type, const char* ruleName)
+{
+    if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE_UPPER))
+    {
+        Log_Debug("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFixedWing));
+
+        lua_pushboolean(lua, type->IsFixedWing);
+    }
+    else if (Strings_Are_Equal(ruleName, CAN_LAND_RULE_UPPER))
+    {
+        Log_Debug("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsLandable));
+
+        lua_pushboolean(lua, type->IsLandable);
+    }
+    else if (Strings_Are_Equal(ruleName, HAS_ROTOR_RULE_UPPER))
+    {
+        Log_Debug("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRotorEquipped));
+
+        lua_pushboolean(lua, type->IsRotorEquipped);
     }
     else
     {
@@ -679,6 +730,15 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
             type->Secondary = weapon;
         }
     }
+    else if (Strings_Are_Equal(ruleName, ARMOR_RULE_UPPER))
+    {
+        auto armourType = Parse_Armor_Type(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->Armor = armourType;
+        }
+    }
     else if (Strings_Are_Equal(ruleName, AMMO_RULE_UPPER))
     {
         auto numValue = atoi(value);
@@ -687,6 +747,63 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
         if (!*valueParseError)
         {
             type->MaxAmmo = numValue;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE_UPPER))
+    {
+        auto numValue = atoi(value);
+        *valueParseError = numValue < -1 && numValue > INT_MAX;
+
+        if (!*valueParseError)
+        {
+            type->SightRange = numValue;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, RISK_RULE_UPPER))
+    {
+        auto numValue = atoi(value);
+        *valueParseError = numValue < -1 && numValue > INT_MAX;
+
+        if (!*valueParseError)
+        {
+            type->Risk = numValue;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, REWARD_RULE_UPPER))
+    {
+        auto numValue = atoi(value);
+        *valueParseError = numValue < -1 && numValue > INT_MAX;
+
+        if (!*valueParseError)
+        {
+            type->Reward = numValue;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, DETECT_CLOAKED_OBJECTS_RULE_UPPER))
+    {
+        auto isScanner = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsScanner = isScanner;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, CRUSHABLE_RULE_UPPER))
+    {
+        auto isCrushable = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsCrushable = isCrushable;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, TRANSPORTER_RULE_UPPER))
+    {
+        auto isTransporter = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            type->IsTransporter = isTransporter;
         }
     }
     else
@@ -772,11 +889,55 @@ static bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const ch
 
         lua_pushstring(lua, weaponStr);
     }
+    else if (Strings_Are_Equal(ruleName, ARMOR_RULE_UPPER))
+    {
+        auto armorStr = Armor_Type_To_String(type->Armor);
+
+        Log_Debug("Read_TechnoType_Rule => Rule value: %s", armorStr);
+
+        lua_pushstring(lua, armorStr);
+    }
     else if (Strings_Are_Equal(ruleName, AMMO_RULE_UPPER))
     {
         Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
 
         lua_pushnumber(lua, type->MaxAmmo);
+    }
+    else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE_UPPER))
+    {
+        Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
+
+        lua_pushnumber(lua, type->SightRange);
+    }
+    else if (Strings_Are_Equal(ruleName, RISK_RULE))
+    {
+        Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
+
+        lua_pushnumber(lua, type->Risk);
+    }
+    else if (Strings_Are_Equal(ruleName, REWARD_RULE))
+    {
+        Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
+
+        lua_pushnumber(lua, type->Reward);
+    }
+    else if (Strings_Are_Equal(ruleName, DETECT_CLOAKED_OBJECTS_RULE_UPPER))
+    {
+        Log_Debug("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsScanner));
+
+        lua_pushboolean(lua, type->IsScanner);
+    }
+    else if (Strings_Are_Equal(ruleName, CRUSHABLE_RULE_UPPER))
+    {
+        Log_Debug("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrushable));
+
+        lua_pushboolean(lua, type->IsCrushable);
+    }
+    else if (Strings_Are_Equal(ruleName, TRANSPORTER_RULE_UPPER))
+    {
+        Log_Debug("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTransporter));
+
+        lua_pushboolean(lua, type->IsTransporter);
     }
     else
     {
@@ -815,6 +976,37 @@ static BuildingTypeClass* ResolveBuilding(lua_State* lua, const char* buildingTy
     Log_Debug("unit type parsed: %s", Structure_Type_To_String(buildingType));
 
     return (BuildingTypeClass*)&BuildingTypeClass::As_Reference(buildingType);
+}
+
+static AircraftType ParseAircraftType(lua_State* lua, const char* aircraftTypeName, bool* parseError)
+{
+    auto aircraftType = Parse_Aircraft_Type(
+        Convert_String_To_Upper_Case(aircraftTypeName),
+        parseError
+    );
+
+    if (*parseError)
+    {
+        luaL_error(lua, "aircraft type passed was not recognised: %s", aircraftTypeName);
+        return AIRCRAFT_NONE;
+    }
+
+    return aircraftType;
+}
+
+static AircraftTypeClass* ResolveAircraft(lua_State* lua, const char* aircraftTypeName)
+{
+    bool parseError = false;
+    auto aircraftType = ParseAircraftType(lua, aircraftTypeName, &parseError);
+
+    if (parseError)
+    {
+        return NULL;
+    }
+
+    Log_Debug("aircraft type parsed: %s", Aircraft_Type_To_String(aircraftType));
+
+    return (AircraftTypeClass*)&AircraftTypeClass::As_Reference(aircraftType);
 }
 
 static UnitType ParseUnitType(lua_State* lua, const char* unitTypeName, bool* parseError)
@@ -1104,7 +1296,7 @@ int Lua_Set_Unit_Rule(lua_State* lua)
 
     if (unitTypeName == NULL)
     {
-        luaL_error(lua, "setUnitRule argument `infantryTypeName` was nil");
+        luaL_error(lua, "setUnitRule argument `unitTypeName` was nil");
         return 0;
     }
 
@@ -1174,6 +1366,156 @@ int Lua_Set_Unit_Rule(lua_State* lua)
     }
 
     luaL_error(lua, "rule name passed setUnitRule was not recognised: %s", ruleName);
+
+    return 0;
+}
+
+int Lua_Get_Aircraft_Rule(lua_State* lua)
+{
+    Log_Debug("Lua_Get_Aircraft_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 2)
+    {
+        luaL_error(lua, "getAircraftRule requires exactly two arguments");
+    }
+
+    auto aircraftTypeName = Get_Lua_Value_As_String(1);
+
+    if (aircraftTypeName == NULL)
+    {
+        luaL_error(lua, "getAircraftRule argument `aircraftTypeName` was nil");
+        return 0;
+    }
+
+
+    auto aircraft = ResolveAircraft(lua, aircraftTypeName);
+
+    if (aircraft == NULL)
+    {
+        return 0;
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(2);
+
+    if (ruleName == NULL)
+    {
+        luaL_error(lua, "getAircraftRule argument `ruleName` was nil");
+        return 0;
+    }
+
+    Log_Debug("Lua_Get_Aircraft_Rule => looking for rule '%s' in Techno Type", ruleName);
+
+    auto ruleMatched = Read_TechnoType_Rule(lua, aircraft, Convert_String_To_Upper_Case(ruleName));
+
+    if (ruleMatched)
+    {
+        Log_Debug("Lua_Get_Aircraft_Rule => Rule matched in Techno Type");
+        return 1;
+    }
+
+    Log_Debug("Lua_Get_Aircraft_Rule => looking for rule in Aircraft Type");
+
+    ruleMatched = Read_Aircraft_Rule(lua, aircraft, Convert_String_To_Upper_Case(ruleName));
+
+    if (ruleMatched)
+    {
+        Log_Debug("Lua_Get_Aircraft_Rule => Rule matched in Aircraft Type");
+        return 1;
+    }
+
+    luaL_error(lua, "rule name type passed getAircraftRule was not recognised: %s", ruleName);
+
+    return 0;
+}
+
+int Lua_Set_Aircraft_Rule(lua_State* lua)
+{
+    Log_Debug("Lua_Set_Aircraft_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 3)
+    {
+        luaL_error(lua, "setAircraftRule requires exactly three arguments");
+        return 0;
+    }
+
+    auto aircraftTypeName = Get_Lua_Value_As_String(1);
+
+    if (aircraftTypeName == NULL)
+    {
+        luaL_error(lua, "setAircraftRule argument `aircraftTypeName` was nil");
+        return 0;
+    }
+
+    auto aircraft = ResolveAircraft(lua, aircraftTypeName);
+
+    if (aircraft == NULL)
+    {
+        return 0;
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(2);
+    auto ruleValue = Get_Lua_Value_As_String(3);
+
+    if (ruleName == NULL)
+    {
+        luaL_error(lua, "setAircraftRule argument `ruleName` was nil");
+        return 0;
+    }
+
+    if (ruleValue == NULL)
+    {
+        luaL_error(lua, "setAircraftRule argument `ruleValue` was nil");
+        return 0;
+    }
+
+    Log_Debug("Lua_Set_Aircraft_Rule => attempting to set rule '%s' to value: %s", ruleName, ruleValue);
+
+    Log_Debug("Lua_Set_Aircraft_Rule => looking for rule in Techno Type");
+
+    bool parseError = false;
+    auto ruleMatched = Write_TechnoType_Rule(
+        aircraft,
+        Convert_String_To_Upper_Case(ruleName),
+        Convert_String_To_Upper_Case(ruleValue),
+        &parseError
+    );
+
+    if (ruleMatched && !parseError)
+    {
+        Log_Debug("Lua_Set_Unit_Rule => Rule matched in Techno Type");
+        return 1;
+    }
+
+    if (!parseError)
+    {
+        Log_Debug("Lua_Set_Unit_Rule => looking for rule in Aircraft Type");
+
+        ruleMatched = Write_Aircraft_Rule(
+            aircraft,
+            Convert_String_To_Upper_Case(ruleName),
+            Convert_String_To_Upper_Case(ruleValue),
+            &parseError
+        );
+
+        if (ruleMatched && !parseError)
+        {
+            Log_Debug("Lua_Set_Unit_Rule => Rule matched in Aircraft Type");
+            return 1;
+        }
+    }
+
+    if (parseError)
+    {
+        luaL_error(lua, "value for rule `%s` passed to setAircraftRule was not valid: %s", ruleName, ruleValue);
+
+        return 0;
+    }
+
+    luaL_error(lua, "rule name passed setAircraftRule was not recognised: %s", ruleName);
 
     return 0;
 }

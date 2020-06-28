@@ -8,8 +8,13 @@ static void Load_Infantry_Functions()
 
     Register_Lua_Function("getInfantryRule", Lua_Get_Infantry_Rule);
     Register_Lua_Function("setInfantryRule", Lua_Set_Infantry_Rule);
+
     Register_Lua_Function("getUnitRule", Lua_Get_Unit_Rule);
     Register_Lua_Function("setUnitRule", Lua_Set_Unit_Rule);
+
+    Register_Lua_Function("getAircraftRule", Lua_Get_Aircraft_Rule);
+    Register_Lua_Function("setAircraftRule", Lua_Set_Aircraft_Rule);
+
     Register_Lua_Function("getBuildingRule", Lua_Get_Building_Rule);
     Register_Lua_Function("setBuildingRule", Lua_Set_Building_Rule);
 }

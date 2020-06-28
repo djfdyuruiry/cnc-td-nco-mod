@@ -313,7 +313,6 @@ int Read_Prerequisite(
 	StructType defaultValue
 )
 {
-	// TODO: validation list
 	auto defaultString = Structure_Type_To_String(defaultValue);
 	auto structValueStr = Read_String_From_Rules_Ini(section, PREREQUISITE_RULE, defaultString);
 	bool parseError = false;
@@ -321,7 +320,7 @@ int Read_Prerequisite(
 
 	if (parseError)
 	{
-		// unable to parse entry as a structure
+		// unable to parse entry as a structure type
 		RULES_VALID = false;
 		return STRUCT_NONE;
 	}
@@ -348,7 +347,7 @@ static int Parse_House_Name_List_Csv(char* houseListCsv)
 
 		if (parseError)
 		{
-			// unable to parse entry as a house
+			// unable to parse entry as a house name
 			RULES_VALID = false;
 			return HOUSEF_NONE;
 		}
@@ -383,7 +382,6 @@ int Read_House_List_From_Rules_Ini(
 	const char* defaultValueAsString
 )
 {
-	// TODO: validation list
 	auto houseListCsv = Read_String_From_Rules_Ini(section, HOUSES_RULE, defaultValueAsString);
 
 	if (Strings_Are_Equal(houseListCsv, defaultValueAsString))
@@ -402,7 +400,6 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 	WeaponType defaultValue
 )
 {
-	// TODO: validation list
 	auto defaultString = Weapon_Type_To_String(defaultValue);
 	auto weaponTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
 
@@ -416,12 +413,66 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 
 	if (parseError)
 	{
-		// unable to parse entry as a weapon
+		// unable to parse entry as a weapon type
 		RULES_VALID = false;
 		return WEAPON_NONE;
 	}
 
 	return weaponType;
+}
+
+ArmorType Read_Armor_Type_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	ArmorType defaultValue
+)
+{
+	auto defaultString = Armor_Type_To_String(defaultValue);
+	auto armorTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	if (Strings_Are_Equal(armorTypeStr, defaultString))
+	{
+		return defaultValue;
+	}
+
+	bool parseError = false;
+	auto armorType = Parse_Armor_Type(armorTypeStr, &parseError);
+
+	if (parseError)
+	{
+		// unable to parse entry as a armor type
+		RULES_VALID = false;
+		return ARMOR_NONE;
+	}
+
+	return armorType;
+}
+
+FactoryType Read_Factory_Type_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	FactoryType defaultValue
+)
+{
+	auto defaultString = Factory_Type_To_String(defaultValue);
+	auto factoryTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	if (Strings_Are_Equal(factoryTypeStr, defaultString))
+	{
+		return defaultValue;
+	}
+
+	bool parseError = false;
+	auto factoryType = Parse_Factory_Type(factoryTypeStr, &parseError);
+
+	if (parseError)
+	{
+		// unable to parse entry as a factory type
+		RULES_VALID = false;
+		return FACTORY_TYPE_NONE;
+	}
+
+	return factoryType;
 }
 
 bool Rules_Ini_Failed_Validation()
