@@ -512,6 +512,11 @@ LogLevel Current_Log_Level()
 	return LOG_LEVEL;
 }
 
+void Set_Current_Log_Level(LogLevel level)
+{
+	LOG_LEVEL = level;
+}
+
 bool Lua_Is_Enabled()
 {
 	return LUA_IS_ENABLED;

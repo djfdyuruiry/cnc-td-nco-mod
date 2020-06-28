@@ -60,7 +60,7 @@
 #define AMMO_RULE_UPPER "AMMO"
 
 #define SIGHT_RANGE_RULE "SightRange"
-#define SIGHT_RANGE_RULE_UPPER "SightRange"
+#define SIGHT_RANGE_RULE_UPPER "SIGHTRANGE"
 
 #define RISK_RULE "Risk"
 #define RISK_RULE_UPPER "RISK"
@@ -77,6 +77,7 @@
 #define TRANSPORTER_RULE "CanTransportInfantry"
 #define TRANSPORTER_RULE_UPPER "CANTRANSPORTINFANTRY"
 
+// this is a virtual rule which is read from rules INI only!
 #define SHOW_NAME_RULE "ShowName"
 #define SHOW_NAME_RULE_UPPER "SHOWNAME"
 
@@ -98,10 +99,9 @@
     REWARD_RULE, \
     CRUSHABLE_RULE, \
     DETECT_CLOAKED_OBJECTS_RULE, \
-    TRANSPORTER_RULE, \
-    SHOW_NAME_RULE
+    TRANSPORTER_RULE
 
-#define SHARED_RULE_COUNT 20
+#define SHARED_RULE_COUNT (unsigned) 19
 
 // infantry rules
 #define FEMALE_RULE "Female"
@@ -130,7 +130,7 @@
     AVOIDS_TIBERIUM_RULE, \
     SHARED_RULES
 
-#define INFANTRY_RULE_COUNT 6 + SHARED_RULE_COUNT
+#define INFANTRY_RULE_COUNT (unsigned) 6 + SHARED_RULE_COUNT
 
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
@@ -189,9 +189,10 @@
     CAN_CLOAK_RULE, \
     CONSTANT_ANIMATION_RULE, \
     UNIT_SPEED_RULE, \
-    SHARED_UNIT_AIRCRAFT_RULES
+    SHARED_UNIT_AIRCRAFT_RULES, \
+    SHARED_RULES
 
-#define UNIT_RULE_COUNT 13 + SHARED_UNIT_AIRCRAFT_RULE_COUNT
+#define UNIT_RULE_COUNT (unsigned) 13 + SHARED_UNIT_AIRCRAFT_RULE_COUNT + SHARED_RULE_COUNT
 
 // aircraft rules
 #define CANT_HOVER_RULE "CantHover"
@@ -209,7 +210,7 @@
     SHARED_UNIT_AIRCRAFT_RULES, \
     SHARED_RULES
 
-#define AIRCRAFT_RULE_COUNT 3 + SHARED_UNIT_AIRCRAFT_RULE_COUNT + SHARED_RULE_COUNT
+#define AIRCRAFT_RULE_COUNT (unsigned) 3 + SHARED_UNIT_AIRCRAFT_RULE_COUNT + SHARED_RULE_COUNT
 
 // building rules
 #define BIBBED_RULE "Bibbed"
@@ -260,9 +261,9 @@
     STORAGE_CAPACITY_RULE, \
     POWER_OUTPUT_RULE, \
     POWER_INPUT_RULE, \
-    SHARED_RULE_COUNT
+    SHARED_RULES
 
-#define BUILDING_RULE_COUNT 13 + SHARED_RULE_COUNT
+#define BUILDING_RULE_COUNT (unsigned) 13 + SHARED_RULE_COUNT
 
 char* Read_Rules_Ini();
 
@@ -446,6 +447,8 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 bool Rules_Ini_Failed_Validation();
 
 LogLevel Current_Log_Level();
+
+void Set_Current_Log_Level(LogLevel level);
 
 bool Lua_Is_Enabled();
 

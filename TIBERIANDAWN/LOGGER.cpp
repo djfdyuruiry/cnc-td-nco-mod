@@ -47,6 +47,17 @@ LogLevel Parse_Log_Level(char* levelString)
 	return logLevel;
 }
 
+LogLevel Parse_Log_Level(const char* levelString)
+{
+	auto levelStr = strdup(levelString);
+
+	auto level = Parse_Log_Level(levelStr);
+
+	delete levelStr;
+
+	return level;
+}
+
 void Log(LogLevel logLevel, const char* messageFormat, ...)
 {
 	if (logLevel > Current_Log_Level())
@@ -103,7 +114,7 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		Append_To_File(LOG_FILE_HANDLE, messageWithLevelBuffer);
 	}
 
-	printf(messageWithLevelBuffer);
+	printf("%s", messageWithLevelBuffer);
 
 	delete messageBuffer;
 	delete messageWithLevelBuffer;

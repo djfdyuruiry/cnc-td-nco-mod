@@ -1,5 +1,21 @@
 #include "function.h"
 
+static auto INFANTRY_RULE_NAMES = new const char* [INFANTRY_RULE_COUNT] {
+    INFANTRY_RULES
+};
+
+static auto UNIT_RULE_NAMES = new const char* [UNIT_RULE_COUNT] {
+    UNIT_RULES
+};
+
+static auto AIRCRAFT_RULE_NAMES = new const char* [AIRCRAFT_RULE_COUNT] {
+    AIRCRAFT_RULES
+};
+
+static auto BUILDING_RULE_NAMES = new const char* [BUILDING_RULE_COUNT] {
+    BUILDING_RULES
+};
+
 static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
 {
     if (Strings_Are_Equal(ruleName, BIBBED_RULE_UPPER))
@@ -884,25 +900,25 @@ static bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const ch
     }
     else if (Strings_Are_Equal(ruleName, AMMO_RULE_UPPER))
     {
-        Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
+        Log_Debug("Read_TechnoType_Rule => Rule value: %d", type->MaxAmmo);
 
         lua_pushnumber(lua, type->MaxAmmo);
     }
     else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE_UPPER))
     {
-        Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
+        Log_Debug("Read_TechnoType_Rule => Rule value: %d", type->SightRange);
 
         lua_pushnumber(lua, type->SightRange);
     }
-    else if (Strings_Are_Equal(ruleName, RISK_RULE))
+    else if (Strings_Are_Equal(ruleName, RISK_RULE_UPPER))
     {
-        Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
+        Log_Debug("Read_TechnoType_Rule => Rule value: %d", type->Risk);
 
         lua_pushnumber(lua, type->Risk);
     }
-    else if (Strings_Are_Equal(ruleName, REWARD_RULE))
+    else if (Strings_Are_Equal(ruleName, REWARD_RULE_UPPER))
     {
-        Log_Debug("Read_TechnoType_Rule => Rule value: %u", type->MaxAmmo);
+        Log_Debug("Read_TechnoType_Rule => Rule value: %d", type->Reward);
 
         lua_pushnumber(lua, type->Reward);
     }
@@ -1054,6 +1070,91 @@ static InfantryTypeClass* ResolveInfantry(lua_State* lua, const char* infantryTy
     Log_Debug("infantry type parsed: %s", Infantry_Type_To_String(infantryType));
 
     return (InfantryTypeClass*)&InfantryTypeClass::As_Reference(infantryType);
+}
+
+static void Read_Object_Names(
+    lua_State* lua,
+    char first,
+    char count,
+    void* toStringFunctionPtr
+)
+{
+    auto toStringFunction = (char* (*)(char))toStringFunctionPtr;
+
+    lua_newtable(lua);
+
+    for (char i = first; i < count; i++)
+    {
+        lua_pushstring(lua, toStringFunction(i));
+        lua_rawseti(lua, -2, i + 1);
+    }
+}
+
+static void Read_Rule_Names(lua_State* lua, const char** ruleNames, unsigned ruleCount)
+{
+    lua_newtable(lua);
+
+    for (unsigned i = 0; i < ruleCount; i++)
+    {
+        lua_pushstring(lua, ruleNames[i]);
+        lua_rawseti(lua, -2, i + 1);
+    }
+}
+
+int Lua_Get_Infantry_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, INFANTRY_RULE_NAMES, INFANTRY_RULE_COUNT);
+
+    return 1;
+}
+
+int Lua_Get_Unit_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, UNIT_RULE_NAMES, UNIT_RULE_COUNT);
+
+    return 1;
+}
+
+int Lua_Get_Aircraft_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, AIRCRAFT_RULE_NAMES, AIRCRAFT_RULE_COUNT);
+
+    return 1;
+}
+
+int Lua_Get_Building_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, BUILDING_RULE_NAMES, BUILDING_RULE_COUNT);
+
+    return 1;
+}
+
+int Lua_Get_Infantry_Types(lua_State* lua)
+{
+    Read_Object_Names(lua, INFANTRY_FIRST, INFANTRY_COUNT, &(Infantry_Type_To_String));
+
+    return 1;
+}
+
+int Lua_Get_Unit_Types(lua_State* lua)
+{
+    Read_Object_Names(lua, UNIT_FIRST, UNIT_COUNT, &(Unit_Type_To_String));
+
+    return 1;
+}
+
+int Lua_Get_Aircraft_Types(lua_State* lua)
+{
+    Read_Object_Names(lua, AIRCRAFT_FIRST, AIRCRAFT_COUNT, &(Aircraft_Type_To_String));
+
+    return 1;
+}
+
+int Lua_Get_Building_Types(lua_State* lua)
+{
+    Read_Object_Names(lua, STRUCT_FIRST, STRUCT_COUNT, &(Structure_Type_To_String));
+
+    return 1;
 }
 
 int Lua_Get_Infantry_Rule(lua_State* lua)

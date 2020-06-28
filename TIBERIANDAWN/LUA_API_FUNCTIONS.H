@@ -6,6 +6,22 @@
 #include "defines.h"
 #include "type.h"
 
+int Lua_Get_Infantry_Types(lua_State* lua);
+
+int Lua_Get_Unit_Types(lua_State* lua);
+
+int Lua_Get_Aircraft_Types(lua_State* lua);
+
+int Lua_Get_Building_Types(lua_State* lua);
+
+int Lua_Get_Infantry_Rule_Names(lua_State* lua);
+
+int Lua_Get_Unit_Rule_Names(lua_State* lua);
+
+int Lua_Get_Aircraft_Rule_Names(lua_State* lua);
+
+int Lua_Get_Building_Rule_Names(lua_State* lua);
+
 int Lua_Get_Infantry_Rule(lua_State* lua);
 
 int Lua_Set_Infantry_Rule(lua_State* lua);

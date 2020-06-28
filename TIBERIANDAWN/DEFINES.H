@@ -883,7 +883,7 @@ typedef enum StructType : char {
 	STRUCT_WOOD_WALL=64,
 
 	STRUCT_COUNT=65,
-	STRUCT_FIRST=1
+	STRUCT_FIRST=0
 } StructType;
 
 //inline StructType operator++(StructType &, int);
@@ -1004,6 +1004,7 @@ typedef enum InfantryType : char {
 */
 typedef enum UnitType : char{
 	UNIT_NONE=-1,
+
 	UNIT_HTANK=0,					// Heavy tank (Mammoth).
 	UNIT_MTANK=1,					// Medium tank (M1).
 	UNIT_LTANK=2,					// Light tank ('Bradly').
@@ -1026,6 +1027,7 @@ typedef enum UnitType : char{
 	UNIT_TREX=19,					//	Tyranosaurus Rex
 	UNIT_RAPT=20,					//	Velociraptor
 	UNIT_STEG=21,					//	Stegasaurus
+
 	UNIT_COUNT,
 	UNIT_FIRST=0
 } UnitType;
@@ -1061,14 +1063,15 @@ typedef enum UnitType : char{
 **	as well as traditional aircraft.
 */
 typedef enum AircraftType : char {
-	AIRCRAFT_TRANSPORT,			// Transport helicopter.
-	AIRCRAFT_A10,					// Ground attack plane.
-	AIRCRAFT_HELICOPTER,			// Apache gunship.
-	AIRCRAFT_CARGO,				// Cargo plane.
-	AIRCRAFT_ORCA,					// Nod attack helicopter.
+	AIRCRAFT_NONE = -1,
+
+	AIRCRAFT_TRANSPORT=0,			// Transport helicopter.
+	AIRCRAFT_A10=1,					// Ground attack plane.
+	AIRCRAFT_HELICOPTER=2,			// Apache gunship.
+	AIRCRAFT_CARGO=3,				// Cargo plane.
+	AIRCRAFT_ORCA=4,					// Nod attack helicopter.
 
 	AIRCRAFT_COUNT,
-	AIRCRAFT_NONE=-1,
 	AIRCRAFT_FIRST=0
 } AircraftType;
 
