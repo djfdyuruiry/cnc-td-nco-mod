@@ -19,10 +19,19 @@
 #define DEBUG_LOGGING_RULE "EnableDebugLogging"
 #define DEBUG_LOGGING_RULE_UPPER "ENABLEDEBUGLOGGING"
 
+// game cheats
 #define ALLOW_BUILDING_ALL_FOR_HOUSE_RULE "AllowBuildingAllForCurrentHouse"
 #define ALLOW_BUILDING_ALL_FOR_HOUSE_RULE_UPPER "ALLOWBUILDINGALLFORCURRENTHOUSE"
 
+// game misc rules
+#define ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE "OnlyAllowNukeIfAllPartsHaveBeenCollected"
+#define ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE_UPPER "OnlyAllowNukeIfAllPartsHaveBeenCollected"
+
+#define ONE_TIME_NUKE_RULE "OnlyAllowUsingOneNukePerScenario"
+#define ONE_TIME_NUKE_RULE_UPPER "ONLYALLOWUSINGONENUKEPERSCENARIO"
+
 // game house specific rules
+
 #define HIDE_TMPL_FROM_GDI_RULE "HideTempleFromGdi"
 #define HIDE_TMPL_FROM_GDI_RULE_UPPER "HIDETEMPLEFROMGDI"
 

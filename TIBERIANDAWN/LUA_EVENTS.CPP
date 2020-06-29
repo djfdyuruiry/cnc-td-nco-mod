@@ -20,15 +20,13 @@ static auto FIRE_EVENT_FORMAT = "\
   end                                           \
 ";
 
-const int LUA_EVENT_COUNT = 2;
+const int LUA_EVENT_COUNT = 1;
 
 const LuaEvent ON_SCENARIO_START_EVENT = "ScenarioStart";
-const LuaEvent ON_GAME_TICK_EVENT = "GameTick";
 
 static const LuaEvent* LUA_EVENTS = new LuaEvent[LUA_EVENT_COUNT]
 {
-    ON_SCENARIO_START_EVENT,
-    ON_GAME_TICK_EVENT
+    ON_SCENARIO_START_EVENT
 };
 
 static bool EVENTS_INITIALISED = false;
@@ -103,9 +101,4 @@ void On_Scenario_Load(char* name)
         "'%s'",
         name
     );
-}
-
-void On_Game_Tick()
-{
-    Fire_Lua_Event(ON_GAME_TICK_EVENT);
 }

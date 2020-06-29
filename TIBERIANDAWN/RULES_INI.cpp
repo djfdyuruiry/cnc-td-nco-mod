@@ -215,7 +215,7 @@ char* Read_String_From_Rules_Ini(
 {
 	Ensure_Rules_Ini_Buffer_Is_Loaded();
 
-	Log_Debug("Resolving rule value: %s -> %s", section, entry);
+	Log_Trace("Resolving rule value: %s -> %s", section, entry);
 	Log_Trace("Default value: %s", defaultValue);
 
 	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
@@ -339,7 +339,7 @@ int Read_Prerequisite(
 
 static void Store_Game_Rule(const char* entry, bool value)
 {
-	Log_Debug("Caching Game rule %s value: %d", entry, value);
+	Log_Trace("Caching Game rule %s value: %d", entry, value);
 
 	GAME_RULES[GAME_RULE_COUNT] = (GameRules*)malloc(sizeof(GameRules));
 	GAME_RULES[GAME_RULE_COUNT]->ruleValue = (bool*)malloc(sizeof(bool*));
@@ -384,9 +384,9 @@ bool Read_Game_Rule(
 
 	if (!ruleCached)
 	{
-		value = Read_Bool_From_Rules_Ini(GAME_RULES_SECTION, upperCaseEntry, defaultValue);
+		value = Read_Bool_From_Rules_Ini(GAME_RULES_SECTION, entry, defaultValue);
 
-		Store_Game_Rule(entry, value);
+		Store_Game_Rule(upperCaseEntry, value);
 	}
 
 	return value;

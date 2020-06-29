@@ -300,8 +300,6 @@ void Main_Game(int argc, char *argv[])
 						break;
 				}
 			}
-
-			On_Game_Tick();
 		}
 #endif
 		//Stop_Profiler();

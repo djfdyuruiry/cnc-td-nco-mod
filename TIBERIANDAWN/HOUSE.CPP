@@ -1382,7 +1382,10 @@ void HouseClass::AI(void)
 		**	available, then make the nuke strike strike available.
 		*/
 		if ((GameToPlay == GAME_NORMAL || Rule.AllowSuperWeapons) && (ActiveBScan & STRUCTF_TEMPLE) && Has_Nuke_Device() && IsHuman) {
-			NukeStrike.Enable((GameToPlay == GAME_NORMAL), this == PlayerPtr);
+			NukeStrike.Enable(
+				GameToPlay != GAME_NORMAL || Read_Game_Rule(ONE_TIME_NUKE_RULE, true),
+				this == PlayerPtr
+			);
 
 			/*
 			**	Flag the sidebar to be redrawn if necessary.
@@ -4700,6 +4703,12 @@ bool HouseClass::Has_Nuke_Device(void)
 {
 	Validate();
 	if (GameToPlay != GAME_NORMAL || !IsHuman) return(true);
+
+	if (!Read_Game_Rule(ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE, true))
+	{
+		return true;
+	}
+
 	return((NukePieces & 0x07) == 0x07);
 }
 
