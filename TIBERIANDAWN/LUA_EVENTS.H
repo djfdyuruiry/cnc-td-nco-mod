@@ -3,6 +3,6 @@
 
 boolean Initialise_Events();
 
-void On_Scenario_Load(HousesType player, unsigned int scenarioNumber, unsigned int buildLevel);
+void On_Scenario_Load(char* name);
 
 #endif

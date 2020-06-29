@@ -6,6 +6,9 @@ static void Load_Api_Functions()
 {
     Log_Debug("Initialising Lua API functions");
 
+    Register_Lua_Function("getGameRule", Lua_Get_Game_Rule);
+    Register_Lua_Function("setGameRule", Lua_Set_Game_Rule);
+
     Register_Lua_Function("getInfantryTypes", Lua_Get_Infantry_Types);
     Register_Lua_Function("getUnitTypes", Lua_Get_Unit_Types);
     Register_Lua_Function("getAircraftTypes", Lua_Get_Aircraft_Types);

@@ -6,6 +6,10 @@
 #include "defines.h"
 #include "type.h"
 
+int Lua_Get_Game_Rule(lua_State* lua);
+
+int Lua_Set_Game_Rule(lua_State* lua);
+
 int Lua_Get_Infantry_Types(lua_State* lua);
 
 int Lua_Get_Unit_Types(lua_State* lua);

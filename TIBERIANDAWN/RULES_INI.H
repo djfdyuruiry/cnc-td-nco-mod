@@ -16,8 +16,44 @@
 #define LUA_SCRIPTS_RULE_UPPER "LUASCRIPTS"
 
 // game rules (often scenario or techno type specific)
-#define RENAME_TECH_CENTER_TO_PRISON_RULE "RenameTechCenterToPrision"
+#define RENAME_TECH_CENTER_TO_PRISON_RULE "RenameTechCenterToPrisionInNodScenario3"
 #define RENAME_TECH_CENTER_TO_PRISON_RULE_UPPER "RENAMETECHCENTERTOPRISION"
+
+#define HIDE_E3_FROM_GDI_RULE "HideBazookaFromGdiUntilSenario8"
+#define HIDE_E3_FROM_GDI_RULE_UPPER "HIDEBAZOOKAFROMGDIUNTILSENARIO8"
+
+#define HIDE_MSAM_FROM_GDI_RULE "HideRocketLauncherFromGdiUntilScenario9"
+#define HIDE_MSAM_FROM_GDI_RULE_UPPER "HIDEROCKETLAUNCHERFROMGDIUNTILSCENARIO9"
+
+#define HIDE_APC_FROM_NOD_RULE "HideApcFromNod"
+#define HIDE_APC_FROM_NOD_RULE_UPPER "HIDEAPCFROMNOD"
+
+#define HIDE_TMPL_FROM_GDI_RULE "HideTempleFromGdi"
+#define HIDE_TMPL_FROM_GDI_RULE_UPPER "HIDETEMPLEFROMGDI"
+
+#define HIDE_OBLI_FROM_GDI_RULE "HideObeliskFromGdi"
+#define HIDE_OBLI_FROM_GDI_RULE_UPPER "HIDEOBELISKFROMGDI"
+
+#define HIDE_MSAM_FROM_NOD_RULE "HideRocketLauncherFromNod"
+#define HIDE_MSAM_FROM_NOD_RULE_UPPER "HIDEROCKETLAUNCHERFROMNOD"
+
+#define HIDE_ADV_COMM_FROM_NOD_RULE "HideAdvancedCommCenterFromNod"
+#define HIDE_ADV_COMM_FROM_NOD_RULE_UPPER "HIDEADVANCEDCOMMCENTERFROMNOD"
+
+#define ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE "AllowNodToBuildAdvancedPowerInScenario12"
+#define ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE_UPPER "ALLOWNODTOBUILDADVANCEDPOWERINSCENARIO12"
+
+#define HIDE_HELIPAD_FROM_NOD_RULE "HideHelipadFromNod"
+#define HIDE_HELIPAD_FROM_NOD_RULE_UPPER "HIDEHELIPADFROMNOD"
+
+#define HIDE_SBAG_FROM_GDI_RULE "HideSandbagFromGdiUntilScenario9"
+#define HIDE_SBAG_FROM_GDI_RULE_UPPER "HIDESANDBAGFROMGDIUNTILSCENARIO9"
+
+#define SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE "SetGdiScenario2BuildLevelTo1"
+#define SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE_UPPER "SETGDISCENARIO1BUILDLEVELTO1"
+
+#define ALLOW_BUILDING_ALL_FOR_HOUSE_RULE "AllowBuildingAllForCurrentHouse"
+#define ALLOW_BUILDING_ALL_FOR_HOUSE_RULE_UPPER "ALLOWBUILDINGALLFORCURRENTHOUSE"
 
 // generic rules - apply to all types
 #define BUILD_LEVEL_RULE "BuildLevel"
@@ -299,6 +335,16 @@ bool Read_Bool_From_Rules_Ini(
 	bool defaultValue
 );
 
+bool Read_Game_Rule(
+    const char* entry,
+    bool defaultValue
+);
+
+void Update_Current_Game_Rule_Value(
+    const char* entry,
+    bool value
+);
+
 int Read_Prerequisite(
 	const char* section,
 	StructType defaultValue
@@ -333,6 +379,11 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 	const char* entry,
 	FactoryType defaultValue
 );
+
+typedef struct GameRules {
+    const char* ruleName;
+    bool* ruleValue;
+} GameRules;
 
 // shared rules
 #define Read_Build_Level(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, BUILD_LEVEL_RULE, defaultValue, 1, 99)

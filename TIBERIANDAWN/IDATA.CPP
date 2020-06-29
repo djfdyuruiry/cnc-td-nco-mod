@@ -265,8 +265,8 @@ static InfantryTypeClass const E3(
 	80, Read_Reward("E3", 10),						// Risk/Reward of this infantry unit.
 	Read_House_List_From_Rules_Ini("E3", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("E2", WEAPON_DRAGON),
-	Read_Secondary_Weapon("E2", WEAPON_NONE),
+	Read_Primary_Weapon("E3", WEAPON_DRAGON),
+	Read_Secondary_Weapon("E3", WEAPON_NONE),
 	Read_Speed("E3", MPH_KINDA_SLOW)  // Maximum speed of infantry.
 );
 // Flamethrower
@@ -527,7 +527,7 @@ static InfantryTypeClass const Commando(
 	Read_Is_Civilian("RMBO", false),						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
 	Read_Is_Fraidy_Cat("RMBO", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("RMBO", true),							// Can this infantry type capture a building?
+	Read_Can_Capture_Buildings("RMBO", false),							// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
 	Read_Ammo("RMBO", -1),							// Number of shots it has (default).
 	&CommandoDos[0][0],		// ptr to DO table
@@ -541,7 +541,7 @@ static InfantryTypeClass const Commando(
 	Read_House_List_From_Rules_Ini("RMBO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
 	Read_Primary_Weapon("RMBO", WEAPON_RIFLE),Read_Secondary_Weapon("RMBO", WEAPON_NONE),
-	Read_Speed("RMBO", MPH_SLOW_ISH)  // Maximum speed of infantry.Maximum speed of infantry.
+	Read_Speed("RMBO", MPH_SLOW_ISH)  // Maximum speed of infantry.
 );
 // Civilians
 

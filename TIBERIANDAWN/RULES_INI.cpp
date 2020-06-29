@@ -2,7 +2,7 @@
 
 static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static auto DEFAULT_RULES_FILENAME = "RULES.INI";
-static const int RULES_STRING_LENGTH = 512;
+static const unsigned int RULES_STRING_LENGTH = 512;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
@@ -10,6 +10,10 @@ static auto LOG_LEVEL = INFO;
 static bool RULES_VALID = true;
 static bool LUA_IS_ENABLED = false;
 static LuaScripts RULES_LUA_SCRIPTS;
+
+static const unsigned int MAX_GAME_RULES = 50;
+static unsigned int GAME_RULE_COUNT = 0;
+static GameRules** GAME_RULES = new GameRules*[MAX_GAME_RULES];
 
 char* Read_String_From_Rules_Ini(
 	const char* section,
@@ -331,6 +335,87 @@ int Read_Prerequisite(
 	}
 
 	return 1L << structValue;
+}
+
+static void Store_Game_Rule(const char* entry, bool value)
+{
+	Log_Debug("Caching Game rule %s value: %d", entry, value);
+
+	GAME_RULES[GAME_RULE_COUNT] = (GameRules*)malloc(sizeof(GameRules));
+	GAME_RULES[GAME_RULE_COUNT]->ruleValue = (bool*)malloc(sizeof(bool*));
+
+	GAME_RULES[GAME_RULE_COUNT]->ruleName = entry;
+	*(GAME_RULES[GAME_RULE_COUNT]->ruleValue) = value;
+
+	GAME_RULE_COUNT++;
+}
+
+bool Read_Game_Rule(
+	const char* entry,
+	bool defaultValue
+)
+{
+	auto ruleCached = false;
+	bool value;
+
+	Log_Debug("Reading Game rule %s", entry);
+
+	for (unsigned i = 0; i < GAME_RULE_COUNT; i++)
+	{
+		auto gameRule = GAME_RULES[i];
+
+		if (gameRule == NULL)
+		{
+			continue;
+		}
+
+		if (Strings_Are_Equal(gameRule->ruleName, entry))
+		{
+			ruleCached = true;
+
+			value = *(gameRule->ruleValue);
+
+			Log_Debug("Read Game rule %s value from cache: %d", entry, value);
+
+			break;
+		}
+	}
+
+	if (!ruleCached)
+	{
+		value = Read_Bool_From_Rules_Ini(GAME_RULES_SECTION, entry, defaultValue);
+
+		Store_Game_Rule(entry, value);
+	}
+
+	return value;
+}
+
+void Update_Current_Game_Rule_Value(
+	const char* entry,
+	bool value
+)
+{
+	for (unsigned i = 0; i < GAME_RULE_COUNT; i++)
+	{
+		auto gameRule = GAME_RULES[i];
+
+		if (gameRule == NULL)
+		{
+			continue;
+		}
+
+		if (Strings_Are_Equal(gameRule->ruleName, entry))
+		{
+			*(gameRule->ruleValue) = value;
+
+			Log_Debug("Updating Game rule %s value in cache: %d", entry, value);
+
+			return;
+		}
+	}
+
+	Store_Game_Rule(entry, value);
 }
 
 static int Parse_House_Name_List_Csv(char* houseListCsv)

@@ -108,7 +108,7 @@ If you get an error on load of a scenario complaining the dll version is differe
 
 - ✓ add armour and other missing rules
 - ✓ add lookups for all rules in object definitions
-- ⚠ generate rules ini by reading defaults
+- ✓ generate rules ini by reading defaults
 - ✓ test on non-dev machine
 - ⚠ create publish script
 - ⚠ publish alpha to steam workshop
@@ -125,7 +125,7 @@ If you get an error on load of a scenario complaining the dll version is differe
 
 ## Problems
 
-- All clear :)
+- Cannot modify commando through Lua (or at least it does not appear to have ANY impact in game)
 
 ## Problem Archive
 

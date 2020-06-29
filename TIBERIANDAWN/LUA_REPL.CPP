@@ -12,7 +12,14 @@ static void Print_Lua_Result(HANDLE stdOut)
 	// value was not a string/number
 	if (value != NULL)
 	{
-		sprintf(output, "%s\r\n", value);
+		if (Strings_Are_Equal(valueType, "boolean"))
+		{
+			sprintf(output, "%s\r\n", Strings_Are_Equal(value, "TRUE") ? "true" : "false");
+		}
+		else
+		{
+			sprintf(output, "%s\r\n", value);
+		}
 	}
 	else
 	{

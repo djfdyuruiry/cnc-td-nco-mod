@@ -1,4 +1,4 @@
-#//
+//
 // Copyright 2020 Electronic Arts Inc.
 //
 // TiberianDawn.DLL and RedAlert.dll and corresponding source code is free 
@@ -67,7 +67,6 @@ extern int PreserveVQAScreen;
  *=============================================================================================*/
 bool Start_Scenario(char *root, bool briefing)
 {
-
 	if (!Read_Scenario(root)) {
 		CCDebugString ("C&C95 - Failed to read scenario.\n");
 		return(false);

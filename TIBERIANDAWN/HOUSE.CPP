@@ -555,7 +555,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	Validate();
 	if (!type || !type->IsBuildable || !((1L << house) & type->Ownable)) return(false);
 
-	// todo: add lua event and rule entries for all the non-generic logic in here
+	// TODO: add lua event and rule entries for all the non-generic logic in here
 
 	/*
 	**	The computer can always build everthing.
@@ -627,8 +627,10 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		type->What_Am_I() == RTTI_INFANTRYTYPE &&
 		((InfantryTypeClass const *)type)->Type == INFANTRY_E3 &&
 		level < 7) {
-
-		return(false);
+		if (Read_Game_Rule( HIDE_E3_FROM_GDI_RULE, true))
+		{
+			return(false);
+		}
 	}
 
 	/*
@@ -639,8 +641,10 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
 		level < 9) {
-
-		return(false);
+		if (Read_Game_Rule( HIDE_MSAM_FROM_GDI_RULE, true))
+		{
+			return(false);
+		}
 	}
 
 	/*
@@ -649,8 +653,10 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (house == HOUSE_BAD &&
 		type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_APC) {
-
-		return(false);
+		if (Read_Game_Rule( HIDE_APC_FROM_NOD_RULE, true))
+		{
+			return(false);
+		}
 	}
 
 	/*
@@ -661,7 +667,14 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		(((BuildingTypeClass const *)type)->Type == STRUCT_TEMPLE || ((BuildingTypeClass const *)type)->Type == STRUCT_OBELISK) &&
 		Class->House == HOUSE_GOOD) {
 
-		return(false);
+		if (((BuildingTypeClass const*)type)->Type == STRUCT_TEMPLE && Read_Game_Rule( HIDE_TMPL_FROM_GDI_RULE, true))
+		{
+			return(false);
+		}
+		else if (((BuildingTypeClass const*)type)->Type == STRUCT_OBELISK && Read_Game_Rule( HIDE_OBLI_FROM_GDI_RULE, true))
+		{
+			return(false);
+		}
 	}
 
 	/*
@@ -670,8 +683,10 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
 		Class->House == HOUSE_BAD) {
-
-		return(false);
+		if (Read_Game_Rule( HIDE_MSAM_FROM_NOD_RULE, true))
+		{
+			return(false);
+		}
 	}
 
 	/*
@@ -681,8 +696,10 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		(((BuildingTypeClass const *)type)->Type == STRUCT_EYE) &&
 		Class->House == HOUSE_BAD) {
-
-		return(false);
+		if (Read_Game_Rule( HIDE_ADV_COMM_FROM_NOD_RULE, true))
+		{
+			return(false);
+		}
 	}
 
 	/*
@@ -692,8 +709,10 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		level >= 12 &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_ADVANCED_POWER) {
-
-		level = type->Scenario;
+		if (Read_Game_Rule( ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE, true))
+		{
+			level = type->Scenario;
+		}
 	}
 
 	/*
@@ -702,8 +721,10 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (house == HOUSE_BAD &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_HELIPAD) {
-
-		return(false);
+		if (Read_Game_Rule( HIDE_HELIPAD_FROM_NOD_RULE, true))
+		{
+			return(false);
+		}
 	}
 
 	/*
@@ -713,8 +734,10 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		level < 8 &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_SANDBAG_WALL) {
-
-		return(false);
+		if (Read_Game_Rule( HIDE_SBAG_FROM_GDI_RULE, true))
+		{
+			return(false);
+		}
 	}
 
 	/*
@@ -722,14 +745,17 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	**	scenario two will still feel like scenario #1.
 	*/
 	if (house == HOUSE_GOOD && level == 2) {
-		level = 1;
+		if (Read_Game_Rule( SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE, true))
+		{
+			level = 1;
+		}
 	}
 
 	// ST - 8/23/2019 4:53PM
-	if (DebugUnlockBuildables) {
+	if (DebugUnlockBuildables || Read_Game_Rule(ALLOW_BUILDING_ALL_FOR_HOUSE_RULE, false)) {
 		level = 98;
 		pre = 0;
-	}			
+	}
 
 	if (Debug_Cheat) level = 98;
 	return((pre & flags) == pre && type->Scenario <= level);

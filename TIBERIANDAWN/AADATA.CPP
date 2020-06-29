@@ -219,7 +219,7 @@ static AircraftTypeClass const CargoPlane(
 	Read_Prerequisite("C17", STRUCT_NONE),			// Building prerequisite.
 		false,				// Is a leader type?
 		false,				// Does it fire a pair of shots in quick succession?
-		Read_Is_Transport("HELI", true),					//	Is this a typical transport vehicle?
+		Read_Is_Transport("C17", true),					//	Is this a typical transport vehicle?
 		Read_Cant_Hover("C17", true),					// Fixed wing aircraft?
 		Read_Has_Rotor("C17", false),				// Equipped with a rotor?
 		false,				// Custom rotor sets for each facing?

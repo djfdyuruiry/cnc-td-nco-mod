@@ -4,12 +4,14 @@ function printMinigunnerWeapon()
   log(string.format("E1 primary weapon is: %s", weapon))
 end
 
-onScenarioStart(function (house, scenarioNumber, buildLevel)
-  log(string.format("Scenario received: %s %d", house, scenarioNumber))
-  log(string.format("Scenario build level: %d", buildLevel))
+onScenarioStart(function (name)
+  log(string.format("Scenario received: %s", name))
 
   printMinigunnerWeapon()
  
+  local scenarioNumber = 1;
+  local buildLevel = 1;
+
   setInfantryRule("E1", "CanCapture", true)
 
   setInfantryRule("E3", "ScenarioLevel", scenarioNumber)
@@ -17,6 +19,12 @@ onScenarioStart(function (house, scenarioNumber, buildLevel)
   
   setInfantryRule("E6", "ScenarioLevel", scenarioNumber)
   setInfantryRule("E6", "BuildLevel", buildLevel)
+  
+  setInfantryRule("RMBO", "Buildable", true)
+  setInfantryRule("RMBO", "ScenarioLevel", scenarioNumber)
+  setInfantryRule("RMBO", "BuildLevel", buildLevel)
+  setInfantryRule("RMBO", "PrimaryWeapon", "obelisk_laser")
+  setInfantryRule("RMBO", "Prerequisite", "none")
   
   setUnitRule("JEEP", "Speed", 100)
   
@@ -26,17 +34,19 @@ onScenarioStart(function (house, scenarioNumber, buildLevel)
   setUnitRule("MCV", "CanCloak", true)
  
   setUnitRule("BOAT", "CanCloak", true)
+  
+  setUnitRule("HTNK", "ScenarioLevel", scenarioNumber)
+  setUnitRule("HTNK", "BuildLevel", buildLevel)
+  setUnitRule("HTNK", "Cost", 10)
  
   setBuildingRule("BIO", "Buildable", true)
   setBuildingRule("BIO", "ScenarioLevel", scenarioNumber)
   setBuildingRule("BIO", "BuildLevel", buildLevel)
   setBuildingRule("BIO", "Prerequisite", "none")
-  
-  setBuildingRule("HAND", "FactoryType", "Unit")
 
   setBuildingRule("NUKE", "Bibbed", false)
 
-  if scenarioNumber ~= 4 then
+  if name ~= "SCG01EA" then
     return
   end
 

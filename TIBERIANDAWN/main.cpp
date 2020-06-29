@@ -9,11 +9,11 @@ static void Test_Lua_Events()
 {
 	Log_Info("Testing setting rules from scenario start event handler");
 
-	On_Scenario_Load(HOUSE_GOOD, 4, 4);
+	On_Scenario_Load("SCG01EA");
 
 	Log_Info("Testing returning early from scenario start event handler");
 
-	On_Scenario_Load(HOUSE_BAD, 1, 1);
+	On_Scenario_Load("SCB01EA");
 }
 
 static void Pause()

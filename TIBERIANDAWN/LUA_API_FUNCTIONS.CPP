@@ -1142,6 +1142,54 @@ int Lua_Get_Building_Types(lua_State* lua)
     return 1;
 }
 
+int Lua_Get_Game_Rule(lua_State* lua)
+{
+    Log_Debug("Lua_Get_Game_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 1)
+    {
+        luaL_error(lua, "getGameRule requires at least one argument");
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(1);
+
+    auto ruleValue = Read_Game_Rule(ruleName, false);
+
+    lua_pushboolean(lua, ruleValue);
+
+    return 1;
+}
+
+int Lua_Set_Game_Rule(lua_State* lua)
+{
+    Log_Debug("Lua_Set_Game_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 3)
+    {
+        luaL_error(lua, "setGameRule requires at least two arguments");
+    }
+
+    bool parseError = false;
+
+    auto ruleName = Get_Lua_Value_As_String(1);
+    auto ruleValue = Parse_Boolean(Get_Lua_Value_As_String(2), &parseError);
+
+    if (!parseError)
+    {
+        Update_Current_Game_Rule_Value(ruleName, ruleValue);
+    }
+    else
+    {
+        luaL_error(lua, "setGameRule argument `value` not set to a valid boolean value");
+    }
+
+    return 0;
+}
+
 int Lua_Get_Infantry_Rule(lua_State* lua)
 {
     Log_Debug("Lua_Get_Infantry_Rule called from Lua");
