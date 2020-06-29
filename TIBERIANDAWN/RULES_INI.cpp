@@ -355,6 +355,7 @@ bool Read_Game_Rule(
 	bool defaultValue
 )
 {
+	auto upperCaseEntry = Convert_String_To_Upper_Case(entry);
 	auto ruleCached = false;
 	bool value;
 
@@ -369,7 +370,7 @@ bool Read_Game_Rule(
 			continue;
 		}
 
-		if (Strings_Are_Equal(gameRule->ruleName, entry))
+		if (Strings_Are_Equal(gameRule->ruleName, upperCaseEntry))
 		{
 			ruleCached = true;
 
@@ -383,7 +384,7 @@ bool Read_Game_Rule(
 
 	if (!ruleCached)
 	{
-		value = Read_Bool_From_Rules_Ini(GAME_RULES_SECTION, entry, defaultValue);
+		value = Read_Bool_From_Rules_Ini(GAME_RULES_SECTION, upperCaseEntry, defaultValue);
 
 		Store_Game_Rule(entry, value);
 	}
@@ -396,6 +397,8 @@ void Update_Current_Game_Rule_Value(
 	bool value
 )
 {
+	auto upperCaseEntry = Convert_String_To_Upper_Case(entry);
+
 	for (unsigned i = 0; i < GAME_RULE_COUNT; i++)
 	{
 		auto gameRule = GAME_RULES[i];
@@ -405,7 +408,7 @@ void Update_Current_Game_Rule_Value(
 			continue;
 		}
 
-		if (Strings_Are_Equal(gameRule->ruleName, entry))
+		if (Strings_Are_Equal(gameRule->ruleName, upperCaseEntry))
 		{
 			*(gameRule->ruleValue) = value;
 
@@ -415,7 +418,7 @@ void Update_Current_Game_Rule_Value(
 		}
 	}
 
-	Store_Game_Rule(entry, value);
+	Store_Game_Rule(upperCaseEntry, value);
 }
 
 int Read_House_List_From_Rules_Ini(

@@ -13,7 +13,7 @@ static void Test_Lua_Events()
 
 	Log_Info("Testing returning early from scenario start event handler");
 
-	On_Scenario_Load("SCB01EA");
+	On_Scenario_Load("SCG04EA");
 
 	Log_Info("Testing game tick event handler");
 
