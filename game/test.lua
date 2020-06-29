@@ -49,28 +49,11 @@ onScenarioStart(function (name)
   
   setBuildingRule("GUN", "Captureable", true) 
 
-  if name ~= "SCG01EA" then
+  if name ~= "SCG04EA" then
     return
   end
 
-  setInfantryRule("E2", "Primary", "TOWTWO")
+  setInfantryRule("E2", "PrimaryWeapon", "TOWTWO")
 
   printMinigunnerWeapon()
-end)
-
-onGameTick(function ()
-  local scenarioLevel = getInfantryRule("RMBO", "ScenarioLevel")
-  local buildLevel = getInfantryRule("RMBO", "BuildLevel")
-  local weapon = getInfantryRule("RMBO", "PrimaryWeapon")
-  local pre = getInfantryRule("RMBO", "Prerequisite")
-
-  log(
-    string.format(
-      "RMBO == { scenarioLevel = %d, buildLevel = %d, primaryWeapon = '%s', prerequisite = '%s' }",
-      scenarioLevel,
-      buildLevel,
-      weapon,
-      pre
-    )
-  )
 end)
