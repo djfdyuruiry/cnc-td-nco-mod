@@ -254,7 +254,6 @@ void Main_Game(int argc, char *argv[])
 		**	Non-editor version of main-loop processing
 		*/
 		for (;;) {
-
 			/*
 			**	Call the game's main loop
 			*/
@@ -301,6 +300,8 @@ void Main_Game(int argc, char *argv[])
 						break;
 				}
 			}
+
+			On_Game_Tick();
 		}
 #endif
 		//Stop_Profiler();
@@ -1238,8 +1239,6 @@ void Call_Back(void)
 		//NullModem.Service();
 	}
 #endif
-
-	On_Game_Tick();
 }
 
 /***********************************************************************************************

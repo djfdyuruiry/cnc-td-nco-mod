@@ -2,6 +2,7 @@
 #define LOGGER_H
 
 typedef enum LogLevel : unsigned short {
+	TRACE = 5,
 	DEBUG = 4,
 	INFO = 3,
 	WARN = 2,
@@ -28,6 +29,8 @@ void Log(LogLevel logLevel, const char* messageFormat, ...);
 #define Log_Info(messageFormat, ...) Log(INFO, messageFormat, __VA_ARGS__)
 
 #define Log_Debug(messageFormat, ...) Log(DEBUG, messageFormat, __VA_ARGS__)
+
+#define Log_Trace(messageFormat, ...) Log(TRACE, messageFormat, __VA_ARGS__)
 
 void Close_Log_File_If_Open();
 

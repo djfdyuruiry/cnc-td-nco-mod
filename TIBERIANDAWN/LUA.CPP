@@ -84,7 +84,7 @@ bool Execute_Lua_Script(char* luaScript, bool beQuiet)
 
     if (!beQuiet)
     {
-        Log_Debug("Executing Lua snippet: \n%s\n", luaScript);
+        Log_Trace("Executing Lua snippet: \n%s\n", luaScript);
     }
 
     if (!executionOK)

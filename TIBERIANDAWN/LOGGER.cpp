@@ -11,6 +11,8 @@ const char* Log_Level_To_String(LogLevel level)
 {
 	switch (level)
 	{
+		case TRACE:
+			return "TRACE";
 		case DEBUG:
 			return "DEBUG";
 		case WARN:
@@ -27,7 +29,11 @@ LogLevel Parse_Log_Level(char* levelString)
 {
 	auto logLevel = INFO;
 
-	if (Strings_Are_Equal(levelString, "DEBUG"))
+	if (Strings_Are_Equal(levelString, "TRACE"))
+	{
+		logLevel = TRACE;
+	}
+	else if (Strings_Are_Equal(levelString, "DEBUG"))
 	{
 		logLevel = DEBUG;
 	}

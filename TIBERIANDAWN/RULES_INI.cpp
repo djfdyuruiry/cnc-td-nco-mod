@@ -135,8 +135,8 @@ static int Read_Int_From_Rules_Ini(
 {
 	Ensure_Rules_Ini_Buffer_Is_Loaded();
 
-	Log_Debug("Resolving rule value: %s -> %s", section, entry);
-	Log_Debug("Default value: %d", defaultValue);
+	Log_Trace("Resolving rule value: %s -> %s", section, entry);
+	Log_Trace("Default value: %d", defaultValue);
 
 	auto ruleValue = WWGetPrivateProfileInt(
 		section,
@@ -162,7 +162,7 @@ static int Read_Int_From_Rules_Ini(
 		}
 	}
 
-	Log_Debug("Resolved value: %d", ruleValue);
+	Log_Trace("Resolved value: %d", ruleValue);
 	Log_Debug("Setting rule [%s -> %s] = %d", section, entry, ruleValue);
 
 	return ruleValue;
@@ -216,7 +216,7 @@ char* Read_String_From_Rules_Ini(
 	Ensure_Rules_Ini_Buffer_Is_Loaded();
 
 	Log_Debug("Resolving rule value: %s -> %s", section, entry);
-	Log_Debug("Default value: %s", defaultValue);
+	Log_Trace("Default value: %s", defaultValue);
 
 	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 
@@ -275,7 +275,7 @@ char* Read_String_From_Rules_Ini(
 		delete validValuesCsv;
 	}
 
-	Log_Debug("Resolved value: %s", valueBuffer);
+	Log_Trace("Resolved value: %s", valueBuffer);
 	Log_Debug("Setting rule [%s -> %s] = %s", section, entry, valueBuffer);
 
 	return valueBuffer;
@@ -359,7 +359,7 @@ bool Read_Game_Rule(
 	auto ruleCached = false;
 	bool value;
 
-	Log_Debug("Reading Game rule %s", entry);
+	Log_Trace("Reading Game rule %s", entry);
 
 	for (unsigned i = 0; i < GAME_RULE_COUNT; i++)
 	{
@@ -376,7 +376,7 @@ bool Read_Game_Rule(
 
 			value = *(gameRule->ruleValue);
 
-			Log_Debug("Read Game rule %s value from cache: %s", entry, Convert_Boolean_To_String(value));
+			Log_Trace("Read Game rule %s value from cache: %s", entry, Convert_Boolean_To_String(value));
 
 			break;
 		}

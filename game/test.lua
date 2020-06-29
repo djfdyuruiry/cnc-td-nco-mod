@@ -57,3 +57,7 @@ onScenarioStart(function (name)
 
   printMinigunnerWeapon()
 end)
+
+onGameTick(function()
+    log("Game tick")
+end)
