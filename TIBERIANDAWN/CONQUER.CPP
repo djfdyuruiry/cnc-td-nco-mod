@@ -1238,8 +1238,9 @@ void Call_Back(void)
 		//NullModem.Service();
 	}
 #endif
-}
 
+	On_Game_Tick();
+}
 
 /***********************************************************************************************
  * Language_Name -- Build filename for current language.                                       *

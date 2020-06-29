@@ -27,6 +27,7 @@ onScenarioStart(function (name)
   setInfantryRule("RMBO", "Prerequisite", "none")
   
   setUnitRule("JEEP", "Speed", 100)
+  setUnitRule("JEEP", "CanCrushInfantry", true)
   
   setUnitRule("FTNK", "ScenarioLevel", scenarioNumber)
   setUnitRule("FTNK", "BuildLevel", buildLevel)
@@ -45,16 +46,31 @@ onScenarioStart(function (name)
   setBuildingRule("BIO", "Prerequisite", "none")
 
   setBuildingRule("NUKE", "Bibbed", false)
+  
+  setBuildingRule("GUN", "Captureable", true) 
 
   if name ~= "SCG01EA" then
     return
   end
 
-  setInfantryRule("E1", "FraidyCat", true)
-  setInfantryRule("E1", "AvoidsTiberium", true)
-  setInfantryRule("E1", "Crawling", false)
-
-  setInfantryRule("E1", "PrimaryWeapon", "obelisk_laser")
+  setInfantryRule("E2", "Primary", "TOWTWO")
 
   printMinigunnerWeapon()
+end)
+
+onGameTick(function ()
+  local scenarioLevel = getInfantryRule("RMBO", "ScenarioLevel")
+  local buildLevel = getInfantryRule("RMBO", "BuildLevel")
+  local weapon = getInfantryRule("RMBO", "PrimaryWeapon")
+  local pre = getInfantryRule("RMBO", "Prerequisite")
+
+  log(
+    string.format(
+      "RMBO == { scenarioLevel = %d, buildLevel = %d, primaryWeapon = '%s', prerequisite = '%s' }",
+      scenarioLevel,
+      buildLevel,
+      weapon,
+      pre
+    )
+  )
 end)

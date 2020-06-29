@@ -68,6 +68,58 @@ HousesType Parse_House_Type(const char* houseTypeString, bool* parseError)
     return houseType;
 }
 
+int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
+{
+    auto houseNameListSize = 0;
+    auto houseNameList = Parse_Csv_String(houseListCsv, 8, &houseNameListSize);
+    auto houseListInitialised = false;
+    auto houseList = 0;
+
+    for (auto i = 0; i < houseNameListSize; i++)
+    {
+        auto house = Parse_House_Type(houseNameList[i], parseError);
+
+        if (!*parseError)
+        {
+            // unable to parse entry as a house name
+            return HOUSEF_NONE;
+        }
+
+        if (house == HOUSE_NONE)
+        {
+            // none overrides all entries in csv
+            return HOUSEF_NONE;
+        }
+
+        auto houseBit = 1 << house;
+
+        if (!houseListInitialised)
+        {
+            houseList = houseBit;
+            houseListInitialised = true;
+        }
+        else
+        {
+            houseList = houseList | houseBit;
+        }
+    }
+
+    delete houseNameList;
+
+    return houseList;
+}
+
+int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError)
+{
+    auto houseTypeCsvStr = strdup(houseListCsv);
+
+    auto owner = Parse_House_Type(houseTypeCsvStr, parseError);
+
+    delete houseTypeCsvStr;
+
+    return owner;
+}
+
 char* House_Type_To_String(HousesType houseType)
 {
     char* houseTypeString;
@@ -232,6 +284,13 @@ StructType Prerequisite_To_Structure_Type(long prerequisite)
     return structType;
 }
 
+char* Prerequisite_To_String(long prerequisite)
+{
+    return Structure_Type_To_String(
+        Prerequisite_To_Structure_Type(prerequisite)
+    );
+}
+
 WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
 {
     WeaponType weaponType;
@@ -312,7 +371,7 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
     {
         weaponType = WEAPON_TOMAHAWK;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "ATWR"))
+    else if (Strings_Are_Equal(weaponTypeString, "TOWTWO"))
     {
         weaponType = WEAPON_TOW_TWO;
     }
@@ -442,7 +501,7 @@ char* Weapon_Type_To_String(WeaponType weaponType)
     }
     else if (weaponType == WEAPON_TOW_TWO)
     {
-        weaponTypeString = "ATWR";
+        weaponTypeString = "TOWTWO";
     }
     else if (weaponType == WEAPON_NAPALM)
     {
@@ -1636,6 +1695,22 @@ char* Structure_Type_To_String(StructType structType)
     return structTypeString;
 }
 
+long Structure_Type_To_Prerequisite(StructType structType, bool* parseError)
+{
+    if (structType == STRUCT_NONE)
+    {
+        return STRUCTF_NONE;
+    }
+
+    if (structType < STRUCT_FIRST || structType > STRUCT_COUNT - 1)
+    {
+        *parseError = true;
+        return STRUCTF_NONE;
+    }
+
+    return 1L << structType;
+}
+
 FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError)
 {
     FactoryType factoryType;
@@ -1662,6 +1737,7 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError)
     }
     else
     {
+        *parseError = true;
         Show_Error("Unable to parse factory type from string: %s", factoryTypeString);
     }
 

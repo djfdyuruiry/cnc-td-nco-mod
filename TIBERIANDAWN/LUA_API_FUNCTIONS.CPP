@@ -24,6 +24,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsBibbed), Convert_Boolean_To_String(isBibbed));
+
             type->IsBibbed = isBibbed;
         }
     }
@@ -33,6 +35,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsWall), Convert_Boolean_To_String(isWall));
+
             type->IsWall = isWall;
         }
     }
@@ -42,6 +46,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsFactory), Convert_Boolean_To_String(isFactory));
+
             type->IsFactory = isFactory;
         }
     }
@@ -51,6 +57,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsSimpleDamage), Convert_Boolean_To_String(isSimpleDamage));
+
             type->IsSimpleDamage = isSimpleDamage;
         }
     }
@@ -60,6 +68,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsSturdy), Convert_Boolean_To_String(isSturdy));
+
             type->IsSturdy = isSturdy;
         }
     }
@@ -69,6 +79,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCaptureable), Convert_Boolean_To_String(isCaptureable));
+
             type->IsCaptureable = isCaptureable;
         }
     }
@@ -78,6 +90,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsRegulated), Convert_Boolean_To_String(isRegulated));
+
             type->IsRegulated = isRegulated;
         }
     }
@@ -87,6 +101,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsUnsellable), Convert_Boolean_To_String(isUnsellable));
+
             type->IsUnsellable = isUnsellable;
         }
     }
@@ -96,6 +112,12 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug(
+                "Write_Building_Rule => Rule value: %s -> %s",
+                Factory_Type_To_String((FactoryType)type->ToBuild),
+                Factory_Type_To_String(factoryType)
+            );
+
             type->ToBuild = (RTTIType)factoryType;
         }
     }
@@ -106,6 +128,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %u -> %u", type->Capacity, capacity);
+
             type->Capacity = capacity;
         }
     }
@@ -116,6 +140,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %d -> %d", type->Power, power);
+
             type->Power = power;
         }
     }
@@ -126,6 +152,8 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Building_Rule => Rule value: %d -> %d", type->Drain, drain);
+
             type->Drain = drain;
         }
     }
@@ -223,13 +251,14 @@ static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const ch
 
 static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
 {
-
     if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE_UPPER))
     {
         auto isFixedWing = Parse_Boolean(value, valueParseError);
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Aircraft_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsFixedWing), Convert_Boolean_To_String(isFixedWing));
+
             type->IsFixedWing = isFixedWing;
         }
     }
@@ -239,6 +268,8 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Aircraft_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsLandable), Convert_Boolean_To_String(isLandable));
+
             type->IsLandable = isLandable;
         }
     }
@@ -248,6 +279,8 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Aircraft_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsRotorEquipped), Convert_Boolean_To_String(hasRotor));
+
             type->IsRotorEquipped = hasRotor;
         }
     }
@@ -258,6 +291,8 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Aircraft_Rule => Rule value: %u -> %u", type->ROT, rot);
+
             type->ROT = rot;
         }
     }
@@ -311,6 +346,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCrateGoodie), Convert_Boolean_To_String(isCrateGoodie));
+
             type->IsCrateGoodie = isCrateGoodie;
         }
     }
@@ -320,6 +357,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => %s -> %s", Convert_Boolean_To_String(type->IsPieceOfEight), Convert_Boolean_To_String(isPieceOfEight));
+
             type->IsPieceOfEight = isPieceOfEight;
         }
     }
@@ -329,6 +368,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCrusher), Convert_Boolean_To_String(isCrusher));
+
             type->IsCrusher = isCrusher;
         }
     }
@@ -338,6 +379,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsToHarvest), Convert_Boolean_To_String(isHarvester));
+
             type->IsToHarvest = isHarvester;
         }
     }
@@ -347,6 +390,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsRadarEquipped), Convert_Boolean_To_String(isRadarEquipped));
+
             type->IsRadarEquipped = isRadarEquipped;
         }
     }
@@ -356,6 +401,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsFireAnim), Convert_Boolean_To_String(hasFireAnim));
+
             type->IsFireAnim = hasFireAnim;
         }
     }
@@ -365,6 +412,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsLockTurret), Convert_Boolean_To_String(lockTurret));
+
             type->IsLockTurret = lockTurret;
         }
     }
@@ -374,6 +423,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsTracked), Convert_Boolean_To_String(hasTracks));
+
             type->IsTracked = hasTracks;
         }
     }
@@ -383,6 +434,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsGigundo), Convert_Boolean_To_String(isHuge));
+
             type->IsGigundo = isHuge;
         }
     }
@@ -392,6 +445,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCloakable), Convert_Boolean_To_String(canCloak));
+
             type->IsCloakable = canCloak;
         }
     }
@@ -401,6 +456,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsAnimating), Convert_Boolean_To_String(constAnim));
+
             type->IsAnimating = constAnim;
         }
     }
@@ -410,6 +467,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", type->Speed, speed);
+
             type->Speed = speed;
         }
     }
@@ -420,6 +479,8 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", type->ROT, rot);
+
             type->ROT = rot;
         }
     }
@@ -529,6 +590,8 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Infantry_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsFemale), Convert_Boolean_To_String(isFemale));
+
             type->IsFemale = isFemale;
         }
     }
@@ -538,6 +601,8 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Infantry_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCrawling), Convert_Boolean_To_String(isCrawling));
+
             type->IsCrawling = isCrawling;
         }
     }
@@ -547,6 +612,8 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Infantry_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCapture), Convert_Boolean_To_String(isCapture));
+
             type->IsCapture = isCapture;
         }
     }
@@ -556,6 +623,8 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Infantry_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsFraidyCat), Convert_Boolean_To_String(isFraidyCat));
+
             type->IsFraidyCat = isFraidyCat;
         }
     }
@@ -565,6 +634,8 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Infantry_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCivilian), Convert_Boolean_To_String(isCivilian));
+
             type->IsCivilian = isCivilian;
         }
     }
@@ -574,6 +645,8 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_Infantry_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsAvoidingTiberium), Convert_Boolean_To_String(isAvoidingTiberium));
+
             type->IsAvoidingTiberium = isAvoidingTiberium;
         }
     }
@@ -640,6 +713,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", type->Level, numValue);
+
             type->Level = numValue;
         }
     }
@@ -650,6 +725,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", type->Scenario, numValue);
+
             type->Scenario = numValue;
         }
     }
@@ -659,12 +736,27 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
-            type->Pre = 1L << scructType;
+            auto prerequisite = Structure_Type_To_Prerequisite(scructType, valueParseError);
+
+            if (!*valueParseError)
+            {
+                Log_Debug(
+                    "Write_TechnoType_Rule => Rule value: %s -> %s",
+                    Prerequisite_To_String(type->Pre),
+                    Prerequisite_To_String(prerequisite)
+                );
+
+                type->Pre = prerequisite;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, COST_RULE_UPPER))
     {
-        type->Cost = atoi(value);
+        auto numValue = atoi(value);
+
+        Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", type->Cost, numValue);
+
+        type->Cost = numValue;
     }
     else if (Strings_Are_Equal(ruleName, BUILDABLE_RULE_UPPER))
     {
@@ -672,6 +764,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", type->IsBuildable, isBuildable);
+
             type->IsBuildable = isBuildable;
         }
     }
@@ -681,6 +775,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsFlammable), Convert_Boolean_To_String(isFlammable));
+
             type->IsFlammable = isFlammable;
         }
     }
@@ -691,6 +787,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", type->MaxSpeed, numValue);
+
             type->MaxSpeed = (MPHType)numValue;
         }
     }
@@ -701,16 +799,21 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", type->MaxStrength, numValue);
+
             type->MaxStrength = numValue;
         }
     }
     else if (Strings_Are_Equal(ruleName, HOUSES_RULE_UPPER))
     {
-        auto houseType = Parse_House_Type(value, valueParseError);
+        auto owner = Parse_House_Name_List_Csv(value, valueParseError);
 
         if (!*valueParseError)
         {
-            type->Ownable = houseType;
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", type->HouseListCsv, value);
+
+            type->Ownable = owner;
+            type->HouseListCsv = strdup(value); // ensure house list csv is up-to-date for future reference
         }
     }
     else if (Strings_Are_Equal(ruleName, PRIMARY_WEAPON_RULE_UPPER))
@@ -719,6 +822,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Weapon_Type_To_String(type->Primary), Weapon_Type_To_String(weapon));
+
             type->Primary = weapon;
             type->Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
         }
@@ -729,6 +834,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Weapon_Type_To_String(type->Secondary), Weapon_Type_To_String(weapon));
+
             type->Secondary = weapon;
         }
     }
@@ -738,6 +845,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %u -> %u", Armor_Type_To_String(type->Armor), Armor_Type_To_String(armourType));
+
             type->Armor = armourType;
         }
     }
@@ -748,6 +857,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %d -> %d", type->MaxAmmo, numValue);
+
             type->MaxAmmo = numValue;
         }
     }
@@ -758,6 +869,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %d -> %d", type->SightRange, numValue);
+
             type->SightRange = numValue;
         }
     }
@@ -768,6 +881,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %d -> %d", type->Reward, numValue);
+
             type->Reward = numValue;
         }
     }
@@ -777,6 +892,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsScanner), Convert_Boolean_To_String(isScanner));
+
             type->IsScanner = isScanner;
         }
     }
@@ -786,6 +903,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCrushable), Convert_Boolean_To_String(isCrushable));
+
             type->IsCrushable = isCrushable;
         }
     }
@@ -795,6 +914,8 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 
         if (!*valueParseError)
         {
+            Log_Debug("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsTransporter), Convert_Boolean_To_String(isTransporter));
+
             type->IsTransporter = isTransporter;
         }
     }
@@ -959,7 +1080,7 @@ static BuildingTypeClass* ResolveBuilding(lua_State* lua, const char* buildingTy
         return NULL;
     }
 
-    Log_Debug("unit type parsed: %s", Structure_Type_To_String(buildingType));
+    Log_Debug("building type parsed: %s -> %s", buildingTypeName, Structure_Type_To_String(buildingType));
 
     return (BuildingTypeClass*)&BuildingTypeClass::As_Reference(buildingType);
 }
@@ -990,7 +1111,7 @@ static AircraftTypeClass* ResolveAircraft(lua_State* lua, const char* aircraftTy
         return NULL;
     }
 
-    Log_Debug("aircraft type parsed: %s", Aircraft_Type_To_String(aircraftType));
+    Log_Debug("aircraft type parsed: %s -> %s", aircraftTypeName, Aircraft_Type_To_String(aircraftType));
 
     return (AircraftTypeClass*)&AircraftTypeClass::As_Reference(aircraftType);
 }
@@ -1021,7 +1142,7 @@ static UnitTypeClass* ResolveUnit(lua_State* lua, const char* unitTypeName)
         return NULL;
     }
 
-    Log_Debug("unit type parsed: %s", Unit_Type_To_String(unitType));
+    Log_Debug("unit type parsed: %s -> %s", unitTypeName, Unit_Type_To_String(unitType));
 
     return (UnitTypeClass*)&UnitTypeClass::As_Reference(unitType);
 }
@@ -1052,7 +1173,7 @@ static InfantryTypeClass* ResolveInfantry(lua_State* lua, const char* infantryTy
         return NULL;
     }
 
-    Log_Debug("infantry type parsed: %s", Infantry_Type_To_String(infantryType));
+    Log_Debug("infantry type parsed: %s -> %s", infantryTypeName, Infantry_Type_To_String(infantryType));
 
     return (InfantryTypeClass*)&InfantryTypeClass::As_Reference(infantryType);
 }

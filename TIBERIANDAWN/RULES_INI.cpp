@@ -375,7 +375,7 @@ bool Read_Game_Rule(
 
 			value = *(gameRule->ruleValue);
 
-			Log_Debug("Read Game rule %s value from cache: %d", entry, value);
+			Log_Debug("Read Game rule %s value from cache: %s", entry, Convert_Boolean_To_String(value));
 
 			break;
 		}
@@ -409,56 +409,13 @@ void Update_Current_Game_Rule_Value(
 		{
 			*(gameRule->ruleValue) = value;
 
-			Log_Debug("Updating Game rule %s value in cache: %d", entry, value);
+			Log_Debug("Updating Game rule %s value in cache: %s", entry, Convert_Boolean_To_String(value));
 
 			return;
 		}
 	}
 
 	Store_Game_Rule(entry, value);
-}
-
-static int Parse_House_Name_List_Csv(char* houseListCsv)
-{
-	auto houseNameListSize = 0;
-	auto houseNameList = Parse_Csv_String(houseListCsv, 8, &houseNameListSize);
-	auto houseListInitialised = false;
-	auto houseList = 0;
-
-	for (auto i = 0; i < houseNameListSize; i++)
-	{
-		bool parseError = false;
-		auto house = Parse_House_Type(houseNameList[i], &parseError);
-
-		if (parseError)
-		{
-			// unable to parse entry as a house name
-			RULES_VALID = false;
-			return HOUSEF_NONE;
-		}
-
-		if (house == HOUSE_NONE)
-		{
-			// none overrides all entries in csv
-			return HOUSEF_NONE;
-		}
-
-		auto houseBit = 1 << house;
-
-		if (!houseListInitialised)
-		{
-			houseList = houseBit;
-			houseListInitialised = true;
-		}
-		else
-		{
-			houseList = houseList | houseBit;
-		}
-	}
-
-	delete houseNameList;
-
-	return houseList;
 }
 
 int Read_House_List_From_Rules_Ini(
@@ -474,7 +431,13 @@ int Read_House_List_From_Rules_Ini(
 		return defaultValue;
 	}
 
-	auto houseListBitField = Parse_House_Name_List_Csv(houseListCsv);
+	bool parseError = false;
+	auto houseListBitField = Parse_House_Name_List_Csv(houseListCsv, &parseError);
+
+	if (!parseError)
+	{
+		RULES_VALID = false;
+	}
 
 	return houseListBitField;
 }

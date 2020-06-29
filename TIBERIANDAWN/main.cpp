@@ -14,6 +14,10 @@ static void Test_Lua_Events()
 	Log_Info("Testing returning early from scenario start event handler");
 
 	On_Scenario_Load("SCB01EA");
+
+	Log_Info("Testing game tick event handler");
+
+	On_Game_Tick();
 }
 
 static void Pause()

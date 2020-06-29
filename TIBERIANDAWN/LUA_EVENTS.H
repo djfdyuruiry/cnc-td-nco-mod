@@ -5,4 +5,6 @@ boolean Initialise_Events();
 
 void On_Scenario_Load(char* name);
 
+void On_Game_Tick();
+
 #endif

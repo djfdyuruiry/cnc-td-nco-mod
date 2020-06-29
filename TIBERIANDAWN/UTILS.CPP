@@ -27,7 +27,7 @@ void Show_Error(const char* messageFormat, ...)
 		MB_OK | MB_ICONSTOP
 	);
 	#else
-	system("cls");
+	system("pause");
 	#endif
 
 	delete formattedMessageBuffer;

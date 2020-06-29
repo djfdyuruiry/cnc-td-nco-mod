@@ -8,9 +8,15 @@ HousesType Parse_House_Type(char* houseTypeString, bool* parseError);
 
 HousesType Parse_House_Type(const char* houseTypeString, bool* parseError);
 
+int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError);
+
+int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError);
+
 char* House_Type_To_String(HousesType houseType);
 
 StructType Prerequisite_To_Structure_Type(long prerequisite);
+
+char * Prerequisite_To_String(long prerequisite);
 
 WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError);
 
@@ -68,6 +74,8 @@ StructType Parse_Structure_Type(char* structTypeString, bool* parseError);
 StructType Parse_Structure_Type(const char* structTypeString, bool* parseError);
 
 char* Structure_Type_To_String(StructType structType);
+
+long Structure_Type_To_Prerequisite(StructType structType, bool* parseError);
 
 FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError);
 
