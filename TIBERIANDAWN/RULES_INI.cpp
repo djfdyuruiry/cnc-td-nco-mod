@@ -53,14 +53,15 @@ static void Read_Log_Level_From_Rules_Ini()
 		NCO_RULES_SECTION,
 		"LogLevel",
 		"INFO", 
-		new const char* [5]{
+		new const char* [6]{
 			Log_Level_To_String(OFF),
 			Log_Level_To_String(ERR),
 			Log_Level_To_String(WARN),
 			Log_Level_To_String(INFO),
-			Log_Level_To_String(DEBUG)
+			Log_Level_To_String(DEBUG),
+			Log_Level_To_String(TRACE)
 		},
-		5
+		7
 	);
 
 	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
@@ -145,6 +146,8 @@ static int Read_Int_From_Rules_Ini(
 		RULES_INI_BUFFER
 	);
 
+	Log_Trace("WWGetPrivateProfileInt value: %d", ruleValue);
+
 	if (valueToAllowAlways == NULL || ruleValue != *valueToAllowAlways)
 	{
 		if (ruleValue < minValueInclusive || ruleValue > maxValueInclusive)
@@ -228,6 +231,8 @@ char* Read_String_From_Rules_Ini(
 		RULES_STRING_LENGTH,
 		RULES_INI_BUFFER
 	);
+
+	Log_Trace("WWGetPrivateProfileString value: %s", valueBuffer);
 
 	strupr(valueBuffer);
 
@@ -326,6 +331,9 @@ int Read_Prerequisite(
 	{
 		// unable to parse entry as a structure type
 		RULES_VALID = false;
+
+		Show_Error("Failed to parse prerequisite for '%s': %s", section, structValueStr);
+
 		return STRUCT_NONE;
 	}
 
@@ -437,9 +445,11 @@ int Read_House_List_From_Rules_Ini(
 	bool parseError = false;
 	auto houseListBitField = Parse_House_Name_List_Csv(houseListCsv, &parseError);
 
-	if (!parseError)
+	if (parseError)
 	{
 		RULES_VALID = false;
+
+		Show_Error("Failed to parse houses for '%s': %s", section, houseListCsv);
 	}
 
 	return houseListBitField;
@@ -466,6 +476,9 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 	{
 		// unable to parse entry as a weapon type
 		RULES_VALID = false;
+
+		Show_Error("Failed to parse %s for '%s': %s", entry, section, weaponTypeStr);
+
 		return WEAPON_NONE;
 	}
 
@@ -520,6 +533,9 @@ SpeedType Read_Unit_Speed_Type_From_Rules_Ini(
 	{
 		// unable to parse entry as a unit speed type
 		RULES_VALID = false;
+
+		Show_Error("Failed to parse unit speed type for '%s': %s", section, unitSpeedTypeStr);
+
 		return SPEED_NONE;
 	}
 
@@ -547,6 +563,9 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 	{
 		// unable to parse entry as a factory type
 		RULES_VALID = false;
+
+		Show_Error("Failed to parse factory type for '%s': %s", section, factoryTypeStr);
+
 		return FACTORY_TYPE_NONE;
 	}
 

@@ -79,7 +79,7 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
     {
         auto house = Parse_House_Type(houseNameList[i], parseError);
 
-        if (!*parseError)
+        if (*parseError)
         {
             // unable to parse entry as a house name
             return HOUSEF_NONE;

@@ -1,6 +1,6 @@
 {
   "name": "New Construction Options",
-  "description": "RULES.INI for Tiberian Dawn",
+  "description": "RULES.INI & Lua Scripting",
   "author": "djfdyuruiry",
   "load_order": 1,
   "version_low": 10,

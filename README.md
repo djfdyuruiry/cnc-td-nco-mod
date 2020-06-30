@@ -111,8 +111,8 @@ If you get an error on load of a scenario complaining the dll version is differe
 - ✓ generate rules ini by reading defaults
 - ✓ test on non-dev machine
 - ⚠ create publish script
-- ⚠ publish alpha to steam workshop
-- ⚠ test workshop item on non-dev machine
+- ✓ publish alpha to steam workshop
+- ✓ test workshop item on non-dev machine
 - ⚠ write full docs
   - rules ini structure
   - rule names
@@ -125,10 +125,10 @@ If you get an error on load of a scenario complaining the dll version is differe
 
 ## Problems
 
-- Cannot modify commando through Lua (or at least it does not appear to have ANY impact in game)
 
 ## Problem Archive
 
+- Cannot modify commando through Lua (or at least it does not appear to have ANY impact in game) - issue with pre-req parsing, TRACE logging added to compare input value against current value and parsed value
 - Risk not working: this is a dummy var/val, calculated using primary weapon - added update logic when primary weapon value is set from Lua to ensure the calculate risk is correct 
 - Prison text logic never gets called (Building get name)
 - Can't build engineer in mission 1 regardless of rules (STRUTF parsing was wrong - fixed, also E6 is code for engineer even though E7 is the reference in code)
