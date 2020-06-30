@@ -39,14 +39,14 @@ If you get a COM error when trying to open the solution/project, follow the belo
     regsvr32 %SystemRoot%\System32\msxml3.dll
     regsvr32 %SystemRoot%\SysWOW64\msxml3.dll
     ```
-- You should not be able to open the project/solution
+- You should now be able to open the project/solution
 
 ### Debugging
 
 - Open a command prompt in the repo root
 - Run:
     ```batch
-    scripts\run.bat
+    scripts\run-cnc.bat
     ```
 - Alt-tab out of the game menu once it loads
 - Open Visual Studio
@@ -54,6 +54,14 @@ If you get a COM error when trying to open the solution/project, follow the belo
     - Click `Attach to Process...`
     - Select `InstanceServerG.exe`
 - DLL will be loaded once you start a mission/skirmish
+
+#### Lua REPL
+
+A test REPL program for the embedded Lua API can be launched by running:
+
+```batch
+scripts\run-lua-repl.bat
+```
 
 ### Updating Tiberian Dawn
 
@@ -71,7 +79,7 @@ You will need to remove `REDALERT` files and fix merge conflicts. Build and inst
 - Open a command prompt in the repo root
 - Run:
     ```batch
-    script\deploy.bat
+    script\build-and-deploy.bat
     ```
 
 ## Troubleshooting
@@ -110,7 +118,7 @@ If you get an error on load of a scenario complaining the dll version is differe
 - ✓ add lookups for all rules in object definitions
 - ✓ generate rules ini by reading defaults
 - ✓ test on non-dev machine
-- ⚠ create publish script
+- ✓ create publish script
 - ✓ publish alpha to steam workshop
 - ✓ test workshop item on non-dev machine
 - ⚠ write full docs

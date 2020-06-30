@@ -1,0 +1,45 @@
+[h1]🛠New Construction Options🛠[/h1]
+
+This mod provides an extensive RULES.INI file for Tiberian Dawn & Lua event scripting.
+
+Unfortunately only one dll mod can run at a time, I aim to fix that problem by providing rules and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
+
+Ever wanted gunboats that can cloak and shoot laser beams❓❓❓
+How about capturing a Obelisk with an Engineer❓❓❓
+Building Temple of Nod as GDI❓❓❓
+
+[b]You can do all this and more:[/b]
+
+[list]
+[*] Set indivual rules for:
+  [*] Aircraft
+  [*] Infantry
+  [*] Units
+  [*] Buildings
+[*] Turn off single player constraints, for example:
+  [*] Nod can't build APCs
+  [*] GDI can't build Sandbags until late in the game
+[*] Control superweapon logic (only Nukes for now)
+[*] Additional rules for cheats and debug options
+[/list]
+
+[i]More rules are planned: all superweapons, change graphics, load additional mix files [/i]
+
+[b]Lua Scripting support:[/b]
+
+[img]https://www.lua.org/images/lua-language.gif[/img]
+
+[list]
+[*] Lua 5.3 support
+[*] Run your scripts when game events happen
+[*] Get/set rules
+[/list]
+
+Currently only one game event has been added:
+
+[list]
+[*] On Scenario Load - onScenarioLoad
+  [*] Use case: set different rules for different missions, or add a special rule for a given mission
+[/list]
+
+[i]Many more are planned: onPlayerWin, onPlayerLose, on [/i]

@@ -19,15 +19,13 @@ void Show_Error(const char* messageFormat, ...)
 	Log_Error(formattedMessageBuffer);
 
 	// we don't want a message box blocking an automated test
-	#ifndef TEST_CONSOLE
+	#ifndef CI_ENV
 	MessageBox(
 		NULL,
 		formattedMessageBuffer,
 		"Command & Conquer",
 		MB_OK | MB_ICONSTOP
 	);
-	#else
-	system("pause");
 	#endif
 
 	delete formattedMessageBuffer;

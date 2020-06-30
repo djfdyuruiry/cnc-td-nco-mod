@@ -211,7 +211,11 @@ copy ..\lib\lua53.lib ..\bin\$(PlatformName)\
 
 if exist ..\bin\$(PlatformName)\test.lua del ..\bin\$(PlatformName)\test.lua
 
-copy ..\game\test.lua ..\bin\$(PlatformName)\
+copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
+
+if exist ..\bin\$(PlatformName)\dump-rules.lua del ..\bin\$(PlatformName)\dump-rules.lua
+
+copy ..\game\lua\dump-rules.lua ..\bin\$(PlatformName)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -266,7 +270,11 @@ copy ..\lib\lua53.lib ..\bin\$(PlatformName)\
 
 if exist ..\bin\$(PlatformName)\test.lua del ..\bin\$(PlatformName)\test.lua
 
-copy ..\game\test.lua ..\bin\$(PlatformName)\
+copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
+
+if exist ..\bin\$(PlatformName)\dump-rules.lua del ..\bin\$(PlatformName)\dump-rules.lua
+
+copy ..\game\lua\dump-rules.lua ..\bin\$(PlatformName)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -286,7 +294,7 @@ copy ..\game\test.lua ..\bin\$(PlatformName)\
     <None Include="..\bin\Win32\test.lua" />
     <None Include="..\game\ccmod.json" />
     <None Include="..\game\RULES.INI" />
-    <None Include="..\game\test.lua" />
+    <None Include="..\game\lua\test.lua" />
     <None Include="..\README.md" />
     <None Include="COORDA.ASM" />
     <MASM Include="KEYFBUFF.ASM">

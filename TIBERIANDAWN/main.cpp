@@ -3,8 +3,6 @@
 #include "function.h"
 #include "lua_repl.h"
 
-static bool IS_RUNNING_IN_CI_ENV = false;
-
 static void Test_Lua_Events()
 {
 	Log_Info("Testing setting rules from scenario start event handler");
@@ -18,20 +16,16 @@ static void Test_Lua_Events()
 
 static void Pause()
 {
-	if (!IS_RUNNING_IN_CI_ENV)
-	{
-		system("pause");
-	}
+	#ifndef CI_ENV
+	system("pause");
+	#endif
 }
 
 static void Configure_Console_Output()
 {
-	if (IS_RUNNING_IN_CI_ENV)
-	{
-		puts("WARNING: CI environment detected - skipped windows console allocation");
-		return;
-	}
-
+	#ifdef CI_ENV
+	puts("WARNING: CI environment detected - skipped windows console allocation");
+	#else
 	if (!AttachConsole(ATTACH_PARENT_PROCESS) 
 		&& !AllocConsole()
 		&& !AttachConsole(GetCurrentProcessId()))
@@ -44,25 +38,33 @@ static void Configure_Console_Output()
 	freopen("CON", "w", stdout);
 	freopen("CON", "w", stderr);
 	freopen("CON", "w", stdin);
+	#endif
 }
 
 static void Parse_Command_Line(const char* commandLine)
 {
-	if (!String_Starts_With(commandLine, "--lua-repl"))
+	if (String_Starts_With(commandLine, "--lua-repl"))
 	{
-		return;
-	}
-
-	if (IS_RUNNING_IN_CI_ENV)
-	{
+		#ifdef CI_ENV
 		puts("ERROR: CI environment detected - Lua REPL not supported");
 
 		exit(1);
+		#else
+		Enter_Lua_Repl();
+
+		exit(0);
+		#endif
 	}
+	else if (String_Starts_With(commandLine, "--dump-rules"))
+	{
+		if (!Initialise_Lua() || !Execute_Lua_File("dump-rules.lua"))
+		{
+			puts("ERROR: Failed to dump rules file");
+			exit(1);
+		}
 
-	Enter_Lua_Repl();
-
-	exit(0);
+		exit(0);
+	}
 }
 
 /// <summary>
@@ -70,13 +72,6 @@ static void Parse_Command_Line(const char* commandLine)
 /// </summary>
 int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int windowState)
 {
-	IS_RUNNING_IN_CI_ENV = Parse_Boolean_Or_Default(
-		Convert_String_To_Upper_Case(
-			Get_Env_Var_Or_Default("CI", "false")
-		),
-		false
-	);
-
 	Configure_Console_Output();
 
 	puts("========================");

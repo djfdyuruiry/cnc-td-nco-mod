@@ -35,21 +35,13 @@ function main()
 
   log(string.format("Dumping rules ini to %s", outputFile))
 
-  rulesFile:write([[
-###############
-## rules.ini ##
-###############]])
+  rulesFile:write("### rules.ini for Tiberian Dawn")
 
   rulesFile:write("\n\n")
 
   for typeAreaName, typeArea in pairs(typeAreas) do
-    rulesFile:write(string.format([[
-###############
-## %s ##
-###############]], typeAreaName))
+    rulesFile:write(string.format("## %s\n", typeAreaName))
 
-    rulesFile:write("\n\n")
-  
     for _, areaType in ipairs(typeArea.getTypes()) do
       rulesFile:write(string.format("[%s]\n", areaType))
 

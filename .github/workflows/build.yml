@@ -43,7 +43,23 @@ jobs:
 
       - name: Build Tiberian Dawn Test App
         run: scripts\build-test.bat
+        env:
+          CL: /DCI_ENV
 
       - name: Run Test App
         working-directory: bin\Win32 
-        run: ./TiberianDawn.exe
+        run: .\TiberianDawn.exe
+
+      - name: Package for Steam Workshop
+        run: scripts\build-and-package.bat
+
+      - name: Read Short Git Commit Hash
+        shell: powershell
+        run: |
+          $gitCommit = $env:GITHUB_SHA.substring(0, 6)
+
+          Write-Host "::set-env name=GIT_COMMIT::${gitCommit}"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          path: .steam-workshop\cnc-td-nco-mod-steam-${{ env.GIT_COMMIT }}.zip

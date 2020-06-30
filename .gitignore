@@ -362,3 +362,5 @@ FodyWeavers.xsd
 BIN
 
 !TiberianDawn.vcxproj.user
+
+.steam-workshop

@@ -97,7 +97,7 @@
     <None Include="..\game\RULES.INI">
       <Filter>game</Filter>
     </None>
-    <None Include="..\game\test.lua">
+    <None Include="..\game\lua\test.lua">
       <Filter>game</Filter>
     </None>
     <None Include="..\README.md" />
