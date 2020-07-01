@@ -91,7 +91,7 @@ The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find t
   - next, open `NCO`
   - next, open `Data`
 
-    <img src="docs/steam_rules_path_3.png" width="800" height="100" />
+    <img src="docs/steam_rules_path_3.png" width="800" height="80" />
 
 ### Manual installation
 
