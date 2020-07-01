@@ -503,6 +503,8 @@ typedef struct GameRules {
 
 #define Read_Is_Unsellable(section, defaultValue) Read_Bool_From_Rules_Ini(section, UNSELLABLE_RULE, defaultValue)
 
+#define Read_Is_Sturdy(section, defaultValue) Read_Bool_From_Rules_Ini(section, STURDY_RULE, defaultValue)
+
 // NCO config
 bool Rules_Ini_Failed_Validation();
 

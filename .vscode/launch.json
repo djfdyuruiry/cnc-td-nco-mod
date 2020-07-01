@@ -9,9 +9,6 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/Win32",
-            "environment": {
-                "TD_RULES_FILE": "${workspaceFolder}/bin/Win32/RULES.INI"
-            },
             "externalConsole": false,
             "preLaunchTask": "Build TestConsole"
         }

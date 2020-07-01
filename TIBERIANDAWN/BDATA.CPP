@@ -193,7 +193,7 @@ static BuildingTypeClass const ClassTemple(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("TMPL", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("TMPL", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("TMPL", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("TMPL", 1000),										// STRNTH:		Full strength of building.
@@ -242,7 +242,7 @@ static BuildingTypeClass const ClassEye(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("EYE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("EYE", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("EYE", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	Read_Strength("EYE", 500),										// STRNTH:		Full strength of building.
@@ -291,7 +291,7 @@ static BuildingTypeClass const ClassWeapon(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("WEAP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("WEAP", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("WEAP", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 #ifdef ADVANCED
@@ -344,7 +344,7 @@ static BuildingTypeClass const ClassGTower(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("GTWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("GTWR", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("GTWR", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("GTWR", 200),										// STRNTH:		Full strength of building.
@@ -394,7 +394,7 @@ static BuildingTypeClass const ClassATower(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("ATWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("ATWR", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("ATWR", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ATWR", 300),										// STRNTH:		Full strength of building.
@@ -444,7 +444,7 @@ static BuildingTypeClass const ClassObelisk(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("OBLI", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("OBLI", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("OBLI", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("OBLI", 200),										// STRNTH:		Full strength of building.
@@ -493,7 +493,7 @@ static BuildingTypeClass const ClassTurret(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("GUN", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("GUN", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("GUN", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	(DirType)208,							// Starting idle frame to match construction.
 	Read_Strength("GUN", 200),										// STRNTH:		Full strength of building.
@@ -550,7 +550,7 @@ static BuildingTypeClass const ClassConst(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("FACT", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("FACT", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("FACT", FACTORY_TYPE_BUILDING),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("FACT", 400),										// STRNTH:		Full strength of building.
@@ -599,7 +599,7 @@ static BuildingTypeClass const ClassRefinery(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("PROC", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("PROC", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("PROC", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("PROC", 450),										// STRNTH:		Full strength of building.
@@ -648,7 +648,7 @@ static BuildingTypeClass const ClassStorage(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("SILO", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("SILO", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("SILO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SILO", 150),										// STRNTH:		Full strength of building.
@@ -698,7 +698,7 @@ static BuildingTypeClass const ClassHelipad(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("HPAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("HPAD", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("HPAD", FACTORY_TYPE_AIRCRAFT),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HPAD", 400),										// STRNTH:		Full strength of building.
@@ -747,7 +747,7 @@ static BuildingTypeClass const ClassCommand(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("HQ", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("HQ", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("HQ", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	Read_Strength("HQ", 500),										// STRNTH:		Full strength of building.
@@ -796,7 +796,7 @@ static BuildingTypeClass const ClassSAM(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("SAM", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("SAM", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("SAM", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SAM", 200),										// STRNTH:		Full strength of building.
@@ -845,7 +845,7 @@ static BuildingTypeClass const ClassAirStrip(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("AFLD", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("AFLD", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("AFLD", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("AFLD", 500),										// STRNTH:		Full strength of building.
@@ -894,7 +894,7 @@ static BuildingTypeClass const ClassPower(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("NUKE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("NUKE", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("NUKE", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("NUKE", 200),										// STRNTH:		Full strength of building.
@@ -943,7 +943,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("NUK2", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("NUK2", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("NUK2", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("NUK2", 300),										// STRNTH:		Full strength of building.
@@ -992,7 +992,7 @@ static BuildingTypeClass const ClassHospital(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("HOSP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("HOSP", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("HOSP", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HOSP", 200),										// STRNTH:		Full strength of building.
@@ -1042,7 +1042,7 @@ static BuildingTypeClass const ClassBioLab(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("BIO", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("BIO", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("BIO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BIO", 300),										// STRNTH:		Full strength of building.
@@ -1091,7 +1091,7 @@ static BuildingTypeClass const ClassBarracks(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("PYLE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("PYLE", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("PYLE", FACTORY_TYPE_INFANTRY),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("PYLE", 400),										// STRNTH:		Full strength of building.
@@ -1140,7 +1140,7 @@ static BuildingTypeClass const ClassHand(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("HAND", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("HAND", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("HAND", FACTORY_TYPE_INFANTRY),					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HAND", 400),										// STRNTH:		Full strength of building.
@@ -1189,7 +1189,7 @@ static BuildingTypeClass const ClassTanker(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("ARCO", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		Read_Is_Sturdy("ARCO", true),			// Does building care less if placed on concrete?
 	Read_Factory_Type("ARCO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ARCO", 100),										// STRNTH:		Full strength of building.
@@ -1238,7 +1238,7 @@ static BuildingTypeClass const ClassRepair(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("FIX", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("FIX", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("FIX", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("FIX", 400),										// STRNTH:		Full strength of building.
@@ -1289,7 +1289,7 @@ static BuildingTypeClass const ClassRoad(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("ROAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		Read_Is_Sturdy("ROAD", true),			// Does building care less if placed on concrete?
 	Read_Factory_Type("ROAD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ROAD", 1),											// STRNTH:		Full strength of building.
@@ -1339,7 +1339,7 @@ static BuildingTypeClass const ClassV01(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V01", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V01", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V01", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V01", 200),										// STRNTH:		Full strength of building.
@@ -1388,7 +1388,7 @@ static BuildingTypeClass const ClassV02(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V02", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V02", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V02", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V02", 200),										// STRNTH:		Full strength of building.
@@ -1437,7 +1437,7 @@ static BuildingTypeClass const ClassV03(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V03", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V03", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V03", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V03", 200),										// STRNTH:		Full strength of building.
@@ -1486,7 +1486,7 @@ static BuildingTypeClass const ClassV04(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V04", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V04", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V04", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V04", 200),										// STRNTH:		Full strength of building.
@@ -1535,7 +1535,7 @@ static BuildingTypeClass const ClassV05(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V05", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V05", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V05", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V05", 200),										// STRNTH:		Full strength of building.
@@ -1584,7 +1584,7 @@ static BuildingTypeClass const ClassV06(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V06", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V06", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V06", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V06", 200),										// STRNTH:		Full strength of building.
@@ -1633,7 +1633,7 @@ static BuildingTypeClass const ClassV07(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V07", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V07", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V07", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V07", 200),										// STRNTH:		Full strength of building.
@@ -1682,7 +1682,7 @@ static BuildingTypeClass const ClassV08(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V08", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V08", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V08", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V08", 200),										// STRNTH:		Full strength of building.
@@ -1731,7 +1731,7 @@ static BuildingTypeClass const ClassV09(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V09", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V09", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V09", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V09", 200),										// STRNTH:		Full strength of building.
@@ -1780,7 +1780,7 @@ static BuildingTypeClass const ClassV10(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V10", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V10", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V10", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V10", 200),										// STRNTH:		Full strength of building.
@@ -1829,7 +1829,7 @@ static BuildingTypeClass const ClassV11(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V11", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V11", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V11", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V11", 200),										// STRNTH:		Full strength of building.
@@ -1878,7 +1878,7 @@ static BuildingTypeClass const ClassV12(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V12", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V12", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V12", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V12", 200),										// STRNTH:		Full strength of building.
@@ -1927,7 +1927,7 @@ static BuildingTypeClass const ClassV13(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V13", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V13", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V13", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V13", 200),										// STRNTH:		Full strength of building.
@@ -1976,7 +1976,7 @@ static BuildingTypeClass const ClassV14(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V14", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V14", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V14", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V14", 200),										// STRNTH:		Full strength of building.
@@ -2025,7 +2025,7 @@ static BuildingTypeClass const ClassV15(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V15", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V15", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V15", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V15", 200),										// STRNTH:		Full strength of building.
@@ -2074,7 +2074,7 @@ static BuildingTypeClass const ClassV16(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V16", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V16", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V16", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V16", 200),										// STRNTH:		Full strength of building.
@@ -2123,7 +2123,7 @@ static BuildingTypeClass const ClassV17(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V17", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V17", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V17", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V17", 200),										// STRNTH:		Full strength of building.
@@ -2172,7 +2172,7 @@ static BuildingTypeClass const ClassV18(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V18", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V18", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V18", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V18", 200),										// STRNTH:		Full strength of building.
@@ -2221,7 +2221,7 @@ static BuildingTypeClass const ClassV19(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V19", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V19", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V19", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V19", 200),										// STRNTH:		Full strength of building.
@@ -2270,7 +2270,7 @@ static BuildingTypeClass const ClassV20(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V20", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V20", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V20", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V20", 200),										// STRNTH:		Full strength of building.
@@ -2319,7 +2319,7 @@ static BuildingTypeClass const ClassV21(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V21", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V21", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V21", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V21", 200),										// STRNTH:		Full strength of building.
@@ -2368,7 +2368,7 @@ static BuildingTypeClass const ClassV22(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V22", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V22", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V22", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V22", 200),										// STRNTH:		Full strength of building.
@@ -2417,7 +2417,7 @@ static BuildingTypeClass const ClassV23(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V23", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V23", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V23", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V23", 200),										// STRNTH:		Full strength of building.
@@ -2466,7 +2466,7 @@ static BuildingTypeClass const ClassV24(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V24", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V24", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V24", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V24", 200),										// STRNTH:		Full strength of building.
@@ -2515,7 +2515,7 @@ static BuildingTypeClass const ClassV25(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V25", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V25", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V25", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V25", 200),										// STRNTH:		Full strength of building.
@@ -2564,7 +2564,7 @@ static BuildingTypeClass const ClassV26(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V26", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V26", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V26", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V26", 200),										// STRNTH:		Full strength of building.
@@ -2613,7 +2613,7 @@ static BuildingTypeClass const ClassV27(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V27", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V27", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V27", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V27", 200),										// STRNTH:		Full strength of building.
@@ -2662,7 +2662,7 @@ static BuildingTypeClass const ClassV28(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V28", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V28", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V28", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V28", 200),										// STRNTH:		Full strength of building.
@@ -2711,7 +2711,7 @@ static BuildingTypeClass const ClassV29(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V29", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V29", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V29", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V29", 200),										// STRNTH:		Full strength of building.
@@ -2760,7 +2760,7 @@ static BuildingTypeClass const ClassV30(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V30", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V30", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V30", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V30", 200),										// STRNTH:		Full strength of building.
@@ -2809,7 +2809,7 @@ static BuildingTypeClass const ClassV31(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V31", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V31", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V31", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V31", 200),										// STRNTH:		Full strength of building.
@@ -2858,7 +2858,7 @@ static BuildingTypeClass const ClassV32(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V32", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V32", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V32", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V32", 200),										// STRNTH:		Full strength of building.
@@ -2907,7 +2907,7 @@ static BuildingTypeClass const ClassV33(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V33", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V33", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V33", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V33", 200),										// STRNTH:		Full strength of building.
@@ -2956,7 +2956,7 @@ static BuildingTypeClass const ClassV34(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V34", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V34", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V34", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V34", 200),										// STRNTH:		Full strength of building.
@@ -3005,7 +3005,7 @@ static BuildingTypeClass const ClassV35(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V35", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V35", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V35", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V35", 200),										// STRNTH:		Full strength of building.
@@ -3054,7 +3054,7 @@ static BuildingTypeClass const ClassV36(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V36", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V36", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V36", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V36", 200),										// STRNTH:		Full strength of building.
@@ -3102,7 +3102,7 @@ static BuildingTypeClass const ClassV37(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("V37", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("V37", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("V37", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V37", 300),										// STRNTH:		Full strength of building.
@@ -3150,7 +3150,7 @@ static BuildingTypeClass const ClassMission(
 		true,			// Can it be repaired?
 		Read_Is_Buildable("MISS", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
-		false,		// Does building care less if placed on concrete?
+		Read_Is_Sturdy("MISS", false),		// Does building care less if placed on concrete?
 	Read_Factory_Type("MISS", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("MISS", 200),										// STRNTH:		Full strength of building.
@@ -3200,7 +3200,7 @@ static BuildingTypeClass const Sandbag(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("SBAG", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		Read_Is_Sturdy("SBAG", true),			// Does building care less if placed on concrete?
 	Read_Factory_Type("SBAG", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SBAG", 1),											// STRNTH:		Full strength of building.
@@ -3249,7 +3249,7 @@ static BuildingTypeClass const Cyclone(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("CYCL", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		Read_Is_Sturdy("CYCL", true),			// Does building care less if placed on concrete?
 	Read_Factory_Type("CYCL", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("CYCL", 1),											// STRNTH:		Full strength of building.
@@ -3298,7 +3298,7 @@ static BuildingTypeClass const Brick(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("BRIK", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		Read_Is_Sturdy("BRIK", true),			// Does building care less if placed on concrete?
 	Read_Factory_Type("BRIK", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BRIK", 1),											// STRNTH:		Full strength of building.
@@ -3347,7 +3347,7 @@ static BuildingTypeClass const Barbwire(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("BARB", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		Read_Is_Sturdy("BARB", true),			// Does building care less if placed on concrete?
 	Read_Factory_Type("BARB", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BARB", 1),											// STRNTH:		Full strength of building.
@@ -3396,7 +3396,7 @@ static BuildingTypeClass const Wood(
 		false,		// Can it be repaired?
 		Read_Is_Buildable("WOOD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		Read_Is_Sturdy("WOOD", true),			// Does building care less if placed on concrete?
 	Read_Factory_Type("WOOD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("WOOD", 1),											// STRNTH:		Full strength of building.
