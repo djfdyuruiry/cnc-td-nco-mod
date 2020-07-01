@@ -122,12 +122,13 @@ If you get an error on load of a scenario complaining the dll version is differe
 - ✓ publish alpha to steam workshop
 - ✓ test workshop item on non-dev machine
 - ⚠ write full docs
-  - rules ini structure
-  - rule names
-  - valid rule values
+  - ✓ rules ini structure
+  - ✓ rule names
+  - ✓ valid rule values
   - lua scripting api
   - use id of workshop item in any path hints
   - add weapon wiki links in docs
+  - move dev docs into wiki and have steam mod getting started with `RULES.INI` and Lua script(s) path in main `README.md`
 - ⚠ publish v1 to steam workshop
 - ⚠ test v1 workshop item on non-dev machine
 
