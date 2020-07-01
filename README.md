@@ -11,15 +11,13 @@ The key goal is to overcome the limitation of only having one `dll` based mod lo
 - [Installing](#Installing)
   - [Using Steam Workshop](#Using-Steam-Workshop)
   - [Manual Install](#Manual-Install)
-- [RULES.INI Location](#RULES.INI-Location)
+- [RULES.INI Location](#RULESINI-Location)
   - [Steam Workshop](#Steam-Workshop)
   - [Manual Installation](#Manual-Installation)
 
 ---
 
 ## Features
-
----
 
 - 📃 Full `RULES.INI` support for Tiberian Dawn - majority of constants are now read from a rules file if present
 
@@ -30,8 +28,6 @@ The key goal is to overcome the limitation of only having one `dll` based mod lo
 
 ## How to Use
 
----
-
 There are several pages written in the wiki that will detail how to edit the `RULES.INI` file and create Lua scripts.
 
 See the [New Construction Options Wiki](https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki)
@@ -39,8 +35,6 @@ See the [New Construction Options Wiki](https://github.com/djfdyuruiry/cnc-td-nc
 ---
 
 ## Installing
-
----
 
 ### Using Steam Workshop
 
@@ -71,8 +65,6 @@ See the [New Construction Options Wiki](https://github.com/djfdyuruiry/cnc-td-nc
 ---
 
 ## RULES.INI Location
-
----
 
 The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find this folder, follow the steps below.
 
@@ -112,8 +104,6 @@ The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find t
 ---
 
 ## Path to v1
-
----
 
 - ✓ add armour and other missing rules
 - ✓ add lookups for all rules in object definitions
