@@ -5437,6 +5437,10 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		return(true);
 	}
 
+	if (Read_Game_Rule(BUILD_ANYWHERE_RULE, false)) {
+		return true;
+	}
+
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent
 	**	cells to these are of friendly persuasion, then consider the proximity check to
@@ -5446,7 +5450,9 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = homecell + *ptr++;
 
-		if (!Map.In_Radar(cell)) return(false);
+		if (!Map.In_Radar(cell) && Read_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true)) {
+			return false;
+		}
 
 		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
 			CELL	newcell = Adjacent_Cell(cell, facing);
@@ -5459,9 +5465,11 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 			**	building located there.
 			*/
 			if (Map[newcell].Owner == House->Class->House) {
-				return(true);
+				return Read_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true);
 			}
 
+			// TODO: could add a `build off allies base` rule by checking if 
+			//       house is friendly to current players house
 			if (base && base->House->Class->House == House->Class->House) {
 				return(true);
 			}

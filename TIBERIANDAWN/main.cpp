@@ -14,6 +14,14 @@ static void Test_Lua_Events()
 	On_Scenario_Load("SCG04EA");
 }
 
+static void Test_Special_Rules() {
+	Log_Info("Testing special rules");
+
+	auto special = SpecialClass();
+
+	special.Init();
+}
+
 static void Pause()
 {
 	#ifndef CI_ENV
@@ -89,6 +97,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 		return 1;
 	}
+
+	Test_Special_Rules();
 
 	Log_Debug("Test Console: Testing Lua Events");
 

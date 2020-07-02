@@ -35,37 +35,41 @@
 #ifndef SPECIAL_H
 #define SPECIAL_H
 
+#include "rules_ini_game.h"
+
+// TODO: rules the ever living fuck out of this bad boy
 class SpecialClass
 {
 	public:
 		void Init(void) {
+			IsGross = Read_Game_Rule(BLOOD_GUTS_RULE, false);
+			IsSpeedBuild = Read_Game_Rule(SPEEDY_BUILDS_RULE, false);
+			IsDefenderAdvantage = Read_Game_Rule(DEFENDER_ADVANTAGE_RULE, true);
+			IsVisibleTarget = Read_Game_Rule(PLAYER_TARGETS_VISIBLE_RULE, false);
+			IsJuvenile = Read_Game_Rule(FARTS_RULE, false);
+			IsSmartDefense = Read_Game_Rule(DEFEND_AGAINST_FRIENDLY_FIRE_RULE, false);
+			IsTreeTarget = Read_Game_Rule(TARGET_TREES_RULE, false);
+			IsMCVDeploy = Read_Game_Rule(MCV_REDEPLOY_RULE, false);
+			IsVisceroids = Read_Game_Rule(VISCEROIDS_RULE, false);
+			IsInert = Read_Game_Rule(UNITS_INDESTRUCTIBLE_RULE, false);
+			IsShowPath = Read_Game_Rule(SHOW_AI_PATH_RULE, false);
+			IsThreePoint = Read_Game_Rule(THREE_POINT_TURNS_RULE, false);
+			IsTGrowth = Read_Game_Rule(TIBERIUM_GROWS_RULE, true);
+			IsTSpread = Read_Game_Rule(TIBERIUM_SPREADS_RULE, true);
+			IsTFast = Read_Game_Rule(FAST_TIBERIUM_RULE, true);
+			IsRoad = Read_Game_Rule(SHOW_BUILDING_ROADS_RULE, false);
+			IsScatter = Read_Game_Rule(AUTO_SCATTER_RULE, false);
+			IsNamed = Read_Game_Rule(NAME_CIVILIAN_BUILDINGS_RULE, false);
+			IsSeparate = Read_Game_Rule(CAN_BUY_HELIPAD_ONLY_RULE, false);
+
 			IsScrollMod = false;
-			IsGross = false;
 			IsEasy = false;
 			IsDifficult = false;
-			IsSpeedBuild = false;
-			IsDefenderAdvantage = true;
-			IsVisibleTarget = false;
 			IsVariation = false;
 			IsJurassic = false;
-			IsJuvenile = false;
-			IsSmartDefense = false;
-			IsTreeTarget = false;
-			IsMCVDeploy = false;
-			IsVisceroids = false;
 			IsMonoEnabled = false;
-			IsInert = false;
-			IsShowPath = false;
-			IsThreePoint = false;
-			IsTGrowth = true;
-			IsTSpread = true;
-			IsTFast = true;
-			IsRoad = false;
-			IsScatter = false;
 			IsCaptureTheFlag = false;
-			IsNamed = false;
 			IsFromInstall = false;
-			IsSeparate = false;
 			IsFromWChat = false;
 			IsEarlyWin = false;
 			HealthBarDisplayMode = HB_SELECTED;

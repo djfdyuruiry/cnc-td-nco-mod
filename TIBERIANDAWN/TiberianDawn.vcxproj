@@ -458,6 +458,12 @@ copy ..\game\lua\dump-rules.lua ..\bin\$(PlatformName)\
     <ClInclude Include="Resource\resource.h" />
     <ClInclude Include="RULES.H" />
     <ClInclude Include="RULES_INI.H" />
+    <ClInclude Include="RULES_INI_AIRCRAFT.H" />
+    <ClInclude Include="RULES_INI_BUILDING.H" />
+    <ClInclude Include="RULES_INI_GAME.H" />
+    <ClInclude Include="RULES_INI_GENERIC.H" />
+    <ClInclude Include="RULES_INI_INFANTRY.H" />
+    <ClInclude Include="RULES_INI_UNIT.H" />
     <ClInclude Include="SAVEDLG.H" />
     <ClInclude Include="SCORE.H" />
     <ClInclude Include="SCREEN.H" />
