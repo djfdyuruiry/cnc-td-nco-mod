@@ -50,8 +50,8 @@ See the [New Construction Options Wiki](https://github.com/djfdyuruiry/cnc-td-nc
 
 ### Manual Install
 
-- Go the the [Releases Page]()
-- Download the latest `Manual Install` zip
+- Go the the [Releases Page](https://github.com/djfdyuruiry/cnc-td-nco-mod/releases)
+- Download the latest `nco-cnc-td-mod.zip` file
 - Open the Start menu
 - Type `Run`
 - Click on the `Run` app that is highlighted
