@@ -46,7 +46,6 @@ class SpecialClass
 			IsSpeedBuild = Read_Game_Rule(SPEEDY_BUILDS_RULE, false);
 			IsDefenderAdvantage = Read_Game_Rule(DEFENDER_ADVANTAGE_RULE, true);
 			IsVisibleTarget = Read_Game_Rule(PLAYER_TARGETS_VISIBLE_RULE, false);
-			IsJuvenile = Read_Game_Rule(FARTS_RULE, false);
 			IsSmartDefense = Read_Game_Rule(DEFEND_AGAINST_FRIENDLY_FIRE_RULE, false);
 			IsTreeTarget = Read_Game_Rule(TARGET_TREES_RULE, false);
 			IsMCVDeploy = Read_Game_Rule(MCV_REDEPLOY_RULE, false);
@@ -57,11 +56,12 @@ class SpecialClass
 			IsTGrowth = Read_Game_Rule(TIBERIUM_GROWS_RULE, true);
 			IsTSpread = Read_Game_Rule(TIBERIUM_SPREADS_RULE, true);
 			IsTFast = Read_Game_Rule(FAST_TIBERIUM_RULE, true);
-			IsRoad = Read_Game_Rule(SHOW_BUILDING_ROADS_RULE, false);
+			IsRoad = Read_Game_Rule(SHOW_BIBS_RULE, false);
 			IsScatter = Read_Game_Rule(AUTO_SCATTER_RULE, false);
 			IsNamed = Read_Game_Rule(NAME_CIVILIAN_BUILDINGS_RULE, false);
 			IsSeparate = Read_Game_Rule(CAN_BUY_HELIPAD_ONLY_RULE, false);
 
+			IsJuvenile = false;
 			IsScrollMod = false;
 			IsEasy = false;
 			IsDifficult = false;
