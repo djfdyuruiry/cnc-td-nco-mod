@@ -1,4 +1,4 @@
-﻿# 🛠 New Contruction Options 🛠
+﻿# 🛠 New Construction Options 🛠
 
 This is a mod for the remastered version of C&C Tiberian Dawn.
 
@@ -28,7 +28,7 @@ The key goal is to overcome the limitation of only having one `dll` based mod lo
 
 ## How to Use
 
-There are several pages written in the wiki that will detail how to edit the `RULES.INI` file and create Lua scripts.
+There is a wiki with pages that detail how to edit the `RULES.INI` file and create Lua scripts.
 
 See the [New Construction Options Wiki](https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki)
 
@@ -45,7 +45,7 @@ See the [New Construction Options Wiki](https://github.com/djfdyuruiry/cnc-td-nc
 - Click `Subscribe` 
 - Once it has downloaded:
   - Start C&C
-  - Enable the `New Contruction Options` mod in the options menu
+  - Enable the `New Construction Options` mod in the options menu
   - Restart C&C
 
 ### Manual Install
@@ -59,7 +59,7 @@ See the [New Construction Options Wiki](https://github.com/djfdyuruiry/cnc-td-nc
 - Click `OK`
 - Unzip the downloaded file into this folder
 - Start C&C
-- Enable the `New Contruction Options` mod in the options menu
+- Enable the `New Construction Options` mod in the options menu
 - Restart C&C
 
 ---
@@ -101,25 +101,3 @@ The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find t
 - Copy and paste this: `explorer "%USERPROFILE\Documents\CnCRemastered\Mods\Tiberian_Dawn\nco\Data"`
 - Click `OK`
 
----
-
-## Path to v1
-
-- ✓ add armour and other missing rules
-- ✓ add lookups for all rules in object definitions
-- ✓ generate rules ini by reading defaults
-- ✓ test on non-dev machine
-- ✓ create publish script
-- ✓ publish alpha to steam workshop
-- ✓ test workshop item on non-dev machine
-- ⚠ write full docs
-  - ✓ rules ini structure
-  - ✓ rule names
-  - ✓ valid rule values
-  - ⚠ lua scripting api
-  - ⚠ use id of workshop item in any path hints
-  - ⚠ add weapon wiki links in docs
-  - ✓ move dev docs into wiki 
-  - ⚠ steam mod getting started with `RULES.INI` and Lua script(s) path in main `README.md`
-- ⚠ publish v1 to steam workshop
-- ⚠ test v1 workshop item on non-dev machine

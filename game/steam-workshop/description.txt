@@ -1,14 +1,22 @@
 [h1]🛠New Construction Options🛠[/h1]
 
-This mod provides an extensive RULES.INI file for Tiberian Dawn & Lua event scripting.
+This mod provides an extensive 📃 RULES.INI file 📃 for Tiberian Dawn & ⚙ Lua event scripting ⚙.
 
-Unfortunately only one dll mod can run at a time, I aim to fix that problem by providing rules and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
+Unfortunately only one C&C dll mod can run at a time, this mod aims to fix that problem by providing a rules file and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
+
+[b]Getting Started:[/b]
+
+TL;DR - Setup guide can be found here: [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/blob/master/README.md]https://github.com/djfdyuruiry/cnc-td-nco-mod/blob/master/README.md[/url]
+
+Check out the complete wiki here: [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki]https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki[/url]
+
+[b]Features:[/b]
 
 Ever wanted gunboats that can cloak and shoot laser beams❓❓❓
 How about capturing a Obelisk with an Engineer❓❓❓
 Building Temple of Nod as GDI❓❓❓
 
-[b]You can do all this and more:[/b]
+[b]You can do all this and more![/b]
 
 [list]
 [*] Set indivual rules for:
@@ -25,9 +33,9 @@ Building Temple of Nod as GDI❓❓❓
 
 [i]More rules are planned: all superweapons, change graphics, load additional mix files [/i]
 
-[b]Lua Scripting support:[/b]
+A guide on how to edit the RULES.INI file can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/1.-RULES.INI-Full-Guide]here[/url].
 
-[img]https://www.lua.org/images/lua-language.gif[/img]
+[b]Lua Scripting support:[/b]
 
 [list]
 [*] Lua 5.3 support
@@ -35,11 +43,16 @@ Building Temple of Nod as GDI❓❓❓
 [*] Get/set rules
 [/list]
 
-Currently only one game event has been added:
+A guide on how to use Lua Scripts with the mod can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/2.-Lua-Scripting-Tutorial]here[/url].
 
-[list]
-[*] On Scenario Load - onScenarioLoad
-  [*] Use case: set different rules for different missions, or add a special rule for a given mission
-[/list]
+[code]
+Changelog:
 
-[i]Many more are planned: onPlayerWin, onPlayerLose, on [/i]
+v1.0:
+
+  - Initial release on Steam Workshop
+  - Majority of rules for Infantry, Units, Aircraft and Buildings covered
+  - Lua scripting created with one event to start
+  - Wiki documentation
+  - Developer documentation
+[/code] 
