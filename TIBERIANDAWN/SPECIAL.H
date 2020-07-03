@@ -43,13 +43,11 @@ class SpecialClass
 		void Init(void) {
 			IsSpeedBuild = Get_Game_Rules()->Read_Boolean_Rule(SPEEDY_BUILDS_RULE, false);
 			IsDefenderAdvantage = Get_Game_Rules()->Read_Boolean_Rule(DEFENDER_ADVANTAGE_RULE, true);
-			IsVisibleTarget = Get_Game_Rules()->Read_Boolean_Rule(PLAYER_TARGETS_VISIBLE_RULE, false);
 			IsSmartDefense = Get_Game_Rules()->Read_Boolean_Rule(DEFEND_AGAINST_FRIENDLY_FIRE_RULE, false);
 			IsTreeTarget = Get_Game_Rules()->Read_Boolean_Rule(TARGET_TREES_RULE, false);
 			IsMCVDeploy = Get_Game_Rules()->Read_Boolean_Rule(MCV_REDEPLOY_RULE, false);
 			IsVisceroids = Get_Game_Rules()->Read_Boolean_Rule(VISCEROIDS_RULE, false);
 			IsInert = Get_Game_Rules()->Read_Boolean_Rule(UNITS_INDESTRUCTIBLE_RULE, false);
-			IsShowPath = Get_Game_Rules()->Read_Boolean_Rule(SHOW_AI_PATH_RULE, false);
 			IsThreePoint = Get_Game_Rules()->Read_Boolean_Rule(THREE_POINT_TURNS_RULE, false);
 			IsTGrowth = Get_Game_Rules()->Read_Boolean_Rule(TIBERIUM_GROWS_RULE, true);
 			IsTSpread = Get_Game_Rules()->Read_Boolean_Rule(TIBERIUM_SPREADS_RULE, true);
@@ -59,6 +57,8 @@ class SpecialClass
 			IsNamed = Get_Game_Rules()->Read_Boolean_Rule(NAME_CIVILIAN_BUILDINGS_RULE, false);
 			IsSeparate = Get_Game_Rules()->Read_Boolean_Rule(CAN_BUY_HELIPAD_ONLY_RULE, false);
 
+			IsVisibleTarget = false;
+			IsShowPath = false;
 			IsGross = false;
 			IsJuvenile = false;
 			IsScrollMod = false;

@@ -5477,10 +5477,6 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		return(true);
 	}
 
-	if (Get_Game_Rules()->Read_Boolean_Rule(BUILD_ANYWHERE_RULE, false)) {
-		return true;
-	}
-
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent
 	**	cells to these are of friendly persuasion, then consider the proximity check to
