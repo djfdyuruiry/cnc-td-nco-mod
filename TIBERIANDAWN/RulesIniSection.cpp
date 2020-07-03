@@ -44,7 +44,7 @@ RulesIniSection::RulesIniSection(const char* sectionName, const char** ruleNames
 
 bool RulesIniSection::Init_Rules()
 {
-	currentGameRules = new IniRule * [RulesIniSection::MAX_GAME_RULES];
+	currentGameRules = new IniRule * [RulesIniSection::MAX_SECTION_RULES];
 	auto valid = true;
 
 	for (unsigned int i = 0; i < ruleCount; i++)

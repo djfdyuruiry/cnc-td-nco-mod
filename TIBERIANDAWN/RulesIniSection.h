@@ -11,7 +11,7 @@ typedef struct IniRule {
 
 class RulesIniSection {
 	private:
-		static const unsigned int MAX_GAME_RULES = 50;
+		static const unsigned int MAX_SECTION_RULES = 50;
 
 		const char* sectionName;
 		const char** ruleNames;
