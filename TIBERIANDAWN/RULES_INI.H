@@ -3,16 +3,11 @@
 
 #include "logger.h"
 
-#include "rules_ini_aircraft.h"
-#include "rules_ini_building.h"
-#include "rules_ini_game.h"
-#include "rules_ini_generic.h"
-#include "rules_ini_infantry.h"
-#include "rules_ini_unit.h"
+#include "./lua.h"
 
 // rules ini sections
-#define NCO_RULES_SECTION "NCO"
-#define GAME_RULES_SECTION "Game"
+#define NCO_RULES_SECTION_NAME "NCO"
+#define GAME_RULES_SECTION_NAME "Game"
 
 // nco config
 #define ENABLE_LUA_SCRIPTS_RULE "EnableLuaScripts"
@@ -22,6 +17,8 @@
 #define LUA_SCRIPTS_RULE_UPPER "LUASCRIPTS"
 
 char* Read_Rules_Ini();
+
+void Ensure_Rules_Ini_Is_Loaded();
 
 int Read_Int_From_Rules_Ini(
 	const char* section,
@@ -60,6 +57,8 @@ bool Read_Bool_From_Rules_Ini(
 );
 
 // NCO config
+void Rules_Ini_Failed_Validation(bool value);
+
 bool Rules_Ini_Failed_Validation();
 
 LogLevel Current_Log_Level();

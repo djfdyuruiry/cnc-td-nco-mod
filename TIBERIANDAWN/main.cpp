@@ -20,6 +20,10 @@ static void Test_Special_Rules() {
 	auto special = SpecialClass();
 
 	special.Init();
+
+	Log_Info("Testing cached special rules ");
+
+	special.Init();
 }
 
 static void Pause()

@@ -5408,6 +5408,46 @@ bool BuildingClass::Can_Player_Move(void) const
 	return(*this == STRUCT_CONST && (Mission == MISSION_GUARD) && Special.IsMCVDeploy);
 }
 
+static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remainingDistance)
+{
+	if (remainingDistance < 1) {
+		return false;
+	}
+
+	for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
+		CELL newcell = Adjacent_Cell(cell, facing);
+
+		if (newcell < 0 || newcell >= MAP_CELL_TOTAL) {
+			continue;
+		}
+
+		/*
+		**	The special cell ownership flag allows building adjacent
+		**	to friendly walls and bibs even though there is no official
+		**	building located there.
+		*/
+		if (Map[newcell].Owner == house->Class->House) {
+			if (!Is_Wall(Map[newcell].Overlay) || Get_Game_Rules()->Read_Boolean_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true)) {
+				return true;
+			}
+		}
+
+		BuildingClass* base = Map[newcell].Cell_Building();
+
+		// TODO: could add a `build off allies base` rule by checking if 
+		//       house is friendly to current players house
+		if (base && base->House->Class->House == house->Class->House) {
+			return true;
+		}
+
+		if (Scan_For_Proximity_Check(newcell, house, remainingDistance - 1)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 /***********************************************************************************************
  * BuildingClass::Passes_Proximity_Check -- Determines if building placement is near friendly sq*
  *                                                                                             *
@@ -5450,29 +5490,16 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = homecell + *ptr++;
 
-		if (!Map.In_Radar(cell) && Read_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true)) {
+		if (!Map.In_Radar(cell) && Get_Game_Rules()->Read_Boolean_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true)) {
 			return false;
 		}
 
-		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
-			CELL	newcell = Adjacent_Cell(cell, facing);
+		auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
 
-			BuildingClass * base = Map[newcell].Cell_Building();
+		auto proximityDetected = Scan_For_Proximity_Check(cell, House, maxPlacementDistance);
 
-			/*
-			**	The special cell ownership flag allows building adjacent
-			**	to friendly walls and bibs even though there is no official
-			**	building located there.
-			*/
-			if (Map[newcell].Owner == House->Class->House) {
-				return Read_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true);
-			}
-
-			// TODO: could add a `build off allies base` rule by checking if 
-			//       house is friendly to current players house
-			if (base && base->House->Class->House == House->Class->House) {
-				return(true);
-			}
+		if (proximityDetected) {
+			return true;
 		}
 	}
 	return(false);

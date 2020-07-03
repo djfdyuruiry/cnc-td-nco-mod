@@ -1207,6 +1207,13 @@ static void Read_Rule_Names(lua_State* lua, const char** ruleNames, unsigned rul
     }
 }
 
+int Lua_Get_Game_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, Get_Game_Rules()->Get_Rule_Names(), GAME_RULE_COUNT);
+
+    return 1;
+}
+
 int Lua_Get_Infantry_Rule_Names(lua_State* lua)
 {
     Read_Rule_Names(lua, INFANTRY_RULE_NAMES, INFANTRY_RULE_COUNT);
@@ -1276,9 +1283,24 @@ int Lua_Get_Game_Rule(lua_State* lua)
 
     auto ruleName = Get_Lua_Value_As_String(1);
 
-    auto ruleValue = Read_Game_Rule(ruleName, false);
+    auto rule = Get_Game_Rules()->Get_Rule(ruleName);
 
-    lua_pushboolean(lua, ruleValue);
+    if (rule == NULL || rule->ruleValue == NULL)
+    {
+        lua_pushnil(lua);
+    }
+    else if (Strings_Are_Equal((char*)rule->valueType, "string"))
+    {
+        lua_pushstring(lua, (char*)rule->ruleValue);
+    }
+    else if (Strings_Are_Equal((char*)rule->valueType, "int"))
+    {
+        lua_pushnumber(lua, *(bool*)rule->ruleValue);
+    }
+    else if (Strings_Are_Equal((char*)rule->valueType, "bool"))
+    {
+        lua_pushboolean(lua, *(bool*)rule->ruleValue);
+    }
 
     return 1;
 }
@@ -1289,23 +1311,32 @@ int Lua_Set_Game_Rule(lua_State* lua)
 
     int argCount = lua_gettop(lua);
 
-    if (argCount < 3)
+    if (argCount < 2)
     {
         luaL_error(lua, "setGameRule requires at least two arguments");
     }
 
-    bool parseError = false;
-
     auto ruleName = Get_Lua_Value_As_String(1);
-    auto ruleValue = Parse_Boolean(Get_Lua_Value_As_String(2), &parseError);
+    auto rule = Get_Game_Rules()->Get_Rule(ruleName);
+    auto setSuccess = false;
 
-    if (!parseError)
+    if (rule == NULL || Strings_Are_Equal(rule->valueType, "string"))
     {
-        Update_Current_Game_Rule_Value(ruleName, ruleValue);
+        // new game rules default to string type
+        setSuccess = Get_Game_Rules()->Update_Current_Rule_Value(ruleName, Get_Lua_Value_As_String(2));
     }
-    else
+    else if (lua_isboolean(lua, 2))
     {
-        luaL_error(lua, "setGameRule argument `value` not set to a valid boolean value");
+        setSuccess = Get_Game_Rules()->Update_Current_Boolean_Rule_Value(ruleName, lua_toboolean(lua, 2));
+    }
+    else if (lua_isnumber(lua, 2))
+    {
+        setSuccess = Get_Game_Rules()->Update_Current_Int_Rule_Value(ruleName, lua_tonumber(lua, 2));
+    }
+
+    if (!setSuccess)
+    {
+        luaL_error(lua, "setGameRule argument `value` was not of a valid type for the given rule");
     }
 
     return 0;

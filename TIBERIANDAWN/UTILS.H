@@ -15,7 +15,11 @@ HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured);
 
 void Append_To_File(HANDLE file, char* data);
 
+bool Is_Number_String(char* numberValue);
+
 int Parse_Number(char character);
+
+bool Is_Boolean_String(char* booleanValue);
 
 bool Parse_Boolean(char* booleanValue, bool* parseError);
 
