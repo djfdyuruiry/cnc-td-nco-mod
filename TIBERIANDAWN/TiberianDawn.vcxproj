@@ -457,7 +457,14 @@ copy ..\game\lua\dump-rules.lua ..\bin\$(PlatformName)\
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
     <ClInclude Include="RULES.H" />
+    <ClInclude Include="RulesIniSection.h" />
     <ClInclude Include="RULES_INI.H" />
+    <ClInclude Include="RULES_INI_AIRCRAFT.H" />
+    <ClInclude Include="RULES_INI_BUILDING.H" />
+    <ClInclude Include="RULES_INI_GAME.H" />
+    <ClInclude Include="RULES_INI_GENERIC.H" />
+    <ClInclude Include="RULES_INI_INFANTRY.H" />
+    <ClInclude Include="RULES_INI_UNIT.H" />
     <ClInclude Include="SAVEDLG.H" />
     <ClInclude Include="SCORE.H" />
     <ClInclude Include="SCREEN.H" />
@@ -601,6 +608,8 @@ copy ..\game\lua\dump-rules.lua ..\bin\$(PlatformName)\
     <ClCompile Include="LUA_API_FUNCTIONS.CPP" />
     <ClCompile Include="LUA_REPL.CPP" />
     <ClCompile Include="NCO.cpp" />
+    <ClCompile Include="RulesIniSection.cpp" />
+    <ClCompile Include="RULES_INI_GAME.CPP" />
     <ClCompile Include="UTILS.CPP" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />

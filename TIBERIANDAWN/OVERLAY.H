@@ -106,4 +106,6 @@ class OverlayClass : public ObjectClass
 		static void * VTable;
 };
 
+bool Is_Wall(OverlayType type);
+
 #endif

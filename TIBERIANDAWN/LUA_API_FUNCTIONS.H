@@ -18,6 +18,8 @@ int Lua_Get_Aircraft_Types(lua_State* lua);
 
 int Lua_Get_Building_Types(lua_State* lua);
 
+int Lua_Get_Game_Rule_Names(lua_State* lua);
+
 int Lua_Get_Infantry_Rule_Names(lua_State* lua);
 
 int Lua_Get_Unit_Rule_Names(lua_State* lua);

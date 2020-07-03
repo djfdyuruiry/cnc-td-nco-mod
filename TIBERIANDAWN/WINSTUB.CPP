@@ -564,7 +564,7 @@ HANDLE DebugFile = INVALID_HANDLE_VALUE;
  *=============================================================================================*/
 void CCDebugString (char *string)
 {
-	if (Read_Game_Rule(DEBUG_LOGGING_RULE, false))
+	if (Get_Game_Rules()->Read_Boolean_Rule(DEBUG_LOGGING_RULE, false))
 	{
 		Log_Debug("CCDebugString => %s", string);
 	}

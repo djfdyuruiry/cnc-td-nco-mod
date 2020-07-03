@@ -427,3 +427,12 @@ void OverlayClass::Write_INI(char *buffer)
 		}
 	}
 }
+
+bool Is_Wall(OverlayType type)
+{
+	return type == OVERLAY_BARBWIRE_WALL
+		|| type == OVERLAY_WOOD_WALL
+		|| type == OVERLAY_BRICK_WALL
+		|| type == OVERLAY_CYCLONE_WALL
+		|| type == OVERLAY_SANDBAG_WALL;
+}

@@ -4,6 +4,8 @@ This mod provides an extensive 📃 RULES.INI file 📃 for Tiberian Dawn & ⚙ 
 
 Unfortunately only one C&C dll mod can run at a time, this mod aims to fix that problem by providing a rules file and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
 
+Project Roadmap can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/7.-Roadmap]here[/url].
+
 [b]Getting Started:[/b]
 
 TL;DR - Setup guide can be found here: [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/blob/master/README.md]https://github.com/djfdyuruiry/cnc-td-nco-mod/blob/master/README.md[/url]
@@ -29,6 +31,7 @@ Building Temple of Nod as GDI❓❓❓
   [*] GDI can't build Sandbags until late in the game
 [*] Control superweapon logic (only Nukes for now)
 [*] Additional rules for cheats and debug options
+[*] Set distance between buildings (build more than one cell away)
 [/list]
 
 [i]More rules are planned: all superweapons, change graphics, load additional mix files [/i]

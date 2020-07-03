@@ -35,37 +35,40 @@
 #ifndef SPECIAL_H
 #define SPECIAL_H
 
+#include "rules_ini_game.h"
+
 class SpecialClass
 {
 	public:
 		void Init(void) {
-			IsScrollMod = false;
+			IsSpeedBuild = Get_Game_Rules()->Read_Boolean_Rule(SPEEDY_BUILDS_RULE, false);
+			IsDefenderAdvantage = Get_Game_Rules()->Read_Boolean_Rule(DEFENDER_ADVANTAGE_RULE, true);
+			IsSmartDefense = Get_Game_Rules()->Read_Boolean_Rule(DEFEND_AGAINST_FRIENDLY_FIRE_RULE, false);
+			IsTreeTarget = Get_Game_Rules()->Read_Boolean_Rule(TARGET_TREES_RULE, false);
+			IsMCVDeploy = Get_Game_Rules()->Read_Boolean_Rule(MCV_REDEPLOY_RULE, false);
+			IsVisceroids = Get_Game_Rules()->Read_Boolean_Rule(VISCEROIDS_RULE, false);
+			IsInert = Get_Game_Rules()->Read_Boolean_Rule(UNITS_INDESTRUCTIBLE_RULE, false);
+			IsThreePoint = Get_Game_Rules()->Read_Boolean_Rule(THREE_POINT_TURNS_RULE, false);
+			IsTGrowth = Get_Game_Rules()->Read_Boolean_Rule(TIBERIUM_GROWS_RULE, true);
+			IsTSpread = Get_Game_Rules()->Read_Boolean_Rule(TIBERIUM_SPREADS_RULE, true);
+			IsTFast = Get_Game_Rules()->Read_Boolean_Rule(FAST_TIBERIUM_RULE, true);
+			IsRoad = Get_Game_Rules()->Read_Boolean_Rule(SHOW_BIBS_RULE, false);
+			IsScatter = Get_Game_Rules()->Read_Boolean_Rule(AUTO_SCATTER_RULE, false);
+			IsNamed = Get_Game_Rules()->Read_Boolean_Rule(NAME_CIVILIAN_BUILDINGS_RULE, false);
+			IsSeparate = Get_Game_Rules()->Read_Boolean_Rule(CAN_BUY_HELIPAD_ONLY_RULE, false);
+
+			IsVisibleTarget = false;
+			IsShowPath = false;
 			IsGross = false;
+			IsJuvenile = false;
+			IsScrollMod = false;
 			IsEasy = false;
 			IsDifficult = false;
-			IsSpeedBuild = false;
-			IsDefenderAdvantage = true;
-			IsVisibleTarget = false;
 			IsVariation = false;
 			IsJurassic = false;
-			IsJuvenile = false;
-			IsSmartDefense = false;
-			IsTreeTarget = false;
-			IsMCVDeploy = false;
-			IsVisceroids = false;
 			IsMonoEnabled = false;
-			IsInert = false;
-			IsShowPath = false;
-			IsThreePoint = false;
-			IsTGrowth = true;
-			IsTSpread = true;
-			IsTFast = true;
-			IsRoad = false;
-			IsScatter = false;
 			IsCaptureTheFlag = false;
-			IsNamed = false;
 			IsFromInstall = false;
-			IsSeparate = false;
 			IsFromWChat = false;
 			IsEarlyWin = false;
 			HealthBarDisplayMode = HB_SELECTED;
