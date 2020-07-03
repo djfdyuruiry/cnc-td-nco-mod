@@ -14,6 +14,7 @@ static void Load_Api_Functions()
     Register_Lua_Function("getAircraftTypes", Lua_Get_Aircraft_Types);
     Register_Lua_Function("getBuildingTypes", Lua_Get_Building_Types);
 
+    Register_Lua_Function("getGameRuleNames", Lua_Get_Game_Rule_Names);
     Register_Lua_Function("getInfantryRuleNames", Lua_Get_Infantry_Rule_Names);
     Register_Lua_Function("getUnitRuleNames", Lua_Get_Unit_Rule_Names);
     Register_Lua_Function("getAircraftRuleNames", Lua_Get_Aircraft_Rule_Names);

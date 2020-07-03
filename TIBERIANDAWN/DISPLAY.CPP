@@ -846,6 +846,51 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 
 
 #ifdef USE_RA_AI
+bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remainingDistance) const
+{
+	if (remainingDistance < 1) {
+		return false;
+	}
+
+	for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
+		CELL newcell = Adjacent_Cell(cell, facing);
+
+		if (newcell < 0 || newcell >= MAP_CELL_TOTAL) {
+			continue;
+		}
+
+		if (!In_Radar(cell) && Get_Game_Rules()->Read_Boolean_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true))
+		{
+			return false;
+		}
+
+		/*
+		**	The special cell ownership flag allows building adjacent
+		**	to friendly walls and bibs even though there is no official
+		**	building located there.
+		*/
+		if ((*this)[newcell].Owner == house) {
+			if (!Is_Wall((*this)[newcell].Overlay) || Get_Game_Rules()->Read_Boolean_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true)) {
+				return true;
+			}
+		}
+
+		TechnoClass* base = (*this)[newcell].Cell_Techno();
+
+		// TODO: could add a `build off allies base` rule by checking if 
+		//       house is friendly to current players house
+		if (base && base->What_Am_I() == RTTI_BUILDING && base->House->Class->House == house) {
+			return true;
+		}
+
+		if (Scan_For_Proximity(newcell, house, remainingDistance - 1)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 /*
 ** Additional version of Passes_Proximity_Check, inspired by RA implementation. Needed for RA AI. ST - 7/24/2019 5:42PM
 */
@@ -894,6 +939,10 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const * object, Houses
 		return(true);
 	}
 
+	if (Get_Game_Rules()->Read_Boolean_Rule(BUILD_ANYWHERE_RULE, false)) {
+		return true;
+	}
+
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent
 	**	cells to these are of friendly persuasion, then consider the proximity check to
@@ -901,27 +950,15 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const * object, Houses
 	*/
 	ptr = list;
 	while (*ptr != REFRESH_EOL) {
-		CELL	cell = trycell + *ptr++;
+		CELL cell = trycell + *ptr++;
 
-		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
-			CELL	newcell = Adjacent_Cell(cell, facing);
+		auto maximumDistance = Read_Build_Distance_Game_Rule();
 
-			if (!In_Radar(cell)) return(false);
+		auto proximityDetected = Scan_For_Proximity(cell, house, maximumDistance);
 
-			TechnoClass * base = (*this)[newcell].Cell_Techno();
-
-			/*
-			**	The special cell ownership flag allows building adjacent
-			**	to friendly walls and bibs even though there is no official
-			**	building located there.
-			*/
-			if ((*this)[newcell].Owner == house) {
-				return(true);
-			}
-
-			if (base && base->What_Am_I() == RTTI_BUILDING && base->House->Class->House == house) {
-				return(true);
-			}
+		if (proximityDetected)
+		{
+			return true;
 		}
 	}
 	return(false);

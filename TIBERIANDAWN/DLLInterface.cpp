@@ -4352,6 +4352,33 @@ bool DLLExportClass::Get_Sidebar_State(uint64 player_id, unsigned char *buffer_i
 }
 
 
+static void Scan_For_Valid_Placement(CELL cell, unsigned char* placement_distance, int remainingDistance)
+{
+	if (remainingDistance < 1)
+	{
+		return;
+	}
+
+	for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
+		CELL adjcell = Adjacent_Cell(cell, facing);
+
+		//Out of bounds check
+		if (adjcell < 0 || adjcell >= MAP_CELL_TOTAL) {
+			continue;
+		}
+
+		if (Is_Wall(Map[adjcell].Overlay) && !Get_Game_Rules()->Read_Boolean_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true)) {
+			return;
+		}
+
+		if (Map.In_Radar(adjcell) || !Get_Game_Rules()->Read_Boolean_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true)) {
+			placement_distance[adjcell] = min(placement_distance[adjcell], 1U);
+		}
+
+		Scan_For_Valid_Placement(adjcell, placement_distance, remainingDistance - 1);
+	}
+}
+
 void DLLExportClass::Calculate_Placement_Distances(BuildingTypeClass* placement_type, unsigned char* placement_distance)
 {
 	int map_cell_x = Map.MapCellX;
@@ -4384,12 +4411,10 @@ void DLLExportClass::Calculate_Placement_Distances(BuildingTypeClass* placement_
 			BuildingClass* base = (BuildingClass*)Map[cell].Cell_Find_Object(RTTI_BUILDING);
 			if ((base && base->House->Class->House == PlayerPtr->Class->House) || (Map[cell].Owner == PlayerPtr->Class->House)) {
 				placement_distance[cell] = 0U;
-				for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
-					CELL adjcell = Adjacent_Cell(cell, facing);
-					if (Map.In_Radar(adjcell)) {
-						placement_distance[adjcell] = min(placement_distance[adjcell], 1U);
-					}
-				}
+
+				auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
+
+				Scan_For_Valid_Placement(cell, placement_distance, maxPlacementDistance);
 			}
 		}
 	}

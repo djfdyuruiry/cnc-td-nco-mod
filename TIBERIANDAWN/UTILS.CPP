@@ -119,10 +119,20 @@ int Parse_Number(char character)
 	return character - '0';
 }
 
-bool Parse_Boolean(char* booleanValue, bool* parseError)
+bool Is_Boolean_String(char* booleanValue)
 {
 	if (String_Is_Empty(booleanValue)
 		|| (!Strings_Are_Equal(booleanValue, "TRUE") && !Strings_Are_Equal(booleanValue, "FALSE")))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool Parse_Boolean(char* booleanValue, bool* parseError)
+{
+	if (!Is_Boolean_String(booleanValue))
 	{
 		*parseError = true;
 
@@ -171,6 +181,29 @@ bool Parse_Boolean_Or_Default(const char* booleanValue, bool default)
 char* Convert_Boolean_To_String(bool booleanValue)
 {
 	return booleanValue ? "TRUE" : "FALSE";
+}
+
+bool Is_Number_String(char* numberValue)
+{
+	if (String_Is_Empty(numberValue))
+	{
+		return false;
+	}
+
+	char* remainder;
+
+	strtol(numberValue, &remainder, 10);
+
+	return !Strings_Are_Equal(numberValue, remainder);
+}
+
+char* Convert_Number_To_String(int number)
+{
+	auto numberBuffer = Allocate_String(10); // INT_MAX string length
+
+	itoa(number, numberBuffer, 10);
+
+	return numberBuffer;
 }
 
 char* Get_Mod_Data_Path()

@@ -52,7 +52,7 @@
     POWER_INPUT_RULE, \
     SHARED_RULES
 
-#define BUILDING_RULE_COUNT (unsigned) 13 + SHARED_RULE_COUNT
+#define BUILDING_RULE_COUNT (unsigned) 12 + SHARED_RULE_COUNT
 
 // building rules
 #define Read_Is_Bibbed(section, defaultValue) Read_Bool_From_Rules_Ini(section, BIBBED_RULE, defaultValue)

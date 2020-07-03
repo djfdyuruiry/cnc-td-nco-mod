@@ -55,7 +55,7 @@
     SHARED_UNIT_AIRCRAFT_RULES, \
     SHARED_RULES
 
-#define UNIT_RULE_COUNT (unsigned) 13 + SHARED_UNIT_AIRCRAFT_RULE_COUNT + SHARED_RULE_COUNT
+#define UNIT_RULE_COUNT (unsigned) 12 + SHARED_UNIT_AIRCRAFT_RULE_COUNT + SHARED_RULE_COUNT
 
 // unit rules
 #define Read_Can_Cloak(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_CLOAK_RULE, defaultValue)

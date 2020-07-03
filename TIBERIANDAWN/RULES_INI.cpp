@@ -11,31 +11,13 @@ static bool RULES_VALID = true;
 static bool LUA_IS_ENABLED = false;
 static LuaScripts RULES_LUA_SCRIPTS;
 
-static const unsigned int MAX_GAME_RULES = 50;
-static unsigned int GAME_RULE_COUNT = 0;
-static GameRules** GAME_RULES = new GameRules*[MAX_GAME_RULES];
-
-char* Read_String_From_Rules_Ini(
-	const char* section,
-	const char* entry,
-	const char* defaultValue,
-	const char* validValues[],
-	int validValueCount
-);
-
-char* Read_String_From_Rules_Ini(
-	const char* section,
-	const char* entry,
-	const char* defaultValue
-);
-
 static void Read_Lua_Scripts_From_Rules_Ini()
 {
 	Log_Info("Reading Lua scripts from rules ini");
 
 	RULES_LUA_SCRIPTS = {};
 
-	auto onScenarioLoadCsv = Read_String_From_Rules_Ini(NCO_RULES_SECTION, LUA_SCRIPTS_RULE, "");
+	auto onScenarioLoadCsv = Read_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, "");
 
 	RULES_LUA_SCRIPTS.ScriptFiles = Parse_Csv_String(
 		onScenarioLoadCsv,
@@ -50,7 +32,7 @@ static void Read_Log_Level_From_Rules_Ini()
 
 	auto logLevelLength = Get_Log_Level_Length();
 	auto logLevelBuffer = Read_String_From_Rules_Ini(
-		NCO_RULES_SECTION,
+		NCO_RULES_SECTION_NAME,
 		"LogLevel",
 		"INFO", 
 		new const char* [6]{
@@ -112,7 +94,7 @@ char* Read_Rules_Ini() {
 	return rulesBuffer;
 }
 
-static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
+void Ensure_Rules_Ini_Is_Loaded() {
 	if (RULES_INI_BUFFER != NULL) {
 		return;
 	}
@@ -121,8 +103,15 @@ static void Ensure_Rules_Ini_Buffer_Is_Loaded() {
 
 	Read_Log_Level_From_Rules_Ini();
 
-	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION, ENABLE_LUA_SCRIPTS_RULE, false);
+	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE, false);
 	Read_Lua_Scripts_From_Rules_Ini();
+
+	auto gameRulesAreValid = Init_Game_Rules();
+
+	if (RULES_VALID)
+	{
+		RULES_VALID = gameRulesAreValid;
+	}
 }
 
 static int Read_Int_From_Rules_Ini(
@@ -134,7 +123,7 @@ static int Read_Int_From_Rules_Ini(
 	int* valueToAllowAlways
 )
 {
-	Ensure_Rules_Ini_Buffer_Is_Loaded();
+	Ensure_Rules_Ini_Is_Loaded();
 
 	Log_Trace("Resolving rule value: %s -> %s", section, entry);
 	Log_Trace("Default value: %d", defaultValue);
@@ -216,7 +205,7 @@ char* Read_String_From_Rules_Ini(
 	int validValueCount
 )
 {
-	Ensure_Rules_Ini_Buffer_Is_Loaded();
+	Ensure_Rules_Ini_Is_Loaded();
 
 	Log_Trace("Resolving rule value: %s -> %s", section, entry);
 	Log_Trace("Default value: %s", defaultValue);
@@ -235,6 +224,11 @@ char* Read_String_From_Rules_Ini(
 	Log_Trace("WWGetPrivateProfileString value: %s", valueBuffer);
 
 	strupr(valueBuffer);
+
+	if (String_Is_Empty(valueBuffer))
+	{
+		return strdup(defaultValue);
+	}
 
 	auto valueIsValid = false;
 
@@ -343,90 +337,6 @@ int Read_Prerequisite(
 	}
 
 	return 1L << structValue;
-}
-
-static void Store_Game_Rule(const char* entry, bool value)
-{
-	Log_Trace("Caching Game rule %s value: %d", entry, value);
-
-	GAME_RULES[GAME_RULE_COUNT] = (GameRules*)malloc(sizeof(GameRules));
-	GAME_RULES[GAME_RULE_COUNT]->ruleValue = (bool*)malloc(sizeof(bool*));
-
-	GAME_RULES[GAME_RULE_COUNT]->ruleName = entry;
-	*(GAME_RULES[GAME_RULE_COUNT]->ruleValue) = value;
-
-	GAME_RULE_COUNT++;
-}
-
-bool Read_Game_Rule(
-	const char* entry,
-	bool defaultValue
-)
-{
-	auto upperCaseEntry = Convert_String_To_Upper_Case(entry);
-	auto ruleCached = false;
-	bool value;
-
-	Log_Trace("Reading Game rule %s", entry);
-
-	for (unsigned i = 0; i < GAME_RULE_COUNT; i++)
-	{
-		auto gameRule = GAME_RULES[i];
-
-		if (gameRule == NULL)
-		{
-			continue;
-		}
-
-		if (Strings_Are_Equal(gameRule->ruleName, upperCaseEntry))
-		{
-			ruleCached = true;
-
-			value = *(gameRule->ruleValue);
-
-			Log_Trace("Read Game rule %s value from cache: %s", entry, Convert_Boolean_To_String(value));
-
-			break;
-		}
-	}
-
-	if (!ruleCached)
-	{
-		value = Read_Bool_From_Rules_Ini(GAME_RULES_SECTION, entry, defaultValue);
-
-		Store_Game_Rule(upperCaseEntry, value);
-	}
-
-	return value;
-}
-
-void Update_Current_Game_Rule_Value(
-	const char* entry,
-	bool value
-)
-{
-	auto upperCaseEntry = Convert_String_To_Upper_Case(entry);
-
-	for (unsigned i = 0; i < GAME_RULE_COUNT; i++)
-	{
-		auto gameRule = GAME_RULES[i];
-
-		if (gameRule == NULL)
-		{
-			continue;
-		}
-
-		if (Strings_Are_Equal(gameRule->ruleName, upperCaseEntry))
-		{
-			*(gameRule->ruleValue) = value;
-
-			Log_Debug("Updating Game rule %s value in cache: %s", entry, Convert_Boolean_To_String(value));
-
-			return;
-		}
-	}
-
-	Store_Game_Rule(upperCaseEntry, value);
 }
 
 int Read_House_List_From_Rules_Ini(
@@ -572,6 +482,11 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 	return factoryType;
 }
 
+void Rules_Ini_Failed_Validation(bool value)
+{
+	RULES_VALID = value;
+}
+
 bool Rules_Ini_Failed_Validation()
 {
 	return !RULES_VALID;
@@ -589,10 +504,15 @@ void Set_Current_Log_Level(LogLevel level)
 
 bool Lua_Is_Enabled()
 {
+	Ensure_Rules_Ini_Is_Loaded();
+
 	return LUA_IS_ENABLED;
 }
 
 LuaScripts Rules_Get_Lua_Scripts()
 {
+	Ensure_Rules_Ini_Is_Loaded();
+
 	return RULES_LUA_SCRIPTS;
 }
+
