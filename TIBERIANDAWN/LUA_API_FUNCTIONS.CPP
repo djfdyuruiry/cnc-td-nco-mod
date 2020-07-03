@@ -1,9 +1,5 @@
 #include "function.h"
 
-static auto GAME_RULE_NAMES = new const char* [GAME_RULE_COUNT] {
-    GAME_RULES
-};
-
 static auto INFANTRY_RULE_NAMES = new const char* [INFANTRY_RULE_COUNT] {
     INFANTRY_RULES
 };
@@ -1213,7 +1209,7 @@ static void Read_Rule_Names(lua_State* lua, const char** ruleNames, unsigned rul
 
 int Lua_Get_Game_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, GAME_RULE_NAMES, GAME_RULE_COUNT);
+    Read_Rule_Names(lua, Get_Game_Rules()->Get_Rule_Names(), GAME_RULE_COUNT);
 
     return 1;
 }
