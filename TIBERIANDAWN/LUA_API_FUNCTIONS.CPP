@@ -1046,6 +1046,12 @@ static bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const ch
 
         lua_pushboolean(lua, type->IsTransporter);
     }
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    {
+        Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->FriendlyName);
+
+        lua_pushstring(lua, type->FriendlyName);
+    }
     else
     {
         return false;

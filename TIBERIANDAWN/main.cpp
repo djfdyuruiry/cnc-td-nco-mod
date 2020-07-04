@@ -3,15 +3,13 @@
 #include "function.h"
 #include "lua_repl.h"
 
-static void Test_Lua_Events()
-{
-	Log_Info("Testing setting rules from scenario start event handler");
+static void Dump_Rules() {
+	Log_Info("Testing dumping all rules");
 
-	On_Scenario_Load("SCG01EA");
-
-	Log_Info("Testing returning early from scenario start event handler");
-
-	On_Scenario_Load("SCG04EA");
+	if (!Execute_Lua_File("dump-rules.lua"))
+	{
+		Log_Error("Rule dumping script failed");
+	}
 }
 
 static void Test_Special_Rules() {
@@ -24,6 +22,19 @@ static void Test_Special_Rules() {
 	Log_Info("Testing cached special rules ");
 
 	special.Init();
+}
+
+static void Test_Lua_Events()
+{
+	Log_Debug("Test Console: Testing Lua Events");
+
+	Log_Info("Testing setting rules from scenario start event handler");
+
+	On_Scenario_Load("SCG01EA");
+
+	Log_Info("Testing returning early from scenario start event handler");
+
+	On_Scenario_Load("SCG04EA");
 }
 
 static void Pause()
@@ -104,9 +115,9 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 	Test_Special_Rules();
 
-	Log_Debug("Test Console: Testing Lua Events");
-
 	Test_Lua_Events();
+
+	Dump_Rules();
 
 	NCO_Shutdown();
 

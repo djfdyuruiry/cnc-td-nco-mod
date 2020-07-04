@@ -23,13 +23,10 @@ function Zip-Mod-Package {
     -DestinationPath "${workshopOutPath}\cnc-td-nco-mod-steam-${currentGitCommit}.zip"
 }
 
-function Clean-Rules-Ini {
-  Write-Log-Info "Cleaning RULES.INI for release"
+function Generate-Rules-File {
+  & "${repoRootPath}\scripts\build-and-dump-rules.bat"
 
-  (Get-Content "${gameFilesPath}\RULES.INI") `
-    -replace "^LuaScripts=.+$", "LuaScripts=" `
-    -replace "^LogLevel=.+$", "LogLevel=error" `
-      | Out-File "${workshopOutDataPath}\RULES.INI"
+  Copy-Item -Path "${buildOutPath}\RULES-DUMP.INI" -Destination "${workshopOutDataPath}\RULES.INI"
 }
 
 function Build-Mod-Spec {
@@ -62,7 +59,7 @@ function Main {
 
   Copy-Game-Files
   Build-Mod-Spec
-  Clean-Rules-Ini
+  Generate-Rules-File
 
   Zip-Mod-Package
 }

@@ -169,6 +169,7 @@ static short const OListTmpl[] = {0, 1, 2, REFRESH_EOL};
 static BuildingTypeClass const ClassTemple(
 	STRUCT_TEMPLE,
 	TXT_TEMPLE,								// NAME:			Short name of the structure.
+	TXT_TEMPLE_STRING,
 	"TMPL",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("TMPL", 7),								// Build level.
@@ -218,6 +219,7 @@ static BuildingTypeClass const ClassTemple(
 static BuildingTypeClass const ClassEye(
 	STRUCT_EYE,
 	TXT_EYE,									// NAME:			Short name of the structure.
+	TXT_EYE_STRING,
 	"EYE",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("EYE", 7),								// Build level.
@@ -267,6 +269,7 @@ static BuildingTypeClass const ClassEye(
 static BuildingTypeClass const ClassWeapon(
 	STRUCT_WEAP,
 	TXT_WEAPON_FACTORY,					// NAME:			Short name of the structure.
+	TXT_WEAPON_FACTORY_STRING,
 	"WEAP",									// NAME:			Short name of the structure.
 	XYP_COORD(10+(CELL_PIXEL_W/2), ((CELL_PIXEL_H*3)-(CELL_PIXEL_H/2))-21),			// Exit point for produced units.
 	Read_Build_Level("WEAP", 2),								// Build level.
@@ -320,6 +323,7 @@ static BuildingTypeClass const ClassWeapon(
 static BuildingTypeClass const ClassGTower(
 	STRUCT_GTOWER,
 	TXT_GUARD_TOWER,						// NAME:			Short name of the structure.
+	TXT_GUARD_TOWER_STRING,
 	"GTWR",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("GTWR", 2),								// Build level.
@@ -370,6 +374,7 @@ static BuildingTypeClass const ClassGTower(
 static BuildingTypeClass const ClassATower(
 	STRUCT_ATOWER,
 	TXT_AGUARD_TOWER,						// NAME:			Short name of the structure.
+	TXT_AGUARD_TOWER_STRING,
 	"ATWR",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ATWR", 4),								// Build level.
@@ -420,6 +425,7 @@ static BuildingTypeClass const ClassATower(
 static BuildingTypeClass const ClassObelisk(
 	STRUCT_OBELISK,
 	TXT_OBELISK,							// NAME:			Short name of the structure.
+	TXT_OBELISK_STRING,
 	"OBLI",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("OBLI", 4),								// Build level.
@@ -469,6 +475,7 @@ static BuildingTypeClass const ClassObelisk(
 static BuildingTypeClass const ClassTurret(
 	STRUCT_TURRET,
 	TXT_TURRET,								// NAME:			Short name of the structure.
+	TXT_TURRET_STRING,
 	"GUN",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("GUN", 2),								// Build level.
@@ -526,6 +533,7 @@ static BuildingTypeClass const ClassTurret(
 static BuildingTypeClass const ClassConst(
 	STRUCT_CONST,
 	TXT_CONST_YARD,						// NAME:			Short name of the structure.
+	TXT_CONST_YARD_STRING,
 	"FACT",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("FACT", 99),							// Build level.
@@ -575,6 +583,7 @@ static BuildingTypeClass const ClassConst(
 static BuildingTypeClass const ClassRefinery(
 	STRUCT_REFINERY,
 	TXT_REFINERY,							// NAME:			Short name of the structure.
+	TXT_REFINERY_STRING,
 	"PROC",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("PROC", 1),								// Build level.
@@ -624,6 +633,7 @@ static BuildingTypeClass const ClassRefinery(
 static BuildingTypeClass const ClassStorage(
 	STRUCT_STORAGE,
 	TXT_STORAGE,							// NAME:			Short name of the structure.
+	TXT_STORAGE_STRING,
 	"SILO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SILO", 1),								// Build level.
@@ -674,6 +684,7 @@ static BuildingTypeClass const ClassStorage(
 static BuildingTypeClass const ClassHelipad(
 	STRUCT_HELIPAD,
 	TXT_HELIPAD,							// NAME:			Short name of the structure.
+	TXT_HELIPAD_STRING,
 	"HPAD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HPAD", 6),								// Build level.
@@ -723,6 +734,7 @@ static BuildingTypeClass const ClassHelipad(
 static BuildingTypeClass const ClassCommand(
 	STRUCT_RADAR,
 	TXT_COMMAND,							// NAME:			Short name of the structure.
+	TXT_COMMAND_STRING,
 	"HQ",										// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HQ", 2),								// Build level.
@@ -772,6 +784,7 @@ static BuildingTypeClass const ClassCommand(
 static BuildingTypeClass const ClassSAM(
 	STRUCT_SAM,
 	TXT_SAM,									// NAME:			Short name of the structure.
+	TXT_SAM_STRING,
 	"SAM",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SAM", 6),								// Build level.
@@ -821,6 +834,7 @@ static BuildingTypeClass const ClassSAM(
 static BuildingTypeClass const ClassAirStrip(
 	STRUCT_AIRSTRIP,
 	TXT_AIRSTRIP,							// NAME:			Short name of the structure.
+	TXT_AIRSTRIP_STRING,
 	"AFLD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("AFLD", 2),								// Build level.
@@ -870,6 +884,7 @@ static BuildingTypeClass const ClassAirStrip(
 static BuildingTypeClass const ClassPower(
 	STRUCT_POWER,
 	TXT_POWER,								// NAME:			Short name of the structure.
+	TXT_POWER_STRING,
 	"NUKE",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("NUKE", 0),								// Build level.
@@ -919,6 +934,7 @@ static BuildingTypeClass const ClassPower(
 static BuildingTypeClass const ClassAdvancedPower(
 	STRUCT_ADVANCED_POWER,
 	TXT_ADVANCED_POWER,					// NAME:			Short name of the structure.
+	TXT_ADVANCED_POWER_STRING,
 	"NUK2",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("NUK2", 5),											// Build level.
@@ -968,6 +984,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 static BuildingTypeClass const ClassHospital(
 	STRUCT_HOSPITAL,
 	TXT_HOSPITAL,							// NAME:			Short name of the structure.
+	TXT_HOSPITAL_STRING,
 	"HOSP",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HOSP", 99),							// Build level.
@@ -1018,6 +1035,7 @@ static BuildingTypeClass const ClassHospital(
 static BuildingTypeClass const ClassBioLab(
 	STRUCT_BIO_LAB,
 	TXT_BIO_LAB,							// NAME:			Short name of the structure.
+	TXT_BIO_LAB_STRING,
 	"BIO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BIO", 99),							// Build level.
@@ -1067,6 +1085,7 @@ static BuildingTypeClass const ClassBioLab(
 static BuildingTypeClass const ClassBarracks(
 	STRUCT_BARRACKS,
 	TXT_BARRACKS,							// NAME:			Short name of the structure.
+	TXT_BARRACKS_STRING,
 	"PYLE",									// NAME:			Short name of the structure.
 	XYP_COORD(30,33),						// Exit point for produced units.
 	Read_Build_Level("PYLE", 0),								// Build level.
@@ -1116,6 +1135,7 @@ static BuildingTypeClass const ClassBarracks(
 static BuildingTypeClass const ClassHand(
 	STRUCT_HAND,
 	TXT_HAND,								// NAME:			Short name of the structure.
+	TXT_HAND_STRING,
 	"HAND",									// NAME:			Short name of the structure.
 	XYP_COORD(36,63),						// Exit point for produced units.
 	Read_Build_Level("HAND", 0),								// Build level.
@@ -1165,6 +1185,7 @@ static BuildingTypeClass const ClassHand(
 static BuildingTypeClass const ClassTanker(
 	STRUCT_TANKER,
 	TXT_TANKER,								// NAME:			Short name of the structure.
+	TXT_TANKER_STRING,
 	"ARCO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ARCO", 99),							// Build level.
@@ -1214,6 +1235,7 @@ static BuildingTypeClass const ClassTanker(
 static BuildingTypeClass const ClassRepair(
 	STRUCT_REPAIR,
 	TXT_FIX_IT,								// NAME:			Short name of the structure.
+	TXT_FIX_IT_STRING,
 	"FIX",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("FIX", 5),								// Build level.
@@ -1264,6 +1286,7 @@ static BuildingTypeClass const ClassRepair(
 static BuildingTypeClass const ClassRoad(
 	STRUCT_ROAD,
 	TXT_ROAD,								// NAME:			Short name of the structure.
+	TXT_ROAD_STRING,
 	"ROAD",									// NAME:			Short name of the structure.
 	Read_Prerequisite("ROAD", STRUCT_NONE),							// PREREQ:		Buildings that must exist first.
 	XYP_COORD(0,0),						// Exit point for produced units.
@@ -1315,6 +1338,7 @@ static BuildingTypeClass const ClassRoad(
 static BuildingTypeClass const ClassV01(
 	STRUCT_V01,
 	TXT_CIV1,								// NAME:			Short name of the structure.
+	TXT_CIV1_STRING,
 	"V01",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V01", 99),							// Build level.
@@ -1364,6 +1388,7 @@ static BuildingTypeClass const ClassV01(
 static BuildingTypeClass const ClassV02(
 	STRUCT_V02,
 	TXT_CIV2,								// NAME:			Short name of the structure.
+	TXT_CIV2_STRING,
 	"V02",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V02", 99),							// Build level.
@@ -1413,6 +1438,7 @@ static BuildingTypeClass const ClassV02(
 static BuildingTypeClass const ClassV03(
 	STRUCT_V03,
 	TXT_CIV3,								// NAME:			Short name of the structure.
+	TXT_CIV3_STRING,
 	"V03",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V03", 99),							// Build level.
@@ -1462,6 +1488,7 @@ static BuildingTypeClass const ClassV03(
 static BuildingTypeClass const ClassV04(
 	STRUCT_V04,
 	TXT_CIV4,								// NAME:			Short name of the structure.
+	TXT_CIV4_STRING,
 	"V04",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V04", 99),							// Build level.
@@ -1511,6 +1538,7 @@ static BuildingTypeClass const ClassV04(
 static BuildingTypeClass const ClassV05(
 	STRUCT_V05,
 	TXT_CIV5,								// NAME:			Short name of the structure.
+	TXT_CIV5_STRING,
 	"V05",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V05", 99),							// Build level.
@@ -1560,6 +1588,7 @@ static BuildingTypeClass const ClassV05(
 static BuildingTypeClass const ClassV06(
 	STRUCT_V06,
 	TXT_CIV6,								// NAME:			Short name of the structure.
+	TXT_CIV6_STRING,
 	"V06",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V06", 99),							// Build level.
@@ -1609,6 +1638,7 @@ static BuildingTypeClass const ClassV06(
 static BuildingTypeClass const ClassV07(
 	STRUCT_V07,
 	TXT_CIV7,								// NAME:			Short name of the structure.
+	TXT_CIV7_STRING,
 	"V07",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V07", 99),							// Build level.
@@ -1658,6 +1688,7 @@ static BuildingTypeClass const ClassV07(
 static BuildingTypeClass const ClassV08(
 	STRUCT_V08,
 	TXT_CIV8,								// NAME:			Short name of the structure.
+	TXT_CIV8_STRING,
 	"V08",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V08", 99),							// Build level.
@@ -1707,6 +1738,7 @@ static BuildingTypeClass const ClassV08(
 static BuildingTypeClass const ClassV09(
 	STRUCT_V09,
 	TXT_CIV9,								// NAME:			Short name of the structure.
+	TXT_CIV9_STRING,
 	"V09",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V09", 99),							// Build level.
@@ -1756,6 +1788,7 @@ static BuildingTypeClass const ClassV09(
 static BuildingTypeClass const ClassV10(
 	STRUCT_V10,
 	TXT_CIV10,								// NAME:			Short name of the structure.
+	TXT_CIV10_STRING,
 	"V10",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V10", 99),							// Build level.
@@ -1805,6 +1838,7 @@ static BuildingTypeClass const ClassV10(
 static BuildingTypeClass const ClassV11(
 	STRUCT_V11,
 	TXT_CIV11,								// NAME:			Short name of the structure.
+	TXT_CIV11_STRING,
 	"V11",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V11", 99),							// Build level.
@@ -1854,6 +1888,7 @@ static BuildingTypeClass const ClassV11(
 static BuildingTypeClass const ClassV12(
 	STRUCT_V12,
 	TXT_CIV12,								// NAME:			Short name of the structure.
+	TXT_CIV12_STRING,
 	"V12",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V12", 99),							// Build level.
@@ -1903,6 +1938,7 @@ static BuildingTypeClass const ClassV12(
 static BuildingTypeClass const ClassV13(
 	STRUCT_V13,
 	TXT_CIV13,								// NAME:			Short name of the structure.
+	TXT_CIV13_STRING,
 	"V13",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V13", 99),							// Build level.
@@ -1952,6 +1988,7 @@ static BuildingTypeClass const ClassV13(
 static BuildingTypeClass const ClassV14(
 	STRUCT_V14,
 	TXT_CIV14,								// NAME:			Short name of the structure.
+	TXT_CIV14_STRING,
 	"V14",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V14", 99),							// Build level.
@@ -2001,6 +2038,7 @@ static BuildingTypeClass const ClassV14(
 static BuildingTypeClass const ClassV15(
 	STRUCT_V15,
 	TXT_CIV15,								// NAME:			Short name of the structure.
+	TXT_CIV15_STRING,
 	"V15",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V15", 99),							// Build level.
@@ -2050,6 +2088,7 @@ static BuildingTypeClass const ClassV15(
 static BuildingTypeClass const ClassV16(
 	STRUCT_V16,
 	TXT_CIV16,								// NAME:			Short name of the structure.
+	TXT_CIV16_STRING,
 	"V16",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V16", 99),							// Build level.
@@ -2099,6 +2138,7 @@ static BuildingTypeClass const ClassV16(
 static BuildingTypeClass const ClassV17(
 	STRUCT_V17,
 	TXT_CIV17,								// NAME:			Short name of the structure.
+	TXT_CIV17_STRING,
 	"V17",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V17", 99),							// Build level.
@@ -2148,6 +2188,7 @@ static BuildingTypeClass const ClassV17(
 static BuildingTypeClass const ClassV18(
 	STRUCT_V18,
 	TXT_CIV18,								// NAME:			Short name of the structure.
+	TXT_CIV18_STRING,
 	"V18",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V18", 99),							// Build level.
@@ -2197,6 +2238,7 @@ static BuildingTypeClass const ClassV18(
 static BuildingTypeClass const ClassV19(
 	STRUCT_PUMP,
 	TXT_PUMP,								// NAME:			Short name of the structure.
+	TXT_PUMP_STRING,
 	"V19",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V19", 99),							// Build level.
@@ -2246,6 +2288,7 @@ static BuildingTypeClass const ClassV19(
 static BuildingTypeClass const ClassV20(
 	STRUCT_V20,
 	TXT_CIV20,								// NAME:			Short name of the structure.
+	TXT_CIV20_STRING,
 	"V20",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V20", 99),							// Build level.
@@ -2295,6 +2338,7 @@ static BuildingTypeClass const ClassV20(
 static BuildingTypeClass const ClassV21(
 	STRUCT_V21,
 	TXT_CIV21,								// NAME:			Short name of the structure.
+	TXT_CIV21_STRING,
 	"V21",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V21", 99),							// Build level.
@@ -2344,6 +2388,7 @@ static BuildingTypeClass const ClassV21(
 static BuildingTypeClass const ClassV22(
 	STRUCT_V22,
 	TXT_CIV22,								// NAME:			Short name of the structure.
+	TXT_CIV22_STRING,
 	"V22",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V22", 99),							// Build level.
@@ -2393,6 +2438,7 @@ static BuildingTypeClass const ClassV22(
 static BuildingTypeClass const ClassV23(
 	STRUCT_V23,
 	TXT_CIV23,								// NAME:			Short name of the structure.
+	TXT_CIV23_STRING,
 	"V23",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V23", 99),							// Build level.
@@ -2442,6 +2488,7 @@ static BuildingTypeClass const ClassV23(
 static BuildingTypeClass const ClassV24(
 	STRUCT_V24,
 	TXT_CIV24,								// NAME:			Short name of the structure.
+	TXT_CIV24_STRING,
 	"V24",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V24", 99),							// Build level.
@@ -2491,6 +2538,7 @@ static BuildingTypeClass const ClassV24(
 static BuildingTypeClass const ClassV25(
 	STRUCT_V25,
 	TXT_CIV25,								// NAME:			Short name of the structure.
+	TXT_CIV25_STRING,
 	"V25",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V25", 99),							// Build level.
@@ -2540,6 +2588,7 @@ static BuildingTypeClass const ClassV25(
 static BuildingTypeClass const ClassV26(
 	STRUCT_V26,
 	TXT_CIV26,								// NAME:			Short name of the structure.
+	TXT_CIV26_STRING,
 	"V26",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V26", 99),							// Build level.
@@ -2589,6 +2638,7 @@ static BuildingTypeClass const ClassV26(
 static BuildingTypeClass const ClassV27(
 	STRUCT_V27,
 	TXT_CIV27,								// NAME:			Short name of the structure.
+	TXT_CIV27_STRING,
 	"V27",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V27", 99),							// Build level.
@@ -2638,6 +2688,7 @@ static BuildingTypeClass const ClassV27(
 static BuildingTypeClass const ClassV28(
 	STRUCT_V28,
 	TXT_CIV28,								// NAME:			Short name of the structure.
+	TXT_CIV28_STRING,
 	"V28",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V28", 99),							// Build level.
@@ -2687,6 +2738,7 @@ static BuildingTypeClass const ClassV28(
 static BuildingTypeClass const ClassV29(
 	STRUCT_V29,
 	TXT_CIV29,								// NAME:			Short name of the structure.
+	TXT_CIV29_STRING,
 	"V29",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V29", 99),							// Build level.
@@ -2736,6 +2788,7 @@ static BuildingTypeClass const ClassV29(
 static BuildingTypeClass const ClassV30(
 	STRUCT_V30,
 	TXT_CIV30,								// NAME:			Short name of the structure.
+	TXT_CIV30_STRING,
 	"V30",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V30", 99),							// Build level.
@@ -2785,6 +2838,7 @@ static BuildingTypeClass const ClassV30(
 static BuildingTypeClass const ClassV31(
 	STRUCT_V31,
 	TXT_CIV31,								// NAME:			Short name of the structure.
+	TXT_CIV31_STRING,
 	"V31",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V31", 99),							// Build level.
@@ -2834,6 +2888,7 @@ static BuildingTypeClass const ClassV31(
 static BuildingTypeClass const ClassV32(
 	STRUCT_V32,
 	TXT_CIV32,								// NAME:			Short name of the structure.
+	TXT_CIV32_STRING,
 	"V32",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V32", 99),							// Build level.
@@ -2883,6 +2938,7 @@ static BuildingTypeClass const ClassV32(
 static BuildingTypeClass const ClassV33(
 	STRUCT_V33,
 	TXT_CIV33,								// NAME:			Short name of the structure.
+	TXT_CIV33_STRING,
 	"V33",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V33", 99),							// Build level.
@@ -2932,6 +2988,7 @@ static BuildingTypeClass const ClassV33(
 static BuildingTypeClass const ClassV34(
 	STRUCT_V34,
 	TXT_CIV34,								// NAME:			Short name of the structure.
+	TXT_CIV34_STRING,
 	"V34",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V34", 99),							// Build level.
@@ -2981,6 +3038,7 @@ static BuildingTypeClass const ClassV34(
 static BuildingTypeClass const ClassV35(
 	STRUCT_V35,
 	TXT_CIV35,								// NAME:			Short name of the structure.
+	TXT_CIV35_STRING,
 	"V35",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V35", 99),							// Build level.
@@ -3030,6 +3088,7 @@ static BuildingTypeClass const ClassV35(
 static BuildingTypeClass const ClassV36(
 	STRUCT_V36,
 	TXT_CIV36,								// NAME:			Short name of the structure.
+	TXT_CIV36_STRING,
 	"V36",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V36", 99),							// Build level.
@@ -3078,6 +3137,7 @@ static BuildingTypeClass const ClassV36(
 static BuildingTypeClass const ClassV37(
 	STRUCT_V37,
 	TXT_CIV37,								// NAME:			Short name of the structure.
+	TXT_CIV37_STRING,
 	"V37",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V37", 99),							// Build level.
@@ -3126,6 +3186,7 @@ static BuildingTypeClass const ClassV37(
 static BuildingTypeClass const ClassMission(
 	STRUCT_MISSION,
 	TXT_CIVMISS,							// NAME:			Short name of the structure.
+	TXT_CIVMISS_STRING,
 	"MISS",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("MISS", 99),							// Build level.
@@ -3176,6 +3237,7 @@ static BuildingTypeClass const ClassMission(
 static BuildingTypeClass const Sandbag(
 	STRUCT_SANDBAG_WALL,
 	TXT_SANDBAG_WALL,						// NAME:			Short name of the structure.
+	TXT_SANDBAG_WALL_STRING,
 	"SBAG",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SBAG", 2),								// Build level.
@@ -3225,6 +3287,7 @@ static BuildingTypeClass const Sandbag(
 static BuildingTypeClass const Cyclone(
 	STRUCT_CYCLONE_WALL,
 	TXT_CYCLONE_WALL,						// NAME:			Short name of the structure.
+	TXT_CYCLONE_WALL_STRING,
 	"CYCL",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("CYCL", 5),								// Build level.
@@ -3274,6 +3337,7 @@ static BuildingTypeClass const Cyclone(
 static BuildingTypeClass const Brick(
 	STRUCT_BRICK_WALL,
 	TXT_BRICK_WALL,						// NAME:			Short name of the structure.
+	TXT_BRICK_WALL_STRING,
 	"BRIK",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BRIK", 7),								// Build level.
@@ -3323,6 +3387,7 @@ static BuildingTypeClass const Brick(
 static BuildingTypeClass const Barbwire(
 	STRUCT_BARBWIRE_WALL,
 	TXT_BARBWIRE_WALL,					// NAME:			Short name of the structure.
+	TXT_BARBWIRE_WALL_STRING,
 	"BARB",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BARB", 98),							// Build level.
@@ -3372,6 +3437,7 @@ static BuildingTypeClass const Barbwire(
 static BuildingTypeClass const Wood(
 	STRUCT_WOOD_WALL,
 	TXT_WOOD_WALL,							// NAME:			Short name of the structure.
+	TXT_WOOD_WALL_STRING,
 	"WOOD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("WOOD", 99),							// Build level.
@@ -3512,6 +3578,7 @@ void const *WarFactoryOverlay;
 BuildingTypeClass::BuildingTypeClass(
 						StructType type,
 						int name,
+						const char* friendlyName,
 						char const *ininame,
 						COORDINATE exitpoint,
 						unsigned char level,
@@ -3560,6 +3627,7 @@ BuildingTypeClass::BuildingTypeClass(
 						short const *overlap,
 						bool is_unsellable) :
 									TechnoTypeClass(name,
+													friendlyName,
 													ininame,
 													level,
 													pre,

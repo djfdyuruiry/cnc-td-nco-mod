@@ -52,6 +52,7 @@ void const * UnitTypeClass::WakeShapes = 0;
 static UnitTypeClass const UnitVisceroid(
 	UNIT_VICE,
 	TXT_VISCEROID,							// NAME:			Text name of this unit type.
+	TXT_VISCEROID_STRING,
 	"VICE",									// NAME:			Text name of this unit type.
 	ANIM_NAPALM2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("VICE", 99),							// Build level.
@@ -103,6 +104,7 @@ static UnitTypeClass const UnitVisceroid(
 static UnitTypeClass const UnitFTank(
 	UNIT_FTANK,
 	TXT_FTANK,								// NAME:			Text name of this unit type.
+	TXT_FTANK_STRING,
 	"FTNK",									// NAME:			Text name of this unit type.
 	ANIM_NAPALM3,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("FTNK", 4),							// Build level.
@@ -154,6 +156,7 @@ static UnitTypeClass const UnitFTank(
 static UnitTypeClass const UnitSTank(
 	UNIT_STANK,
 	TXT_STANK,								// NAME:			Text name of this unit type.
+	TXT_STANK_STRING,
 	"STNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("STNK", 5),								// Build level.
@@ -205,6 +208,7 @@ static UnitTypeClass const UnitSTank(
 static UnitTypeClass const UnitLTank(
 	UNIT_LTANK,
 	TXT_LTANK,								// NAME:			Text name of this unit type.
+	TXT_LTANK_STRING,
 	"LTNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("LTNK", 3),								// Build level.
@@ -256,6 +260,7 @@ static UnitTypeClass const UnitLTank(
 static UnitTypeClass const UnitMTank(
 	UNIT_MTANK,
 	TXT_MTANK,								// NAME:			Text name of this unit type.
+	TXT_MTANK_STRING,
 	"MTNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MTNK", 3),								// Build level.
@@ -307,6 +312,7 @@ static UnitTypeClass const UnitMTank(
 static UnitTypeClass const UnitHTank(
 	UNIT_HTANK,
 	TXT_HTANK,								// NAME:			Text name of this unit type.
+	TXT_HTANK_STRING,
 	"HTNK",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("HTNK", 5),								// Build level.
@@ -358,6 +364,7 @@ static UnitTypeClass const UnitHTank(
 static UnitTypeClass const UnitMHQ(
 	UNIT_MHQ,
 	TXT_MHQ,									// NAME:			Text name of this unit type.
+	TXT_MHQ_STRING,
 	"MHQ",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MHQ", 99),							// Build level.
@@ -409,6 +416,7 @@ static UnitTypeClass const UnitMHQ(
 static UnitTypeClass const UnitHover(
 	UNIT_HOVER,
 	TXT_HOVER,								// NAME:			Text name of this unit type.
+	TXT_HOVER_STRING,
 	"LST",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("LST", 99),							// Build level.
@@ -461,6 +469,7 @@ static UnitTypeClass const UnitHover(
 static UnitTypeClass const UnitSAM(
 	UNIT_MSAM,
 	TXT_MSAM,								// NAME:			Text name of this unit type.
+	TXT_MSAM_STRING,
 	"MLRS",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MLRS", 7),								// Build level.
@@ -512,6 +521,7 @@ static UnitTypeClass const UnitSAM(
 static UnitTypeClass const UnitArty(
 	UNIT_ARTY,
 	TXT_ARTY,								// NAME:			Text name of this unit type.
+	TXT_ARTY_STRING,
 	"ARTY",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("ARTY", 6),								// Build level.
@@ -563,6 +573,7 @@ static UnitTypeClass const UnitArty(
 static UnitTypeClass const UnitHarvester(
 	UNIT_HARVESTER,
 	TXT_HARVESTER,							// NAME:			Text name of this unit type.
+	TXT_HARVESTER_STRING,
 	"HARV",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("HARV", 2),								// Build level.
@@ -615,6 +626,7 @@ static UnitTypeClass const UnitHarvester(
 static UnitTypeClass const UnitMCV(
 	UNIT_MCV,
 	TXT_MCV,									// NAME:			Text name of this unit type.
+	TXT_MCV_STRING,
 	"MCV",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MCV", 7),							// Build level.
@@ -666,6 +678,7 @@ static UnitTypeClass const UnitMCV(
 static UnitTypeClass const UnitJeep(
 	UNIT_JEEP,
 	TXT_JEEP,								// NAME:			Text name of this unit type.
+	TXT_JEEP_STRING,
 	"JEEP",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("JEEP", 2),								// Build level.
@@ -717,6 +730,7 @@ static UnitTypeClass const UnitJeep(
 static UnitTypeClass const UnitBuggy(
 	UNIT_BUGGY,
 	TXT_DUNE_BUGGY,						// NAME:			Text name of this unit type.
+	TXT_DUNE_BUGGY_STRING,
 	"BGGY",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BGGY", 4),								// Build level.
@@ -768,6 +782,7 @@ static UnitTypeClass const UnitBuggy(
 static UnitTypeClass const UnitBike(
 	UNIT_BIKE,
 	TXT_BIKE,								// NAME:			Text name of this unit type.
+	TXT_BIKE_STRING,
 	"BIKE",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BIKE", 2),								// Build level.
@@ -823,6 +838,7 @@ static UnitTypeClass const UnitBike(
 static UnitTypeClass const UnitMLRS(
 	UNIT_MLRS,
 	TXT_MLRS,								// NAME:			Text name of this unit type.
+	TXT_MLRS_STRING,
 	"MSAM",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MSAM", 7),								// Build level.
@@ -874,6 +890,7 @@ static UnitTypeClass const UnitMLRS(
 static UnitTypeClass const UnitAPC(
 	UNIT_APC,
 	TXT_APC,									// NAME:			Text name of this unit type.
+	TXT_APC_STRING,
 	"APC",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("APC", 4),								// Build level.
@@ -925,6 +942,7 @@ static UnitTypeClass const UnitAPC(
 static UnitTypeClass const UnitGunBoat(
 	UNIT_GUNBOAT,
 	TXT_GUNBOAT,							// NAME:			Text name of this unit type.
+	TXT_GUNBOAT_STRING,
 	"BOAT",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BOAT", 99),							// Build level.
@@ -976,6 +994,7 @@ static UnitTypeClass const UnitGunBoat(
 static UnitTypeClass const UnitTric(
 	UNIT_TRIC,
 	TXT_TRIC,								// NAME:			Text name of this unit type.
+	TXT_TRIC_STRING,
 	"TRIC",									// NAME:			Text name of this unit type.
 	ANIM_TRIC_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("TRIC", 99),							// Build level.
@@ -1027,6 +1046,7 @@ static UnitTypeClass const UnitTric(
 static UnitTypeClass const UnitTrex(
 	UNIT_TREX,
 	TXT_TREX,								// NAME:			Text name of this unit type.
+	TXT_TREX_STRING,
 	"TREX",									// NAME:			Text name of this unit type.
 	ANIM_TREX_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("TREX", 99),							// Build level.
@@ -1078,6 +1098,7 @@ static UnitTypeClass const UnitTrex(
 static UnitTypeClass const UnitRapt(
 	UNIT_RAPT,
 	TXT_RAPT,								// NAME:			Text name of this unit type.
+	TXT_RAPT_STRING,
 	"RAPT",									// NAME:			Text name of this unit type.
 	ANIM_RAPT_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("RAPT", 99),							// Build level.
@@ -1129,6 +1150,7 @@ static UnitTypeClass const UnitRapt(
 static UnitTypeClass const UnitSteg(
 	UNIT_STEG,
 	TXT_STEG,								// NAME:			Text name of this unit type.
+	TXT_STEG_STRING,
 	"STEG",									// NAME:			Text name of this unit type.
 	ANIM_STEG_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("STEG", 99),							// Build level.
@@ -1225,6 +1247,7 @@ UnitTypeClass const * const UnitTypeClass::Pointers[UNIT_COUNT] = {
  *=============================================================================================*/
 UnitTypeClass::UnitTypeClass(UnitType type,
 				int name,
+				const char* friendlyName,
 				char const *ininame,
 				AnimType exp,
 				unsigned char level,
@@ -1272,6 +1295,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				int toffset,
 				MissionType order) :
 					TechnoTypeClass(name,
+										friendlyName,
 										ininame,
 										level,
 										pre,

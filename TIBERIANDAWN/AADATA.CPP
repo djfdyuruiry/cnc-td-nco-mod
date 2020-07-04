@@ -56,6 +56,7 @@ void const * AircraftTypeClass::RRotorData = NULL;
 static AircraftTypeClass const AttackPlane(
 	AIRCRAFT_A10,			// What kind of aircraft is this.
 	TXT_A10,					// Translated text number for aircraft.
+	TXT_A10_STRING,
 	"A10",					// INI name of aircraft.
 	Read_Build_Level("A10", 99),						// Build level.
 	Read_Prerequisite("A10", STRUCT_NONE),			// Building prerequisite.
@@ -95,6 +96,7 @@ static AircraftTypeClass const AttackPlane(
 static AircraftTypeClass const TransportHeli(
 	AIRCRAFT_TRANSPORT,	// What kind of aircraft is this.
 	TXT_TRANS,				// Translated text number for aircraft.
+	TXT_TRANS_STRING,
 	"TRAN",					// INI name of aircraft.
 	Read_Build_Level("TRAN", 6),							// Build level.
 	Read_Prerequisite("TRAN", STRUCT_HELIPAD),		// Building prerequisite.
@@ -134,6 +136,7 @@ static AircraftTypeClass const TransportHeli(
 static AircraftTypeClass const AttackHeli(
 	AIRCRAFT_HELICOPTER,	// What kind of aircraft is this.
 	TXT_HELI,				// Translated text number for aircraft.
+	TXT_HELI_STRING,
 	"HELI",					// INI name of aircraft.
 	Read_Build_Level("HELI", 6),							// Build level.
 	Read_Prerequisite("HELI", STRUCT_HELIPAD),		// Building prerequisite.
@@ -174,6 +177,7 @@ static AircraftTypeClass const AttackHeli(
 static AircraftTypeClass const OrcaHeli(
 	AIRCRAFT_ORCA,			// What kind of aircraft is this.
 	TXT_ORCA,				// Translated text number for aircraft.
+	TXT_ORCA_STRING,
 	"ORCA",					// INI name of aircraft.
 	Read_Build_Level("ORCA", 6),							// Build level.
 	Read_Prerequisite("ORCA", STRUCT_HELIPAD),		// Building prerequisite.
@@ -214,6 +218,7 @@ static AircraftTypeClass const OrcaHeli(
 static AircraftTypeClass const CargoPlane(
 	AIRCRAFT_CARGO,		// What kind of aircraft is this.
 	TXT_C17,					// Translated text number for aircraft.
+	TXT_C17_STRING,
 	"C17",					// INI name of aircraft.
 	Read_Build_Level("C17", 99),						// Build level.
 	Read_Prerequisite("C17", STRUCT_NONE),			// Building prerequisite.
@@ -276,6 +281,7 @@ AircraftTypeClass const * const AircraftTypeClass::Pointers[AIRCRAFT_COUNT] = {
 AircraftTypeClass::AircraftTypeClass(
 				AircraftType airtype,
 				int name,
+				const char* friendlyName,
 				char const *ininame,
 				unsigned char level,
 				long pre,
@@ -312,6 +318,7 @@ AircraftTypeClass::AircraftTypeClass(
 				int rot,
 				MissionType deforder) :
 					TechnoTypeClass(name,
+										friendlyName,
 										ininame,
 										level,
 										pre,

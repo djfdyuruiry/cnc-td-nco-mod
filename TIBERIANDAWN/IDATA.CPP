@@ -100,6 +100,7 @@ int MiniGunnerDos [DO_COUNT][3]={
 static InfantryTypeClass const E1(
 	INFANTRY_E1,				// Infantry type number.
 	TXT_E1,						// Translate name number for infantry type.
+	TXT_E1_STRING,
 	"E1",							// INI name for infantry.
 	Read_Build_Level("E1", 1),								// Build level.
 	Read_Prerequisite("E1", STRUCT_NONE),				// Building prerequisite.
@@ -170,6 +171,7 @@ int GrenadierDos [DO_COUNT][3]={
 static InfantryTypeClass const E2(
 	INFANTRY_E2,				// Infantry type number.
 	TXT_E2,						// Translate name number for infantry type.
+	TXT_E2_STRING,
 	"E2",							// INI name for infantry.
 	Read_Build_Level("E2", 1),								// Build level.
 	Read_Prerequisite("E2", STRUCT_NONE),				// Building prerequisite.
@@ -243,6 +245,7 @@ int BazookaDos [DO_COUNT][3]={
 static InfantryTypeClass const E3(
 	INFANTRY_E3,				// Infantry type number.
 	TXT_E3,						// Translate name number for infantry type.
+	TXT_E3_STRING,
 	"E3",							// INI name for infantry.
 	Read_Build_Level("E3", 2),								// Build level.
 	Read_Prerequisite("E3", STRUCT_NONE),				// Building prerequisite.
@@ -313,6 +316,7 @@ int FlamethrowerDos [DO_COUNT][3]={
 static InfantryTypeClass const E4(
 	INFANTRY_E4,				// Infantry type number.
 	TXT_E4,						// Translate name number for infantry type.
+	TXT_E4_STRING,
 	"E4",							// INI name for infantry.
 	Read_Build_Level("E4", 1),								// Build level.
 	Read_Prerequisite("E4", STRUCT_NONE),				// Building prerequisite.
@@ -382,6 +386,7 @@ int ChemwarriorDos [DO_COUNT][3]={
 static InfantryTypeClass const E5(
 	INFANTRY_E5,				// Infantry type number.
 	TXT_E5,						// Translate name number for infantry type.
+	TXT_E5_STRING,
 	"E5",							// INI name for infantry.
 	Read_Build_Level("E5", 7),								// Build level.
 	Read_Prerequisite("E5", STRUCT_EYE),				// Building prerequisite.
@@ -451,6 +456,7 @@ int EngineerDos[DO_COUNT][3]={
 static InfantryTypeClass const E7(
 	INFANTRY_E7,				// Infantry type number.
 	TXT_E7,						// Translate name number for infantry type.
+	TXT_E7_STRING,
 	"E6",							// INI name for infantry.
 	Read_Build_Level("E6", 3),								// Build level.
 	Read_Prerequisite("E6", STRUCT_NONE),				// Building prerequisite.
@@ -518,6 +524,7 @@ int CommandoDos[DO_COUNT][3]={
 static InfantryTypeClass const Commando(
 	INFANTRY_RAMBO,			// Infantry type number.
 	TXT_RAMBO,					// Translate name number for infantry type.
+	TXT_RAMBO_STRING,
 	"RMBO",						// INI name for infantry.
 	Read_Build_Level("RMBO", 7),								// Build level.
 	Read_Prerequisite("RMBO", STRUCT_EYE),				// Building prerequisite.
@@ -585,6 +592,7 @@ int CivilianDos1[DO_COUNT][3]={
 static InfantryTypeClass const C1(
 	INFANTRY_C1,				// Infantry type number.
 	TXT_C1,						// Translate name number for infantry type.
+	TXT_C1_STRING,
 	"C1",							// INI name for infantry.
 	Read_Build_Level("C1", 99),							// Build level.
 	Read_Prerequisite("C1", STRUCT_NONE),				// Building prerequisite.
@@ -651,6 +659,7 @@ int CivilianDos2[DO_COUNT][3]={
 static InfantryTypeClass const C2(
 	INFANTRY_C2,				// Infantry type number.
 	TXT_C2,						// Translate name number for infantry type.
+	TXT_C2_STRING,
 	"C2",							// INI name for infantry.
 	Read_Build_Level("C2", 99),							// Build level.
 	Read_Prerequisite("C2", STRUCT_NONE),				// Building prerequisite.
@@ -718,6 +727,7 @@ int CivilianDos3[DO_COUNT][3]={
 static InfantryTypeClass const C3(
 	INFANTRY_C3,				// Infantry type number.
 	TXT_C3,						// Translate name number for infantry type.
+	TXT_C3_STRING,
 	"C3",							// INI name for infantry.
 	Read_Build_Level("C3", 99),							// Build level.
 	Read_Prerequisite("C3", STRUCT_NONE),				// Building prerequisite.
@@ -785,6 +795,7 @@ int CivilianDos4[DO_COUNT][3]={
 static InfantryTypeClass const C4(
 	INFANTRY_C4,				// Infantry type number.
 	TXT_C4,						// Translate name number for infantry type.
+	TXT_C4_STRING,
 	"C4",							// INI name for infantry.
 	Read_Build_Level("C4", 99),							// Build level.
 	Read_Prerequisite("C4", STRUCT_NONE),				// Building prerequisite.
@@ -851,6 +862,7 @@ int CivilianDos5[DO_COUNT][3]={
 static InfantryTypeClass const C5(
 	INFANTRY_C5,				// Infantry type number.
 	TXT_C5,						// Translate name number for infantry type.
+	TXT_C5_STRING,
 	"C5",							// INI name for infantry.
 	Read_Build_Level("C5", 99),							// Build level.
 	Read_Prerequisite("C5", STRUCT_NONE),				// Building prerequisite.
@@ -917,6 +929,7 @@ int CivilianDos6[DO_COUNT][3]={
 static InfantryTypeClass const C6(
 	INFANTRY_C6,				// Infantry type number.
 	TXT_C6,						// Translate name number for infantry type.
+	TXT_C6_STRING,
 	"C6",							// INI name for infantry.
 	Read_Build_Level("C6", 99),							// Build level.
 	Read_Prerequisite("C6", STRUCT_NONE),				// Building prerequisite.
@@ -983,6 +996,7 @@ int CivilianDos7[DO_COUNT][3]={
 static InfantryTypeClass const C7(
 	INFANTRY_C7,				// Infantry type number.
 	TXT_C7,						// Translate name number for infantry type.
+	TXT_C7_STRING,
 	"C7",							// INI name for infantry.
 	Read_Build_Level("C7", 99),							// Build level.
 	Read_Prerequisite("C7", STRUCT_NONE),				// Building prerequisite.
@@ -1048,6 +1062,7 @@ int CivilianDos8[DO_COUNT][3]={
 static InfantryTypeClass const C8(
 	INFANTRY_C8,				// Infantry type number.
 	TXT_C8,						// Translate name number for infantry type.
+	TXT_C8_STRING,
 	"C8",							// INI name for infantry.
 	Read_Build_Level("C8", 99),							// Build level.
 	Read_Prerequisite("C8", STRUCT_NONE),				// Building prerequisite.
@@ -1114,6 +1129,7 @@ int CivilianDos9[DO_COUNT][3]={
 static InfantryTypeClass const C9(
 	INFANTRY_C9,				// Infantry type number.
 	TXT_C9,						// Translate name number for infantry type.
+	TXT_C9_STRING,
 	"C9",							// INI name for infantry.
 	Read_Build_Level("C9", 99),							// Build level.
 	Read_Prerequisite("C9", STRUCT_NONE),				// Building prerequisite.
@@ -1182,6 +1198,7 @@ int NikoombaDos[DO_COUNT][3]={
 static InfantryTypeClass const C10(
 	INFANTRY_C10,				// Infantry type number.
 	TXT_C10,						// Translate name number for infantry type.
+	TXT_C10_STRING,
 	"C10",						// INI name for infantry.
 	Read_Build_Level("C10", 99),							// Build level.
 	Read_Prerequisite("C10", STRUCT_NONE),				// Building prerequisite.
@@ -1247,6 +1264,7 @@ int MoebiusDos[DO_COUNT][3]={
 static InfantryTypeClass const Moebius(
 	INFANTRY_MOEBIUS,			// Infantry type number.
 	TXT_MOEBIUS,				// Translate name number for infantry type.
+	TXT_MOEBIUS_STRING,
 	"MOEBIUS",					// INI name for infantry.
 	Read_Build_Level("MOEBIUS", 99),							// Build level.
 	Read_Prerequisite("MOEBIUS", STRUCT_NONE),				// Building prerequisite.
@@ -1312,6 +1330,7 @@ int DelphiDos[DO_COUNT][3]={
 static InfantryTypeClass const Delphi(
 	INFANTRY_DELPHI,			// Infantry type number.
 	TXT_DELPHI,					// Translate name number for infantry type.
+	TXT_DELPHI_STRING,
 	"DELPHI",					// INI name for infantry.
 	Read_Build_Level("DELPHI", 99),							// Build level.
 	Read_Prerequisite("DELPHI", STRUCT_NONE),				// Building prerequisite.
@@ -1378,6 +1397,7 @@ int DrChanDos[DO_COUNT][3]={
 static InfantryTypeClass const DrChan(
 	INFANTRY_CHAN,				// Infantry type number.
 	TXT_CHAN,					// Translate name number for infantry type.
+	TXT_CHAN_STRING,
 	"CHAN",						// INI name for infantry.
 	Read_Build_Level("CHAN", 99),							// Build level.
 	Read_Prerequisite("CHAN", STRUCT_NONE),				// Building prerequisite.
@@ -1450,7 +1470,10 @@ InfantryTypeClass const * const InfantryTypeClass::Pointers[INFANTRY_COUNT] = {
  *   09/24/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 InfantryTypeClass::InfantryTypeClass	(
-						InfantryType type, int name, char const *ininame,
+						InfantryType type,
+						int name,
+						const char* friendlyName,
+						char const *ininame,
 						unsigned char level, long pre,
 						bool is_female,
 						bool is_leader,
@@ -1472,7 +1495,7 @@ InfantryTypeClass::InfantryTypeClass	(
 						const char* houseListCsv,
 						WeaponType primary, WeaponType secondary,
 						MPHType maxspeed)
-	: TechnoTypeClass(name, ininame, level, pre,
+	: TechnoTypeClass(name, friendlyName, ininame, level, pre,
 							is_leader, true, is_nominal, false, Read_Is_Flammable(ininame, false), Read_Is_Crushable(ininame, true), true, true, true, false, false,
 							is_theater, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,

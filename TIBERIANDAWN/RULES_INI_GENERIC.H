@@ -58,9 +58,13 @@
 #define TRANSPORTER_RULE "CanTransportInfantry"
 #define TRANSPORTER_RULE_UPPER "CANTRANSPORTINFANTRY"
 
-// this is a virtual rule which is read from rules INI only!
+// virtual rule used in game logic, not the type itself
 #define SHOW_NAME_RULE "ShowName"
 #define SHOW_NAME_RULE_UPPER "SHOWNAME"
+
+// virtual rule exposed by the Lua API only
+#define FRIENDLY_NAME_RULE "FriendlyName"
+#define FRIENDLY_NAME_RULE_UPPER "FRIENDLYNAME"
 
 #define SHARED_RULES BUILD_LEVEL_RULE, \
     SCENARIO_LEVEL_RULE, \
@@ -79,9 +83,10 @@
     REWARD_RULE, \
     CRUSHABLE_RULE, \
     DETECT_CLOAKED_OBJECTS_RULE, \
-    TRANSPORTER_RULE
+    TRANSPORTER_RULE, \
+    FRIENDLY_NAME_RULE
 
-#define SHARED_RULE_COUNT (unsigned) 18
+#define SHARED_RULE_COUNT (unsigned) 19
 
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
