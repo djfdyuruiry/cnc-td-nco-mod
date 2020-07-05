@@ -627,7 +627,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		type->What_Am_I() == RTTI_INFANTRYTYPE &&
 		((InfantryTypeClass const *)type)->Type == INFANTRY_E3 &&
 		level < 7) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( HIDE_E3_FROM_GDI_RULE, true))
+		if (Read_Boolean_Game_Rule( HIDE_E3_FROM_GDI_RULE, true))
 		{
 			return(false);
 		}
@@ -641,7 +641,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
 		level < 9) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( HIDE_MSAM_FROM_GDI_RULE, true))
+		if (Read_Boolean_Game_Rule( HIDE_MSAM_FROM_GDI_RULE, true))
 		{
 			return(false);
 		}
@@ -653,7 +653,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (house == HOUSE_BAD &&
 		type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_APC) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( HIDE_APC_FROM_NOD_RULE, true))
+		if (Read_Boolean_Game_Rule( HIDE_APC_FROM_NOD_RULE, true))
 		{
 			return(false);
 		}
@@ -667,11 +667,11 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		(((BuildingTypeClass const *)type)->Type == STRUCT_TEMPLE || ((BuildingTypeClass const *)type)->Type == STRUCT_OBELISK) &&
 		Class->House == HOUSE_GOOD) {
 
-		if (((BuildingTypeClass const*)type)->Type == STRUCT_TEMPLE && Get_Game_Rules()->Read_Boolean_Rule( HIDE_TMPL_FROM_GDI_RULE, true))
+		if (((BuildingTypeClass const*)type)->Type == STRUCT_TEMPLE && Read_Boolean_Game_Rule( HIDE_TMPL_FROM_GDI_RULE, true))
 		{
 			return(false);
 		}
-		else if (((BuildingTypeClass const*)type)->Type == STRUCT_OBELISK && Get_Game_Rules()->Read_Boolean_Rule( HIDE_OBLI_FROM_GDI_RULE, true))
+		else if (((BuildingTypeClass const*)type)->Type == STRUCT_OBELISK && Read_Boolean_Game_Rule( HIDE_OBLI_FROM_GDI_RULE, true))
 		{
 			return(false);
 		}
@@ -683,7 +683,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
 		Class->House == HOUSE_BAD) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( HIDE_MSAM_FROM_NOD_RULE, true))
+		if (Read_Boolean_Game_Rule( HIDE_MSAM_FROM_NOD_RULE, true))
 		{
 			return(false);
 		}
@@ -696,7 +696,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		(((BuildingTypeClass const *)type)->Type == STRUCT_EYE) &&
 		Class->House == HOUSE_BAD) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( HIDE_ADV_COMM_FROM_NOD_RULE, true))
+		if (Read_Boolean_Game_Rule( HIDE_ADV_COMM_FROM_NOD_RULE, true))
 		{
 			return(false);
 		}
@@ -709,7 +709,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		level >= 12 &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_ADVANCED_POWER) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE, true))
+		if (Read_Boolean_Game_Rule( ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE, true))
 		{
 			level = type->Scenario;
 		}
@@ -721,7 +721,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (house == HOUSE_BAD &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_HELIPAD) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( HIDE_HELIPAD_FROM_NOD_RULE, true))
+		if (Read_Boolean_Game_Rule( HIDE_HELIPAD_FROM_NOD_RULE, true))
 		{
 			return(false);
 		}
@@ -734,7 +734,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		level < 8 &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_SANDBAG_WALL) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( HIDE_SBAG_FROM_GDI_RULE, true))
+		if (Read_Boolean_Game_Rule( HIDE_SBAG_FROM_GDI_RULE, true))
 		{
 			return(false);
 		}
@@ -745,14 +745,14 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	**	scenario two will still feel like scenario #1.
 	*/
 	if (house == HOUSE_GOOD && level == 2) {
-		if (Get_Game_Rules()->Read_Boolean_Rule( SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE, true))
+		if (Read_Boolean_Game_Rule( SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE, true))
 		{
 			level = 1;
 		}
 	}
 
 	// ST - 8/23/2019 4:53PM
-	if (DebugUnlockBuildables || Get_Game_Rules()->Read_Boolean_Rule(ALLOW_BUILDING_ALL_FOR_HOUSE_RULE, false)) {
+	if (DebugUnlockBuildables || Read_Boolean_Game_Rule(ALLOW_BUILDING_ALL_FOR_HOUSE_RULE, false)) {
 		level = 98;
 		pre = 0;
 	}
@@ -1383,7 +1383,7 @@ void HouseClass::AI(void)
 		*/
 		if ((GameToPlay == GAME_NORMAL || Rule.AllowSuperWeapons) && (ActiveBScan & STRUCTF_TEMPLE) && Has_Nuke_Device() && IsHuman) {
 			NukeStrike.Enable(
-				GameToPlay != GAME_NORMAL || Get_Game_Rules()->Read_Boolean_Rule(ONE_TIME_NUKE_RULE, true),
+				GameToPlay != GAME_NORMAL || Read_Boolean_Game_Rule(ONE_TIME_NUKE_RULE, true),
 				this == PlayerPtr
 			);
 
@@ -4704,7 +4704,7 @@ bool HouseClass::Has_Nuke_Device(void)
 	Validate();
 	if (GameToPlay != GAME_NORMAL || !IsHuman) return(true);
 
-	if (!Get_Game_Rules()->Read_Boolean_Rule(ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE, true))
+	if (!Read_Boolean_Game_Rule(ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE, true))
 	{
 		return true;
 	}

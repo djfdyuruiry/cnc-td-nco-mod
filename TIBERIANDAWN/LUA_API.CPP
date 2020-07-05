@@ -6,8 +6,9 @@ static void Load_Api_Functions()
 {
     Log_Debug("Initialising Lua API functions");
 
-    Register_Lua_Function("getGameRule", Lua_Get_Game_Rule);
-    Register_Lua_Function("setGameRule", Lua_Set_Game_Rule);
+    Register_Lua_Function("getStringGameRule", Lua_Get_String_Game_Rule);
+    Register_Lua_Function("getIntGameRule", Lua_Get_Int_Game_Rule);
+    Register_Lua_Function("getBoolGameRule", Lua_Get_Boolean_Game_Rule);
 
     Register_Lua_Function("getInfantryTypes", Lua_Get_Infantry_Types);
     Register_Lua_Function("getUnitTypes", Lua_Get_Unit_Types);
@@ -15,6 +16,7 @@ static void Load_Api_Functions()
     Register_Lua_Function("getBuildingTypes", Lua_Get_Building_Types);
 
     Register_Lua_Function("getGameRuleNames", Lua_Get_Game_Rule_Names);
+    Register_Lua_Function("getGameRuleTypeNames", Lua_Get_Game_Rule_Type_Names);
     Register_Lua_Function("getInfantryRuleNames", Lua_Get_Infantry_Rule_Names);
     Register_Lua_Function("getUnitRuleNames", Lua_Get_Unit_Rule_Names);
     Register_Lua_Function("getAircraftRuleNames", Lua_Get_Aircraft_Rule_Names);

@@ -117,7 +117,9 @@ function main()
     }
   }
 
-  local outputFile = "RULES-DUMP.INI"
+  local outputFile = "RULES-DEFAULT.INI"
+
+  setLogLevel("info");
 
   os.remove(outputFile)
 
@@ -135,6 +137,8 @@ function main()
   rulesFile:close()
 
   log(string.format("Rules ini dump complete, see results @ %s", outputFile))
+  
+  setLogLevel("debug");
 end
 
 main()

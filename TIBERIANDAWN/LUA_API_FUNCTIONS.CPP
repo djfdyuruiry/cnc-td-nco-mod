@@ -1,5 +1,13 @@
 #include "function.h"
 
+static auto GAME_RULE_NAMES = new const char* [GAME_RULE_COUNT] {
+    GAME_RULES
+};
+
+static auto GAME_RULE_TYPE_NAMES = new const char* [GAME_RULE_COUNT] {
+    GAME_RULE_TYPES
+};
+
 static auto INFANTRY_RULE_NAMES = new const char* [INFANTRY_RULE_COUNT] {
     INFANTRY_RULES
 };
@@ -1215,7 +1223,15 @@ static void Read_Rule_Names(lua_State* lua, const char** ruleNames, unsigned rul
 
 int Lua_Get_Game_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, Get_Game_Rules()->Get_Rule_Names(), GAME_RULE_COUNT);
+    Read_Rule_Names(lua, GAME_RULE_NAMES, GAME_RULE_COUNT);
+
+    return 1;
+}
+
+
+int Lua_Get_Game_Rule_Type_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, GAME_RULE_TYPE_NAMES, GAME_RULE_COUNT);
 
     return 1;
 }
@@ -1276,76 +1292,88 @@ int Lua_Get_Building_Types(lua_State* lua)
     return 1;
 }
 
-int Lua_Get_Game_Rule(lua_State* lua)
+int Lua_Get_String_Game_Rule(lua_State* lua)
 {
-    Log_Trace("Lua_Get_Game_Rule called from Lua");
+    Log_Trace("Lua_Get_String_Game_Rule called from Lua");
 
     int argCount = lua_gettop(lua);
 
     if (argCount < 1)
     {
-        luaL_error(lua, "getGameRule requires at least one argument");
+        luaL_error(lua, "getStringGameRule requires at least one argument");
     }
 
     auto ruleName = Get_Lua_Value_As_String(1);
 
-    auto rule = Get_Game_Rules()->Get_Rule(ruleName);
+    bool valueFound = false;
+    auto ruleValue = Read_Optional_String_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound);
 
-    if (rule == NULL || rule->ruleValue == NULL)
+    if (valueFound)
+    {
+        lua_pushstring(lua, ruleValue);
+    }
+    else
     {
         lua_pushnil(lua);
-    }
-    else if (Strings_Are_Equal((char*)rule->valueType, "string"))
-    {
-        lua_pushstring(lua, (char*)rule->ruleValue);
-    }
-    else if (Strings_Are_Equal((char*)rule->valueType, "int"))
-    {
-        lua_pushnumber(lua, *(bool*)rule->ruleValue);
-    }
-    else if (Strings_Are_Equal((char*)rule->valueType, "bool"))
-    {
-        lua_pushboolean(lua, *(bool*)rule->ruleValue);
     }
 
     return 1;
 }
 
-int Lua_Set_Game_Rule(lua_State* lua)
+int Lua_Get_Int_Game_Rule(lua_State* lua)
 {
-    Log_Trace("Lua_Set_Game_Rule called from Lua");
+    Log_Trace("Lua_Get_Int_Game_Rule called from Lua");
 
     int argCount = lua_gettop(lua);
 
-    if (argCount < 2)
+    if (argCount < 1)
     {
-        luaL_error(lua, "setGameRule requires at least two arguments");
+        luaL_error(lua, "getIntGameRule requires at least one argument");
     }
 
     auto ruleName = Get_Lua_Value_As_String(1);
-    auto rule = Get_Game_Rules()->Get_Rule(ruleName);
-    auto setSuccess = false;
 
-    if (rule == NULL || Strings_Are_Equal(rule->valueType, "string"))
+    bool valueFound = false;
+    auto ruleValue = Read_Optional_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound);
+
+    if (valueFound)
     {
-        // new game rules default to string type
-        setSuccess = Get_Game_Rules()->Update_Current_Rule_Value(ruleName, Get_Lua_Value_As_String(2));
+        lua_pushboolean(lua, ruleValue);
     }
-    else if (lua_isboolean(lua, 2))
+    else
     {
-        setSuccess = Get_Game_Rules()->Update_Current_Boolean_Rule_Value(ruleName, lua_toboolean(lua, 2));
-    }
-    else if (lua_isnumber(lua, 2))
-    {
-        setSuccess = Get_Game_Rules()->Update_Current_Int_Rule_Value(ruleName, lua_tonumber(lua, 2));
+        lua_pushnil(lua);
     }
 
-    if (!setSuccess)
+    return 1;
+}
+
+int Lua_Get_Boolean_Game_Rule(lua_State* lua)
+{
+    Log_Trace("Lua_Get_Boolean_Game_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 1)
     {
-        luaL_error(lua, "setGameRule argument `value` was not of a valid type for the given rule");
+        luaL_error(lua, "getBoolGameRule requires at least one argument");
     }
 
-    return 0;
+    auto ruleName = Get_Lua_Value_As_String(1);
+
+    bool valueFound = false;
+    auto ruleValue = Read_Optional_Bool_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound);
+
+    if (valueFound)
+    {
+        lua_pushnumber(lua, ruleValue);
+    }
+    else
+    {
+        lua_pushnil(lua);
+    }
+
+    return 1;
 }
 
 int Lua_Get_Infantry_Rule(lua_State* lua)

@@ -5427,7 +5427,7 @@ static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remaining
 		**	building located there.
 		*/
 		if (Map[newcell].Owner == house->Class->House) {
-			if (!Is_Wall(Map[newcell].Overlay) || Get_Game_Rules()->Read_Boolean_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true)) {
+			if (!Is_Wall(Map[newcell].Overlay) || Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true)) {
 				return true;
 			}
 		}
@@ -5486,7 +5486,7 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = homecell + *ptr++;
 
-		if (!Map.In_Radar(cell) && Get_Game_Rules()->Read_Boolean_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true)) {
+		if (!Map.In_Radar(cell) && Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true)) {
 			return false;
 		}
 

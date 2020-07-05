@@ -47,7 +47,7 @@ function Copy-Game-Files {
   Copy-Item -Path "${gameFilesPath}\ccmod.json" -Destination "${workshopOutPath}\NCO"
   Copy-Item -Path "${workshopInPath}\NCOWorkshopPreview.png" -Destination $workshopOutPath
   Copy-Item -Path "${buildOutPath}\TiberianDawn.dll" -Destination $workshopOutDataPath
-  Copy-Item -Path "${gameFilesPath}\RULES-DUMP.INI" -Destination "${workshopOutDataPath}\RULES.INI"
+  Copy-Item -Path "${gameFilesPath}\RULES-DEFAULT.INI" -Destination $workshopOutDataPath
 }
 
 function Main {
