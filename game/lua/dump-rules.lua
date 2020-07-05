@@ -12,12 +12,10 @@ LuaScripts=
 [Game]
 EnableDebugLogging=false
 
-; cheats
-AllowBuildingAllForCurrentHouse=false
-UnitsAreIndestructible=false
-InfantryAutoScatters=false
-GiveAttackersAnAdvantage=false
-SpeedyBuilds=false
+; map
+MaxBuildDistance=1
+PreventBuildingInShroud=true
+AllowBuildingBesideWalls=true
 
 ; misc
 DefendAgainstFriendlyFire=false
@@ -34,11 +32,6 @@ OnlyAllowNukeIfAllPartsHaveBeenCollected=true
 OnlyAllowUsingOneNukePerScenario=true
 HelipadsAndAircraftBoughtSeperately=false
 
-; map
-MaxBuildDistance=1
-PreventBuildingInShroud=true
-AllowBuildingBesideWalls=true
-
 ; house specific
 HideTempleFromGdi=true
 HideObeliskFromGdi=true
@@ -54,6 +47,13 @@ HideBazookaFromGdiUntilSenario8=true
 HideRocketLauncherFromGdiUntilScenario9=true
 HideSandbagFromGdiUntilScenario9=true
 AllowNodToBuildAdvancedPowerInScenario12=true
+
+; cheats
+AllowBuildingAllForCurrentHouse=false
+UnitsAreIndestructible=false
+InfantryAutoScatters=false
+GiveAttackersAnAdvantage=false
+SpeedyBuilds=false
 
 ]]
 
