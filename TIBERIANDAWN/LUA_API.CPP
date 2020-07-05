@@ -2,7 +2,37 @@
 
 static bool API_INITIALISED = false;
 
-static void Load_Api_Functions()
+static const char* GET_GAME_RULE_FUNCTION = "\
+  function getGameRule(ruleName)                   \n\
+    local gameRules = getGameRuleNames()           \n\
+    local gameRuleTypes = getGameRuleTypeNames()   \n\
+                                                   \n\
+    for idx, rule in ipairs(gameRules) do          \n\
+      if rule == ruleName then                     \n\
+        local value                                \n\
+                                                   \n\
+        if gameRuleTypes[idx] == 'string' then     \n\
+          value = getStringGameRule(rule)          \n\
+        elseif gameRuleTypes[idx] == 'int' then    \n\
+          value = getIntGameRule(rule)             \n\
+        else                                       \n\
+          value = getBoolGameRule(rule)            \n\
+        end                                        \n\
+                                                   \n\
+        return value                               \n\
+      end                                          \n\
+    end                                            \n\
+                                                   \n\
+    return nil                                     \n\
+  end                                              \n\
+";
+
+static bool Load_Lua_Api_Functions()
+{
+    return Execute_Lua_Script(GET_GAME_RULE_FUNCTION);
+}
+
+static bool Load_Api_Functions()
 {
     Log_Debug("Initialising Lua API functions");
 
@@ -33,6 +63,8 @@ static void Load_Api_Functions()
 
     Register_Lua_Function("getBuildingRule", Lua_Get_Building_Rule);
     Register_Lua_Function("setBuildingRule", Lua_Set_Building_Rule);
+
+    return Load_Lua_Api_Functions();
 }
 
 static int Lua_Set_Log_Level(lua_State* lua)
@@ -98,9 +130,7 @@ bool Initialise_Lua_Api()
     Log_Info("Initialising Lua API");
 
     Load_Utility_Functions();
-    Load_Api_Functions();
-
-    API_INITIALISED = true;
+    API_INITIALISED = Load_Api_Functions();
 
     return API_INITIALISED;
 }

@@ -1,7 +1,7 @@
 #include "function.h"
 
 static auto LOG_FILE_PATH = "log\\nco.log";
-static auto LOG_LINE_LENGTH = 1024;
+static auto LOG_LINE_LENGTH = 25600;
 static auto LOG_LEVEL_LENGTH = 5;
 
 static HANDLE LOG_FILE_HANDLE = NULL;
