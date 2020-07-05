@@ -42,7 +42,7 @@ class SpecialClass
 	public:
 		void Init(void) {
 			IsSpeedBuild = Get_Game_Rules()->Read_Boolean_Rule(SPEEDY_BUILDS_RULE, false);
-			IsDefenderAdvantage = Get_Game_Rules()->Read_Boolean_Rule(DEFENDER_ADVANTAGE_RULE, true);
+			IsDefenderAdvantage = !Get_Game_Rules()->Read_Boolean_Rule(ATTACKER_ADVANTAGE_RULE, false);
 			IsSmartDefense = Get_Game_Rules()->Read_Boolean_Rule(DEFEND_AGAINST_FRIENDLY_FIRE_RULE, false);
 			IsTreeTarget = Get_Game_Rules()->Read_Boolean_Rule(TARGET_TREES_RULE, false);
 			IsMCVDeploy = Get_Game_Rules()->Read_Boolean_Rule(MCV_REDEPLOY_RULE, false);
@@ -51,7 +51,7 @@ class SpecialClass
 			IsThreePoint = Get_Game_Rules()->Read_Boolean_Rule(THREE_POINT_TURNS_RULE, false);
 			IsTGrowth = Get_Game_Rules()->Read_Boolean_Rule(TIBERIUM_GROWS_RULE, true);
 			IsTSpread = Get_Game_Rules()->Read_Boolean_Rule(TIBERIUM_SPREADS_RULE, true);
-			IsTFast = Get_Game_Rules()->Read_Boolean_Rule(FAST_TIBERIUM_RULE, true);
+			IsTFast = !Get_Game_Rules()->Read_Boolean_Rule(SLOW_TIBERIUM_RULE, false);
 			IsRoad = Get_Game_Rules()->Read_Boolean_Rule(SHOW_BIBS_RULE, false);
 			IsScatter = Get_Game_Rules()->Read_Boolean_Rule(AUTO_SCATTER_RULE, false);
 			IsNamed = Get_Game_Rules()->Read_Boolean_Rule(NAME_CIVILIAN_BUILDINGS_RULE, false);

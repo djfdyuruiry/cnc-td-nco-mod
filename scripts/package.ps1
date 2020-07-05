@@ -19,17 +19,15 @@ function Zip-Mod-Package {
 
   $currentGitCommit=(git --git-dir "${repoRootPath}\.git" rev-parse --short HEAD)
  
+  Write-Log-Info "Building steam mod package"
+
   Compress-Archive -Path "${workshopOutPath}\*" `
     -DestinationPath "${workshopOutPath}\cnc-td-nco-mod-steam-${currentGitCommit}.zip"
-}
 
-function Clean-Rules-Ini {
-  Write-Log-Info "Cleaning RULES.INI for release"
+  Write-Log-Info "Building manual install mod package"
 
-  (Get-Content "${gameFilesPath}\RULES.INI") `
-    -replace "^LuaScripts=.+$", "LuaScripts=" `
-    -replace "^LogLevel=.+$", "LogLevel=error" `
-      | Out-File "${workshopOutDataPath}\RULES.INI"
+  Compress-Archive -Path "${workshopOutPath}\NCO" `
+    -DestinationPath "${workshopOutPath}\cnc-td-nco-mod-${currentGitCommit}.zip"
 }
 
 function Build-Mod-Spec {
@@ -49,6 +47,7 @@ function Copy-Game-Files {
   Copy-Item -Path "${gameFilesPath}\ccmod.json" -Destination "${workshopOutPath}\NCO"
   Copy-Item -Path "${workshopInPath}\NCOWorkshopPreview.png" -Destination $workshopOutPath
   Copy-Item -Path "${buildOutPath}\TiberianDawn.dll" -Destination $workshopOutDataPath
+  Copy-Item -Path "${gameFilesPath}\RULES-DUMP.INI" -Destination "${workshopOutDataPath}\RULES.INI"
 }
 
 function Main {
@@ -62,7 +61,6 @@ function Main {
 
   Copy-Game-Files
   Build-Mod-Spec
-  Clean-Rules-Ini
 
   Zip-Mod-Package
 }

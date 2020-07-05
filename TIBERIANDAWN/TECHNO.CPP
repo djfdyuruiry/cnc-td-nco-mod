@@ -148,6 +148,7 @@ int const TechnoClass::BodyShape[32] = {0,31,30,29,28,27,26,25,24,23,22,21,20,19
  *=============================================================================================*/
 TechnoTypeClass::TechnoTypeClass(
 		int name,
+		const char* friendlyName,
 		char const *ininame,
 		unsigned char level,
 		long pre,
@@ -194,6 +195,7 @@ TechnoTypeClass::TechnoTypeClass(
 							armor,
 							strength)
 {
+	FriendlyName = friendlyName;
 	Level = level;
 	Pre = pre;
 	MaxAmmo = ammo;

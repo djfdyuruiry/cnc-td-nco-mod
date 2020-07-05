@@ -517,15 +517,6 @@ class TechnoTypeClass : public ObjectTypeClass
 		unsigned short Ownable;
 
 		/*
-		**	This is a csv string representing the houses that are allowed to
-		**	own (by normal means) this particular object type. This value is
-		**	typically used in production contexts. It is possible for a side
-		**	to take possession of an object type otherwise not normally allowed.
-		**	This event usually occurs as a result of capture.
-		*/
-		char * HouseListCsv;
-
-		/*
 		**	This is the small icon image that is used to display the object in
 		**	the sidebar for construction selection purposes.
 		*/
@@ -537,9 +528,21 @@ class TechnoTypeClass : public ObjectTypeClass
 		WeaponType Primary;
 		WeaponType Secondary;
 
+		/*
+		**	This is a csv string representing the houses that are allowed to
+		**	own (by normal means) this particular object type. This value is
+		**	typically used in production contexts. It is possible for a side
+		**	to take possession of an object type otherwise not normally allowed.
+		**	This event usually occurs as a result of capture.
+		*/
+		char* HouseListCsv;
+
+		const char* FriendlyName;
+
 		//--------------------------------------------------------------------
 		TechnoTypeClass(
 				int name,
+				const char* friendlyName,
 				char const *ininame,
 				unsigned char level,
 				long pre,
@@ -752,6 +755,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		BuildingTypeClass	(
 						StructType type,
 						int name,
+						const char* friendlyName,
 						char const *ininame,
 						COORDINATE exitpoint,
 						unsigned char level,
@@ -1000,6 +1004,7 @@ class UnitTypeClass : public TechnoTypeClass
 		UnitTypeClass	(
 						UnitType type,
 						int name,
+						const char* friendlyName,
 						char const *ininame,
 						AnimType exp,
 						unsigned char level,
@@ -1155,6 +1160,7 @@ class InfantryTypeClass : public TechnoTypeClass
 		InfantryTypeClass	(
 						InfantryType type,
 						int name,
+						const char* friendlyName,
 						char const *ininame,
 						unsigned char level,
 						long pre,
@@ -1771,6 +1777,7 @@ class AircraftTypeClass : public TechnoTypeClass
 		AircraftTypeClass(
 				AircraftType airtype,
 				int name,
+				const char* friendlyName,
 				char const *ininame,
 				unsigned char level,
 				long pre,

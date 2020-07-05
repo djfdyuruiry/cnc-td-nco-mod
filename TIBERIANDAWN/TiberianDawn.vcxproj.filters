@@ -107,6 +107,12 @@
     <None Include="..\bin\Win32\RULES.INI">
       <Filter>output</Filter>
     </None>
+    <None Include="..\game\lua\dump-rules.lua">
+      <Filter>game</Filter>
+    </None>
+    <None Include="..\bin\Win32\dump-rules.lua">
+      <Filter>output</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABSTRACT.H">
