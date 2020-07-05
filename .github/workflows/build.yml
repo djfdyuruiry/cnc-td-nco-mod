@@ -64,3 +64,8 @@ jobs:
         with:
           name: steam-workshop-mod
           path: .steam-workshop\cnc-td-nco-mod-steam-${{ env.GIT_COMMIT }}.zip
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: manual-install-mod
+          path: .steam-workshop\cnc-td-nco-mod-${{ env.GIT_COMMIT }}.zip

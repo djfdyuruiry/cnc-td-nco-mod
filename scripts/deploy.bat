@@ -21,7 +21,7 @@ mkdir "%MOD_PATH%"
 mkdir "%MOD_PATH%\Data"
 
 copy "%REPO_PATH%\game\ccmod.json" "%MOD_PATH%\ccmod.json"
-copy "%REPO_PATH%\game\RULES.INI" "%MOD_PATH%\Data"
+copy "%REPO_PATH%\game\RULES-DEBUG.INI" "%MOD_PATH%\Data\RULES.INI"
 copy "%REPO_PATH%\game\lua\test.lua" "%MOD_PATH%\Data"
 
 copy "%REPO_PATH%\bin\Win32\TiberianDawn.dll" "%MOD_PATH%\Data"
