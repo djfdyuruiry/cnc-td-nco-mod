@@ -1354,6 +1354,34 @@ int Lua_Get_Int_Game_Rule(lua_State* lua)
     return 1;
 }
 
+int Lua_Get_Double_Game_Rule(lua_State* lua)
+{
+    Log_Trace("Lua_Get_Double_Game_Rule called from Lua");
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 1)
+    {
+        luaL_error(lua, "getDoubleGameRule requires at least one argument");
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(1);
+
+    bool valueFound = false;
+    auto ruleValue = Read_Optional_Double_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound);
+
+    if (valueFound)
+    {
+        lua_pushnumber(lua, ruleValue);
+    }
+    else
+    {
+        lua_pushnil(lua);
+    }
+
+    return 1;
+}
+
 int Lua_Get_Boolean_Game_Rule(lua_State* lua)
 {
     Log_Trace("Lua_Get_Boolean_Game_Rule called from Lua");

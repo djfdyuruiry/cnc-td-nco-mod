@@ -10,6 +10,8 @@ int Lua_Get_String_Game_Rule(lua_State* lua);
 
 int Lua_Get_Int_Game_Rule(lua_State* lua);
 
+int Lua_Get_Double_Game_Rule(lua_State* lua);
+
 int Lua_Get_Boolean_Game_Rule(lua_State* lua);
 
 int Lua_Get_Infantry_Types(lua_State* lua);

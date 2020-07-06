@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "CppUnitTest.h"
 
 #include "utils.h"
@@ -31,6 +30,30 @@ namespace Unit
 				Assert::AreEqual(
 					"2147483647",
 					Convert_Number_To_String(INT_MAX)
+				);
+			}
+
+			TEST_METHOD(When_Is_Double_String_IsCalled_WithStringContainingAnInt_ThenTrueIsReturned)
+			{
+				Assert::AreEqual(
+					true,
+					Is_Double_String("39")
+				);
+			}
+
+			TEST_METHOD(When_Is_Double_String_IsCalled_WithStringContainingADouble_ThenTrueIsReturned)
+			{
+				Assert::AreEqual(
+					true,
+					Is_Double_String("837.38")
+				);
+			}
+
+			TEST_METHOD(When_Is_Double_String_IsCalled_WithStringContainingNoNumbers_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					true,
+					Is_Double_String("NaN")
 				);
 			}
 	};

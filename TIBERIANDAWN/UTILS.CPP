@@ -241,7 +241,7 @@ char* Convert_Boolean_To_String(bool booleanValue)
 	return booleanValue ? "TRUE" : "FALSE";
 }
 
-bool Is_Number_String(char* numberValue)
+bool Is_Int_String(char* numberValue)
 {
 	if (String_Is_Empty(numberValue))
 	{
@@ -251,6 +251,20 @@ bool Is_Number_String(char* numberValue)
 	char* remainder;
 
 	strtol(numberValue, &remainder, 10);
+
+	return !Strings_Are_Equal(numberValue, remainder);
+}
+
+bool Is_Double_String(char* numberValue)
+{
+	if (String_Is_Empty(numberValue))
+	{
+		return false;
+	}
+
+	char* remainder;
+
+	strtod(numberValue, &remainder);
 
 	return !Strings_Are_Equal(numberValue, remainder);
 }

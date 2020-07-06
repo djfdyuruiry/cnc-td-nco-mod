@@ -262,6 +262,8 @@
     <None Include="..\bin\Win32\test.lua" />
     <None Include="..\game\ccmod.json" />
     <None Include="..\game\lua\dump-rules.lua" />
+    <None Include="..\game\lua\test-lua-rules.lua" />
+    <None Include="..\game\RULES-DEFAULT.INI" />
     <None Include="..\game\RULES.INI" />
     <None Include="..\game\lua\test.lua" />
     <None Include="..\README.md" />

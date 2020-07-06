@@ -3,28 +3,30 @@
 static bool API_INITIALISED = false;
 
 static const char* GET_GAME_RULE_FUNCTION = "\
-  function getGameRule(ruleName)                   \n\
-    local gameRules = getGameRuleNames()           \n\
-    local gameRuleTypes = getGameRuleTypeNames()   \n\
-                                                   \n\
-    for idx, rule in ipairs(gameRules) do          \n\
-      if rule == ruleName then                     \n\
-        local value                                \n\
-                                                   \n\
-        if gameRuleTypes[idx] == 'string' then     \n\
-          value = getStringGameRule(rule)          \n\
-        elseif gameRuleTypes[idx] == 'int' then    \n\
-          value = getIntGameRule(rule)             \n\
-        else                                       \n\
-          value = getBoolGameRule(rule)            \n\
-        end                                        \n\
-                                                   \n\
-        return value                               \n\
-      end                                          \n\
-    end                                            \n\
-                                                   \n\
-    return nil                                     \n\
-  end                                              \n\
+  function getGameRule(ruleName)                    \n\
+    local gameRules = getGameRuleNames()            \n\
+    local gameRuleTypes = getGameRuleTypeNames()    \n\
+                                                    \n\
+    for idx, rule in ipairs(gameRules) do           \n\
+      if rule == ruleName then                      \n\
+        local value                                 \n\
+                                                    \n\
+        if gameRuleTypes[idx] == 'string' then      \n\
+          value = getStringGameRule(rule)           \n\
+        elseif gameRuleTypes[idx] == 'int' then     \n\
+          value = getIntGameRule(rule)              \n\
+        elseif gameRuleTypes[idx] == 'double' then  \n\
+          value = getDoubleGameRule(rule)           \n\
+        else                                        \n\
+          value = getBoolGameRule(rule)             \n\
+        end                                         \n\
+                                                    \n\
+        return value                                \n\
+      end                                           \n\
+    end                                             \n\
+                                                    \n\
+    return nil                                      \n\
+  end                                               \n\
 ";
 
 static bool Load_Lua_Api_Functions()
@@ -38,6 +40,7 @@ static bool Load_Api_Functions()
 
     Register_Lua_Function("getStringGameRule", Lua_Get_String_Game_Rule);
     Register_Lua_Function("getIntGameRule", Lua_Get_Int_Game_Rule);
+    Register_Lua_Function("getDoubleGameRule", Lua_Get_Double_Game_Rule);
     Register_Lua_Function("getBoolGameRule", Lua_Get_Boolean_Game_Rule);
 
     Register_Lua_Function("getInfantryTypes", Lua_Get_Infantry_Types);

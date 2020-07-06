@@ -11,7 +11,7 @@ char* Allocate_String(unsigned int length)
 		return "";
 	}
 
-	auto stringSizeInBytes = (length  + 1) * sizeof(char);
+	auto stringSizeInBytes = (length + 1) * sizeof(char);
 	auto string = (char*)malloc(stringSizeInBytes);
 
 	memset(string, 0, stringSizeInBytes);
