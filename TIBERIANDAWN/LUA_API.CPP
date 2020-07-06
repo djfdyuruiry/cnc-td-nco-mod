@@ -73,12 +73,27 @@ static int Lua_Set_Log_Level(lua_State* lua)
 
     if (argCount > 0)
     {
-        auto logLevel = Parse_Log_Level(Get_Lua_Value_As_String(1));
+        auto logLevelStr = Get_Lua_Value_As_String(1);
+
+        auto logLevelUpper = Convert_String_To_Upper_Case(logLevelStr);
+
+        auto logLevel = Parse_Log_Level(logLevelUpper);
+
+        delete logLevelUpper;
 
         Set_Current_Log_Level(logLevel);
     }
 
     return 0;
+}
+
+static int Lua_Get_Log_Level(lua_State* lua)
+{
+  auto logLevel = Log_Level_To_String(Current_Log_Level());
+
+  lua_pushstring(lua, logLevel);
+
+  return 1;
 }
 
 static int Lua_Show_Error(lua_State* lua)
@@ -116,6 +131,7 @@ static void Load_Utility_Functions()
     Register_Lua_Function("log", Lua_Log);
     Register_Lua_Function("print", Lua_Log);
     Register_Lua_Function("showError", Lua_Show_Error);
+    Register_Lua_Function("getLogLevel", Lua_Get_Log_Level);
     Register_Lua_Function("setLogLevel", Lua_Set_Log_Level);
 }
 

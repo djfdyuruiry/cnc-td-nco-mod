@@ -2,8 +2,8 @@
 
 char* Allocate_String(int length)
 {
-	auto stringSizeInBytes = length * sizeof(char);
-	auto string = new char[length];
+	auto stringSizeInBytes = (length  + 1) * sizeof(char);
+	auto string = (char*)malloc(stringSizeInBytes);
 
 	memset(string, 0, stringSizeInBytes);
 
@@ -131,53 +131,28 @@ char* Convert_String_To_Upper_Case(const char* subject)
 
 char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCount)
 {
-	if (csvString == NULL || Strings_Are_Equal(csvString, ""))
+	if (String_Is_Empty(csvString))
 	{
 		return NULL;
 	}
 
-	auto csvLength = strlen(csvString);
+	auto entryCount = 0;
+	
+	auto token = strtok(csvString, ",");
 
-	if (csvLength < 1)
-	{
-		return NULL;
-	}
-
-	auto entryCount = 1;
-
-	for (unsigned int i = 0; i < csvLength; i++)
-	{
-		if (csvString[i] == ',')
-		{
-			entryCount++;
-		}
+	while (token != NULL) {
+		token = strtok(NULL, ",");
+		entryCount++;
 	}
 
 	auto csvEntries = new char*[entryCount];
 
-	auto currentEntryIdx = 0;
-	auto currentEntryStrIdx = 0;
+	token = strtok(csvString, ",");
 
-	csvEntries[currentEntryIdx] = Allocate_String(entrySize);
-
-	for (unsigned int i = 0; i < csvLength + 1; i++)
+	for (auto i = 0; i < entryCount; i++)
 	{
-		// if not at a comma and have not reached the end of the houses string
-		if (i != csvLength && csvString[i] != ',')
-		{
-			csvEntries[currentEntryIdx][currentEntryStrIdx] = csvString[i];
-			currentEntryStrIdx++;
-
-			continue;
-		}
-
-		currentEntryIdx++;
-		currentEntryStrIdx = 0;
-
-		csvEntries[currentEntryIdx] = Allocate_String(entrySize);
+		csvEntries[i] = strtok(NULL, ",");
 	}
 
-	*csvEntryCount = entryCount;
-
-	return (char**)csvEntries;
+	return csvEntries;
 }

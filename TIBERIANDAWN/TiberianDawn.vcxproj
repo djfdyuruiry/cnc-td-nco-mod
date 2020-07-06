@@ -216,6 +216,10 @@ copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
 if exist ..\bin\$(PlatformName)\dump-rules.lua del ..\bin\$(PlatformName)\dump-rules.lua
 
 copy ..\game\lua\dump-rules.lua ..\bin\$(PlatformName)\
+
+if exist ..\bin\$(PlatformName)\test-lua-rules.lua del ..\bin\$(PlatformName)\test-lua-rules.lua
+
+copy ..\game\lua\test-lua-rules.lua ..\bin\$(PlatformName)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -275,6 +279,10 @@ copy ..\game\lua\test.lua ..\bin\$(PlatformName)\
 if exist ..\bin\$(PlatformName)\dump-rules.lua del ..\bin\$(PlatformName)\dump-rules.lua
 
 copy ..\game\lua\dump-rules.lua ..\bin\$(PlatformName)\
+
+if exist ..\bin\$(PlatformName)\test-lua-rules.lua del ..\bin\$(PlatformName)\test-lua-rules.lua
+
+copy ..\game\lua\test-lua-rules.lua ..\bin\$(PlatformName)\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -113,7 +113,7 @@ int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError)
 {
     auto houseTypeCsvStr = strdup(houseListCsv);
 
-    auto owner = Parse_House_Type(houseTypeCsvStr, parseError);
+    auto owner = Parse_House_Name_List_Csv(houseTypeCsvStr, parseError);
 
     delete houseTypeCsvStr;
 

@@ -1,26 +1,26 @@
 #include "function.h"
 
-static auto GAME_RULE_NAMES = new const char* [GAME_RULE_COUNT] {
+static const auto GAME_RULE_NAMES = new const char* [GAME_RULE_COUNT] {
     GAME_RULES
 };
 
-static auto GAME_RULE_TYPE_NAMES = new const char* [GAME_RULE_COUNT] {
+static const auto GAME_RULE_TYPE_NAMES = new const char* [GAME_RULE_COUNT] {
     GAME_RULE_TYPES
 };
 
-static auto INFANTRY_RULE_NAMES = new const char* [INFANTRY_RULE_COUNT] {
+static const auto INFANTRY_RULE_NAMES = new const char* [INFANTRY_RULE_COUNT] {
     INFANTRY_RULES
 };
 
-static auto UNIT_RULE_NAMES = new const char* [UNIT_RULE_COUNT] {
+static const auto UNIT_RULE_NAMES = new const char* [UNIT_RULE_COUNT] {
     UNIT_RULES
 };
 
-static auto AIRCRAFT_RULE_NAMES = new const char* [AIRCRAFT_RULE_COUNT] {
+static const auto AIRCRAFT_RULE_NAMES = new const char* [AIRCRAFT_RULE_COUNT] {
     AIRCRAFT_RULES
 };
 
-static auto BUILDING_RULE_NAMES = new const char* [BUILDING_RULE_COUNT] {
+static const auto BUILDING_RULE_NAMES = new const char* [BUILDING_RULE_COUNT] {
     BUILDING_RULES
 };
 
@@ -354,7 +354,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCrateGoodie), Convert_Boolean_To_String(isCrateGoodie));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCrateGoodie), Convert_Boolean_To_String(isCrateGoodie));
 
             type->IsCrateGoodie = isCrateGoodie;
         }
@@ -365,7 +365,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => %s -> %s", Convert_Boolean_To_String(type->IsPieceOfEight), Convert_Boolean_To_String(isPieceOfEight));
+            Log_Trace("Write_Unit_Rule => %s -> %s", Convert_Boolean_To_String(type->IsPieceOfEight), Convert_Boolean_To_String(isPieceOfEight));
 
             type->IsPieceOfEight = isPieceOfEight;
         }
@@ -376,7 +376,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCrusher), Convert_Boolean_To_String(isCrusher));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCrusher), Convert_Boolean_To_String(isCrusher));
 
             type->IsCrusher = isCrusher;
         }
@@ -387,7 +387,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsToHarvest), Convert_Boolean_To_String(isHarvester));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsToHarvest), Convert_Boolean_To_String(isHarvester));
 
             type->IsToHarvest = isHarvester;
         }
@@ -398,7 +398,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsRadarEquipped), Convert_Boolean_To_String(isRadarEquipped));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsRadarEquipped), Convert_Boolean_To_String(isRadarEquipped));
 
             type->IsRadarEquipped = isRadarEquipped;
         }
@@ -409,7 +409,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsFireAnim), Convert_Boolean_To_String(hasFireAnim));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsFireAnim), Convert_Boolean_To_String(hasFireAnim));
 
             type->IsFireAnim = hasFireAnim;
         }
@@ -420,7 +420,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsLockTurret), Convert_Boolean_To_String(lockTurret));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsLockTurret), Convert_Boolean_To_String(lockTurret));
 
             type->IsLockTurret = lockTurret;
         }
@@ -431,7 +431,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsTracked), Convert_Boolean_To_String(hasTracks));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsTracked), Convert_Boolean_To_String(hasTracks));
 
             type->IsTracked = hasTracks;
         }
@@ -442,7 +442,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsGigundo), Convert_Boolean_To_String(isHuge));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsGigundo), Convert_Boolean_To_String(isHuge));
 
             type->IsGigundo = isHuge;
         }
@@ -453,7 +453,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCloakable), Convert_Boolean_To_String(canCloak));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsCloakable), Convert_Boolean_To_String(canCloak));
 
             type->IsCloakable = canCloak;
         }
@@ -464,7 +464,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsAnimating), Convert_Boolean_To_String(constAnim));
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsAnimating), Convert_Boolean_To_String(constAnim));
 
             type->IsAnimating = constAnim;
         }
@@ -475,7 +475,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->Speed, speed);
+            Log_Trace("Write_Unit_Rule => Rule value: %u -> %u", type->Speed, speed);
 
             type->Speed = speed;
         }
@@ -487,7 +487,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->ROT, rot);
+            Log_Trace("Write_Unit_Rule => Rule value: %u -> %u", type->ROT, rot);
 
             type->ROT = rot;
         }
@@ -951,12 +951,12 @@ static bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const ch
     }
     else if (Strings_Are_Equal(ruleName, PREREQUISITE_RULE_UPPER))
     {
-        auto scructType = Prerequisite_To_Structure_Type(type->Pre);
-        auto scrutTypeStr = Structure_Type_To_String(scructType);
+        auto structType = Prerequisite_To_Structure_Type(type->Pre);
+        auto structTypeStr = Structure_Type_To_String(structType);
 
-        Log_Trace("Read_TechnoType_Rule => Rule value: %s", scrutTypeStr);
+        Log_Trace("Read_TechnoType_Rule => Rule value: %s", structTypeStr);
 
-        lua_pushstring(lua, scrutTypeStr);
+        lua_pushstring(lua, structTypeStr);
     }
     else if (Strings_Are_Equal(ruleName, COST_RULE_UPPER))
     {
@@ -1201,21 +1201,27 @@ static void Read_Object_Names(
 {
     auto toStringFunction = (char* (*)(char))toStringFunctionPtr;
 
-    lua_newtable(lua);
+    lua_createtable(lua, 0, count);
 
     for (char i = first; i < count; i++)
     {
-        lua_pushstring(lua, toStringFunction(i));
+        auto name = toStringFunction(i);
+
+        Log_Trace("Pushing object name onto Lua table: %s", name);
+
+        lua_pushstring(lua, name);
         lua_rawseti(lua, -2, i + 1);
     }
 }
 
 static void Read_Rule_Names(lua_State* lua, const char** ruleNames, unsigned ruleCount)
 {
-    lua_newtable(lua);
+    lua_createtable(lua, 0, ruleCount);
 
     for (unsigned i = 0; i < ruleCount; i++)
     {
+        Log_Trace("Pushing object rule name onto Lua table: %s", ruleNames[i]);
+
         lua_pushstring(lua, ruleNames[i]);
         lua_rawseti(lua, -2, i + 1);
     }

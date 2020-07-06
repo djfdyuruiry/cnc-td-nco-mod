@@ -27,6 +27,8 @@ bool Execute_Lua_Script(const char* luaScript);
 
 bool Execute_Lua_File(char* luaScriptPath);
 
+bool Execute_Lua_File(const char* scriptFile);
+
 const char* Get_Lua_Value_As_String(int index);
 
 const char* Get_Lua_Value_Type(int index);
