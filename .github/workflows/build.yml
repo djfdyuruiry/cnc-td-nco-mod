@@ -39,7 +39,7 @@ jobs:
           $vstestPath = join-path $vsPath "Common7\IDE\CommonExtensions\Microsoft\TestWindow"
 
           if (!(test-path $vstestPath)) {
-            throw "Failed to find VSTest path"
+            throw "Failed to find VSTest"
           }
 
           Write-Host "::add-path::${msBuildPath}"

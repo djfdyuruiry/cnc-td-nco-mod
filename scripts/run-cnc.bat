@@ -5,7 +5,7 @@ set "CNC_PATH=%ProgramFiles(x86)%\Steam\steamapps\common\CnCRemastered"
 call "%~dp0lib\log.bat" "INFO" "Running CnC in debug mode at path: %CNC_PATH%"
 
 :: make sure game is not running by killing it
-call "%~dp0\kill-cnc.bat"
+call "%~dp0kill-cnc.bat"
 
 pushd "%CNC_PATH%"
 
