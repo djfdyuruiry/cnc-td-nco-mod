@@ -4,7 +4,7 @@ call "%~dp0lib\log.bat" "INFO" "Running tests"
 
 pushd "%~dp0..\tests\Win32\Debug"
 
-vstest.console "%~dp0..\tests\Win32\Debug\Nco.Tests.dll"
+vstest.console "Nco.Tests.dll"
 
 popd
 
