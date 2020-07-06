@@ -257,7 +257,7 @@ bool Is_Number_String(char* numberValue)
 
 char* Convert_Number_To_String(int number)
 {
-	auto numberBuffer = Allocate_String(10); // INT_MAX string length
+	auto numberBuffer = Allocate_String(11); // INT_MIN string length
 
 	itoa(number, numberBuffer, 10);
 

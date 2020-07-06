@@ -88,6 +88,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(PlatformName)\$(Configuration)\</IntDir>
     <OutDir>..\bin\$(PlatformName)\</OutDir>
+    <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TestConsoleLuaRepl|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -188,12 +189,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>winmm.lib;Ws2_32.lib;Shlwapi.lib;..\lib\lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImageHasSafeExceptionHandlers>
-      </ImageHasSafeExceptionHandlers>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <ShowProgress>
-      </ShowProgress>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <BaseAddress>
+      </BaseAddress>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PreLinkEvent>
       <Command>

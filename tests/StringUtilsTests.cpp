@@ -10,14 +10,14 @@ namespace Unit
 	TEST_CLASS(StringUtilsTests)
 	{
 		public:
-			TEST_METHOD(WhenAllocate_StringIsCalled_WithNonZeroLength_ThenEmptyStringIsReturned)
+			TEST_METHOD(When_Allocate_String_IsCalled_WithNonZeroLength_ThenEmptyStringIsReturned)
 			{
 				auto testStr = Allocate_String(10u);
 
 				Assert::AreEqual("", testStr);
 			}
 
-			TEST_METHOD(WhenAllocate_StringIsCalled_WithNonZeroLength_ThenStringCanBeWrittenTo)
+			TEST_METHOD(When_Allocate_String_IsCalled_WithNonZeroLength_ThenStringCanBeWrittenTo)
 			{
 				auto testStr = Allocate_String(10u);
 
@@ -26,7 +26,7 @@ namespace Unit
 				Assert::AreEqual("1234567890", testStr);
 			}
 
-			TEST_METHOD(WhenStrings_Are_EqualIsCalled_WithMatchingNonConstStrings_ThenTrueIsReturned)
+			TEST_METHOD(When_Strings_Are_Equal_IsCalled_WithMatchingNonConstStrings_ThenTrueIsReturned)
 			{
 				Assert::AreEqual(
 					true,
@@ -34,7 +34,7 @@ namespace Unit
 				);
 			}
 
-			TEST_METHOD(WhenStrings_Are_EqualIsCalled_WithNonMatchingNonConstStrings_ThenFalseIsReturned)
+			TEST_METHOD(When_Strings_Are_Equal_IsCalled_WithNonMatchingNonConstStrings_ThenFalseIsReturned)
 			{
 				Assert::AreEqual(
 					false,
@@ -42,7 +42,7 @@ namespace Unit
 				);
 			}
 
-			TEST_METHOD(WhenStrings_Are_EqualIsCalled_WithMatchingConstStrings_ThenTrueIsReturned)
+			TEST_METHOD(When_Strings_Are_Equal_IsCalled_WithMatchingConstStrings_ThenTrueIsReturned)
 			{
 				Assert::AreEqual(
 					true,
@@ -50,7 +50,7 @@ namespace Unit
 				);
 			}
 
-			TEST_METHOD(WhenStrings_Are_EqualIsCalled_WithNonMatchingConstStrings_ThenFaseIsReturned)
+			TEST_METHOD(When_Strings_Are_Equal_IsCalled_WithNonMatchingConstStrings_ThenFalseIsReturned)
 			{
 				Assert::AreEqual(
 					false,
@@ -58,38 +58,116 @@ namespace Unit
 				);
 			}
 
-			TEST_METHOD(WhenStrings_Are_EqualIsCalled_WithNullSubject_ThenFaseIsReturned)
+			TEST_METHOD(When_Strings_Are_Equal_IsCalled_WithNullSubject_ThenFalseIsReturned)
 			{
 				Assert::AreEqual(
 					false,
-					Strings_Are_Equal((char*) NULL, "yes?")
+					Strings_Are_Equal((char*)NULL, "nope")
 				);
 			}
 
-			TEST_METHOD(WhenStrings_Are_EqualIsCalled_WithNullExpected_ThenFaseIsReturned)
+			TEST_METHOD(When_Strings_Are_Equal_IsCalled_WithNullExpected_ThenFalseIsReturned)
 			{
 				Assert::AreEqual(
 					false,
-					Strings_Are_Equal("yo", (char*)NULL)
+					Strings_Are_Equal("negative", (char*)NULL)
 				);
 			}
 
-			TEST_METHOD(WhenConvert_String_To_Upper_CaseIsCalled_WithNonBlankString_ThenUppercaseStringIsReturned)
+			TEST_METHOD(When_String_Is_Empty_IsCalled_WithBlankConstSubject_ThenTrueIsReturned)
 			{
-				auto testStr = strdup("loWerCasisH");
+				Assert::AreEqual(
+					true,
+					String_Is_Empty("")
+				);
+			}
+
+			TEST_METHOD(When_String_Is_Empty_IsCalled_WithBlankNonConstSubject_ThenTrueIsReturned)
+			{
+				Assert::AreEqual(
+					true,
+					String_Is_Empty(strdup(""))
+				);
+			}
+
+			TEST_METHOD(When_String_Is_Empty_IsCalled_WithNonBlankConstSubject_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					String_Is_Empty("i'm not dead")
+				);
+			}
+
+			TEST_METHOD(When_String_Is_Empty_IsCalled_WithNonBlankNonConstSubject_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					String_Is_Empty(strdup("i'm not dead"))
+				);
+			}
+
+			TEST_METHOD(When_String_Starts_With_IsCalled_WithNonConstMatchingStrings_ThenTrueIsReturned)
+			{
+				Assert::AreEqual(
+					true,
+					String_Starts_With(strdup("what the"), strdup("wha"))
+				);
+			}
+
+			TEST_METHOD(When_String_Starts_With_IsCalled_WithNonConstNonMatchingStrings_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					String_Starts_With(strdup("where"), strdup("wha"))
+				);
+			}
+
+			TEST_METHOD(When_String_Starts_With_IsCalled_WithConstMatchingStrings_ThenTrueIsReturned)
+			{
+				Assert::AreEqual(
+					true,
+					String_Starts_With("juice", "jui")
+				);
+			}
+
+			TEST_METHOD(When_String_Starts_With_IsCalled_WithConstNonMatchingStrings_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					String_Starts_With("plane", "car")
+				);
+			}
+
+			TEST_METHOD(When_String_Starts_With_IsCalled_WithNullSubject_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					String_Starts_With((char*)NULL, "abs")
+				);
+			}
+
+			TEST_METHOD(When_String_Starts_With_IsCalled_WithNullExpected_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					String_Starts_With("lake", (char*)NULL)
+				);
+			}
+
+			TEST_METHOD(When_Convert_String_To_Upper_Case_IsCalled_WithNonBlankString_ThenUppercaseStringIsReturned)
+			{
+				auto testStr = strdup("Add Read");
 
 				Convert_String_To_Upper_Case(testStr);
 
-				Assert::AreEqual("LOWERCASISH", testStr);
+				Assert::AreEqual("ADD READ", testStr);
 			}
 
-			TEST_METHOD(WhenConvert_String_To_Upper_CaseIsCalled_WithNonBlankConstString_ThenUppercaseStringIsReturned)
+			TEST_METHOD(When_Convert_String_To_Upper_Case_IsCalled_WithNonBlankConstString_ThenUppercaseStringIsReturned)
 			{
-				auto testStr = "loWerDeasisH";
+				auto result = Convert_String_To_Upper_Case("lo,WerDea,sisH");
 
-				auto result = Convert_String_To_Upper_Case(testStr);
-
-				Assert::AreEqual("LOWERDEASISH", result);
+				Assert::AreEqual("LO,WERDEA,SISH", result);
 			}
 	};
 }

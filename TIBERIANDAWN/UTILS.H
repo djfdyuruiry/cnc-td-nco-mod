@@ -19,6 +19,8 @@ bool Is_Number_String(char* numberValue);
 
 int Parse_Number(char character);
 
+char* Convert_Number_To_String(int number);
+
 bool Is_Boolean_String(char* booleanValue);
 
 bool Parse_Boolean(char* booleanValue, bool* parseError);
