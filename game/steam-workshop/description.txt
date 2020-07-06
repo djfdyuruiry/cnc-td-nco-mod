@@ -47,15 +47,3 @@ A guide on how to edit the RULES.INI file can be found [url=https://github.com/d
 [/list]
 
 A guide on how to use Lua Scripts with the mod can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/2.-Lua-Scripting-Tutorial]here[/url].
-
-[code]
-Changelog:
-
-v1.0:
-
-  - Initial release on Steam Workshop
-  - Majority of rules for Infantry, Units, Aircraft and Buildings covered
-  - Lua scripting created with one event to start
-  - Wiki documentation
-  - Developer documentation
-[/code] 
