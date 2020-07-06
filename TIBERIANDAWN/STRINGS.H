@@ -1,7 +1,7 @@
 #ifndef STRING_H
 #define STRING_H
 
-char* Allocate_String(int length);
+char* Allocate_String(unsigned int length);
 
 bool Strings_Are_Equal(char* subject, char* expected);
 

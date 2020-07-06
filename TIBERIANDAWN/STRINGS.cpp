@@ -1,7 +1,16 @@
 #include "function.h"
 
-char* Allocate_String(int length)
+static const auto COMMA = ",";
+
+char* Allocate_String(unsigned int length)
 {
+	if (length == 0)
+	{
+		Show_Error("Length passed to Allocate_String was less than 1");
+
+		return "";
+	}
+
 	auto stringSizeInBytes = (length  + 1) * sizeof(char);
 	auto string = (char*)malloc(stringSizeInBytes);
 
@@ -12,11 +21,21 @@ char* Allocate_String(int length)
 
 bool Strings_Are_Equal(char* subject, char* expected)
 {
+	if (subject == NULL || expected == NULL)
+	{
+		return false;
+	}
+
 	return strcmp(subject, expected) == 0;
 }
 
 bool Strings_Are_Equal(const char* subject, char* expected)
 {
+	if (subject == NULL || expected == NULL)
+	{
+		return false;
+	}
+
 	auto subjectStr = strdup(subject);
 
 	auto result = Strings_Are_Equal(subjectStr, expected);
@@ -28,6 +47,11 @@ bool Strings_Are_Equal(const char* subject, char* expected)
 
 bool Strings_Are_Equal(char* subject, const char* expected)
 {
+	if (subject == NULL || expected == NULL)
+	{
+		return false;
+	}
+
 	auto expectedStr = strdup(expected);
 
 	auto result = Strings_Are_Equal(subject, expectedStr);
@@ -39,6 +63,11 @@ bool Strings_Are_Equal(char* subject, const char* expected)
 
 bool Strings_Are_Equal(const char* subject, const char* expected)
 {
+	if (subject == NULL || expected == NULL)
+	{
+		return false;
+	}
+
 	auto subjectStr = strdup(subject);
 	auto expectedStr = strdup(expected);
 
@@ -88,6 +117,11 @@ bool String_Starts_With(char* subject, char* expected)
 
 bool String_Starts_With(const char* subject, char* expected)
 {
+	if (String_Is_Empty(subject) || String_Is_Empty(expected))
+	{
+		return false;
+	}
+
 	auto subjectStr = strdup(subject);
 
 	auto result = String_Starts_With(subjectStr, expected);
@@ -96,8 +130,14 @@ bool String_Starts_With(const char* subject, char* expected)
 
 	return result;
 }
+
 bool String_Starts_With(char* subject, const char* expected)
 {
+	if (String_Is_Empty(subject) || String_Is_Empty(expected))
+	{
+		return false;
+	}
+
 	auto expectedStr = strdup(expected);
 
 	auto result = String_Starts_With(subject, expectedStr);
@@ -109,6 +149,11 @@ bool String_Starts_With(char* subject, const char* expected)
 
 bool String_Starts_With(const char* subject, const char* expected)
 {
+	if (String_Is_Empty(subject) || String_Is_Empty(expected))
+	{
+		return false;
+	}
+
 	auto subjectStr = strdup(subject);
 	auto expectedStr = strdup(expected);
 
@@ -122,6 +167,11 @@ bool String_Starts_With(const char* subject, const char* expected)
 
 char* Convert_String_To_Upper_Case(const char* subject)
 {
+	if (String_Is_Empty(subject))
+	{
+		return "";
+	}
+
 	auto uppercaseSubject = strdup(subject);
 
 	Convert_String_To_Upper_Case(uppercaseSubject);
@@ -133,25 +183,45 @@ char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCo
 {
 	if (String_Is_Empty(csvString))
 	{
+		Show_Error("CSV string passed to Parse_Csv_String was null or empty");
+
+		*csvEntryCount = 0;
+
 		return NULL;
 	}
 
+	// get a count for the csv list size
+	auto countCsvStringBuffer = strdup(csvString);
 	auto entryCount = 0;
 	
-	auto token = strtok(csvString, ",");
+	auto token = strtok(countCsvStringBuffer, COMMA);
 
 	while (token != NULL) {
 		token = strtok(NULL, ",");
 		entryCount++;
 	}
 
-	auto csvEntries = new char*[entryCount];
+	delete countCsvStringBuffer;
 
-	token = strtok(csvString, ",");
+	// read the csv entries into the new list of correct size
+	auto csvEntries = new char* [entryCount];
 
-	for (auto i = 0; i < entryCount; i++)
+	auto readStringBuffer = strdup(csvString);
+	auto entryIdx = 0;
+
+	token = strtok(readStringBuffer, ",");
+
+	while(token != NULL && entryIdx < entryCount)
 	{
-		csvEntries[i] = strtok(NULL, ",");
+		csvEntries[entryIdx] = token;
+		entryIdx++;
+
+		token = strtok(NULL, ",");
+	}
+
+	if (csvEntryCount != NULL)
+	{
+		*csvEntryCount = entryCount;
 	}
 
 	return csvEntries;

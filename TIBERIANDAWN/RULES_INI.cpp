@@ -18,15 +18,16 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 {
 	Log_Info("Reading Lua scripts from rules ini");
 
-	RULES_LUA_SCRIPTS = {};
+	RULES_LUA_SCRIPTS = {
+		NULL,
+		0
+	};
 
 	bool valueFound = false;
 	auto onScenarioLoadCsv = Read_Optional_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, &valueFound);
 
 	if (!valueFound)
 	{
-		RULES_LUA_SCRIPTS.ScriptFileCount = 0;
-
 		return;
 	}
 
