@@ -151,6 +151,18 @@ bool Execute_Lua_File(char* scriptFile)
     return executionOK;
 }
 
+
+bool Execute_Lua_File(const char* scriptFile)
+{
+    auto scriptFileStr = strdup(scriptFile);
+
+    auto result = Execute_Lua_File(scriptFileStr);
+
+    delete scriptFileStr;
+
+    return result;
+}
+
 const char * Get_Lua_Value_As_String(int index)
 {
     if (lua_isboolean(LUA, index))

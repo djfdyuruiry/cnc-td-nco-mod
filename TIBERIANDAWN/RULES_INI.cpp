@@ -1,8 +1,11 @@
 #include "function.h"
 
 static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
-static auto DEFAULT_RULES_FILENAME = "RULES.INI";
-static const unsigned int RULES_STRING_LENGTH = 512;
+static auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
+static auto RULES_FILENAME = "RULES.INI";
+static const unsigned int RULES_STRING_LENGTH = MAX_PATH * 15;
+static const int VALID_BOOLEAN_VALUE_COUNT = 2;
+static const char** VALID_BOOLEAN_VALUES;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
@@ -15,13 +18,22 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 {
 	Log_Info("Reading Lua scripts from rules ini");
 
-	RULES_LUA_SCRIPTS = {};
+	RULES_LUA_SCRIPTS = {
+		NULL,
+		0
+	};
 
-	auto onScenarioLoadCsv = Read_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, "");
+	bool valueFound = false;
+	auto onScenarioLoadCsv = Read_Optional_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, &valueFound);
+
+	if (!valueFound)
+	{
+		return;
+	}
 
 	RULES_LUA_SCRIPTS.ScriptFiles = Parse_Csv_String(
 		onScenarioLoadCsv,
-		256,
+		MAX_PATH,
 		&RULES_LUA_SCRIPTS.ScriptFileCount
 	);
 }
@@ -43,7 +55,7 @@ static void Read_Log_Level_From_Rules_Ini()
 			Log_Level_To_String(DEBUG),
 			Log_Level_To_String(TRACE)
 		},
-		7
+		LOG_LEVEL_COUNT
 	);
 
 	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
@@ -64,18 +76,29 @@ char* Read_Rules_Ini() {
 
 	auto rulesFilename = Allocate_String(MAX_PATH);
 
-	sprintf(rulesFilename, "%s\\%s", modPath, DEFAULT_RULES_FILENAME);
+	sprintf(rulesFilename, "%s\\%s", modPath, RULES_FILENAME);
 
 	auto rulesFile = new RawFileClass(rulesFilename);
 
 	if (!rulesFile->Is_Available()) {
 		delete rulesFile;
-		delete rulesFilename;
-		delete modPath;
 
-		Log_Warn("Rules ini not found, default rules will be used");
+		sprintf(rulesFilename, "%s\\%s", modPath, DEFAULT_RULES_FILENAME);
 
-		return "";
+		rulesFile = new RawFileClass(rulesFilename);
+
+		if (!rulesFile->Is_Available()) {
+			delete modPath;
+			delete rulesFilename;
+			delete rulesFile;
+
+
+			Log_Warn("%s not found, defaults in code will be used", DEFAULT_RULES_FILENAME);
+
+			return "";
+		}
+
+		Log_Warn("%s not found, default rules from %s be used", RULES_FILENAME, DEFAULT_RULES_FILENAME);
 	}
 
 	Log_Info("Reading rules ini from file: %s", rulesFilename);
@@ -99,19 +122,32 @@ void Ensure_Rules_Ini_Is_Loaded() {
 		return;
 	}
 
+	VALID_BOOLEAN_VALUES = new const char* [VALID_BOOLEAN_VALUE_COUNT] { "TRUE", "FALSE" };
+
 	RULES_INI_BUFFER = Read_Rules_Ini();
 
 	Read_Log_Level_From_Rules_Ini();
 
-	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE, false);
+	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE, true);
 	Read_Lua_Scripts_From_Rules_Ini();
+}
 
-	auto gameRulesAreValid = Init_Game_Rules();
+int Read_Optional_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+)
+{
+	Ensure_Rules_Ini_Is_Loaded();
 
-	if (RULES_VALID)
-	{
-		RULES_VALID = gameRulesAreValid;
-	}
+	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
+
+	return WWGetPrivateProfileInt(
+		section,
+		entry,
+		RULES_INI_BUFFER,
+		valueFound
+	);
 }
 
 static int Read_Int_From_Rules_Ini(
@@ -128,14 +164,29 @@ static int Read_Int_From_Rules_Ini(
 	Log_Trace("Resolving rule value: %s -> %s", section, entry);
 	Log_Trace("Default value: %d", defaultValue);
 
+	bool valueFound = false;
+
 	auto ruleValue = WWGetPrivateProfileInt(
 		section,
 		entry,
 		defaultValue,
-		RULES_INI_BUFFER
+		RULES_INI_BUFFER,
+		&valueFound
 	);
 
-	Log_Trace("WWGetPrivateProfileInt value: %d", ruleValue);
+	if (valueFound)
+	{
+		Log_Trace("Rules ini value: %d", ruleValue);
+	}
+	else
+	{
+		Log_Trace("No rules ini value found, default will be used");
+	}
+
+	if (!valueFound)
+	{
+		return defaultValue;
+	}
 
 	if (valueToAllowAlways == NULL || ruleValue != *valueToAllowAlways)
 	{
@@ -197,6 +248,33 @@ int Read_Int_From_Rules_Ini(
 	);
 }
 
+/**
+ * Get a string without any default fallback.
+ */
+char* Read_Optional_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+)
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
+
+	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
+
+	WWGetPrivateProfileString(
+		section,
+		entry,
+		valueBuffer,
+		RULES_STRING_LENGTH,
+		RULES_INI_BUFFER,
+		valueFound
+	);
+
+	return valueBuffer;
+}
+
 char* Read_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -211,6 +289,7 @@ char* Read_String_From_Rules_Ini(
 	Log_Trace("Default value: %s", defaultValue);
 
 	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
+	bool valueFound = false;
 
 	WWGetPrivateProfileString(
 		section,
@@ -218,19 +297,27 @@ char* Read_String_From_Rules_Ini(
 		defaultValue, 
 		valueBuffer,
 		RULES_STRING_LENGTH,
-		RULES_INI_BUFFER
+		RULES_INI_BUFFER,
+		&valueFound
 	);
 
-	Log_Trace("WWGetPrivateProfileString value: %s", valueBuffer);
+	if (valueFound)
+	{
+		Log_Trace("Rules ini value: %s", valueBuffer);
+	}
+	else
+	{
+		Log_Trace("No rules ini value found, default will be returned");
+	}
 
-	strupr(valueBuffer);
-
-	if (String_Is_Empty(valueBuffer))
+	if (String_Is_Empty(valueBuffer) || !valueFound)
 	{
 		return strdup(defaultValue);
 	}
 
 	auto valueIsValid = false;
+
+	strupr(valueBuffer);
 
 	if (validValues == NULL || validValueCount < 1)
 	{
@@ -289,6 +376,30 @@ char* Read_String_From_Rules_Ini(
 	return Read_String_From_Rules_Ini(section, entry, defaultValue, NULL, 0);
 }
 
+bool Read_Optional_Bool_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+)
+{
+	Read_Optional_String_From_Rules_Ini(
+		section,
+		entry,
+		valueFound
+	);
+
+	if (!valueFound)
+	{
+		return false;
+	}
+
+	return Read_Bool_From_Rules_Ini(
+		section,
+		entry,
+		false
+	);
+}
+
 bool Read_Bool_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -301,11 +412,8 @@ bool Read_Bool_From_Rules_Ini(
 		section,
 		entry,
 		defaultValueStr,
-		new const char* [2]{
-			"TRUE",
-			"FALSE"
-		},
-		2
+		VALID_BOOLEAN_VALUES,
+		VALID_BOOLEAN_VALUE_COUNT
 	);
 
 	return Strings_Are_Equal(ruleValue, "TRUE");
@@ -345,9 +453,10 @@ int Read_House_List_From_Rules_Ini(
 	const char* defaultValueAsString
 )
 {
-	auto houseListCsv = Read_String_From_Rules_Ini(section, HOUSES_RULE, defaultValueAsString);
+	bool valueFound = false;
+	auto houseListCsv = Read_Optional_String_From_Rules_Ini(section, HOUSES_RULE, &valueFound);
 
-	if (Strings_Are_Equal(houseListCsv, defaultValueAsString))
+	if (!valueFound)
 	{
 		return defaultValue;
 	}

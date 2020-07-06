@@ -2,7 +2,7 @@
 
 pushd "%~dp0..\bin\Win32"
 
-del RULES.INI
+del RULES-DEFAULT.INI
 
 TiberianDawn.exe --dump-rules
 

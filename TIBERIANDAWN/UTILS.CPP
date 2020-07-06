@@ -6,6 +6,13 @@ static auto USER_PROFILE_ENV_VAR = "USERPROFILE";
 
 void Show_Error(const char* messageFormat, ...)
 {
+	if (messageFormat == NULL)
+	{
+		Show_Error("Message format passed to Show_Error was null");
+
+		return;
+	}
+
 	auto logLineLength = Get_Log_Line_Length();
 	auto formattedMessageBuffer = Allocate_String(logLineLength);
 
@@ -32,6 +39,20 @@ void Show_Error(const char* messageFormat, ...)
 }
 
 const char* Get_Env_Var_Or_Default(const char* envVarName, char* defaultValue) {
+	if (String_Is_Empty(envVarName) && String_Is_Empty(defaultValue))
+	{
+		Show_Error("No env var or default passed to Get_Env_Var_Or_Default");
+
+		return "";
+	}
+
+	if (String_Is_Empty(envVarName))
+	{
+		Show_Error("Env var passed to Get_Env_Var_Or_Default was null or empty");
+
+		return defaultValue;
+	}
+
 	Log_Debug("Attempting to get value of env var: %s", envVarName);
 
 	auto requiredSize = GetEnvironmentVariable(envVarName, NULL, 0);
@@ -76,6 +97,13 @@ char* Get_Win32_Error_Message(DWORD error)
 
 HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
 {
+	if (String_Is_Empty(filename))
+	{
+		Show_Error("Filename passed to Open_File_For_Appending was null or empty");
+
+		return NULL;
+	}
+
 	auto file = CreateFile(
 		filename,  // name of the write
 		FILE_APPEND_DATA,          // open for appending
@@ -98,7 +126,19 @@ HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
 
 void Append_To_File(HANDLE file, char* data)
 {
-	if (file == NULL || file == INVALID_HANDLE_VALUE)
+	if (file == INVALID_HANDLE_VALUE)
+	{
+		Show_Error("File handle passed to Append_To_File was invalid");
+		return;
+	}
+
+	if (file == NULL)
+	{
+		Show_Error("File handle passed to Append_To_File was null");
+		return;
+	}
+
+	if (String_Is_Empty(data))
 	{
 		return;
 	}
@@ -134,7 +174,10 @@ bool Parse_Boolean(char* booleanValue, bool* parseError)
 {
 	if (!Is_Boolean_String(booleanValue))
 	{
-		*parseError = true;
+		if (parseError != NULL)
+		{
+			*parseError = true;
+		}
 
 		return false;
 	}
@@ -144,6 +187,16 @@ bool Parse_Boolean(char* booleanValue, bool* parseError)
 
 bool Parse_Boolean(const char* booleanValue, bool* parseError)
 {
+	if (String_Is_Empty(booleanValue))
+	{
+		if (parseError != NULL)
+		{
+			*parseError = true;
+		}
+
+		return false;
+	}
+
 	auto booleanValueStr = strdup(booleanValue);
 
 	auto result = Parse_Boolean(booleanValueStr, parseError);
@@ -169,6 +222,11 @@ bool Parse_Boolean_Or_Default(char* booleanValue, bool default)
 
 bool Parse_Boolean_Or_Default(const char* booleanValue, bool default)
 {
+	if (String_Is_Empty(booleanValue))
+	{
+		return default;
+	}
+
 	auto booleanValueStr = strdup(booleanValue);
 
 	auto result = Parse_Boolean_Or_Default(booleanValueStr, default);

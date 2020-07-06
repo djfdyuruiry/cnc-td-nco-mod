@@ -1,7 +1,9 @@
 #ifndef RULES_INI_GAME
 #define RULES_INI_GAME
 
-#include "RulesIniSection.h"
+#include "rules_ini.h"
+
+#define GAME_RULES_SECTION_NAME "Game"
 
 // C&C internal debug rules
 #define DEBUG_LOGGING_RULE "EnableDebugLogging"
@@ -217,10 +219,12 @@
     HIDE_SBAG_FROM_GDI_RULE_TYPE, \
     ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE_TYPE
 
-#define Read_Build_Distance_Game_Rule() Get_Game_Rules()->Read_Int_Rule(MAX_BUILD_DISTANCE_RULE, 1, 1, INT_MAX);
+#define Read_Game_Rule(ruleName, defaultValue) Read_String_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue)
 
-bool Init_Game_Rules();
+#define Read_Boolean_Game_Rule(ruleName, defaultValue) Read_Bool_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue)
 
-RulesIniSection* Get_Game_Rules();
+#define Read_Int_Game_Rule(ruleName, defaultValue, minValue, maxValue) Read_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, minValue, maxValue)
+
+#define Read_Build_Distance_Game_Rule() Read_Int_Game_Rule(MAX_BUILD_DISTANCE_RULE, 1, 1, INT_MAX)
 
 #endif

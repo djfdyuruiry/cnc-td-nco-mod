@@ -7,7 +7,6 @@
 
 // rules ini sections
 #define NCO_RULES_SECTION_NAME "NCO"
-#define GAME_RULES_SECTION_NAME "Game"
 
 // nco config
 #define ENABLE_LUA_SCRIPTS_RULE "EnableLuaScripts"
@@ -19,6 +18,12 @@
 char* Read_Rules_Ini();
 
 void Ensure_Rules_Ini_Is_Loaded();
+
+int Read_Optional_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+);
 
 int Read_Int_From_Rules_Ini(
 	const char* section,
@@ -36,6 +41,12 @@ int Read_Int_From_Rules_Ini(
 	int maxValueInclusive
 );
 
+char* Read_Optional_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+);
+
 char* Read_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -48,6 +59,12 @@ char* Read_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,
 	const char* defaultValue
+);
+
+bool Read_Optional_Bool_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
 );
 
 bool Read_Bool_From_Rules_Ini(

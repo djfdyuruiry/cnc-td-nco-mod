@@ -3,6 +3,15 @@
 #include "function.h"
 #include "lua_repl.h"
 
+static void Test_Lua_Rules() {
+	Log_Info("Testing Lua rules");
+
+	if (!Execute_Lua_File("test-lua-rules.lua"))
+	{
+		Log_Error("Lua rules test script failed");
+	}
+}
+
 static void Dump_Rules() {
 	Log_Info("Testing dumping all rules");
 
@@ -16,10 +25,6 @@ static void Test_Special_Rules() {
 	Log_Info("Testing special rules");
 
 	auto special = SpecialClass();
-
-	special.Init();
-
-	Log_Info("Testing cached special rules ");
 
 	special.Init();
 }
@@ -116,6 +121,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 	Test_Special_Rules();
 
 	Test_Lua_Events();
+
+	Test_Lua_Rules();
 
 	Dump_Rules();
 

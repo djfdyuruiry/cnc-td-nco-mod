@@ -50,7 +50,11 @@ HousesType Parse_House_Type(char* houseTypeString, bool* parseError)
 	}
     else
     {
-        *parseError = true;
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         Show_Error("Unable to parse house from string: %s", houseTypeString);
     }
 
@@ -72,15 +76,32 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
 {
     auto houseNameListSize = 0;
     auto houseNameList = Parse_Csv_String(houseListCsv, 8, &houseNameListSize);
+
+    if (houseNameList == NULL)
+    {
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return HOUSEF_NONE;
+    }
+
     auto houseListInitialised = false;
     auto houseList = 0;
 
     for (auto i = 0; i < houseNameListSize; i++)
     {
-        auto house = Parse_House_Type(houseNameList[i], parseError);
+        bool houseParseError = false;
+        auto house = Parse_House_Type(houseNameList[i], &houseParseError);
 
-        if (*parseError)
+        if (houseParseError)
         {
+            if (parseError != NULL)
+            {
+                *parseError = true;
+            }
+
             // unable to parse entry as a house name
             return HOUSEF_NONE;
         }
@@ -111,9 +132,21 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
 
 int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError)
 {
+    if (String_Is_Empty(houseListCsv))
+    {
+        Show_Error("CSV passed to Parse_House_Name_List_Csv was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return HOUSEF_NONE;
+    }
+
     auto houseTypeCsvStr = strdup(houseListCsv);
 
-    auto owner = Parse_House_Type(houseTypeCsvStr, parseError);
+    auto owner = Parse_House_Name_List_Csv(houseTypeCsvStr, parseError);
 
     delete houseTypeCsvStr;
 
@@ -400,8 +433,12 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
         weaponType = WEAPON_TREX;
     }
     else
-    {
-        *parseError = true;
+    {       
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         Show_Error("Unable to parse weapon type from string: %s", weaponTypeString);
     }
 
@@ -410,6 +447,18 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
 
 WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError)
 {
+    if (String_Is_Empty(weaponTypeString))
+    {
+        Show_Error("Weapon type passed to Parse_Weapon_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return WEAPON_NONE;
+    }
+
     auto weaponTypeStr = strdup(weaponTypeString);
 
     auto weaponType = Parse_Weapon_Type(weaponTypeStr, parseError);
@@ -561,7 +610,11 @@ ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError)
     }
     else
     {
-        *parseError = true;
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         Show_Error("Unable to parse armor type from string: %s", armorTypeString);
     }
 
@@ -570,6 +623,18 @@ ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError)
 
 ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError)
 {
+    if (String_Is_Empty(armorTypeString))
+    {
+        Show_Error("Armor type to Parse_Armor_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return ARMOR_NONE;
+    }
+
     auto armorTypeStr = strdup(armorTypeString);
 
     auto armorType = Parse_Armor_Type(armorTypeStr, parseError);
@@ -639,7 +704,7 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
     {
         return INFANTRY_CHAN;
     }
-    else if (infantryTypeString[0] == 'E')
+    else if (!String_Is_Empty(infantryTypeString) && infantryTypeString[0] == 'E')
     {
         auto number = Parse_Number(infantryTypeString[1]);
 
@@ -648,7 +713,7 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
             return (InfantryType)(number - 1);
         }
     }
-    else if (infantryTypeString[0] == 'C')
+    else if (!String_Is_Empty(infantryTypeString) && infantryTypeString[0] == 'C')
     {
         auto number = Parse_Number(infantryTypeString[1]);
 
@@ -658,7 +723,11 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
         }
     }
 
-    *parseError = true;
+    if (parseError != NULL)
+    {
+        *parseError = true;
+    }
+
     Show_Error("Unable to parse infantry type from string: %s", infantryTypeString);
 
     return infantryType;
@@ -666,6 +735,18 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
 
 InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError)
 {
+    if (String_Is_Empty(infantryTypeString))
+    {
+        Show_Error("Infantry type passed to Parse_Infantry_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return INFANTRY_NONE;
+    }
+
     auto infantryTypeStr = strdup(infantryTypeString);
 
     InfantryType result = Parse_Infantry_Type(infantryTypeStr, parseError);
@@ -825,7 +906,11 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
     }
     else
     {
-        *parseError = true;
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         Show_Error("Unable to parse unit type from string: %s", unitTypeString);
     }
 
@@ -834,6 +919,18 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
 
 UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError)
 {
+    if (String_Is_Empty(unitTypeString))
+    {
+        Show_Error("Unit type passed to Parse_Unit_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return UNIT_NONE;
+    }
+
     auto unitTypeStr = strdup(unitTypeString);
 
     UnitType result = Parse_Unit_Type(unitTypeStr, parseError);
@@ -985,7 +1082,11 @@ SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError)
     }
     else
     {
-        *parseError = true;
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         Show_Error("Unable to parse unit speed type from string: %s", unitSpeedTypeString);
     }
 
@@ -994,6 +1095,18 @@ SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError)
 
 SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError)
 {
+    if (String_Is_Empty(unitSpeedTypeString))
+    {
+        Show_Error("Unit speed type passed to Parse_Unit_Speed_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return SPEED_NONE;
+    }
+
     auto unitSpeedTypeStr = strdup(unitSpeedTypeString);
 
     auto unitSpeedType = Parse_Unit_Speed_Type(unitSpeedTypeStr, parseError);
@@ -1077,7 +1190,11 @@ AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError)
     }
     else
     {
-        *parseError = true;
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         Show_Error("Unable to parse aircraft type from string: %s", aircraftTypeString);
     }
 
@@ -1086,6 +1203,18 @@ AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError)
 
 AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseError)
 {
+    if (String_Is_Empty(aircraftTypeString))
+    {
+        Show_Error("Aircraft type passed to Parse_Aircraft_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return AIRCRAFT_NONE;
+    }
+
     auto aircraftTypeStr = strdup(aircraftTypeString);
 
     auto aircraftType = Parse_Aircraft_Type(aircraftTypeStr, parseError);
@@ -1401,7 +1530,11 @@ StructType Parse_Structure_Type(char* structTypeString, bool* parseError)
     }
     else
     {
-        *parseError = true;
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         Show_Error("Unable to parse structure from string: %s", structTypeString);
     }
 
@@ -1410,6 +1543,18 @@ StructType Parse_Structure_Type(char* structTypeString, bool* parseError)
 
 StructType Parse_Structure_Type(const char* structTypeString, bool* parseError)
 {
+    if (String_Is_Empty(structTypeString))
+    {
+        Show_Error("Structure type passed to Parse_Structure_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return STRUCT_NONE;
+    }
+
     auto structTypeStr = strdup(structTypeString);
 
     auto structType = Parse_Structure_Type(structTypeStr, parseError);
@@ -1704,7 +1849,11 @@ long Structure_Type_To_Prerequisite(StructType structType, bool* parseError)
 
     if (structType < STRUCT_FIRST || structType > STRUCT_COUNT - 1)
     {
-        *parseError = true;
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         return STRUCTF_NONE;
     }
 
@@ -1737,7 +1886,11 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError)
     }
     else
     {
-        *parseError = true;
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
         Show_Error("Unable to parse factory type from string: %s", factoryTypeString);
     }
 
@@ -1746,6 +1899,18 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError)
 
 FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError)
 {
+    if (String_Is_Empty(factoryTypeString))
+    {
+        Show_Error("Factory type passed to Parse_Factory_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return FACTORY_TYPE_NONE;
+    }
+
     auto factoryTypeStr = strdup(factoryTypeString);
 
     auto factoryType = Parse_Factory_Type(factoryTypeStr, parseError);

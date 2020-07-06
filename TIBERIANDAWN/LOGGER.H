@@ -2,6 +2,7 @@
 #define LOGGER_H
 
 typedef enum LogLevel : unsigned short {
+	LOG_LEVEL_COUNT = 6,
 	TRACE = 5,
 	DEBUG = 4,
 	INFO = 3,

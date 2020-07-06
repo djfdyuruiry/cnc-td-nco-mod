@@ -93,6 +93,17 @@ unsigned WWGetPrivateProfileHex (char const *section, char const *entry, char *p
 	return(card);
 }
 
+int WWGetPrivateProfileInt(char const* section, char const* entry, int def, char* profile)
+{
+	bool dummy = false;
+
+	return WWGetPrivateProfileInt(section, entry, def, profile, &dummy);
+}
+
+int WWGetPrivateProfileInt(char const* section, char const* entry, char* profile, bool* valueFound)
+{
+	return WWGetPrivateProfileInt(section, entry, 0, profile, valueFound);
+}
 
 /***********************************************************************************************
  * WWGetPrivateProfileInt -- Fetches integer value.                                              *
@@ -115,7 +126,7 @@ unsigned WWGetPrivateProfileHex (char const *section, char const *entry, char *p
  * HISTORY:                                                                                    *
  *   08/05/1992 JLB : Created.                                                                 *
  *=============================================================================================*/
-int WWGetPrivateProfileInt(char const *section, char const *entry, int def, char *profile)
+int WWGetPrivateProfileInt(char const *section, char const *entry, int def, char *profile, bool* valueFound)
 {
 	char	buffer[16];			// Integer staging buffer.
 
@@ -127,7 +138,7 @@ int WWGetPrivateProfileInt(char const *section, char const *entry, int def, char
 	/*
 	**	Get the buffer; use itself as the default.
 	*/
-	WWGetPrivateProfileString(section, entry, buffer, buffer, 15, profile);
+	WWGetPrivateProfileString(section, entry, buffer, buffer, 15, profile, valueFound);
 
 	/*
 	**	Convert to int & return.
@@ -179,7 +190,6 @@ bool WWWritePrivateProfileInt(char const *section, char const *entry, int value,
 	return(WWWritePrivateProfileString(section, entry, buffer, profile));
 }
 
-
 /***********************************************************************************************
  * WWGetPrivateProfileString -- Fetch game override string.                                      *
  *                                                                                             *
@@ -207,7 +217,19 @@ bool WWWritePrivateProfileInt(char const *section, char const *entry, int value,
  * HISTORY:                                                                                    *
  *   08/05/1992 JLB : Created.                                                                 *
  *=============================================================================================*/
-char * WWGetPrivateProfileString(char const *section, char const *entry, char const *def, char *retbuffer, int retlen, char *profile)
+char* WWGetPrivateProfileString(char const* section, char const* entry, char const* def, char* retbuffer, int retlen, char* profile)
+{
+	bool dummy = false;
+
+	return WWGetPrivateProfileString(section, entry, def, retbuffer, retlen, profile, &dummy);
+}
+
+char* WWGetPrivateProfileString(char const* section, char const* entry, char* retbuffer, int retlen, char* profile, bool* valueFound)
+{
+	return WWGetPrivateProfileString(section, entry, NULL, retbuffer, retlen, profile, valueFound);
+}
+
+char * WWGetPrivateProfileString(char const *section, char const *entry, char const *def, char *retbuffer, int retlen, char *profile, bool* valueFound)
 {
 	char	* workptr,		// Working pointer into profile block.
 			* altworkptr;	// Alternate work pointer.
@@ -234,6 +256,8 @@ char * WWGetPrivateProfileString(char const *section, char const *entry, char co
 	**	Make sure a profile string was passed in
 	*/
 	if (!profile || !section) {
+		*valueFound = false;
+
 		return(retbuffer);
 	}
 
@@ -261,6 +285,8 @@ char * WWGetPrivateProfileString(char const *section, char const *entry, char co
 		**	then abort with a failure flag.
 		*/
 		if (!workptr) {
+			*valueFound = false;
+
 			return(NULL);
 		}
 
@@ -351,6 +377,8 @@ char * WWGetPrivateProfileString(char const *section, char const *entry, char co
 					**	into the next section, then abort
 					*/
 					if (!workptr || workptr >= next) {
+						*valueFound = false;
+
 						return(NULL);
 					}
 
@@ -383,6 +411,8 @@ char * WWGetPrivateProfileString(char const *section, char const *entry, char co
 						**	the next '='
 						*/
 						if (workptr == NULL || altworkptr < workptr) {
+							*valueFound = false;
+
 							return(retval);
 						}
 
@@ -396,8 +426,11 @@ char * WWGetPrivateProfileString(char const *section, char const *entry, char co
 							/*
 							**	Just return if there's no entry past the '='.
 							*/
-							if (workptr >= altworkptr)
+							if (workptr >= altworkptr) {
+								*valueFound = false;
+
 								return(retval);
+							}
 
 							workptr++;									// Skip the whitespace
 						}
@@ -415,6 +448,9 @@ char * WWGetPrivateProfileString(char const *section, char const *entry, char co
 							*(retbuffer + len) = '\0';		// Insert trailing null.
 							strtrim(retbuffer);
 						}
+
+						*valueFound = true;
+
 						return(retval);
 					}
 
@@ -494,6 +530,8 @@ char * WWGetPrivateProfileString(char const *section, char const *entry, char co
 			workptr++;
 		}
 	}
+
+	*valueFound = false;
 
 	return(retval);
 }
