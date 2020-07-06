@@ -169,5 +169,45 @@ namespace Unit
 
 				Assert::AreEqual("LO,WERDEA,SISH", result);
 			}
+
+			TEST_METHOD(When_Parse_Csv_String_IsCalled_WithStringWithOneEntry_ThenCountOfOneIsReturned)
+			{
+				auto entryCount = 0;
+				
+				Parse_Csv_String(strdup("entry_0"), 7, &entryCount);
+
+				Assert::AreEqual(1, entryCount);
+			}
+
+			TEST_METHOD(When_Parse_Csv_String_IsCalled_WithStringWithOneEntry_ThenEntryIsReturned)
+			{
+				auto entryCount = 0;
+				auto result = Parse_Csv_String(strdup("entry_0"), 7, &entryCount);
+
+				auto ewq = strcmp(strdup("entry_0"), result[0]);
+				printf("Help me god %d", ewq);
+
+				Assert::AreEqual("entry_0", result[0]);
+			}
+
+			TEST_METHOD(When_Parse_Csv_String_IsCalled_WithStringWithMultipleEntries_ThenEntryCountIsCorrect)
+			{
+				auto entryCount = 0;
+				
+				Parse_Csv_String(strdup("entry_0,entry_1,entry_2,entry_3"), 7, &entryCount);
+
+				Assert::AreEqual(4, entryCount);
+			}
+
+			TEST_METHOD(When_Parse_Csv_String_IsCalled_WithStringWithMultipleEntries_ThenEntriesAreReturned)
+			{
+				auto entryCount = 0;
+				auto result = Parse_Csv_String(strdup("entry_0,entry_1,entry_2,entry_3"), 7, &entryCount);
+
+				Assert::AreEqual("entry_0", result[0]);
+				Assert::AreEqual("entry_1", result[1]);
+				Assert::AreEqual("entry_2", result[2]);
+				Assert::AreEqual("entry_3", result[3]);
+			}
 	};
 }
