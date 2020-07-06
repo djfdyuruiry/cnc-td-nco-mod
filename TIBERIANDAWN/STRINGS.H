@@ -23,7 +23,7 @@ bool String_Starts_With(char* subject, const char* expected);
 
 bool String_Starts_With(const char* subject, const char* expected);
 
-#define Convert_String_To_Upper_Case(subject) _strupr(subject)
+void Convert_String_To_Upper_Case(char* subject);
 
 char* Convert_String_To_Upper_Case(const char* subject);
 

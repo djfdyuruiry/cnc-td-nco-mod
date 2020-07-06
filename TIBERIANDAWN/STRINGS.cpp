@@ -165,6 +165,16 @@ bool String_Starts_With(const char* subject, const char* expected)
 	return result;
 }
 
+void Convert_String_To_Upper_Case(char* subject)
+{
+	if (String_Is_Empty(subject))
+	{
+		return;
+	}
+
+	_strupr(subject);
+}
+
 char* Convert_String_To_Upper_Case(const char* subject)
 {
 	if (String_Is_Empty(subject))
