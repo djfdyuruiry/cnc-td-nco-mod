@@ -41,6 +41,20 @@ int Read_Int_From_Rules_Ini(
 	int maxValueInclusive
 );
 
+double Read_Double_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	double defaultValue,
+	double minValueInclusive,
+	double maxValueInclusive
+);
+
+double Read_Optional_Double_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+);
+
 char* Read_Optional_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,

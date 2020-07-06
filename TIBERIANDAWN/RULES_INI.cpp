@@ -248,6 +248,111 @@ int Read_Int_From_Rules_Ini(
 	);
 }
 
+static double Read_Double_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	double defaultValue,
+	double minValueInclusive,
+	double maxValueInclusive,
+	bool* valueFound
+)
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	Log_Trace("Resolving rule value: %s -> %s", section, entry);
+	Log_Trace("Default value: %f", defaultValue);
+
+	auto ruleValueStr = Read_Optional_String_From_Rules_Ini(section, entry, valueFound);
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules ini value found, default will be used");
+
+		return defaultValue;
+	}
+
+	bool isValid = Is_Double_String(ruleValueStr);
+
+	if (!isValid)
+	{
+		RULES_VALID = false;
+
+		Show_Error(
+			"Rule [%s -> %s] must be a floating point number. Value provided: %s",
+			section,
+			entry,
+			ruleValueStr
+		);
+
+		delete ruleValueStr;
+
+		return defaultValue;
+	}
+
+	auto ruleValue = strtod(ruleValueStr, NULL);
+
+	Log_Trace("Rules ini value: %s", ruleValueStr);
+
+	if (ruleValue < minValueInclusive || ruleValue > maxValueInclusive)
+	{
+		RULES_VALID = false;
+
+		Show_Error(
+			"Rule [%s -> %s] must be between %f and %f (inclusive). Value provided: %f",
+			section,
+			entry,
+			minValueInclusive,
+			maxValueInclusive,
+			ruleValue
+		);
+	}
+
+	Log_Trace("Resolved value: %f", ruleValue);
+	Log_Debug("Setting rule [%s -> %s] = %f", section, entry, ruleValue);
+
+	delete ruleValueStr;
+
+	return ruleValue;
+}
+
+double Read_Optional_Double_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+)
+{
+	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
+
+	return Read_Double_From_Rules_Ini(
+		section,
+		entry,
+		0.0f,
+		-999.99f,
+		999.9f,
+		valueFound
+	);
+}
+
+double Read_Double_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	double defaultValue,
+	double minValueInclusive,
+	double maxValueInclusive
+)
+{
+	bool valueFound = false;
+
+	return Read_Double_From_Rules_Ini(
+		section,
+		entry,
+		defaultValue,
+		minValueInclusive,
+		maxValueInclusive,
+		&valueFound
+	);
+}
+
 /**
  * Get a string without any default fallback.
  */

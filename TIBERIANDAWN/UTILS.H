@@ -15,9 +15,13 @@ HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured);
 
 void Append_To_File(HANDLE file, char* data);
 
-bool Is_Number_String(char* numberValue);
+bool Is_Int_String(char* numberValue);
+
+bool Is_Double_String(char* numberValue);
 
 int Parse_Number(char character);
+
+char* Convert_Number_To_String(int number);
 
 bool Is_Boolean_String(char* booleanValue);
 

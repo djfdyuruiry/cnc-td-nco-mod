@@ -4,6 +4,8 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiberianDawn", "TiberianDawn\TiberianDawn.vcxproj", "{1380ED08-82A3-49C2-A171-1915574B3382}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nco.Tests", "tests\Nco.Tests.vcxproj", "{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -20,6 +22,12 @@ Global
 		{1380ED08-82A3-49C2-A171-1915574B3382}.TestConsole|x86.Build.0 = TestConsole|Win32
 		{1380ED08-82A3-49C2-A171-1915574B3382}.TestConsoleLuaRepl|x86.ActiveCfg = TestConsoleLuaRepl|Win32
 		{1380ED08-82A3-49C2-A171-1915574B3382}.TestConsoleLuaRepl|x86.Build.0 = TestConsoleLuaRepl|Win32
+		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.Debug|x86.ActiveCfg = Debug|Win32
+		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.Debug|x86.Build.0 = Debug|Win32
+		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.Release|x86.ActiveCfg = Debug|Win32
+		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.TestConsole|x86.ActiveCfg = Debug|Win32
+		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.TestConsole|x86.Build.0 = Debug|Win32
+		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.TestConsoleLuaRepl|x86.ActiveCfg = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

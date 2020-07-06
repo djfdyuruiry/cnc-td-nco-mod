@@ -76,6 +76,14 @@
 #define SLOW_TIBERIUM_RULE_UPPER "SLOWTIBERIUMGROWTHANDSPREAD"
 #define SLOW_TIBERIUM_RULE_TYPE "bool"
 
+#define TIBERIUM_GROWTH_RATE_RULE "TiberiumGrowthRate"
+#define TIBERIUM_GROWTH_RATE_UPPER "TIBERIUMGROWTHRATE"
+#define TIBERIUM_GROWTH_RATE_RULE_TYPE "double"
+
+#define TIBERIUM_SPREAD_RATE_RULE "TiberiumSpreadRate"
+#define TIBERIUM_SPREAD_RATE_UPPER "TIBERIUMSPREADRATE"
+#define TIBERIUM_SPREAD_RATE_RULE_TYPE "double"
+
 #define ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE "OnlyAllowNukeIfAllPartsHaveBeenCollected"
 #define ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE_UPPER "OnlyAllowNukeIfAllPartsHaveBeenCollected"
 #define ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE_TYPE "bool"
@@ -163,6 +171,8 @@
     CAN_BUY_HELIPAD_ONLY_RULE, \
     TIBERIUM_GROWS_RULE, \
     TIBERIUM_SPREADS_RULE, \
+    TIBERIUM_GROWTH_RATE_RULE, \
+    TIBERIUM_SPREAD_RATE_RULE, \
     SLOW_TIBERIUM_RULE, \
     ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE, \
     ONE_TIME_NUKE_RULE, \
@@ -182,7 +192,7 @@
     HIDE_SBAG_FROM_GDI_RULE, \
     ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE
 
-#define GAME_RULE_COUNT (unsigned) 34
+#define GAME_RULE_COUNT (unsigned) 36
 
 #define GAME_RULE_TYPES DEBUG_LOGGING_RULE_TYPE, \
     ALLOW_BUILDING_ALL_FOR_HOUSE_RULE_TYPE, \
@@ -200,6 +210,8 @@
     CAN_BUY_HELIPAD_ONLY_RULE_TYPE, \
     TIBERIUM_GROWS_RULE_TYPE, \
     TIBERIUM_SPREADS_RULE_TYPE, \
+    TIBERIUM_GROWTH_RATE_RULE_TYPE, \
+    TIBERIUM_SPREAD_RATE_RULE_TYPE, \
     SLOW_TIBERIUM_RULE_TYPE, \
     ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE_TYPE, \
     ONE_TIME_NUKE_RULE_TYPE, \
@@ -224,6 +236,8 @@
 #define Read_Boolean_Game_Rule(ruleName, defaultValue) Read_Bool_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue)
 
 #define Read_Int_Game_Rule(ruleName, defaultValue, minValue, maxValue) Read_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, minValue, maxValue)
+
+#define Read_Double_Game_Rule(ruleName, defaultValue) Read_Double_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, -999.99f, 999.99f)
 
 #define Read_Build_Distance_Game_Rule() Read_Int_Game_Rule(MAX_BUILD_DISTANCE_RULE, 1, 1, INT_MAX)
 

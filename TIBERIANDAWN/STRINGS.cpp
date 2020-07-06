@@ -11,7 +11,7 @@ char* Allocate_String(unsigned int length)
 		return "";
 	}
 
-	auto stringSizeInBytes = (length  + 1) * sizeof(char);
+	auto stringSizeInBytes = (length + 1) * sizeof(char);
 	auto string = (char*)malloc(stringSizeInBytes);
 
 	memset(string, 0, stringSizeInBytes);
@@ -163,6 +163,16 @@ bool String_Starts_With(const char* subject, const char* expected)
 	delete expectedStr;
 
 	return result;
+}
+
+void Convert_String_To_Upper_Case(char* subject)
+{
+	if (String_Is_Empty(subject))
+	{
+		return;
+	}
+
+	_strupr(subject);
 }
 
 char* Convert_String_To_Upper_Case(const char* subject)

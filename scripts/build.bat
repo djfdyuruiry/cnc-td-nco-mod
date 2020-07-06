@@ -15,7 +15,7 @@ MSBuild.exe ^
   /p:configuration=%config% ^
   /t:clean ^
   /t:build ^
-  "%~dp0..\TIBERIANDAWN\TiberianDawn.vcxproj"
+  "%~dp0..\CnCRemastered.sln"
 
 if errorlevel 1 (
   call "%~dp0lib\log.bat" "ERROR" "Build Failed"

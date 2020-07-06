@@ -35,16 +35,23 @@ jobs:
               throw "Failed to find MSBuild"
             }
           }
+          
+          $vstestPath = join-path $vsPath "Common7\IDE\CommonExtensions\Microsoft\TestWindow"
 
-          Write-Host "::set-env name=VS_PATH::${vsPath}"
-          Write-Host "::set-env name=MSBUILD_PATH::${msBuildPath}"
+          if (!(test-path $vstestPath)) {
+            throw "Failed to find VSTest"
+          }
 
           Write-Host "::add-path::${msBuildPath}"
+          Write-Host "::add-path::${vstestPath}"
 
       - name: Build Tiberian Dawn Test App
         run: scripts\build-test.bat
         env:
           CL: /DCI_ENV
+
+      - name: Run Tests
+        run: scripts\run-tests.bat
 
       - name: Run Test App
         working-directory: bin\Win32 
