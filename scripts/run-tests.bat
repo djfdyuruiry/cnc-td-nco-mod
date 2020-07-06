@@ -1,10 +1,8 @@
-::@echo off
+@echo off
 
 call "%~dp0lib\log.bat" "INFO" "Running tests"
 
 pushd "%~dp0..\tests\Win32\Debug"
-
-dir
 
 vstest.console "Nco.Tests.dll"
 
