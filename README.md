@@ -93,6 +93,8 @@ The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find t
 
     <img src="docs/steam_rules_path_3.png" width="800" height="80" />
 
+- Copy the `RULES-DEFAULT` file and name the copy `RULES` (new releases of the mod will update `RULES-DEFAULT` so don't edit that file directly)
+
 ### Manual installation
 
 - Open the Start menu
@@ -100,4 +102,5 @@ The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find t
 - Click on the `Run` app that is highlighted
 - Copy and paste this: `explorer "%USERPROFILE\Documents\CnCRemastered\Mods\Tiberian_Dawn\nco\Data"`
 - Click `OK`
+- Copy the `RULES-DEFAULT` file and name the copy `RULES` (new releases of the mod will update `RULES-DEFAULT` so don't edit that file directly)
 
