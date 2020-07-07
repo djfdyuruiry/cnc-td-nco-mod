@@ -16,6 +16,12 @@ EnableDebugLogging=false
 MaxBuildDistance=1
 PreventBuildingInShroud=true
 AllowBuildingBesideWalls=true
+TiberiumGrows=true
+TiberiumSpreads=true
+SlowTiberiumGrowthAndSpread=false
+TiberiumGrowthRate=1.0
+TiberiumSpreadRate=1.0
+CreditsPerTiberiumScoop=25
 
 ; misc
 DefendAgainstFriendlyFire=false
@@ -25,14 +31,12 @@ SpawnVisceroids=false
 VehiclesDoThreePointTurns=false
 ShowBibsOnBuildings=false
 ShowCivilianBuildingNames=false
-TiberiumGrows=true
-TiberiumSpreads=true
-SlowTiberiumGrowthAndSpread=false
-TiberiumGrowthRate=1.0
-TiberiumSpreadRate=1.0
 OnlyAllowNukeIfAllPartsHaveBeenCollected=true
 OnlyAllowUsingOneNukePerScenario=true
 HelipadsAndAircraftBoughtSeperately=false
+MaxHarvesterCapacity=28
+UnitRepairFactor=1.02
+UnitRepairStrengthStep=4
 
 ; house specific
 HideTempleFromGdi=true

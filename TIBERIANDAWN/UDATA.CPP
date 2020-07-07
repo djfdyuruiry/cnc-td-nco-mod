@@ -1756,7 +1756,15 @@ void UnitTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Cost(void) const
 {
-	return(Fixed_To_Cardinal(Cost/(MaxStrength/REPAIR_STEP), REPAIR_PERCENT));
+	auto repairFactor = Read_Double_Game_Rule(UNIT_REPAIR_FACTOR_RULE, 1.02f);
+	auto repairPercent = nearbyint(repairFactor * 100);
+
+	return(
+		Fixed_To_Cardinal(
+			Cost / (MaxStrength/ Read_Repair_Step_Rule(4)),
+			repairPercent
+		)
+	);
 }
 
 
@@ -1777,7 +1785,7 @@ int UnitTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Step(void) const
 {
-	return(REPAIR_STEP);
+	return(Read_Repair_Step_Rule(4));
 }
 
 
@@ -1799,12 +1807,16 @@ int UnitTypeClass::Repair_Step(void) const
  *=============================================================================================*/
 int UnitTypeClass::Max_Pips(void) const
 {
-	if (Type == UNIT_HARVESTER) {
-		return(FULL_LOAD_CREDITS/100);
+	if (this->IsToHarvest) {
+		return(
+			Read_Harvester_Max_Credits_Rule() / 100
+		);
 	}
 
 	if (IsTransporter) {
 		return(Max_Passengers());
 	}
+
 	return(0);
 }
+

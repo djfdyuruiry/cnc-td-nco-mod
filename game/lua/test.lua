@@ -26,6 +26,7 @@ function testRules (isScenarioFour)
   
   setUnitRule("JEEP", "Speed", 100)
   setUnitRule("JEEP", "CanCrushInfantry", true)
+  setUnitRule("JEEP", "CanTransportInfantry", true)
   
   setUnitRule("FTNK", "ScenarioLevel", scenarioNumber)
   setUnitRule("FTNK", "BuildLevel", buildLevel)
@@ -55,11 +56,11 @@ end
 onScenarioStart(function(name)
   log(string.format("Scenario received: %s", name))
 
-  testRules(name == "SCG04EA")
+  testRules()
 end)
 
 onSaveLoad(function(house, scenario)
   log(string.format("Save game loading for %s scenario %d", house, scenario))
 
-  testRules(scenario == 4 and house == "GOODGUY")
+  testRules()
 end)

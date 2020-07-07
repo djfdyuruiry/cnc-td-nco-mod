@@ -4508,7 +4508,7 @@ int TechnoClass::Refund_Amount(void) const
 	**	If the object is carrying Tiberium directly (i.e., the harvester), then
 	**	account for the credits of the load.
 	*/
-	cost += Fixed_To_Cardinal(UnitTypeClass::FULL_LOAD_CREDITS, Tiberium_Load())/2;
+	cost += Fixed_To_Cardinal(Read_Harvester_Max_Credits_Rule(), Tiberium_Load())/2;
 
 	if (House->IsHuman) {
 		cost /= 2;

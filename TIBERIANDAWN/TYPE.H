@@ -874,14 +874,6 @@ class BuildingTypeClass : public TechnoTypeClass {
 class UnitTypeClass : public TechnoTypeClass
 {
 	public:
-		enum UnitTypeClassRepairEnums {
-			TIBERIUM_STEP=25,					// Credits per step of Tiberium.
-			STEP_COUNT=28,						// Number of steps a harvester can carry.
-			FULL_LOAD_CREDITS=(TIBERIUM_STEP*STEP_COUNT),
-			REPAIR_PERCENT=102,		// 40% fixed point number.
-			REPAIR_STEP=4				// Number of damage points recovered per "step".
-		};
-
 		/*
 		**	If this unit can appear out of a crate, then this flag will be true.
 		*/

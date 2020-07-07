@@ -1912,7 +1912,7 @@ long CellClass::Tiberium_Adjust(bool pregame)
 			}
 
 			OverlayData = _adj[count];
-			return((OverlayData+1) * UnitTypeClass::TIBERIUM_STEP);
+			return((OverlayData+1) * Read_Credits_Per_Scoop_Rule());
 		}
 	}
 	return(0);
