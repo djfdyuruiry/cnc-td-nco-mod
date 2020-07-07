@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="StringUtilsTests.cpp" />
+    <ClCompile Include="UtilsIntegrationTests.cpp" />
     <ClCompile Include="UtilsTests.cpp" />
   </ItemGroup>
   <ItemGroup>

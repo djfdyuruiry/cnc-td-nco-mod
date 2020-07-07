@@ -30,7 +30,7 @@ void Show_Error(const char* messageFormat, ...)
 	MessageBox(
 		NULL,
 		formattedMessageBuffer,
-		"Command & Conquer",
+		"NCO Mod",
 		MB_OK | MB_ICONSTOP
 	);
 	#endif
@@ -82,7 +82,7 @@ char* Get_Win32_Error_Message(DWORD error)
 {
 	LPSTR messageBuffer = nullptr;
 
-	FormatMessageA(
+	FormatMessage(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL,
 		error,
@@ -105,12 +105,12 @@ HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
 	}
 
 	auto file = CreateFile(
-		filename,  // name of the write
-		FILE_APPEND_DATA,          // open for appending
-		FILE_SHARE_READ,           // share for reading only
-		NULL,                      // default security
-		OPEN_ALWAYS,               // open existing file or create new file 
-		FILE_ATTRIBUTE_NORMAL,     // normal file
+		filename,
+		FILE_APPEND_DATA,
+		FILE_SHARE_READ,
+		NULL,
+		OPEN_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
 		NULL
 	);
 
@@ -143,20 +143,55 @@ void Append_To_File(HANDLE file, char* data)
 		return;
 	}
 
-	auto dwBytesToWrite = strlen(data);
-
 	WriteFile(
-		file,              // open file handle
-		data,               // start of data to write
-		dwBytesToWrite,     // number of bytes to write
-		NULL,    // number of bytes that were written
+		file,
+		data,
+		strlen(data),
+		NULL,
 		NULL
-	);              // no overlapped structure
+	);
+}
+
+bool Is_Int_String(char* numberValue)
+{
+	if (String_Is_Empty(numberValue))
+	{
+		return false;
+	}
+
+	char* remainder;
+
+	strtol(numberValue, &remainder, 10);
+
+	return !Strings_Are_Equal(numberValue, remainder);
+}
+
+bool Is_Double_String(char* numberValue)
+{
+	if (String_Is_Empty(numberValue))
+	{
+		return false;
+	}
+
+	char* remainder;
+
+	strtod(numberValue, &remainder);
+
+	return !Strings_Are_Equal(numberValue, remainder);
 }
 
 int Parse_Number(char character)
 {
 	return character - '0';
+}
+
+char* Convert_Number_To_String(int number)
+{
+	auto numberBuffer = Allocate_String(11); // INT_MIN string length
+
+	itoa(number, numberBuffer, 10);
+
+	return numberBuffer;
 }
 
 bool Is_Boolean_String(char* booleanValue)
@@ -241,43 +276,6 @@ char* Convert_Boolean_To_String(bool booleanValue)
 	return booleanValue ? "TRUE" : "FALSE";
 }
 
-bool Is_Int_String(char* numberValue)
-{
-	if (String_Is_Empty(numberValue))
-	{
-		return false;
-	}
-
-	char* remainder;
-
-	strtol(numberValue, &remainder, 10);
-
-	return !Strings_Are_Equal(numberValue, remainder);
-}
-
-bool Is_Double_String(char* numberValue)
-{
-	if (String_Is_Empty(numberValue))
-	{
-		return false;
-	}
-
-	char* remainder;
-
-	strtod(numberValue, &remainder);
-
-	return !Strings_Are_Equal(numberValue, remainder);
-}
-
-char* Convert_Number_To_String(int number)
-{
-	auto numberBuffer = Allocate_String(11); // INT_MIN string length
-
-	itoa(number, numberBuffer, 10);
-
-	return numberBuffer;
-}
-
 char* Get_Mod_Data_Path()
 {
 	auto modPath = Allocate_String(MAX_PATH);
@@ -286,11 +284,7 @@ char* Get_Mod_Data_Path()
 
 	if (!GetModuleHandleEx(
 		GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-		#ifndef TEST_CONSOLE
-		(LPCSTR)&NCO_Startup,
-		#else
-		(LPCSTR)&WinMain,
-		#endif
+		(LPCSTR)&Get_Mod_Data_Path,
 		&moduleHandle
 	))
 	{
