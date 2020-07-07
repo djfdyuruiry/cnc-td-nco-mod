@@ -360,6 +360,8 @@ AircraftTypeClass::AircraftTypeClass(
 	Type = airtype;
 	ROT = rot;
 	Mission = deforder;
+
+	TransportCapacity = (unsigned int)Read_Int_From_Rules_Ini(this->IniName, TRANSPORT_CAPACITY_RULE, 5, 1, INT_MAX);
 }
 
 
@@ -623,7 +625,15 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Cost(void) const
 {
-	return(Fixed_To_Cardinal(Cost/(MaxStrength/REPAIR_STEP), REPAIR_PERCENT));
+	auto repairFactor = Read_Double_Game_Rule(AIRCRAFT_REPAIR_FACTOR_RULE, 1.02f, 0.01f);
+	auto repairPercent = nearbyint(repairFactor * 100);
+
+	return(
+		Fixed_To_Cardinal(
+			Cost / (MaxStrength / Read_Aircraft_Repair_Step_Rule(2)),
+			repairPercent
+		)
+	);
 }
 
 
@@ -643,7 +653,9 @@ int AircraftTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Step(void) const
 {
-	return(REPAIR_STEP);
+	return(
+		Read_Aircraft_Repair_Step_Rule(2)
+	);
 }
 
 

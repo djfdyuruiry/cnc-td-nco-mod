@@ -304,26 +304,26 @@ void UnitClass::Debug_Dump(MonoClass *mono) const
 	Validate();
 	mono->Set_Cursor(0, 0);
 	mono->Print(
-		"ÚName:ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂMission:ÄÄÄÂTarCom:ÂNavCom:ÂRadio:ÂCoord:ÄÄÂHeadTo:ÄÂSt:Ä¿\n"
-		"³                   ³           ³       ³       ³      ³        ³        ³    ³\n"
-		"ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂNÂYÂHealth:ÄÂBody:ÂTurret:ÂSpeed:ÂPath:ÁÄÄÄÄÄÄÂCargo:ÄÄÄÄÁÄÄÄÄ´\n"
-		"³Active........³ ³ ³        ³     ³       ³      ³            ³               ³\n"
-		"³Limbo.........³ ³ ÃÄÄÄÄÄÄÄÄÁÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n"
-		"³Owned.........³ ³ ³Last Message:                                             ³\n"
-		"³Discovered....³ ³ ÃTimer:ÂArm:ÂTrack:ÂTiberium:ÂFlash:ÂStage:ÂTeam:ÄÄÄÄÂArch:´\n"
-		"³Selected......³ ³ ³      ³    ³      ³         ³      ³      ³         ³     ³\n"
-		"³Teathered.....³ ³ ÃÄÄÄÄÄÄÁÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÙ\n"
-		"³Locked on Map.³ ³ ³                                                           \n"
-		"³Turret Locked.³ ³ ³                                                           \n"
-		"³Is A Loaner...³ ³ ³                                                           \n"
-		"³Deploying.....³ ³ ³                                                           \n"
-		"³Rotating......³ ³ ³                                                           \n"
-		"³Firing........³ ³ ³                                                           \n"
-		"³Driving.......³ ³ ³                                                           \n"
-		"³To Look.......³ ³ ³                                                           \n"
-		"³Recoiling.....³ ³ ³                                                           \n"
-		"³To Display....³ ³ ³                                                           \n"
-		"ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÁÄÙ                                                           \n");
+		"ï¿½Name:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Mission:ï¿½ï¿½ï¿½ï¿½TarCom:ï¿½NavCom:ï¿½Radio:ï¿½Coord:ï¿½ï¿½ï¿½HeadTo:ï¿½ï¿½St:Ä¿\n"
+		"ï¿½                   ï¿½           ï¿½       ï¿½       ï¿½      ï¿½        ï¿½        ï¿½    ï¿½\n"
+		"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½Yï¿½Health:ï¿½ï¿½Body:ï¿½Turret:ï¿½Speed:ï¿½Path:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cargo:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´\n"
+		"ï¿½Active........ï¿½ ï¿½ ï¿½        ï¿½     ï¿½       ï¿½      ï¿½            ï¿½               ï¿½\n"
+		"ï¿½Limbo.........ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´\n"
+		"ï¿½Owned.........ï¿½ ï¿½ ï¿½Last Message:                                             ï¿½\n"
+		"ï¿½Discovered....ï¿½ ï¿½ ï¿½Timer:ï¿½Arm:ï¿½Track:ï¿½Tiberium:ï¿½Flash:ï¿½Stage:ï¿½Team:ï¿½ï¿½ï¿½ï¿½ï¿½Arch:ï¿½\n"
+		"ï¿½Selected......ï¿½ ï¿½ ï¿½      ï¿½    ï¿½      ï¿½         ï¿½      ï¿½      ï¿½         ï¿½     ï¿½\n"
+		"ï¿½Teathered.....ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n"
+		"ï¿½Locked on Map.ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½Turret Locked.ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½Is A Loaner...ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½Deploying.....ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½Rotating......ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½Firing........ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½Driving.......ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½To Look.......ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½Recoiling.....ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½To Display....ï¿½ ï¿½ ï¿½                                                           \n"
+		"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                                                           \n");
 	mono->Set_Cursor(1, 1);mono->Printf("%s:%s", House->Class->IniName, Class->IniName);
 	CargoClass::Debug_Dump(mono);
 	MissionClass::Debug_Dump(mono);
@@ -662,7 +662,7 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 				}
 			}
 
-			if (Class->IsTransporter && *this == UNIT_APC && How_Many() < Class->Max_Passengers()) {
+			if (Class->IsTransporter && How_Many() < Class->Max_Passengers()) {
 				TarComClass::Receive_Message(from, message, param);
 
 				/*
@@ -2407,7 +2407,7 @@ bool UnitClass::Harvesting(void)
 		**	than the harvester can carry.
 		*/
 		int reducer = (ptr->OverlayData % 6) + 1;
-		reducer = ptr->Reduce_Tiberium(MIN(reducer, UnitTypeClass::STEP_COUNT-Tiberium));
+		reducer = ptr->Reduce_Tiberium(MIN(reducer, Read_Harvester_Capcity_Rule()-Tiberium));
 		Tiberium += reducer;
 		Set_Stage(0);
 		Set_Rate(2);
@@ -2458,160 +2458,161 @@ int UnitClass::Mission_Unload(void)
 	DirType	dir;
 	CELL		cell;
 
-	switch (Class->Type) {
-		case UNIT_APC:
-			switch (Status) {
-				case INITIAL_CHECK:
-					dir = Desired_Load_Dir(NULL, cell);
-					if (How_Many() && cell != 0) {
-						Do_Turn(dir);
-						Status = MANEUVERING;
+	if (Class->IsTransporter && Class->Type != UNIT_HOVER) {
+		switch (Status) {
+			case INITIAL_CHECK:
+				dir = Desired_Load_Dir(NULL, cell);
+				if (How_Many() && cell != 0) {
+					Do_Turn(dir);
+					Status = MANEUVERING;
+					return(1);
+				} else {
+					Assign_Mission(MISSION_GUARD);
+				}
+				break;
+
+			case MANEUVERING:
+				if (!IsRotating) {
+					APC_Open_Door();
+					if (Is_Door_Opening()) {
+						Status = OPENING_DOOR;
 						return(1);
-					} else {
-						Assign_Mission(MISSION_GUARD);
 					}
-					break;
+				}
+				break;
 
-				case MANEUVERING:
-					if (!IsRotating) {
-						APC_Open_Door();
-						if (Is_Door_Opening()) {
-							Status = OPENING_DOOR;
-							return(1);
-						}
+			case OPENING_DOOR:
+				if (Is_Door_Open()) {
+					Status = UNLOADING;
+					return(1);
+				} else {
+					if (!Is_Door_Opening()) {
+						Status = INITIAL_CHECK;
 					}
-					break;
+				}
+				break;
 
-				case OPENING_DOOR:
-					if (Is_Door_Open()) {
-						Status = UNLOADING;
-						return(1);
-					} else {
-						if (!Is_Door_Opening()) {
-							Status = INITIAL_CHECK;
-						}
-					}
-					break;
+			case UNLOADING:
+				if (How_Many()) {
+					FootClass * passenger = Detach_Object();
 
-				case UNLOADING:
-					if (How_Many()) {
-						FootClass * passenger = Detach_Object();
+					if (passenger) {
+						DirType toface = DIR_S + PrimaryFacing;
+						bool placed = false;
 
-						if (passenger) {
-							DirType toface = DIR_S + PrimaryFacing;
-							bool placed = false;
+						for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
+							DirType newface = toface + face;
+							CELL newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
 
-							for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
-								DirType newface = toface + face;
-								CELL newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
-
-								if (passenger->Can_Enter_Cell(newcell) == MOVE_OK) {
-									ScenarioInit++;
-									passenger->Unlimbo(Coord_Move(Coord, newface, 0x0080), newface);
-									ScenarioInit--;
-									passenger->Assign_Mission(MISSION_MOVE);
-									passenger->Assign_Destination(::As_Target(newcell));
-									placed = true;
-									break;
-								}
-							}
-
-							/*
-							** If the attached unit could NOT be deployed, then re-attach
-							**	it and then bail out of this deploy process.
-							*/
-							if (!placed) {
-								Attach(passenger);
-								Status = CLOSING_DOOR;
-							}
-							else {
-								passenger->Look(false);
+							if (passenger->Can_Enter_Cell(newcell) == MOVE_OK) {
+								ScenarioInit++;
+								passenger->Unlimbo(Coord_Move(Coord, newface, 0x0080), newface);
+								ScenarioInit--;
+								passenger->Assign_Mission(MISSION_MOVE);
+								passenger->Assign_Destination(::As_Target(newcell));
+								placed = true;
+								break;
 							}
 						}
-					} else {
-						Status = CLOSING_DOOR;
+
+						/*
+						** If the attached unit could NOT be deployed, then re-attach
+						**	it and then bail out of this deploy process.
+						*/
+						if (!placed) {
+							Attach(passenger);
+							Status = CLOSING_DOOR;
+						}
+						else {
+							passenger->Look(false);
+						}
 					}
-					break;
+				} else {
+					Status = CLOSING_DOOR;
+				}
+				break;
 
 				/*
 				**	Close APC door in preparation for normal operation.
 				*/
-				case CLOSING_DOOR:
-					if (Is_Door_Open()) {
-						APC_Close_Door();
-					}
-					if (Is_Door_Closed()) {
-						Assign_Mission(MISSION_GUARD);
-					}
-					break;
-			}
-			break;
+			case CLOSING_DOOR:
+				if (Is_Door_Open()) {
+					APC_Close_Door();
+				}
+				if (Is_Door_Closed()) {
+					Assign_Mission(MISSION_GUARD);
+				}
+				break;
+		}
+	} else {
+		switch (Class->Type) {
+			case UNIT_MCV:
+				switch (Status) {
+					case 0:
+						Path[0] = FACING_NONE;
+						Status = 1;
+						break;
 
-		case UNIT_MCV:
-			switch (Status) {
-				case 0:
-					Path[0] = FACING_NONE;
-					Status = 1;
-					break;
-
-				case 1:
-					if (!IsDriving) {
-						Try_To_Deploy();
-						if (IsDeploying) {
-							Status = 2;
-						} else {
-							/*
-							** Functionality from Red Alert for AI. ST - 7/25/2019 3:09PM
-							*/			  
-#ifndef USE_RA_AI
-							Assign_Mission(MISSION_GUARD);
-#else //USE_RA_AI
-							if (!House->IsHuman && GameToPlay != GAME_NORMAL) {
-								Assign_Mission(MISSION_HUNT);
+					case 1:
+						if (!IsDriving) {
+							Try_To_Deploy();
+							if (IsDeploying) {
+								Status = 2;
 							} else {
+								/*
+								** Functionality from Red Alert for AI. ST - 7/25/2019 3:09PM
+								*/
+								#ifndef USE_RA_AI
+								Assign_Mission(MISSION_GUARD);
+								#else //USE_RA_AI
+								if (!House->IsHuman && GameToPlay != GAME_NORMAL) {
+									Assign_Mission(MISSION_HUNT);
+								} else {
+									Assign_Mission(MISSION_GUARD);
+								}
+								#endif //USE_RA_AI
+							}
+						}
+						break;
+
+					case 2:
+					#ifdef USE_RA_AI
+						/*
+						** Functionality from Red Alert for AI. ST - 7/25/2019 3:09PM
+						*/
+						if (GameToPlay != GAME_NORMAL) {
+							if (!IsDeploying) {
 								Assign_Mission(MISSION_GUARD);
 							}
-#endif //USE_RA_AI
 						}
-					}
-					break;
+					#endif // USE_RA_AI
+						break;
+				}
+				return(1);
 
-				case 2:
-#ifdef USE_RA_AI
-					/*
-					** Functionality from Red Alert for AI. ST - 7/25/2019 3:09PM
-					*/			  
-					if (GameToPlay != GAME_NORMAL) {
-						if (!IsDeploying) {
-							Assign_Mission(MISSION_GUARD);
+			case UNIT_HOVER:
+				switch (Status) {
+					case 0:
+						if (Unload_Hovercraft_Process()) {
+							Status = 1;
 						}
-					}
-#endif // USE_RA_AI
-					break;
-			}
-			return(1);
+						break;
 
-		case UNIT_HOVER:
-			switch (Status) {
-				case 0:
-					if (Unload_Hovercraft_Process()) {
-						Status = 1;
-					}
-					break;
-
-				/*
-				**	Hovercraft always leave the map when they finish
-				**	unloading.
-				*/
-				case 1:
-					if (Team) {
-						Team->Remove(this);
-					}
-					Exit_Map();
-					break;
-			}
-			break;
+						/*
+						**	Hovercraft always leave the map when they finish
+						**	unloading.
+						*/
+					case 1:
+						if (Team) {
+							Team->Remove(this);
+						}
+						Exit_Map();
+						break;
+				}
+				break;
+		}
 	}
+
 	return(TICKS_PER_SECOND);
 }
 
@@ -4205,7 +4206,7 @@ int UnitClass::Pip_Count(void) const
 		return(How_Many());
 	}
 	if (Class->IsToHarvest) {
-		return(Fixed_To_Cardinal(UnitTypeClass::FULL_LOAD_CREDITS/100, Tiberium_Load()));
+		return(Fixed_To_Cardinal(Read_Harvester_Max_Credits_Rule()/100, Tiberium_Load()));
 	}
 	return(0);
 }

@@ -463,6 +463,8 @@ bool Load_Game(const char *file_name)
 
 	Call_Back();
 
+	On_Save_Load(house, scenario);
+
 	/*
 	**	Load the map.  The map comes first, since it loads the Theater & init's
 	**	mixfiles.  The map calls all the type-class's Init routines, telling them

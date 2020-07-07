@@ -37,9 +37,9 @@ static void Test_Lua_Events()
 
 	On_Scenario_Load("SCG01EA");
 
-	Log_Info("Testing returning early from scenario start event handler");
+	Log_Info("Testing setting rules from save load event handler");
 
-	On_Scenario_Load("SCG04EA");
+	On_Save_Load(HOUSE_GOOD, 4);
 }
 
 static void Pause()
