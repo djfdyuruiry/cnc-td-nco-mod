@@ -20,13 +20,15 @@ static auto FIRE_EVENT_FORMAT = "\
   end                                           \
 ";
 
-const int LUA_EVENT_COUNT = 1;
-
 const LuaEvent ON_SCENARIO_START_EVENT = "ScenarioStart";
+const LuaEvent ON_SAVE_LOAD_EVENT = "SaveLoad";
+
+const int LUA_EVENT_COUNT = 2;
 
 static const LuaEvent* LUA_EVENTS = new LuaEvent[LUA_EVENT_COUNT]
 {
-    ON_SCENARIO_START_EVENT
+    ON_SCENARIO_START_EVENT,
+    ON_SAVE_LOAD_EVENT
 };
 
 static bool EVENTS_INITIALISED = false;
@@ -35,8 +37,11 @@ static void Fire_Lua_Event(LuaEvent name, const char* argumentFormat = "nil", ..
 {
     if (!Lua_Is_Enabled())
     {
+        Log_Debug("Lua is disabled, skipping firing event: %s", name);
         return;
     }
+
+    Log_Debug("Firing Lua event: %s", name);
 
     auto argumentsBuffer = Allocate_String(1024);
 
@@ -57,6 +62,10 @@ static void Fire_Lua_Event(LuaEvent name, const char* argumentFormat = "nil", ..
     {
         Show_Error("Error firing Lua event: %s", name);
     }
+    else
+    {
+        Log_Trace("Lua event fired ok: %s", name);
+    }
 
     delete scriptBuffer;
 }
@@ -69,11 +78,15 @@ boolean Initialise_Events()
         return true;
     }
 
+    Log_Trace("Initialising Lua events");
+
     auto executionOK = true;
     auto initEventScriptBuffer = Allocate_String(1024);
 
     for (auto i = 0; i < LUA_EVENT_COUNT; i++)
     {
+        Log_Trace("Initialising Lua event: %s", LUA_EVENTS[i]);
+
         _sprintf_p(
             initEventScriptBuffer,
             1024,
@@ -100,5 +113,15 @@ void On_Scenario_Load(char* name)
         ON_SCENARIO_START_EVENT,
         "'%s'",
         name
+    );
+}
+
+void On_Save_Load(HousesType playerHouse, unsigned int scenarioNumber)
+{
+    Fire_Lua_Event(
+        ON_SAVE_LOAD_EVENT,
+        "'%s', %u",
+        House_Type_To_String(playerHouse),
+        scenarioNumber
     );
 }

@@ -5,4 +5,6 @@ boolean Initialise_Events();
 
 void On_Scenario_Load(char* name);
 
+void On_Save_Load(HousesType playerHouse, unsigned int scenarioNumber);
+
 #endif

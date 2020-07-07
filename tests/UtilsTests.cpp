@@ -263,7 +263,6 @@ namespace Unit
 				Assert::AreEqual(true, parseError);
 			}
 
-
 			TEST_METHOD(When_Parse_Boolean_Or_Default_IsCalled_WithUppercaseStringContainingTrueAndDefaultOfFalse_ThenTrueIsReturned)
 			{
 				Assert::AreEqual(
