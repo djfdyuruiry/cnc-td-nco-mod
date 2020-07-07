@@ -1635,20 +1635,20 @@ int DriveClass::Offload_Tiberium_Bail(void)
 	if (Tiberium) {
 		Tiberium--;
 		if (House->IsHuman) {
-			return(Read_Harvester_Max_Credits_Rule()/Read_Harvester_Capcity_Rule()); // 25 in debugger
+			return(Read_Harvester_Max_Credits_Rule()/Read_Harvester_Capcity_Rule());
 		}
 
 		// MBL 05.14.2020: AI harvested credits fix for multiplayer, since they are miscalculated, and it's noticed
 		//
-		// return(Read_Harvester_Max_Credits_Rule()+(Read_Harvester_Max_Credits_Rule()/3)/Read_Harvester_Capcity_Rule()); 708 in debugger
+		// return(Read_Harvester_Max_Credits_Rule()+(Read_Harvester_Max_Credits_Rule()/3)/Read_Harvester_Capcity_Rule());
 		//
-		if (GameToPlay == GAME_NORMAL) // Non-multiplayer game, keep the original calculation; 708 in debugger
+		if (GameToPlay == GAME_NORMAL) // Non-multiplayer game, keep the original calculation
 		{
-			return(Read_Harvester_Max_Credits_Rule()+(Read_Harvester_Max_Credits_Rule()/3)/Read_Harvester_Capcity_Rule()); // Original (708), wrong calcualation but preserving to not break missions
+			return(Read_Harvester_Max_Credits_Rule()+(Read_Harvester_Max_Credits_Rule()/3)/Read_Harvester_Capcity_Rule());
 		}
-		else // Multiplayer game, apply the 1/3 bonus credits correction, so not be as extreme; 33 in debugger
+		else // Multiplayer game, apply the 1/3 bonus credits correction, so not be as extreme
 		{
-			return((Read_Harvester_Max_Credits_Rule()+(Read_Harvester_Max_Credits_Rule()/3))/Read_Harvester_Capcity_Rule()); // Corrected calculation
+			return((Read_Harvester_Max_Credits_Rule()+(Read_Harvester_Max_Credits_Rule()/3))/Read_Harvester_Capcity_Rule());
 		}
 	}
 	return(0);
