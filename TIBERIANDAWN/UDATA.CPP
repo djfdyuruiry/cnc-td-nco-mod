@@ -1347,6 +1347,8 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	Speed = speed;
 	TurretOffset = toffset;
 	Type = type;
+
+	TransportCapacity = (unsigned int) Read_Int_From_Rules_Ini(this->IniName, TRANSPORT_CAPACITY_RULE, 5, 1, INT_MAX);
 }
 
 
@@ -1756,12 +1758,12 @@ void UnitTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = Read_Double_Game_Rule(UNIT_REPAIR_FACTOR_RULE, 1.02f);
+	auto repairFactor = Read_Double_Game_Rule(UNIT_REPAIR_FACTOR_RULE, 1.02f, 0.01f);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(
 		Fixed_To_Cardinal(
-			Cost / (MaxStrength/ Read_Repair_Step_Rule(4)),
+			Cost / (MaxStrength/ Read_Unit_Repair_Step_Rule(4)),
 			repairPercent
 		)
 	);
@@ -1785,7 +1787,7 @@ int UnitTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Step(void) const
 {
-	return(Read_Repair_Step_Rule(4));
+	return(Read_Unit_Repair_Step_Rule(4));
 }
 
 

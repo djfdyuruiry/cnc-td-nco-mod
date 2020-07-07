@@ -17,6 +17,8 @@ void Append_To_File(HANDLE file, char* data);
 
 bool Is_Int_String(char* numberValue);
 
+bool Is_Int_String(const char* numberValue);
+
 bool Is_Double_String(char* numberValue);
 
 int Parse_Number(char character);

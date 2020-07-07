@@ -37,6 +37,8 @@ HelipadsAndAircraftBoughtSeperately=false
 MaxHarvesterCapacity=28
 UnitRepairFactor=1.02
 UnitRepairStrengthStep=4
+AircraftRepairFactor=1.02
+AircraftRepairStrengthStep=2
 
 ; house specific
 HideTempleFromGdi=true

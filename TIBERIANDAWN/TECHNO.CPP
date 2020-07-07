@@ -3077,7 +3077,7 @@ ResultType TechnoClass::Take_Damage(int & damage, int distance, WarheadType warh
 int TechnoTypeClass::Max_Passengers(void) const
 {
 	if (IsTransporter) {
-		return(5);
+		return(this->TransportCapacity);
 	}
 	return(0);
 }

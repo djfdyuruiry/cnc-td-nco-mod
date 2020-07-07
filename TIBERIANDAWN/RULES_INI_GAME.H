@@ -1,6 +1,8 @@
 #ifndef RULES_INI_GAME
 #define RULES_INI_GAME
 
+#include <float.h>
+
 #include "rules_ini.h"
 
 #define GAME_RULES_SECTION_NAME "Game"
@@ -104,6 +106,14 @@
 #define UNIT_REPAIR_STEP_RULE_UPPER "UNITREPAIRSTRENGTHSTEP"
 #define UNIT_REPAIR_STEP_RULE_TYPE "int"
 
+#define AIRCRAFT_REPAIR_FACTOR_RULE "AircraftRepairFactor"
+#define AIRCRAFT_REPAIR_FACTOR_RULE_UPPER "AIRCRAFTREPAIRFACTOR"
+#define AIRCRAFT_REPAIR_FACTOR_RULE_TYPE "double"
+
+#define AIRCRAFT_REPAIR_STEP_RULE "AircraftRepairStrengthStep"
+#define AIRCRAFT_REPAIR_STEP_RULE_UPPER "AIRCRAFTREPAIRSTRENGTHSTEP"
+#define AIRCRAFT_REPAIR_STEP_RULE_TYPE "int"
+
 // house specific rules
 #define HIDE_TMPL_FROM_GDI_RULE "HideTempleFromGdi"
 #define HIDE_TMPL_FROM_GDI_RULE_UPPER "HIDETEMPLEFROMGDI"
@@ -195,6 +205,8 @@
     MAX_HARVESTER_CAPACITY_RULE, \
     UNIT_REPAIR_FACTOR_RULE, \
     UNIT_REPAIR_STEP_RULE, \
+    AIRCRAFT_REPAIR_FACTOR_RULE, \
+    AIRCRAFT_REPAIR_STEP_RULE, \
     HIDE_TMPL_FROM_GDI_RULE, \
     HIDE_OBLI_FROM_GDI_RULE, \
     HIDE_APC_FROM_NOD_RULE, \
@@ -212,7 +224,7 @@
     ATTACKER_ADVANTAGE_RULE, \
     SPEEDY_BUILDS_RULE
 
-#define GAME_RULE_COUNT (unsigned) 40
+#define GAME_RULE_COUNT (unsigned) 42
 
 #define GAME_RULE_TYPES DEBUG_LOGGING_RULE_TYPE, \
     MAX_BUILD_DISTANCE_RULE_TYPE, \
@@ -238,6 +250,8 @@
     MAX_HARVESTER_CAPACITY_RULE_TYPE, \
     UNIT_REPAIR_FACTOR_RULE_TYPE, \
     UNIT_REPAIR_STEP_RULE_TYPE, \
+    AIRCRAFT_REPAIR_FACTOR_RULE_TYPE, \
+    AIRCRAFT_REPAIR_STEP_RULE_TYPE, \
     HIDE_TMPL_FROM_GDI_RULE_TYPE, \
     HIDE_OBLI_FROM_GDI_RULE_TYPE, \
     HIDE_APC_FROM_NOD_RULE_TYPE, \
@@ -261,7 +275,7 @@
 
 #define Read_Int_Game_Rule(ruleName, defaultValue, minValue, maxValue) Read_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, minValue, maxValue)
 
-#define Read_Double_Game_Rule(ruleName, defaultValue) Read_Double_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, -999.99f, 999.99f)
+#define Read_Double_Game_Rule(ruleName, defaultValue, minValue) Read_Double_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, minValue, DBL_MAX)
 
 #define Read_Build_Distance_Game_Rule() Read_Int_Game_Rule(MAX_BUILD_DISTANCE_RULE, 1, 1, INT_MAX)
 
@@ -272,16 +286,8 @@
 #define Read_Harvester_Max_Credits_Rule() \
     Read_Credits_Per_Scoop_Rule() * Read_Harvester_Capcity_Rule()
 
-#define Read_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(UNIT_REPAIR_STEP_RULE,defaultValue, 1, INT_MAX)
+#define Read_Unit_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(UNIT_REPAIR_STEP_RULE, defaultValue, 1, INT_MAX)
 
-/**
-
-TIBERIUM_STEP = Read_Int_Game_Rule("", 25, 1, 999),					// Credits per step of Tiberium.
-STEP_COUNT = 28,						// Number of steps a harvester can carry.
-FULL_LOAD_CREDITS = (TIBERIUM_STEP * STEP_COUNT),
-REPAIR_PERCENT = 102,		// 40% fixed point number.
-REPAIR_STEP = 4				// Number of damage points recovered per "step".
-
- */
+#define Read_Aircraft_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(AIRCRAFT_REPAIR_STEP_RULE, defaultValue, 1, INT_MAX)
 
 #endif

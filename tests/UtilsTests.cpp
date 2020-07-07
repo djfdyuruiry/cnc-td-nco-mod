@@ -9,7 +9,7 @@ namespace Unit
 	TEST_CLASS(UtilsTests)
 	{
 		public:
-			TEST_METHOD(When_Is_Int_String_IsCalled_WithStringContainingAnInt_ThenTrueIsReturned)
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithConstStringContainingAnInt_ThenTrueIsReturned)
 			{
 				Assert::AreEqual(
 					true,
@@ -17,7 +17,15 @@ namespace Unit
 				);
 			}
 
-			TEST_METHOD(When_Is_Int_String_IsCalled_WithStringContainingNoNumbers_ThenFalseIsReturned)
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithConstStringContainingAnSingleDigit_ThenTrueIsReturned)
+			{
+				Assert::AreEqual(
+					true,
+					Is_Int_String("1")
+				);
+			}
+
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithConstStringContainingNoNumbers_ThenFalseIsReturned)
 			{
 				Assert::AreEqual(
 					false,
@@ -25,7 +33,39 @@ namespace Unit
 				);
 			}
 
-			TEST_METHOD(When_Is_Int_String_IsCalled_WithNullString_ThenFalseIsReturned)
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithNonConstStringContainingAnInt_ThenTrueIsReturned)
+			{
+				Assert::AreEqual(
+					true,
+					Is_Int_String(strdup("938"))
+				);
+			}
+
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithNonConstStringContainingNoNumbers_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					Is_Int_String(strdup("null"))
+				);
+			}
+
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithConstNullString_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					Is_Int_String((const char*)NULL)
+				);
+			}
+
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithConstEmptyString_ThenFalseIsReturned)
+			{
+				Assert::AreEqual(
+					false,
+					Is_Int_String("")
+				);
+			}
+
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithNonConstNullString_ThenFalseIsReturned)
 			{
 				Assert::AreEqual(
 					false,
@@ -33,11 +73,11 @@ namespace Unit
 				);
 			}
 
-			TEST_METHOD(When_Is_Int_String_IsCalled_WithEmptyString_ThenFalseIsReturned)
+			TEST_METHOD(When_Is_Int_String_IsCalled_WithNonConstEmptyString_ThenFalseIsReturned)
 			{
 				Assert::AreEqual(
 					false,
-					Is_Int_String("")
+					Is_Int_String(strdup(""))
 				);
 			}
 

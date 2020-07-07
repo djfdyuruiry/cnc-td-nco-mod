@@ -55,9 +55,6 @@
 #define DETECT_CLOAKED_OBJECTS_RULE "DetectCloakedObjects"
 #define DETECT_CLOAKED_OBJECTS_RULE_UPPER "DETECTCLOAKEDOBJECTS"
 
-#define TRANSPORTER_RULE "CanTransportInfantry"
-#define TRANSPORTER_RULE_UPPER "CANTRANSPORTINFANTRY"
-
 // virtual rule used in game logic, not the type itself
 #define SHOW_NAME_RULE "ShowName"
 #define SHOW_NAME_RULE_UPPER "SHOWNAME"
@@ -83,18 +80,25 @@
     REWARD_RULE, \
     CRUSHABLE_RULE, \
     DETECT_CLOAKED_OBJECTS_RULE, \
-    TRANSPORTER_RULE, \
     FRIENDLY_NAME_RULE
 
-#define SHARED_RULE_COUNT (unsigned) 19
+#define SHARED_RULE_COUNT (unsigned) 18
 
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
 #define RATE_OF_TURN_RULE_UPPER "RATEOFTURN"
 
-#define SHARED_UNIT_AIRCRAFT_RULES RATE_OF_TURN_RULE
+#define TRANSPORTER_RULE "CanTransportInfantry"
+#define TRANSPORTER_RULE_UPPER "CANTRANSPORTINFANTRY"
 
-#define SHARED_UNIT_AIRCRAFT_RULE_COUNT 1
+#define TRANSPORT_CAPACITY_RULE "TransportCapacity"
+#define TRANSPORT_CAPACITY_RULE_UPPER "TRANSPORTCAPACITY"
+
+#define SHARED_UNIT_AIRCRAFT_RULES RATE_OF_TURN_RULE, \
+    TRANSPORTER_RULE, \
+    TRANSPORT_CAPACITY_RULE
+
+#define SHARED_UNIT_AIRCRAFT_RULE_COUNT 3
 
 // shared rules
 #define Read_Build_Level(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, BUILD_LEVEL_RULE, defaultValue, 1, 99)

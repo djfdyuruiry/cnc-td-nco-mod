@@ -294,14 +294,36 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
     {
-        auto rot = atoi(value);
-        *valueParseError = rot < 0 || rot > UCHAR_MAX;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_Aircraft_Rule => Rule value: %u -> %u", type->ROT, rot);
+            auto rot = atoi(value);
+            *valueParseError = rot < 0 || rot > UCHAR_MAX;
 
-            type->ROT = rot;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_Aircraft_Rule => Rule value: %u -> %u", type->ROT, rot);
+
+                type->ROT = rot;
+            }
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
+    {
+        *valueParseError = !Is_Int_String(value);
+
+        if (!*valueParseError)
+        {
+            auto capacity = atoi(value);
+            *valueParseError = capacity < 0 || capacity > UINT_MAX;
+
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_Aircraft_Rule => Rule value: %u -> %u", type->TransportCapacity, capacity);
+
+                type->TransportCapacity = capacity;
+            }
         }
     }
     else
@@ -337,6 +359,12 @@ static bool Read_Aircraft_Rule(lua_State* lua, AircraftTypeClass* type, const ch
         Log_Trace("Read_Aircraft_Rule => Rule value: %u", type->ROT);
 
         lua_pushnumber(lua, type->ROT);
+    }
+    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
+    {
+        Log_Trace("Read_Aircraft_Rule => Rule value: %u", type->TransportCapacity);
+
+        lua_pushnumber(lua, type->TransportCapacity);
     }
     else
     {
@@ -482,14 +510,36 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
     }
     else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
     {
-        auto rot = atoi(value);
-        *valueParseError = rot < 0 || rot > UCHAR_MAX;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_Unit_Rule => Rule value: %u -> %u", type->ROT, rot);
+            auto rot = atoi(value);
+            *valueParseError = rot < 0 || rot > UCHAR_MAX;
 
-            type->ROT = rot;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_Unit_Rule => Rule value: %u -> %u", type->ROT, rot);
+
+                type->ROT = rot;
+            }
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
+    {
+        *valueParseError = !Is_Int_String(value);
+
+        if (!*valueParseError)
+        {
+            auto capacity = atoi(value);
+            *valueParseError = capacity < 0 || capacity > UINT_MAX;
+
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_Unit_Rule => Rule value: %u -> %u", type->TransportCapacity, capacity);
+
+                type->TransportCapacity = capacity;
+            }
         }
     }
     else
@@ -579,6 +629,12 @@ static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* rule
     else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %u", type->ROT);
+
+        lua_pushnumber(lua, type->ROT);
+    }
+    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
+    {
+        Log_Trace("Read_Unit_Rule => Rule value: %u", type->TransportCapacity);
 
         lua_pushnumber(lua, type->ROT);
     }
@@ -716,26 +772,36 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
 {
     if (Strings_Are_Equal(ruleName, BUILD_LEVEL_RULE_UPPER))
     {
-        auto numValue = atoi(value);
-        *valueParseError = numValue < 1 && numValue > 99;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->Level, numValue);
+            auto numValue = atoi(value);
+            *valueParseError = numValue < 1 && numValue > 99;
 
-            type->Level = numValue;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->Level, numValue);
+
+                type->Level = numValue;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, SCENARIO_LEVEL_RULE_UPPER))
     {
-        auto numValue = atoi(value);
-        *valueParseError = numValue < 1 && numValue > 99;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->Scenario, numValue);
+            auto numValue = atoi(value);
+            *valueParseError = numValue < 1 && numValue > 99;
 
-            type->Scenario = numValue;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->Scenario, numValue);
+
+                type->Scenario = numValue;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, PREREQUISITE_RULE_UPPER))
@@ -760,11 +826,16 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, COST_RULE_UPPER))
     {
-        auto numValue = atoi(value);
+        *valueParseError = !Is_Int_String(value);
 
-        Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->Cost, numValue);
+        if (!*valueParseError)
+        {
+            auto numValue = atoi(value);
 
-        type->Cost = numValue;
+            Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->Cost, numValue);
+
+            type->Cost = numValue;
+        }
     }
     else if (Strings_Are_Equal(ruleName, BUILDABLE_RULE_UPPER))
     {
@@ -790,26 +861,36 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, SPEED_RULE_UPPER))
     {
-        auto numValue = atoi(value);
-        *valueParseError = numValue < 0 && numValue > UCHAR_MAX;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->MaxSpeed, numValue);
+            auto numValue = atoi(value);
+            *valueParseError = numValue < 0 && numValue > UCHAR_MAX;
 
-            type->MaxSpeed = (MPHType)numValue;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->MaxSpeed, numValue);
+
+                type->MaxSpeed = (MPHType)numValue;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, STRENGTH_RULE_UPPER))
     {
-        auto numValue = atoi(value);
-        *valueParseError = numValue < 0 && numValue > USHRT_MAX;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->MaxStrength, numValue);
+            auto numValue = atoi(value);
+            *valueParseError = numValue < 0 && numValue > USHRT_MAX;
 
-            type->MaxStrength = numValue;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_TechnoType_Rule => Rule value: %u -> %u", type->MaxStrength, numValue);
+
+                type->MaxStrength = numValue;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, HOUSES_RULE_UPPER))
@@ -860,38 +941,53 @@ static bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, AMMO_RULE_UPPER))
     {
-        auto numValue = atoi(value);
-        *valueParseError = numValue < -1 && numValue > INT_MAX;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %d -> %d", type->MaxAmmo, numValue);
+            auto numValue = atoi(value);
+            *valueParseError = numValue < -1 && numValue > INT_MAX;
 
-            type->MaxAmmo = numValue;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_TechnoType_Rule => Rule value: %d -> %d", type->MaxAmmo, numValue);
+
+                type->MaxAmmo = numValue;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE_UPPER))
     {
-        auto numValue = atoi(value);
-        *valueParseError = numValue < -1 && numValue > INT_MAX;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %d -> %d", type->SightRange, numValue);
+            auto numValue = atoi(value);
+            *valueParseError = numValue < -1 && numValue > INT_MAX;
 
-            type->SightRange = numValue;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_TechnoType_Rule => Rule value: %d -> %d", type->SightRange, numValue);
+
+                type->SightRange = numValue;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, REWARD_RULE_UPPER))
     {
-        auto numValue = atoi(value);
-        *valueParseError = numValue < -1 && numValue > INT_MAX;
+        *valueParseError = !Is_Int_String(value);
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %d -> %d", type->Reward, numValue);
+            auto numValue = atoi(value);
+            *valueParseError = numValue < -1 && numValue > INT_MAX;
 
-            type->Reward = numValue;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_TechnoType_Rule => Rule value: %d -> %d", type->Reward, numValue);
+
+                type->Reward = numValue;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, DETECT_CLOAKED_OBJECTS_RULE_UPPER))

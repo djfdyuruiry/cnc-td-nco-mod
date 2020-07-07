@@ -539,6 +539,8 @@ class TechnoTypeClass : public ObjectTypeClass
 
 		const char* FriendlyName;
 
+		unsigned int TransportCapacity;
+
 		//--------------------------------------------------------------------
 		TechnoTypeClass(
 				int name,
@@ -1735,10 +1737,6 @@ class AnimTypeClass : public ObjectTypeClass
 */
 class AircraftTypeClass : public TechnoTypeClass
 {
-	enum UnitTypeClassRepairEnums {
-		REPAIR_PERCENT=102,		// 40% fixed point number.
-		REPAIR_STEP=2				// Number of damage points recovered per "step".
-	};
 	public:
 
 		/*

@@ -27,6 +27,7 @@ function testRules (isScenarioFour)
   setUnitRule("JEEP", "Speed", 100)
   setUnitRule("JEEP", "CanCrushInfantry", true)
   setUnitRule("JEEP", "CanTransportInfantry", true)
+  setUnitRule("JEEP", "TransportCapacity", 10)
   
   setUnitRule("FTNK", "ScenarioLevel", scenarioNumber)
   setUnitRule("FTNK", "BuildLevel", buildLevel)

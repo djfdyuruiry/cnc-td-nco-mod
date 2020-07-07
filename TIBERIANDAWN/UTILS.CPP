@@ -166,6 +166,22 @@ bool Is_Int_String(char* numberValue)
 	return !Strings_Are_Equal(numberValue, remainder);
 }
 
+bool Is_Int_String(const char* numberValue)
+{
+	if (String_Is_Empty(numberValue))
+	{
+		return false;
+	}
+
+	auto numberValueStr = strdup(numberValue);
+
+	auto result = Is_Int_String(numberValueStr);
+
+	delete numberValueStr;
+
+	return result;
+}
+
 bool Is_Double_String(char* numberValue)
 {
 	if (String_Is_Empty(numberValue))
