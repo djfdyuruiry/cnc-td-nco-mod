@@ -13,6 +13,7 @@ static auto LOG_LEVEL = INFO;
 static bool RULES_VALID = true;
 static bool LUA_IS_ENABLED = false;
 static LuaScripts RULES_LUA_SCRIPTS;
+static int GAME_TICK_INTERVAL_IN_MS;
 
 static void Read_Lua_Scripts_From_Rules_Ini()
 {
@@ -129,6 +130,8 @@ void Ensure_Rules_Ini_Is_Loaded() {
 	Read_Log_Level_From_Rules_Ini();
 
 	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE, true);
+	GAME_TICK_INTERVAL_IN_MS = Read_Int_From_Rules_Ini(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE, 250, 1, INT_MAX);
+
 	Read_Lua_Scripts_From_Rules_Ini();
 }
 
@@ -728,5 +731,12 @@ LuaScripts Rules_Get_Lua_Scripts()
 	Ensure_Rules_Ini_Is_Loaded();
 
 	return RULES_LUA_SCRIPTS;
+}
+
+int Rules_Get_Game_Tick_Interval_In_Ms()
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	return GAME_TICK_INTERVAL_IN_MS;
 }
 

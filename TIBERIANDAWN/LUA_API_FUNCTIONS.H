@@ -50,4 +50,6 @@ int Lua_Get_Building_Rule(lua_State* lua);
 
 int Lua_Set_Building_Rule(lua_State* lua);
 
+int Lua_Show_Game_Message(lua_State* lua);
+
 #endif

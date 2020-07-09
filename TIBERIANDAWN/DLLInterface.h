@@ -912,9 +912,11 @@ struct CarryoverObjectStruct
 	int House;
 };
 
+typedef void(__cdecl* CNC_Event_Callback_Type)(const EventCallbackStruct& event);
 
+void Add_Event_Callback_Proxy(CNC_Event_Callback_Type callback);
 
-
+void On_Message(const char* message, float timeout_seconds);
 
 /*
 ** End of strict structure packing

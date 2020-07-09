@@ -2,7 +2,11 @@
 
 #include "function.h"
 
-static auto USER_PROFILE_ENV_VAR = "USERPROFILE";
+static const auto ONE_HUNDRED_NS_INTERVALS_SINCE_UNIX_EPOCH = 116444736000000000LL;
+static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_MS = 10000LL;
+static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_S = 10000000LL;
+
+static const auto USER_PROFILE_ENV_VAR = "USERPROFILE";
 
 void Show_Error(const char* messageFormat, ...)
 {
@@ -317,4 +321,31 @@ char* Get_Mod_Data_Path()
 	PathRemoveFileSpec(modPath);
 
 	return modPath;
+}
+
+long long Get_Now_In_Epoch_Nanos()
+{
+	FILETIME now;
+
+	GetSystemTimeAsFileTime(&now);
+
+	LARGE_INTEGER li = { 0 };
+
+	li.LowPart = now.dwLowDateTime;
+	li.HighPart = now.dwHighDateTime;
+
+	auto nowIn100Nanos = li.QuadPart;
+	auto nowIn100NanosSinceEpoch = nowIn100Nanos - ONE_HUNDRED_NS_INTERVALS_SINCE_UNIX_EPOCH;
+
+	return nowIn100NanosSinceEpoch;
+}
+
+long long Get_Now_In_Epoch_Millis()
+{
+	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_MS;
+}
+
+long long Get_Now_In_Epoch_Secs()
+{
+	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_S;
 }

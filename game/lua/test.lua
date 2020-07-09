@@ -65,3 +65,7 @@ onSaveLoad(function(house, scenario)
 
   testRules()
 end)
+
+onGameTick(function()
+  showGameMessage(string.format("[%d] Peace through power!", getNowInEpochMillis()), 30)
+end)

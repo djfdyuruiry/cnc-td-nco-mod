@@ -1,6 +1,9 @@
 #ifdef TEST_CONSOLE
 
 #include "function.h"
+#
+#include "DllInterface.h"
+
 #include "lua_repl.h"
 
 static void Test_Lua_Rules() {
@@ -40,6 +43,22 @@ static void Test_Lua_Events()
 	Log_Info("Testing setting rules from save load event handler");
 
 	On_Save_Load(HOUSE_GOOD, 4);
+
+	Log_Info("Testing game tick event handler");
+
+	On_Game_Tick();
+}
+
+static void Game_Event_Callback(const EventCallbackStruct& event)
+{
+	if (event.EventType == CALLBACK_EVENT_MESSAGE)
+	{
+		Log_Info(
+			"Game message emitted for %f seconds: %s",
+			event.Message.TimeoutSeconds,
+			event.Message.Message
+		);
+	}
 }
 
 static void Pause()
@@ -117,6 +136,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 		return 1;
 	}
+
+	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
 
 	Test_Special_Rules();
 

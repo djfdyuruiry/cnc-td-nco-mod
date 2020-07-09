@@ -15,6 +15,9 @@
 #define LUA_SCRIPTS_RULE "LuaScripts"
 #define LUA_SCRIPTS_RULE_UPPER "LUASCRIPTS"
 
+#define GAME_TICK_INTERVAL_IN_MS_RULE "GameTickIntervalInMs"
+#define GAME_TICK_INTERVAL_IN_MS_RULE_UPPER "LUASCRIPTS"
+
 char* Read_Rules_Ini();
 
 void Ensure_Rules_Ini_Is_Loaded();
@@ -99,5 +102,7 @@ void Set_Current_Log_Level(LogLevel level);
 bool Lua_Is_Enabled();
 
 LuaScripts Rules_Get_Lua_Scripts();
+
+int Rules_Get_Game_Tick_Interval_In_Ms();
 
 #endif
