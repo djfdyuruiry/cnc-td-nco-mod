@@ -114,7 +114,7 @@ static AircraftTypeClass const TransportHeli(
 		false,				// Is it insignificant (won't be announced)?
 		false,				// Theater specific graphic image?
 		false,				// Is it equipped with a combat turret?
-		false,				// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		true,					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
 	0,							// Number of shots it has (default).
@@ -154,7 +154,7 @@ static AircraftTypeClass const AttackHeli(
 		false,				// Is it insignificant (won't be announced)?
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
-		false,				// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		true,					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
 	15,						// Number of shots it has (default).
@@ -195,7 +195,7 @@ static AircraftTypeClass const OrcaHeli(
 		false,				// Is it insignificant (won't be announced)?
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
-		false,				// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		true,					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
 	6,							// Number of shots it has (default).
