@@ -24,6 +24,7 @@ The key goal is to overcome the limitation of only having one `dll` based mod lo
 - [RULES.INI Location](#RULESINI-Location)
   - [Steam Workshop](#Steam-Workshop)
   - [Manual Installation](#Manual-Installation)
+- [Help](#Help)
 
 ---
 
@@ -114,3 +115,12 @@ The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find t
 - Click `OK`
 - Copy the `RULES-DEFAULT` file and name the copy `RULES` (new releases of the mod will update `RULES-DEFAULT` so don't edit that file directly)
 
+## Help
+
+If you are having issues with the mod, you can:
+
+- Read the [Troubleshooting page](https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/10.-Troubleshooting)
+
+- Report an [issue on GitHub](https://github.com/djfdyuruiry/cnc-td-nco-mod/issues)
+
+- Leave a comment in the [bugs workshop discussion](https://steamcommunity.com/workshop/filedetails/discussion/2147631402/2568690592367526149/)

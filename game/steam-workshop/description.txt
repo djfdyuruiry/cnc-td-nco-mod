@@ -53,3 +53,13 @@ A guide on how to edit the RULES.INI file can be found [url=https://github.com/d
 [/list]
 
 A guide on how to use Lua Scripts with the mod can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/2.-Lua-Scripting-Tutorial]here[/url].
+
+[b]Help[/b]
+
+If you are having issues with the mod, you can:
+
+[list]
+  [*] Read the [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/10.-Troubleshooting]troubleshooting page[/url]
+  [*] Report an [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/issues]issue on GitHub[/url]
+  [*] Leave a comment in the [url=https://steamcommunity.com/workshop/filedetails/discussion/2147631402/2568690592367526149]bugs workshop discussion[/url]
+[/list]
