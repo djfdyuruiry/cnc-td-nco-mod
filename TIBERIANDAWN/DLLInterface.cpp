@@ -57,7 +57,6 @@ extern bool Color_Cycle(void);
 bool Debug_Write_Shape_Type(const ObjectTypeClass *type, int shapenum);
 bool Debug_Write_Shape(const char *file_name, void const * shapefile, int shapenum, int flags = 0, void const * ghostdata = NULL);
 
-typedef void (__cdecl* CNC_Event_Callback_Type)(const EventCallbackStruct &event);
 typedef unsigned __int64 uint64;
 typedef __int64 int64;
 
@@ -281,6 +280,8 @@ class DLLExportClass {
 
 		static bool Get_Game_Over()	{ return GameOver; }
 
+		static CNC_Event_Callback_Type EventCallback;
+
 
 	private:
 		static void Calculate_Single_Player_Score(EventCallbackStruct&);
@@ -297,8 +298,6 @@ class DLLExportClass {
 		static int TotalObjectCount;
 		static int SortOrder;
 		static CNCObjectListStruct *ObjectList;
-
-		static CNC_Event_Callback_Type EventCallback;
 
 
 		static int CurrentLocalPlayerIndex;
@@ -361,6 +360,29 @@ int DLLForceMouseX = 0;
 int DLLForceMouseY = 0;
 
 CNC_Event_Callback_Type DLLExportClass::EventCallback = NULL;
+CNC_Event_Callback_Type baseEventCallBack = NULL;
+CNC_Event_Callback_Type proxyEventCallBack = NULL;
+
+static void Event_Callback_Interceptor(const EventCallbackStruct& event)
+{
+	if (baseEventCallBack != NULL)
+	{
+		baseEventCallBack(event);
+	}
+
+	if (proxyEventCallBack != NULL)
+	{
+		proxyEventCallBack(event);
+	}
+}
+
+void Add_Event_Callback_Proxy(CNC_Event_Callback_Type proxyCallback)
+{
+	baseEventCallBack = DLLExportClass::EventCallback;
+	proxyEventCallBack = proxyCallback;
+
+	DLLExportClass::EventCallback = &Event_Callback_Interceptor;
+}
 
 // Needed to accomodate Glyphx client sidebar. ST - 4/12/2019 5:29PM
 int GlyphXClientSidebarWidthInLeptons = 0;
@@ -2580,6 +2602,11 @@ void DLLExportClass::On_Message(const HouseClass* player_ptr, const char* messag
 void On_Message(const char* message, float timeout_seconds, EventCallbackMessageEnum message_type, int64 message_id)
 {
 	DLLExportClass::On_Message(PlayerPtr, message, timeout_seconds, message_type, message_id);
+}
+
+void On_Message(const char* message, float timeout_seconds)
+{
+	DLLExportClass::On_Message(PlayerPtr, message, timeout_seconds, MESSAGE_TYPE_DIRECT, -1);
 }
 
 void On_Message(const char* message, float timeout_seconds, int64 message_id)

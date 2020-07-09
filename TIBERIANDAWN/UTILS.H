@@ -39,4 +39,12 @@ char * Convert_Boolean_To_String(bool booleanValue);
 
 char* Get_Mod_Data_Path();
 
+long long Get_Now_In_Epoch_Nanos();
+
+long long Get_Now_In_Epoch_Millis();
+
+long long Get_Now_In_Epoch_Secs();
+
+void Configure_Console_Output();
+
 #endif

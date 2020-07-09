@@ -20,28 +20,31 @@ static auto FIRE_EVENT_FORMAT = "\
   end                                           \
 ";
 
-const LuaEvent ON_SCENARIO_START_EVENT = "ScenarioStart";
-const LuaEvent ON_SAVE_LOAD_EVENT = "SaveLoad";
+static const LuaEvent ON_SCENARIO_START_EVENT = "ScenarioStart";
+static const LuaEvent ON_SAVE_LOAD_EVENT = "SaveLoad";
+static const LuaEvent ON_GAME_TICK_EVENT = "GameTick";
 
-const int LUA_EVENT_COUNT = 2;
+static const auto LUA_EVENT_COUNT = 3;
 
 static const LuaEvent* LUA_EVENTS = new LuaEvent[LUA_EVENT_COUNT]
 {
     ON_SCENARIO_START_EVENT,
-    ON_SAVE_LOAD_EVENT
+    ON_SAVE_LOAD_EVENT,
+    ON_GAME_TICK_EVENT
 };
 
 static bool EVENTS_INITIALISED = false;
+static long long LAST_TICK_TIME_IN_EPOCH_MILLIS = 0;
 
 static void Fire_Lua_Event(LuaEvent name, const char* argumentFormat = "nil", ...)
 {
     if (!Lua_Is_Enabled())
     {
-        Log_Debug("Lua is disabled, skipping firing event: %s", name);
+        Log_Trace("Lua is disabled, skipping firing event: %s", name);
         return;
     }
 
-    Log_Debug("Firing Lua event: %s", name);
+    Log_Trace("Firing Lua event: %s", name);
 
     auto argumentsBuffer = Allocate_String(1024);
 
@@ -124,4 +127,20 @@ void On_Save_Load(HousesType playerHouse, unsigned int scenarioNumber)
         House_Type_To_String(playerHouse),
         scenarioNumber
     );
+}
+
+void On_Game_Tick()
+{
+    auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
+    auto msSinceLastTick = nowInEpochMillis - LAST_TICK_TIME_IN_EPOCH_MILLIS;
+
+    if (msSinceLastTick < Rules_Get_Game_Tick_Interval_In_Ms())
+    {
+        // fire game tick at most every GAME_TICK_INTERVAL_IN_MS millis
+        return;
+    }
+
+    Fire_Lua_Event(ON_GAME_TICK_EVENT);
+
+    LAST_TICK_TIME_IN_EPOCH_MILLIS = nowInEpochMillis;
 }

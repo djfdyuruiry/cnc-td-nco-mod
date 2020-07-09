@@ -89,12 +89,14 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 	// format final message with log level
 	sprintf(
 		messageWithLevelBuffer,
-		"%02d-%02d-%04d %02d:%02d - %s %s\n",
+		"%02d-%02d-%04d %02d:%02d:%02d.%03d - %s %s\n",
 		now.wDay,
 		now.wMonth,
 		now.wYear,
 		now.wHour,
 		now.wMinute,
+		now.wSecond,
+		now.wMilliseconds,
 		Log_Level_To_String(logLevel),
 		messageBuffer
 	);

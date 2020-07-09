@@ -1922,6 +1922,7 @@ inline TextPrintType operator~(TextPrintType a)
 **	maximums never exceed the maximum value for the "ID" element in the
 **	object class.
 */
+// TODO: load these from RULES to allow more units in game
 #define	AIRCRAFT_MAX			100			// Lasts for minutes.
 #define	ANIM_MAX					200			// Lasts only a few seconds.
 #define	BUILDING_MAX			500		// Lasts for hours.

@@ -7,6 +7,8 @@ local ncoAndGameRules = [[### rules.ini for Tiberian Dawn
 LogLevel=error
 EnableLuaScripts=true
 LuaScripts=
+EnableLuaConsole=false
+GameTickIntervalInMs=250
 
 ## game rules
 [Game]

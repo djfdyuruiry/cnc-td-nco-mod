@@ -1,7 +1,5 @@
 #include "function.h"
 
-static bool API_INITIALISED = false;
-
 static const char* GET_GAME_RULE_FUNCTION = "\
   function getGameRule(ruleName)                    \n\
     local gameRules = getGameRuleNames()            \n\
@@ -28,6 +26,8 @@ static const char* GET_GAME_RULE_FUNCTION = "\
     return nil                                      \n\
   end                                               \n\
 ";
+
+static bool API_INITIALISED = false;
 
 static bool Load_Lua_Api_Functions()
 {
@@ -67,7 +67,16 @@ static bool Load_Api_Functions()
     Register_Lua_Function("getBuildingRule", Lua_Get_Building_Rule);
     Register_Lua_Function("setBuildingRule", Lua_Set_Building_Rule);
 
+    Register_Lua_Function("showGameMessage", Lua_Show_Game_Message);
+
     return Load_Lua_Api_Functions();
+}
+
+static int Lua_Get_Now_In_Epoch_Millis(lua_State* lua)
+{
+    lua_pushnumber(lua, Get_Now_In_Epoch_Millis());
+
+    return 1;
 }
 
 static int Lua_Set_Log_Level(lua_State* lua)
@@ -136,6 +145,7 @@ static void Load_Utility_Functions()
     Register_Lua_Function("showError", Lua_Show_Error);
     Register_Lua_Function("getLogLevel", Lua_Get_Log_Level);
     Register_Lua_Function("setLogLevel", Lua_Set_Log_Level);
+    Register_Lua_Function("getNowInEpochMillis", Lua_Get_Now_In_Epoch_Millis);
 }
 
 bool Initialise_Lua_Api()
