@@ -1,10 +1,20 @@
 ﻿# 🛠 New Construction Options 🛠
 
+
+![version](https://img.shields.io/github/v/release/djfdyuruiry/cnc-td-nco-mod)
+![build status](https://img.shields.io/github/workflow/status/djfdyuruiry/cnc-td-nco-mod/Build%20&%20Test)
+![subs](https://img.shields.io/steam/subscriptions/2147631402?label=steam%20subs)
+
+
 This is a mod for the remastered version of C&C Tiberian Dawn.
 
 It aims to make Tiberian Dawn as customisable as possible through configuration and scripting without having to modify source code directly.
 
 The key goal is to overcome the limitation of only having one `dll` based mod loaded into the game at a time.
+
+**I stream coding on twitch: https://www.twitch.tv/djfdyuruiry**
+
+![twitch stream](https://img.shields.io/twitch/status/djfdyuruiry?label=twitch%20stream)
 
 - [Features](#Features)
 - [How to Use](#How-To-Use)

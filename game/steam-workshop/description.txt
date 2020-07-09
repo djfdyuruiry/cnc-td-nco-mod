@@ -1,10 +1,16 @@
 [h1]🛠New Construction Options🛠[/h1]
 
+[img]https://img.shields.io/github/v/release/djfdyuruiry/cnc-td-nco-mod[/img][img]https://img.shields.io/github/workflow/status/djfdyuruiry/cnc-td-nco-mod/Build%20&%20Test[/img][img]https://img.shields.io/github/stars/djfdyuruiry/cnc-td-nco-mod?style=social[/img]
+
+[img]https://img.shields.io/twitch/status/djfdyuruiry?label=twitch%20stream[/img]
+
 This mod provides an extensive 📃 RULES.INI file 📃 for Tiberian Dawn & ⚙ Lua event scripting ⚙.
 
 Unfortunately only one C&C dll mod can run at a time, this mod aims to fix that problem by providing a rules file and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
 
 Project Roadmap can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/7.-Roadmap]here[/url].
+
+[i]I stream coding on twitch: [/i][url=https://www.twitch.tv/djfdyuruiry]https://www.twitch.tv/djfdyuruiry[/url]
 
 [b]Getting Started:[/b]
 
