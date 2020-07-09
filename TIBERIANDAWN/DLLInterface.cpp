@@ -2002,6 +2002,34 @@ void DLLExportClass::Config(const CNCRulesDataStruct& rules)
 		Rule.Diff[i].RepairDelay = rules.Difficulties[i].RepairDelay;
 		Rule.Diff[i].BuildDelay = rules.Difficulties[i].BuildDelay;
 		Rule.Diff[i].IsBuildSlowdown = rules.Difficulties[i].IsBuildSlowdown ? 1 : 0;
+
+		Log_Debug("Difficulty Rules: \n\
+[%d] \n\
+Firepower=%f \n\
+Groundspeed=%f \n\
+Airspeed=%f \n\
+Armor=%f \n\
+ROF=%f \n\
+Cost=%f \n\
+BuildSpeed=%f \n\
+RepairDelay=%f \n\
+BuildDelay=%f \n\
+BuildSlowdown=%s \n\
+\n",
+			i,
+			Rule.Diff[i].FirepowerBias,
+			Rule.Diff[i].GroundspeedBias,
+			Rule.Diff[i].AirspeedBias,
+			Rule.Diff[i].ArmorBias,
+			Rule.Diff[i].ROFBias,
+			Rule.Diff[i].CostBias,
+			Rule.Diff[i].BuildSpeedBias,
+			Rule.Diff[i].RepairDelay,
+			Rule.Diff[i].BuildDelay,
+			Convert_Boolean_To_String(Rule.Diff[i].IsBuildSlowdown)
+		);
+
+		// below two rules are never used for C&C (RA only)
 		Rule.Diff[i].IsWallDestroyer = rules.Difficulties[i].IsWallDestroyer ? 1 : 0;
 		Rule.Diff[i].IsContentScan = rules.Difficulties[i].IsContentScan ? 1 : 0;
 	}	

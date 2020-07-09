@@ -1,73 +1,43 @@
-local ncoAndGameRules = [[### rules.ini for Tiberian Dawn
-###
-### full guide to editing this file: https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/1.-RULES.INI-Full-Guide
-###
+local typeAreas =
+{
+  Infantry = {
+    getTypes = getInfantryTypes,
+    getRuleNames = getInfantryRuleNames,
+    getRuleValue = getInfantryRule,
+    rules = {}
+  },
+  Units = {
+    getTypes = getUnitTypes,
+    getRuleNames = getUnitRuleNames,
+    getRuleValue = getUnitRule,
+    rules = {}
+  },
+  Aircraft = {
+    getTypes = getAircraftTypes,
+    getRuleNames = getAircraftRuleNames,
+    getRuleValue = getAircraftRule,
+    rules = {}
+  },
+  Buildings = {
+    getTypes = getBuildingTypes,
+    getRuleNames = getBuildingRuleNames,
+    getRuleValue = getBuildingRule,
+    rules = {}
+  }
+}
 
-[NCO]
-LogLevel=error
-EnableLuaScripts=true
-EnableLuaConsole=false
-LuaScripts=
-GameTickIntervalInMs=250
+local typeAreaOrder =
+{
+  "Infantry",
+  "Units",
+  "Aircraft",
+  "Buildings"
+}
 
-## game rules
-[Game]
-EnableDebugLogging=false
+local outputFileName = "RULES-DEFAULT.INI"
+local rulesFile = nil
 
-; map
-MaxBuildDistance=1
-PreventBuildingInShroud=true
-AllowBuildingBesideWalls=true
-TiberiumGrows=true
-TiberiumSpreads=true
-SlowTiberiumGrowthAndSpread=false
-TiberiumGrowthRate=1.0
-TiberiumSpreadRate=1.0
-CreditsPerTiberiumScoop=25
-
-; misc
-DefendAgainstFriendlyFire=false
-TargetTrees=false
-MvcRedeployable=false
-SpawnVisceroids=false
-VehiclesDoThreePointTurns=false
-ShowBibsOnBuildings=false
-ShowCivilianBuildingNames=false
-OnlyAllowNukeIfAllPartsHaveBeenCollected=true
-OnlyAllowUsingOneNukePerScenario=true
-HelipadsAndAircraftBoughtSeperately=false
-MaxHarvesterCapacity=28
-UnitRepairFactor=1.02
-UnitRepairStrengthStep=4
-AircraftRepairFactor=1.02
-AircraftRepairStrengthStep=2
-
-; house specific
-HideTempleFromGdi=true
-HideObeliskFromGdi=true
-HideApcFromNod=true
-HideRocketLauncherFromNod=true
-HideHelipadFromNod=true
-HideAdvancedCommCenterFromNod=true
-
-; level specific
-SetBuildLevelTo1InGdiScenario2=true
-RenameTechCenterToPrisionInScenario3=true
-HideBazookaFromGdiUntilSenario8=true
-HideRocketLauncherFromGdiUntilScenario9=true
-HideSandbagFromGdiUntilScenario9=true
-AllowNodToBuildAdvancedPowerInScenario12=true
-
-; cheats
-AllowBuildingAllForCurrentHouse=false
-UnitsAreIndestructible=false
-InfantryAutoScatters=false
-GiveAttackersAnAdvantage=false
-SpeedyBuilds=false
-
-]]
-
-function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
+local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   rulesFile:write(string.format("## %s\n", typeAreaName))
 
   for _, areaType in ipairs(typeArea.getTypes()) do
@@ -92,57 +62,38 @@ function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   end
 end
 
-function main()
-  local typeAreas =
-  {
-    infantry = {
-      getTypes = getInfantryTypes,
-      getRuleNames = getInfantryRuleNames,
-      getRuleValue = getInfantryRule,
-      rules = {}
-    },
-    unit = {
-      getTypes = getUnitTypes,
-      getRuleNames = getUnitRuleNames,
-      getRuleValue = getUnitRule,
-      rules = {}
-    },
-    aircraft = {
-      getTypes = getAircraftTypes,
-      getRuleNames = getAircraftRuleNames,
-      getRuleValue = getAircraftRule,
-      rules = {}
-    },
-    building = {
-      getTypes = getBuildingTypes,
-      getRuleNames = getBuildingRuleNames,
-      getRuleValue = getBuildingRule,
-      rules = {}
-    }
-  }
+local function dumpRules()
+  log(string.format("Dumping rules ini to %s", outputFileName))
 
-  local outputFile = "RULES-DEFAULT.INI"
+  if not os.execute(string.format("copy RULES-BASE.INI %s", outputFileName)) then
+    error("Failed to copy RULES-BASE.INI")
+  end
+
+  rulesFile = io.open(outputFileName, "a+")
+
+  for _, areaName in ipairs(typeAreaOrder) do
+    dumpRulesForTypeArea(rulesFile, areaName, typeAreas[areaName])
+  end
+end
+
+local function main()
+  os.remove(outputFileName)
 
   setLogLevel("info");
 
-  os.remove(outputFile)
+  local _, err = pcall(dumpRules)
 
-  local rulesFile = io.open(outputFile, "w")
-
-  log(string.format("Dumping rules ini to %s", outputFile))
-
-  rulesFile:write(ncoAndGameRules)
-
-  dumpRulesForTypeArea(rulesFile, "Infantry", typeAreas.infantry)
-  dumpRulesForTypeArea(rulesFile, "Units", typeAreas.unit)
-  dumpRulesForTypeArea(rulesFile, "Aircraft", typeAreas.aircraft)
-  dumpRulesForTypeArea(rulesFile, "Buildings", typeAreas.building)
-
-  rulesFile:close()
-
-  log(string.format("Rules ini dump complete, see results @ %s", outputFile))
+  if rulesFile then
+    rulesFile:close()
+  end
   
   setLogLevel("debug");
+
+  if err then
+    error(string.format("Lua rules dump failed: %s", err))
+  end
+
+  log(string.format("Rules ini dump complete, see results @ %s", outputFileName))
 end
 
 main()
