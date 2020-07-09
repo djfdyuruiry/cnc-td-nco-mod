@@ -88,9 +88,12 @@
     REWARD_RULE, \
     CRUSHABLE_RULE, \
     DETECT_CLOAKED_OBJECTS_RULE, \
+    LEADER_RULE, \
+    TWO_SHOOTER_RULE, \
+    HAS_THEATER_GFX_RULE, \
     SHOW_NAME_RULE
 
-#define SHARED_RULE_COUNT (unsigned) 19
+#define SHARED_RULE_COUNT (unsigned) 22
 
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
