@@ -1,5 +1,3 @@
-#ifdef TEST_CONSOLE
-
 #include "function.h"
 
 static void Print_Lua_Result(HANDLE stdOut)
@@ -104,5 +102,3 @@ void Enter_Lua_Repl()
 		Print_Lua_Result(stdOut);
 	}
 }
-
-#endif

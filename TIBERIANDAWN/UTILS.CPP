@@ -349,3 +349,23 @@ long long Get_Now_In_Epoch_Secs()
 {
 	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_S;
 }
+
+void Configure_Console_Output()
+{
+#ifdef CI_ENV
+	puts("WARNING: CI environment detected - skipped windows console allocation");
+#else
+	if (!AttachConsole(ATTACH_PARENT_PROCESS)
+		&& !AllocConsole()
+		&& !AttachConsole(GetCurrentProcessId()))
+	{
+		Log_Error("Error opening Win32 console: %s", Get_Win32_Error_Message());
+
+		exit(1);
+	}
+
+	freopen("CON", "w", stdout);
+	freopen("CON", "w", stderr);
+	freopen("CON", "w", stdin);
+#endif
+}

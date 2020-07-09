@@ -15,6 +15,9 @@
 #define LUA_SCRIPTS_RULE "LuaScripts"
 #define LUA_SCRIPTS_RULE_UPPER "LUASCRIPTS"
 
+#define ENABLE_LUA_CONSOLE_RULE "EnableLuaConsole"
+#define ENABLE_LUA_CONSOLE_RULE_UPPER "ENABLELUACONSOLE"
+
 #define GAME_TICK_INTERVAL_IN_MS_RULE "GameTickIntervalInMs"
 #define GAME_TICK_INTERVAL_IN_MS_RULE_UPPER "LUASCRIPTS"
 
@@ -100,6 +103,8 @@ LogLevel Current_Log_Level();
 void Set_Current_Log_Level(LogLevel level);
 
 bool Lua_Is_Enabled();
+
+bool Lua_Console_Is_Enabled();
 
 LuaScripts Rules_Get_Lua_Scripts();
 
