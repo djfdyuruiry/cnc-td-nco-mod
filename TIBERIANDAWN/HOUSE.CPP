@@ -1313,21 +1313,22 @@ void HouseClass::AI(void)
 		*/
 		if ((GameToPlay == GAME_NORMAL || Rule.AllowSuperWeapons) &&
 			(ActiveBScan & STRUCTF_EYE) &&
-			(ActLike == HOUSE_GOOD || GameToPlay != GAME_NORMAL) &&
 			(IsHuman || GameToPlay != GAME_NORMAL)) {
+			// one of: multiplayer game OR playing as GOODGUY OR GDI only rule disabled
+			auto houseCanUseIonCannon = GameToPlay != GAME_NORMAL
+					|| ActLike == HOUSE_GOOD 
+					|| !Read_Boolean_Game_Rule(ONLY_GDI_CAN_USE_ION_CANNON_RULE, true);
 
-			IonCannon.Enable(false, this == PlayerPtr, Power_Fraction() < 0x0100);
+			if (houseCanUseIonCannon) {
+				IonCannon.Enable(false, this == PlayerPtr, Power_Fraction() < 0x0100);
 
-			/*
-			**	Flag the sidebar to be redrawn if necessary.
-			*/
-			// Add to Glyphx multiplayer sidebar. ST - 3/22/2019 1:50PM
-			if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
-				if (IsHuman) {
+				/*
+				**	Flag the sidebar to be redrawn if necessary.
+				*/
+				// Add to Glyphx multiplayer sidebar. ST - 3/22/2019 1:50PM
+				if (GameToPlay == GAME_GLYPHX_MULTIPLAYER && IsHuman) {
 					Sidebar_Glyphx_Add(RTTI_SPECIAL, SPC_ION_CANNON, this);
-				}
-			} else {
-				if (this == PlayerPtr) {
+				} else if (this == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
 					Map.Column[1].Flag_To_Redraw();
 				}

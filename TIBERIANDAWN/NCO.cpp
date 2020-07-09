@@ -62,8 +62,10 @@ void NCO_Shutdown()
 
 	Close_Log_File_If_Open();
 
+	#ifndef TEST_CONSOLE
 	if (Lua_Console_Is_Enabled() && !TerminateThread(LUA_REPL_THREAD, 0))
 	{
 		Log_Warn("Error closing Lua console: %s", Get_Win32_Error_Message());
 	}
+	#endif
 }
