@@ -20,15 +20,15 @@
 #define AVOIDS_TIBERIUM_RULE "AvoidsTiberium"
 #define AVOIDS_TIBERIUM_RULE_UPPER "AVOIDSTIBERIUM"
 
-#define INFANTRY_RULES FEMALE_RULE, \
+#define INFANTRY_RULES SHARED_RULES, \
+    FEMALE_RULE, \
     CRAWLING_RULE, \
     CAN_CAPTURE_RULE, \
     FRAIDY_CAT_RULE, \
     CIVILIAN_RULE, \
-    AVOIDS_TIBERIUM_RULE, \
-    SHARED_RULES
+    AVOIDS_TIBERIUM_RULE
 
-#define INFANTRY_RULE_COUNT (unsigned) 6 + SHARED_RULE_COUNT
+#define INFANTRY_RULE_COUNT 6u + SHARED_RULE_COUNT
 
 // infantry rules
 #define Read_Is_Female(section, defaultValue) Read_Bool_From_Rules_Ini(section, FEMALE_RULE, defaultValue)

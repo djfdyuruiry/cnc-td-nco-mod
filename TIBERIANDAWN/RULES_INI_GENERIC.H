@@ -93,7 +93,7 @@
     HAS_THEATER_GFX_RULE, \
     SHOW_NAME_RULE
 
-#define SHARED_RULE_COUNT (unsigned) 22
+#define SHARED_RULE_COUNT 22u
 
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
@@ -105,13 +105,13 @@
 #define TRANSPORT_CAPACITY_RULE "TransportCapacity"
 #define TRANSPORT_CAPACITY_RULE_UPPER "TRANSPORTCAPACITY"
 
-#define DEFAULT_TRANSPORT_CAPACITY 5
+#define DEFAULT_TRANSPORT_CAPACITY 5u
 
 #define SHARED_UNIT_AIRCRAFT_RULES RATE_OF_TURN_RULE, \
     TRANSPORTER_RULE, \
     TRANSPORT_CAPACITY_RULE
 
-#define SHARED_UNIT_AIRCRAFT_RULE_COUNT 3
+#define SHARED_UNIT_AIRCRAFT_RULE_COUNT 3u
 
 // non-infantry shared rules
 #define REPAIRABLE_RULE "Repairable"
@@ -127,7 +127,7 @@
     HAS_CREW_RULE, \
     TURRET_EQUIPPED_RULE
 
-#define SHARED_NON_INFANTRY_RULE_COUNT 3
+#define SHARED_NON_INFANTRY_RULE_COUNT 3u
 
 // shared rules
 #define Read_Build_Level(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, BUILD_LEVEL_RULE, defaultValue, 1, 99)
