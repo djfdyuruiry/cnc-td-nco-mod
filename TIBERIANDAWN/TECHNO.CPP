@@ -196,14 +196,6 @@ TechnoTypeClass::TechnoTypeClass(
 							strength)
 {
 	CameoData = NULL;
-	IsLeader = is_leader;
-	IsScanner = is_scanner;
-	IsTwoShooter = is_twoshooter;
-	IsCrew = is_crew;
-	IsTheater = is_theater;
-	IsRepairable = is_repairable;
-	IsTurretEquipped= is_turret_equipped;
-	IsNominal = is_nominal;
 
 	/*
 	** Units risk value is based on the type of weapon he has and the
@@ -212,11 +204,13 @@ TechnoTypeClass::TechnoTypeClass(
 	risk = risk;
 	Risk = 0;
 
-	FriendlyName = friendlyName;
-	BuildLevel = Read_Build_Level(IniName, level);
+	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	Level = Read_Build_Level(IniName, level);
 	Pre = Read_Prerequisite(IniName, pre);
 	IsTransporter = Read_Is_Transport(IniName, is_transporter);
-	TransportCapacity = (unsigned int)Read_Int_From_Rules_Ini(this->IniName, TRANSPORT_CAPACITY_RULE, 5, 1, INT_MAX);
+	TransportCapacity = IsTransporter
+		? Read_Unsigned_Int_From_Rules_Ini(IniName, TRANSPORT_CAPACITY_RULE, DEFAULT_TRANSPORT_CAPACITY, 0, INT_MAX)
+		: 0;
 	IsBuildable = Read_Is_Buildable(IniName, is_buildable);
 	MaxAmmo = Read_Ammo(IniName, ammo);
 	SightRange = Read_Sight_Range(IniName, sightrange);
@@ -228,6 +222,14 @@ TechnoTypeClass::TechnoTypeClass(
 	Primary = Read_Primary_Weapon(IniName, primary);
 	Secondary =  Read_Secondary_Weapon(IniName, secondary);
 	MaxSpeed = Read_Speed(IniName, maxspeed);
+	IsScanner = Read_Unsigned_Bool_From_Rules_Ini(IniName, DETECT_CLOAKED_OBJECTS_RULE, is_scanner);
+	IsRepairable = Read_Unsigned_Bool_From_Rules_Ini(IniName, REPAIRABLE_RULE, is_repairable);
+	IsCrew = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_CREW_RULE, is_crew);
+	IsLeader = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_CREW_RULE, is_leader);
+	IsTwoShooter = Read_Unsigned_Bool_From_Rules_Ini(IniName, TWO_SHOOTER_RULE, is_twoshooter);
+	IsTheater = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_THEATER_GFX_RULE, is_theater);
+	IsTurretEquipped = Read_Unsigned_Bool_From_Rules_Ini(IniName, TURRET_EQUIPPED_RULE, is_turret_equipped);
+	IsNominal = Read_Unsigned_Bool_From_Rules_Ini(IniName, SHOW_NAME_RULE, is_nominal);
 
 	if (primary != WEAPON_NONE) {
 		Calculate_Risk();

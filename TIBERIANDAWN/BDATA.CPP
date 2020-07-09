@@ -4530,13 +4530,7 @@ int BuildingTypeClass::Full_Name(void) const
 		return(TXT_PRISON);
 	}
 
-	auto showName = Read_Bool_From_Rules_Ini(
-		IniName,
-		SHOW_NAME_RULE,
-		(Type == STRUCT_V23 || Type == STRUCT_V30 || Type == STRUCT_MISSION || Type == STRUCT_BIO_LAB)
-	);
-
-	if (!IsNominal || Special.IsNamed || IsWall || Debug_Map || showName) {
+	if (!IsNominal || Special.IsNamed || IsWall || Debug_Map || Type == STRUCT_V23 || Type == STRUCT_V30 || Type == STRUCT_MISSION || Type == STRUCT_BIO_LAB) {
 		return(TechnoTypeClass::Full_Name());
 	}
 

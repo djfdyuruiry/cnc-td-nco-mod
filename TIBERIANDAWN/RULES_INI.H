@@ -93,6 +93,10 @@ bool Read_Bool_From_Rules_Ini(
 	bool defaultValue
 );
 
+#define Read_Unsigned_Int_From_Rules_Ini(section, entry, defaultValue, minValue, maxValue) (unsigned int)Read_Int_From_Rules_Ini(section, entry, defaultValue, minValue, maxValue)
+
+#define Read_Unsigned_Bool_From_Rules_Ini(section, entry, defaultValue) (unsigned)Read_Bool_From_Rules_Ini(section, entry, defaultValue)
+
 // NCO config
 void Rules_Ini_Failed_Validation(bool value);
 

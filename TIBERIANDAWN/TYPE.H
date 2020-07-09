@@ -536,8 +536,7 @@ class TechnoTypeClass : public ObjectTypeClass
 		**	This event usually occurs as a result of capture.
 		*/
 		char* HouseListCsv;
-
-		const char* FriendlyName;
+		char* FriendlyName;
 
 		unsigned int TransportCapacity;
 

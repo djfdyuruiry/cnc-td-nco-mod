@@ -50,9 +50,10 @@
     STORAGE_CAPACITY_RULE, \
     POWER_OUTPUT_RULE, \
     POWER_INPUT_RULE, \
+    SHARED_NON_INFANTRY_RULES, \
     SHARED_RULES
 
-#define BUILDING_RULE_COUNT (unsigned) 12 + SHARED_RULE_COUNT
+#define BUILDING_RULE_COUNT (unsigned) 12 + SHARED_NON_INFANTRY_RULE_COUNT + SHARED_RULE_COUNT
 
 // building rules
 #define Read_Is_Bibbed(section, defaultValue) Read_Bool_From_Rules_Ini(section, BIBBED_RULE, defaultValue)

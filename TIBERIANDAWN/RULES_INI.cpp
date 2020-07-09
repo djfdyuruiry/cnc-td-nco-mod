@@ -529,7 +529,7 @@ bool Read_Bool_From_Rules_Ini(
 	return Strings_Are_Equal(ruleValue, "TRUE");
 }
 
-int Read_Prerequisite(
+long Read_Prerequisite(
 	const char* section,
 	StructType defaultValue
 )
