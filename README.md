@@ -12,6 +12,8 @@ It aims to make Tiberian Dawn as customisable as possible through configuration 
 
 The key goal is to overcome the limitation of only having one `dll` based mod loaded into the game at a time.
 
+[View on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2147631402)
+
 **I stream coding on twitch: https://www.twitch.tv/djfdyuruiry**
 
 ![twitch stream](https://img.shields.io/twitch/status/djfdyuruiry?label=twitch%20stream)

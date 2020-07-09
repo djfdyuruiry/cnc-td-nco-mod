@@ -536,8 +536,7 @@ class TechnoTypeClass : public ObjectTypeClass
 		**	This event usually occurs as a result of capture.
 		*/
 		char* HouseListCsv;
-
-		const char* FriendlyName;
+		char* FriendlyName;
 
 		unsigned int TransportCapacity;
 
@@ -547,7 +546,7 @@ class TechnoTypeClass : public ObjectTypeClass
 				const char* friendlyName,
 				char const *ininame,
 				unsigned char level,
-				long pre,
+				StructType pre,
 				bool is_leader,
 				bool is_scanner,
 				bool is_nominal,
@@ -761,7 +760,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 						char const *ininame,
 						COORDINATE exitpoint,
 						unsigned char level,
-						long pre,
+						StructType pre,
 						bool is_scanner,
 						bool is_regulated,
 						bool is_bibbed,
@@ -783,7 +782,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 						bool is_buildable,
 						bool is_crew,
 						bool is_sturdy,
-						RTTIType tobuild,
+						FactoryType tobuild,
 						DirType sframe,
 						unsigned short strength,
 						int sightrange,
@@ -1002,7 +1001,7 @@ class UnitTypeClass : public TechnoTypeClass
 						char const *ininame,
 						AnimType exp,
 						unsigned char level,
-						long pre,
+						StructType pre,
 						bool is_goodie,
 						bool is_leader,
 						bool is_eight,
@@ -1157,7 +1156,7 @@ class InfantryTypeClass : public TechnoTypeClass
 						const char* friendlyName,
 						char const *ininame,
 						unsigned char level,
-						long pre,
+						StructType pre,
 						bool is_female,
 						bool is_leader,
 						bool is_crawling,
@@ -1770,7 +1769,7 @@ class AircraftTypeClass : public TechnoTypeClass
 				const char* friendlyName,
 				char const *ininame,
 				unsigned char level,
-				long pre,
+				StructType pre,
 				bool is_leader,
 				bool is_twoshooter,
 				bool is_transporter,

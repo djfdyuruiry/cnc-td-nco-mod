@@ -1,11 +1,10 @@
 #include "function.h"
 
-static auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
-static auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
-static auto RULES_FILENAME = "RULES.INI";
+static const auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
+static const auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
+static const auto RULES_FILENAME = "RULES.INI";
 static const unsigned int RULES_STRING_LENGTH = MAX_PATH * 15;
-static const int VALID_BOOLEAN_VALUE_COUNT = 2;
-static const char** VALID_BOOLEAN_VALUES;
+static const auto VALID_BOOL_STRINGS_COUNT = 2;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
@@ -44,21 +43,25 @@ static void Read_Log_Level_From_Rules_Ini()
 {
 	Log_Info("Parsing Log Level from rules ini");
 
+	auto validLogLevels = new const char* [LOG_LEVEL_COUNT]{
+		Log_Level_To_String(OFF),
+		Log_Level_To_String(ERR),
+		Log_Level_To_String(WARN),
+		Log_Level_To_String(INFO),
+		Log_Level_To_String(DEBUG),
+		Log_Level_To_String(TRACE)
+	};
+
 	auto logLevelLength = Get_Log_Level_Length();
 	auto logLevelBuffer = Read_String_From_Rules_Ini(
 		NCO_RULES_SECTION_NAME,
 		"LogLevel",
 		"INFO", 
-		new const char* [6]{
-			Log_Level_To_String(OFF),
-			Log_Level_To_String(ERR),
-			Log_Level_To_String(WARN),
-			Log_Level_To_String(INFO),
-			Log_Level_To_String(DEBUG),
-			Log_Level_To_String(TRACE)
-		},
+		validLogLevels,
 		LOG_LEVEL_COUNT
 	);
+
+	delete validLogLevels;
 
 	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
 
@@ -123,8 +126,6 @@ void Ensure_Rules_Ini_Is_Loaded() {
 	if (RULES_INI_BUFFER != NULL) {
 		return;
 	}
-
-	VALID_BOOLEAN_VALUES = new const char* [VALID_BOOLEAN_VALUE_COUNT] { "TRUE", "FALSE" };
 
 	RULES_INI_BUFFER = Read_Rules_Ini();
 
@@ -517,19 +518,22 @@ bool Read_Bool_From_Rules_Ini(
 )
 {
 	auto defaultValueStr = Convert_Boolean_To_String(defaultValue);
+	auto validBoolStrings = new const char* [VALID_BOOL_STRINGS_COUNT]{ "TRUE", "FALSE" };
 
 	auto ruleValue = Read_String_From_Rules_Ini(
 		section,
 		entry,
 		defaultValueStr,
-		VALID_BOOLEAN_VALUES,
-		VALID_BOOLEAN_VALUE_COUNT
+		validBoolStrings,
+		VALID_BOOL_STRINGS_COUNT
 	);
+
+	delete validBoolStrings;
 
 	return Strings_Are_Equal(ruleValue, "TRUE");
 }
 
-int Read_Prerequisite(
+long Read_Prerequisite(
 	const char* section,
 	StructType defaultValue
 )

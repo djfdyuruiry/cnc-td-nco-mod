@@ -52,10 +52,6 @@ function main()
 
           rulesRead = rulesRead + 1
 
-          if ruleName == "FriendlyName" then
-              goto next
-          end
-
           typeArea.setRuleValue(areaType, ruleName, ruleValue)
 
           rulesWritten = rulesWritten + 1

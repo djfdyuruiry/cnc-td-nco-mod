@@ -23,3 +23,5 @@ copy ..\game\lua\dump-rules.lua %outDir%
 if exist %outDir%test-lua-rules.lua del %outDir%test-lua-rules.lua
 
 copy ..\game\lua\test-lua-rules.lua %outDir%
+
+"%~dp0update-default-rules.bat"

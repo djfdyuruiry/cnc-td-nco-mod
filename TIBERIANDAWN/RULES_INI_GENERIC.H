@@ -4,6 +4,9 @@
 #include "defines.h"
 
 // generic rules - apply to all types
+#define FRIENDLY_NAME_RULE "FriendlyName"
+#define FRIENDLY_NAME_RULE_UPPER "FRIENDLYNAME"
+
 #define BUILD_LEVEL_RULE "BuildLevel"
 #define BUILD_LEVEL_RULE_UPPER "BUILDLEVEL"
 
@@ -55,15 +58,20 @@
 #define DETECT_CLOAKED_OBJECTS_RULE "DetectCloakedObjects"
 #define DETECT_CLOAKED_OBJECTS_RULE_UPPER "DETECTCLOAKEDOBJECTS"
 
-// virtual rule used in game logic, not the type itself
+#define LEADER_RULE "Leader"
+#define LEADER_RULE_UPPER "LEADER"
+
+#define TWO_SHOOTER_RULE "TwoShooter"
+#define TWO_SHOOTER_RULE_UPPER "TWOSHOOTER"
+
+#define HAS_THEATER_GFX_RULE "HasTheaterSpecificGraphic"
+#define HAS_THEATER_GFX_RULE_UPPER "HASTHEATERSPECIFICGRAPHIC"
+
 #define SHOW_NAME_RULE "ShowName"
 #define SHOW_NAME_RULE_UPPER "SHOWNAME"
 
-// virtual rule exposed by the Lua API only
-#define FRIENDLY_NAME_RULE "FriendlyName"
-#define FRIENDLY_NAME_RULE_UPPER "FRIENDLYNAME"
-
-#define SHARED_RULES BUILD_LEVEL_RULE, \
+#define SHARED_RULES FRIENDLY_NAME_RULE, \
+    BUILD_LEVEL_RULE, \
     SCENARIO_LEVEL_RULE, \
     PREREQUISITE_RULE, \
     COST_RULE, \
@@ -80,9 +88,12 @@
     REWARD_RULE, \
     CRUSHABLE_RULE, \
     DETECT_CLOAKED_OBJECTS_RULE, \
-    FRIENDLY_NAME_RULE
+    LEADER_RULE, \
+    TWO_SHOOTER_RULE, \
+    HAS_THEATER_GFX_RULE, \
+    SHOW_NAME_RULE
 
-#define SHARED_RULE_COUNT (unsigned) 18
+#define SHARED_RULE_COUNT 22u
 
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
@@ -94,11 +105,29 @@
 #define TRANSPORT_CAPACITY_RULE "TransportCapacity"
 #define TRANSPORT_CAPACITY_RULE_UPPER "TRANSPORTCAPACITY"
 
+#define DEFAULT_TRANSPORT_CAPACITY 5u
+
 #define SHARED_UNIT_AIRCRAFT_RULES RATE_OF_TURN_RULE, \
     TRANSPORTER_RULE, \
     TRANSPORT_CAPACITY_RULE
 
-#define SHARED_UNIT_AIRCRAFT_RULE_COUNT 3
+#define SHARED_UNIT_AIRCRAFT_RULE_COUNT 3u
+
+// non-infantry shared rules
+#define REPAIRABLE_RULE "Repairable"
+#define REPAIRABLE_RULE_UPPER "REPAIRABLE"
+
+#define HAS_CREW_RULE "HasCrew"
+#define HAS_CREW_RULE_UPPER "HASCREW"
+
+#define TURRET_EQUIPPED_RULE "TurretEquipped"
+#define TURRED_EQUIPPED_RULE_UPPER "TURRETEQUIPPED"
+
+#define SHARED_NON_INFANTRY_RULES REPAIRABLE_RULE, \
+    HAS_CREW_RULE, \
+    TURRET_EQUIPPED_RULE
+
+#define SHARED_NON_INFANTRY_RULE_COUNT 3u
 
 // shared rules
 #define Read_Build_Level(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, BUILD_LEVEL_RULE, defaultValue, 1, 99)
@@ -136,7 +165,7 @@
 // unit/aircraft shared rules
 #define Read_Rate_Of_Turn(section, defaultValue) (unsigned char)Read_Int_From_Rules_Ini(section, RATE_OF_TURN_RULE, defaultValue, 0, UCHAR_MAX)
 
-int Read_Prerequisite(
+long Read_Prerequisite(
     const char* section,
     StructType defaultValue
 );

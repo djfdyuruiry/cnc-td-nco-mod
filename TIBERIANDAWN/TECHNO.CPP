@@ -151,7 +151,7 @@ TechnoTypeClass::TechnoTypeClass(
 		const char* friendlyName,
 		char const *ininame,
 		unsigned char level,
-		long pre,
+		StructType pre,
 		bool is_leader,
 		bool is_scanner,
 		bool is_nominal,
@@ -195,30 +195,7 @@ TechnoTypeClass::TechnoTypeClass(
 							armor,
 							strength)
 {
-	FriendlyName = friendlyName;
-	Level = level;
-	Pre = pre;
-	MaxAmmo = ammo;
-	MaxSpeed = maxspeed;
 	CameoData = NULL;
-	Primary = primary,
-	Secondary = secondary,
-	Cost = cost;
-	IsLeader = is_leader;
-	IsScanner = is_scanner;
-	IsTransporter = is_transporter;
-	IsTwoShooter = is_twoshooter;
-	IsBuildable = is_buildable;
-	IsCrew = is_crew;
-	IsTheater = is_theater;
-	IsRepairable = is_repairable;
-	IsTurretEquipped= is_turret_equipped;
-	IsNominal = is_nominal;
-	Ownable = ownable;
-	HouseListCsv = strdup(houseListCsv);
-	Reward = reward;
-	Scenario = scenario;
-	SightRange = sightrange;
 
 	/*
 	** Units risk value is based on the type of weapon he has and the
@@ -226,6 +203,33 @@ TechnoTypeClass::TechnoTypeClass(
 	*/
 	risk = risk;
 	Risk = 0;
+
+	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	Level = Read_Build_Level(IniName, level);
+	Pre = Read_Prerequisite(IniName, pre);
+	IsTransporter = Read_Is_Transport(IniName, is_transporter);
+	TransportCapacity = IsTransporter
+		? Read_Unsigned_Int_From_Rules_Ini(IniName, TRANSPORT_CAPACITY_RULE, DEFAULT_TRANSPORT_CAPACITY, 0, INT_MAX)
+		: 0;
+	IsBuildable = Read_Is_Buildable(IniName, is_buildable);
+	MaxAmmo = Read_Ammo(IniName, ammo);
+	SightRange = Read_Sight_Range(IniName, sightrange);
+	Cost = Read_Cost(IniName, cost);
+	Scenario = Read_Scenario_Level(IniName, scenario);
+	Reward = Read_Reward(IniName, reward);
+	HouseListCsv = strdup(houseListCsv);
+	Ownable = Read_House_List_From_Rules_Ini(IniName, ownable, HouseListCsv);
+	Primary = Read_Primary_Weapon(IniName, primary);
+	Secondary =  Read_Secondary_Weapon(IniName, secondary);
+	MaxSpeed = Read_Speed(IniName, maxspeed);
+	IsScanner = Read_Unsigned_Bool_From_Rules_Ini(IniName, DETECT_CLOAKED_OBJECTS_RULE, is_scanner);
+	IsRepairable = Read_Unsigned_Bool_From_Rules_Ini(IniName, REPAIRABLE_RULE, is_repairable);
+	IsCrew = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_CREW_RULE, is_crew);
+	IsLeader = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_CREW_RULE, is_leader);
+	IsTwoShooter = Read_Unsigned_Bool_From_Rules_Ini(IniName, TWO_SHOOTER_RULE, is_twoshooter);
+	IsTheater = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_THEATER_GFX_RULE, is_theater);
+	IsTurretEquipped = Read_Unsigned_Bool_From_Rules_Ini(IniName, TURRET_EQUIPPED_RULE, is_turret_equipped);
+	IsNominal = Read_Unsigned_Bool_From_Rules_Ini(IniName, SHOW_NAME_RULE, is_nominal);
 
 	if (primary != WEAPON_NONE) {
 		Calculate_Risk();

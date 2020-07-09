@@ -102,30 +102,30 @@ static InfantryTypeClass const E1(
 	TXT_E1,						// Translate name number for infantry type.
 	TXT_E1_STRING,
 	"E1",							// INI name for infantry.
-	Read_Build_Level("E1", 1),								// Build level.
-	Read_Prerequisite("E1", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("E1", false),						// Is this a female type?
+	1,								// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	true,							// Is a leader type?
-	Read_Is_Crawling("E1", true),							// Has crawling animation frames?
-	Read_Is_Civilian("E1", false),						// Is this a civlian?
+	true,							// Has crawling animation frames?
+	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("E1", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("E1", false),						// Can this infantry type capture a building?
+	false,						// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("E1", -1),							// Number of shots it has (default).
+	-1,							// Number of shots it has (default).
 	&MiniGunnerDos[0][0],	// Ptr to minigunner 'DO' table above
 	2,								// Frame of projectile launch.
 	2,								// Frame of projectile launch while prone.
-	Read_Strength("E1", 50),							// Strength of infantry (in damage points).
-	Read_Sight_Range("E1", 1),								// Sight range.
-	Read_Cost("E1", 100),							// Cost of infantry (in credits).
-	Read_Scenario_Level("E1", 1),								// Scenario when they first appear.
-	80, Read_Reward("E1", 10),						// Risk/Reward of this infantry unit.
- 	Read_House_List_From_Rules_Ini("E1", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
+	50,							// Strength of infantry (in damage points).
+	1,								// Sight range.
+	100,							// Cost of infantry (in credits).
+	1,								// Scenario when they first appear.
+	80, 10,						// Risk/Reward of this infantry unit.
+ 	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD,					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("E1", WEAPON_M16),
-	Read_Secondary_Weapon("E1", WEAPON_NONE),
-	Read_Speed("E1", MPH_SLOW)  // Maximum speed of infantry.
+	WEAPON_M16,
+	WEAPON_NONE,
+	MPH_SLOW  // Maximum speed of infantry.
 );
 
 // Grenadiers
@@ -173,30 +173,30 @@ static InfantryTypeClass const E2(
 	TXT_E2,						// Translate name number for infantry type.
 	TXT_E2_STRING,
 	"E2",							// INI name for infantry.
-	Read_Build_Level("E2", 1),								// Build level.
-	Read_Prerequisite("E2", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("E2", false),						// Is this a female type?
+	1,								// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	true,							// Is a leader type?
-	Read_Is_Crawling("E2", true),							// Has crawling animation frames?
-	Read_Is_Civilian("E2", false),						// Is this a civlian?
+	true,							// Has crawling animation frames?
+	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("E2", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("E2", false),						// Can this infantry type capture a building?
+	false,						// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("E2", -1),							// Number of shots it has (default).
+	-1,							// Number of shots it has (default).
 	&GrenadierDos[0][0],		// Ptr to grenadier DO table (above)
 	14,							// Frame of projectile launch.
 	6,								// Frame of projectile launch while prone.
-	Read_Strength("E2", 50),							// Strength of infantry (in damage points).
-	Read_Sight_Range("E2", 1),								// Sight range.
-	Read_Cost("E2", 160),							// Cost of infantry (in credits).
-	Read_Scenario_Level("E2", 3),								// Scenario when they first appear.
-	80, Read_Reward("E2", 10),						// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("E2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY"),				// Who can own this infantry unit.
+	50,							// Strength of infantry (in damage points).
+	1,								// Sight range.
+	160,							// Cost of infantry (in credits).
+	3,								// Scenario when they first appear.
+	80, 10,						// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
-	Read_Primary_Weapon("E2", WEAPON_GRENADE),
-	Read_Secondary_Weapon("E2", WEAPON_NONE),
-	Read_Speed("E2", MPH_SLOW_ISH)  // Maximum speed of infantry.
+	WEAPON_GRENADE,
+	WEAPON_NONE,
+	MPH_SLOW_ISH  // Maximum speed of infantry.
 );
 
 
@@ -247,30 +247,30 @@ static InfantryTypeClass const E3(
 	TXT_E3,						// Translate name number for infantry type.
 	TXT_E3_STRING,
 	"E3",							// INI name for infantry.
-	Read_Build_Level("E3", 2),								// Build level.
-	Read_Prerequisite("E3", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("E3", false),						// Is this a female type?
+	2,								// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	true,							// Is a leader type?
-	Read_Is_Crawling("E3", true),							// Has crawling animation frames?
-	Read_Is_Civilian("E3", false),						// Is this a civlian?
+	true,							// Has crawling animation frames?
+	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("E3", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("E3", false),						// Can this infantry type capture a building?
+	false,						// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("E3", -1),							// Number of shots it has (default).
+	-1,							// Number of shots it has (default).
 	&BazookaDos[0][0],		// Ptr to DO table (above)
 	3,								// Frame of projectile launch.
 	3,								// Frame of projectile launch while prone.
-	Read_Strength("E3", 25),							// Strength of infantry (in damage points).
-	Read_Sight_Range("E3", 2),								// Sight range.
-	Read_Cost("E3", 300),							// Cost of infantry (in credits).
-	Read_Scenario_Level("E3", 3),								// Scenario when they first appear.
-	80, Read_Reward("E3", 10),						// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("E3", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
+	25,							// Strength of infantry (in damage points).
+	2,								// Sight range.
+	300,							// Cost of infantry (in credits).
+	3,								// Scenario when they first appear.
+	80, 10,						// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD,					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("E3", WEAPON_DRAGON),
-	Read_Secondary_Weapon("E3", WEAPON_NONE),
-	Read_Speed("E3", MPH_KINDA_SLOW)  // Maximum speed of infantry.
+	WEAPON_DRAGON,
+	WEAPON_NONE,
+	MPH_KINDA_SLOW  // Maximum speed of infantry.
 );
 // Flamethrower
 
@@ -318,29 +318,29 @@ static InfantryTypeClass const E4(
 	TXT_E4,						// Translate name number for infantry type.
 	TXT_E4_STRING,
 	"E4",							// INI name for infantry.
-	Read_Build_Level("E4", 1),								// Build level.
-	Read_Prerequisite("E4", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("E4", false),						// Is this a female type?
+	1,								// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	true,							// Is a leader type?
-	Read_Is_Crawling("E4", true),							// Has crawling animation frames?
-	Read_Is_Civilian("E4", false),						// Is this a civlian?
+	true,							// Has crawling animation frames?
+	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("E4", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("E4", false),						// Can this infantry type capture a building?
+	false,						// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("E4", -1),							// Number of shots it has (default).
+	-1,							// Number of shots it has (default).
 	&FlamethrowerDos[0][0],	// ptr to DO table (above)
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("E4", 70),							// Strength of infantry (in damage points).
-	Read_Sight_Range("E4", 1),								// Sight range.
-	Read_Cost("E4", 200),							// Cost of infantry (in credits).
-	Read_Scenario_Level("E4", 5),								// Scenario when they first appear.
-	80, Read_Reward("E4", 10),						// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("E4", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY"),					// Who can own this infantry unit.
+	70,							// Strength of infantry (in damage points).
+	1,								// Sight range.
+	200,							// Cost of infantry (in credits).
+	5,								// Scenario when they first appear.
+	80, 10,						// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD,					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
-	Read_Primary_Weapon("E4", WEAPON_FLAMETHROWER),Read_Secondary_Weapon("E4", WEAPON_NONE),
-	Read_Speed("E4", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_FLAMETHROWER,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 // Chemwarrior
@@ -388,29 +388,29 @@ static InfantryTypeClass const E5(
 	TXT_E5,						// Translate name number for infantry type.
 	TXT_E5_STRING,
 	"E5",							// INI name for infantry.
-	Read_Build_Level("E5", 7),								// Build level.
-	Read_Prerequisite("E5", STRUCT_EYE),				// Building prerequisite.
-	Read_Is_Female("E5", false),						// Is this a female type?
+	7,								// Build level.
+	STRUCT_EYE,				// Building prerequisite.
+	false,						// Is this a female type?
 	true,							// Is a leader type?
-	Read_Is_Crawling("E5", true),							// Has crawling animation frames?
-	Read_Is_Civilian("E5", false),						// Is this a civlian?
+	true,							// Has crawling animation frames?
+	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("E5", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("E5", false),						// Can this infantry type capture a building?
+	false,						// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("E5", -1),							// Number of shots it has (default).
+	-1,							// Number of shots it has (default).
 	&ChemwarriorDos[0][0],	// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("E5", 70),							// Strength of infantry (in damage points).
-	Read_Sight_Range("E5", 1),								// Sight range.
-	Read_Cost("E5", 300),							// Cost of infantry (in credits).
-	Read_Scenario_Level("E5", 99),							// Scenario when they first appear.
-	80, Read_Reward("E5", 10),						// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("E5", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP"),					// Who can own this infantry unit.
+	70,							// Strength of infantry (in damage points).
+	1,								// Sight range.
+	300,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	80, 10,						// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP,					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
-	Read_Primary_Weapon("E5", WEAPON_CHEMSPRAY),Read_Secondary_Weapon("E5", WEAPON_NONE),
-	Read_Speed("E5", MPH_SLOW) // Maximum speed of infantry.
+	WEAPON_CHEMSPRAY,WEAPON_NONE,
+	MPH_SLOW // Maximum speed of infantry.
 );
 
 // Engineer
@@ -458,29 +458,29 @@ static InfantryTypeClass const E7(
 	TXT_E7,						// Translate name number for infantry type.
 	TXT_E7_STRING,
 	"E6",							// INI name for infantry.
-	Read_Build_Level("E6", 3),								// Build level.
-	Read_Prerequisite("E6", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("E6", false),						// Is this a female type?
+	3,								// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("E6", false),						// Has crawling animation frames?
-	Read_Is_Civilian("E6", false),						// Is this a civlian?
+	false,						// Has crawling animation frames?
+	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("E6", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("E6", true),							// Can this infantry type capture a building?
+	false,						// Is this a "fraidycat" run-away type infantry?
+	true,							// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("E6", -1),							// Number of shots it has (default).
+	-1,							// Number of shots it has (default).
 	&EngineerDos[0][0],		// ptr to DO table
 	3,								// Frame of projectile launch.
 	3,								// Frame of projectile launch while prone.
-	Read_Strength("E6", 25),							// Strength of infantry (in damage points).
-	Read_Sight_Range("E6", 2),								// Sight range.
-	Read_Cost("E6", 500),							// Cost of infantry (in credits).
-	Read_Scenario_Level("E6", 2),								// Scenario when they first appear.
-	80, Read_Reward("E6", 75),						// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("E6", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),				// Who can own this infantry unit.
+	25,							// Strength of infantry (in damage points).
+	2,								// Sight range.
+	500,							// Cost of infantry (in credits).
+	2,								// Scenario when they first appear.
+	80, 75,						// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD | HOUSEF_GOOD,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("E6", WEAPON_NONE),Read_Secondary_Weapon("E6", WEAPON_NONE),
-	Read_Speed("E6", MPH_SLOW)  // Maximum speed of infantry.aximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW  // Maximum speed of infantry.aximum speed of infantry.
 );
 // Commandos
 
@@ -526,29 +526,29 @@ static InfantryTypeClass const Commando(
 	TXT_RAMBO,					// Translate name number for infantry type.
 	TXT_RAMBO_STRING,
 	"RMBO",						// INI name for infantry.
-	Read_Build_Level("RMBO", 7),								// Build level.
-	Read_Prerequisite("RMBO", STRUCT_EYE),				// Building prerequisite.
-	Read_Is_Female("RMBO", false),						// Is this a female type?
+	7,								// Build level.
+	STRUCT_EYE,				// Building prerequisite.
+	false,						// Is this a female type?
 	true,							// Is a leader type?
-	Read_Is_Crawling("RMBO", true),							// Has crawling animation frames?
-	Read_Is_Civilian("RMBO", false),						// Is this a civlian?
+	true,							// Has crawling animation frames?
+	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("RMBO", false),						// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("RMBO", false),							// Can this infantry type capture a building?
+	false,						// Is this a "fraidycat" run-away type infantry?
+	false,							// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("RMBO", -1),							// Number of shots it has (default).
+	-1,							// Number of shots it has (default).
 	&CommandoDos[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	2,								// Frame of projectile launch while prone.
-	Read_Strength("RMBO", 80),							// Strength of infantry (in damage points).
-	Read_Sight_Range("RMBO", 5),								// Sight range.
-	Read_Cost("RMBO", 1000),							// Cost of infantry (in credits).
-	Read_Scenario_Level("RMBO", 98),							// Scenario when they first appear.
-	80, Read_Reward("RMBO", 75),						// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("RMBO", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY"),					// Who can own this infantry unit.
+	80,							// Strength of infantry (in damage points).
+	5,								// Sight range.
+	1000,							// Cost of infantry (in credits).
+	98,							// Scenario when they first appear.
+	80, 75,						// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD,					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY",
-	Read_Primary_Weapon("RMBO", WEAPON_RIFLE),Read_Secondary_Weapon("RMBO", WEAPON_NONE),
-	Read_Speed("RMBO", MPH_SLOW_ISH)  // Maximum speed of infantry.
+	WEAPON_RIFLE,WEAPON_NONE,
+	MPH_SLOW_ISH  // Maximum speed of infantry.
 );
 // Civilians
 
@@ -594,29 +594,29 @@ static InfantryTypeClass const C1(
 	TXT_C1,						// Translate name number for infantry type.
 	TXT_C1_STRING,
 	"C1",							// INI name for infantry.
-	Read_Build_Level("C1", 99),							// Build level.
-	Read_Prerequisite("C1", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C1", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	true,							// Is a leader type?
-	Read_Is_Crawling("C1", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C1", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C1", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C1", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("E1", 10),							// Number of shots it has (default).
+	10,							// Number of shots it has (default).
 	&CivilianDos1[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C1", 25),							// Strength of infantry (in damage points).
-	Read_Sight_Range("C1", 0),								// Sight range.
-	Read_Cost("C1", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C1", 99),							// Scenario when they first appear.
-	0, Read_Reward("C1", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C1", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	25,							// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C1", WEAPON_PISTOL),Read_Secondary_Weapon("C1", WEAPON_NONE),
-	Read_Speed("C1", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_PISTOL,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int CivilianDos2[DO_COUNT][3]={
@@ -661,29 +661,29 @@ static InfantryTypeClass const C2(
 	TXT_C2,						// Translate name number for infantry type.
 	TXT_C2_STRING,
 	"C2",							// INI name for infantry.
-	Read_Build_Level("C2", 99),							// Build level.
-	Read_Prerequisite("C2", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C2", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("C2", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C2", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C2", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C2", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C2", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&CivilianDos2[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C2", 5),								// Strength of infantry (in damage points).
-	Read_Sight_Range("C2", 0),								// Sight range.
-	Read_Cost("C2", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C2", 99),							// Scenario when they first appear.
-	0, Read_Reward("C2", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C2", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	5,								// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C2", WEAPON_NONE),Read_Secondary_Weapon("C2", WEAPON_NONE),
-	Read_Speed("C2", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int CivilianDos3[DO_COUNT][3]={
@@ -729,29 +729,29 @@ static InfantryTypeClass const C3(
 	TXT_C3,						// Translate name number for infantry type.
 	TXT_C3_STRING,
 	"C3",							// INI name for infantry.
-	Read_Build_Level("C3", 99),							// Build level.
-	Read_Prerequisite("C3", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C3", true),							// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	true,							// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("C3", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C3", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C3", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C3", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C3", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&CivilianDos3[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C3", 5),								// Strength of infantry (in damage points).
-	Read_Sight_Range("C3", 0),								// Sight range.
-	Read_Cost("C3", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C3", 99),							// Scenario when they first appear.
-	0, Read_Reward("C3", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C3", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	5,								// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C3", WEAPON_NONE),Read_Secondary_Weapon("C3", WEAPON_NONE),
-	Read_Speed("C3", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int CivilianDos4[DO_COUNT][3]={
@@ -797,29 +797,29 @@ static InfantryTypeClass const C4(
 	TXT_C4,						// Translate name number for infantry type.
 	TXT_C4_STRING,
 	"C4",							// INI name for infantry.
-	Read_Build_Level("C4", 99),							// Build level.
-	Read_Prerequisite("C4", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C4", true),							// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	true,							// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("C4", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C4", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C4", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C4", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C4", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&CivilianDos4[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C4", 5),								// Strength of infantry (in damage points).
-	Read_Sight_Range("C4", 0),								// Sight range.
-	Read_Cost("C4", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C4", 99),							// Scenario when they first appear.
-	0, Read_Reward("C4", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C4", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	5,								// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C4", WEAPON_NONE),Read_Secondary_Weapon("C4", WEAPON_NONE),
-	Read_Speed("C4", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int CivilianDos5[DO_COUNT][3]={
@@ -864,29 +864,29 @@ static InfantryTypeClass const C5(
 	TXT_C5,						// Translate name number for infantry type.
 	TXT_C5_STRING,
 	"C5",							// INI name for infantry.
-	Read_Build_Level("C5", 99),							// Build level.
-	Read_Prerequisite("C5", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C5", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("C5", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C5", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C5", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C5", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C5", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&CivilianDos5[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C5", 5),								// Strength of infantry (in damage points).
-	Read_Sight_Range("C5", 0),								// Sight range.
-	Read_Cost("C5", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C5", 99),							// Scenario when they first appear.
-	0, Read_Reward("C5", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C5", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	5,								// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C5", WEAPON_NONE),Read_Secondary_Weapon("C5", WEAPON_NONE),
-	Read_Speed("C5", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int CivilianDos6[DO_COUNT][3]={
@@ -931,29 +931,29 @@ static InfantryTypeClass const C6(
 	TXT_C6,						// Translate name number for infantry type.
 	TXT_C6_STRING,
 	"C6",							// INI name for infantry.
-	Read_Build_Level("C6", 99),							// Build level.
-	Read_Prerequisite("C6", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C6", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("C6", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C6", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C6", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C6", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C6", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&CivilianDos6[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C6", 5),								// Strength of infantry (in damage points).
-	Read_Sight_Range("C6", 0),								// Sight range.
-	Read_Cost("C6", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C6", 99),							// Scenario when they first appear.
-	0, Read_Reward("C6", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C6", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	5,								// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C6", WEAPON_NONE),Read_Secondary_Weapon("C6", WEAPON_NONE),
-	Read_Speed("C6", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int CivilianDos7[DO_COUNT][3]={
@@ -998,29 +998,29 @@ static InfantryTypeClass const C7(
 	TXT_C7,						// Translate name number for infantry type.
 	TXT_C7_STRING,
 	"C7",							// INI name for infantry.
-	Read_Build_Level("C7", 99),							// Build level.
-	Read_Prerequisite("C7", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C7", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	true,							// Is a leader type?
-	Read_Is_Crawling("C7", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C7", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C7", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C7", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C7", 10),							// Number of shots it has (default).
+	10,							// Number of shots it has (default).
 	&CivilianDos7[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C7", 5),								// Strength of infantry (in damage points).
-	Read_Sight_Range("C7", 0),								// Sight range.
-	Read_Cost("C7", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C7", 99),							// Scenario when they first appear.
-	0, Read_Reward("C7", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C7", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	5,								// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C7", WEAPON_PISTOL),Read_Secondary_Weapon("C7", WEAPON_NONE),
-	Read_Speed("C7", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_PISTOL,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 int CivilianDos8[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1064,29 +1064,29 @@ static InfantryTypeClass const C8(
 	TXT_C8,						// Translate name number for infantry type.
 	TXT_C8_STRING,
 	"C8",							// INI name for infantry.
-	Read_Build_Level("C8", 99),							// Build level.
-	Read_Prerequisite("C8", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C8", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("C8", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C8", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C8", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C8", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C8", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&CivilianDos8[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C8", 5),								// Strength of infantry (in damage points).
-	Read_Sight_Range("C8", 0),								// Sight range.
-	Read_Cost("C8", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C8", 99),							// Scenario when they first appear.
-	0, Read_Reward("C8", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C8", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	5,								// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C8", WEAPON_NONE),Read_Secondary_Weapon("C8", WEAPON_NONE),
-	Read_Speed("C8", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int CivilianDos9[DO_COUNT][3]={
@@ -1131,29 +1131,29 @@ static InfantryTypeClass const C9(
 	TXT_C9,						// Translate name number for infantry type.
 	TXT_C9_STRING,
 	"C9",							// INI name for infantry.
-	Read_Build_Level("C9", 99),							// Build level.
-	Read_Prerequisite("C9", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C9", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("C9", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C9", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C9", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C9", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C9", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&CivilianDos9[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C9", 5),								// Strength of infantry (in damage points).
-	Read_Sight_Range("C9", 0),								// Sight range.
-	Read_Cost("C9", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C9", 99),							// Scenario when they first appear.
-	0, Read_Reward("C9", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C9", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	5,								// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C9", WEAPON_NONE),Read_Secondary_Weapon("C9", WEAPON_NONE),
-	Read_Speed("C9", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int NikoombaDos[DO_COUNT][3]={
@@ -1200,29 +1200,29 @@ static InfantryTypeClass const C10(
 	TXT_C10,						// Translate name number for infantry type.
 	TXT_C10_STRING,
 	"C10",						// INI name for infantry.
-	Read_Build_Level("C10", 99),							// Build level.
-	Read_Prerequisite("C10", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("C10", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("C10", false),						// Has crawling animation frames?
-	Read_Is_Civilian("C10", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("C10", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("C10", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("C10", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&NikoombaDos[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("C10", 50),							// Strength of infantry (in damage points).
-	Read_Sight_Range("C10", 0),								// Sight range.
-	Read_Cost("C10", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("C10", 99),							// Scenario when they first appear.
-	0, Read_Reward("C10", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("C10", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	50,							// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("C10", WEAPON_NONE),Read_Secondary_Weapon("C10", WEAPON_NONE),
-	Read_Speed("C10", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 int MoebiusDos[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1266,29 +1266,29 @@ static InfantryTypeClass const Moebius(
 	TXT_MOEBIUS,				// Translate name number for infantry type.
 	TXT_MOEBIUS_STRING,
 	"MOEBIUS",					// INI name for infantry.
-	Read_Build_Level("MOEBIUS", 99),							// Build level.
-	Read_Prerequisite("MOEBIUS", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("MOEBIUS", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("MOEBIUS", false),						// Has crawling animation frames?
-	Read_Is_Civilian("MOEBIUS", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("MOEBIUS", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("MOEBIUS", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("MOEBIUS", 0),								// Number of shots it has (default).
+	0,								// Number of shots it has (default).
 	&MoebiusDos[0][0],		// ptr to DO table
 	0,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("MOEBIUS", 50),							// Strength of infantry (in damage points).
-	Read_Sight_Range("MOEBIUS", 0),								// Sight range.
-	Read_Cost("MOEBIUS", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("MOEBIUS", 99),							// Scenario when they first appear.
-	0, Read_Reward("MOEBIUS", 10),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("MOEBIUS", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL"),				// Who can own this infantry unit.
+	50,							// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 10,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_BAD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,BADGUY,NEUTRAL",
-	Read_Primary_Weapon("MOEBIUS", WEAPON_NONE),Read_Secondary_Weapon("MOEBIUS", WEAPON_NONE),
-	Read_Speed("MOEBIUS", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 int DelphiDos[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1332,29 +1332,29 @@ static InfantryTypeClass const Delphi(
 	TXT_DELPHI,					// Translate name number for infantry type.
 	TXT_DELPHI_STRING,
 	"DELPHI",					// INI name for infantry.
-	Read_Build_Level("DELPHI", 99),							// Build level.
-	Read_Prerequisite("DELPHI", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("DELPHI", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("DELPHI", false),						// Has crawling animation frames?
-	Read_Is_Civilian("DELPHI", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("DELPHI", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("DELPHI", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("DELPHI", 10),							// Number of shots it has (default).
+	10,							// Number of shots it has (default).
 	&DelphiDos[0][0],			// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("DELPHI", 25),							// Strength of infantry (in damage points).
-	Read_Sight_Range("DELPHI", 0),								// Sight range.
-	Read_Cost("DELPHI", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("DELPHI", 99),							// Scenario when they first appear.
-	0, Read_Reward("DELPHI", 0),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("DELPHI", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL"),				// Who can own this infantry unit.
+	25,							// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 0,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL",
-	Read_Primary_Weapon("DELPHI", WEAPON_PISTOL),Read_Secondary_Weapon("DELPHI", WEAPON_NONE),
-	Read_Speed("DELPHI", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_PISTOL,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 int DrChanDos[DO_COUNT][3]={
@@ -1399,29 +1399,29 @@ static InfantryTypeClass const DrChan(
 	TXT_CHAN,					// Translate name number for infantry type.
 	TXT_CHAN_STRING,
 	"CHAN",						// INI name for infantry.
-	Read_Build_Level("CHAN", 99),							// Build level.
-	Read_Prerequisite("CHAN", STRUCT_NONE),				// Building prerequisite.
-	Read_Is_Female("CHAN", false),						// Is this a female type?
+	99,							// Build level.
+	STRUCT_NONE,				// Building prerequisite.
+	false,						// Is this a female type?
 	false,						// Is a leader type?
-	Read_Is_Crawling("CHAN", false),						// Has crawling animation frames?
-	Read_Is_Civilian("CHAN", true),							// Is this a civlian?
+	false,						// Has crawling animation frames?
+	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
-	Read_Is_Fraidy_Cat("CHAN", true),							// Is this a "fraidycat" run-away type infantry?
-	Read_Can_Capture_Buildings("CHAN", false),						// Can this infantry type capture a building?
+	true,							// Is this a "fraidycat" run-away type infantry?
+	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
-	Read_Ammo("CHAN", 10),							// Number of shots it has (default).
+	10,							// Number of shots it has (default).
 	&DrChanDos[0][0],			// ptr to DO table
 	2,								// Frame of projectile launch.
 	0,								// Frame of projectile launch while prone.
-	Read_Strength("CHAN", 25),							// Strength of infantry (in damage points).
-	Read_Sight_Range("CHAN", 0),								// Sight range.
-	Read_Cost("CHAN", 10),							// Cost of infantry (in credits).
-	Read_Scenario_Level("CHAN", 99),							// Scenario when they first appear.
-	0, Read_Reward("CHAN", 1),							// Risk/Reward of this infantry unit.
-	Read_House_List_From_Rules_Ini("CHAN", HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_NEUTRAL, "MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL"),				// Who can own this infantry unit.
+	25,							// Strength of infantry (in damage points).
+	0,								// Sight range.
+	10,							// Cost of infantry (in credits).
+	99,							// Scenario when they first appear.
+	0, 1,							// Risk/Reward of this infantry unit.
+	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_GOOD | HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY,NEUTRAL",
-	Read_Primary_Weapon("CHAN", WEAPON_NONE),Read_Secondary_Weapon("CHAN", WEAPON_NONE),
-	Read_Speed("CHAN", MPH_SLOW_ISH) // Maximum speed of infantry.
+	WEAPON_NONE,WEAPON_NONE,
+	MPH_SLOW_ISH // Maximum speed of infantry.
 );
 
 
@@ -1474,7 +1474,8 @@ InfantryTypeClass::InfantryTypeClass	(
 						int name,
 						const char* friendlyName,
 						char const *ininame,
-						unsigned char level, long pre,
+						unsigned char level,
+						StructType pre,
 						bool is_female,
 						bool is_leader,
 						bool is_crawling,
@@ -1501,14 +1502,8 @@ InfantryTypeClass::InfantryTypeClass	(
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable, houseListCsv,
 							primary, secondary,
-							Read_Armor(ininame, ARMOR_NONE))
+							ARMOR_NONE)
 {
-	IsFemale = is_female;
-	IsCrawling = is_crawling;
-	IsCapture = is_capture;
-	IsFraidyCat = is_fraidycat;
-	IsCivilian = is_civilian;
-	IsAvoidingTiberium = Read_Avoids_Tiberium(ininame, false);
 	Type = type;
 	FireLaunch = firelaunch;
 	ProneLaunch = pronelaunch;
@@ -1516,6 +1511,13 @@ InfantryTypeClass::InfantryTypeClass	(
 	/*
 	**	Set the animation sequence custom values.
 	*/
+
+	IsFemale = Read_Is_Female(IniName, is_female);
+	IsCrawling = Read_Is_Crawling(IniName, is_crawling);
+	IsCapture = Read_Can_Capture_Buildings(IniName, is_capture);
+	IsFraidyCat = Read_Is_Fraidy_Cat(IniName, is_fraidycat);
+	IsCivilian = Read_Is_Civilian(IniName, is_civilian);
+	IsAvoidingTiberium = Read_Avoids_Tiberium(IniName, false);
 
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;

@@ -77,10 +77,6 @@ function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
     rulesFile:write(string.format("[%s]\n", areaType))
 
     for _, ruleName in ipairs(typeArea.getRuleNames()) do
-      if ruleName == "FriendlyName" then
-          goto next
-      end
-
       local ruleValue = typeArea.getRuleValue(areaType, ruleName)
 
       rulesFile:write(
@@ -90,8 +86,6 @@ function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
           tostring(ruleValue):gsub(".0$", "")
           )
       )
-
-      ::next::
     end
 
     rulesFile:write("\n")
