@@ -4,6 +4,8 @@
 
 [img]https://img.shields.io/twitch/status/djfdyuruiry?label=twitch%20stream[/img]
 
+[url=https://github.com/djfdyuruiry/cnc-td-nco-mod]Github Repository[/url]
+
 This mod provides an extensive 📃 RULES.INI file 📃 for Tiberian Dawn & ⚙ Lua event scripting ⚙.
 
 Unfortunately only one C&C dll mod can run at a time, this mod aims to fix that problem by providing a rules file and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
