@@ -68,7 +68,7 @@ See the [New Construction Options Wiki](https://github.com/djfdyuruiry/cnc-td-nc
 - Open the Start menu
 - Type `Run`
 - Click on the `Run` app that is highlighted
-- Copy and paste this: `explorer "%USERPROFILE\Documents\CnCRemastered\Mods\Tiberian_Dawn"`
+- Copy and paste this: `explorer "%USERPROFILE%\Documents\CnCRemastered\Mods\Tiberian_Dawn"`
 - Click `OK`
 - Unzip the downloaded file into this folder
 - Start C&C
@@ -113,7 +113,7 @@ The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find t
 - Open the Start menu
 - Type `Run`
 - Click on the `Run` app that is highlighted
-- Copy and paste this: `explorer "%USERPROFILE\Documents\CnCRemastered\Mods\Tiberian_Dawn\nco\Data"`
+- Copy and paste this: `explorer "%USERPROFILE%\Documents\CnCRemastered\Mods\Tiberian_Dawn\nco\Data"`
 - Click `OK`
 - Copy the `RULES-DEFAULT` file and name the copy `RULES` (new releases of the mod will update `RULES-DEFAULT` so don't edit that file directly)
 
