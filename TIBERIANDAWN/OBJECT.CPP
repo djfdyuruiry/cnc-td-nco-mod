@@ -137,6 +137,9 @@ ObjectTypeClass::ObjectTypeClass(
 	MaxStrength = strength;
 	ImageData = NULL;
 	//RadarIcon = NULL;
+
+	Armor = Read_Armor(IniName, armor);
+	MaxStrength = Read_Strength(IniName, strength);
 }
 
 

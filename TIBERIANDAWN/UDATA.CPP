@@ -56,7 +56,7 @@ static UnitTypeClass const UnitVisceroid(
 	"VICE",									// NAME:			Text name of this unit type.
 	ANIM_NAPALM2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("VICE", 99),							// Build level.
-	Read_Prerequisite("VICE", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("VICE", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("VICE", false),			// Only has eight facings?
@@ -108,7 +108,7 @@ static UnitTypeClass const UnitFTank(
 	"FTNK",									// NAME:			Text name of this unit type.
 	ANIM_NAPALM3,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("FTNK", 4),							// Build level.
-	Read_Prerequisite("FTNK", STRUCT_RADAR),			// Building prerequisite.
+	STRUCT_RADAR,			// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("FTNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("FTNK", false),			// Only has eight facings?
@@ -160,7 +160,7 @@ static UnitTypeClass const UnitSTank(
 	"STNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("STNK", 5),								// Build level.
-	Read_Prerequisite("STNK", STRUCT_RADAR),				// Building prerequisite.
+	STRUCT_RADAR,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("STNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("STNK", false),			// Only has eight facings?
@@ -212,7 +212,7 @@ static UnitTypeClass const UnitLTank(
 	"LTNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("LTNK", 3),								// Build level.
-	Read_Prerequisite("LTNK", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("LTNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("LTNK", false),			// Only has eight facings?
@@ -264,7 +264,7 @@ static UnitTypeClass const UnitMTank(
 	"MTNK",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MTNK", 3),								// Build level.
-	Read_Prerequisite("MTNK", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("MTNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("MTNK", false),			// Only has eight facings?
@@ -316,7 +316,7 @@ static UnitTypeClass const UnitHTank(
 	"HTNK",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("HTNK", 5),								// Build level.
-	Read_Prerequisite("HTNK", STRUCT_REPAIR),			// Building prerequisite.
+	STRUCT_REPAIR,			// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("HTNK", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("HTNK", false),			// Only has eight facings?
@@ -368,7 +368,7 @@ static UnitTypeClass const UnitMHQ(
 	"MHQ",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MHQ", 99),							// Build level.
-	Read_Prerequisite("MHQ", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("MHQ", false),			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
 		Read_Limited_Facings("MHQ", false),			// Only has eight facings?
@@ -420,7 +420,7 @@ static UnitTypeClass const UnitHover(
 	"LST",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("LST", 99),							// Build level.
-	Read_Prerequisite("LST", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("LST", false),			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
 		Read_Limited_Facings("LST", false),			// Only has eight facings?
@@ -473,7 +473,7 @@ static UnitTypeClass const UnitSAM(
 	"MLRS",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MLRS", 7),								// Build level.
-	Read_Prerequisite("MLRS", STRUCT_ATOWER),			// Building prerequisite.
+	STRUCT_ATOWER,			// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("MLRS", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("MLRS", false),			// Only has eight facings?
@@ -525,7 +525,7 @@ static UnitTypeClass const UnitArty(
 	"ARTY",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("ARTY", 6),								// Build level.
-	Read_Prerequisite("ARTY", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("ARTY", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("ARTY", false),			// Only has eight facings?
@@ -577,7 +577,7 @@ static UnitTypeClass const UnitHarvester(
 	"HARV",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("HARV", 2),								// Build level.
-	Read_Prerequisite("HARV", STRUCT_REFINERY),			// Building prerequisite.
+	STRUCT_REFINERY,			// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("HARV", true),				// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
 		Read_Limited_Facings("HARV", false),			// Only has eight facings?
@@ -630,7 +630,7 @@ static UnitTypeClass const UnitMCV(
 	"MCV",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MCV", 7),							// Build level.
-	Read_Prerequisite("MCV", STRUCT_EYE),			// Building prerequisite.
+	STRUCT_EYE,			// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("MCV", true),				// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
 		Read_Limited_Facings("MCV", false),			// Only has eight facings?
@@ -682,7 +682,7 @@ static UnitTypeClass const UnitJeep(
 	"JEEP",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("JEEP", 2),								// Build level.
-	Read_Prerequisite("JEEP", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("JEEP", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("JEEP", false),			// Only has eight facings?
@@ -734,7 +734,7 @@ static UnitTypeClass const UnitBuggy(
 	"BGGY",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BGGY", 4),								// Build level.
-	Read_Prerequisite("BGGY", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("BGGY", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("BGGY", false),			// Only has eight facings?
@@ -786,7 +786,7 @@ static UnitTypeClass const UnitBike(
 	"BIKE",									// NAME:			Text name of this unit type.
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BIKE", 2),								// Build level.
-	Read_Prerequisite("BIKE", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("BIKE", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("BIKE", false),			// Only has eight facings?
@@ -842,7 +842,7 @@ static UnitTypeClass const UnitMLRS(
 	"MSAM",									// NAME:			Text name of this unit type.
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("MSAM", 7),								// Build level.
-	Read_Prerequisite("MSAM", STRUCT_EYE),				// Building prerequisite.
+	STRUCT_EYE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("MSAM", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("MSAM", false),			// Only has eight facings?
@@ -894,7 +894,7 @@ static UnitTypeClass const UnitAPC(
 	"APC",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("APC", 4),								// Build level.
-	Read_Prerequisite("APC", STRUCT_BARRACKS),			// Building prerequisite.
+	STRUCT_BARRACKS,			// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("APC", true),				// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("APC", false),			// Only has eight facings?
@@ -946,7 +946,7 @@ static UnitTypeClass const UnitGunBoat(
 	"BOAT",									// NAME:			Text name of this unit type.
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("BOAT", 99),							// Build level.
-	Read_Prerequisite("BOAT", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("BOAT", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("BOAT", false),			// Only has eight facings?
@@ -998,7 +998,7 @@ static UnitTypeClass const UnitTric(
 	"TRIC",									// NAME:			Text name of this unit type.
 	ANIM_TRIC_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("TRIC", 99),							// Build level.
-	Read_Prerequisite("TRIC", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("TRIC", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("TRIC", true),				// Only has eight facings?
@@ -1050,7 +1050,7 @@ static UnitTypeClass const UnitTrex(
 	"TREX",									// NAME:			Text name of this unit type.
 	ANIM_TREX_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("TREX", 99),							// Build level.
-	Read_Prerequisite("TREX", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("TREX", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("TREX", true),				// Only has eight facings?
@@ -1102,7 +1102,7 @@ static UnitTypeClass const UnitRapt(
 	"RAPT",									// NAME:			Text name of this unit type.
 	ANIM_RAPT_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("RAPT", 99),							// Build level.
-	Read_Prerequisite("RAPT", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("RAPT", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("RAPT", true),				// Only has eight facings?
@@ -1154,7 +1154,7 @@ static UnitTypeClass const UnitSteg(
 	"STEG",									// NAME:			Text name of this unit type.
 	ANIM_STEG_DIE,							// EXPLOSION:	Type of explosion when destroyed.
 	Read_Build_Level("STEG", 99),							// Build level.
-	Read_Prerequisite("STEG", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Can_Be_Found_In_Crate("STEG", false),			// Can this be a goodie surprise from a crate?
 		true,				// Is a leader type?
 		Read_Limited_Facings("STEG", true),				// Only has eight facings?
@@ -1251,7 +1251,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				char const *ininame,
 				AnimType exp,
 				unsigned char level,
-				long pre,
+				StructType pre,
 				bool is_goodie,
 				bool is_leader,
 				bool is_eight,
@@ -1330,25 +1330,24 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										armor)
 {
 	Explosion = exp;
-	IsCrateGoodie = is_goodie;
-	IsPieceOfEight = is_eight;
-	IsCloakable = is_cloakable;
 	IsChunkyShape = is_chunky;
-	IsCrusher = is_crusher;
-	IsFireAnim = is_fire_anim;
-	IsGigundo = is_gigundo;
-	IsLockTurret = is_lock_turret;
-	IsRadarEquipped = is_radar_equipped;
-	IsToHarvest = is_harvest;
-	IsTracked = is_tracked;
-	IsAnimating = is_animating;
 	Mission = order;
-	ROT = rot;
-	Speed = speed;
 	TurretOffset = toffset;
 	Type = type;
 
-	TransportCapacity = (unsigned int) Read_Int_From_Rules_Ini(this->IniName, TRANSPORT_CAPACITY_RULE, 5, 1, INT_MAX);
+	IsCrateGoodie = Read_Can_Be_Found_In_Crate(IniName, is_goodie);
+	IsPieceOfEight = Read_Limited_Facings(IniName, is_eight);
+	IsCrusher = Read_Can_Crush_Infantry(IniName, is_crusher);
+	IsToHarvest = Read_Can_Harvest(IniName, is_harvest);
+	IsRadarEquipped = Read_Radar_Equipped(IniName, is_radar_equipped);
+	IsFireAnim = Read_Has_Fire_Animation(IniName, is_fire_anim);
+	IsLockTurret = Read_Lock_Turret(IniName, is_lock_turret);
+	IsTracked = Read_Has_Tracks(IniName, is_tracked);
+	IsGigundo = Read_Is_Huge(IniName, is_gigundo);
+	IsCloakable = Read_Can_Cloak(IniName, is_cloakable);
+	IsAnimating = Read_Has_Constant_Animation(IniName, is_animating); 
+	Speed = Read_Unit_Speed(IniName, speed);
+	ROT = Read_Rate_Of_Turn(IniName, rot);
 }
 
 

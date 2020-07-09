@@ -218,6 +218,13 @@ typedef enum RTTIType : unsigned char {
 	RTTI_SPECIAL
 } RTTIType;
 
+typedef enum FactoryType : unsigned char {
+	FACTORY_TYPE_NONE = RTTI_NONE,
+	FACTORY_TYPE_INFANTRY = RTTI_INFANTRYTYPE,
+	FACTORY_TYPE_UNIT = RTTI_UNITTYPE,
+	FACTORY_TYPE_AIRCRAFT = RTTI_AIRCRAFTTYPE,
+	FACTORY_TYPE_BUILDING = RTTI_BUILDINGTYPE
+} FactoryType;
 
 /**********************************************************************
 **	These are the difficulty settings of the game.

@@ -59,7 +59,7 @@ static AircraftTypeClass const AttackPlane(
 	TXT_A10_STRING,
 	"A10",					// INI name of aircraft.
 	Read_Build_Level("A10", 99),						// Build level.
-	Read_Prerequisite("A10", STRUCT_NONE),			// Building prerequisite.
+	STRUCT_NONE,			// Building prerequisite.
 		false,				// Is a leader type?
 		false,				// Does it fire a pair of shots in quick succession?
 		Read_Is_Transport("A10", false),				//	Is this a typical transport vehicle?
@@ -99,7 +99,7 @@ static AircraftTypeClass const TransportHeli(
 	TXT_TRANS_STRING,
 	"TRAN",					// INI name of aircraft.
 	Read_Build_Level("TRAN", 6),							// Build level.
-	Read_Prerequisite("TRAN", STRUCT_HELIPAD),		// Building prerequisite.
+	STRUCT_HELIPAD,		// Building prerequisite.
 		false,				// Is a leader type?
 		false,				// Does it fire a pair of shots in quick succession?
 		Read_Is_Transport("TRAN", true),					//	Is this a typical transport vehicle?
@@ -139,7 +139,7 @@ static AircraftTypeClass const AttackHeli(
 	TXT_HELI_STRING,
 	"HELI",					// INI name of aircraft.
 	Read_Build_Level("HELI", 6),							// Build level.
-	Read_Prerequisite("HELI", STRUCT_HELIPAD),		// Building prerequisite.
+	STRUCT_HELIPAD,		// Building prerequisite.
 		true,					// Is a leader type?
 		true,					// Does it fire a pair of shots in quick succession?
 		Read_Is_Transport("HELI", false),				//	Is this a typical transport vehicle?
@@ -180,7 +180,7 @@ static AircraftTypeClass const OrcaHeli(
 	TXT_ORCA_STRING,
 	"ORCA",					// INI name of aircraft.
 	Read_Build_Level("ORCA", 6),							// Build level.
-	Read_Prerequisite("ORCA", STRUCT_HELIPAD),		// Building prerequisite.
+	STRUCT_HELIPAD,		// Building prerequisite.
 		true,					// Is a leader type?
 		true,					// Does it fire a pair of shots in quick succession?
 		Read_Is_Transport("ORCA", false),				//	Is this a typical transport vehicle?
@@ -221,7 +221,7 @@ static AircraftTypeClass const CargoPlane(
 	TXT_C17_STRING,
 	"C17",					// INI name of aircraft.
 	Read_Build_Level("C17", 99),						// Build level.
-	Read_Prerequisite("C17", STRUCT_NONE),			// Building prerequisite.
+	STRUCT_NONE,			// Building prerequisite.
 		false,				// Is a leader type?
 		false,				// Does it fire a pair of shots in quick succession?
 		Read_Is_Transport("C17", true),					//	Is this a typical transport vehicle?
@@ -284,7 +284,7 @@ AircraftTypeClass::AircraftTypeClass(
 				const char* friendlyName,
 				char const *ininame,
 				unsigned char level,
-				long pre,
+				StructType pre,
 				bool is_leader,
 				bool is_twoshooter,
 				bool is_transporter,
@@ -353,15 +353,14 @@ AircraftTypeClass::AircraftTypeClass(
 										secondary,
 										armor)
 {
-	IsRotorEquipped = is_rotorequipped;
 	IsRotorCustom = is_rotorcustom;
-	IsLandable = is_landable;
-	IsFixedWing = is_fixedwing;
 	Type = airtype;
-	ROT = rot;
 	Mission = deforder;
-
-	TransportCapacity = (unsigned int)Read_Int_From_Rules_Ini(this->IniName, TRANSPORT_CAPACITY_RULE, 5, 1, INT_MAX);
+	
+	IsFixedWing = Read_Cant_Hover(IniName, is_fixedwing);
+	IsLandable = Read_Can_Land(IniName, is_landable);
+	IsRotorEquipped = Read_Has_Rotor(IniName, is_rotorequipped);
+	ROT = Read_Rate_Of_Turn(IniName, rot);
 }
 
 

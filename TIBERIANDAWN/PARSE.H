@@ -60,15 +60,6 @@ char* Aircraft_Type_To_String(AircraftType aircraftType);
 
 // building specific
 
-// subset of RTTIType values
-typedef enum FactoryType : unsigned char {
-	FACTORY_TYPE_NONE = RTTI_NONE,
-	FACTORY_TYPE_INFANTRY = RTTI_INFANTRYTYPE,
-	FACTORY_TYPE_UNIT = RTTI_UNITTYPE,
-	FACTORY_TYPE_AIRCRAFT = RTTI_AIRCRAFTTYPE,
-	FACTORY_TYPE_BUILDING = RTTI_BUILDINGTYPE
-} FactoryType;
-
 StructType Parse_Structure_Type(char* structTypeString, bool* parseError);
 
 StructType Parse_Structure_Type(const char* structTypeString, bool* parseError);

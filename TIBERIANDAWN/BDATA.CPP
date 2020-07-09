@@ -173,7 +173,7 @@ static BuildingTypeClass const ClassTemple(
 	"TMPL",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("TMPL", 7),								// Build level.
-	Read_Prerequisite("TMPL", STRUCT_RADAR),				// Building prerequisite.
+	STRUCT_RADAR,				// Building prerequisite.
 		Read_Detects_Cloak("TMPL", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("TMPL", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("TMPL", true),			// Requires a bib dirt patch?
@@ -195,7 +195,7 @@ static BuildingTypeClass const ClassTemple(
 		Read_Is_Buildable("TMPL", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("TMPL", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("TMPL", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("TMPL", 1000),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("TMPL", 4),											// SIGHTRANGE:	Range of sighting.
@@ -223,7 +223,7 @@ static BuildingTypeClass const ClassEye(
 	"EYE",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("EYE", 7),								// Build level.
-	Read_Prerequisite("EYE", STRUCT_RADAR),				// Building prerequisite.
+	STRUCT_RADAR,				// Building prerequisite.
 		Read_Detects_Cloak("EYE", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("EYE", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("EYE", true),			// Requires a bib dirt patch?
@@ -245,7 +245,7 @@ static BuildingTypeClass const ClassEye(
 		Read_Is_Buildable("EYE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("EYE", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("EYE", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	Read_Strength("EYE", 500),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("EYE", 10),										// SIGHTRANGE:	Range of sighting.
@@ -273,7 +273,7 @@ static BuildingTypeClass const ClassWeapon(
 	"WEAP",									// NAME:			Short name of the structure.
 	XYP_COORD(10+(CELL_PIXEL_W/2), ((CELL_PIXEL_H*3)-(CELL_PIXEL_H/2))-21),			// Exit point for produced units.
 	Read_Build_Level("WEAP", 2),								// Build level.
-	Read_Prerequisite("WEAP", STRUCT_REFINERY),			// Building prerequisite.
+	STRUCT_REFINERY,			// Building prerequisite.
 		Read_Detects_Cloak("WEAP", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("WEAP", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("WEAP", true),			// Requires a bib dirt patch?
@@ -295,7 +295,7 @@ static BuildingTypeClass const ClassWeapon(
 		Read_Is_Buildable("WEAP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("WEAP", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("WEAP", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
+	FACTORY_TYPE_UNIT,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 #ifdef ADVANCED
 	Read_Strength("WEAP", 500),										// STRNTH:		Full strength of building.
@@ -327,7 +327,7 @@ static BuildingTypeClass const ClassGTower(
 	"GTWR",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("GTWR", 2),								// Build level.
-	Read_Prerequisite("GTWR", STRUCT_BARRACKS),			// Building prerequisite.
+	STRUCT_BARRACKS,			// Building prerequisite.
 		Read_Detects_Cloak("GTWR", true),			// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("GTWR", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("GTWR", false),		// Requires a bib dirt patch?
@@ -349,7 +349,7 @@ static BuildingTypeClass const ClassGTower(
 		Read_Is_Buildable("GTWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("GTWR", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("GTWR", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("GTWR", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("GTWR", 3),											// SIGHTRANGE:	Range of sighting.
@@ -378,7 +378,7 @@ static BuildingTypeClass const ClassATower(
 	"ATWR",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ATWR", 4),								// Build level.
-	Read_Prerequisite("ATWR", STRUCT_RADAR),				// Building prerequisite.
+	STRUCT_RADAR,				// Building prerequisite.
 		Read_Detects_Cloak("ATWR", true),			// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("ATWR", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("ATWR", false),		// Requires a bib dirt patch?
@@ -400,7 +400,7 @@ static BuildingTypeClass const ClassATower(
 		Read_Is_Buildable("ATWR", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("ATWR", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("ATWR", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ATWR", 300),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("ATWR", 4),											// SIGHTRANGE:	Range of sighting.
@@ -429,7 +429,7 @@ static BuildingTypeClass const ClassObelisk(
 	"OBLI",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("OBLI", 4),								// Build level.
-	Read_Prerequisite("OBLI", STRUCT_RADAR),				// Building prerequisite.
+	STRUCT_RADAR,				// Building prerequisite.
 		Read_Detects_Cloak("OBLI", true),			// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("OBLI", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("OBLI", false),		// Requires a bib dirt patch?
@@ -451,7 +451,7 @@ static BuildingTypeClass const ClassObelisk(
 		Read_Is_Buildable("OBLI", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("OBLI", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("OBLI", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("OBLI", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("OBLI", 5),											// SIGHTRANGE:	Range of sighting.
@@ -479,7 +479,7 @@ static BuildingTypeClass const ClassTurret(
 	"GUN",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("GUN", 2),								// Build level.
-	Read_Prerequisite("GUN", STRUCT_BARRACKS),			// Building prerequisite.
+	STRUCT_BARRACKS,			// Building prerequisite.
 		Read_Detects_Cloak("GUN", true),			// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("GUN", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("GUN", false),		// Requires a bib dirt patch?
@@ -501,7 +501,7 @@ static BuildingTypeClass const ClassTurret(
 		Read_Is_Buildable("GUN", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("GUN", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("GUN", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	(DirType)208,							// Starting idle frame to match construction.
 	Read_Strength("GUN", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("GUN", 5),											// SIGHTRANGE:	Range of sighting.
@@ -537,7 +537,7 @@ static BuildingTypeClass const ClassConst(
 	"FACT",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("FACT", 99),							// Build level.
-	Read_Prerequisite("FACT", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Detects_Cloak("FACT", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("FACT", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("FACT", true),			// Requires a bib dirt patch?
@@ -559,7 +559,7 @@ static BuildingTypeClass const ClassConst(
 		Read_Is_Buildable("FACT", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("FACT", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("FACT", FACTORY_TYPE_BUILDING),					// The object type produced at this factory.
+	FACTORY_TYPE_BUILDING,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("FACT", 400),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("FACT", 3),											// SIGHTRANGE:	Range of sighting.
@@ -587,7 +587,7 @@ static BuildingTypeClass const ClassRefinery(
 	"PROC",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("PROC", 1),								// Build level.
-	Read_Prerequisite("PROC", STRUCT_POWER),				// Building prerequisite.
+	STRUCT_POWER,				// Building prerequisite.
 		Read_Detects_Cloak("PROC", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("PROC", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("PROC", true),			// Requires a bib dirt patch?
@@ -609,7 +609,7 @@ static BuildingTypeClass const ClassRefinery(
 		Read_Is_Buildable("PROC", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("PROC", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("PROC", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("PROC", 450),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("PROC", 4),											// SIGHTRANGE:	Range of sighting.
@@ -637,7 +637,7 @@ static BuildingTypeClass const ClassStorage(
 	"SILO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SILO", 1),								// Build level.
-	Read_Prerequisite("SILO", STRUCT_REFINERY),			// Building prerequisite.
+	STRUCT_REFINERY,			// Building prerequisite.
 		Read_Detects_Cloak("SILO", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("SILO", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("SILO", true),			// Requires a bib dirt patch?
@@ -659,7 +659,7 @@ static BuildingTypeClass const ClassStorage(
 		Read_Is_Buildable("SILO", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("SILO", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("SILO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SILO", 150),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("SILO", 2),											// SIGHTRANGE:	Range of sighting.
@@ -688,7 +688,7 @@ static BuildingTypeClass const ClassHelipad(
 	"HPAD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HPAD", 6),								// Build level.
-	Read_Prerequisite("HPAD", STRUCT_BARRACKS),			// Building prerequisite.
+	STRUCT_BARRACKS,			// Building prerequisite.
 		Read_Detects_Cloak("HPAD", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("HPAD", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("HPAD", true),			// Requires a bib dirt patch?
@@ -710,7 +710,7 @@ static BuildingTypeClass const ClassHelipad(
 		Read_Is_Buildable("HPAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("HPAD", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("HPAD", FACTORY_TYPE_AIRCRAFT),					// The object type produced at this factory.
+	FACTORY_TYPE_AIRCRAFT,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HPAD", 400),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("HPAD", 3),											// SIGHTRANGE:	Range of sighting.
@@ -738,7 +738,7 @@ static BuildingTypeClass const ClassCommand(
 	"HQ",										// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HQ", 2),								// Build level.
-	Read_Prerequisite("HQ", STRUCT_REFINERY),			// Building prerequisite.
+	STRUCT_REFINERY,			// Building prerequisite.
 		Read_Detects_Cloak("HQ", true),			// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("HQ", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("HQ", true),			// Requires a bib dirt patch?
@@ -760,7 +760,7 @@ static BuildingTypeClass const ClassCommand(
 		Read_Is_Buildable("HQ", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("HQ", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("HQ", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	Read_Strength("HQ", 500),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("HQ", 10),										// SIGHTRANGE:	Range of sighting.
@@ -788,7 +788,7 @@ static BuildingTypeClass const ClassSAM(
 	"SAM",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SAM", 6),								// Build level.
-	Read_Prerequisite("SAM", STRUCT_BARRACKS),			// Building prerequisite.
+	STRUCT_BARRACKS,			// Building prerequisite.
 		Read_Detects_Cloak("SAM", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("SAM", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("SAM", false),		// Requires a bib dirt patch?
@@ -810,7 +810,7 @@ static BuildingTypeClass const ClassSAM(
 		Read_Is_Buildable("SAM", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("SAM", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("SAM", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SAM", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("SAM", 3),											// SIGHTRANGE:	Range of sighting.
@@ -838,7 +838,7 @@ static BuildingTypeClass const ClassAirStrip(
 	"AFLD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("AFLD", 2),								// Build level.
-	Read_Prerequisite("AFLD", STRUCT_REFINERY),			// Building prerequisite.
+	STRUCT_REFINERY,			// Building prerequisite.
 		Read_Detects_Cloak("AFLD", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("AFLD", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("AFLD", true),			// Requires a bib dirt patch?
@@ -860,7 +860,7 @@ static BuildingTypeClass const ClassAirStrip(
 		Read_Is_Buildable("AFLD", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("AFLD", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("AFLD", FACTORY_TYPE_UNIT),							// The object type produced at this factory.
+	FACTORY_TYPE_UNIT,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("AFLD", 500),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("AFLD", 5),											// SIGHTRANGE:	Range of sighting.
@@ -888,7 +888,7 @@ static BuildingTypeClass const ClassPower(
 	"NUKE",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("NUKE", 0),								// Build level.
-	Read_Prerequisite("NUKE", STRUCT_NONE),				// Building prerequisite.
+	STRUCT_NONE,				// Building prerequisite.
 		Read_Detects_Cloak("NUKE", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("NUKE", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("NUKE", true),			// Requires a bib dirt patch?
@@ -910,7 +910,7 @@ static BuildingTypeClass const ClassPower(
 		Read_Is_Buildable("NUKE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("NUKE", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("NUKE", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("NUKE", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("NUKE", 2),											// SIGHTRANGE:	Range of sighting.
@@ -938,7 +938,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 	"NUK2",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("NUK2", 5),											// Build level.
-	Read_Prerequisite("NUK2", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
+	STRUCT_POWER,							// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("NUK2", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("NUK2", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("NUK2", true),			// Requires a bib dirt patch?
@@ -960,7 +960,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		Read_Is_Buildable("NUK2", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("NUK2", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("NUK2", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("NUK2", 300),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("NUK2", 2),											// SIGHTRANGE:	Range of sighting.
@@ -988,7 +988,7 @@ static BuildingTypeClass const ClassHospital(
 	"HOSP",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("HOSP", 99),							// Build level.
-	Read_Prerequisite("HOSP", STRUCT_BARRACKS),			// PREREQ:		Buildings that must exist first.
+	STRUCT_BARRACKS,			// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("HOSP", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("HOSP", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("HOSP", true),			// Requires a bib dirt patch?
@@ -1010,7 +1010,7 @@ static BuildingTypeClass const ClassHospital(
 		Read_Is_Buildable("HOSP", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("HOSP", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("HOSP", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HOSP", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("HOSP", 2),											// SIGHTRANGE:	Range of sighting.
@@ -1039,7 +1039,7 @@ static BuildingTypeClass const ClassBioLab(
 	"BIO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BIO", 99),							// Build level.
-	Read_Prerequisite("BIO", STRUCT_HOSPITAL),			// PREREQ:		Buildings that must exist first.
+	STRUCT_HOSPITAL,			// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("BIO", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("BIO", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("BIO", true),			// Requires a bib dirt patch?
@@ -1061,7 +1061,7 @@ static BuildingTypeClass const ClassBioLab(
 		Read_Is_Buildable("BIO", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("BIO", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("BIO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BIO", 300),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("BIO", 2),											// SIGHTRANGE:	Range of sighting.
@@ -1089,7 +1089,7 @@ static BuildingTypeClass const ClassBarracks(
 	"PYLE",									// NAME:			Short name of the structure.
 	XYP_COORD(30,33),						// Exit point for produced units.
 	Read_Build_Level("PYLE", 0),								// Build level.
-	Read_Prerequisite("PYLE", STRUCT_POWER),				// Building prerequisite.
+	STRUCT_POWER,				// Building prerequisite.
 		Read_Detects_Cloak("PYLE", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("PYLE", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("PYLE", true),			// Requires a bib dirt patch?
@@ -1111,7 +1111,7 @@ static BuildingTypeClass const ClassBarracks(
 		Read_Is_Buildable("PYLE", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("PYLE", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("PYLE", FACTORY_TYPE_INFANTRY),					// The object type produced at this factory.
+	FACTORY_TYPE_INFANTRY,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("PYLE", 400),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("PYLE", 3),											// SIGHTRANGE:	Range of sighting.
@@ -1139,7 +1139,7 @@ static BuildingTypeClass const ClassHand(
 	"HAND",									// NAME:			Short name of the structure.
 	XYP_COORD(36,63),						// Exit point for produced units.
 	Read_Build_Level("HAND", 0),								// Build level.
-	Read_Prerequisite("HAND", STRUCT_POWER),				// Building prerequisite.
+	STRUCT_POWER,				// Building prerequisite.
 		Read_Detects_Cloak("HAND", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("HAND", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("HAND", true),			// Requires a bib dirt patch?
@@ -1161,7 +1161,7 @@ static BuildingTypeClass const ClassHand(
 		Read_Is_Buildable("HAND", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("HAND", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("HAND", FACTORY_TYPE_INFANTRY),					// The object type produced at this factory.
+	FACTORY_TYPE_INFANTRY,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("HAND", 400),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("HAND", 3),											// SIGHTRANGE:	Range of sighting.
@@ -1189,7 +1189,7 @@ static BuildingTypeClass const ClassTanker(
 	"ARCO",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ARCO", 99),							// Build level.
-	Read_Prerequisite("ARCO", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
+	STRUCT_POWER,							// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("ARCO", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("ARCO", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("ARCO", false),		// Requires a bib dirt patch?
@@ -1211,7 +1211,7 @@ static BuildingTypeClass const ClassTanker(
 		Read_Is_Buildable("ARCO", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("ARCO", true),			// Does building care less if placed on concrete?
-	Read_Factory_Type("ARCO", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ARCO", 100),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("ARCO", 2),											// SIGHTRANGE:	Range of sighting.
@@ -1239,7 +1239,7 @@ static BuildingTypeClass const ClassRepair(
 	"FIX",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("FIX", 5),								// Build level.
-	Read_Prerequisite("FIX", STRUCT_POWER),							// PREREQ:		Buildings that must exist first.
+	STRUCT_POWER,							// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("FIX", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("FIX", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("FIX", true),			// Requires a bib dirt patch?
@@ -1261,7 +1261,7 @@ static BuildingTypeClass const ClassRepair(
 		Read_Is_Buildable("FIX", true),			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("FIX", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("FIX", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("FIX", 400),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("FIX", 3),											// SIGHTRANGE:	Range of sighting.
@@ -1288,7 +1288,7 @@ static BuildingTypeClass const ClassRoad(
 	TXT_ROAD,								// NAME:			Short name of the structure.
 	TXT_ROAD_STRING,
 	"ROAD",									// NAME:			Short name of the structure.
-	Read_Prerequisite("ROAD", STRUCT_NONE),							// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,							// PREREQ:		Buildings that must exist first.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("ROAD", 99),							// Build level.
 	0,								// Building prerequisite.
@@ -1313,7 +1313,7 @@ static BuildingTypeClass const ClassRoad(
 		Read_Is_Buildable("ROAD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("ROAD", true),			// Does building care less if placed on concrete?
-	Read_Factory_Type("ROAD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("ROAD", 1),											// STRNTH:		Full strength of building.
 	Read_Sight_Range("ROAD", 0),											// SIGHTRANGE:	Range of sighting.
@@ -1342,7 +1342,7 @@ static BuildingTypeClass const ClassV01(
 	"V01",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V01", 99),							// Build level.
-	Read_Prerequisite("V01", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V01", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V01", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V01", false),		// Requires a bib dirt patch?
@@ -1364,7 +1364,7 @@ static BuildingTypeClass const ClassV01(
 		Read_Is_Buildable("V01", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V01", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V01", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V01", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V01", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1392,7 +1392,7 @@ static BuildingTypeClass const ClassV02(
 	"V02",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V02", 99),							// Build level.
-	Read_Prerequisite("V02", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V02", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V02", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V02", false),		// Requires a bib dirt patch?
@@ -1414,7 +1414,7 @@ static BuildingTypeClass const ClassV02(
 		Read_Is_Buildable("V02", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V02", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V02", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V02", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V02", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1442,7 +1442,7 @@ static BuildingTypeClass const ClassV03(
 	"V03",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V03", 99),							// Build level.
-	Read_Prerequisite("V03", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V03", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V03", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V03", false),		// Requires a bib dirt patch?
@@ -1464,7 +1464,7 @@ static BuildingTypeClass const ClassV03(
 		Read_Is_Buildable("V03", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V03", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V03", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V03", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V03", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1492,7 +1492,7 @@ static BuildingTypeClass const ClassV04(
 	"V04",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V04", 99),							// Build level.
-	Read_Prerequisite("V04", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V04", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V04", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V04", false),		// Requires a bib dirt patch?
@@ -1514,7 +1514,7 @@ static BuildingTypeClass const ClassV04(
 		Read_Is_Buildable("V04", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V04", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V04", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V04", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V04", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1542,7 +1542,7 @@ static BuildingTypeClass const ClassV05(
 	"V05",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V05", 99),							// Build level.
-	Read_Prerequisite("V05", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V05", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V05", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V05", false),		// Requires a bib dirt patch?
@@ -1564,7 +1564,7 @@ static BuildingTypeClass const ClassV05(
 		Read_Is_Buildable("V05", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V05", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V05", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V05", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V05", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1592,7 +1592,7 @@ static BuildingTypeClass const ClassV06(
 	"V06",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V06", 99),							// Build level.
-	Read_Prerequisite("V06", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V06", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V06", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V06", false),		// Requires a bib dirt patch?
@@ -1614,7 +1614,7 @@ static BuildingTypeClass const ClassV06(
 		Read_Is_Buildable("V06", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V06", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V06", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V06", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V06", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1642,7 +1642,7 @@ static BuildingTypeClass const ClassV07(
 	"V07",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V07", 99),							// Build level.
-	Read_Prerequisite("V07", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V07", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V07", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V07", false),		// Requires a bib dirt patch?
@@ -1664,7 +1664,7 @@ static BuildingTypeClass const ClassV07(
 		Read_Is_Buildable("V07", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V07", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V07", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V07", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V07", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1692,7 +1692,7 @@ static BuildingTypeClass const ClassV08(
 	"V08",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V08", 99),							// Build level.
-	Read_Prerequisite("V08", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V08", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V08", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V08", false),		// Requires a bib dirt patch?
@@ -1714,7 +1714,7 @@ static BuildingTypeClass const ClassV08(
 		Read_Is_Buildable("V08", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V08", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V08", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V08", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V08", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1742,7 +1742,7 @@ static BuildingTypeClass const ClassV09(
 	"V09",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V09", 99),							// Build level.
-	Read_Prerequisite("V09", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V09", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V09", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V09", false),		// Requires a bib dirt patch?
@@ -1764,7 +1764,7 @@ static BuildingTypeClass const ClassV09(
 		Read_Is_Buildable("V09", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V09", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V09", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V09", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V09", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1792,7 +1792,7 @@ static BuildingTypeClass const ClassV10(
 	"V10",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V10", 99),							// Build level.
-	Read_Prerequisite("V10", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V10", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V10", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V10", false),		// Requires a bib dirt patch?
@@ -1814,7 +1814,7 @@ static BuildingTypeClass const ClassV10(
 		Read_Is_Buildable("V10", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V10", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V10", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V10", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V10", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1842,7 +1842,7 @@ static BuildingTypeClass const ClassV11(
 	"V11",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V11", 99),							// Build level.
-	Read_Prerequisite("V11", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V11", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V11", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V11", false),		// Requires a bib dirt patch?
@@ -1864,7 +1864,7 @@ static BuildingTypeClass const ClassV11(
 		Read_Is_Buildable("V11", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V11", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V11", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V11", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V11", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1892,7 +1892,7 @@ static BuildingTypeClass const ClassV12(
 	"V12",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V12", 99),							// Build level.
-	Read_Prerequisite("V12", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V12", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V12", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V12", false),		// Requires a bib dirt patch?
@@ -1914,7 +1914,7 @@ static BuildingTypeClass const ClassV12(
 		Read_Is_Buildable("V12", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V12", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V12", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V12", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V12", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1942,7 +1942,7 @@ static BuildingTypeClass const ClassV13(
 	"V13",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V13", 99),							// Build level.
-	Read_Prerequisite("V13", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V13", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V13", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V13", false),		// Requires a bib dirt patch?
@@ -1964,7 +1964,7 @@ static BuildingTypeClass const ClassV13(
 		Read_Is_Buildable("V13", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V13", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V13", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V13", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V13", 1),											// SIGHTRANGE:	Range of sighting.
@@ -1992,7 +1992,7 @@ static BuildingTypeClass const ClassV14(
 	"V14",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V14", 99),							// Build level.
-	Read_Prerequisite("V14", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V14", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V14", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V14", false),		// Requires a bib dirt patch?
@@ -2014,7 +2014,7 @@ static BuildingTypeClass const ClassV14(
 		Read_Is_Buildable("V14", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V14", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V14", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V14", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V14", 1),											// SIGHTRANGE:	Range of sighting.
@@ -2042,7 +2042,7 @@ static BuildingTypeClass const ClassV15(
 	"V15",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V15", 99),							// Build level.
-	Read_Prerequisite("V15", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V15", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V15", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V15", false),		// Requires a bib dirt patch?
@@ -2064,7 +2064,7 @@ static BuildingTypeClass const ClassV15(
 		Read_Is_Buildable("V15", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V15", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V15", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V15", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V15", 1),											// SIGHTRANGE:	Range of sighting.
@@ -2092,7 +2092,7 @@ static BuildingTypeClass const ClassV16(
 	"V16",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V16", 99),							// Build level.
-	Read_Prerequisite("V16", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V16", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V16", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V16", false),		// Requires a bib dirt patch?
@@ -2114,7 +2114,7 @@ static BuildingTypeClass const ClassV16(
 		Read_Is_Buildable("V16", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V16", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V16", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V16", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V16", 1),											// SIGHTRANGE:	Range of sighting.
@@ -2142,7 +2142,7 @@ static BuildingTypeClass const ClassV17(
 	"V17",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V17", 99),							// Build level.
-	Read_Prerequisite("V17", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V17", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V17", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V17", false),		// Requires a bib dirt patch?
@@ -2164,7 +2164,7 @@ static BuildingTypeClass const ClassV17(
 		Read_Is_Buildable("V17", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V17", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V17", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V17", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V17", 1),											// SIGHTRANGE:	Range of sighting.
@@ -2192,7 +2192,7 @@ static BuildingTypeClass const ClassV18(
 	"V18",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V18", 99),							// Build level.
-	Read_Prerequisite("V18", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V18", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V18", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V18", false),		// Requires a bib dirt patch?
@@ -2214,7 +2214,7 @@ static BuildingTypeClass const ClassV18(
 		Read_Is_Buildable("V18", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V18", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V18", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V18", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V18", 1),											// SIGHTRANGE:	Range of sighting.
@@ -2242,7 +2242,7 @@ static BuildingTypeClass const ClassV19(
 	"V19",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V19", 99),							// Build level.
-	Read_Prerequisite("V19", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V19", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V19", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V19", false),		// Requires a bib dirt patch?
@@ -2264,7 +2264,7 @@ static BuildingTypeClass const ClassV19(
 		Read_Is_Buildable("V19", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V19", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V19", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V19", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V19", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2292,7 +2292,7 @@ static BuildingTypeClass const ClassV20(
 	"V20",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V20", 99),							// Build level.
-	Read_Prerequisite("V20", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V20", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V20", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V20", false),		// Requires a bib dirt patch?
@@ -2314,7 +2314,7 @@ static BuildingTypeClass const ClassV20(
 		Read_Is_Buildable("V20", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V20", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V20", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V20", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V20", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2342,7 +2342,7 @@ static BuildingTypeClass const ClassV21(
 	"V21",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V21", 99),							// Build level.
-	Read_Prerequisite("V21", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V21", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V21", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V21", false),		// Requires a bib dirt patch?
@@ -2364,7 +2364,7 @@ static BuildingTypeClass const ClassV21(
 		Read_Is_Buildable("V21", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V21", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V21", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V21", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V21", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2392,7 +2392,7 @@ static BuildingTypeClass const ClassV22(
 	"V22",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V22", 99),							// Build level.
-	Read_Prerequisite("V22", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V22", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V22", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V22", false),		// Requires a bib dirt patch?
@@ -2414,7 +2414,7 @@ static BuildingTypeClass const ClassV22(
 		Read_Is_Buildable("V22", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V22", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V22", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V22", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V22", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2442,7 +2442,7 @@ static BuildingTypeClass const ClassV23(
 	"V23",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V23", 99),							// Build level.
-	Read_Prerequisite("V23", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V23", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V23", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V23", false),		// Requires a bib dirt patch?
@@ -2464,7 +2464,7 @@ static BuildingTypeClass const ClassV23(
 		Read_Is_Buildable("V23", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V23", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V23", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V23", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V23", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2492,7 +2492,7 @@ static BuildingTypeClass const ClassV24(
 	"V24",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V24", 99),							// Build level.
-	Read_Prerequisite("V24", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V24", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V24", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V24", false),		// Requires a bib dirt patch?
@@ -2514,7 +2514,7 @@ static BuildingTypeClass const ClassV24(
 		Read_Is_Buildable("V24", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V24", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V24", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V24", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V24", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2542,7 +2542,7 @@ static BuildingTypeClass const ClassV25(
 	"V25",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V25", 99),							// Build level.
-	Read_Prerequisite("V25", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V25", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V25", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V25", false),		// Requires a bib dirt patch?
@@ -2564,7 +2564,7 @@ static BuildingTypeClass const ClassV25(
 		Read_Is_Buildable("V25", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V25", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V25", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V25", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V25", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2592,7 +2592,7 @@ static BuildingTypeClass const ClassV26(
 	"V26",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V26", 99),							// Build level.
-	Read_Prerequisite("V26", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V26", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V26", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V26", false),		// Requires a bib dirt patch?
@@ -2614,7 +2614,7 @@ static BuildingTypeClass const ClassV26(
 		Read_Is_Buildable("V26", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V26", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V26", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V26", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V26", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2642,7 +2642,7 @@ static BuildingTypeClass const ClassV27(
 	"V27",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V27", 99),							// Build level.
-	Read_Prerequisite("V27", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V27", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V27", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V27", false),		// Requires a bib dirt patch?
@@ -2664,7 +2664,7 @@ static BuildingTypeClass const ClassV27(
 		Read_Is_Buildable("V27", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V27", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V27", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V27", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V27", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2692,7 +2692,7 @@ static BuildingTypeClass const ClassV28(
 	"V28",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V28", 99),							// Build level.
-	Read_Prerequisite("V28", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V28", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V28", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V28", false),		// Requires a bib dirt patch?
@@ -2714,7 +2714,7 @@ static BuildingTypeClass const ClassV28(
 		Read_Is_Buildable("V28", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V28", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V28", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V28", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V28", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2742,7 +2742,7 @@ static BuildingTypeClass const ClassV29(
 	"V29",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V29", 99),							// Build level.
-	Read_Prerequisite("V29", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V29", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V29", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V29", false),		// Requires a bib dirt patch?
@@ -2764,7 +2764,7 @@ static BuildingTypeClass const ClassV29(
 		Read_Is_Buildable("V29", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V29", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V29", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V29", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V29", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2792,7 +2792,7 @@ static BuildingTypeClass const ClassV30(
 	"V30",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V30", 99),							// Build level.
-	Read_Prerequisite("V30", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V30", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V30", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V30", false),		// Requires a bib dirt patch?
@@ -2814,7 +2814,7 @@ static BuildingTypeClass const ClassV30(
 		Read_Is_Buildable("V30", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V30", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V30", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V30", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V30", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2842,7 +2842,7 @@ static BuildingTypeClass const ClassV31(
 	"V31",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V31", 99),							// Build level.
-	Read_Prerequisite("V31", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V31", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V31", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V31", false),		// Requires a bib dirt patch?
@@ -2864,7 +2864,7 @@ static BuildingTypeClass const ClassV31(
 		Read_Is_Buildable("V31", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V31", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V31", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V31", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V31", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2892,7 +2892,7 @@ static BuildingTypeClass const ClassV32(
 	"V32",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V32", 99),							// Build level.
-	Read_Prerequisite("V32", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V32", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V32", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V32", false),		// Requires a bib dirt patch?
@@ -2914,7 +2914,7 @@ static BuildingTypeClass const ClassV32(
 		Read_Is_Buildable("V32", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V32", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V32", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V32", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V32", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2942,7 +2942,7 @@ static BuildingTypeClass const ClassV33(
 	"V33",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V33", 99),							// Build level.
-	Read_Prerequisite("V33", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V33", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V33", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V33", false),		// Requires a bib dirt patch?
@@ -2964,7 +2964,7 @@ static BuildingTypeClass const ClassV33(
 		Read_Is_Buildable("V33", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V33", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V33", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V33", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V33", 2),											// SIGHTRANGE:	Range of sighting.
@@ -2992,7 +2992,7 @@ static BuildingTypeClass const ClassV34(
 	"V34",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V34", 99),							// Build level.
-	Read_Prerequisite("V34", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V34", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V34", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V34", false),		// Requires a bib dirt patch?
@@ -3014,7 +3014,7 @@ static BuildingTypeClass const ClassV34(
 		Read_Is_Buildable("V34", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V34", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V34", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V34", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V34", 2),											// SIGHTRANGE:	Range of sighting.
@@ -3042,7 +3042,7 @@ static BuildingTypeClass const ClassV35(
 	"V35",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V35", 99),							// Build level.
-	Read_Prerequisite("V35", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V35", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V35", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V35", false),		// Requires a bib dirt patch?
@@ -3064,7 +3064,7 @@ static BuildingTypeClass const ClassV35(
 		Read_Is_Buildable("V35", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V35", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V35", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V35", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V35", 2),											// SIGHTRANGE:	Range of sighting.
@@ -3092,7 +3092,7 @@ static BuildingTypeClass const ClassV36(
 	"V36",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V36", 99),							// Build level.
-	Read_Prerequisite("V36", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V36", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V36", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V36", false),		// Requires a bib dirt patch?
@@ -3114,7 +3114,7 @@ static BuildingTypeClass const ClassV36(
 		Read_Is_Buildable("V36", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V36", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V36", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V36", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V36", 2),											// SIGHTRANGE:	Range of sighting.
@@ -3141,7 +3141,7 @@ static BuildingTypeClass const ClassV37(
 	"V37",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("V37", 99),							// Build level.
-	Read_Prerequisite("V37", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("V37", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("V37", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("V37", false),		// Requires a bib dirt patch?
@@ -3163,7 +3163,7 @@ static BuildingTypeClass const ClassV37(
 		Read_Is_Buildable("V37", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("V37", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("V37", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("V37", 300),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("V37", 2),											// SIGHTRANGE:	Range of sighting.
@@ -3190,7 +3190,7 @@ static BuildingTypeClass const ClassMission(
 	"MISS",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("MISS", 99),							// Build level.
-	Read_Prerequisite("MISS", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("MISS", true),			// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("MISS", true),			// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("MISS", true),			// Requires a bib dirt patch?
@@ -3212,7 +3212,7 @@ static BuildingTypeClass const ClassMission(
 		Read_Is_Buildable("MISS", false),		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		Read_Is_Sturdy("MISS", false),		// Does building care less if placed on concrete?
-	Read_Factory_Type("MISS", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("MISS", 200),										// STRNTH:		Full strength of building.
 	Read_Sight_Range("MISS", 2),											// SIGHTRANGE:	Range of sighting.
@@ -3241,7 +3241,7 @@ static BuildingTypeClass const Sandbag(
 	"SBAG",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("SBAG", 2),								// Build level.
-	Read_Prerequisite("SBAG", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("SBAG", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("SBAG", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("SBAG", false),		// Requires a bib dirt patch?
@@ -3263,7 +3263,7 @@ static BuildingTypeClass const Sandbag(
 		Read_Is_Buildable("SBAG", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("SBAG", true),			// Does building care less if placed on concrete?
-	Read_Factory_Type("SBAG", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("SBAG", 1),											// STRNTH:		Full strength of building.
 	Read_Sight_Range("SBAG", 0),											// SIGHTRANGE:	Range of sighting.
@@ -3291,7 +3291,7 @@ static BuildingTypeClass const Cyclone(
 	"CYCL",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("CYCL", 5),								// Build level.
-	Read_Prerequisite("CYCL", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("CYCL", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("CYCL", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("CYCL", false),		// Requires a bib dirt patch?
@@ -3313,7 +3313,7 @@ static BuildingTypeClass const Cyclone(
 		Read_Is_Buildable("CYCL", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("CYCL", true),			// Does building care less if placed on concrete?
-	Read_Factory_Type("CYCL", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("CYCL", 1),											// STRNTH:		Full strength of building.
 	Read_Sight_Range("CYCL", 0),											// SIGHTRANGE:	Range of sighting.
@@ -3341,7 +3341,7 @@ static BuildingTypeClass const Brick(
 	"BRIK",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BRIK", 7),								// Build level.
-	Read_Prerequisite("BRIK", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("BRIK", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("BRIK", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("BRIK", false),		// Requires a bib dirt patch?
@@ -3363,7 +3363,7 @@ static BuildingTypeClass const Brick(
 		Read_Is_Buildable("BRIK", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("BRIK", true),			// Does building care less if placed on concrete?
-	Read_Factory_Type("BRIK", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BRIK", 1),											// STRNTH:		Full strength of building.
 	Read_Sight_Range("BRIK", 0),											// SIGHTRANGE:	Range of sighting.
@@ -3391,7 +3391,7 @@ static BuildingTypeClass const Barbwire(
 	"BARB",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("BARB", 98),							// Build level.
-	Read_Prerequisite("BARB", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("BARB", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("BARB", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("BARB", false),		// Requires a bib dirt patch?
@@ -3413,7 +3413,7 @@ static BuildingTypeClass const Barbwire(
 		Read_Is_Buildable("BARB", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("BARB", true),			// Does building care less if placed on concrete?
-	Read_Factory_Type("BARB", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("BARB", 1),											// STRNTH:		Full strength of building.
 	Read_Sight_Range("BARB", 0),											// SIGHTRANGE:	Range of sighting.
@@ -3441,7 +3441,7 @@ static BuildingTypeClass const Wood(
 	"WOOD",									// NAME:			Short name of the structure.
 	XYP_COORD(0,0),						// Exit point for produced units.
 	Read_Build_Level("WOOD", 99),							// Build level.
-	Read_Prerequisite("WOOD", STRUCT_NONE),				// PREREQ:		Buildings that must exist first.
+	STRUCT_NONE,				// PREREQ:		Buildings that must exist first.
 		Read_Detects_Cloak("WOOD", false),		// Has ability to detect adjacent cloaked objects?
 		Read_Is_Fixed_Speed("WOOD", false),		// Animation rate is regulated for constant speed?
 		Read_Is_Bibbed("WOOD", false),		// Requires a bib dirt patch?
@@ -3463,7 +3463,7 @@ static BuildingTypeClass const Wood(
 		Read_Is_Buildable("WOOD", true),			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		Read_Is_Sturdy("WOOD", true),			// Does building care less if placed on concrete?
-	Read_Factory_Type("WOOD", FACTORY_TYPE_NONE),								// The object type produced at this factory.
+	FACTORY_TYPE_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	Read_Strength("WOOD", 1),											// STRNTH:		Full strength of building.
 	Read_Sight_Range("WOOD", 0),											// SIGHTRANGE:	Range of sighting.
@@ -3582,7 +3582,7 @@ BuildingTypeClass::BuildingTypeClass(
 						char const *ininame,
 						COORDINATE exitpoint,
 						unsigned char level,
-						long pre,
+						StructType pre,
 						bool is_scanner,
 						bool is_regulated,
 						bool is_bibbed,
@@ -3604,7 +3604,7 @@ BuildingTypeClass::BuildingTypeClass(
 						bool is_buildable,
 						bool is_crew,
 						bool is_sturdy,
-						RTTIType tobuild,
+						FactoryType tobuild,
 						DirType sframe,
 						unsigned short strength,
 						int sightrange,
@@ -3663,25 +3663,26 @@ BuildingTypeClass::BuildingTypeClass(
 													armor)
 {
 	CanEnter = canenter;
-	Capacity = capacity;
-	Drain = drain;
 	ExitList = exitlist;
 	ExitPoint = exitpoint;
-	IsBibbed = is_bibbed;
-	IsCaptureable = is_captureable;
-	IsFactory = is_factory;
-	IsRegulated = is_regulated;
-	IsUnsellable = Read_Is_Unsellable(ininame, is_unsellable);
-	IsSimpleDamage = is_simpledamage;
-	IsSturdy = is_sturdy;
-	IsWall = is_wall;
 	OccupyList = sizelist;
 	OverlapList = overlap;
-	Power = power;
 	Size = size;
 	StartFace = sframe;
-	ToBuild = tobuild;
 	Type = type;
+
+	IsBibbed = Read_Is_Bibbed(IniName, is_bibbed);
+	IsWall = Read_Is_Wall(IniName, is_wall);
+	IsFactory = Read_Is_Factory(IniName, is_factory);
+	IsSimpleDamage = Read_Use_Simple_Damage(IniName, is_simpledamage);
+	IsCaptureable = Read_Is_Captureable(IniName, is_captureable);
+	IsRegulated = Read_Is_Fixed_Speed(IniName, is_regulated);
+	IsUnsellable = Read_Is_Unsellable(IniName, is_unsellable);
+	ToBuild = Read_Factory_Type(IniName, tobuild);
+	Capacity = Read_Storage_Capacity(IniName, capacity);
+	Power = Read_Power_Output(IniName, power);
+	Drain = Read_Power_Input(IniName, drain);
+	IsSturdy = Read_Is_Sturdy(IniName, is_sturdy);
 
 	Anims[BSTATE_CONSTRUCTION].Start = 0;
 	Anims[BSTATE_CONSTRUCTION].Count = 1;
