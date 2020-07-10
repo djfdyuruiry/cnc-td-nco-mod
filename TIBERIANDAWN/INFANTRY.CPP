@@ -91,8 +91,6 @@ int Infantry_Punch_Damage[] = { 4, 7};
 */
 void * InfantryClass::VTable;
 
-static int INFANTRY_TIBERIUM_DAMAGE;
-
 /***************************************************************************
 ** This is the array of constant data associated with infantry maneuvers. It
 **	specifies the frame rate as well as if the animation can be aborted.
@@ -240,8 +238,6 @@ InfantryClass::InfantryClass(InfantryType classid, HousesType house) :
 	Class(&InfantryTypeClass::As_Reference(classid)),
 	FootClass(house)
 {
-	INFANTRY_TIBERIUM_DAMAGE = Read_Int_Game_Rule(TIBERIUM_INFANTRY_DAMAGE_RULE, 2, 0, INT_MAX);
-
 	/*
 	**	For two shooters, clear out the second shot flag -- it will be set the first time
 	**	the object fires. For non two shooters, set the flag since it will never be cleared
@@ -775,7 +771,9 @@ void InfantryClass::Per_Cell_Process(bool center)
 	**	If over Tiberium, then this infantry unit will take damage.
 	*/
 	if (IsActive && !IsInLimbo && center && cellptr->Land_Type() == LAND_TIBERIUM && !Class->IsImmuneToTiberium) {   // *this != INFANTRY_E5) { - allowing the infantry to control wether it's immune to tiberium
-		Take_Damage(INFANTRY_TIBERIUM_DAMAGE, 0, WARHEAD_FIRE);
+		auto tiberiumDamage = Read_Int_Game_Rule(TIBERIUM_INFANTRY_DAMAGE_RULE, 2, 0, INT_MAX);
+
+		Take_Damage(tiberiumDamage, 0, WARHEAD_FIRE);
 	}
 }
 
