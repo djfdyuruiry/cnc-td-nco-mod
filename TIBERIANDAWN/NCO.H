@@ -11,6 +11,7 @@
 #include "./rules_ini.h"
 #include "./rules_ini_aircraft.h"
 #include "./rules_ini_building.h"
+#include "./rules_ini_difficulty.h"
 #include "./rules_ini_game.h"
 #include "./rules_ini_generic.h"
 #include "./rules_ini_infantry.h"

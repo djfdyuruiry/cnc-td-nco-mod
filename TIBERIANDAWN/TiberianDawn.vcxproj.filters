@@ -721,6 +721,9 @@
     <ClInclude Include="RULES_INI_BUILDING.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="RULES_INI_DIFFICULTY.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
