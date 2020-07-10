@@ -9,6 +9,7 @@ static const auto ONE_SEC_IN_MILLIS = 1000;
 static const auto TICK_INTERVAL_IN_MILLIS = ONE_SEC_IN_MILLIS / TICKS_PER_SECOND;
 
 static char* RULES_INI_BUFFER = NULL;
+static char* DEFAULT_RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
 
 static bool RULES_VALID = true;
@@ -70,44 +71,8 @@ static void Read_Log_Level_From_Rules_Ini()
 	Log_Info("Resolved Log Level: %s", Log_Level_To_String(LOG_LEVEL));
 }
 
-/// <summary>
-/// Load the content of the rules ini file, the location is read from the env var pointed to by
-/// <ref>RULES_FILE_ENV_VAR</ref> or defaults to <ref>DEFAULT_RULES_FILENAME</ref> stored in the
-/// mod path.
-/// </summary>
-/// <returns>The text content of the ini file or a blank string if no file was found.</returns>
-char* Read_Rules_Ini() {
-	auto modPath = Get_Mod_Data_Path();
-
-	Log_Info("Attempting to load rules ini from mod path: %s", modPath);
-
-	auto rulesFilename = Allocate_String(MAX_PATH);
-
-	sprintf(rulesFilename, "%s\\%s", modPath, RULES_FILENAME);
-
-	auto rulesFile = new RawFileClass(rulesFilename);
-
-	if (!rulesFile->Is_Available()) {
-		delete rulesFile;
-
-		sprintf(rulesFilename, "%s\\%s", modPath, DEFAULT_RULES_FILENAME);
-
-		rulesFile = new RawFileClass(rulesFilename);
-
-		if (!rulesFile->Is_Available()) {
-			delete modPath;
-			delete rulesFilename;
-			delete rulesFile;
-
-
-			Log_Warn("%s not found, defaults in code will be used", DEFAULT_RULES_FILENAME);
-
-			return "";
-		}
-
-		Log_Warn("%s not found, default rules from %s be used", RULES_FILENAME, DEFAULT_RULES_FILENAME);
-	}
-
+static char* Read_Buffer_From_Rules_File(RawFileClass* rulesFile, char* rulesFilename)
+{
 	Log_Info("Reading rules ini from file: %s", rulesFilename);
 
 	auto rulesBuffer = Allocate_String(rulesFile->Size());
@@ -115,21 +80,67 @@ char* Read_Rules_Ini() {
 	rulesFile->Read(rulesBuffer, rulesFile->Size());
 	rulesFile->Close();
 
-	delete rulesFile;
-	delete rulesFilename;
-	delete modPath;
-
-	Log_Debug("Returning rules ini content");
-
 	return rulesBuffer;
 }
 
+/// <summary>
+/// Load the content of the rules ini file, the location is read from the env var pointed to by
+/// <ref>RULES_FILE_ENV_VAR</ref> or defaults to <ref>DEFAULT_RULES_FILENAME</ref> stored in the
+/// mod path.
+/// </summary>
+/// <returns>The text content of the ini file or a blank string if no file was found.</returns>
+static void Read_Rules_Ini_Buffers() {
+	auto modPath = Get_Mod_Data_Path();
+
+	Log_Info("Attempting to load rules ini from mod path: %s", modPath);
+
+	auto rulesFilename = Allocate_String(MAX_PATH);
+	auto defaultRulesFilename = Allocate_String(MAX_PATH);
+
+	sprintf(rulesFilename, "%s\\%s", modPath, RULES_FILENAME);
+	sprintf(defaultRulesFilename, "%s\\%s", modPath, DEFAULT_RULES_FILENAME);
+
+	auto rulesFile = new RawFileClass(rulesFilename);
+	auto defaultRulesFile = new RawFileClass(defaultRulesFilename);
+
+	DEFAULT_RULES_INI_BUFFER = "";
+	RULES_INI_BUFFER = "";
+
+	if (!rulesFile->Is_Available()) {
+		if (!defaultRulesFile->Is_Available()) {
+			Log_Warn("%s not found, defaults in code will be used", DEFAULT_RULES_FILENAME);
+		}
+
+		Log_Warn("%s not found, default rules from %s be used", RULES_FILENAME, DEFAULT_RULES_FILENAME);
+	}
+
+	if (rulesFile->Is_Available())
+	{
+		Log_Info("Reading rules ini content: %s", rulesFilename);
+
+		RULES_INI_BUFFER = Read_Buffer_From_Rules_File(rulesFile, rulesFilename);
+	}
+
+	if (defaultRulesFile->Is_Available())
+	{
+		Log_Info("Reading default rules ini content: %s", rulesFilename);
+
+		DEFAULT_RULES_INI_BUFFER = Read_Buffer_From_Rules_File(defaultRulesFile, defaultRulesFilename);
+	}
+
+	delete modPath;
+	delete rulesFilename;
+	delete defaultRulesFilename;
+	delete rulesFile;
+	delete defaultRulesFile;
+}
+
 void Ensure_Rules_Ini_Is_Loaded() {
-	if (RULES_INI_BUFFER != NULL) {
+	if (RULES_INI_BUFFER != NULL && DEFAULT_RULES_INI_BUFFER != NULL) {
 		return;
 	}
 
-	RULES_INI_BUFFER = Read_Rules_Ini();
+	Read_Rules_Ini_Buffers();
 
 	Read_Log_Level_From_Rules_Ini();
 
@@ -156,12 +167,31 @@ int Read_Optional_Int_From_Rules_Ini(
 
 	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
 
-	return WWGetPrivateProfileInt(
+	auto value = WWGetPrivateProfileInt(
 		section,
 		entry,
 		RULES_INI_BUFFER,
 		valueFound
 	);
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules value found in RULES.INI buffer, reading from RULES-DEFAULT.INI buffer");
+
+		value = WWGetPrivateProfileInt(
+			section,
+			entry,
+			DEFAULT_RULES_INI_BUFFER,
+			valueFound
+		);
+	}
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules value found in RULES-DEFAULT.INI buffer");
+	}
+
+	return value;
 }
 
 static int Read_Int_From_Rules_Ini(
@@ -180,27 +210,16 @@ static int Read_Int_From_Rules_Ini(
 
 	bool valueFound = false;
 
-	auto ruleValue = WWGetPrivateProfileInt(
-		section,
-		entry,
-		defaultValue,
-		RULES_INI_BUFFER,
-		&valueFound
-	);
-
-	if (valueFound)
-	{
-		Log_Trace("Rules ini value: %d", ruleValue);
-	}
-	else
-	{
-		Log_Trace("No rules ini value found, default will be used");
-	}
+	auto ruleValue = Read_Optional_Int_From_Rules_Ini(section, entry, &valueFound);
 
 	if (!valueFound)
 	{
+		Log_Trace("No rules ini value found, default will be used");
+
 		return defaultValue;
 	}
+
+	Log_Trace("Rules ini value: %d", ruleValue);
 
 	if (valueToAllowAlways == NULL || ruleValue != *valueToAllowAlways)
 	{
@@ -391,6 +410,25 @@ char* Read_Optional_String_From_Rules_Ini(
 		valueFound
 	);
 
+	if (!*valueFound)
+	{
+		Log_Trace("No rules value found in RULES.INI buffer, reading from RULES-DEFAULT.INI buffer");
+
+		WWGetPrivateProfileString(
+			section,
+			entry,
+			valueBuffer,
+			RULES_STRING_LENGTH,
+			DEFAULT_RULES_INI_BUFFER,
+			valueFound
+		);
+	}
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules value found in RULES-DEFAULT.INI buffer");
+	}
+
 	return valueBuffer;
 }
 
@@ -407,18 +445,8 @@ char* Read_String_From_Rules_Ini(
 	Log_Trace("Resolving rule value: %s -> %s", section, entry);
 	Log_Trace("Default value: %s", defaultValue);
 
-	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 	bool valueFound = false;
-
-	WWGetPrivateProfileString(
-		section,
-		entry,
-		defaultValue, 
-		valueBuffer,
-		RULES_STRING_LENGTH,
-		RULES_INI_BUFFER,
-		&valueFound
-	);
+	auto valueBuffer = Read_Optional_String_From_Rules_Ini(section, entry, &valueFound);
 
 	if (valueFound)
 	{
@@ -427,10 +455,14 @@ char* Read_String_From_Rules_Ini(
 	else
 	{
 		Log_Trace("No rules ini value found, default will be returned");
+
+		return strdup(defaultValue);
 	}
 
-	if (String_Is_Empty(valueBuffer) || !valueFound)
+	if (String_Is_Empty(valueBuffer))
 	{
+		Log_Trace("Resolved rule value was empty, default will be returned");
+
 		return strdup(defaultValue);
 	}
 

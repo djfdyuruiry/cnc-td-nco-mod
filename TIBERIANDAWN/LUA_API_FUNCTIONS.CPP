@@ -1584,7 +1584,7 @@ int Lua_Get_Int_Game_Rule(lua_State* lua)
 
     if (valueFound)
     {
-        lua_pushboolean(lua, ruleValue);
+        lua_pushnumber(lua, ruleValue);
     }
     else
     {
@@ -1640,7 +1640,7 @@ int Lua_Get_Boolean_Game_Rule(lua_State* lua)
 
     if (valueFound)
     {
-        lua_pushnumber(lua, ruleValue);
+        lua_pushboolean(lua, ruleValue);
     }
     else
     {

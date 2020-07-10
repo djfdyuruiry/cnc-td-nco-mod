@@ -21,8 +21,6 @@
 #define GAME_TICK_INTERVAL_IN_MS_RULE "GameTickIntervalInMs"
 #define GAME_TICK_INTERVAL_IN_MS_RULE_UPPER "LUASCRIPTS"
 
-char* Read_Rules_Ini();
-
 void Ensure_Rules_Ini_Is_Loaded();
 
 int Read_Optional_Int_From_Rules_Ini(
