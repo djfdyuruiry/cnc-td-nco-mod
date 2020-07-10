@@ -350,7 +350,7 @@ long long Get_Now_In_Epoch_Secs()
 	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_S;
 }
 
-void Configure_Console_Output()
+void Start_Console_Output()
 {
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console allocation");
@@ -367,5 +367,21 @@ void Configure_Console_Output()
 	freopen("CON", "w", stdout);
 	freopen("CON", "w", stderr);
 	freopen("CON", "w", stdin);
+#endif
+}
+
+void Stop_Console_Output()
+{
+#ifdef CI_ENV
+	puts("WARNING: CI environment detected - skipped windows console stop");
+#else
+	if (!FreeConsole())
+	{
+		Log_Error("Error closing Win32 console: %s", Get_Win32_Error_Message());
+	}
+
+	fclose(stdout);
+	fclose(stderr);
+	fclose(stdin);
 #endif
 }

@@ -45,6 +45,8 @@ long long Get_Now_In_Epoch_Millis();
 
 long long Get_Now_In_Epoch_Secs();
 
-void Configure_Console_Output();
+void Start_Console_Output();
+
+void Stop_Console_Output();
 
 #endif

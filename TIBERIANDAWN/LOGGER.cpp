@@ -146,7 +146,7 @@ void Close_Log_File_If_Open()
 
 		if (!CloseHandle(LOG_FILE_HANDLE))
 		{
-			printf("ERROR: Failed to close handle for log file: %s\n", LOG_FILE_PATH);
+			printf("ERROR: Failed to close handle for log file '%s': %s", LOG_FILE_PATH, Get_Win32_Error_Message());
 		}
 
 		LOG_FILE_HANDLE = NULL;
