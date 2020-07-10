@@ -2,6 +2,8 @@
 
 #include "DLLInterface.h"
 
+#include "rules_cache.h"
+
 static const auto GAME_RULE_NAMES = new const char* [GAME_RULE_COUNT] {
     GAME_RULES
 };
@@ -1547,12 +1549,13 @@ int Lua_Get_String_Game_Rule(lua_State* lua)
     if (argCount < 1)
     {
         luaL_error(lua, "getStringGameRule requires at least one argument");
+        return 0;
     }
 
     auto ruleName = Get_Lua_Value_As_String(1);
 
     bool valueFound = false;
-    auto ruleValue = Read_Optional_String_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound);
+    auto ruleValue = Read_Optional_String_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound, false);
 
     if (valueFound)
     {
@@ -1575,6 +1578,7 @@ int Lua_Get_Int_Game_Rule(lua_State* lua)
     if (argCount < 1)
     {
         luaL_error(lua, "getIntGameRule requires at least one argument");
+        return 0;
     }
 
     auto ruleName = Get_Lua_Value_As_String(1);
@@ -1603,6 +1607,7 @@ int Lua_Get_Double_Game_Rule(lua_State* lua)
     if (argCount < 1)
     {
         luaL_error(lua, "getDoubleGameRule requires at least one argument");
+        return 0;
     }
 
     auto ruleName = Get_Lua_Value_As_String(1);
@@ -1631,6 +1636,7 @@ int Lua_Get_Boolean_Game_Rule(lua_State* lua)
     if (argCount < 1)
     {
         luaL_error(lua, "getBoolGameRule requires at least one argument");
+        return 0;
     }
 
     auto ruleName = Get_Lua_Value_As_String(1);
@@ -1648,6 +1654,77 @@ int Lua_Get_Boolean_Game_Rule(lua_State* lua)
     }
 
     return 1;
+}
+
+template<typename T> static int Lua_Set_Game_Rule(
+    lua_State* lua,
+    const char* typeName,
+    T (*readValue)(lua_State*, int),
+    void(*writeCacheValue)(const char*, const char*, T))
+{
+    Log_Trace("Lua_Set_%s_Game_Rule called from Lua", typeName);
+
+    int argCount = lua_gettop(lua);
+
+    if (argCount < 2)
+    {
+        auto errorMessage = Allocate_String(64);
+
+        sprintf(errorMessage, "set%sGameRule requires at least two arguments", typeName);
+
+        luaL_error(lua, errorMessage);
+        return 0;
+    }
+
+    auto ruleName = Get_Lua_Value_As_String(1);
+    auto ruleValue = readValue(lua, 2);
+
+    writeCacheValue(GAME_RULES_SECTION_NAME, ruleName, ruleValue);
+
+    return 0;
+}
+
+static const char* Lua_To_String_Wrapper(lua_State* lua, int index)
+{
+    return Get_Lua_Value_As_String(index);
+}
+
+int Lua_Set_String_Game_Rule(lua_State* lua)
+{
+    return Lua_Set_Game_Rule(lua, "String", &Lua_To_String_Wrapper, Cache_String_Rule);
+}
+
+static int Lua_To_Int_Wrapper(lua_State* lua, int index)
+{
+    return luaL_checknumber(lua, index);
+}
+
+int Lua_Set_Int_Game_Rule(lua_State* lua)
+{
+    return Lua_Set_Game_Rule(lua, "Int", &Lua_To_Int_Wrapper, Cache_Int_Rule);
+}
+
+int Lua_Set_Double_Game_Rule(lua_State* lua)
+{
+    return Lua_Set_Game_Rule(lua, "Double", &luaL_checknumber, Cache_Double_Rule);
+}
+
+static bool Lua_To_Bool_Wrapper(lua_State* lua, int index)
+{
+    bool parseError = false;
+    auto value = Parse_Boolean(Get_Lua_Value_As_String(index), &parseError);
+
+    if (parseError)
+    {
+        luaL_error(lua, "Failed to parse value as boolean");
+    }
+
+    return value;
+}
+
+int Lua_Set_Boolean_Game_Rule(lua_State* lua)
+{
+    return Lua_Set_Game_Rule(lua, "Bool", &Lua_To_Bool_Wrapper, Cache_Bool_Rule);
 }
 
 int Lua_Get_Infantry_Rule(lua_State* lua)

@@ -27,11 +27,35 @@ static const char* GET_GAME_RULE_FUNCTION = "\
   end                                               \n\
 ";
 
+static const char* SET_GAME_RULE_FUNCTION = "\
+  function setGameRule(ruleName, ruleValue)         \n\
+    local gameRules = getGameRuleNames()            \n\
+    local gameRuleTypes = getGameRuleTypeNames()    \n\
+                                                    \n\
+    for idx, rule in ipairs(gameRules) do           \n\
+      if rule == ruleName then                      \n\
+        local value                                 \n\
+                                                    \n\
+        if gameRuleTypes[idx] == 'string' then      \n\
+          setStringGameRule(rule, ruleValue)        \n\
+        elseif gameRuleTypes[idx] == 'int' then     \n\
+          setIntGameRule(rule, ruleValue)           \n\
+        elseif gameRuleTypes[idx] == 'double' then  \n\
+          setDoubleGameRule(rule, ruleValue)        \n\
+        else                                        \n\
+          setBoolGameRule(rule, ruleValue)          \n\
+        end                                         \n\
+      end                                           \n\
+    end                                             \n\
+  end                                               \n\
+";
+
 static bool API_INITIALISED = false;
 
 static bool Load_Lua_Api_Functions()
 {
-    return Execute_Lua_Script(GET_GAME_RULE_FUNCTION);
+    return Execute_Lua_Script(GET_GAME_RULE_FUNCTION)
+        && Execute_Lua_Script(SET_GAME_RULE_FUNCTION);
 }
 
 static bool Load_Api_Functions()
@@ -42,6 +66,11 @@ static bool Load_Api_Functions()
     Register_Lua_Function("getIntGameRule", Lua_Get_Int_Game_Rule);
     Register_Lua_Function("getDoubleGameRule", Lua_Get_Double_Game_Rule);
     Register_Lua_Function("getBoolGameRule", Lua_Get_Boolean_Game_Rule);
+
+    Register_Lua_Function("setStringGameRule", Lua_Set_String_Game_Rule);
+    Register_Lua_Function("setIntGameRule", Lua_Set_Int_Game_Rule);
+    Register_Lua_Function("setDoubleGameRule", Lua_Set_Double_Game_Rule);
+    Register_Lua_Function("setBoolGameRule", Lua_Set_Boolean_Game_Rule);
 
     Register_Lua_Function("getInfantryTypes", Lua_Get_Infantry_Types);
     Register_Lua_Function("getUnitTypes", Lua_Get_Unit_Types);

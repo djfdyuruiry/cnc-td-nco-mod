@@ -225,7 +225,7 @@ TechnoTypeClass::TechnoTypeClass(
 	IsScanner = Read_Unsigned_Bool_From_Rules_Ini(IniName, DETECT_CLOAKED_OBJECTS_RULE, is_scanner);
 	IsRepairable = Read_Unsigned_Bool_From_Rules_Ini(IniName, REPAIRABLE_RULE, is_repairable);
 	IsCrew = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_CREW_RULE, is_crew);
-	IsLeader = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_CREW_RULE, is_leader);
+	IsLeader = Read_Unsigned_Bool_From_Rules_Ini(IniName, LEADER_RULE, is_leader);
 	IsTwoShooter = Read_Unsigned_Bool_From_Rules_Ini(IniName, TWO_SHOOTER_RULE, is_twoshooter);
 	IsTheater = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_THEATER_GFX_RULE, is_theater);
 	IsTurretEquipped = Read_Unsigned_Bool_From_Rules_Ini(IniName, TURRET_EQUIPPED_RULE, is_turret_equipped);

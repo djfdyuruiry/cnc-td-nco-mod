@@ -5,6 +5,7 @@
 #include "DllInterface.h"
 
 #include "lua_repl.h"
+#include "rules_cache.h"
 
 static void Test_Lua_Rules() {
 	Log_Info("Testing Lua rules");

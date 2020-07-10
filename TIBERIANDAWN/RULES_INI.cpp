@@ -1,5 +1,7 @@
 #include "function.h"
 
+#include "rules_cache.h"
+
 static const auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static const auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
 static const auto RULES_FILENAME = "RULES.INI";
@@ -28,7 +30,7 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 	};
 
 	bool valueFound = false;
-	auto onScenarioLoadCsv = Read_Optional_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, &valueFound);
+	auto onScenarioLoadCsv = Read_Optional_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, &valueFound, false);
 
 	if (!valueFound)
 	{
@@ -167,6 +169,16 @@ int Read_Optional_Int_From_Rules_Ini(
 
 	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
 
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Int_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		*valueFound = true;
+
+		return cachedValue;
+	}
+
 	auto value = WWGetPrivateProfileInt(
 		section,
 		entry,
@@ -295,7 +307,17 @@ static double Read_Double_From_Rules_Ini(
 	Log_Trace("Resolving rule value: %s -> %s", section, entry);
 	Log_Trace("Default value: %f", defaultValue);
 
-	auto ruleValueStr = Read_Optional_String_From_Rules_Ini(section, entry, valueFound);
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Double_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		*valueFound = true;
+
+		return cachedValue;
+	}
+
+	auto ruleValueStr = Read_Optional_String_From_Rules_Ini(section, entry, valueFound, true);
 
 	if (!*valueFound)
 	{
@@ -338,6 +360,10 @@ static double Read_Double_From_Rules_Ini(
 			maxValueInclusive,
 			ruleValue
 		);
+	}
+	else
+	{
+		Cache_Double_Rule(section, entry, ruleValue);
 	}
 
 	Log_Trace("Resolved value: %f", ruleValue);
@@ -392,12 +418,26 @@ double Read_Double_From_Rules_Ini(
 char* Read_Optional_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,
-	bool* valueFound
+	bool* valueFound,
+	bool isForConversion
 )
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
 	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
+
+	if (!isForConversion)
+	{
+		bool cacheHit = false;
+		auto cachedValue = Get_Cached_String_Rule(section, entry, &cacheHit);
+
+		if (cacheHit)
+		{
+			*valueFound = true;
+
+			return cachedValue;
+		}
+	}
 
 	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 
@@ -428,6 +468,13 @@ char* Read_Optional_String_From_Rules_Ini(
 	{
 		Log_Trace("No rules value found in RULES-DEFAULT.INI buffer");
 	}
+	else
+	{
+		if (!isForConversion)
+		{
+			Cache_String_Rule(section, entry, valueBuffer);
+		}
+	}
 
 	return valueBuffer;
 }
@@ -446,7 +493,7 @@ char* Read_String_From_Rules_Ini(
 	Log_Trace("Default value: %s", defaultValue);
 
 	bool valueFound = false;
-	auto valueBuffer = Read_Optional_String_From_Rules_Ini(section, entry, &valueFound);
+	auto valueBuffer = Read_Optional_String_From_Rules_Ini(section, entry, &valueFound, false);
 
 	if (valueFound)
 	{
@@ -533,10 +580,21 @@ bool Read_Optional_Bool_From_Rules_Ini(
 	bool* valueFound
 )
 {
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Bool_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		*valueFound = true;
+
+		return cachedValue;
+	}
+
 	Read_Optional_String_From_Rules_Ini(
 		section,
 		entry,
-		valueFound
+		valueFound,
+		true
 	);
 
 	if (!valueFound)
@@ -557,6 +615,14 @@ bool Read_Bool_From_Rules_Ini(
 	bool defaultValue
 )
 {
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Bool_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		return cachedValue;
+	}
+
 	auto defaultValueStr = Convert_Boolean_To_String(defaultValue);
 	auto validBoolStrings = new const char* [VALID_BOOL_STRINGS_COUNT]{ "TRUE", "FALSE" };
 
@@ -570,7 +636,11 @@ bool Read_Bool_From_Rules_Ini(
 
 	delete validBoolStrings;
 
-	return Strings_Are_Equal(ruleValue, "TRUE");
+	auto boolValue = Strings_Are_Equal(ruleValue, "TRUE");
+
+	Cache_Bool_Rule(section, entry, boolValue);
+
+	return boolValue;
 }
 
 long Read_Prerequisite(
@@ -608,7 +678,7 @@ int Read_House_List_From_Rules_Ini(
 )
 {
 	bool valueFound = false;
-	auto houseListCsv = Read_Optional_String_From_Rules_Ini(section, HOUSES_RULE, &valueFound);
+	auto houseListCsv = Read_Optional_String_From_Rules_Ini(section, HOUSES_RULE, &valueFound, false);
 
 	if (!valueFound)
 	{

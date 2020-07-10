@@ -62,7 +62,8 @@ double Read_Optional_Double_From_Rules_Ini(
 char* Read_Optional_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,
-	bool* valueFound
+	bool* valueFound,
+	bool isForConversion
 );
 
 char* Read_String_From_Rules_Ini(
