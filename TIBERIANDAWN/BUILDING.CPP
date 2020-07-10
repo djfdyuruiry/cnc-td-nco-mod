@@ -2839,7 +2839,7 @@ void BuildingClass::Grand_Opening(bool captured)
 	**	Refineries get a free harvester. Add a harvester to the reinforcement list
 	**	at this time.
 	*/
-	if (*this == STRUCT_REFINERY && !ScenarioInit && !captured && !Debug_Map && (!House->IsHuman || PurchasePrice == 0 || PurchasePrice > Class->Raw_Cost())) {
+	if (*this == STRUCT_REFINERY && !ScenarioInit && !captured && !Debug_Map) { // removed cost check as it stopped giving refineries with extreme difficulty rules
 		CELL cell = Coord_Cell(Adjacent_Cell(Center_Coord(), DIR_SW));
 //		if (!Map[cell].Cell_Unit()) {
 			UnitClass * unit = new UnitClass(UNIT_HARVESTER, House->Class->House);
@@ -2875,7 +2875,7 @@ void BuildingClass::Grand_Opening(bool captured)
 	/*
 	**	Helicopter pads get a free attack helicopter.
 	*/
-	if (*this == STRUCT_HELIPAD && !captured && (!House->IsHuman || PurchasePrice == 0 || PurchasePrice > Class->Raw_Cost())) {
+	if (*this == STRUCT_HELIPAD && !captured) { // removed cost check as it stopped giving refineries with extreme difficulty rules
 		ScenarioInit++;
 		AircraftClass * air = 0;
 		if (House->ActLike == HOUSE_GOOD) {
