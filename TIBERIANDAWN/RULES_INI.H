@@ -26,6 +26,13 @@ void Ensure_Rules_Ini_Is_Loaded();
 int Read_Optional_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
+	bool* valueFound,
+	bool* valueFromCache
+);
+
+int Read_Optional_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
 	bool* valueFound
 );
 

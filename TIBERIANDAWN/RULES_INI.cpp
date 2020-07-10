@@ -68,6 +68,8 @@ static void Read_Log_Level_From_Rules_Ini()
 
 	delete validLogLevels;
 
+	Convert_String_To_Upper_Case(logLevelBuffer);
+
 	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
 
 	Log_Info("Resolved Log Level: %s", Log_Level_To_String(LOG_LEVEL));
@@ -162,19 +164,34 @@ void Ensure_Rules_Ini_Is_Loaded() {
 int Read_Optional_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
-	bool* valueFound
+	bool* valueFound,
+	bool* valueFromCache
 )
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
 	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
 
+	bool fallbackValueFound = false;
 	bool cacheHit = false;
 	auto cachedValue = Get_Cached_Int_Rule(section, entry, &cacheHit);
 
+	if (valueFound == NULL)
+	{
+		valueFound = &fallbackValueFound;
+	}
+
 	if (cacheHit)
 	{
-		*valueFound = true;
+		if (valueFound != NULL)
+		{
+			*valueFound = true;
+		}
+
+		if (valueFromCache != NULL)
+		{
+			*valueFromCache = true;
+		}
 
 		return cachedValue;
 	}
@@ -206,6 +223,16 @@ int Read_Optional_Int_From_Rules_Ini(
 	return value;
 }
 
+
+int Read_Optional_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+)
+{
+	return Read_Optional_Int_From_Rules_Ini(section, entry, valueFound, NULL);
+}
+
 static int Read_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -221,8 +248,14 @@ static int Read_Int_From_Rules_Ini(
 	Log_Trace("Default value: %d", defaultValue);
 
 	bool valueFound = false;
+	bool valueFoundInCache = false;
 
-	auto ruleValue = Read_Optional_Int_From_Rules_Ini(section, entry, &valueFound);
+	auto ruleValue = Read_Optional_Int_From_Rules_Ini(section, entry, &valueFound, &valueFoundInCache);
+
+	if (valueFoundInCache)
+	{
+		return ruleValue;
+	}
 
 	if (!valueFound)
 	{
@@ -312,7 +345,10 @@ static double Read_Double_From_Rules_Ini(
 
 	if (cacheHit)
 	{
-		*valueFound = true;
+		if (valueFound != NULL)
+		{
+			*valueFound = true;
+		}
 
 		return cachedValue;
 	}
@@ -433,7 +469,10 @@ char* Read_Optional_String_From_Rules_Ini(
 
 		if (cacheHit)
 		{
-			*valueFound = true;
+			if (valueFound != NULL)
+			{
+				*valueFound = true;
+			}
 
 			return cachedValue;
 		}
@@ -498,6 +537,8 @@ char* Read_String_From_Rules_Ini(
 	if (valueFound)
 	{
 		Log_Trace("Rules ini value: %s", valueBuffer);
+
+		return valueBuffer;
 	}
 	else
 	{
@@ -585,7 +626,10 @@ bool Read_Optional_Bool_From_Rules_Ini(
 
 	if (cacheHit)
 	{
-		*valueFound = true;
+		if (valueFound != NULL)
+		{
+			*valueFound = true;
+		}
 
 		return cachedValue;
 	}
@@ -636,6 +680,8 @@ bool Read_Bool_From_Rules_Ini(
 
 	delete validBoolStrings;
 
+	Convert_String_To_Upper_Case(ruleValue);
+
 	auto boolValue = Strings_Are_Equal(ruleValue, "TRUE");
 
 	Cache_Bool_Rule(section, entry, boolValue);
@@ -650,6 +696,9 @@ long Read_Prerequisite(
 {
 	auto defaultString = Structure_Type_To_String(defaultValue);
 	auto structValueStr = Read_String_From_Rules_Ini(section, PREREQUISITE_RULE, defaultString);
+
+	Convert_String_To_Upper_Case(structValueStr);
+
 	bool parseError = false;
 	auto structValue = Parse_Structure_Type(structValueStr, &parseError);
 
@@ -685,6 +734,8 @@ int Read_House_List_From_Rules_Ini(
 		return defaultValue;
 	}
 
+	Convert_String_To_Upper_Case(houseListCsv);
+
 	bool parseError = false;
 	auto houseListBitField = Parse_House_Name_List_Csv(houseListCsv, &parseError);
 
@@ -706,6 +757,8 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 {
 	auto defaultString = Weapon_Type_To_String(defaultValue);
 	auto weaponTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	Convert_String_To_Upper_Case(weaponTypeStr);
 
 	if (Strings_Are_Equal(weaponTypeStr, defaultString))
 	{
@@ -737,6 +790,8 @@ ArmorType Read_Armor_Type_From_Rules_Ini(
 	auto defaultString = Armor_Type_To_String(defaultValue);
 	auto armorTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
 
+	Convert_String_To_Upper_Case(armorTypeStr);
+
 	if (Strings_Are_Equal(armorTypeStr, defaultString))
 	{
 		return defaultValue;
@@ -763,6 +818,8 @@ SpeedType Read_Unit_Speed_Type_From_Rules_Ini(
 {
 	auto defaultString = Unit_Speed_Type_To_String(defaultValue);
 	auto unitSpeedTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	Convert_String_To_Upper_Case(unitSpeedTypeStr);
 
 	if (Strings_Are_Equal(unitSpeedTypeStr, defaultString))
 	{
@@ -793,6 +850,8 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 {
 	auto defaultString = Factory_Type_To_String(defaultValue);
 	auto factoryTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	Convert_String_To_Upper_Case(factoryTypeStr);
 
 	if (Strings_Are_Equal(factoryTypeStr, defaultString))
 	{

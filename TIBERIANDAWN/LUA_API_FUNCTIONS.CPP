@@ -1686,7 +1686,9 @@ template<typename T> static int Lua_Set_Game_Rule(
 
 static const char* Lua_To_String_Wrapper(lua_State* lua, int index)
 {
-    return Get_Lua_Value_As_String(index);
+    return Convert_String_To_Upper_Case(
+        Get_Lua_Value_As_String(index)
+    );
 }
 
 int Lua_Set_String_Game_Rule(lua_State* lua)
