@@ -219,6 +219,10 @@ int Read_Optional_Int_From_Rules_Ini(
 	{
 		Log_Trace("No rules value found in RULES-DEFAULT.INI buffer");
 	}
+	else
+	{
+		Cache_Int_Rule(section, entry, value);
+	}
 
 	return value;
 }
@@ -281,6 +285,11 @@ static int Read_Int_From_Rules_Ini(
 				ruleValue
 			);
 		}
+	}
+
+	if (RULES_VALID)
+	{
+		Cache_Int_Rule(section, entry, ruleValue);
 	}
 
 	Log_Trace("Resolved value: %d", ruleValue);

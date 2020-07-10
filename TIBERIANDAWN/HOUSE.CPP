@@ -1087,7 +1087,7 @@ void HouseClass::AI(void)
 		** Create the object, and use Scan_Place_Object to place the object near
 		** the center of the map.
 		*/
-		if (GameToPlay != GAME_NORMAL && Class->House==HOUSE_JP) {
+		if ((GameToPlay != GAME_NORMAL || Special.IsVisceroids) && Class->House==HOUSE_JP) {
 			int rlimit;
 
 			if (Special.IsJurassic && AreThingiesEnabled) {
