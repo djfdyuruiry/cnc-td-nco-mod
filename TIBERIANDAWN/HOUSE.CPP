@@ -360,9 +360,9 @@ void HouseClass::operator delete(void *ptr)
  *=============================================================================================*/
 HouseClass::HouseClass(HousesType house) :
 	Class(&HouseTypeClass::As_Reference(house)),
-	IonCannon(ION_CANNON_GONE_TIME, VOX_ION_READY, VOX_ION_CHARGING, VOX_ION_CHARGING, VOX_NO_POWER),
-	AirStrike(AIR_CANNON_GONE_TIME, VOX_AIRSTRIKE_READY, VOX_NONE, VOX_NOT_READY, VOX_NOT_READY),
-	NukeStrike(NUKE_GONE_TIME, VOX_NUKE_AVAILABLE, VOX_NONE, VOX_NOT_READY, VOX_NO_POWER)
+	AirStrike("AirStrike", AIR_STRIKE_GONE_TIME_IN_MINS, VOX_AIRSTRIKE_READY, VOX_NONE, VOX_NOT_READY, VOX_NOT_READY),
+	IonCannon("IonCannon", ION_CANNON_GONE_TIME_IN_MINS, VOX_ION_READY, VOX_ION_CHARGING, VOX_ION_CHARGING, VOX_NO_POWER),
+	NukeStrike("NuclearStrike", NUKE_GONE_TIME_IN_MINS, VOX_NUKE_AVAILABLE, VOX_NONE, VOX_NOT_READY, VOX_NO_POWER)
 {
 
 	for (HousesType i = HOUSE_FIRST; i < HOUSE_COUNT; i++) {
@@ -4368,7 +4368,7 @@ void HouseClass::MPlayer_Defeated(void)
  *   05/16/1995 BRR : Created.                                             *
  *   06/09/1995 JLB : Handles aircraft.                                    *
  *=========================================================================*/
-void HouseClass::Blowup_All(void)
+void HouseClass::Blowup_All(void) // TODO: add lua function for `thanos snap a house`
 {
 	Validate();
 	int i;

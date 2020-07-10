@@ -435,6 +435,7 @@
     <ClInclude Include="RULES_INI_GAME.H" />
     <ClInclude Include="RULES_INI_GENERIC.H" />
     <ClInclude Include="RULES_INI_INFANTRY.H" />
+    <ClInclude Include="RULES_INI_SUPERWEAPONS.H" />
     <ClInclude Include="RULES_INI_UNIT.H" />
     <ClInclude Include="SAVEDLG.H" />
     <ClInclude Include="SCORE.H" />

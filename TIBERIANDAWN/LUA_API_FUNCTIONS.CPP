@@ -716,6 +716,17 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsAvoidingTiberium = isAvoidingTiberium;
         }
     }
+    else if (Strings_Are_Equal(ruleName, IMMUNE_TO_TIBERIUM_RULE_UPPER))
+    {
+        auto isImmuneToTiberium = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_Infantry_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsImmuneToTiberium), Convert_Boolean_To_String(isImmuneToTiberium));
+
+            type->IsImmuneToTiberium = isImmuneToTiberium;
+        }
+    }
     else
     {
         return false;
@@ -761,6 +772,12 @@ static bool Read_Infantry_Rule(lua_State* lua, InfantryTypeClass* type, const ch
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsAvoidingTiberium));
 
         lua_pushboolean(lua, type->IsAvoidingTiberium);
+    }
+    else if (Strings_Are_Equal(ruleName, IMMUNE_TO_TIBERIUM_RULE_UPPER))
+    {
+        Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsImmuneToTiberium));
+
+        lua_pushboolean(lua, type->IsImmuneToTiberium);
     }
     else
     {

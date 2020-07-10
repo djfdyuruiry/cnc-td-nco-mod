@@ -39,7 +39,16 @@
 
 class SuperClass {
 	public:
-		SuperClass(int recharge=0, VoxType charging=VOX_NONE, VoxType ready=VOX_NONE, VoxType impatient=VOX_NONE, VoxType suspend=VOX_NONE);
+		//Needed to make ANIMATION_STAGES public so the animation frame numbers could be turned into progress 
+		//percentages - 2019/08/07 Jason Scott 
+		enum {
+			ANIMATION_STAGES = 102
+		};
+
+		const char* Type;
+		int RechargeTime;
+
+		SuperClass(const char* type = NULL, int recharge=0, VoxType charging=VOX_NONE, VoxType ready=VOX_NONE, VoxType impatient=VOX_NONE, VoxType suspend=VOX_NONE);
 
 		bool Suspend(bool on);
 		bool Enable(bool onetime = false, bool player=false, bool quiet=false);
@@ -72,16 +81,6 @@ class SuperClass {
 		VoxType VoxCharging;
 		VoxType VoxImpatient;
 		VoxType VoxSuspend;
-		int RechargeTime;
-
-		//Needed to make ANIMATION_STAGES public so the animation frame numbers could be turned into progress 
-		//percentages - 2019/08/07 Jason Scott 
-public:
-		enum {
-			ANIMATION_STAGES=102
-		};
 };
-
-
 
 #endif

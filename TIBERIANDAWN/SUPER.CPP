@@ -50,13 +50,13 @@
  *                                                                                             * 
  *    This is the constructor for the super weapons.                                           * 
  *                                                                                             * 
- * INPUT:   recharge    -- The recharge delay time (in game frames).                           * 
+ * INPUT:   rechargeTimeInMins    -- The recharge delay time (in minutes).                     * 
  *                                                                                             * 
- *          charging    -- Voice to announce that the weapon is charging.                      * 
+ *          charging              -- Voice to announce that the weapon is charging.            * 
  *                                                                                             * 
- *          ready       -- Voice to announce that the weapon is fully charged.                 * 
+ *          ready                 -- Voice to announce that the weapon is fully charged.       * 
  *                                                                                             * 
- *          impatient   -- Voice to announce current charging state.                           * 
+ *          impatient             -- Voice to announce current charging state.                 * 
  *                                                                                             * 
  * OUTPUT:  none                                                                               * 
  *                                                                                             * 
@@ -65,20 +65,24 @@
  * HISTORY:                                                                                    * 
  *   07/28/1995 JLB : Created.                                                                 * 
  *=============================================================================================*/
-SuperClass::SuperClass(int recharge, VoxType ready, VoxType charging, VoxType impatient, VoxType suspend)
+SuperClass::SuperClass(const char* type, int rechargeTimeInMins, VoxType ready, VoxType charging, VoxType impatient, VoxType suspend)
 {
+	Type = type;
 	IsPresent = false;
 	IsOneTime = false;
 	IsReady = false;
 	IsSuspended = false;
 	OldStage = -1;
 	Control = 0;
-	RechargeTime = recharge;
 	SuspendTime = 0;
 	VoxRecharge = ready;
 	VoxCharging = charging;
 	VoxImpatient = impatient;
 	VoxSuspend = suspend;
+
+	auto resolvedTimeInMins = Read_Int_From_Rules_Ini(type, SUPERWEAPON_RECHARGE_TIME_RULE, rechargeTimeInMins, INT_MIN, INT_MAX);
+
+	RechargeTime = resolvedTimeInMins * TICKS_PER_MINUTE;
 }	
 
 

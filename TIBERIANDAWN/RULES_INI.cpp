@@ -5,6 +5,8 @@ static const auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
 static const auto RULES_FILENAME = "RULES.INI";
 static const unsigned int RULES_STRING_LENGTH = MAX_PATH * 15;
 static const auto VALID_BOOL_STRINGS_COUNT = 2;
+static const auto ONE_SEC_IN_MILLIS = 1000;
+static const auto TICK_INTERVAL_IN_MILLIS = ONE_SEC_IN_MILLIS / TICKS_PER_SECOND;
 
 static char* RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
@@ -133,7 +135,13 @@ void Ensure_Rules_Ini_Is_Loaded() {
 
 	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE, true);
 	LUA_CONSOLE_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE, false);
-	GAME_TICK_INTERVAL_IN_MS = Read_Int_From_Rules_Ini(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE, 250, 1, INT_MAX);
+	GAME_TICK_INTERVAL_IN_MS = Read_Int_From_Rules_Ini(
+		NCO_RULES_SECTION_NAME,
+		GAME_TICK_INTERVAL_IN_MS_RULE,
+		TICK_INTERVAL_IN_MILLIS,
+		1,
+		INT_MAX
+	);
 
 	Read_Lua_Scripts_From_Rules_Ini();
 }

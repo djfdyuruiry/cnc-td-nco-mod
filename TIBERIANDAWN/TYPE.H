@@ -1147,6 +1147,8 @@ class InfantryTypeClass : public TechnoTypeClass
 		char FireLaunch;
 		char ProneLaunch;
 
+		bool IsImmuneToTiberium;
+
 		/*
 		**	This is the explicit unit class constructor.
 		*/

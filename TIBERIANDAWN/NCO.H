@@ -15,6 +15,7 @@
 #include "./rules_ini_game.h"
 #include "./rules_ini_generic.h"
 #include "./rules_ini_infantry.h"
+#include "./rules_ini_superweapons.h"
 #include "./rules_ini_unit.h"
 #include "./strings.h"
 #include "./utils.h"
