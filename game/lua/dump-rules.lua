@@ -86,7 +86,7 @@ local function main()
   if rulesFile then
     rulesFile:close()
   end
-  
+
   setLogLevel("debug");
 
   if err then

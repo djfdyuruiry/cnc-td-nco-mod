@@ -820,7 +820,7 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 {
 	Validate();
 	BulletClass * bullet;		// Projectile.
-	WeaponTypeClass const * weapon = (which == 0) ? &Weapons[Class->Primary] : &Weapons[Class->Secondary];
+	WeaponTypeClass const * weapon = (which == 0) ? WeaponTypeClass::By_Type(Class->Primary) : WeaponTypeClass::By_Type(Class->Secondary);
 
 	bullet = TechnoClass::Fire_At(target, which);
 	if (bullet) {
@@ -2808,7 +2808,7 @@ TARGET BuildingClass::Greatest_Threat(ThreatType threat) const
 		threat = threat | THREAT_AREA;
 	}
 
-	if (Class->Primary != WEAPON_NONE && BulletTypeClass::As_Reference(Weapons[Class->Primary].Fires).IsAntiAircraft) {
+	if (Class->Primary != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).IsAntiAircraft) {
 		threat = threat | THREAT_AIR;
 	}
 	return(TechnoClass::Greatest_Threat(threat));

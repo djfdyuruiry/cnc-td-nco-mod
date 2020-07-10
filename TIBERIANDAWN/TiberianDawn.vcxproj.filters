@@ -727,10 +727,13 @@
     <ClInclude Include="RULES_INI_DIFFICULTY.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="RULES_INI_SUPERWEAPONS.H">
+    <ClInclude Include="RULES_CACHE.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="RULES_CACHE.H">
+    <ClInclude Include="RULES_INI_WEAPON.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RULES_INI_SUPERWEAPON.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
   </ItemGroup>

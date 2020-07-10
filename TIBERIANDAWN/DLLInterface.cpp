@@ -3135,7 +3135,7 @@ void DLLExportClass::DLL_Draw_Intercept(int shape_number, int x, int y, int widt
 			new_object.IsNominal = ttype->IsNominal;
 			new_object.MaxPips = ttype->Max_Pips();
 			new_object.IsAntiGround = ttype->Primary != WEAPON_NONE;
-			new_object.IsAntiAircraft = (ttype->Primary != WEAPON_NONE) && (Weapons[ttype->Primary].Fires != BULLET_NONE) && BulletTypeClass::As_Reference(Weapons[ttype->Primary].Fires).IsAntiAircraft;
+			new_object.IsAntiAircraft = (ttype->Primary != WEAPON_NONE) && (WeaponTypeClass::As_Reference(ttype->Primary).Fires != BULLET_NONE) && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(ttype->Primary).Fires).IsAntiAircraft;
 
 			HouseClass* old_player_ptr = PlayerPtr;
 			for (int i = 0; i < Houses.Count(); ++i) {

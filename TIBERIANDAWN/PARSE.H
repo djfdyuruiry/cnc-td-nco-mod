@@ -28,6 +28,8 @@ WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError);
 
 char* Weapon_Type_To_String(WeaponType weaponType);
 
+char* Bullet_Type_To_String(BulletType type);
+
 ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError);
 
 ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError);

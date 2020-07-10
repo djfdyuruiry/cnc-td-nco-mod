@@ -248,7 +248,7 @@ void TurretClass::AI(void)
 BulletClass * TurretClass::Fire_At(TARGET target, int which)
 {
 	BulletClass * bullet = NULL;
-	WeaponTypeClass const * weapon = (which == 0) ? &Weapons[Class->Primary] : &Weapons[Class->Secondary];
+	WeaponTypeClass const &weapon = (which == 0) ? WeaponTypeClass::As_Reference(Class->Primary) : WeaponTypeClass::As_Reference(Class->Secondary);
 
 	if (Can_Fire(target, which) == FIRE_OK) {
 		bullet = DriveClass::Fire_At(target, which);
@@ -294,7 +294,7 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
 	FireErrorType	fire = DriveClass::Can_Fire(target, which);
 
 	if (fire == FIRE_OK) {
-		WeaponTypeClass const * weapon = (which == 0) ? &Weapons[Class->Primary] : &Weapons[Class->Secondary];
+		WeaponTypeClass const &weapon = (which == 0) ? WeaponTypeClass::As_Reference(Class->Primary) : WeaponTypeClass::As_Reference(Class->Secondary);
 
 		/*
 		**	If this unit cannot fire while moving, then bail.
@@ -307,7 +307,7 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
 		**	If the turret is rotating and the projectile isn't a homing type, then
 		**	firing must be delayed until the rotation stops.
 		*/
-		if (!IsFiring && IsRotating && !BulletTypeClass::As_Reference(weapon->Fires).IsHoming) {
+		if (!IsFiring && IsRotating && !BulletTypeClass::As_Reference(weapon.Fires).IsHoming) {
 			return(FIRE_ROTATING);
 		}
 
@@ -326,13 +326,13 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
 		/*
 		**	Special flame tank logic.
 		*/
-		if (weapon->Fires == BULLET_FLAME) {
+		if (weapon.Fires == BULLET_FLAME) {
 			if (Dir_Facing(dir) == Dir_Facing(PrimaryFacing)) {
 				diff = 0;
 			}
 		}
 
-		if (BulletTypeClass::As_Reference(weapon->Fires).IsHoming) {
+		if (BulletTypeClass::As_Reference(weapon.Fires).IsHoming) {
 			diff >>= 2;
 		}
 		if (diff < 8) {

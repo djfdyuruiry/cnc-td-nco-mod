@@ -49,7 +49,11 @@ class HouseClass;
 */
 class WeaponTypeClass
 {
+	private:
+		static bool WeaponsInitialised;
+
 	public:
+		static WeaponTypeClass* Weapons;
 
 		/*
 		**	This is the unit class of the projectile fired. A subset of the unit types
@@ -89,6 +93,12 @@ class WeaponTypeClass
 		**	This is the animation to display at the firing coordinate.
 		*/
 		AnimType Anim;
+
+		static WeaponTypeClass const* By_Type(WeaponType type);
+
+		static WeaponTypeClass const& As_Reference(WeaponType type);
+
+		WeaponTypeClass(BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
 };
 
 

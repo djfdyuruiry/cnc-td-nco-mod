@@ -64,40 +64,91 @@ COORDINATE const StoppingCoordAbs[5] = {
 	0x00C000C0L		// lower right
 };
 
-
 /***************************************************************************
 **	These are the various weapons and their characteristics.
-**
-**	bullet type				dmg,	rof,	range,	sound
 */
-WeaponTypeClass const Weapons[WEAPON_COUNT] = {
-	{BULLET_SNIPER,		125,	40,	0x0580,	VOC_SNIPER, ANIM_NONE},				//	WEAPON_RIFLE
-	{BULLET_SPREADFIRE,	25,	50,	0x0400,	VOC_MINI,	ANIM_GUN_N},			//	WEAPON_CHAIN_GUN
-	{BULLET_BULLET,		1,		7,		0x01C0,	VOC_RIFLE,	ANIM_NONE},				//	WEAPON_PISTOL
-	{BULLET_BULLET,		15,	20,	0x0200,	VOC_MGUN2,	ANIM_NONE},				//	WEAPON_M16
-	{BULLET_TOW,			30,	60,	0x0400,	VOC_BAZOOKA,ANIM_NONE},				//	WEAPON_DRAGON
-	{BULLET_FLAME,			35,	50,	0x0200,	VOC_FLAMER1,ANIM_FLAME_N},			//	WEAPON_FLAMETHROWER
-	{BULLET_FLAME,			50,	50,	0x0200,	VOC_FLAMER1,ANIM_FLAME_N},			//	WEAPON_FLAME_TONGUE
-	{BULLET_CHEMSPRAY,	80,	70,	0x0200,	VOC_FLAMER1,ANIM_CHEM_N},			//	WEAPON_CHEMSPRAY
-	{BULLET_GRENADE,		50,	60,	0x0340,	VOC_TOSS,	ANIM_NONE},				//	WEAPON_GRENADE
-	{BULLET_APDS,			25,	60,	0x0400,	VOC_TANK2,	ANIM_MUZZLE_FLASH},	//	WEAPON_75MM
-	{BULLET_APDS,			30,	50,	0x04C0,	VOC_TANK3,	ANIM_MUZZLE_FLASH},	//	WEAPON_105MM
-	{BULLET_APDS,			40,	80,	0x04C0,	VOC_TANK4,	ANIM_MUZZLE_FLASH},	//	WEAPON_120MM
-	{BULLET_APDS,			40,	60,	0x0600,	VOC_TANK4,	ANIM_MUZZLE_FLASH},	//	WEAPON_TURRET_GUN
-	{BULLET_SSM,			75,	80,	0x0500,	VOC_ROCKET1,ANIM_NONE},				//	WEAPON_MAMMOTH_TUSK
-	{BULLET_SSM2,			75,	80,	0x0600,	VOC_ROCKET1,ANIM_NONE},				//	WEAPON_MLRS
-	{BULLET_HE,				150,	65,	0x0600,	VOC_TANK1,	ANIM_MUZZLE_FLASH},	//	WEAPON_155MM
-	{BULLET_BULLET,		15,	30,	0x0400,	VOC_MGUN11,	ANIM_GUN_N},			//	WEAPON_M60MG
-	{BULLET_SSM,			60,	35,	0x0780,	VOC_ROCKET2,ANIM_NONE},				//	WEAPON_TOMAHAWK
-	{BULLET_SSM,			60,	40,	0x0680,	VOC_ROCKET2,ANIM_NONE},				//	WEAPON_TOW_TWO
-	{BULLET_NAPALM,		100,	20,	0x0480,	VOC_NONE,	ANIM_NONE},				//	WEAPON_NAPALM
-	{BULLET_LASER,			200,	90,	0x0780,	VOC_LASER,	ANIM_NONE},				//	WEAPON_OBELISK_LASER
-	{BULLET_SAM,			50,	50,	0x0780,	VOC_ROCKET2,ANIM_NONE},				//	WEAPON_NIKE
-	{BULLET_HONEST_JOHN,	100,	200,	0x0A00,	VOC_ROCKET1,ANIM_NONE},				//	WEAPON_HONEST_JOHN
-	{BULLET_HEADBUTT,		100,	30,	0x0180,	VOC_DINOATK1,ANIM_NONE},				// WEAPON_STEG
-	{BULLET_TREXBITE,		155,	30,	0x0180,	VOC_DINOATK1,ANIM_NONE},				// WEAPON_TREX
-};
+WeaponTypeClass* WeaponTypeClass::Weapons = NULL;
 
+WeaponTypeClass::WeaponTypeClass(BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim)
+{
+	Fires = fires;
+
+	Attack = Read_Weapon_Damage(Bullet_Type_To_String(fires), attack);
+	ROF = Read_Weapon_Rate_Of_Fire(Bullet_Type_To_String(fires), rof);
+	Range = Read_Weapon_Range(Bullet_Type_To_String(fires), range);
+
+	Sound = sound;
+	Anim = anim;
+}
+
+WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
+{
+	if (Weapons != NULL)
+	{
+		return &Weapons[type];
+	}
+
+	const WeaponTypeClass SNIPER(BULLET_SNIPER, 125, 40, 0x0580, VOC_SNIPER, ANIM_NONE);
+	const WeaponTypeClass CHAIN_GUN(BULLET_SPREADFIRE, 25, 50, 0x0400, VOC_MINI, ANIM_GUN_N);
+	const WeaponTypeClass PISTOL(BULLET_BULLET, 1, 7, 0x01C0, VOC_RIFLE, ANIM_NONE);
+	const WeaponTypeClass M16(BULLET_BULLET, 15, 20, 0x0200, VOC_MGUN2, ANIM_NONE);
+	const WeaponTypeClass DRAGON(BULLET_TOW, 30, 60, 0x0400, VOC_BAZOOKA, ANIM_NONE);
+	const WeaponTypeClass FLAMETHROWER(BULLET_FLAME, 35, 50, 0x0200, VOC_FLAMER1, ANIM_FLAME_N);
+	const WeaponTypeClass FLAME_TONGUE(BULLET_FLAME, 50, 50, 0x0200, VOC_FLAMER1, ANIM_FLAME_N);
+	const WeaponTypeClass CHEMSPRAY(BULLET_CHEMSPRAY, 80, 70, 0x0200, VOC_FLAMER1, ANIM_CHEM_N);
+	const WeaponTypeClass GRENADE(BULLET_GRENADE, 50, 60, 0x0340, VOC_TOSS, ANIM_NONE);
+	const WeaponTypeClass w75MM(BULLET_APDS, 25, 60, 0x0400, VOC_TANK2, ANIM_MUZZLE_FLASH);
+	const WeaponTypeClass w105MM(BULLET_APDS, 30, 50, 0x04C0, VOC_TANK3, ANIM_MUZZLE_FLASH);
+	const WeaponTypeClass w120MM(BULLET_APDS, 40, 80, 0x04C0, VOC_TANK4, ANIM_MUZZLE_FLASH);
+	const WeaponTypeClass TURRET_GUN(BULLET_APDS, 40, 60, 0x0600, VOC_TANK4, ANIM_MUZZLE_FLASH);
+	const WeaponTypeClass MAMMOTH_TUSK(BULLET_SSM, 75, 80, 0x0500, VOC_ROCKET1, ANIM_NONE);
+	const WeaponTypeClass MLRS(BULLET_SSM2, 75, 80, 0x0600, VOC_ROCKET1, ANIM_NONE);
+	const WeaponTypeClass w155MM(BULLET_HE, 150, 65, 0x0600, VOC_TANK1, ANIM_MUZZLE_FLASH);
+	const WeaponTypeClass M60MG(BULLET_BULLET, 15, 30, 0x0400, VOC_MGUN11, ANIM_GUN_N);
+	const WeaponTypeClass TOMAHAWK(BULLET_SSM, 60, 35, 0x0780, VOC_ROCKET2, ANIM_NONE);
+	const WeaponTypeClass TOW_TWO(BULLET_SSM, 60, 40, 0x0680, VOC_ROCKET2, ANIM_NONE);
+	const WeaponTypeClass NAPALM(BULLET_NAPALM, 100, 20, 0x0480, VOC_NONE, ANIM_NONE);
+	const WeaponTypeClass OBELISK_LASER(BULLET_LASER, 200, 90, 0x0780, VOC_LASER, ANIM_NONE);
+	const WeaponTypeClass NIKE(BULLET_SAM, 50, 50, 0x0780, VOC_ROCKET2, ANIM_NONE);
+	const WeaponTypeClass HONEST_JOHN(BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1, ANIM_NONE);
+	const WeaponTypeClass STEG(BULLET_HEADBUTT, 100, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
+	const WeaponTypeClass TREX(BULLET_TREXBITE, 155, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
+
+	Weapons = new WeaponTypeClass[WEAPON_COUNT] {
+		SNIPER,
+		CHAIN_GUN,
+		PISTOL,
+		M16,
+		DRAGON,
+		FLAMETHROWER,
+		FLAME_TONGUE,
+		CHEMSPRAY,
+		GRENADE,
+		w75MM,
+		w105MM,
+		w120MM,
+		TURRET_GUN,
+		MAMMOTH_TUSK,
+		MLRS,
+		w155MM,
+		M60MG,
+		TOMAHAWK,
+		TOW_TWO,
+		NAPALM,
+		OBELISK_LASER,
+		NIKE,
+		HONEST_JOHN,
+		STEG,
+		TREX
+	};
+
+	return &Weapons[type];
+}
+
+WeaponTypeClass const& WeaponTypeClass::As_Reference(WeaponType type)
+{
+	return *(By_Type(type));
+}
 
 /***************************************************************************
 **	These are the various warheads.

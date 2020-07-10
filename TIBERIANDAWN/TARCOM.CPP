@@ -104,14 +104,14 @@ void TarComClass::AI(void)
 		**	cannot fire, then check any secondary weapon. If neither weapon can fire, then the
 		**	failure code returned is that from the primary weapon.
 		*/
-		WeaponTypeClass const * weapon = &Weapons[Class->Primary];
+		WeaponTypeClass const * weapon = WeaponTypeClass::By_Type(Class->Primary);
 		int primary = 0;
 		FireErrorType ok = Can_Fire(TarCom, 0);
 		if (ok != FIRE_OK) {
 			if (Can_Fire(TarCom, 1) == FIRE_OK) {
 				ok = FIRE_OK;
 				primary = 1;
-				weapon = &Weapons[Class->Secondary];
+				weapon = WeaponTypeClass::By_Type(Class->Secondary);
 			}
 		}
 
