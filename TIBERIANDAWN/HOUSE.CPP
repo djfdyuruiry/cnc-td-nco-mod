@@ -4368,7 +4368,7 @@ void HouseClass::MPlayer_Defeated(void)
  *   05/16/1995 BRR : Created.                                             *
  *   06/09/1995 JLB : Handles aircraft.                                    *
  *=========================================================================*/
-void HouseClass::Blowup_All(void) // TODO: add lua function for `thanos snap a house`
+void HouseClass::Blowup_All(void) // TODO: add lua function for `thanos snapping a house`
 {
 	Validate();
 	int i;

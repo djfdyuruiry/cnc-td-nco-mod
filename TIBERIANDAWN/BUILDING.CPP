@@ -1952,8 +1952,16 @@ void BuildingClass::Drop_Debris(TARGET source)
 	cell = Coord_Cell(Coord);
 	offset = Occupy_List();
 	int odds = 2;
-	if (Target_Legal(WhomToRepay)) odds -= 1;
+	if (Target_Legal(WhomToRepay)) {
+		odds -= 1;
+
+		IsSurvivorless = !Read_Boolean_Game_Rule(SURVIVORS_FROM_BUILDINGS_RULE, !IsSurvivorless);
+	}
+
 	if (IsCaptured) odds += 6;
+
+    
+
 	while (*offset != REFRESH_EOL) {
 		CELL	newcell;
 
