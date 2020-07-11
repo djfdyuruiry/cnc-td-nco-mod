@@ -324,7 +324,6 @@ static int Lua_Get_Unit_Rule(lua_State* lua)
         return 0;
     }
 
-
     auto unit = ResolveUnit(lua, unitTypeName);
 
     if (unit == NULL)
@@ -344,6 +343,7 @@ static int Lua_Get_Unit_Rule(lua_State* lua)
 
     Log_Trace("Lua_Get_Unit_Rule => looking for rule '%s' in Techno Type", ruleName);
 
+    // TODO: cleanup uppercase string
     auto ruleMatched = Read_TechnoType_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
 
     if (ruleMatched)

@@ -1,32 +1,34 @@
 local typeAreas =
   {
+    weapons = {
+      getTypes = getWeaponTypes,
+      getRuleNames = getWeaponRuleNames,
+      getRuleValue = getWeaponRule,
+      setRuleValue = setWeaponRule
+    },
     infantry = {
       getTypes = getInfantryTypes,
       getRuleNames = getInfantryRuleNames,
       getRuleValue = getInfantryRule,
-      setRuleValue = setInfantryRule,
-      rules = {}
+      setRuleValue = setInfantryRule
     },
     unit = {
       getTypes = getUnitTypes,
       getRuleNames = getUnitRuleNames,
       getRuleValue = getUnitRule,
-      setRuleValue = setUnitRule,
-      rules = {}
+      setRuleValue = setUnitRule
     },
     aircraft = {
       getTypes = getAircraftTypes,
       getRuleNames = getAircraftRuleNames,
       getRuleValue = getAircraftRule,
-      setRuleValue = setAircraftRule,
-      rules = {}
+      setRuleValue = setAircraftRule
     },
     building = {
       getTypes = getBuildingTypes,
       getRuleNames = getBuildingRuleNames,
       getRuleValue = getBuildingRule,
-      setRuleValue = setBuildingRule,
-      rules = {}
+      setRuleValue = setBuildingRule
     }
   }
 
@@ -48,6 +50,27 @@ function main()
   local validationFailed = false
 
   local status, err = pcall(function()
+    log(">>Testing get/set game rules")
+
+    for _, gameRule in ipairs(getGameRuleNames()) do
+        log(string.format("Game rule: %s", gameRule))
+
+        local ruleValue = getGameRule(gameRule)
+
+        gameRulesRead = gameRulesRead + 1
+
+        setGameRule(gameRule, ruleValue)
+
+        gameRulesWritten = gameRulesWritten + 1
+
+        if ruleValue ~= getGameRule(gameRule) then
+          showError(string.format("Validation of game rule value failed %s", gameRule))
+
+          validationFailed = true
+          gameRuleValidationErrors = gameRuleValidationErrors + 1
+        end
+    end
+
     for area, typeArea in pairs(typeAreas) do
       log(string.format(">>Testing %s get/set rules", area))
 
@@ -69,35 +92,12 @@ function main()
             validationFailed = true
             validationErrors = validationErrors + 1
           end
-
-          ::next::
         end
 
         typesProcessed = typesProcessed + 1
       end
-      
+
       areasProcessed = areasProcessed + 1
-    end
-    
-    log(string.format(">>Testing get/set game rules", typeArea))
-
-    for _, gameRule in ipairs(getGameRuleNames()) do
-        log(string.format("Game rule: %s", gameRule))
-
-        local ruleValue = getGameRule(gameRule)
-
-        gameRulesRead = gameRulesRead + 1
-
-        setGameRule(gameRule, ruleValue)
-        
-        gameRulesWritten = gameRulesWritten + 1
-
-        if ruleValue ~= getGameRule(gameRule) then
-          showError(string.format("Validation of game rule value failed %s", gameRule))
-
-          validationFailed = true
-          gameRuleValidationErrors = gameRuleValidationErrors + 1
-        end
     end
   end)
 

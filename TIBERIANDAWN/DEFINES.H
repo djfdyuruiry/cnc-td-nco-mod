@@ -1833,6 +1833,7 @@ typedef enum WeaponType : char {
 	WEAPON_STEG=23,
 	WEAPON_TREX=24,
 
+	WEAPON_FIRST=0,
 	WEAPON_COUNT=25
 } WeaponType;
 

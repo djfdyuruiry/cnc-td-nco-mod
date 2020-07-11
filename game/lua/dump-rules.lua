@@ -1,5 +1,11 @@
 local typeAreas =
 {
+  Weapons = {
+    getTypes = getWeaponTypes,
+    getRuleNames = getWeaponRuleNames,
+    getRuleValue = getWeaponRule,
+    setRuleValue = setWeaponRule
+  },
   Infantry = {
     getTypes = getInfantryTypes,
     getRuleNames = getInfantryRuleNames,
@@ -28,6 +34,7 @@ local typeAreas =
 
 local typeAreaOrder =
 {
+  "Weapons",
   "Infantry",
   "Units",
   "Aircraft",

@@ -8,6 +8,10 @@ static const auto GAME_RULE_TYPE_NAMES = new const char* [GAME_RULE_COUNT] {
     GAME_RULE_TYPES
 };
 
+static const auto WEAPON_RULE_NAMES = new const char* [WEAPON_RULE_COUNT] {
+    WEAPON_RULES
+};
+
 static const auto INFANTRY_RULE_NAMES = new const char* [INFANTRY_RULE_COUNT] {
     INFANTRY_RULES
 };
@@ -59,14 +63,6 @@ static void Read_Rule_Names(lua_State* lua, const char** ruleNames, unsigned rul
     }
 }
 
-static int Lua_Get_Game_Rule_Names(lua_State* lua)
-{
-    Read_Rule_Names(lua, GAME_RULE_NAMES, GAME_RULE_COUNT);
-
-    return 1;
-}
-
-
 static int Lua_Get_Game_Rule_Type_Names(lua_State* lua)
 {
     Read_Rule_Names(lua, GAME_RULE_TYPE_NAMES, GAME_RULE_COUNT);
@@ -74,30 +70,9 @@ static int Lua_Get_Game_Rule_Type_Names(lua_State* lua)
     return 1;
 }
 
-static int Lua_Get_Infantry_Rule_Names(lua_State* lua)
+static int Lua_Get_Weapon_Types(lua_State* lua)
 {
-    Read_Rule_Names(lua, INFANTRY_RULE_NAMES, INFANTRY_RULE_COUNT);
-
-    return 1;
-}
-
-static int Lua_Get_Unit_Rule_Names(lua_State* lua)
-{
-    Read_Rule_Names(lua, UNIT_RULE_NAMES, UNIT_RULE_COUNT);
-
-    return 1;
-}
-
-static int Lua_Get_Aircraft_Rule_Names(lua_State* lua)
-{
-    Read_Rule_Names(lua, AIRCRAFT_RULE_NAMES, AIRCRAFT_RULE_COUNT);
-
-    return 1;
-}
-
-static int Lua_Get_Building_Rule_Names(lua_State* lua)
-{
-    Read_Rule_Names(lua, BUILDING_RULE_NAMES, BUILDING_RULE_COUNT);
+    Read_Object_Names(lua, WEAPON_FIRST, WEAPON_COUNT, &(Weapon_Type_To_String));
 
     return 1;
 }
@@ -130,24 +105,64 @@ static int Lua_Get_Building_Types(lua_State* lua)
     return 1;
 }
 
+static int Lua_Get_Game_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, GAME_RULE_NAMES, GAME_RULE_COUNT);
+
+    return 1;
+}
+
+static int Lua_Get_Weapon_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, WEAPON_RULE_NAMES, WEAPON_RULE_COUNT);
+
+    return 1;
+}
+
+static int Lua_Get_Infantry_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, INFANTRY_RULE_NAMES, INFANTRY_RULE_COUNT);
+
+    return 1;
+}
+
+static int Lua_Get_Unit_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, UNIT_RULE_NAMES, UNIT_RULE_COUNT);
+
+    return 1;
+}
+
+static int Lua_Get_Aircraft_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, AIRCRAFT_RULE_NAMES, AIRCRAFT_RULE_COUNT);
+
+    return 1;
+}
+
+static int Lua_Get_Building_Rule_Names(lua_State* lua)
+{
+    Read_Rule_Names(lua, BUILDING_RULE_NAMES, BUILDING_RULE_COUNT);
+
+    return 1;
+}
+
 bool Register_Info_Functions()
 {
     Log_Debug("Registering Info Lua API functions");
 
+    Register_Lua_Function("getGameRuleTypeNames", Lua_Get_Game_Rule_Type_Names);
+    Register_Lua_Function("getWeaponTypes", Lua_Get_Weapon_Types);
     Register_Lua_Function("getInfantryTypes", Lua_Get_Infantry_Types);
     Register_Lua_Function("getUnitTypes", Lua_Get_Unit_Types);
     Register_Lua_Function("getAircraftTypes", Lua_Get_Aircraft_Types);
     Register_Lua_Function("getBuildingTypes", Lua_Get_Building_Types);
 
     Register_Lua_Function("getGameRuleNames", Lua_Get_Game_Rule_Names);
-    Register_Lua_Function("getGameRuleTypeNames", Lua_Get_Game_Rule_Type_Names);
-
+    Register_Lua_Function("getWeaponRuleNames", Lua_Get_Weapon_Rule_Names);
     Register_Lua_Function("getInfantryRuleNames", Lua_Get_Infantry_Rule_Names);
-
     Register_Lua_Function("getUnitRuleNames", Lua_Get_Unit_Rule_Names);
-
     Register_Lua_Function("getAircraftRuleNames", Lua_Get_Aircraft_Rule_Names);
-
     Register_Lua_Function("getBuildingRuleNames", Lua_Get_Building_Rule_Names);
 
     return true;

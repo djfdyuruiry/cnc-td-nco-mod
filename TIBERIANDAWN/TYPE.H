@@ -50,11 +50,9 @@ class HouseClass;
 class WeaponTypeClass
 {
 	private:
-		static bool WeaponsInitialised;
-
-	public:
 		static WeaponTypeClass* Weapons;
 
+	public:
 		/*
 		**	This is the unit class of the projectile fired. A subset of the unit types
 		**	represent projectiles. It is one of these classes that is specified here.
@@ -94,11 +92,13 @@ class WeaponTypeClass
 		*/
 		AnimType Anim;
 
+		char* FriendlyName;
+
 		static WeaponTypeClass const* By_Type(WeaponType type);
 
 		static WeaponTypeClass const& As_Reference(WeaponType type);
 
-		WeaponTypeClass(WeaponType owner, BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
+		WeaponTypeClass(const char* friendlyName, WeaponType owner, BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
 };
 
 

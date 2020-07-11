@@ -760,6 +760,9 @@
     <ClInclude Include="LUA_API_FUNCTIONS_GAME.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_WEAPON_RULES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
@@ -1400,6 +1403,9 @@
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_WEAPON_RULES.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>

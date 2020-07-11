@@ -2,10 +2,20 @@
 #define RULES_INI_WEAPON_H
 
 #define WEAPON_DAMAGE_RULE "Damage"
+#define WEAPON_DAMAGE_RULE_UPPER "DAMAGE"
 
 #define WEAPON_RATE_OF_FIRE_RULE "RateOfFire"
+#define WEAPON_RATE_OF_FIRE_RULE_UPPER "RATEOFFIRE"
 
 #define WEAPON_RANGE_RULE "Range"
+#define WEAPON_RANGE_RULE_UPPER "RANGE"
+
+#define WEAPON_RULES FRIENDLY_NAME_RULE, \
+	WEAPON_DAMAGE_RULE, \
+	WEAPON_RATE_OF_FIRE_RULE, \
+	WEAPON_RANGE_RULE
+
+#define WEAPON_RULE_COUNT 4u
 
 #define Read_Weapon_Damage(bulletType, defaultValue) (unsigned char) Read_Unsigned_Int_From_Rules_Ini(bulletType, WEAPON_DAMAGE_RULE, defaultValue, 1, UCHAR_MAX)
 
