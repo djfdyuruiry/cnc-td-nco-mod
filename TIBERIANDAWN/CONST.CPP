@@ -142,21 +142,66 @@ WeaponTypeClass const& WeaponTypeClass::As_Reference(WeaponType type)
 ** spread factor, destroys walls, destroys wood, destroys Tiberium, {armor defense table}
 **           -vs- {none, wood, aluminum, steel, concrete}
 */
-WarheadTypeClass const Warheads[WARHEAD_COUNT] = {
-	{  2,false,false,false,{0x100, 0x80, 0x90, 0x40, 0x40}},	//	WARHEAD_SA					Small arms -- good against infantry.
-	{  6,true,true,true,{0xE0, 0xC0, 0x90, 0x40, 0x100}},		//	WARHEAD_HE					High explosive -- good against buildings & infantry.
-	{  6,true,true,false,{0x40, 0xC0, 0xC0, 0x100, 0x80}},		//	WARHEAD_AP					Armor piercing -- good against armor.
-	{  8,false,true,true,{0xE0, 0x100, 0xB0, 0x40, 0x80}},		//	WARHEAD_FIRE				Incendiary -- Good against flammables.
-	{  4,false,false,false,{0x100, 0x100, 0x100, 0x100, 0x100}},//	WARHEAD_LASER				Light Amplification of Stimulated Emission by Radiation.
-	{  7,true,true,true,{0x100, 0x100, 0xC0, 0xC0, 0xC0}},		//	WARHEAD_PB					Particle beam (neutron beam).
-	{  4,false,false,false,{0x100, 0x20, 0x20, 0x10, 0x10}},	//	WARHEAD_FIST				Punching in hand-to-hand combat.
-	{  4,false,false,false,{0x100, 0x20, 0x20, 0x10, 0x10}},	//	WARHEAD_FOOT				Kicking in hand-to-hand combat.
-	{  4,false,false,false,{0x100, 0x08, 0x08, 0x08, 0x08}},	//	WARHEAD_HOLLOW_POINT		Sniper bullet type.
-	{255,false,false,false,{0x100, 0x01, 0x01, 0x01, 0x01}},	//	WARHEAD_SPORE
-	{  1, true,true,false,{0x100, 0xC0, 0x80, 0x20, 0x08}},		//	WARHEAD_HEADBUTT
-	{  1, true,true,false,{0x100, 0xC0, 0x80, 0x20, 0x08}},		//	WARHEAD_FEEDME
-};
+WarheadTypeClass* WarheadTypeClass::Warheads = NULL;
 
+WarheadTypeClass::WarheadTypeClass(
+	const char* friendlyName,
+	WarheadType type,
+	int spreadFactor,
+	bool isWallDestroyer,
+	bool isWoodDestroyer,
+	bool isTiberiumDestroyer,
+	unsigned armorModifiers[ARMOR_COUNT]
+)
+{
+	FriendlyName = strdup(friendlyName);
+
+	auto warheadTypeString = Warhead_Type_To_String(type);
+
+	SpreadFactor = Read_Int_From_Rules_Ini(warheadTypeString, WARHEAD_SPREAD_FACTOR_RULE, spreadFactor, 1, INT_MAX);
+	IsWallDestroyer = Read_Bool_From_Rules_Ini(warheadTypeString, WARHEAD_DESTORY_WALLS_RULE, isWallDestroyer);
+	IsWoodDestroyer = Read_Bool_From_Rules_Ini(warheadTypeString, WARHEAD_DESTORY_WOOD_RULE, isWallDestroyer);
+	IsTiberiumDestroyer = Read_Bool_From_Rules_Ini(warheadTypeString, WARHEAD_DESTORY_TIBERIUM_RULE, isTiberiumDestroyer);
+
+	Modifier = armorModifiers;
+
+	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
+	{
+		auto modifierRule = Map_Armor_Modifier_To_Warhead_Rule(armorType);
+
+		Modifier[armorType] = Read_Unsigned_Int_From_Rules_Ini(warheadTypeString, modifierRule, Modifier[armorType], 0, UINT_MAX);
+	}
+}
+
+WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
+{
+	if (Warheads != NULL)
+	{
+		return &Warheads[type];
+	}
+
+	Warheads = new WarheadTypeClass[WARHEAD_COUNT]{
+		WarheadTypeClass("Small Arms", WARHEAD_SA, 2, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x80, 0x90, 0x40, 0x40}),
+		WarheadTypeClass("High Explosive", WARHEAD_HE, 6, true, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0xC0, 0x90, 0x40, 0x100}),
+		WarheadTypeClass("Armor Piercing", WARHEAD_AP, 6, true, true, false, new unsigned[ARMOR_COUNT] {0x40, 0xC0, 0xC0, 0x100, 0x80}),
+		WarheadTypeClass("Fire", WARHEAD_FIRE, 8, false, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0x100, 0xB0, 0x40, 0x80}),
+		WarheadTypeClass("Laser", WARHEAD_LASER, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0x100, 0x100, 0x100}),
+		WarheadTypeClass("Ion Cannon Beam", WARHEAD_PB, 7, true, true, true, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0xC0, 0xC0, 0xC0}),
+		WarheadTypeClass("Punch", WARHEAD_FIST, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10}),
+		WarheadTypeClass("Kick", WARHEAD_FOOT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10}),
+		WarheadTypeClass("Hollow Point", WARHEAD_HOLLOW_POINT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x08, 0x08, 0x08, 0x08}),
+		WarheadTypeClass("Tiberium Spore", WARHEAD_SPORE, 255, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x01, 0x01, 0x01, 0x01}),
+		WarheadTypeClass("Stegosaurus Headbutt", WARHEAD_HEADBUTT, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08}),
+		WarheadTypeClass("T-Rex Teeth", WARHEAD_FEEDME, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08})
+	};
+
+	return &Warheads[type];
+}
+
+WarheadTypeClass const& WarheadTypeClass::As_Reference(WarheadType type)
+{
+	return *(By_Type(type));
+}
 
 /***************************************************************************
 **	Converts pixel values (cell relative) into the appropriate lepton (sub cell)

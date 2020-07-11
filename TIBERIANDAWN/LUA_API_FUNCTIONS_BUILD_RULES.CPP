@@ -109,11 +109,12 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
     {
-        auto capacity = atoi(value);
-        *valueParseError = capacity < 0 || capacity > UINT_MAX;
-
+        *valueParseError = !Is_Unsigned_Int_String(value);
+    
         if (!*valueParseError)
         {
+            auto capacity = strtoul(value, NULL, 10);
+
             Log_Trace("Write_Building_Rule => Rule value: %u -> %u", type->Capacity, capacity);
 
             type->Capacity = capacity;
@@ -121,26 +122,36 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE_UPPER))
     {
-        auto power = atoi(value);
-        *valueParseError = power < 0 || power > INT_MAX;
-
+        *valueParseError = !Is_Int_String(value);
+    
         if (!*valueParseError)
         {
-            Log_Trace("Write_Building_Rule => Rule value: %d -> %d", type->Power, power);
+            auto power = atoi(value);
+            *valueParseError = power < 0;
 
-            type->Power = power;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_Building_Rule => Rule value: %d -> %d", type->Power, power);
+
+                type->Power = power;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE_UPPER))
     {
-        auto drain = atoi(value);
-        *valueParseError = drain < 0 || drain > INT_MAX;
-
+        *valueParseError = !Is_Int_String(value);
+    
         if (!*valueParseError)
         {
-            Log_Trace("Write_Building_Rule => Rule value: %d -> %d", type->Drain, drain);
+            auto drain = atoi(value);
+            *valueParseError = drain < 0 || drain > INT_MAX;
 
-            type->Drain = drain;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_Building_Rule => Rule value: %d -> %d", type->Drain, drain);
+
+                type->Drain = drain;
+            }
         }
     }
     else

@@ -155,19 +155,15 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
     }
     else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
     {
-        *valueParseError = !Is_Int_String(value);
+        *valueParseError = !Is_Unsigned_Int_String(value);
 
         if (!*valueParseError)
         {
-            auto capacity = atoi(value);
-            *valueParseError = capacity < 0 || capacity > UINT_MAX;
+            auto capacity = strtoul(value, NULL, 10);
 
-            if (!*valueParseError)
-            {
-                Log_Trace("Write_Unit_Rule => Rule value: %u -> %u", type->TransportCapacity, capacity);
+            Log_Trace("Write_Unit_Rule => Rule value: %u -> %u", type->TransportCapacity, capacity);
 
-                type->TransportCapacity = capacity;
-            }
+            type->TransportCapacity = capacity;
         }
     }
     else

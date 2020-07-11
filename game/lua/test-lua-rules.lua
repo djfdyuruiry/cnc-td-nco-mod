@@ -6,6 +6,12 @@ local typeAreas =
       getRuleValue = getWeaponRule,
       setRuleValue = setWeaponRule
     },
+    warheads = {
+      getTypes = getWarheadTypes,
+      getRuleNames = getWarheadRuleNames,
+      getRuleValue = getWarheadRule,
+      setRuleValue = setWarheadRule
+    },
     infantry = {
       getTypes = getInfantryTypes,
       getRuleNames = getInfantryRuleNames,

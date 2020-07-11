@@ -678,7 +678,7 @@ ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError)
 {
     if (String_Is_Empty(armorTypeString))
     {
-        Show_Error("Armor type to Parse_Armor_Type was null or empty");
+        Show_Error("Armor type passed to Parse_Armor_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -723,10 +723,158 @@ char* Armor_Type_To_String(ArmorType armorType)
     }
     else
     {
-        Show_Error("Unable to convert armor type to string: %d", armorType);
+        Show_Error("Unable to convert armor type to string: %u", armorType);
     }
 
     return armorTypeString;
+}
+
+WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError)
+{
+    WarheadType warhead;
+
+    if (Strings_Are_Equal(warheadTypeString, "SA"))
+    {
+        warhead = WARHEAD_SA;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "HE"))
+    {
+        warhead = WARHEAD_HE;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "AP"))
+    {
+        warhead = WARHEAD_AP;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "FIRE"))
+    {
+        warhead = WARHEAD_FIRE;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "LASER"))
+    {
+        warhead = WARHEAD_LASER;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "PB"))
+    {
+        warhead = WARHEAD_PB;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "FIST"))
+    {
+        warhead = WARHEAD_FIST;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "FOOT"))
+    {
+        warhead = WARHEAD_FOOT;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "HOLLOW_POINT"))
+    {
+        warhead = WARHEAD_HOLLOW_POINT;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "SPORE"))
+    {
+        warhead = WARHEAD_SPORE;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "HEADBUTT"))
+    {
+        warhead = WARHEAD_HEADBUTT;
+    }
+    else if (Strings_Are_Equal(warheadTypeString, "FEEDME"))
+    {
+        warhead = WARHEAD_FEEDME;
+    }
+    else
+    {
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        Show_Error("Unable to parse warhead type from string: %s", warheadTypeString);
+    }
+
+    return warhead;
+}
+
+WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError)
+{
+    if (String_Is_Empty(warheadTypeString))
+    {
+        Show_Error("Warhead type passed to Parse_Warhead_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return WARHEAD_NONE;
+    }
+
+    auto warheadTypeStr = strdup(warheadTypeString);
+
+    auto warheadType = Parse_Warhead_Type(warheadTypeStr, parseError);
+
+    delete warheadTypeStr;
+
+    return warheadType;
+}
+
+char* Warhead_Type_To_String(WarheadType warheadType)
+{
+    char* warheadTypeString;
+
+    if (warheadType == WARHEAD_SA)
+    {
+        warheadTypeString = "SA";
+    }
+    else if (warheadType == WARHEAD_HE)
+    {
+        warheadTypeString = "HE";
+    }
+    else if (warheadType == WARHEAD_AP)
+    {
+        warheadTypeString = "AP";
+    }
+    else if (warheadType == WARHEAD_FIRE)
+    {
+        warheadTypeString = "FIRE";
+    }
+    else if (warheadType == WARHEAD_LASER)
+    {
+        warheadTypeString = "LASER";
+    }
+    else if (warheadType == WARHEAD_PB)
+    {
+        warheadTypeString = "PB";
+    }
+    else if (warheadType == WARHEAD_FIST)
+    {
+        warheadTypeString = "FIST";
+    }
+    else if (warheadType == WARHEAD_FOOT)
+    {
+        warheadTypeString = "FOOT";
+    }
+    else if (warheadType == WARHEAD_HOLLOW_POINT)
+    {
+        warheadTypeString = "HOLLOW_POINT";
+    }
+    else if (warheadType == WARHEAD_SPORE)
+    {
+        warheadTypeString = "SPORE";
+    }
+    else if (warheadType == WARHEAD_HEADBUTT)
+    {
+        warheadTypeString = "HEADBUTT";
+    }
+    else if (warheadType == WARHEAD_FEEDME)
+    {
+        warheadTypeString = "FEEDME";
+    }
+    else
+    {
+        Show_Error("Unable to convert warhead type to string: %u", warheadType);
+    }
+
+    return warheadTypeString;
 }
 
 InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)

@@ -74,7 +74,7 @@ int Modify_Damage(int damage, WarheadType warhead, ArmorType armor, int distance
 	*/
 	if (Special.IsInert || !damage || warhead == WARHEAD_NONE) return(0);
 
-	WarheadTypeClass const * whead = &Warheads[warhead];
+	WarheadTypeClass const * whead = WarheadTypeClass::By_Type(warhead);
 
 	damage = Fixed_To_Cardinal(damage, whead->Modifier[armor]);
 
@@ -138,7 +138,7 @@ void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass * source,
 
 	if (!strength || Special.IsInert || warhead == WARHEAD_NONE) return;
 
-	WarheadTypeClass const * whead = &Warheads[warhead];
+	WarheadTypeClass const * whead = WarheadTypeClass::By_Type(warhead);
 	range = ICON_LEPTON_W + (ICON_LEPTON_W >> 1);
 	cell = Coord_Cell(coord);
 	if ((unsigned)cell >= MAP_CELL_TOTAL) return;

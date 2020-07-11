@@ -19,6 +19,10 @@ bool Is_Int_String(char* numberValue);
 
 bool Is_Int_String(const char* numberValue);
 
+bool Is_Unsigned_Int_String(char* numberValue);
+
+bool Is_Unsigned_Int_String(const char* numberValue);
+
 bool Is_Double_String(char* numberValue);
 
 int Parse_Number(char character);

@@ -56,12 +56,11 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
     {
-        *valueParseError = !Is_Int_String(value);
+        *valueParseError = !Is_Unsigned_Int_String(value);
 
         if (!*valueParseError)
         {
-            auto capacity = atoi(value);
-            *valueParseError = capacity < 0 || capacity > UINT_MAX;
+            auto capacity = strtoul(value, NULL, 10);
 
             if (!*valueParseError)
             {
