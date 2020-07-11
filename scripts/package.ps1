@@ -13,6 +13,7 @@ $buildOutPath =  "${repoRootPath}\bin\Win32"
 
 $workshopOutPath = "${repoRootPath}\.steam-workshop"
 $workshopOutDataPath = "${workshopOutPath}\NCO\Data"
+$workshopOutXmlPath = "${workshopOutPath}\NCO\Data\XML"
 
 function Zip-Mod-Package {
   Write-Log-Info "Zipping mod package"
@@ -48,6 +49,7 @@ function Copy-Game-Files {
   Copy-Item -Path "${workshopInPath}\NCOWorkshopPreview.png" -Destination $workshopOutPath
   Copy-Item -Path "${buildOutPath}\TiberianDawn.dll" -Destination $workshopOutDataPath
   Copy-Item -Path "${gameFilesPath}\RULES-DEFAULT.INI" -Destination $workshopOutDataPath
+  Copy-Item -Path "${gameFilesPath}\XML\CNCModGameCommands.xml" -Destination $workshopOutXmlPath
 }
 
 function Main {
@@ -57,7 +59,7 @@ function Main {
     Remove-Item -Recurse -Force $workshopOutPath
   }
 
-  New-Item -Path $workshopOutDataPath -ItemType directory | Out-Null
+  New-Item -Path $workshopOutXmlPath -ItemType directory | Out-Null
 
   Copy-Game-Files
   Build-Mod-Spec
