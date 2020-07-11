@@ -2,7 +2,7 @@
 
 #include "lua_api_functions_generic_rules.h"
 
-static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
+static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
     if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE_UPPER))
     {
@@ -307,155 +307,24 @@ static UnitTypeClass* ResolveUnit(lua_State* lua, const char* unitTypeName)
 
 static int Lua_Get_Unit_Rule(lua_State* lua)
 {
-    Log_Trace("Lua_Get_Unit_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 2)
-    {
-        luaL_error(lua, "getUnitRule requires exactly two arguments");
-    }
-
-    auto unitTypeName = Get_Lua_Value_As_String(1);
-
-    if (unitTypeName == NULL)
-    {
-        luaL_error(lua, "getUnitRule argument `unitTypeName` was nil");
-        return 0;
-    }
-
-    auto unit = ResolveUnit(lua, unitTypeName);
-
-    if (unit == NULL)
-    {
-        return 0;
-    }
-
-    auto ruleName = Get_Lua_Value_As_String(2);
-
-    if (ruleName == NULL)
-    {
-        luaL_error(lua, "getUnitRule argument `ruleName` was nil");
-        return 0;
-    }
-
-    Log_Debug("Lua_Get_Unit_Rule => attempting to read value of rule '%s'", ruleName);
-
-    Log_Trace("Lua_Get_Unit_Rule => looking for rule '%s' in Techno Type", ruleName);
-
-    // TODO: cleanup uppercase string
-    auto ruleMatched = Read_TechnoType_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
-
-    if (ruleMatched)
-    {
-        Log_Debug("Lua_Get_Unit_Rule => Rule matched in Techno Type");
-        return 1;
-    }
-
-    Log_Trace("Lua_Get_Unit_Rule => looking for rule in Unit Type");
-
-    ruleMatched = Read_Unit_Rule(lua, unit, Convert_String_To_Upper_Case(ruleName));
-
-    if (ruleMatched)
-    {
-        Log_Debug("Lua_Get_Unit_Rule => Rule matched in Unit Type");
-        return 1;
-    }
-
-    luaL_error(lua, "rule name type passed getUnitRule was not recognised: %s", ruleName);
-
-    return 0;
+    return Lua_Get_Rule(
+        lua,
+        "Unit",
+        "unitTypeName",
+        &ResolveUnit,
+        &Read_Unit_Rule
+    );
 }
 
 static int Lua_Set_Unit_Rule(lua_State* lua)
 {
-    Log_Trace("Lua_Set_Unit_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 3)
-    {
-        luaL_error(lua, "setUnitRule requires exactly three arguments");
-        return 0;
-    }
-
-    auto unitTypeName = Get_Lua_Value_As_String(1);
-
-    if (unitTypeName == NULL)
-    {
-        luaL_error(lua, "setUnitRule argument `unitTypeName` was nil");
-        return 0;
-    }
-
-    auto unit = ResolveUnit(lua, unitTypeName);
-
-    if (unit == NULL)
-    {
-        return 0;
-    }
-
-    auto ruleName = Get_Lua_Value_As_String(2);
-    auto ruleValue = Get_Lua_Value_As_String(3);
-
-    if (ruleName == NULL)
-    {
-        luaL_error(lua, "setUnitRule argument `ruleName` was nil");
-        return 0;
-    }
-
-    if (ruleValue == NULL)
-    {
-        luaL_error(lua, "setUnitRule argument `ruleValue` was nil");
-        return 0;
-    }
-
-    Log_Debug("Lua_Set_Unit_Rule => attempting to set rule '%s' to value: %s", ruleName, ruleValue);
-
-    Log_Trace("Lua_Set_Unit_Rule => looking for rule in Techno Type");
-
-    bool parseError = false;
-    auto ruleMatched = Write_TechnoType_Rule(
-        unit,
-        Convert_String_To_Upper_Case(ruleName),
-        Convert_String_To_Upper_Case(ruleValue),
-        ruleValue,
-        &parseError
+    return Lua_Set_Rule(
+        lua,
+        "Unit",
+        "unitTypeName",
+        &ResolveUnit,
+        &Write_Unit_Rule
     );
-
-    if (ruleMatched && !parseError)
-    {
-        Log_Debug("Lua_Set_Unit_Rule => Rule matched in Techno Type");
-        return 1;
-    }
-
-    if (!parseError)
-    {
-        Log_Trace("Lua_Set_Unit_Rule => looking for rule in Unit Type");
-
-        ruleMatched = Write_Unit_Rule(
-            unit,
-            Convert_String_To_Upper_Case(ruleName),
-            Convert_String_To_Upper_Case(ruleValue),
-            &parseError
-        );
-
-        if (ruleMatched && !parseError)
-        {
-            Log_Debug("Lua_Set_Unit_Rule => Rule matched in Unit Type");
-            return 1;
-        }
-    }
-
-    if (parseError)
-    {
-        luaL_error(lua, "value for rule `%s` passed to setUnitRule was not valid: %s", ruleName, ruleValue);
-
-        return 0;
-    }
-
-    luaL_error(lua, "rule name passed setUnitRule was not recognised: %s", ruleName);
-
-    return 0;
 }
 
 bool Register_Unit_Rule_Functions()

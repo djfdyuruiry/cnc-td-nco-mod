@@ -231,13 +231,15 @@ TechnoTypeClass::TechnoTypeClass(
 	IsTurretEquipped = Read_Unsigned_Bool_From_Rules_Ini(IniName, TURRET_EQUIPPED_RULE, is_turret_equipped);
 	IsNominal = Read_Unsigned_Bool_From_Rules_Ini(IniName, SHOW_NAME_RULE, is_nominal);
 
-	if (primary != WEAPON_NONE) {
-		Calculate_Risk();
-	}
+	Calculate_Risk();
 }
 
 void TechnoTypeClass::Calculate_Risk(void) const
 {
+	if (Primary == WEAPON_NONE) {
+		return;
+	}
+
 	auto ref = (TechnoTypeClass*)this;
 
 	// TODO: read some `Game` rule to allow modifying the outcome of this calculation

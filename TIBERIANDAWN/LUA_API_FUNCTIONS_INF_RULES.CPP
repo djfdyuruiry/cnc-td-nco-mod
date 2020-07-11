@@ -2,7 +2,7 @@
 
 #include "lua_api_functions_generic_rules.h"
 
-static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
+static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
     if (Strings_Are_Equal(ruleName, FEMALE_RULE_UPPER))
     {
@@ -174,154 +174,24 @@ static InfantryTypeClass* ResolveInfantry(lua_State* lua, const char* infantryTy
 
 int Lua_Get_Infantry_Rule(lua_State* lua)
 {
-    Log_Trace("Lua_Get_Infantry_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 2)
-    {
-        luaL_error(lua, "getInfantryRule requires exactly two arguments");
-    }
-
-    auto infantryTypeName = Get_Lua_Value_As_String(1);
-
-    if (infantryTypeName == NULL)
-    {
-        luaL_error(lua, "getInfantryRule argument `infantryTypeName` was nil");
-        return 0;
-    }
-
-    auto infantry = ResolveInfantry(lua, infantryTypeName);
-
-    if (infantry == NULL)
-    {
-        return 0;
-    }
-
-    auto ruleName = Get_Lua_Value_As_String(2);
-
-    if (ruleName == NULL)
-    {
-        luaL_error(lua, "getInfantryRule argument `ruleName` was nil");
-        return 0;
-    }
-
-    Log_Trace("Lua_Get_Infantry_Rule => attempting to read value of rule '%s'", ruleName);
-
-    Log_Debug("Lua_Get_Infantry_Rule => looking for rule '%s' in Techno Type", ruleName);
-
-    auto ruleMatched = Read_TechnoType_Rule(lua, infantry, Convert_String_To_Upper_Case(ruleName));
-
-    if (ruleMatched)
-    {
-        Log_Debug("Lua_Get_Infantry_Rule => Rule matched in Techno Type");
-        return 1;
-    }
-
-    Log_Trace("Lua_Get_Infantry_Rule => looking for rule in Infantry Type");
-
-    ruleMatched = Read_Infantry_Rule(lua, infantry, Convert_String_To_Upper_Case(ruleName));
-
-    if (ruleMatched)
-    {
-        Log_Debug("Lua_Get_Infantry_Rule => Rule matched in Infantry Type");
-        return 1;
-    }
-
-    luaL_error(lua, "rule name type passed getInfantryRule was not recognised: %s", ruleName);
-
-    return 0;
+    return Lua_Get_Rule(
+        lua,
+        "Infantry",
+        "infantryTypeName",
+        &ResolveInfantry,
+        &Read_Infantry_Rule
+    );
 }
 
 int Lua_Set_Infantry_Rule(lua_State* lua)
 {
-    Log_Trace("Lua_Set_Infantry_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 3)
-    {
-        luaL_error(lua, "setInfantryRule requires exactly three arguments");
-        return 0;
-    }
-
-    auto infantryTypeName = Get_Lua_Value_As_String(1);
-
-    if (infantryTypeName == NULL)
-    {
-        luaL_error(lua, "setInfantryRule argument `infantryTypeName` was nil");
-        return 0;
-    }
-
-    auto infantry = ResolveInfantry(lua, infantryTypeName);
-
-    if (infantry == NULL)
-    {
-        return 0;
-    }
-
-    auto ruleName = Get_Lua_Value_As_String(2);
-    auto ruleValue = Get_Lua_Value_As_String(3);
-
-    if (ruleName == NULL)
-    {
-        luaL_error(lua, "setInfantryRule argument `ruleName` was nil");
-        return 0;
-    }
-
-    if (ruleValue == NULL)
-    {
-        luaL_error(lua, "setInfantryRule argument `ruleValue` was nil");
-        return 0;
-    }
-
-    Log_Debug("Lua_Set_Infantry_Rule => attempting to set rule '%s' to value: %s", ruleName, ruleValue);
-
-    Log_Trace("Lua_Set_Infantry_Rule => looking for rule in Techno Type");
-
-    bool parseError = false;
-    auto ruleMatched = Write_TechnoType_Rule(
-        infantry,
-        Convert_String_To_Upper_Case(ruleName),
-        Convert_String_To_Upper_Case(ruleValue),
-        ruleValue,
-        &parseError
+    return Lua_Set_Rule(
+        lua,
+        "Infantry",
+        "infantryTypeName",
+        &ResolveInfantry,
+        &Write_Infantry_Rule
     );
-
-    if (ruleMatched && !parseError)
-    {
-        Log_Debug("Lua_Set_Infantry_Rule => Rule matched in Techno Type");
-        return 1;
-    }
-
-    if (!parseError)
-    {
-        Log_Trace("Lua_Get_Infantry_Rule => looking for rule in Infantry Type");
-
-        ruleMatched = Write_Infantry_Rule(
-            infantry,
-            Convert_String_To_Upper_Case(ruleName),
-            Convert_String_To_Upper_Case(ruleValue),
-            &parseError
-        );
-
-        if (ruleMatched && !parseError)
-        {
-            Log_Debug("Lua_Set_Infantry_Rule => Rule matched in Infantry Type");
-            return 1;
-        }
-    }
-
-    if (parseError)
-    {
-        luaL_error(lua, "value for rule `%s` passed to setInfantryRule was not valid: %s", ruleName, ruleValue);
-
-        return 0;
-    }
-
-    luaL_error(lua, "rule name passed setInfantryRule was not recognised: %s", ruleName);
-
-    return 0;
 }
 
 bool Register_Infantry_Rule_Functions()
