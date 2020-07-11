@@ -231,13 +231,15 @@ TechnoTypeClass::TechnoTypeClass(
 	IsTurretEquipped = Read_Unsigned_Bool_From_Rules_Ini(IniName, TURRET_EQUIPPED_RULE, is_turret_equipped);
 	IsNominal = Read_Unsigned_Bool_From_Rules_Ini(IniName, SHOW_NAME_RULE, is_nominal);
 
-	if (primary != WEAPON_NONE) {
-		Calculate_Risk();
-	}
+	Calculate_Risk();
 }
 
 void TechnoTypeClass::Calculate_Risk(void) const
 {
+	if (Primary == WEAPON_NONE) {
+		return;
+	}
+
 	auto ref = (TechnoTypeClass*)this;
 
 	// TODO: read some `Game` rule to allow modifying the outcome of this calculation
@@ -2700,7 +2702,7 @@ ActionType TechnoClass::What_Action(CELL cell) const
 	// Changed for multiplayer. ST - 3/13/2019 5:52PM
 	if (Is_Owned_By_Player() && Techno_Type_Class()->Primary != WEAPON_NONE && (ctrldown || (optr && optr->IsLegalTarget))) {
 	//if (IsOwnedByPlayer && Techno_Type_Class()->Primary != WEAPON_NONE && (ctrldown || (optr && optr->IsLegalTarget))) {
-		WarheadTypeClass const * whead = &Warheads[BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Primary).Fires).Warhead];
+		WarheadTypeClass const * whead = WarheadTypeClass::By_Type(BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Primary).Fires).Warhead);
 		if (!optr || (optr->IsWall && (whead->IsWallDestroyer || (whead->IsWoodDestroyer && optr->IsWooden)))) {
 			if (Can_Player_Move() || In_Range(::As_Target(cell), 0)) {
 				return(ACTION_ATTACK);
@@ -4674,7 +4676,7 @@ int TechnoClass::Anti_Air(void) const
 		//BulletTypeClass const * bullet = weapon->Bullet;
 		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires);
 		//WarheadTypeClass const * warhead = weapon->WarheadPtr;
-		WarheadTypeClass const * warhead = &Warheads[bullet.Warhead];
+		WarheadTypeClass const * warhead = WarheadTypeClass::By_Type(bullet.Warhead);
 
 
 		//if (bullet->IsAntiAircraft) {
@@ -4724,7 +4726,7 @@ int TechnoClass::Anti_Armor(void) const
 		//WarheadTypeClass const * warhead = weapon->WarheadPtr;
 		WeaponTypeClass const * weapon = WeaponTypeClass::By_Type(weapon_type);
 		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires);
-		WarheadTypeClass const * warhead = &Warheads[bullet.Warhead];
+		WarheadTypeClass const * warhead = WarheadTypeClass::By_Type(bullet.Warhead);
 
 		int mrange = min(weapon->Range, 0x0400);
 
@@ -4773,7 +4775,7 @@ int TechnoClass::Anti_Infantry(void) const
 		//WarheadTypeClass const * warhead = weapon->WarheadPtr;
 		WeaponTypeClass const * weapon = WeaponTypeClass::By_Type(weapon_type);
 		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires);
-		WarheadTypeClass const * warhead = &Warheads[bullet.Warhead];
+		WarheadTypeClass const * warhead = WarheadTypeClass::By_Type(bullet.Warhead);
 		int mrange = min(weapon->Range, 0x0400);
 
 		int value = ((weapon->Attack * warhead->Modifier[ARMOR_NONE]) * mrange * warhead->SpreadFactor) / weapon->ROF;

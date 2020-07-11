@@ -1795,7 +1795,8 @@ typedef enum WarheadType : char{
 	WARHEAD_HEADBUTT,			// Other dinosaurs butt into people
 	WARHEAD_FEEDME,			// T-Rex eats people, hurts vehicles/buildings
 
-	WARHEAD_COUNT
+	WARHEAD_COUNT,
+	WARHEAD_FIRST = 0
 } WarheadType;
 
 
@@ -1833,8 +1834,8 @@ typedef enum WeaponType : char {
 	WEAPON_STEG=23,
 	WEAPON_TREX=24,
 
-	WEAPON_FIRST=0,
-	WEAPON_COUNT=25
+	WEAPON_COUNT,
+	WEAPON_FIRST = 0
 } WeaponType;
 
 
@@ -1851,7 +1852,8 @@ typedef enum ArmorType : unsigned char {
 	ARMOR_STEEL,		// Vulnerable to AP.
 	ARMOR_CONCRETE,	// Vulnerable to HE and AP.
 
-	ARMOR_COUNT
+	ARMOR_COUNT,
+	ARMOR_FIRST = 0
 } ArmorType;
 
 

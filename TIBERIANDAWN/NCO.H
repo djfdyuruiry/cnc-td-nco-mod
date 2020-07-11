@@ -15,6 +15,7 @@
 #include "./rules_ini_infantry.h"
 #include "./rules_ini_superweapon.h"
 #include "./rules_ini_unit.h"
+#include "./rules_ini_warhead.h"
 #include "./rules_ini_weapon.h"
 #include "./strings.h"
 #include "./utils.h"

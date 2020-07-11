@@ -146,6 +146,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Weapon_Type_To_String(type->Primary), Weapon_Type_To_String(weapon));
 
             type->Primary = weapon;
+
             type->Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
         }
     }

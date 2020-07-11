@@ -8,6 +8,7 @@
 #include "lua_api_functions_info.h"
 #include "lua_api_functions_unit_rules.h"
 #include "lua_api_functions_util.h"
+#include "lua_api_functions_warhead_rules.h"
 #include "lua_api_functions_weapon_rules.h"
 
 static bool API_INITIALISED = false;
@@ -20,6 +21,7 @@ static bool Load_Api_Functions()
         && Register_Info_Functions()
         && Register_Game_Rule_Functions()
         && Register_Weapon_Functions()
+        && Register_Warhead_Functions()
         && Register_Infantry_Rule_Functions()
         && Register_Unit_Rule_Functions()
         && Register_Aircraft_Rule_Functions()

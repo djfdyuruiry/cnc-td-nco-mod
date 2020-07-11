@@ -34,6 +34,11 @@ ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError);
 
 char* Armor_Type_To_String(ArmorType armorType);
 
+WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError);
+
+WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError);
+
+char* Warhead_Type_To_String(WarheadType warheadType);
 
 // infantry specific
 InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError);

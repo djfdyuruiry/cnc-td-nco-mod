@@ -108,6 +108,9 @@ class WeaponTypeClass
 */
 class WarheadTypeClass
 {
+	private:
+		static WarheadTypeClass* Warheads;
+
 	public:
 
 		/*
@@ -136,7 +139,23 @@ class WarheadTypeClass
 		**	The warhead damage is reduced depending on the the type of armor the
 		**	defender has. This table is what gives weapons their "character".
 		*/
-		unsigned Modifier[ARMOR_COUNT];
+		unsigned* Modifier;
+
+		char* FriendlyName;
+
+		static WarheadTypeClass const* By_Type(WarheadType type);
+
+		static WarheadTypeClass const& As_Reference(WarheadType type);
+
+		WarheadTypeClass(
+			const char* friendlyName,
+			WarheadType type,
+			int spreadFactor,
+			bool isWallDestroyer,
+			bool isWoodDestroyer,
+			bool isTiberiumDestroyer,
+			unsigned armorModifiers[ARMOR_COUNT]
+		);
 };
 
 

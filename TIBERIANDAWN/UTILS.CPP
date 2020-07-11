@@ -186,6 +186,36 @@ bool Is_Int_String(const char* numberValue)
 	return result;
 }
 
+bool Is_Unsigned_Int_String(char* numberValue)
+{
+	if (String_Is_Empty(numberValue))
+	{
+		return false;
+	}
+
+	char* remainder;
+
+	strtoul(numberValue, &remainder, 10);
+
+	return !Strings_Are_Equal(numberValue, remainder);
+}
+
+bool Is_Unsigned_Int_String(const char* numberValue)
+{
+	if (String_Is_Empty(numberValue))
+	{
+		return false;
+	}
+
+	auto numberValueStr = strdup(numberValue);
+
+	auto result = Is_Unsigned_Int_String(numberValueStr);
+
+	delete numberValueStr;
+
+	return result;
+}
+
 bool Is_Double_String(char* numberValue)
 {
 	if (String_Is_Empty(numberValue))

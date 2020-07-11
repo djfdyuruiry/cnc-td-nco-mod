@@ -6,6 +6,12 @@ local typeAreas =
       getRuleValue = getWeaponRule,
       setRuleValue = setWeaponRule
     },
+    warheads = {
+      getTypes = getWarheadTypes,
+      getRuleNames = getWarheadRuleNames,
+      getRuleValue = getWarheadRule,
+      setRuleValue = setWarheadRule
+    },
     infantry = {
       getTypes = getInfantryTypes,
       getRuleNames = getInfantryRuleNames,
@@ -107,7 +113,7 @@ function main()
 
   log(
     string.format(
-      [[Test Lua API rules result: %s -
+      [[Test Lua API rules result: %s
 
   Areas processed: %d
   Types processed: %d

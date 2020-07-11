@@ -52,6 +52,20 @@ int Read_Int_From_Rules_Ini(
 	int maxValueInclusive
 );
 
+unsigned int Read_Unsigned_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive
+);
+
+unsigned int Read_Optional_Unsigned_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+);
+
 double Read_Double_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -98,8 +112,6 @@ bool Read_Bool_From_Rules_Ini(
 	const char* entry,
 	bool defaultValue
 );
-
-#define Read_Unsigned_Int_From_Rules_Ini(section, entry, defaultValue, minValue, maxValue) (unsigned int)Read_Int_From_Rules_Ini(section, entry, defaultValue, minValue, maxValue)
 
 #define Read_Unsigned_Bool_From_Rules_Ini(section, entry, defaultValue) (unsigned)Read_Bool_From_Rules_Ini(section, entry, defaultValue)
 

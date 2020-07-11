@@ -335,6 +335,126 @@ int Read_Int_From_Rules_Ini(
 	);
 }
 
+static unsigned int Read_Unsigned_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive,
+	bool* valueFound
+)
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	Log_Trace("Resolving rule value: %s -> %s", section, entry);
+	Log_Trace("Default value: %u", defaultValue);
+
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Double_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		if (valueFound != NULL)
+		{
+			*valueFound = true;
+		}
+
+		return cachedValue;
+	}
+
+	auto ruleValueStr = Read_Optional_String_From_Rules_Ini(section, entry, valueFound, true);
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules ini value found, default will be used");
+
+		return defaultValue;
+	}
+
+	bool isValid = Is_Unsigned_Int_String(ruleValueStr);
+
+	if (!isValid)
+	{
+		RULES_VALID = false;
+
+		Show_Error(
+			"Rule [%s -> %s] must be a unsigned integer number. Value provided: %s",
+			section,
+			entry,
+			ruleValueStr
+		);
+
+		delete ruleValueStr;
+
+		return defaultValue;
+	}
+
+	auto ruleValue = strtoul(ruleValueStr, NULL, 10);
+
+	Log_Trace("Rules ini value: %s", ruleValueStr);
+
+	if (ruleValue < minValueInclusive || ruleValue > maxValueInclusive)
+	{
+		RULES_VALID = false;
+
+		Show_Error(
+			"Rule [%s -> %s] must be between %u and %u (inclusive). Value provided: %u",
+			section,
+			entry,
+			minValueInclusive,
+			maxValueInclusive,
+			ruleValue
+		);
+	}
+	else
+	{
+		Cache_Double_Rule(section, entry, ruleValue);
+	}
+
+	Log_Trace("Resolved value: %u", ruleValue);
+	Log_Debug("Setting rule [%s -> %s] = %u", section, entry, ruleValue);
+
+	delete ruleValueStr;
+
+	return ruleValue;
+}
+
+unsigned int Read_Optional_Unsigned_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+)
+{
+	return Read_Unsigned_Int_From_Rules_Ini(
+		section,
+		entry,
+		0u,
+		0u,
+		UINT_MAX,
+		valueFound
+	);
+}
+
+unsigned int Read_Unsigned_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive
+)
+{
+	bool valueFound = false;
+
+	return Read_Unsigned_Int_From_Rules_Ini(
+		section,
+		entry,
+		defaultValue,
+		minValueInclusive,
+		maxValueInclusive,
+		&valueFound
+	);
+}
+
 static double Read_Double_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -431,8 +551,8 @@ double Read_Optional_Double_From_Rules_Ini(
 		section,
 		entry,
 		0.0f,
-		-999.99f,
-		999.9f,
+		DBL_MIN,
+		DBL_MAX,
 		valueFound
 	);
 }

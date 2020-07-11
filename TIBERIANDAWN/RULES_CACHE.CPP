@@ -11,6 +11,7 @@ static const auto MAX_KEY_LENGTH = 1024;
 
 static map<string, char*>* STRING_RULES_CACHE;
 static map<string, int>* INT_RULES_CACHE;
+static map<string, unsigned int>* UINT_RULES_CACHE;
 static map<string, double>* DOUBLE_RULES_CACHE;
 static map<string, bool>* BOOL_RULES_CACHE;
 
@@ -69,6 +70,7 @@ static void Ensure_Rule_Cache_Initialised()
 {
 	if (STRING_RULES_CACHE != NULL
 		&& INT_RULES_CACHE != NULL
+		&& UINT_RULES_CACHE != NULL
 		&& DOUBLE_RULES_CACHE != NULL
 		&& BOOL_RULES_CACHE != NULL)
 	{
@@ -77,6 +79,7 @@ static void Ensure_Rule_Cache_Initialised()
 
 	STRING_RULES_CACHE = new map<string, char*>();
 	INT_RULES_CACHE = new map<string, int>();
+	UINT_RULES_CACHE = new map<string, unsigned int>();
 	DOUBLE_RULES_CACHE = new map<string, double>();
 	BOOL_RULES_CACHE = new map<string, bool>();
 }
@@ -128,6 +131,27 @@ void Cache_Int_Rule(const char* section, const char* ruleName, int ruleValue)
 	Ensure_Rule_Cache_Initialised();
 
 	Cache_Rule(*INT_RULES_CACHE, section, ruleName, ruleValue);
+}
+
+double Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleName, bool* cacheHit)
+{
+	Ensure_Rule_Cache_Initialised();
+
+	auto value = Get_Cached_Rule(*UINT_RULES_CACHE, section, ruleName, 0u, cacheHit);
+
+	if (*cacheHit)
+	{
+		Log_Trace("Rule value: %u", value);
+	}
+
+	return value;
+}
+
+void Cache_Unisgned_Int_Rule(const char* section, const char* ruleName, unsigned int ruleValue)
+{
+	Ensure_Rule_Cache_Initialised();
+
+	Cache_Rule(*UINT_RULES_CACHE, section, ruleName, ruleValue);
 }
 
 double Get_Cached_Double_Rule(const char* section, const char* ruleName, bool* cacheHit)

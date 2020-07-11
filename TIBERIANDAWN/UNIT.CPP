@@ -3067,7 +3067,7 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 
 		if (optr->IsWall) {
 			if (Class->Primary != WEAPON_NONE) {
-				WarheadTypeClass const * whead = &Warheads[BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).Warhead];
+				WarheadTypeClass const * whead = WarheadTypeClass::By_Type(BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).Warhead);
 
 				if (whead->IsWallDestroyer || (whead->IsWoodDestroyer && optr->IsWooden)) {
 					if (!House->IsHuman && !House->Is_Ally(cellptr->Owner)) {

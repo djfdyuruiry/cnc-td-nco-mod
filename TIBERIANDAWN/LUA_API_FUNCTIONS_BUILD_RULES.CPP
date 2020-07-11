@@ -2,7 +2,7 @@
 
 #include "lua_api_functions_generic_rules.h"
 
-static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, const char* value, bool* valueParseError)
+static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
     if (Strings_Are_Equal(ruleName, BIBBED_RULE_UPPER))
     {
@@ -109,11 +109,12 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
     {
-        auto capacity = atoi(value);
-        *valueParseError = capacity < 0 || capacity > UINT_MAX;
-
+        *valueParseError = !Is_Unsigned_Int_String(value);
+    
         if (!*valueParseError)
         {
+            auto capacity = strtoul(value, NULL, 10);
+
             Log_Trace("Write_Building_Rule => Rule value: %u -> %u", type->Capacity, capacity);
 
             type->Capacity = capacity;
@@ -121,26 +122,36 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE_UPPER))
     {
-        auto power = atoi(value);
-        *valueParseError = power < 0 || power > INT_MAX;
-
+        *valueParseError = !Is_Int_String(value);
+    
         if (!*valueParseError)
         {
-            Log_Trace("Write_Building_Rule => Rule value: %d -> %d", type->Power, power);
+            auto power = atoi(value);
+            *valueParseError = power < 0;
 
-            type->Power = power;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_Building_Rule => Rule value: %d -> %d", type->Power, power);
+
+                type->Power = power;
+            }
         }
     }
     else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE_UPPER))
     {
-        auto drain = atoi(value);
-        *valueParseError = drain < 0 || drain > INT_MAX;
-
+        *valueParseError = !Is_Int_String(value);
+    
         if (!*valueParseError)
         {
-            Log_Trace("Write_Building_Rule => Rule value: %d -> %d", type->Drain, drain);
+            auto drain = atoi(value);
+            *valueParseError = drain < 0 || drain > INT_MAX;
 
-            type->Drain = drain;
+            if (!*valueParseError)
+            {
+                Log_Trace("Write_Building_Rule => Rule value: %d -> %d", type->Drain, drain);
+
+                type->Drain = drain;
+            }
         }
     }
     else
@@ -237,10 +248,14 @@ static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const ch
 
 static StructType ParseBuildingType(lua_State* lua, const char* buildingTypeName, bool* parseError)
 {
+    auto upperTypeName = Convert_String_To_Upper_Case(buildingTypeName);
+
     auto buildingType = Parse_Structure_Type(
-        Convert_String_To_Upper_Case(buildingTypeName),
+        upperTypeName,
         parseError
     );
+
+    delete upperTypeName;
 
     if (*parseError)
     {
@@ -268,155 +283,24 @@ static BuildingTypeClass* ResolveBuilding(lua_State* lua, const char* buildingTy
 
 static int Lua_Get_Building_Rule(lua_State* lua)
 {
-    Log_Trace("Lua_Get_Building_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 2)
-    {
-        luaL_error(lua, "getBuildingRule requires exactly two arguments");
-    }
-
-    auto buildingTypeName = Get_Lua_Value_As_String(1);
-
-    if (buildingTypeName == NULL)
-    {
-        luaL_error(lua, "getBuildingRule argument `buildingTypeName` was nil");
-        return 0;
-    }
-
-
-    auto building = ResolveBuilding(lua, buildingTypeName);
-
-    if (building == NULL)
-    {
-        return 0;
-    }
-
-    auto ruleName = Get_Lua_Value_As_String(2);
-
-    if (ruleName == NULL)
-    {
-        luaL_error(lua, "getBuildingRule argument `ruleName` was nil");
-        return 0;
-    }
-
-    Log_Debug("Lua_Get_Building_Rule => attempting to read value of rule '%s'", ruleName);
-
-    Log_Trace("Lua_Get_Building_Rule => looking for rule '%s' in Techno Type", ruleName);
-
-    auto ruleMatched = Read_TechnoType_Rule(lua, building, Convert_String_To_Upper_Case(ruleName));
-
-    if (ruleMatched)
-    {
-        Log_Debug("Lua_Get_Building_Rule => Rule matched in Techno Type");
-        return 1;
-    }
-
-    Log_Trace("Lua_Get_Building_Rule => looking for rule in Building Type");
-
-    ruleMatched = Read_Building_Rule(lua, building, Convert_String_To_Upper_Case(ruleName));
-
-    if (ruleMatched)
-    {
-        Log_Debug("Lua_Get_Building_Rule => Rule matched in Building Type");
-        return 1;
-    }
-
-    luaL_error(lua, "rule name type passed getBuildingRule was not recognised: %s", ruleName);
-
-    return 0;
+    return Lua_Get_Rule(
+        lua,
+        "Building",
+        "buildingTypeName",
+        &ResolveBuilding,
+        &Read_Building_Rule
+    );
 }
 
 static int Lua_Set_Building_Rule(lua_State* lua)
 {
-    Log_Trace("Lua_Set_Building_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 3)
-    {
-        luaL_error(lua, "setUnitRule requires exactly three arguments");
-        return 0;
-    }
-
-    auto buildingTypeName = Get_Lua_Value_As_String(1);
-
-    if (buildingTypeName == NULL)
-    {
-        luaL_error(lua, "setBuildingRule argument `buildingTypeName` was nil");
-        return 0;
-    }
-
-    auto building = ResolveBuilding(lua, buildingTypeName);
-
-    if (building == NULL)
-    {
-        return 0;
-    }
-
-    auto ruleName = Get_Lua_Value_As_String(2);
-    auto ruleValue = Get_Lua_Value_As_String(3);
-
-    if (ruleName == NULL)
-    {
-        luaL_error(lua, "setBuildingRule argument `ruleName` was nil");
-        return 0;
-    }
-
-    if (ruleValue == NULL)
-    {
-        luaL_error(lua, "setBuildingRule argument `ruleValue` was nil");
-        return 0;
-    }
-
-    Log_Debug("Lua_Set_Building_Rule => attempting to set rule '%s' to value: %s", ruleName, ruleValue);
-
-    Log_Trace("Lua_Set_Building_Rule => looking for rule in Techno Type");
-
-    bool parseError = false;
-    auto ruleMatched = Write_TechnoType_Rule(
-        building,
-        Convert_String_To_Upper_Case(ruleName),
-        Convert_String_To_Upper_Case(ruleValue),
-        ruleValue,
-        &parseError
+    return Lua_Set_Rule(
+        lua,
+        "Building",
+        "buildingTypeName",
+        &ResolveBuilding,
+        &Write_Building_Rule
     );
-
-    if (ruleMatched && !parseError)
-    {
-        Log_Debug("Lua_Set_Building_Rule => Rule matched in Techno Type");
-        return 1;
-    }
-
-    if (!parseError)
-    {
-        Log_Trace("Lua_Set_Building_Rule => looking for rule in Building Type");
-
-        ruleMatched = Write_Building_Rule(
-            building,
-            Convert_String_To_Upper_Case(ruleName),
-            Convert_String_To_Upper_Case(ruleValue),
-            &parseError
-        );
-
-        if (ruleMatched && !parseError)
-        {
-            Log_Debug("Lua_Set_Building_Rule => Rule matched in Building Type");
-            return 1;
-        }
-    }
-
-    if (parseError)
-    {
-        luaL_error(lua, "value for rule `%s` passed to setBuildingRule was not valid: %s", ruleName, ruleValue);
-
-        return 0;
-    }
-
-    luaL_error(lua, "rule name passed setBuildingRule was not recognised: %s", ruleName);
-
-    return 0;
 }
 
 bool Register_Building_Rule_Functions()
