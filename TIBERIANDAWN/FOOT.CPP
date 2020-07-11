@@ -1167,7 +1167,7 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
 				source &&
 				!House->Is_Ally(source) &&
 				Techno_Type_Class()->Primary != WEAPON_NONE &&
-				(source->What_Am_I() != RTTI_AIRCRAFT || BulletTypeClass::As_Reference(Weapons[Techno_Type_Class()->Primary].Fires).IsAntiAircraft) &&
+				(source->What_Am_I() != RTTI_AIRCRAFT || BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Primary).Fires).IsAntiAircraft) &&
 				(!Target_Legal(TarCom) || ((!House->IsHuman || Special.IsSmartDefense) && (!tweap || !In_Range(TarCom)))) &&
 //				!Target_Legal(NavCom) &&
 					(Mission == MISSION_AMBUSH ||
@@ -1856,10 +1856,10 @@ TARGET FootClass::Greatest_Threat(ThreatType method) const
 		return(TARGET_NONE);
 	}
 
-	if (Techno_Type_Class()->Primary != WEAPON_NONE && BulletTypeClass::As_Reference(Weapons[Techno_Type_Class()->Primary].Fires).IsAntiAircraft) {
+	if (Techno_Type_Class()->Primary != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Primary).Fires).IsAntiAircraft) {
 		method = method | THREAT_AIR;
 	}
-	if (Techno_Type_Class()->Secondary != WEAPON_NONE && BulletTypeClass::As_Reference(Weapons[Techno_Type_Class()->Secondary].Fires).IsAntiAircraft) {
+	if (Techno_Type_Class()->Secondary != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Secondary).Fires).IsAntiAircraft) {
 		method = method | THREAT_AIR;
 	}
 

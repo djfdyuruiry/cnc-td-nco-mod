@@ -360,9 +360,9 @@ void HouseClass::operator delete(void *ptr)
  *=============================================================================================*/
 HouseClass::HouseClass(HousesType house) :
 	Class(&HouseTypeClass::As_Reference(house)),
-	IonCannon(ION_CANNON_GONE_TIME, VOX_ION_READY, VOX_ION_CHARGING, VOX_ION_CHARGING, VOX_NO_POWER),
-	AirStrike(AIR_CANNON_GONE_TIME, VOX_AIRSTRIKE_READY, VOX_NONE, VOX_NOT_READY, VOX_NOT_READY),
-	NukeStrike(NUKE_GONE_TIME, VOX_NUKE_AVAILABLE, VOX_NONE, VOX_NOT_READY, VOX_NO_POWER)
+	AirStrike("AirStrike", AIR_STRIKE_GONE_TIME_IN_MINS, VOX_AIRSTRIKE_READY, VOX_NONE, VOX_NOT_READY, VOX_NOT_READY),
+	IonCannon("IonCannon", ION_CANNON_GONE_TIME_IN_MINS, VOX_ION_READY, VOX_ION_CHARGING, VOX_ION_CHARGING, VOX_NO_POWER),
+	NukeStrike("NuclearStrike", NUKE_GONE_TIME_IN_MINS, VOX_NUKE_AVAILABLE, VOX_NONE, VOX_NOT_READY, VOX_NO_POWER)
 {
 
 	for (HousesType i = HOUSE_FIRST; i < HOUSE_COUNT; i++) {
@@ -1087,7 +1087,7 @@ void HouseClass::AI(void)
 		** Create the object, and use Scan_Place_Object to place the object near
 		** the center of the map.
 		*/
-		if (GameToPlay != GAME_NORMAL && Class->House==HOUSE_JP) {
+		if ((GameToPlay != GAME_NORMAL || Special.IsVisceroids) && Class->House==HOUSE_JP) {
 			int rlimit;
 
 			if (Special.IsJurassic && AreThingiesEnabled) {
@@ -1313,21 +1313,22 @@ void HouseClass::AI(void)
 		*/
 		if ((GameToPlay == GAME_NORMAL || Rule.AllowSuperWeapons) &&
 			(ActiveBScan & STRUCTF_EYE) &&
-			(ActLike == HOUSE_GOOD || GameToPlay != GAME_NORMAL) &&
 			(IsHuman || GameToPlay != GAME_NORMAL)) {
+			// one of: multiplayer game OR playing as GOODGUY OR GDI only rule disabled
+			auto houseCanUseIonCannon = GameToPlay != GAME_NORMAL
+					|| ActLike == HOUSE_GOOD 
+					|| !Read_Boolean_Game_Rule(ONLY_GDI_CAN_USE_ION_CANNON_RULE, true);
 
-			IonCannon.Enable(false, this == PlayerPtr, Power_Fraction() < 0x0100);
+			if (houseCanUseIonCannon) {
+				IonCannon.Enable(false, this == PlayerPtr, Power_Fraction() < 0x0100);
 
-			/*
-			**	Flag the sidebar to be redrawn if necessary.
-			*/
-			// Add to Glyphx multiplayer sidebar. ST - 3/22/2019 1:50PM
-			if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
-				if (IsHuman) {
+				/*
+				**	Flag the sidebar to be redrawn if necessary.
+				*/
+				// Add to Glyphx multiplayer sidebar. ST - 3/22/2019 1:50PM
+				if (GameToPlay == GAME_GLYPHX_MULTIPLAYER && IsHuman) {
 					Sidebar_Glyphx_Add(RTTI_SPECIAL, SPC_ION_CANNON, this);
-				}
-			} else {
-				if (this == PlayerPtr) {
+				} else if (this == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
 					Map.Column[1].Flag_To_Redraw();
 				}
@@ -4367,7 +4368,7 @@ void HouseClass::MPlayer_Defeated(void)
  *   05/16/1995 BRR : Created.                                             *
  *   06/09/1995 JLB : Handles aircraft.                                    *
  *=========================================================================*/
-void HouseClass::Blowup_All(void)
+void HouseClass::Blowup_All(void) // TODO: add lua function for `thanos snapping a house`
 {
 	Validate();
 	int i;

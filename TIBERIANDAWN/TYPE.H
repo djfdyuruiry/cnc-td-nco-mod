@@ -49,8 +49,10 @@ class HouseClass;
 */
 class WeaponTypeClass
 {
-	public:
+	private:
+		static WeaponTypeClass* Weapons;
 
+	public:
 		/*
 		**	This is the unit class of the projectile fired. A subset of the unit types
 		**	represent projectiles. It is one of these classes that is specified here.
@@ -89,6 +91,14 @@ class WeaponTypeClass
 		**	This is the animation to display at the firing coordinate.
 		*/
 		AnimType Anim;
+
+		char* FriendlyName;
+
+		static WeaponTypeClass const* By_Type(WeaponType type);
+
+		static WeaponTypeClass const& As_Reference(WeaponType type);
+
+		WeaponTypeClass(const char* friendlyName, WeaponType owner, BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
 };
 
 
@@ -1146,6 +1156,8 @@ class InfantryTypeClass : public TechnoTypeClass
 		*/
 		char FireLaunch;
 		char ProneLaunch;
+
+		bool IsImmuneToTiberium;
 
 		/*
 		**	This is the explicit unit class constructor.

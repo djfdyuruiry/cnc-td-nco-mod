@@ -561,7 +561,7 @@ void Debug_Key(unsigned input)
 					TechnoTypeClass const & ttype = (TechnoTypeClass const &)CurrentObject[0]->Class_Of();
 					int sight = ((int)ttype.SightRange)<<8;
 					int weapon = 0;
-					if (ttype.Primary != WEAPON_NONE) weapon = Weapons[ttype.Primary].Range;
+					if (ttype.Primary != WEAPON_NONE) weapon = WeaponTypeClass::As_Reference(ttype.Primary).Range;
 					Set_Logic_Page(SeenBuff);
 					COORDINATE center = CurrentObject[0]->Center_Coord();
 					COORDINATE center2 = CurrentObject[0]->Fire_Coord(0);

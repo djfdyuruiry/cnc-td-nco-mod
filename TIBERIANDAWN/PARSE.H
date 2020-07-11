@@ -4,6 +4,10 @@
 #include "defines.h"
 
 // generic parsers
+DiffType Parse_Difficulty_Type(char * difficultyTypeString, bool* parseError);
+
+char* Difficulty_Type_To_String(DiffType difficultyType);
+
 HousesType Parse_House_Type(char* houseTypeString, bool* parseError);
 
 HousesType Parse_House_Type(const char* houseTypeString, bool* parseError);

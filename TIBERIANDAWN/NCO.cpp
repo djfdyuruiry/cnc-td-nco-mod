@@ -40,9 +40,9 @@ bool NCO_Startup()
 	if (Lua_Console_Is_Enabled()) {
 		Log_Info("Attempting to display Lua console");
 
-		Configure_Console_Output();
+		Start_Console_Output();
 
-		CreateThread(
+		LUA_REPL_THREAD = CreateThread(
 			NULL,
 			0,
 			&Start_Lua_Repl_In_Background,
@@ -50,6 +50,11 @@ bool NCO_Startup()
 			NULL,
 			NULL
 		);
+
+		if (LUA_REPL_THREAD == NULL || LUA_REPL_THREAD == INVALID_HANDLE_VALUE)
+		{
+			Show_Error("Failed to start Lua console: %s", Get_Win32_Error_Message());
+		}
 	}
 	#endif
 
@@ -62,8 +67,15 @@ void NCO_Shutdown()
 
 	Close_Log_File_If_Open();
 
-	if (Lua_Console_Is_Enabled() && !TerminateThread(LUA_REPL_THREAD, 0))
+#ifndef TEST_CONSOLE
+	if (Lua_Console_Is_Enabled())
 	{
-		Log_Warn("Error closing Lua console: %s", Get_Win32_Error_Message());
+		if (!TerminateThread(LUA_REPL_THREAD, 0))
+		{
+			Show_Error("Error closing Lua console: %s", Get_Win32_Error_Message());
+		}
+
+		Stop_Console_Output();
 	}
+	#endif
 }

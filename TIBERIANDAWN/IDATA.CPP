@@ -1519,6 +1519,10 @@ InfantryTypeClass::InfantryTypeClass	(
 	IsCivilian = Read_Is_Civilian(IniName, is_civilian);
 	IsAvoidingTiberium = Read_Avoids_Tiberium(IniName, false);
 
+	auto immuneToTiberiumDefault = type == INFANTRY_E5;
+
+	IsImmuneToTiberium = Read_Bool_From_Rules_Ini(IniName, IMMUNE_TO_TIBERIUM_RULE, immuneToTiberiumDefault);
+
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;
 		DoControls[i].Count = *do_table++;

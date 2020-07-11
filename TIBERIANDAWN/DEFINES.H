@@ -323,10 +323,11 @@ typedef enum SpecialWeaponType : unsigned char {
 /**********************************************************************
 **	These defines control the rate of ion cannon and airstrike recharging.
 */
-#define NUKE_GONE_TIME			14*TICKS_PER_MINUTE
-#define ION_CANNON_GONE_TIME	10*TICKS_PER_MINUTE
-#define AIR_CANNON_GONE_TIME	8*TICKS_PER_MINUTE
-#define OBELISK_ANIMATION_RATE	15
+#define AIR_STRIKE_GONE_TIME_IN_MINS 8
+#define ION_CANNON_GONE_TIME_IN_MINS 10
+#define NUKE_GONE_TIME_IN_MINS 14
+
+#define OBELISK_ANIMATION_RATE 15
 
 
 /**********************************************************************
@@ -1832,6 +1833,7 @@ typedef enum WeaponType : char {
 	WEAPON_STEG=23,
 	WEAPON_TREX=24,
 
+	WEAPON_FIRST=0,
 	WEAPON_COUNT=25
 } WeaponType;
 
@@ -2141,7 +2143,7 @@ inline DirType operator + (DirType f1, int f2)
 **	Note that this is based upon a timer that ticks every 60th of a second.
 */
 #define	TICKS_PER_SECOND		15
-#define	TICKS_PER_MINUTE		(TICKS_PER_SECOND * 60)
+#define	TICKS_PER_MINUTE		(TICKS_PER_SECOND * 60) // 900
 
 #define	TIMER_SECOND			60
 #define	TIMER_MINUTE			(TIMER_SECOND*60)

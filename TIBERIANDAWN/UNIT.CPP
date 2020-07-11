@@ -1029,7 +1029,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			**	player. In hard mode, they always do. In normal mode, they only overrun past
 			**	mission #8.
 			*/
-			if ((Class->Primary == WEAPON_NONE || (Distance(source) < 0x0180 && BulletTypeClass::As_Reference(Weapons[Class->Primary].Fires).Warhead != WARHEAD_FIRE)) &&
+			if ((Class->Primary == WEAPON_NONE || (Distance(source) < 0x0180 && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).Warhead != WARHEAD_FIRE)) &&
 						(GameToPlay != GAME_NORMAL ||
 						*this != UNIT_HARVESTER ||
 						BuildLevel > 8 ||
@@ -3067,7 +3067,7 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 
 		if (optr->IsWall) {
 			if (Class->Primary != WEAPON_NONE) {
-				WarheadTypeClass const * whead = &Warheads[BulletTypeClass::As_Reference(Weapons[Class->Primary].Fires).Warhead];
+				WarheadTypeClass const * whead = &Warheads[BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).Warhead];
 
 				if (whead->IsWallDestroyer || (whead->IsWoodDestroyer && optr->IsWooden)) {
 					if (!House->IsHuman && !House->Is_Ally(cellptr->Owner)) {
@@ -3157,7 +3157,7 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 						switch (obj->What_Am_I()) {
 							case RTTI_TERRAIN:
 								if (((TerrainClass *)obj)->Class->IsFlammable &&
-										BulletTypeClass::As_Reference(Weapons[Class->Primary].Fires).Warhead == WARHEAD_FIRE) {
+										BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).Warhead == WARHEAD_FIRE) {
 
 									if (retval < MOVE_DESTROYABLE) retval = MOVE_DESTROYABLE;
 								} else {

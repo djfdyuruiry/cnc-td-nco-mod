@@ -820,7 +820,7 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 {
 	Validate();
 	BulletClass * bullet;		// Projectile.
-	WeaponTypeClass const * weapon = (which == 0) ? &Weapons[Class->Primary] : &Weapons[Class->Secondary];
+	WeaponTypeClass const * weapon = (which == 0) ? WeaponTypeClass::By_Type(Class->Primary) : WeaponTypeClass::By_Type(Class->Secondary);
 
 	bullet = TechnoClass::Fire_At(target, which);
 	if (bullet) {
@@ -1952,8 +1952,16 @@ void BuildingClass::Drop_Debris(TARGET source)
 	cell = Coord_Cell(Coord);
 	offset = Occupy_List();
 	int odds = 2;
-	if (Target_Legal(WhomToRepay)) odds -= 1;
+	if (Target_Legal(WhomToRepay)) {
+		odds -= 1;
+
+		IsSurvivorless = !Read_Boolean_Game_Rule(SURVIVORS_FROM_BUILDINGS_RULE, !IsSurvivorless);
+	}
+
 	if (IsCaptured) odds += 6;
+
+    
+
 	while (*offset != REFRESH_EOL) {
 		CELL	newcell;
 
@@ -2800,7 +2808,7 @@ TARGET BuildingClass::Greatest_Threat(ThreatType threat) const
 		threat = threat | THREAT_AREA;
 	}
 
-	if (Class->Primary != WEAPON_NONE && BulletTypeClass::As_Reference(Weapons[Class->Primary].Fires).IsAntiAircraft) {
+	if (Class->Primary != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).IsAntiAircraft) {
 		threat = threat | THREAT_AIR;
 	}
 	return(TechnoClass::Greatest_Threat(threat));
@@ -2839,7 +2847,7 @@ void BuildingClass::Grand_Opening(bool captured)
 	**	Refineries get a free harvester. Add a harvester to the reinforcement list
 	**	at this time.
 	*/
-	if (*this == STRUCT_REFINERY && !ScenarioInit && !captured && !Debug_Map && (!House->IsHuman || PurchasePrice == 0 || PurchasePrice > Class->Raw_Cost())) {
+	if (*this == STRUCT_REFINERY && !ScenarioInit && !captured && !Debug_Map) { // removed cost check as it stopped giving harvesters with extremly low difficulty rules
 		CELL cell = Coord_Cell(Adjacent_Cell(Center_Coord(), DIR_SW));
 //		if (!Map[cell].Cell_Unit()) {
 			UnitClass * unit = new UnitClass(UNIT_HARVESTER, House->Class->House);
@@ -2875,7 +2883,7 @@ void BuildingClass::Grand_Opening(bool captured)
 	/*
 	**	Helicopter pads get a free attack helicopter.
 	*/
-	if (*this == STRUCT_HELIPAD && !captured && (!House->IsHuman || PurchasePrice == 0 || PurchasePrice > Class->Raw_Cost())) {
+	if (*this == STRUCT_HELIPAD && !captured) { // removed cost check as it stopped giving helicopters with extremly low difficulty rules
 		ScenarioInit++;
 		AircraftClass * air = 0;
 		if (House->ActLike == HOUSE_GOOD) {

@@ -119,6 +119,9 @@
     <None Include="..\game\RULES-DEFAULT.INI">
       <Filter>game</Filter>
     </None>
+    <None Include="..\game\RULES-BASE.INI">
+      <Filter>game</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABSTRACT.H">
@@ -697,9 +700,6 @@
     <ClInclude Include="NCO.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_REPL.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
@@ -719,6 +719,48 @@
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="RULES_INI_BUILDING.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RULES_INI_DIFFICULTY.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RULES_CACHE.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RULES_INI_WEAPON.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RULES_INI_SUPERWEAPON.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_INFO.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_GENERIC_RULES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_INF_RULES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_UNIT_RULES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_AIR_RULES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_BUILD_RULES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_GAME.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_WEAPON_RULES.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1330,10 +1372,40 @@
     <ClCompile Include="NCO.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS.CPP">
+    <ClCompile Include="LUA_REPL.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="LUA_REPL.CPP">
+    <ClCompile Include="RULES_CACHE.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_GENERIC_RULES.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_INF_RULES.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_UNIT_RULES.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_AIR_RULES.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_BUILD_RULES.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_WEAPON_RULES.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>

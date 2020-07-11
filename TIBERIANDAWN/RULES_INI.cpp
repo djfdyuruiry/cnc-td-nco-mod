@@ -1,12 +1,17 @@
 #include "function.h"
 
+#include "rules_cache.h"
+
 static const auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static const auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
 static const auto RULES_FILENAME = "RULES.INI";
 static const unsigned int RULES_STRING_LENGTH = MAX_PATH * 15;
 static const auto VALID_BOOL_STRINGS_COUNT = 2;
+static const auto ONE_SEC_IN_MILLIS = 1000;
+static const auto TICK_INTERVAL_IN_MILLIS = ONE_SEC_IN_MILLIS / TICKS_PER_SECOND;
 
 static char* RULES_INI_BUFFER = NULL;
+static char* DEFAULT_RULES_INI_BUFFER = NULL;
 static auto LOG_LEVEL = INFO;
 
 static bool RULES_VALID = true;
@@ -25,7 +30,7 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 	};
 
 	bool valueFound = false;
-	auto onScenarioLoadCsv = Read_Optional_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, &valueFound);
+	auto onScenarioLoadCsv = Read_Optional_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, &valueFound, false);
 
 	if (!valueFound)
 	{
@@ -63,9 +68,23 @@ static void Read_Log_Level_From_Rules_Ini()
 
 	delete validLogLevels;
 
+	Convert_String_To_Upper_Case(logLevelBuffer);
+
 	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
 
 	Log_Info("Resolved Log Level: %s", Log_Level_To_String(LOG_LEVEL));
+}
+
+static char* Read_Buffer_From_Rules_File(RawFileClass* rulesFile, char* rulesFilename)
+{
+	Log_Info("Reading rules ini from file: %s", rulesFilename);
+
+	auto rulesBuffer = Allocate_String(rulesFile->Size());
+
+	rulesFile->Read(rulesBuffer, rulesFile->Size());
+	rulesFile->Close();
+
+	return rulesBuffer;
 }
 
 /// <summary>
@@ -74,66 +93,70 @@ static void Read_Log_Level_From_Rules_Ini()
 /// mod path.
 /// </summary>
 /// <returns>The text content of the ini file or a blank string if no file was found.</returns>
-char* Read_Rules_Ini() {
+static void Read_Rules_Ini_Buffers() {
 	auto modPath = Get_Mod_Data_Path();
 
 	Log_Info("Attempting to load rules ini from mod path: %s", modPath);
 
 	auto rulesFilename = Allocate_String(MAX_PATH);
+	auto defaultRulesFilename = Allocate_String(MAX_PATH);
 
 	sprintf(rulesFilename, "%s\\%s", modPath, RULES_FILENAME);
+	sprintf(defaultRulesFilename, "%s\\%s", modPath, DEFAULT_RULES_FILENAME);
 
 	auto rulesFile = new RawFileClass(rulesFilename);
+	auto defaultRulesFile = new RawFileClass(defaultRulesFilename);
+
+	DEFAULT_RULES_INI_BUFFER = "";
+	RULES_INI_BUFFER = "";
 
 	if (!rulesFile->Is_Available()) {
-		delete rulesFile;
-
-		sprintf(rulesFilename, "%s\\%s", modPath, DEFAULT_RULES_FILENAME);
-
-		rulesFile = new RawFileClass(rulesFilename);
-
-		if (!rulesFile->Is_Available()) {
-			delete modPath;
-			delete rulesFilename;
-			delete rulesFile;
-
-
+		if (!defaultRulesFile->Is_Available()) {
 			Log_Warn("%s not found, defaults in code will be used", DEFAULT_RULES_FILENAME);
-
-			return "";
 		}
 
 		Log_Warn("%s not found, default rules from %s be used", RULES_FILENAME, DEFAULT_RULES_FILENAME);
 	}
 
-	Log_Info("Reading rules ini from file: %s", rulesFilename);
+	if (rulesFile->Is_Available())
+	{
+		Log_Info("Reading rules ini content: %s", rulesFilename);
 
-	auto rulesBuffer = Allocate_String(rulesFile->Size());
+		RULES_INI_BUFFER = Read_Buffer_From_Rules_File(rulesFile, rulesFilename);
+	}
 
-	rulesFile->Read(rulesBuffer, rulesFile->Size());
-	rulesFile->Close();
+	if (defaultRulesFile->Is_Available())
+	{
+		Log_Info("Reading default rules ini content: %s", rulesFilename);
 
-	delete rulesFile;
-	delete rulesFilename;
+		DEFAULT_RULES_INI_BUFFER = Read_Buffer_From_Rules_File(defaultRulesFile, defaultRulesFilename);
+	}
+
 	delete modPath;
-
-	Log_Debug("Returning rules ini content");
-
-	return rulesBuffer;
+	delete rulesFilename;
+	delete defaultRulesFilename;
+	delete rulesFile;
+	delete defaultRulesFile;
 }
 
 void Ensure_Rules_Ini_Is_Loaded() {
-	if (RULES_INI_BUFFER != NULL) {
+	if (RULES_INI_BUFFER != NULL && DEFAULT_RULES_INI_BUFFER != NULL) {
 		return;
 	}
 
-	RULES_INI_BUFFER = Read_Rules_Ini();
+	Read_Rules_Ini_Buffers();
 
 	Read_Log_Level_From_Rules_Ini();
 
 	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE, true);
 	LUA_CONSOLE_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE, false);
-	GAME_TICK_INTERVAL_IN_MS = Read_Int_From_Rules_Ini(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE, 250, 1, INT_MAX);
+	GAME_TICK_INTERVAL_IN_MS = Read_Int_From_Rules_Ini(
+		NCO_RULES_SECTION_NAME,
+		GAME_TICK_INTERVAL_IN_MS_RULE,
+		TICK_INTERVAL_IN_MILLIS,
+		1,
+		INT_MAX
+	);
 
 	Read_Lua_Scripts_From_Rules_Ini();
 }
@@ -141,19 +164,77 @@ void Ensure_Rules_Ini_Is_Loaded() {
 int Read_Optional_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
-	bool* valueFound
+	bool* valueFound,
+	bool* valueFromCache
 )
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
 	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
 
-	return WWGetPrivateProfileInt(
+	bool fallbackValueFound = false;
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Int_Rule(section, entry, &cacheHit);
+
+	if (valueFound == NULL)
+	{
+		valueFound = &fallbackValueFound;
+	}
+
+	if (cacheHit)
+	{
+		if (valueFound != NULL)
+		{
+			*valueFound = true;
+		}
+
+		if (valueFromCache != NULL)
+		{
+			*valueFromCache = true;
+		}
+
+		return cachedValue;
+	}
+
+	auto value = WWGetPrivateProfileInt(
 		section,
 		entry,
 		RULES_INI_BUFFER,
 		valueFound
 	);
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules value found in RULES.INI buffer, reading from RULES-DEFAULT.INI buffer");
+
+		value = WWGetPrivateProfileInt(
+			section,
+			entry,
+			DEFAULT_RULES_INI_BUFFER,
+			valueFound
+		);
+	}
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules value found in RULES-DEFAULT.INI buffer");
+	}
+	else
+	{
+		Cache_Int_Rule(section, entry, value);
+	}
+
+	return value;
+}
+
+
+int Read_Optional_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	bool* valueFound
+)
+{
+	return Read_Optional_Int_From_Rules_Ini(section, entry, valueFound, NULL);
 }
 
 static int Read_Int_From_Rules_Ini(
@@ -171,28 +252,23 @@ static int Read_Int_From_Rules_Ini(
 	Log_Trace("Default value: %d", defaultValue);
 
 	bool valueFound = false;
+	bool valueFoundInCache = false;
 
-	auto ruleValue = WWGetPrivateProfileInt(
-		section,
-		entry,
-		defaultValue,
-		RULES_INI_BUFFER,
-		&valueFound
-	);
+	auto ruleValue = Read_Optional_Int_From_Rules_Ini(section, entry, &valueFound, &valueFoundInCache);
 
-	if (valueFound)
+	if (valueFoundInCache)
 	{
-		Log_Trace("Rules ini value: %d", ruleValue);
-	}
-	else
-	{
-		Log_Trace("No rules ini value found, default will be used");
+		return ruleValue;
 	}
 
 	if (!valueFound)
 	{
+		Log_Trace("No rules ini value found, default will be used");
+
 		return defaultValue;
 	}
+
+	Log_Trace("Rules ini value: %d", ruleValue);
 
 	if (valueToAllowAlways == NULL || ruleValue != *valueToAllowAlways)
 	{
@@ -209,6 +285,11 @@ static int Read_Int_From_Rules_Ini(
 				ruleValue
 			);
 		}
+	}
+
+	if (RULES_VALID)
+	{
+		Cache_Int_Rule(section, entry, ruleValue);
 	}
 
 	Log_Trace("Resolved value: %d", ruleValue);
@@ -268,7 +349,20 @@ static double Read_Double_From_Rules_Ini(
 	Log_Trace("Resolving rule value: %s -> %s", section, entry);
 	Log_Trace("Default value: %f", defaultValue);
 
-	auto ruleValueStr = Read_Optional_String_From_Rules_Ini(section, entry, valueFound);
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Double_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		if (valueFound != NULL)
+		{
+			*valueFound = true;
+		}
+
+		return cachedValue;
+	}
+
+	auto ruleValueStr = Read_Optional_String_From_Rules_Ini(section, entry, valueFound, true);
 
 	if (!*valueFound)
 	{
@@ -311,6 +405,10 @@ static double Read_Double_From_Rules_Ini(
 			maxValueInclusive,
 			ruleValue
 		);
+	}
+	else
+	{
+		Cache_Double_Rule(section, entry, ruleValue);
 	}
 
 	Log_Trace("Resolved value: %f", ruleValue);
@@ -365,12 +463,29 @@ double Read_Double_From_Rules_Ini(
 char* Read_Optional_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,
-	bool* valueFound
+	bool* valueFound,
+	bool isForConversion
 )
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
 	Log_Trace("Resolving optional rule value: %s -> %s", section, entry);
+
+	if (!isForConversion)
+	{
+		bool cacheHit = false;
+		auto cachedValue = Get_Cached_String_Rule(section, entry, &cacheHit);
+
+		if (cacheHit)
+		{
+			if (valueFound != NULL)
+			{
+				*valueFound = true;
+			}
+
+			return cachedValue;
+		}
+	}
 
 	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 
@@ -382,6 +497,32 @@ char* Read_Optional_String_From_Rules_Ini(
 		RULES_INI_BUFFER,
 		valueFound
 	);
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules value found in RULES.INI buffer, reading from RULES-DEFAULT.INI buffer");
+
+		WWGetPrivateProfileString(
+			section,
+			entry,
+			valueBuffer,
+			RULES_STRING_LENGTH,
+			DEFAULT_RULES_INI_BUFFER,
+			valueFound
+		);
+	}
+
+	if (!*valueFound)
+	{
+		Log_Trace("No rules value found in RULES-DEFAULT.INI buffer");
+	}
+	else
+	{
+		if (!isForConversion)
+		{
+			Cache_String_Rule(section, entry, valueBuffer);
+		}
+	}
 
 	return valueBuffer;
 }
@@ -399,30 +540,26 @@ char* Read_String_From_Rules_Ini(
 	Log_Trace("Resolving rule value: %s -> %s", section, entry);
 	Log_Trace("Default value: %s", defaultValue);
 
-	auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 	bool valueFound = false;
-
-	WWGetPrivateProfileString(
-		section,
-		entry,
-		defaultValue, 
-		valueBuffer,
-		RULES_STRING_LENGTH,
-		RULES_INI_BUFFER,
-		&valueFound
-	);
+	auto valueBuffer = Read_Optional_String_From_Rules_Ini(section, entry, &valueFound, false);
 
 	if (valueFound)
 	{
 		Log_Trace("Rules ini value: %s", valueBuffer);
+
+		return valueBuffer;
 	}
 	else
 	{
 		Log_Trace("No rules ini value found, default will be returned");
+
+		return strdup(defaultValue);
 	}
 
-	if (String_Is_Empty(valueBuffer) || !valueFound)
+	if (String_Is_Empty(valueBuffer))
 	{
+		Log_Trace("Resolved rule value was empty, default will be returned");
+
 		return strdup(defaultValue);
 	}
 
@@ -493,10 +630,24 @@ bool Read_Optional_Bool_From_Rules_Ini(
 	bool* valueFound
 )
 {
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Bool_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		if (valueFound != NULL)
+		{
+			*valueFound = true;
+		}
+
+		return cachedValue;
+	}
+
 	Read_Optional_String_From_Rules_Ini(
 		section,
 		entry,
-		valueFound
+		valueFound,
+		true
 	);
 
 	if (!valueFound)
@@ -517,6 +668,14 @@ bool Read_Bool_From_Rules_Ini(
 	bool defaultValue
 )
 {
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Bool_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		return cachedValue;
+	}
+
 	auto defaultValueStr = Convert_Boolean_To_String(defaultValue);
 	auto validBoolStrings = new const char* [VALID_BOOL_STRINGS_COUNT]{ "TRUE", "FALSE" };
 
@@ -530,7 +689,13 @@ bool Read_Bool_From_Rules_Ini(
 
 	delete validBoolStrings;
 
-	return Strings_Are_Equal(ruleValue, "TRUE");
+	Convert_String_To_Upper_Case(ruleValue);
+
+	auto boolValue = Strings_Are_Equal(ruleValue, "TRUE");
+
+	Cache_Bool_Rule(section, entry, boolValue);
+
+	return boolValue;
 }
 
 long Read_Prerequisite(
@@ -540,6 +705,9 @@ long Read_Prerequisite(
 {
 	auto defaultString = Structure_Type_To_String(defaultValue);
 	auto structValueStr = Read_String_From_Rules_Ini(section, PREREQUISITE_RULE, defaultString);
+
+	Convert_String_To_Upper_Case(structValueStr);
+
 	bool parseError = false;
 	auto structValue = Parse_Structure_Type(structValueStr, &parseError);
 
@@ -568,12 +736,14 @@ int Read_House_List_From_Rules_Ini(
 )
 {
 	bool valueFound = false;
-	auto houseListCsv = Read_Optional_String_From_Rules_Ini(section, HOUSES_RULE, &valueFound);
+	auto houseListCsv = Read_Optional_String_From_Rules_Ini(section, HOUSES_RULE, &valueFound, false);
 
 	if (!valueFound)
 	{
 		return defaultValue;
 	}
+
+	Convert_String_To_Upper_Case(houseListCsv);
 
 	bool parseError = false;
 	auto houseListBitField = Parse_House_Name_List_Csv(houseListCsv, &parseError);
@@ -596,6 +766,8 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 {
 	auto defaultString = Weapon_Type_To_String(defaultValue);
 	auto weaponTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	Convert_String_To_Upper_Case(weaponTypeStr);
 
 	if (Strings_Are_Equal(weaponTypeStr, defaultString))
 	{
@@ -627,6 +799,8 @@ ArmorType Read_Armor_Type_From_Rules_Ini(
 	auto defaultString = Armor_Type_To_String(defaultValue);
 	auto armorTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
 
+	Convert_String_To_Upper_Case(armorTypeStr);
+
 	if (Strings_Are_Equal(armorTypeStr, defaultString))
 	{
 		return defaultValue;
@@ -653,6 +827,8 @@ SpeedType Read_Unit_Speed_Type_From_Rules_Ini(
 {
 	auto defaultString = Unit_Speed_Type_To_String(defaultValue);
 	auto unitSpeedTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	Convert_String_To_Upper_Case(unitSpeedTypeStr);
 
 	if (Strings_Are_Equal(unitSpeedTypeStr, defaultString))
 	{
@@ -683,6 +859,8 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 {
 	auto defaultString = Factory_Type_To_String(defaultValue);
 	auto factoryTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+
+	Convert_String_To_Upper_Case(factoryTypeStr);
 
 	if (Strings_Are_Equal(factoryTypeStr, defaultString))
 	{

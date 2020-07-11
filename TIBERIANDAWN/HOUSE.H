@@ -182,8 +182,8 @@ class HouseClass {
 		**	These super weapon control objects are used to control the recharge
 		**	and availability of these special weapons to this house.
 		*/
-		SuperClass IonCannon;
 		SuperClass AirStrike;
+		SuperClass IonCannon;
 		SuperClass NukeStrike;
 
 		/*

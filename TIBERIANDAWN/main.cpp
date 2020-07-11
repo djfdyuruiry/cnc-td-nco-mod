@@ -5,6 +5,7 @@
 #include "DllInterface.h"
 
 #include "lua_repl.h"
+#include "rules_cache.h"
 
 static void Test_Lua_Rules() {
 	Log_Info("Testing Lua rules");
@@ -99,7 +100,7 @@ static void Parse_Command_Line(const char* commandLine)
 /// </summary>
 int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int windowState)
 {
-	Configure_Console_Output();
+	Start_Console_Output();
 
 	puts("========================");
 	puts("  NCO Mod: Test Console  ");
@@ -132,6 +133,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 	puts("Test Console: finishing normally");
 
 	Pause();
+
+	Stop_Console_Output();
 
 	return 0;
 }

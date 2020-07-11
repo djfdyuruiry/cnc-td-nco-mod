@@ -1,5 +1,58 @@
 #include "function.h"
 
+DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError)
+{
+    DiffType difficultyType;
+
+    if (Strings_Are_Equal(difficultyTypeString, "EASY"))
+    {
+        difficultyType = DIFF_EASY;
+    }
+    else if (Strings_Are_Equal(difficultyTypeString, "NORMAL"))
+    {
+        difficultyType = DIFF_NORMAL;
+    }
+    else if (Strings_Are_Equal(difficultyTypeString, "HARD"))
+    {
+        difficultyType = DIFF_HARD;
+    }
+    else
+    {
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        Show_Error("Unable to parse difficulty from string: %s", difficultyTypeString);
+    }
+
+    return difficultyType;
+}
+
+char* Difficulty_Type_To_String(DiffType difficultyType)
+{
+    char* difficultyTypeString;
+
+    if (difficultyType == DIFF_EASY)
+    {
+        difficultyTypeString = "EASY";
+    }
+    else if (difficultyType == DIFF_NORMAL)
+    {
+        difficultyTypeString = "NORMAL";
+    }
+    else if (difficultyType == DIFF_HARD)
+    {
+        difficultyTypeString = "HARD";
+    }
+    else
+    {
+        Show_Error("Unable to convert difficulty type to string: %d", difficultyType);
+    }
+
+    return difficultyTypeString;
+}
+
 HousesType Parse_House_Type(char* houseTypeString, bool* parseError)
 {
     HousesType house;
