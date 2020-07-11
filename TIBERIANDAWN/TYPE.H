@@ -98,7 +98,7 @@ class WeaponTypeClass
 
 		static WeaponTypeClass const& As_Reference(WeaponType type);
 
-		WeaponTypeClass(BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
+		WeaponTypeClass(WeaponType owner, BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
 };
 
 

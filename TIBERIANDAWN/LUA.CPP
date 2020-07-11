@@ -1,5 +1,7 @@
 #include "function.h"
 
+#include "lua_api.h"
+
 static char * INIT_GAME_STATE = "_G.Game = {}";
 
 static lua_State* LUA = NULL;

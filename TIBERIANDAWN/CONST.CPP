@@ -69,13 +69,15 @@ COORDINATE const StoppingCoordAbs[5] = {
 */
 WeaponTypeClass* WeaponTypeClass::Weapons = NULL;
 
-WeaponTypeClass::WeaponTypeClass(BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim)
+WeaponTypeClass::WeaponTypeClass(WeaponType owner, BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim)
 {
 	Fires = fires;
 
-	Attack = Read_Weapon_Damage(Bullet_Type_To_String(fires), attack);
-	ROF = Read_Weapon_Rate_Of_Fire(Bullet_Type_To_String(fires), rof);
-	Range = Read_Weapon_Range(Bullet_Type_To_String(fires), range);
+	auto weaponTypeStr = Weapon_Type_To_String(owner);
+
+	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
+	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
+	Range = Read_Weapon_Range(weaponTypeStr, range);
 
 	Sound = sound;
 	Anim = anim;
@@ -89,31 +91,31 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 	}
 
 	Weapons = new WeaponTypeClass[WEAPON_COUNT] {
-		WeaponTypeClass(BULLET_SNIPER,      125, 40,  0x0580, VOC_SNIPER,   ANIM_NONE),          // SNIPER
-		WeaponTypeClass(BULLET_SPREADFIRE,  25,  50,  0x0400, VOC_MINI,     ANIM_GUN_N),         // CHAIN_GUN
-		WeaponTypeClass(BULLET_BULLET,      1,   7,   0x01C0, VOC_RIFLE,    ANIM_NONE),          // PISTOL
-		WeaponTypeClass(BULLET_BULLET,      15,  20,  0x0200, VOC_MGUN2,    ANIM_NONE),          // M16
-		WeaponTypeClass(BULLET_TOW,         30,  60,  0x0400, VOC_BAZOOKA,  ANIM_NONE),          // DRAGON
-		WeaponTypeClass(BULLET_FLAME,       35,  50,  0x0200, VOC_FLAMER1,  ANIM_FLAME_N),       // FLAMETHROWER
-		WeaponTypeClass(BULLET_FLAME,       50,  50,  0x0200, VOC_FLAMER1,  ANIM_FLAME_N),       // FLAME_TONGUE
-		WeaponTypeClass(BULLET_CHEMSPRAY,   80,  70,  0x0200, VOC_FLAMER1,  ANIM_CHEM_N),        // CHEMSPRAY
-		WeaponTypeClass(BULLET_GRENADE,     50,  60,  0x0340, VOC_TOSS,     ANIM_NONE),          // GRENADE
-		WeaponTypeClass(BULLET_APDS,        25,  60,  0x0400, VOC_TANK2,    ANIM_MUZZLE_FLASH),  // 75MM
-		WeaponTypeClass(BULLET_APDS,        30,  50,  0x04C0, VOC_TANK3,    ANIM_MUZZLE_FLASH),  // 105MM
-		WeaponTypeClass(BULLET_APDS,        40,  80,  0x04C0, VOC_TANK4,    ANIM_MUZZLE_FLASH),  // 120MM
-		WeaponTypeClass(BULLET_APDS,        40,  60,  0x0600, VOC_TANK4,    ANIM_MUZZLE_FLASH),  // TURRET_GUN
-		WeaponTypeClass(BULLET_SSM,         75,  80,  0x0500, VOC_ROCKET1,  ANIM_NONE),          // MAMMOTH_TUSK
-		WeaponTypeClass(BULLET_SSM2,        75,  80,  0x0600, VOC_ROCKET1,  ANIM_NONE),          // MLRS
-		WeaponTypeClass(BULLET_HE,          150, 65,  0x0600, VOC_TANK1,    ANIM_MUZZLE_FLASH),  // 155MM
-		WeaponTypeClass(BULLET_BULLET,      15,  30,  0x0400, VOC_MGUN11,   ANIM_GUN_N),         // M60MG
-		WeaponTypeClass(BULLET_SSM,         60,  35,  0x0780, VOC_ROCKET2,  ANIM_NONE),          // TOMAHAWK
-		WeaponTypeClass(BULLET_SSM,         60,  40,  0x0680, VOC_ROCKET2,  ANIM_NONE),          // TOW_TWO
-		WeaponTypeClass(BULLET_NAPALM,      100, 20,  0x0480, VOC_NONE,     ANIM_NONE),          // NAPALM
-		WeaponTypeClass(BULLET_LASER,       200, 90,  0x0780, VOC_LASER,    ANIM_NONE),          // OBELISK_LASER
-		WeaponTypeClass(BULLET_SAM,         50,  50,  0x0780, VOC_ROCKET2,  ANIM_NONE),          // NIKE
-		WeaponTypeClass(BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1,  ANIM_NONE),          // HONEST_JOHN
-		WeaponTypeClass(BULLET_HEADBUTT,    100, 30,  0x0180, VOC_DINOATK1, ANIM_NONE),          // STEG
-		WeaponTypeClass(BULLET_TREXBITE,    155, 30,  0x0180, VOC_DINOATK1, ANIM_NONE),          // TREX
+		WeaponTypeClass(WEAPON_RIFLE, BULLET_SNIPER,      125, 40,  0x0580, VOC_SNIPER,   ANIM_NONE),
+		WeaponTypeClass(WEAPON_CHAIN_GUN, BULLET_SPREADFIRE,  25,  50,  0x0400, VOC_MINI,     ANIM_GUN_N),
+		WeaponTypeClass(WEAPON_PISTOL, BULLET_BULLET,      1,   7,   0x01C0, VOC_RIFLE,    ANIM_NONE),
+		WeaponTypeClass(WEAPON_M16, BULLET_BULLET,      15,  20,  0x0200, VOC_MGUN2,    ANIM_NONE),
+		WeaponTypeClass(WEAPON_DRAGON, BULLET_TOW,         30,  60,  0x0400, VOC_BAZOOKA,  ANIM_NONE),
+		WeaponTypeClass(WEAPON_FLAMETHROWER, BULLET_FLAME,       35,  50,  0x0200, VOC_FLAMER1,  ANIM_FLAME_N),
+		WeaponTypeClass(WEAPON_FLAME_TONGUE, BULLET_FLAME,       50,  50,  0x0200, VOC_FLAMER1,  ANIM_FLAME_N),
+		WeaponTypeClass(WEAPON_CHEMSPRAY, BULLET_CHEMSPRAY,   80,  70,  0x0200, VOC_FLAMER1,  ANIM_CHEM_N),
+		WeaponTypeClass(WEAPON_GRENADE, BULLET_GRENADE,     50,  60,  0x0340, VOC_TOSS,     ANIM_NONE),
+		WeaponTypeClass(WEAPON_75MM, BULLET_APDS,        25,  60,  0x0400, VOC_TANK2,    ANIM_MUZZLE_FLASH),
+		WeaponTypeClass(WEAPON_105MM, BULLET_APDS,        30,  50,  0x04C0, VOC_TANK3,    ANIM_MUZZLE_FLASH),
+		WeaponTypeClass(WEAPON_120MM, BULLET_APDS,        40,  80,  0x04C0, VOC_TANK4,    ANIM_MUZZLE_FLASH),
+		WeaponTypeClass(WEAPON_TURRET_GUN, BULLET_APDS,        40,  60,  0x0600, VOC_TANK4,    ANIM_MUZZLE_FLASH),
+		WeaponTypeClass(WEAPON_MAMMOTH_TUSK, BULLET_SSM,         75,  80,  0x0500, VOC_ROCKET1,  ANIM_NONE),
+		WeaponTypeClass(WEAPON_MLRS, BULLET_SSM2,        75,  80,  0x0600, VOC_ROCKET1,  ANIM_NONE),
+		WeaponTypeClass(WEAPON_155MM, BULLET_HE,          150, 65,  0x0600, VOC_TANK1,    ANIM_MUZZLE_FLASH),
+		WeaponTypeClass(WEAPON_M60MG, BULLET_BULLET,      15,  30,  0x0400, VOC_MGUN11,   ANIM_GUN_N),
+		WeaponTypeClass(WEAPON_TOMAHAWK, BULLET_SSM,         60,  35,  0x0780, VOC_ROCKET2,  ANIM_NONE),
+		WeaponTypeClass(WEAPON_TOW_TWO, BULLET_SSM,         60,  40,  0x0680, VOC_ROCKET2,  ANIM_NONE),
+		WeaponTypeClass(WEAPON_NAPALM, BULLET_NAPALM,      100, 20,  0x0480, VOC_NONE,     ANIM_NONE),
+		WeaponTypeClass(WEAPON_OBELISK_LASER, BULLET_LASER,       200, 90,  0x0780, VOC_LASER,    ANIM_NONE),
+		WeaponTypeClass(WEAPON_NIKE, BULLET_SAM,         50,  50,  0x0780, VOC_ROCKET2,  ANIM_NONE),
+		WeaponTypeClass(WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1,  ANIM_NONE),
+		WeaponTypeClass(WEAPON_STEG, BULLET_HEADBUTT,    100, 30,  0x0180, VOC_DINOATK1, ANIM_NONE),
+		WeaponTypeClass(WEAPON_TREX, BULLET_TREXBITE,    155, 30,  0x0180, VOC_DINOATK1, ANIM_NONE),
 	};
 
 	return &Weapons[type];
