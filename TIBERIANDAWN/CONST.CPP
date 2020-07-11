@@ -123,7 +123,7 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 		WeaponTypeClass("Napalm Blast", WEAPON_NAPALM, BULLET_NAPALM,      100, 20,  0x0480, VOC_NONE,     ANIM_NONE),
 		WeaponTypeClass("Laser Blast", WEAPON_OBELISK_LASER, BULLET_LASER,       200, 90,  0x0780, VOC_LASER,    ANIM_NONE),
 		WeaponTypeClass("Anti-Aircraft Missile", WEAPON_NIKE, BULLET_SAM,         50,  50,  0x0780, VOC_ROCKET2,  ANIM_NONE),
-		WeaponTypeClass("Anti-Infantry Missile", WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1,  ANIM_NONE),
+		WeaponTypeClass("Surface to Surface Missile", WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1,  ANIM_NONE),
 		WeaponTypeClass("Dino Ram", WEAPON_STEG, BULLET_HEADBUTT,    100, 30,  0x0180, VOC_DINOATK1, ANIM_NONE),
 		WeaponTypeClass("Dino Bite", WEAPON_TREX, BULLET_TREXBITE,    155, 30,  0x0180, VOC_DINOATK1, ANIM_NONE),
 	};
