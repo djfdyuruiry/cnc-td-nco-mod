@@ -105,10 +105,14 @@ static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char
 
 static WeaponType ParseWeaponType(lua_State* lua, const char* weaponTypeName, bool* parseError)
 {
+    auto upperTypeName = Convert_String_To_Upper_Case(weaponTypeName);
+
     auto weaponType = Parse_Weapon_Type(
-        Convert_String_To_Upper_Case(weaponTypeName),
+        upperTypeName,
         parseError
     );
+
+    delete upperTypeName;
 
     if (*parseError)
     {

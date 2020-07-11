@@ -272,10 +272,14 @@ static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* rule
 
 static UnitType ParseUnitType(lua_State* lua, const char* unitTypeName, bool* parseError)
 {
+    auto upperTypeName = Convert_String_To_Upper_Case(unitTypeName);
+
     auto unitType = Parse_Unit_Type(
-        Convert_String_To_Upper_Case(unitTypeName),
+        upperTypeName,
         parseError
     );
+
+    delete upperTypeName;
 
     if (*parseError)
     {

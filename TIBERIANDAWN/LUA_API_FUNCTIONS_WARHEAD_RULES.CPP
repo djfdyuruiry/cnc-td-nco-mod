@@ -234,16 +234,14 @@ static WarheadType ParseWarheadType(lua_State* lua, const char* warheadTypeName,
         parseError
     );
 
+    delete upperWarheadTypeName;
+
     if (*parseError)
     {
         luaL_error(lua, "warhead type passed was not recognised: %s", warheadTypeName);
 
-        delete upperWarheadTypeName;
-
         return WARHEAD_NONE;
     }
-
-    delete upperWarheadTypeName;
 
     return warheadType;
 }

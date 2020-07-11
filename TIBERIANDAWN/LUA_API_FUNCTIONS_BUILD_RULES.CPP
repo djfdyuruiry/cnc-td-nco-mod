@@ -248,10 +248,14 @@ static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const ch
 
 static StructType ParseBuildingType(lua_State* lua, const char* buildingTypeName, bool* parseError)
 {
+    auto upperTypeName = Convert_String_To_Upper_Case(buildingTypeName);
+
     auto buildingType = Parse_Structure_Type(
-        Convert_String_To_Upper_Case(buildingTypeName),
+        upperTypeName,
         parseError
     );
+
+    delete upperTypeName;
 
     if (*parseError)
     {

@@ -143,10 +143,14 @@ static bool Read_Infantry_Rule(lua_State* lua, InfantryTypeClass* type, const ch
 
 static InfantryType ParseInfantryType(lua_State* lua, const char* infantryTypeName, bool* parseError)
 {
+    auto upperTypeName = Convert_String_To_Upper_Case(infantryTypeName);
+
     auto infantryType = Parse_Infantry_Type(
-        Convert_String_To_Upper_Case(infantryTypeName),
+        upperTypeName,
         parseError
     );
+
+    delete upperTypeName;
 
     if (*parseError)
     {

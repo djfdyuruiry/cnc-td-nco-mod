@@ -120,10 +120,14 @@ static bool Read_Aircraft_Rule(lua_State* lua, AircraftTypeClass* type, const ch
 
 static AircraftType ParseAircraftType(lua_State* lua, const char* aircraftTypeName, bool* parseError)
 {
+    auto upperTypeName = Convert_String_To_Upper_Case(aircraftTypeName);
+
     auto aircraftType = Parse_Aircraft_Type(
-        Convert_String_To_Upper_Case(aircraftTypeName),
+        upperTypeName,
         parseError
     );
+
+    delete upperTypeName;
 
     if (*parseError)
     {
