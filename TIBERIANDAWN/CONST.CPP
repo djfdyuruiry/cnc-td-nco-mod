@@ -80,17 +80,16 @@ WeaponTypeClass::WeaponTypeClass(
 	AnimType anim
 )
 {
-	FriendlyName = strdup(friendlyName);
 	Fires = fires;
+	Sound = sound;
+	Anim = anim;
 
 	auto weaponTypeStr = Weapon_Type_To_String(owner);
 
+	FriendlyName = Read_String_From_Rules_Ini(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
 	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
 	Range = Read_Weapon_Range(weaponTypeStr, range);
-
-	Sound = sound;
-	Anim = anim;
 }
 
 WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
@@ -154,16 +153,15 @@ WarheadTypeClass::WarheadTypeClass(
 	unsigned armorModifiers[ARMOR_COUNT]
 )
 {
-	FriendlyName = strdup(friendlyName);
+	Modifier = armorModifiers;
 
 	auto warheadTypeString = Warhead_Type_To_String(type);
 
+	FriendlyName = Read_String_From_Rules_Ini(warheadTypeString, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	SpreadFactor = Read_Int_From_Rules_Ini(warheadTypeString, WARHEAD_SPREAD_FACTOR_RULE, spreadFactor, 1, INT_MAX);
 	IsWallDestroyer = Read_Bool_From_Rules_Ini(warheadTypeString, WARHEAD_DESTORY_WALLS_RULE, isWallDestroyer);
 	IsWoodDestroyer = Read_Bool_From_Rules_Ini(warheadTypeString, WARHEAD_DESTORY_WOOD_RULE, isWallDestroyer);
 	IsTiberiumDestroyer = Read_Bool_From_Rules_Ini(warheadTypeString, WARHEAD_DESTORY_TIBERIUM_RULE, isTiberiumDestroyer);
-
-	Modifier = armorModifiers;
 
 	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
 	{
