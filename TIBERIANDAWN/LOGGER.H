@@ -35,6 +35,8 @@ void Log(LogLevel logLevel, const char* messageFormat, ...);
 
 void Toggle_Console_Logging();
 
+bool Console_Logging_Enabled();
+
 void Close_Log_File_If_Open();
 
 #endif

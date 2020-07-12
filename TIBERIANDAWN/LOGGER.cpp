@@ -147,6 +147,11 @@ void Toggle_Console_Logging()
 	ONLY_LOG_ERROR_TO_STD_OUT = !ONLY_LOG_ERROR_TO_STD_OUT;
 }
 
+bool Console_Logging_Enabled()
+{
+	return !ONLY_LOG_ERROR_TO_STD_OUT;
+}
+
 void Close_Log_File_If_Open()
 {
 	if (LOG_FILE_HANDLE != NULL)

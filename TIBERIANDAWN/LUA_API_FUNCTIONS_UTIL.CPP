@@ -61,6 +61,20 @@ static int Lua_Show_Error(lua_State* lua)
     return 0;
 }
 
+static int Lua_Print(lua_State* lua)
+{
+    int argCount = lua_gettop(lua);
+
+    if (argCount > 0)
+    {
+        auto logMessage = Get_Lua_Value_As_String(1);
+
+        puts(logMessage);
+    }
+
+    return 0;
+}
+
 static int Lua_Log(lua_State* lua)
 {
     int argCount = lua_gettop(lua);
@@ -80,7 +94,7 @@ bool Register_Util_Functions()
     Log_Debug("Initialising Lua API utility functions");
 
     Register_Lua_Function("log", Lua_Log);
-    Register_Lua_Function("print", Lua_Log);
+    Register_Lua_Function("print", Lua_Print);
     Register_Lua_Function("showError", Lua_Show_Error);
     Register_Lua_Function("getLogLevel", Lua_Get_Log_Level);
     Register_Lua_Function("setLogLevel", Lua_Set_Log_Level);
