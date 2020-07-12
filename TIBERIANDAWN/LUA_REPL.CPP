@@ -55,18 +55,26 @@ static char* Read_Lua_String(HANDLE stdOut, HANDLE stdIn)
 	return input;
 }
 
-void Enter_Lua_Repl()
+bool Enter_Lua_Repl(bool initialiseLua = true)
 {
-	if (!Initialise_Lua())
+	if (initialiseLua && !Initialise_Lua())
 	{
 		puts("ERROR: Failed to initialise Lua state");
-		exit(1);
+		return false;
 	}
 
 	auto stdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	auto stdIn = GetStdHandle(STD_INPUT_HANDLE);
 
 	char* input = NULL;
+
+	Toggle_Console_Logging();
+	system("cls");
+
+	puts("=======================");
+	puts("  NCO Mod Lua Console  ");
+	puts("=======================");
+	printf("\nHelp: https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/9.-Lua-Scripting-API\n\n");
 
 	while (true)
 	{
@@ -101,4 +109,8 @@ void Enter_Lua_Repl()
 
 		Print_Lua_Result(stdOut);
 	}
+
+	Toggle_Console_Logging();
+
+	return true;
 }

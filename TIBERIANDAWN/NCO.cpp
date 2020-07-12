@@ -6,7 +6,7 @@ static HANDLE LUA_REPL_THREAD;
 
 static DWORD WINAPI Start_Lua_Repl_In_Background(LPVOID lpParam)
 {
-	Enter_Lua_Repl();
+	Enter_Lua_Repl(false);
 
 	return 0;
 }

@@ -136,7 +136,7 @@ static BulletTypeClass const ClassAPDS(
 	ANIM_VEH_HIT3				// Explosion to use upon impact.
 );
 
-static BulletTypeClass const Class120mm(
+static BulletTypeClass const Class155mm(
 	BULLET_HE,
 	"ARTILLERY_SHELL",						// NAME:			Text name of this unit type.
 	"Artillery",
@@ -162,8 +162,8 @@ static BulletTypeClass const Class120mm(
 
 static BulletTypeClass const ClassMissile(
 	BULLET_SSM,
-	"TOMAHAWK_MISSILE",					// NAME:			Text name of this unit type.
-	"Gunboat Missile",
+	"SS_MISSILE",					// NAME:			Text name of this unit type.
+	"Surface-to-Surface Missile",
 		true,						// Flies over tall walls?
 		true,						// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -235,7 +235,7 @@ static BulletTypeClass const ClassPatriot(
 static BulletTypeClass const ClassDragon(
 	BULLET_TOW,
 	"TOW_MISSILE",					// NAME:			Text name of this unit type.
-	"Adv. Guard Tower Missile",
+	"Bazooka",
 		true,						// Flies over tall walls?
 		true,						// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -426,8 +426,8 @@ static BulletTypeClass const ClassNukeDown(
 
 static BulletTypeClass const ClassHonestJohn(
 	BULLET_HONEST_JOHN,
-	"S.S.M",					// NAME:			Text name of this unit type.
-	"Surface-to-Surface Missile",
+	"HONEST_JOHN_MISSILE",					// NAME:			Text name of this unit type.
+	"Honest John Missile",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -504,7 +504,7 @@ BulletTypeClass const * const BulletTypeClass::Pointers[BULLET_COUNT] = {
 	&ClassSniper,		//	BULLET_SNIPER
 	&ClassBullet,		//	BULLET_BULLET
 	&ClassAPDS,			//	BULLET_APDS
-	&Class120mm,		//	BULLET_HE
+	&Class155mm,		//	BULLET_HE
 	&ClassMissile,		//	BULLET_SSM
 	&ClassMissile2,	//	BULLET_SSM2
 	&ClassPatriot,		//	BULLET_SAM

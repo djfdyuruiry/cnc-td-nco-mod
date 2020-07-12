@@ -1,6 +1,6 @@
 #ifndef LUA_REPL_H
 #define LUA_REPL_H
 
-void Enter_Lua_Repl();
+bool Enter_Lua_Repl(bool initialiseLua = true);
 
 #endif

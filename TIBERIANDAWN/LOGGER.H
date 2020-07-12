@@ -33,6 +33,8 @@ void Log(LogLevel logLevel, const char* messageFormat, ...);
 
 #define Log_Trace(messageFormat, ...) Log(TRACE, messageFormat, __VA_ARGS__)
 
+void Toggle_Console_Logging();
+
 void Close_Log_File_If_Open();
 
 #endif

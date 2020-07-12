@@ -759,7 +759,7 @@ BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError)
     {
         bullet = BULLET_HE;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "TOMAHAWK_MISSILE"))
+    else if (Strings_Are_Equal(bulletTypeString, "S.S.M"))
     {
         bullet = BULLET_SSM;
     }
@@ -803,7 +803,7 @@ BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError)
     {
         bullet = BULLET_NUKE_DOWN;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "S.S.M"))
+    else if (Strings_Are_Equal(bulletTypeString, "HONEST_JOHN_MISSILE"))
     {
         bullet = BULLET_HONEST_JOHN;
     }
@@ -881,7 +881,7 @@ char* Bullet_Type_To_String(BulletType bulletType)
     }
     else if (bulletType == BULLET_SSM)
     {
-        bulletTypeString = "TOMAHAWK_MISSILE";
+        bulletTypeString = "S.S.M";
     }
     else if (bulletType == BULLET_SSM2)
     {
@@ -925,7 +925,7 @@ char* Bullet_Type_To_String(BulletType bulletType)
     }
     else if (bulletType == BULLET_HONEST_JOHN)
     {
-        bulletTypeString = "S.S.M";
+        bulletTypeString = "HONEST_JOHN_MISSILE";
     }
     else if (bulletType == BULLET_HEADBUTT)
     {

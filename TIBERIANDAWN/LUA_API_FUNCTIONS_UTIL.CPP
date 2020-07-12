@@ -11,6 +11,13 @@ static int Lua_Get_Now_In_Epoch_Millis(lua_State* lua)
     return 1;
 }
 
+static int Lua_Toggle_Console_Logging(lua_State* lua)
+{
+    Toggle_Console_Logging();
+
+    return 0;
+}
+
 static int Lua_Set_Log_Level(lua_State* lua)
 {
     int argCount = lua_gettop(lua);
@@ -77,6 +84,7 @@ bool Register_Util_Functions()
     Register_Lua_Function("showError", Lua_Show_Error);
     Register_Lua_Function("getLogLevel", Lua_Get_Log_Level);
     Register_Lua_Function("setLogLevel", Lua_Set_Log_Level);
+    Register_Lua_Function("toggleConsoleLog", Lua_Toggle_Console_Logging);
     Register_Lua_Function("getNowInEpochMillis", Lua_Get_Now_In_Epoch_Millis);
 
     return true;
