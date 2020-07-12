@@ -4,7 +4,18 @@
 
 static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, WEAPON_FIRES_RULE_UPPER))
+    {
+        auto bullet = Parse_Bullet_Type(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Set_Weapon_Rule => Rule value: %s -> %s", Bullet_Type_To_String(weapon->Fires), value);
+
+            weapon->Fires = bullet;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE_UPPER))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -71,7 +82,15 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
 
 static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, WEAPON_FIRES_RULE_UPPER))
+    {
+        auto bullet = Bullet_Type_To_String(weapon->Fires);
+
+        Log_Trace("Read_Weapon_Rule => Rule value: %s", bullet);
+
+        lua_pushstring(lua, bullet);
+    }
+    else if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE_UPPER))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %u", weapon->Attack);
 

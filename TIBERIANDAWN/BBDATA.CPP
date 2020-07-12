@@ -42,7 +42,8 @@
 */
 static BulletTypeClass const ClassSniper(
 	BULLET_BULLET,
-	"50cal",						// NAME:			Text name of this unit type.
+	"SNIPER",						// NAME:			Text name of this unit type.
+	"Sniper",
 		false,					// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -65,7 +66,8 @@ static BulletTypeClass const ClassSniper(
 
 static BulletTypeClass const ClassBullet(
 	BULLET_BULLET,
-	"50cal",						// NAME:			Text name of this unit type.
+	"BULLET",						// NAME:			Text name of this unit type.
+	"M16/Pistol",
 		false,					// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -88,7 +90,8 @@ static BulletTypeClass const ClassBullet(
 
 static BulletTypeClass const ClassSpreadfire(
 	BULLET_SPREADFIRE,
-	"50cal",						// NAME:			Text name of this unit type.
+	"SPREADFIRE",						// NAME:			Text name of this unit type.
+	"Chain Gun Bullet",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -111,7 +114,8 @@ static BulletTypeClass const ClassSpreadfire(
 
 static BulletTypeClass const ClassAPDS(
 	BULLET_APDS,
-	"120mm",						// NAME:			Text name of this unit type.
+	"APDS",						// NAME:			Text name of this unit type.
+	"Armor Piercing",
 		false,					// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -134,7 +138,8 @@ static BulletTypeClass const ClassAPDS(
 
 static BulletTypeClass const Class120mm(
 	BULLET_HE,
-	"120mm",						// NAME:			Text name of this unit type.
+	"ARTILLERY_SHELL",						// NAME:			Text name of this unit type.
+	"Artillery",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		true,						// Projectile arcs to the target?
@@ -157,7 +162,8 @@ static BulletTypeClass const Class120mm(
 
 static BulletTypeClass const ClassMissile(
 	BULLET_SSM,
-	"DRAGON",					// NAME:			Text name of this unit type.
+	"TOMAHAWK_MISSILE",					// NAME:			Text name of this unit type.
+	"Gunboat Missile",
 		true,						// Flies over tall walls?
 		true,						// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -180,7 +186,8 @@ static BulletTypeClass const ClassMissile(
 
 static BulletTypeClass const ClassMissile2(
 	BULLET_SSM2,
-	"DRAGON",					// NAME:			Text name of this unit type.
+	"MLRS_ROCKET",					// NAME:			Text name of this unit type.
+	"Surface-to-Surface Missile (MLRS)",
 		true,						// Flies over tall walls?
 		true,						// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -203,7 +210,8 @@ static BulletTypeClass const ClassMissile2(
 
 static BulletTypeClass const ClassPatriot(
 	BULLET_SAM,
-	"MISSILE",					// NAME:			Text name of this unit type.
+	"SAM_MISSILE",					// NAME:			Text name of this unit type.
+	"Surface-to-Air Missile (SAM Site)",
 		true,						// Flies over tall walls?
 		true,						// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -226,7 +234,8 @@ static BulletTypeClass const ClassPatriot(
 
 static BulletTypeClass const ClassDragon(
 	BULLET_TOW,
-	"DRAGON",					// NAME:			Text name of this unit type.
+	"TOW_MISSILE",					// NAME:			Text name of this unit type.
+	"Adv. Guard Tower Missile",
 		true,						// Flies over tall walls?
 		true,						// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -250,6 +259,7 @@ static BulletTypeClass const ClassDragon(
 static BulletTypeClass const ClassFlame(
 	BULLET_FLAME,
 	"FLAME",						// NAME:			Text name of this unit type.
+	"Flamethrower/Flame Tank",
 		false,					// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -272,7 +282,8 @@ static BulletTypeClass const ClassFlame(
 
 static BulletTypeClass const ClassChem(
 	BULLET_CHEMSPRAY,
-	"FLAME",						// NAME:			Text name of this unit type.
+	"CHEMICALS",						// NAME:			Text name of this unit type.
+	"Chem. Warrior Spray",
 		false,					// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -295,7 +306,8 @@ static BulletTypeClass const ClassChem(
 
 static BulletTypeClass const ClassNapalm(
 	BULLET_NAPALM,
-	"BOMBLET",					// NAME:			Text name of this unit type.
+	"NAPALM_BOMB",					// NAME:			Text name of this unit type.
+	"Airstrike Bomb",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -318,7 +330,8 @@ static BulletTypeClass const ClassNapalm(
 
 static BulletTypeClass const ClassGrenade(
 	BULLET_GRENADE,
-	"BOMB",						// NAME:			Text name of this unit type.
+	"GRENADE_BOMB",						// NAME:			Text name of this unit type.
+	"Grenade",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		true,						// Projectile arcs to the target?
@@ -341,7 +354,8 @@ static BulletTypeClass const ClassGrenade(
 
 static BulletTypeClass const ClassLaser(
 	BULLET_LASER,
-	"Laser",						// NAME:			Text name of this unit type.
+	"LASER_BEAM",						// NAME:			Text name of this unit type.
+	"Obelisk Laser Beam",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -364,7 +378,8 @@ static BulletTypeClass const ClassLaser(
 
 static BulletTypeClass const ClassNukeUp(
 	BULLET_NUKE_UP,
-	"ATOMICUP",					// NAME:			Text name of this unit type.
+	"NUKE_UP",					// NAME:			Text name of this unit type.
+	"Nuclear Missile (Going up)",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -387,7 +402,8 @@ static BulletTypeClass const ClassNukeUp(
 
 static BulletTypeClass const ClassNukeDown(
 	BULLET_NUKE_DOWN,
-	"ATOMICDN",					// NAME:			Text name of this unit type.
+	"NUKE_DOWN",					// NAME:			Text name of this unit type.
+	"Nuclear Missile (Going down)",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -410,7 +426,8 @@ static BulletTypeClass const ClassNukeDown(
 
 static BulletTypeClass const ClassHonestJohn(
 	BULLET_HONEST_JOHN,
-	"MISSILE",					// NAME:			Text name of this unit type.
+	"S.S.M",					// NAME:			Text name of this unit type.
+	"Surface-to-Surface Missile",
 		true,						// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -434,6 +451,7 @@ static BulletTypeClass const ClassHonestJohn(
 static BulletTypeClass const ClassHeadButt(
 	BULLET_HEADBUTT,
 	"GORE",						// NAME:			Text name of this unit type.
+	"Dino Ram",
 		false,					// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -457,6 +475,7 @@ static BulletTypeClass const ClassHeadButt(
 static BulletTypeClass const ClassTRexBite(
 	BULLET_TREXBITE,
 	"CHEW",						// NAME:			Text name of this unit type.
+	"Dino Bite",
 		false,					// Flies over tall walls?
 		false,					// Homes in on target?
 		false,					// Projectile arcs to the target?
@@ -521,7 +540,8 @@ BulletTypeClass const * const BulletTypeClass::Pointers[BULLET_COUNT] = {
  *=============================================================================================*/
 BulletTypeClass::BulletTypeClass(
 	BulletType type, 
-	char const *ininame, 
+	char const *ininame,
+	const char* friendlyName,
 	bool is_high,
 	bool is_homing, 
 	bool is_arcing, 
@@ -534,29 +554,36 @@ BulletTypeClass::BulletTypeClass(
 	bool is_inaccurate, 
 	bool is_translucent, 
 	bool is_antiaircraft,
-	int arming, int range, MPHType maxspeed, unsigned rot,
-	WarheadType warhead, AnimType explosion) : 
-		ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0) 
+	int arming,
+	int range,
+	MPHType maxspeed,
+	unsigned rot,
+	WarheadType warhead,
+	AnimType explosion
+) : ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0) 
 {
-	Explosion = explosion;
-	IsHigh = is_high;
-	IsAntiAircraft = is_antiaircraft;
-	IsTranslucent = is_translucent;
-	IsArcing = is_arcing;
-	IsHoming = is_homing;
-	IsDropping = is_dropping;
-	IsInvisible = is_invisible;
-	IsProximityArmed = is_proximity_armed;
-	IsFlameEquipped = is_flame_equipped;
-	IsFueled = is_fueled;
-	IsFaceless = is_faceless;
-	IsInaccurate = is_inaccurate;
 	Type = type;
-	Warhead = warhead;
-	MaxSpeed = maxspeed;
-	ROT = rot;
-	Arming = arming;
-	Range = range;
+	Explosion = explosion;
+
+	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	IsHigh = Read_Bool_From_Rules_Ini(IniName, BULLET_HIGH_RULE, is_high);
+	IsAntiAircraft = Read_Bool_From_Rules_Ini(IniName, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
+	IsTranslucent = Read_Bool_From_Rules_Ini(IniName, BULLET_TRANSLUCENT_RULE, is_translucent);
+	IsArcing = Read_Bool_From_Rules_Ini(IniName, BULLET_ARCING_RULE, is_arcing);
+	IsHoming = Read_Bool_From_Rules_Ini(IniName, BULLET_HOMING_RULE, is_homing);
+	IsDropping = Read_Bool_From_Rules_Ini(IniName, BULLET_DROPPING_RULE, is_dropping);
+	IsInvisible = Read_Bool_From_Rules_Ini(IniName, BULLET_INVISIBLE_RULE, is_invisible);
+	IsProximityArmed = Read_Bool_From_Rules_Ini(IniName, BULLET_PROXIMITY_ARMED_RULE, is_proximity_armed);
+	IsFlameEquipped = Read_Bool_From_Rules_Ini(IniName, BULLET_FLAME_EQUIPPED_RULE, is_flame_equipped);
+	IsFueled = Read_Bool_From_Rules_Ini(IniName, BULLET_FUELED_RULE, is_fueled);
+	IsFaceless = Read_Bool_From_Rules_Ini(IniName, BULLET_FACELESS_RULE, is_faceless);
+	IsInaccurate = Read_Bool_From_Rules_Ini(IniName, BULLET_INACCURATE_RULE, is_inaccurate);
+
+	Warhead = Read_Warhead_From_Rules_Ini(IniName, BULLET_WARHEAD_RULE, warhead);
+	MaxSpeed = Read_Speed(IniName, maxspeed);
+	ROT = Read_Rate_Of_Turn(IniName, rot);
+	Arming = Read_Int_From_Rules_Ini(IniName, BULLET_ARMING_RULE, arming, INT_MIN, INT_MAX);
+	Range = Read_Int_From_Rules_Ini(IniName, BULLET_RANGE_RULE, range, INT_MIN, INT_MAX);
 }
 
 
