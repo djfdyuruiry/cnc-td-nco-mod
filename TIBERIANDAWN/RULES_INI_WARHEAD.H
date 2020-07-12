@@ -48,6 +48,4 @@
 
 const char* Map_Armor_Modifier_To_Warhead_Rule(ArmorType type);
 
-WarheadType Read_Warhead_From_Rules_Ini(const char* section, const char* rule, WarheadType default);
-
 #endif

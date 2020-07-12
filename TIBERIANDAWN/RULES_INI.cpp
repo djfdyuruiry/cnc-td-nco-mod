@@ -984,8 +984,6 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 
 	if (Strings_Are_Equal(factoryTypeStr, defaultString))
 	{
-		delete factoryTypeStr;
-
 		return defaultValue;
 	}
 
@@ -999,82 +997,10 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 
 		Show_Error("Failed to parse factory type for '%s': %s", section, factoryTypeStr);
 
-		delete factoryTypeStr;
-
 		return FACTORY_TYPE_NONE;
 	}
 
-	delete factoryTypeStr;
-
 	return factoryType;
-}
-
-WarheadType Read_Warhead_From_Rules_Ini(const char* section, const char* entry, WarheadType default)
-{
-	auto defaultString = Warhead_Type_To_String(default);
-	auto warheadTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
-
-	Convert_String_To_Upper_Case(warheadTypeStr);
-
-	if (Strings_Are_Equal(warheadTypeStr, defaultString))
-	{
-		delete warheadTypeStr;
-
-		return default;
-	}
-
-	bool parseError = false;
-	auto warheadType = Parse_Warhead_Type(warheadTypeStr, &parseError);
-
-	if (parseError)
-	{
-		// unable to parse entry as a warhead type
-		RULES_VALID = false;
-
-		Show_Error("Failed to parse warhead for '%s': %s", section, warheadTypeStr);
-
-		delete warheadTypeStr;
-
-		return WARHEAD_NONE;
-	}
-
-	delete warheadTypeStr;
-
-	return warheadType;
-}
-
-BulletType Read_Bullet_From_Rules_Ini(const char* section, const char* entry, BulletType default)
-{
-	auto defaultString = Bullet_Type_To_String(default);
-	auto bulletTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
-
-	Convert_String_To_Upper_Case(bulletTypeStr);
-
-	if (Strings_Are_Equal(bulletTypeStr, defaultString))
-	{
-		delete bulletTypeStr;
-
-		return default;
-	}
-
-	bool parseError = false;
-	auto bulletType = Parse_Bullet_Type(bulletTypeStr, &parseError);
-
-	if (parseError)
-	{
-		// unable to parse entry as a bullet type
-		RULES_VALID = false;
-
-		Show_Error("Failed to parse bullet for '%s': %s", section, bulletTypeStr);
-
-		delete bulletTypeStr;
-
-		return BULLET_NONE;
-	}
-
-	delete bulletTypeStr;
-
-	return bulletType;
 }
 
 void Rules_Ini_Failed_Validation(bool value)
