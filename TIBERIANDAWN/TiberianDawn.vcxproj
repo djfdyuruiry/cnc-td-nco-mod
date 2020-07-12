@@ -399,6 +399,7 @@
     <ClInclude Include="LOGIC.H" />
     <ClInclude Include="LUA.H" />
     <ClInclude Include="LUA_API.H" />
+    <ClInclude Include="LUA_API_FUNCTIONS_BULLET_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GAME.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_AIR_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_BUILD_RULES.H" />
@@ -445,6 +446,7 @@
     <ClInclude Include="RULES_INI.H" />
     <ClInclude Include="RULES_INI_AIRCRAFT.H" />
     <ClInclude Include="RULES_INI_BUILDING.H" />
+    <ClInclude Include="RULES_INI_BULLET.H" />
     <ClInclude Include="RULES_INI_DIFFICULTY.H" />
     <ClInclude Include="RULES_INI_GAME.H" />
     <ClInclude Include="RULES_INI_GENERIC.H" />
@@ -593,6 +595,7 @@
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="LUA_API.CPP" />
+    <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_AIR_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BUILD_RULES.CPP" />

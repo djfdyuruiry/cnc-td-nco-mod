@@ -80,13 +80,13 @@ WeaponTypeClass::WeaponTypeClass(
 	AnimType anim
 )
 {
-	Fires = fires;
 	Sound = sound;
 	Anim = anim;
 
 	auto weaponTypeStr = Weapon_Type_To_String(owner);
 
 	FriendlyName = Read_String_From_Rules_Ini(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	Fires = Read_Bullet_From_Rules_Ini(weaponTypeStr, WEAPON_FIRES_RULE, fires);
 	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
 	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
 	Range = Read_Weapon_Range(weaponTypeStr, range);
@@ -100,10 +100,10 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 	}
 
 	Weapons = new WeaponTypeClass[WEAPON_COUNT] {
-		WeaponTypeClass("Sniper Rifle Bullet", WEAPON_RIFLE, BULLET_SNIPER,      125, 40,  0x0580, VOC_SNIPER,   ANIM_NONE),
-		WeaponTypeClass("Chain Gun Bullet", WEAPON_CHAIN_GUN, BULLET_SPREADFIRE,  25,  50,  0x0400, VOC_MINI,     ANIM_GUN_N),
-		WeaponTypeClass("Pistol Bullet", WEAPON_PISTOL, BULLET_BULLET,      1,   7,   0x01C0, VOC_RIFLE,    ANIM_NONE),
-		WeaponTypeClass("Assault Rifle Bullet", WEAPON_M16, BULLET_BULLET,      15,  20,  0x0200, VOC_MGUN2,    ANIM_NONE),
+		WeaponTypeClass("Sniper Rifle", WEAPON_RIFLE, BULLET_SNIPER,      125, 40,  0x0580, VOC_SNIPER,   ANIM_NONE),
+		WeaponTypeClass("Chain Gun", WEAPON_CHAIN_GUN, BULLET_SPREADFIRE,  25,  50,  0x0400, VOC_MINI,     ANIM_GUN_N),
+		WeaponTypeClass("Pistol", WEAPON_PISTOL, BULLET_BULLET,      1,   7,   0x01C0, VOC_RIFLE,    ANIM_NONE),
+		WeaponTypeClass("Assault Rifle", WEAPON_M16, BULLET_BULLET,      15,  20,  0x0200, VOC_MGUN2,    ANIM_NONE),
 		WeaponTypeClass("Bazooka Rocket", WEAPON_DRAGON, BULLET_TOW,         30,  60,  0x0400, VOC_BAZOOKA,  ANIM_NONE),
 		WeaponTypeClass("Flamethrower Blast", WEAPON_FLAMETHROWER, BULLET_FLAME,       35,  50,  0x0200, VOC_FLAMER1,  ANIM_FLAME_N),
 		WeaponTypeClass("Flame Tank Blast", WEAPON_FLAME_TONGUE, BULLET_FLAME,       50,  50,  0x0200, VOC_FLAMER1,  ANIM_FLAME_N),

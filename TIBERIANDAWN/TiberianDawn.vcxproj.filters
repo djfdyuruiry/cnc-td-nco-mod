@@ -769,6 +769,12 @@
     <ClInclude Include="LUA_API_FUNCTIONS_WARHEAD_RULES.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="RULES_INI_BULLET.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_BULLET_RULES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
@@ -1418,6 +1424,9 @@
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_WARHEAD_RULES.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>
