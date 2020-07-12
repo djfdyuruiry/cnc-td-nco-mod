@@ -2,6 +2,7 @@
 
 #include "lua_api_functions_air_rules.h"
 #include "lua_api_functions_build_rules.h"
+#include "lua_api_functions_bullet_rules.h"
 #include "lua_api_functions_game.h"
 #include "lua_api_functions_game_rules.h"
 #include "lua_api_functions_inf_rules.h"
@@ -21,6 +22,7 @@ static bool Load_Api_Functions()
         && Register_Info_Functions()
         && Register_Game_Rule_Functions()
         && Register_Weapon_Functions()
+        && Register_Bullet_Functions()
         && Register_Warhead_Functions()
         && Register_Infantry_Rule_Functions()
         && Register_Unit_Rule_Functions()

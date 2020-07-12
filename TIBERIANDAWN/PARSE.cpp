@@ -1,5 +1,26 @@
 #include "function.h"
 
+static const auto HOUSE_NAME_MAX_LENGTH = 8;
+static const auto INFANTRY_TYPE_MAP = new const char* [INFANTRY_RAMBO] {
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+};
+static const auto CIVILIAN_TYPE_MAP = new const char* [INFANTRY_C10 - INFANTRY_C1] {
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9"
+};
+
 DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError)
 {
     DiffType difficultyType;
@@ -29,9 +50,9 @@ DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError)
     return difficultyType;
 }
 
-char* Difficulty_Type_To_String(DiffType difficultyType)
+const char* Difficulty_Type_To_String(DiffType difficultyType)
 {
-    char* difficultyTypeString;
+    const char* difficultyTypeString;
 
     if (difficultyType == DIFF_EASY)
     {
@@ -128,7 +149,7 @@ HousesType Parse_House_Type(const char* houseTypeString, bool* parseError)
 int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
 {
     auto houseNameListSize = 0;
-    auto houseNameList = Parse_Csv_String(houseListCsv, 8, &houseNameListSize);
+    auto houseNameList = Parse_Csv_String(houseListCsv, HOUSE_NAME_MAX_LENGTH, &houseNameListSize);
 
     if (houseNameList == NULL)
     {
@@ -206,9 +227,9 @@ int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError)
     return owner;
 }
 
-char* House_Type_To_String(HousesType houseType)
+const char* House_Type_To_String(HousesType houseType)
 {
-    char* houseTypeString;
+    const char* houseTypeString;
 
     if (houseType == HOUSE_NONE)
     {
@@ -370,7 +391,7 @@ StructType Prerequisite_To_Structure_Type(long prerequisite)
     return structType;
 }
 
-char* Prerequisite_To_String(long prerequisite)
+const char* Prerequisite_To_String(long prerequisite)
 {
     return Structure_Type_To_String(
         Prerequisite_To_Structure_Type(prerequisite)
@@ -521,9 +542,9 @@ WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError)
     return weaponType;
 }
 
-char* Weapon_Type_To_String(WeaponType weaponType)
+const char* Weapon_Type_To_String(WeaponType weaponType)
 {
-    char* weaponTypeString;
+    const char* weaponTypeString;
 
     if (weaponType == WEAPON_NONE)
     {
@@ -697,9 +718,9 @@ ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError)
     return armorType;
 }
 
-char* Armor_Type_To_String(ArmorType armorType)
+const char* Armor_Type_To_String(ArmorType armorType)
 {
-    char* armorTypeString;
+    const char* armorTypeString;
 
     if (armorType == ARMOR_NONE)
     {
@@ -727,6 +748,218 @@ char* Armor_Type_To_String(ArmorType armorType)
     }
 
     return armorTypeString;
+}
+
+BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError)
+{
+    BulletType bullet;
+
+    if (Strings_Are_Equal(bulletTypeString, "NONE"))
+    {
+        bullet = BULLET_NONE;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "SNIPER"))
+    {
+        bullet = BULLET_SNIPER;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "BULLET"))
+    {
+        bullet = BULLET_BULLET;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "SPREADFIRE"))
+    {
+        bullet = BULLET_SPREADFIRE;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "APDS"))
+    {
+        bullet = BULLET_APDS;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "ARTILLERY_SHELL"))
+    {
+        bullet = BULLET_HE;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "S.S.M"))
+    {
+        bullet = BULLET_SSM;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "MLRS_ROCKET"))
+    {
+        bullet = BULLET_SSM2;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "SAM_MISSILE"))
+    {
+        bullet = BULLET_SAM;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "TOW_MISSILE"))
+    {
+        bullet = BULLET_TOW;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "FLAME"))
+    {
+        bullet = BULLET_FLAME;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "CHEMICALS"))
+    {
+        bullet = BULLET_CHEMSPRAY;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "NAPALM_BOMB"))
+    {
+        bullet = BULLET_NAPALM;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "GRENADE_BOMB"))
+    {
+        bullet = BULLET_GRENADE;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "LASER_BEAM"))
+    {
+        bullet = BULLET_LASER;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "NUKE_UP"))
+    {
+        bullet = BULLET_NUKE_UP;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "NUKE_DOWN"))
+    {
+        bullet = BULLET_NUKE_DOWN;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "HONEST_JOHN_MISSILE"))
+    {
+        bullet = BULLET_HONEST_JOHN;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "GORE"))
+    {
+        bullet = BULLET_HEADBUTT;
+    }
+    else if (Strings_Are_Equal(bulletTypeString, "CHEW"))
+    {
+        bullet = BULLET_TREXBITE;
+    }
+    else
+    {
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        Show_Error("Unable to parse bullet type from string: %s", bulletTypeString);
+    }
+
+    return bullet;
+}
+
+BulletType Parse_Bullet_Type(const char* bulletTypeString, bool* parseError)
+{
+    if (String_Is_Empty(bulletTypeString))
+    {
+        Show_Error("Bullet type passed to Parse_Bullet_Type was null or empty");
+
+        if (parseError != NULL)
+        {
+            *parseError = true;
+        }
+
+        return BULLET_NONE;
+    }
+
+    auto bulletTypeStr = strdup(bulletTypeString);
+
+    auto bulletType = Parse_Bullet_Type(bulletTypeStr, parseError);
+
+    delete bulletTypeStr;
+
+    return bulletType;
+}
+
+const char* Bullet_Type_To_String(BulletType bulletType)
+{
+    const char* bulletTypeString;
+
+    if (bulletType == BULLET_NONE)
+    {
+        bulletTypeString = "NONE";
+    }
+    else if (bulletType == BULLET_SNIPER)
+    {
+        bulletTypeString = "SNIPER";
+    }
+    else if (bulletType == BULLET_BULLET)
+    {
+        bulletTypeString = "BULLET";
+    }
+    else if (bulletType == BULLET_SPREADFIRE)
+    {
+        bulletTypeString = "SPREADFIRE";
+    }
+    else if (bulletType == BULLET_APDS)
+    {
+        bulletTypeString = "APDS";
+    }
+    else if (bulletType == BULLET_HE)
+    {
+        bulletTypeString = "ARTILLERY_SHELL";
+    }
+    else if (bulletType == BULLET_SSM)
+    {
+        bulletTypeString = "S.S.M";
+    }
+    else if (bulletType == BULLET_SSM2)
+    {
+        bulletTypeString = "MLRS_ROCKET";
+    }
+    else if (bulletType == BULLET_SAM)
+    {
+        bulletTypeString = "SAM_MISSILE";
+    }
+    else if (bulletType == BULLET_TOW)
+    {
+        bulletTypeString = "TOW_MISSILE";
+    }
+    else if (bulletType == BULLET_FLAME)
+    {
+        bulletTypeString = "FLAME";
+    }
+    else if (bulletType == BULLET_CHEMSPRAY)
+    {
+        bulletTypeString = "CHEMICALS";
+    }
+    else if (bulletType == BULLET_NAPALM)
+    {
+        bulletTypeString = "NAPALM_BOMB";
+    }
+    else if (bulletType == BULLET_GRENADE)
+    {
+        bulletTypeString = "GRENADE_BOMB";
+    }
+    else if (bulletType == BULLET_LASER)
+    {
+        bulletTypeString = "LASER_BEAM";
+    }
+    else if (bulletType == BULLET_NUKE_UP)
+    {
+        bulletTypeString = "NUKE_UP";
+    }
+    else if (bulletType == BULLET_NUKE_DOWN)
+    {
+        bulletTypeString = "NUKE_DOWN";
+    }
+    else if (bulletType == BULLET_HONEST_JOHN)
+    {
+        bulletTypeString = "HONEST_JOHN_MISSILE";
+    }
+    else if (bulletType == BULLET_HEADBUTT)
+    {
+        bulletTypeString = "GORE";
+    }
+    else if (bulletType == BULLET_TREXBITE)
+    {
+        bulletTypeString = "CHEW";
+    }
+    else
+    {
+        Show_Error("Unable to convert bullet type to string: %d", bulletType);
+    }
+
+    return bulletTypeString;
 }
 
 WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError)
@@ -817,9 +1050,9 @@ WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError)
     return warheadType;
 }
 
-char* Warhead_Type_To_String(WarheadType warheadType)
+const char* Warhead_Type_To_String(WarheadType warheadType)
 {
-    char* warheadTypeString;
+    const char* warheadTypeString;
 
     if (warheadType == WARHEAD_SA)
     {
@@ -889,7 +1122,7 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
     {
         return INFANTRY_RAMBO;
     }
-    else if (Strings_Are_Equal(infantryTypeString, "C10"))
+    else if (Strings_Are_Equal(infantryTypeString, "NIKOOMBA"))
     {
         return INFANTRY_C10;
     }
@@ -957,9 +1190,9 @@ InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseErro
     return result;
 }
 
-char* Infantry_Type_To_String(InfantryType infantryType)
+const char* Infantry_Type_To_String(InfantryType infantryType)
 {
-    char* infantryTypeString;
+    const char* infantryTypeString;
 
     if (infantryType == INFANTRY_NONE)
     {
@@ -971,7 +1204,7 @@ char* Infantry_Type_To_String(InfantryType infantryType)
     }
     else if (infantryType == INFANTRY_C10)
     {
-        infantryTypeString = "C10";
+        infantryTypeString = "NIKOOMBA";
     }
     else if (infantryType == INFANTRY_MOEBIUS)
     {
@@ -987,19 +1220,15 @@ char* Infantry_Type_To_String(InfantryType infantryType)
     }
     else if (infantryType > -1 && infantryType < 6)
     {
-        auto index = infantryType + 1;
+        auto index = infantryType;
 
-        infantryTypeString = new char[2];
-
-        sprintf(infantryTypeString, "E%d", index);
+        infantryTypeString = INFANTRY_TYPE_MAP[index];
     }
     else if (infantryType > 6 && infantryType < 17)
     {
-        auto index = infantryType - 6;
+        auto index = infantryType - 7;
 
-        infantryTypeString = new char[2];
-
-        sprintf(infantryTypeString, "C%d", index);
+        infantryTypeString = CIVILIAN_TYPE_MAP[index];
     }
     else
     {
@@ -1141,9 +1370,9 @@ UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError)
     return result;
 }
 
-char* Unit_Type_To_String(UnitType unitType)
+const char* Unit_Type_To_String(UnitType unitType)
 {
-    char* unitTypeString;
+    const char* unitTypeString;
 
     if (unitType == UNIT_NONE)
     {
@@ -1317,9 +1546,9 @@ SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseErro
     return unitSpeedType;
 }
 
-char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
+const char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
 {
-    char* unitSpeedTypeString;
+    const char* unitSpeedTypeString;
 
     if (unitSpeedType == SPEED_NONE)
     {
@@ -1425,9 +1654,9 @@ AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseErro
     return aircraftType;
 }
 
-char* Aircraft_Type_To_String(AircraftType aircraftType)
+const char* Aircraft_Type_To_String(AircraftType aircraftType)
 {
-    char* aircraftTypeString;
+    const char* aircraftTypeString;
 
     if (aircraftType == AIRCRAFT_NONE)
     {
@@ -1765,9 +1994,9 @@ StructType Parse_Structure_Type(const char* structTypeString, bool* parseError)
     return structType;
 }
 
-char* Structure_Type_To_String(StructType structType)
+const char* Structure_Type_To_String(StructType structType)
 {
-    char* structTypeString;
+    const char* structTypeString;
 
     if (structType == STRUCT_NONE)
     {
@@ -2121,9 +2350,9 @@ FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError)
     return factoryType;
 }
 
-char* Factory_Type_To_String(FactoryType factoryType)
+const char* Factory_Type_To_String(FactoryType factoryType)
 {
-    char* factoryTypeString;
+    const char* factoryTypeString;
 
     if (factoryType == FACTORY_TYPE_NONE)
     {

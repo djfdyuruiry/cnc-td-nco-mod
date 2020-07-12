@@ -1,6 +1,7 @@
 #include "function.h"
 
 static const auto COMMA = ",";
+static const auto EMPTY_STRING = "";
 
 char* Allocate_String(unsigned int length)
 {
@@ -8,7 +9,7 @@ char* Allocate_String(unsigned int length)
 	{
 		Show_Error("Length passed to Allocate_String was less than 1");
 
-		return "";
+		return strdup(EMPTY_STRING);
 	}
 
 	auto stringSizeInBytes = (length + 1) * sizeof(char);
@@ -81,12 +82,12 @@ bool Strings_Are_Equal(const char* subject, const char* expected)
 
 bool String_Is_Empty(const char* subject)
 {
-	return subject == NULL || Strings_Are_Equal(subject, "");
+	return subject == NULL || Strings_Are_Equal(subject, EMPTY_STRING);
 }
 
 bool String_Is_Empty(char* subject)
 {
-	return subject == NULL || Strings_Are_Equal(subject, "");
+	return subject == NULL || Strings_Are_Equal(subject, EMPTY_STRING);
 }
 
 bool String_Starts_With(char* subject, char* expected)
@@ -179,7 +180,7 @@ char* Convert_String_To_Upper_Case(const char* subject)
 {
 	if (String_Is_Empty(subject))
 	{
-		return "";
+		return strdup(EMPTY_STRING);
 	}
 
 	auto uppercaseSubject = strdup(subject);
@@ -207,7 +208,7 @@ char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCo
 	auto token = strtok(countCsvStringBuffer, COMMA);
 
 	while (token != NULL) {
-		token = strtok(NULL, ",");
+		token = strtok(NULL, COMMA);
 		entryCount++;
 	}
 
@@ -219,14 +220,14 @@ char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCo
 	auto readStringBuffer = strdup(csvString);
 	auto entryIdx = 0;
 
-	token = strtok(readStringBuffer, ",");
+	token = strtok(readStringBuffer, COMMA);
 
 	while(token != NULL && entryIdx < entryCount)
 	{
 		csvEntries[entryIdx] = token;
 		entryIdx++;
 
-		token = strtok(NULL, ",");
+		token = strtok(NULL, COMMA);
 	}
 
 	if (csvEntryCount != NULL)

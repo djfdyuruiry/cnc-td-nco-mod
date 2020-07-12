@@ -6,6 +6,7 @@ static auto LOG_LEVEL_LENGTH = 5;
 
 static HANDLE LOG_FILE_HANDLE = NULL;
 static bool FAILED_TO_OPEN_LOG_FILE = false;
+static bool ONLY_LOG_ERROR_TO_STD_OUT = false;
 
 const char* Log_Level_To_String(LogLevel level)
 {
@@ -122,7 +123,10 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		Append_To_File(LOG_FILE_HANDLE, messageWithLevelBuffer);
 	}
 
-	printf("%s", messageWithLevelBuffer);
+	if (!ONLY_LOG_ERROR_TO_STD_OUT || logLevel == ERR)
+	{
+		printf("%s", messageWithLevelBuffer);
+	}
 
 	delete messageBuffer;
 	delete messageWithLevelBuffer;
@@ -136,6 +140,11 @@ int Get_Log_Line_Length()
 int Get_Log_Level_Length()
 {
 	return LOG_LEVEL_LENGTH;
+}
+
+void Toggle_Console_Logging()
+{
+	ONLY_LOG_ERROR_TO_STD_OUT = !ONLY_LOG_ERROR_TO_STD_OUT;
 }
 
 void Close_Log_File_If_Open()

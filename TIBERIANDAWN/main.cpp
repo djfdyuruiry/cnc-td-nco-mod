@@ -78,9 +78,7 @@ static void Parse_Command_Line(const char* commandLine)
 
 		exit(1);
 		#else
-		Enter_Lua_Repl();
-
-		exit(0);
+		Enter_Lua_Repl() ? exit(0) : exit (1);
 		#endif
 	}
 	else if (String_Starts_With(commandLine, "--dump-rules"))

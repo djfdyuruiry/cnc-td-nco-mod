@@ -1360,10 +1360,13 @@ class BulletTypeClass : public ObjectTypeClass
 		*/
 		int Range;
 
+		char* FriendlyName;
+
 		//---------------------------------------------------------------------
 		BulletTypeClass(
 			BulletType type,
-			char const *ininame,
+			const char* ininame,
+			const char* friendlyName,
 			bool is_high,
 			bool is_homing,
 			bool is_arcing,
