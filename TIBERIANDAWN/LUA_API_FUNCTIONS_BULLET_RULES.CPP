@@ -213,9 +213,9 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
     }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
     {
-        Log_Trace("Write_Bullet_Rule => Rule value: %s -> %s", bullet->FriendlyName,  value);
+        Log_Trace("Write_Bullet_Rule => Rule value: %s -> %s", bullet->FriendlyName,  originalValue);
 
-        bullet->FriendlyName = strdup(value);
+        bullet->FriendlyName = strdup(originalValue);
     }
     else
     {
