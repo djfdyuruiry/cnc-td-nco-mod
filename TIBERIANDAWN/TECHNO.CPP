@@ -182,18 +182,19 @@ TechnoTypeClass::TechnoTypeClass(
 		WeaponType primary,
 		WeaponType secondary,
 		ArmorType armor) :
-	ObjectTypeClass(	true,
-							is_flammable,
-							is_crushable,
-							is_stealthy,
-							is_selectable,
-							is_legal_target,
-							is_insignificant,
-							is_immune,
-							name,
-							ininame,
-							armor,
-							strength)
+	ObjectTypeClass(true,
+					is_flammable,
+					is_crushable,
+					is_stealthy,
+					is_selectable,
+					is_legal_target,
+					is_insignificant,
+					is_immune,
+					name,
+					ininame,
+					armor,
+					strength,
+		            true)
 {
 	CameoData = NULL;
 
@@ -204,7 +205,12 @@ TechnoTypeClass::TechnoTypeClass(
 	risk = risk;
 	Risk = 0;
 
-	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	if (Strings_Are_Equal(IniName, "TREX"))
+	{
+		printf("REEEEA");
+	}
+
+	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, friendlyName);
 	Level = Read_Build_Level(IniName, level);
 	Pre = Read_Prerequisite(IniName, pre);
 	IsTransporter = Read_Is_Transport(IniName, is_transporter);

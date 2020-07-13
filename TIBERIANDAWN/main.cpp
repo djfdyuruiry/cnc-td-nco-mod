@@ -47,7 +47,7 @@ static void Test_Lua_Events()
 
 	Log_Info("Testing game tick event handler");
 
-	On_Game_Tick();
+	Push_Game_Loop_Message(GAME_TICK_ELAPSED);
 }
 
 static void Game_Event_Callback(const EventCallbackStruct& event)
@@ -59,6 +59,27 @@ static void Game_Event_Callback(const EventCallbackStruct& event)
 			event.Message.TimeoutSeconds,
 			event.Message.Message
 		);
+	}
+}
+
+static void Run_Special_Test_If_Present()
+{
+	if (true)
+	{
+		return;
+	}
+
+	while (true)
+	{
+		auto gameRuleValue = Read_Int_Game_Rule("MaxHarvesterCapacity", 28, INT_MIN, INT_MAX);
+		
+		gameRuleValue = Read_Int_Game_Rule("MaxHarvesterCapacity", 28, INT_MIN, INT_MAX);
+		gameRuleValue = Read_Int_Game_Rule("MaxHarvesterCapacity", 28, INT_MIN, INT_MAX);
+		gameRuleValue = Read_Int_Game_Rule("MaxHarvesterCapacity", 28, INT_MIN, INT_MAX);
+
+		Sleep(25);
+
+		printf(".");
 	}
 }
 
@@ -115,6 +136,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 		return 1;
 	}
+
+	Run_Special_Test_If_Present();
 
 	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
 

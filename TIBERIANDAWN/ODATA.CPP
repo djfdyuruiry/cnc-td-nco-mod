@@ -636,7 +636,8 @@ OverlayTypeClass::OverlayTypeClass(
 							fullname,
 							ininame,
 							ARMOR_NONE,
-							0)
+							0,
+							false)
 {
 	IsRadarVisible = isradarvisible;
 	IsCrate = iscrate;

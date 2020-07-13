@@ -462,7 +462,7 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
     {
         weaponType = WEAPON_MAMMOTH_TUSK;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "MLRS"))
+    else if (Strings_Are_Equal(weaponTypeString, "ROCKET_LAUNCHER"))
     {
         weaponType = WEAPON_MLRS;
     }
@@ -498,11 +498,11 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
     {
         weaponType = WEAPON_HONEST_JOHN;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "STEG"))
+    else if (Strings_Are_Equal(weaponTypeString, "DINO_RAM"))
     {
         weaponType = WEAPON_STEG;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "TREX"))
+    else if (Strings_Are_Equal(weaponTypeString, "DINO_BITE"))
     {
         weaponType = WEAPON_TREX;
     }
@@ -608,7 +608,7 @@ const char* Weapon_Type_To_String(WeaponType weaponType)
     }
     else if (weaponType == WEAPON_MLRS)
     {
-        weaponTypeString = "MLRS";
+        weaponTypeString = "ROCKET_LAUNCHER";
     }
     else if (weaponType == WEAPON_155MM)
     {
@@ -644,11 +644,11 @@ const char* Weapon_Type_To_String(WeaponType weaponType)
     }
     else if (weaponType == WEAPON_STEG)
     {
-        weaponTypeString = "STEG";
+        weaponTypeString = "DINO_RAM";
     }
     else if (weaponType == WEAPON_TREX)
     {
-        weaponTypeString = "TREX";
+        weaponTypeString = "DINO_BITE";
     }
     else
     {

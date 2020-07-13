@@ -211,7 +211,7 @@ void Enable_Uncompressed_Shapes (void)
 
 unsigned long Build_Frame(void const *dataptr, unsigned short framenumber, void *buffptr)
 {
-	On_Game_Tick();
+	Push_Game_Loop_Message(GAME_TICK_ELAPSED);
 
 #ifdef FIXIT_SCORE_CRASH
 	char * ptr;

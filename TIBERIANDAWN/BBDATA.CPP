@@ -580,7 +580,7 @@ BulletTypeClass::BulletTypeClass(
 	unsigned rot,
 	WarheadType warhead,
 	AnimType explosion
-) : ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0) 
+) : ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0, false) 
 {
 	Type = type;
 	Explosion = explosion;

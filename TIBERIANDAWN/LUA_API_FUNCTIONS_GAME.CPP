@@ -58,7 +58,7 @@ static HouseClass* Get_House_By_Type(lua_State* lua, HousesType houseType)
 static HousesType Lua_Parse_House_Type(lua_State* lua, const char* houseTypeString, const char* callingFunctionName, bool* parseError)
 {
     auto upperHouseTypeString = Convert_String_To_Upper_Case(houseTypeString);
-    auto houseType = Parse_House_Type(houseTypeString, parseError);
+    auto houseType = Parse_House_Type(upperHouseTypeString, parseError);
 
     delete upperHouseTypeString;
 

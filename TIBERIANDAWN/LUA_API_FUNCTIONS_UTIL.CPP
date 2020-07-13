@@ -55,6 +55,12 @@ static int Lua_Show_Error(lua_State* lua)
     {
         auto logMessage = Get_Lua_Value_As_String(1);
 
+        if (String_Is_Empty(logMessage))
+        {
+            luaL_error(lua, "showError parameter `message` was nil or blank");
+            return 0;
+        }
+
         Show_Error(logMessage);
     }
 

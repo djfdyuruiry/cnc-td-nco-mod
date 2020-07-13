@@ -16,4 +16,14 @@ struct HouseSuperweaponMessage {
 	bool oneTime;
 };
 
+
+enum GameLoopMessageType : unsigned char {
+	GAME_TICK_ELAPSED
+};
+
+struct GameLoopMessage {
+	bool unread;
+	GameLoopMessageType type;
+};
+
 #endif
