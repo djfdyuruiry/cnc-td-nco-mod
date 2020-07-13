@@ -119,7 +119,7 @@ static int Lua_Send_House_Super_Weapon_Message(
     }
 
     if (house->SuperweaponMessage.unread) {
-        luaL_error(lua, "Given house already has a superweapon change pending, try again when this change is shown in game");
+        luaL_error(lua, "Given house already has a superweapon change pending, try again when this change is shown ingame");
         return 0;
     }
 

@@ -375,6 +375,7 @@
     <ClInclude Include="FUSE.H" />
     <ClInclude Include="GADGET.H" />
     <ClInclude Include="GAMEDLG.H" />
+    <ClInclude Include="GAME_MESSAGES.H" />
     <ClInclude Include="GAUGE.H" />
     <ClInclude Include="GOPTIONS.H" />
     <ClInclude Include="GSCREEN.H" />

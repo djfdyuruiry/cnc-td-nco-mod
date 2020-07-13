@@ -775,6 +775,9 @@
     <ClInclude Include="LUA_API_FUNCTIONS_BULLET_RULES.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="GAME_MESSAGES.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
