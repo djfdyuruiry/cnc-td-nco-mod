@@ -72,7 +72,7 @@ onGameTick(function()
   local now = getNowInEpochMillis()
 
   if now - lastMessageTime >= 30000 then -- every 30 seconds
-    showGameMessage(string.format("[%d] Peace through power!", now), 30)
+    showGameMessage(string.format("[%d] Peace through power!", now), 3)
 
     lastMessageTime = now
   end

@@ -595,6 +595,7 @@
     <ClCompile Include="DRIVE.CPP" />
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
+    <ClCompile Include="GAME_MESSAGES.CPP" />
     <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP" />

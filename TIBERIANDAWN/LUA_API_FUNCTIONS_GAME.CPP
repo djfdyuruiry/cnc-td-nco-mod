@@ -1,8 +1,5 @@
 #include "function.h"
 
-#include "DLLInterface.h"
-#include "SidebarGlyphx.h"
-
 static SuperClass* Get_House_Superweapon(lua_State* lua, int index, HouseClass* house, const char* callingFunctionName)
 {
     auto superWeaponName = Get_Lua_Value_As_String(index);
@@ -242,7 +239,9 @@ static int Lua_Show_Game_Message(lua_State* lua)
         return 0;
     }
 
-    On_Message(message, durationInSeconds);
+    GAME_UI_MESSAGE.message = strdup(message);
+    GAME_UI_MESSAGE.durationInSeconds = durationInSeconds;
+    GAME_UI_MESSAGE.unread = true;
 
     return 0;
 }

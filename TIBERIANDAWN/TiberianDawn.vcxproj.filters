@@ -1432,6 +1432,9 @@
     <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
+    <ClCompile Include="GAME_MESSAGES.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="win32lib\FACINGFF.ASM">
