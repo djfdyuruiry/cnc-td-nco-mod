@@ -66,6 +66,14 @@ onSaveLoad(function(house, scenario)
   testRules()
 end)
 
+local lastMessageTime = 0
+
 onGameTick(function()
-  showGameMessage(string.format("[%d] Peace through power!", getNowInEpochMillis()), 30)
+  local now = getNowInEpochMillis()
+
+  if now - lastMessageTime >= 30000 then -- every 30 seconds
+    showGameMessage(string.format("[%d] Peace through power!", now), 3)
+
+    lastMessageTime = now
+  end
 end)

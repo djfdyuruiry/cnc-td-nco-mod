@@ -9,23 +9,39 @@ using namespace std;
 
 static const auto MAX_KEY_LENGTH = 1024;
 
-static map<string, char*>* STRING_RULES_CACHE;
-static map<string, int>* INT_RULES_CACHE;
-static map<string, unsigned int>* UINT_RULES_CACHE;
-static map<string, double>* DOUBLE_RULES_CACHE;
-static map<string, bool>* BOOL_RULES_CACHE;
+static map<unsigned long, char*>* STRING_RULES_CACHE;
+static map<unsigned long, int>* INT_RULES_CACHE;
+static map<unsigned long, unsigned int>* UINT_RULES_CACHE;
+static map<unsigned long, double>* DOUBLE_RULES_CACHE;
+static map<unsigned long, bool>* BOOL_RULES_CACHE;
 
-static string* Build_Rule_Key(const char* section, const char* ruleName)
+static unsigned long Build_Rule_Key(const char* section, const char* ruleName)
 {
-	auto key = Allocate_String(MAX_KEY_LENGTH);
+	auto keyString = Allocate_String(MAX_KEY_LENGTH);
+	auto upperSection = Convert_String_To_Upper_Case(section);
+	auto upperRuleName = Convert_String_To_Upper_Case(ruleName);
 
-	sprintf(key, "%s__%s", section, ruleName);
+	sprintf(keyString, "%s__%s", upperSection, upperRuleName);
 
-	return new string(key);
+	auto hash = 5381ul;
+	auto stringChar = 0;
+
+	auto iterator = keyString;
+
+	while (stringChar = *iterator++)
+	{
+		hash = ((hash << 5) + hash) + stringChar;
+	}
+
+	delete keyString;
+	delete upperSection;
+	delete upperRuleName;
+
+	return hash;
 }
 
 template<typename T> static T Get_Cached_Rule(
-	map<string, T> cache,
+	map<unsigned long, T> cache,
 	const char* section,
 	const char* ruleName,
 	T defaultIfMissing,
@@ -34,36 +50,31 @@ template<typename T> static T Get_Cached_Rule(
 {
 	auto key = Build_Rule_Key(section, ruleName);
 
-	if (cache.find(*key) == cache.end())
+	if (cache.find(key) == cache.end())
 	{
-		Log_Trace("Cache miss for key %s", key->c_str());
+		Log_Trace("Cache miss for key %d", key);
 
 		*cacheHit = false;
 
-		delete key;
 		return defaultIfMissing;
 	}
 
-	Log_Trace("Cache hit for key %s", key->c_str());
+	Log_Trace("Cache hit for key %d", key);
 
 	*cacheHit = true;
 
-	auto value = cache[*key];
-
-	delete key;
+	auto value = cache[key];
 
 	Log_Trace("Resolved rule value from cache: %s -> %s", section, ruleName);
 
 	return value;
 }
 
-template<typename T> static void Cache_Rule(map<string, T>& cache, const char* section, const char* ruleName, T ruleValue)
+template<typename T> static void Cache_Rule(map<unsigned long, T>& cache, const char* section, const char* ruleName, T ruleValue)
 {
 	auto key = Build_Rule_Key(section, ruleName);
 
-	cache[*key] = ruleValue;
-
-	delete key;
+	cache[key] = ruleValue;
 }
 
 static void Ensure_Rule_Cache_Initialised()
@@ -77,18 +88,18 @@ static void Ensure_Rule_Cache_Initialised()
 		return;
 	}
 
-	STRING_RULES_CACHE = new map<string, char*>();
-	INT_RULES_CACHE = new map<string, int>();
-	UINT_RULES_CACHE = new map<string, unsigned int>();
-	DOUBLE_RULES_CACHE = new map<string, double>();
-	BOOL_RULES_CACHE = new map<string, bool>();
+	STRING_RULES_CACHE = new map<unsigned long, char*>();
+	INT_RULES_CACHE = new map<unsigned long, int>();
+	UINT_RULES_CACHE = new map<unsigned long, unsigned int>();
+	DOUBLE_RULES_CACHE = new map<unsigned long, double>();
+	BOOL_RULES_CACHE = new map<unsigned long, bool>();
 }
 
 char* Get_Cached_String_Rule(const char* section, const char* ruleName, bool* cacheHit)
 {
 	Ensure_Rule_Cache_Initialised();
 
-	auto value = Get_Cached_Rule(*STRING_RULES_CACHE, section, ruleName, (char *)"", cacheHit);
+	auto value = Get_Cached_Rule(*STRING_RULES_CACHE, section, ruleName, (char*)"", cacheHit);
 
 	if (*cacheHit)
 	{
@@ -133,7 +144,7 @@ void Cache_Int_Rule(const char* section, const char* ruleName, int ruleValue)
 	Cache_Rule(*INT_RULES_CACHE, section, ruleName, ruleValue);
 }
 
-double Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleName, bool* cacheHit)
+unsigned int Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleName, bool* cacheHit)
 {
 	Ensure_Rule_Cache_Initialised();
 
@@ -147,7 +158,7 @@ double Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleName, b
 	return value;
 }
 
-void Cache_Unisgned_Int_Rule(const char* section, const char* ruleName, unsigned int ruleValue)
+void Cache_Unsigned_Int_Rule(const char* section, const char* ruleName, unsigned int ruleValue)
 {
 	Ensure_Rule_Cache_Initialised();
 

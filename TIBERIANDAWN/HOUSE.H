@@ -41,18 +41,7 @@
 #include "COORDA.h"
 #include "Credits.h"
 
-enum HouseSuperweaponMessageType : unsigned char {
-	ENABLE_SUPERWEAPON,
-	DISABLE_SUPERWEAPON,
-	CHARGE_SUPERWEAPON
-};
-
-struct HouseSuperweaponMessage {
-	bool unread;
-	HouseSuperweaponMessageType type;
-	SuperClass* weapon;
-	bool oneTime;
-};
+#include "game_messages.h"
 
 //extern "C" {
 //unsigned Cardinal_To_Fixed(unsigned base, unsigned cardinal);

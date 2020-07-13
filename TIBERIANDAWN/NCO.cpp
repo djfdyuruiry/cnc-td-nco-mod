@@ -3,8 +3,9 @@
 #include "lua_repl.h"
 
 static HANDLE LUA_REPL_THREAD;
+static HANDLE LUA_EVENT_THREAD;
 
-static DWORD WINAPI Start_Lua_Repl_In_Background(LPVOID lpParam)
+static DWORD WINAPI Start_Lua_Repl(LPVOID lpParam)
 {
 	Enter_Lua_Repl(false);
 
@@ -45,7 +46,7 @@ bool NCO_Startup()
 		LUA_REPL_THREAD = CreateThread(
 			NULL,
 			0,
-			&Start_Lua_Repl_In_Background,
+			&Start_Lua_Repl,
 			NULL,
 			NULL,
 			NULL
@@ -58,6 +59,24 @@ bool NCO_Startup()
 	}
 	#endif
 
+	if (Lua_Is_Enabled())
+	{
+		LUA_EVENT_THREAD = CreateThread(
+			NULL,
+			0,
+			&Process_Game_Events,
+			NULL,
+			NULL,
+			NULL
+		);
+
+		if (LUA_EVENT_THREAD == NULL || LUA_EVENT_THREAD == INVALID_HANDLE_VALUE)
+		{
+			Show_Error("Failed to start Lua event thread: %s", Get_Win32_Error_Message());
+			return false;
+		}
+	}
+
 	return true;
 }
 
@@ -67,7 +86,7 @@ void NCO_Shutdown()
 
 	Close_Log_File_If_Open();
 
-#ifndef TEST_CONSOLE
+	#ifndef TEST_CONSOLE
 	if (Lua_Console_Is_Enabled())
 	{
 		if (!TerminateThread(LUA_REPL_THREAD, 0))
@@ -78,4 +97,12 @@ void NCO_Shutdown()
 		Stop_Console_Output();
 	}
 	#endif
+
+	if (Lua_Is_Enabled())
+	{
+		if (LUA_EVENT_THREAD != NULL && !TerminateThread(LUA_EVENT_THREAD, 0))
+		{
+			Show_Error("Error stopping Lua event thread: %s", Get_Win32_Error_Message());
+		}
+	}
 }

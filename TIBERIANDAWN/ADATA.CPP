@@ -2511,7 +2511,7 @@ AnimTypeClass::AnimTypeClass(AnimType anim, char const *name, int size, int bigg
 		bool istrans, bool isflame, unsigned int damage,
 		int delaytime, int start, int loopstart, int loopend, int stages, int loops, 
 		VocType sound, AnimType chainto, int virtualstages, int virtualscale, AnimType virtualanim) :
-	ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, name, ARMOR_NONE, 0)
+	ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, name, ARMOR_NONE, 0, false)
 {
 	Biggest = biggest;
 	ChainTo = chainto;

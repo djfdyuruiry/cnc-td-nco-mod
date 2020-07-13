@@ -122,7 +122,8 @@ ObjectTypeClass::ObjectTypeClass(
 						int name,
 						char const *ini,
 						ArmorType armor,
-						unsigned short strength) :
+						unsigned short strength,
+						bool loadObjectRules) :
 	AbstractTypeClass(name, ini)
 {
 	IsSentient = is_sentient;
@@ -138,8 +139,11 @@ ObjectTypeClass::ObjectTypeClass(
 	ImageData = NULL;
 	//RadarIcon = NULL;
 
-	Armor = Read_Armor(IniName, armor);
-	MaxStrength = Read_Strength(IniName, strength);
+	if (loadObjectRules)
+	{
+		Armor = Read_Armor(IniName, armor);
+		MaxStrength = Read_Strength(IniName, strength);
+	}
 }
 
 

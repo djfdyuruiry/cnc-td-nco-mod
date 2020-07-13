@@ -35,6 +35,7 @@ static const LuaEvent* LUA_EVENTS = new LuaEvent[LUA_EVENT_COUNT]
 
 static bool EVENTS_INITIALISED = false;
 static long long LAST_TICK_TIME_IN_EPOCH_MILLIS = 0;
+static GameLoopMessage GAME_LOOP_MESSAGE;
 
 static void Fire_Lua_Event(LuaEvent name, const char* argumentFormat = "nil", ...)
 {
@@ -129,7 +130,7 @@ void On_Save_Load(HousesType playerHouse, unsigned int scenarioNumber)
     );
 }
 
-void On_Game_Tick()
+static void On_Game_Tick()
 {
     auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
     auto msSinceLastTick = nowInEpochMillis - LAST_TICK_TIME_IN_EPOCH_MILLIS;
@@ -143,4 +144,30 @@ void On_Game_Tick()
     Fire_Lua_Event(ON_GAME_TICK_EVENT);
 
     LAST_TICK_TIME_IN_EPOCH_MILLIS = nowInEpochMillis;
+}
+
+DWORD WINAPI Process_Game_Events(LPVOID lpParam)
+{
+    GAME_LOOP_MESSAGE.unread = false;
+
+    while (true)
+    {
+        if (GAME_LOOP_MESSAGE.unread)
+        {
+            if (GAME_LOOP_MESSAGE.type == GAME_TICK_ELAPSED)
+            {
+                On_Game_Tick();
+            }
+
+            GAME_LOOP_MESSAGE.unread = false;
+        }
+
+        Sleep(10);
+    }
+}
+
+void Push_Game_Loop_Message(GameLoopMessageType messageType)
+{
+    GAME_LOOP_MESSAGE.type = messageType;
+    GAME_LOOP_MESSAGE.unread = true;
 }

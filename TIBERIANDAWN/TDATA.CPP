@@ -817,7 +817,7 @@ TerrainTypeClass::TerrainTypeClass(
 	int fullname, unsigned short strength, ArmorType armor, short const *occupy, short const *overlap) :
 		ObjectTypeClass(true, is_flammable, is_crushable, true, is_selectable,
 								is_legal_target, is_insignificant, is_immune,
-								fullname, ininame, armor, strength)
+								fullname, ininame, armor, strength, false)
 {
 	CenterBase = centerbase;
 	IsTiberiumSpawn = is_spawn;

@@ -2493,7 +2493,7 @@ TemplateTypeClass const * const TemplateTypeClass::Pointers[TEMPLATE_COUNT] = {
 TemplateTypeClass::TemplateTypeClass(TemplateType iconset, int theater,
 	char const *ininame, int fullname, LandType land,
 	int width, int height, LandType altland, char const *alticons ) :
-		ObjectTypeClass(false, false, false, true, false, false, true, true, fullname, ininame, ARMOR_NONE, 0)
+		ObjectTypeClass(false, false, false, true, false, false, true, true, fullname, ininame, ARMOR_NONE, 0, false)
 {
 	Theater = theater;
 	AltIcons = alticons;

@@ -82,7 +82,6 @@ char	**KeyFrameSlots [MAX_SLOTS];
 int 	TotalSlotsUsed=0;
 int		TheaterSlotsUsed = THEATER_SLOT_START;
 
-
 typedef struct tShapeHeaderType{
 	unsigned draw_flags;
 	char		*shape_data;
@@ -211,7 +210,8 @@ void Enable_Uncompressed_Shapes (void)
 
 unsigned long Build_Frame(void const *dataptr, unsigned short framenumber, void *buffptr)
 {
-	On_Game_Tick();
+	Process_Game_Ui_Message();
+	Push_Game_Loop_Message(GAME_TICK_ELAPSED);
 
 #ifdef FIXIT_SCORE_CRASH
 	char * ptr;

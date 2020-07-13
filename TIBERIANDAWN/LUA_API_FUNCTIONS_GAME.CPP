@@ -1,8 +1,5 @@
 #include "function.h"
 
-#include "DLLInterface.h"
-#include "SidebarGlyphx.h"
-
 static SuperClass* Get_House_Superweapon(lua_State* lua, int index, HouseClass* house, const char* callingFunctionName)
 {
     auto superWeaponName = Get_Lua_Value_As_String(index);
@@ -58,7 +55,7 @@ static HouseClass* Get_House_By_Type(lua_State* lua, HousesType houseType)
 static HousesType Lua_Parse_House_Type(lua_State* lua, const char* houseTypeString, const char* callingFunctionName, bool* parseError)
 {
     auto upperHouseTypeString = Convert_String_To_Upper_Case(houseTypeString);
-    auto houseType = Parse_House_Type(houseTypeString, parseError);
+    auto houseType = Parse_House_Type(upperHouseTypeString, parseError);
 
     delete upperHouseTypeString;
 
@@ -119,7 +116,7 @@ static int Lua_Send_House_Super_Weapon_Message(
     }
 
     if (house->SuperweaponMessage.unread) {
-        luaL_error(lua, "Given house already has a superweapon change pending, try again when this change is shown in game");
+        luaL_error(lua, "Given house already has a superweapon change pending, try again when this change is shown ingame");
         return 0;
     }
 
@@ -242,7 +239,9 @@ static int Lua_Show_Game_Message(lua_State* lua)
         return 0;
     }
 
-    On_Message(message, durationInSeconds);
+    GAME_UI_MESSAGE.message = strdup(message);
+    GAME_UI_MESSAGE.durationInSeconds = durationInSeconds;
+    GAME_UI_MESSAGE.unread = true;
 
     return 0;
 }

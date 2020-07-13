@@ -13,7 +13,7 @@ void Cache_Int_Rule(const char* section, const char* ruleName, int ruleValue);
 
 int Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleName, bool* cacheHit);
 
-void Cache_Unsigned_Int_Rule(const char* section, const char* ruleName, int ruleValue);
+void Cache_Unsigned_Int_Rule(const char* section, const char* ruleName, unsigned int ruleValue);
 
 double Get_Cached_Double_Rule(const char* section, const char* ruleName, bool* cacheHit);
 

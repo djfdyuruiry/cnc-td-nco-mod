@@ -379,18 +379,19 @@ class ObjectTypeClass : public AbstractTypeClass
 		void const * RadarIcon;
 
 		//--------------------------------------------------------------------
-		ObjectTypeClass(	bool is_sentient,
-								bool is_flammable,
-								bool is_crushable,
-								bool is_stealthy,
-								bool is_selectable,
-								bool is_legal_target,
-								bool is_insignificant,
-								bool is_immune,
-								int fullname,
-								char const *name,
-								ArmorType armor,
-								unsigned short strength);
+		ObjectTypeClass(bool is_sentient,
+						bool is_flammable,
+						bool is_crushable,
+						bool is_stealthy,
+						bool is_selectable,
+						bool is_legal_target,
+						bool is_insignificant,
+						bool is_immune,
+						int fullname,
+						char const *name,
+						ArmorType armor,
+						unsigned short strength,
+			            bool loadObjectRules);
 
 		static void One_Time(void);
 

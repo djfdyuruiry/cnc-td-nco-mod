@@ -47,7 +47,9 @@ static void Test_Lua_Events()
 
 	Log_Info("Testing game tick event handler");
 
-	On_Game_Tick();
+	// simulate the keyframe.cpp logic
+	Push_Game_Loop_Message(GAME_TICK_ELAPSED);
+	Process_Game_Ui_Message();
 }
 
 static void Game_Event_Callback(const EventCallbackStruct& event)

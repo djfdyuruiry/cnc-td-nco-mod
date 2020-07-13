@@ -265,6 +265,8 @@ static int Read_Int_From_Rules_Ini(
 	{
 		Log_Trace("No rules ini value found, default will be used");
 
+		Cache_Int_Rule(section, entry, defaultValue);
+
 		return defaultValue;
 	}
 
@@ -367,6 +369,8 @@ static unsigned int Read_Unsigned_Int_From_Rules_Ini(
 	if (!*valueFound)
 	{
 		Log_Trace("No rules ini value found, default will be used");
+
+		Cache_Double_Rule(section, entry, defaultValue);
 
 		return defaultValue;
 	}
@@ -673,14 +677,22 @@ char* Read_String_From_Rules_Ini(
 	{
 		Log_Trace("No rules ini value found, default will be returned");
 
-		return strdup(defaultValue);
+		auto defaultCopy = strdup(defaultValue);
+
+		Cache_String_Rule(section, entry, defaultCopy);
+		
+		return defaultCopy;
 	}
 
 	if (String_Is_Empty(valueBuffer))
 	{
 		Log_Trace("Resolved rule value was empty, default will be returned");
 
-		return strdup(defaultValue);
+		auto defaultCopy = strdup(defaultValue);
+
+		Cache_String_Rule(section, entry, defaultCopy);
+
+		return defaultCopy;
 	}
 
 	auto valueIsValid = false;

@@ -214,7 +214,7 @@ SmudgeTypeClass const * const SmudgeTypeClass::Pointers[SMUDGE_COUNT] = {
  *   08/12/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 SmudgeTypeClass::SmudgeTypeClass(SmudgeType smudge, char const *ininame, int fullname, int width, int height, bool isbib, bool iscrater) :
-	ObjectTypeClass(false, false, false, true, false, false, true, true, fullname, ininame, ARMOR_NONE, 0)
+	ObjectTypeClass(false, false, false, true, false, false, true, true, fullname, ininame, ARMOR_NONE, 0, false)
 {
 	IsBib = isbib;
 	Width = width;
