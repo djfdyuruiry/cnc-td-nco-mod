@@ -205,11 +205,6 @@ TechnoTypeClass::TechnoTypeClass(
 	risk = risk;
 	Risk = 0;
 
-	if (Strings_Are_Equal(IniName, "TREX"))
-	{
-		printf("REEEEA");
-	}
-
 	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, friendlyName);
 	Level = Read_Build_Level(IniName, level);
 	Pre = Read_Prerequisite(IniName, pre);

@@ -1,8 +1,6 @@
 #ifndef RULES_CACHE_H
 #define RULES_CACHE_H
 
-unsigned long Build_Rule_Key(const char* section, const char* ruleName);
-
 char* Get_Cached_String_Rule(const char* section, const char* ruleName, bool* cacheHit);
 
 void Cache_String_Rule(const char* section, const char* ruleName, char* ruleValue);

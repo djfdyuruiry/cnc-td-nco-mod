@@ -15,7 +15,7 @@ static map<unsigned long, unsigned int>* UINT_RULES_CACHE;
 static map<unsigned long, double>* DOUBLE_RULES_CACHE;
 static map<unsigned long, bool>* BOOL_RULES_CACHE;
 
-unsigned long Build_Rule_Key(const char* section, const char* ruleName)
+static unsigned long Build_Rule_Key(const char* section, const char* ruleName)
 {
 	auto keyString = Allocate_String(MAX_KEY_LENGTH);
 	auto upperSection = Convert_String_To_Upper_Case(section);
@@ -158,7 +158,7 @@ unsigned int Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleN
 	return value;
 }
 
-void Cache_Unisgned_Int_Rule(const char* section, const char* ruleName, unsigned int ruleValue)
+void Cache_Unsigned_Int_Rule(const char* section, const char* ruleName, unsigned int ruleValue)
 {
 	Ensure_Rule_Cache_Initialised();
 
