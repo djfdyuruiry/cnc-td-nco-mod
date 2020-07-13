@@ -1,9 +1,5 @@
 [h1]🛠New Construction Options🛠[/h1]
 
-[img]https://raster.shields.io/github/v/release/djfdyuruiry/cnc-td-nco-mod.png[/img][img]https://img.shields.io/github/workflow/status/djfdyuruiry/cnc-td-nco-mod/Build%20&%20Test.png[/img][img]https://raster.shields.io/github/stars/djfdyuruiry/cnc-td-nco-mod.png?style=social[/img]
-
-[img]https://raster.shields.io/twitch/status/djfdyuruiry.png?label=twitch%20stream[/img]
-
 [url=https://github.com/djfdyuruiry/cnc-td-nco-mod]Github Repository[/url]
 
 This mod provides an extensive 📃 RULES.INI file 📃 for Tiberian Dawn & ⚙ Lua event scripting ⚙.
