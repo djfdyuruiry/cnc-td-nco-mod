@@ -360,9 +360,9 @@ void HouseClass::operator delete(void *ptr)
  *=============================================================================================*/
 HouseClass::HouseClass(HousesType house) :
 	Class(&HouseTypeClass::As_Reference(house)),
-	AirStrike("AirStrike", AIR_STRIKE_GONE_TIME_IN_MINS, VOX_AIRSTRIKE_READY, VOX_NONE, VOX_NOT_READY, VOX_NOT_READY),
-	IonCannon("IonCannon", ION_CANNON_GONE_TIME_IN_MINS, VOX_ION_READY, VOX_ION_CHARGING, VOX_ION_CHARGING, VOX_NO_POWER),
-	NukeStrike("NuclearStrike", NUKE_GONE_TIME_IN_MINS, VOX_NUKE_AVAILABLE, VOX_NONE, VOX_NOT_READY, VOX_NO_POWER)
+	AirStrike(AIRSTRIKE_SECTION_NAME, AIR_STRIKE_GONE_TIME_IN_MINS, VOX_AIRSTRIKE_READY, VOX_NONE, VOX_NOT_READY, VOX_NOT_READY),
+	IonCannon(ION_CANNON_SECTION_NAME, ION_CANNON_GONE_TIME_IN_MINS, VOX_ION_READY, VOX_ION_CHARGING, VOX_ION_CHARGING, VOX_NO_POWER),
+	NukeStrike(NUCLEAR_STRIKE_SECTION_NAME, NUKE_GONE_TIME_IN_MINS, VOX_NUKE_AVAILABLE, VOX_NONE, VOX_NOT_READY, VOX_NO_POWER)
 {
 
 	for (HousesType i = HOUSE_FIRST; i < HOUSE_COUNT; i++) {
@@ -522,8 +522,11 @@ HouseClass::HouseClass(HousesType house) :
 
 #endif
 
-}
+	SuperweaponMessage.unread = false;
 
+	ForceIonCannonToRemainOn = false;
+	ForceNukeToRemainOn = false;
+}
 
 HouseClass::~HouseClass (void)
 {
@@ -1271,7 +1274,14 @@ void HouseClass::AI(void)
 	**	being destroyed is a good example of this.
 	*/
 	if (IonCannon.Is_Present()) {
-		if (!(ActiveBScan & STRUCTF_EYE) && !IonCannon.Is_One_Time()) {
+		auto disableIonCannon = !ForceIonCannonToRemainOn && !(ActiveBScan & STRUCTF_EYE) && !IonCannon.Is_One_Time();
+
+		auto ionCannonMessageRecieved = SuperweaponMessage.unread
+			&& SuperweaponMessage.weapon == &IonCannon;
+
+		auto disableIonCannonMessageRecieved = ionCannonMessageRecieved && SuperweaponMessage.type == DISABLE_SUPERWEAPON;
+
+		if (disableIonCannon || disableIonCannonMessageRecieved) {
 
 			/*
 			**	Remove the ion cannon when there is no advanced communication facility.
@@ -1280,14 +1290,25 @@ void HouseClass::AI(void)
 			if (IonCannon.Remove()) {
 				if (this == PlayerPtr) Map.Column[1].Flag_To_Redraw();
 				IsRecalcNeeded = true;
+
+				ForceIonCannonToRemainOn = false;
+			}
+
+			if (disableIonCannonMessageRecieved) {
+				SuperweaponMessage.unread = false;
 			}
 		} else {
+			if (ionCannonMessageRecieved && SuperweaponMessage.type == CHARGE_SUPERWEAPON) {
+				IonCannon.Forced_Charge(this == PlayerPtr);
+
+				SuperweaponMessage.unread = false;
+			}
 
 			/*
 			**	Turn the ion cannon suspension on or off depending on the available
 			**	power. Note that one time ion cannon will not be affected by this.
 			*/
-			IonCannon.Suspend(Power_Fraction() < 0x0100);
+			IonCannon.Suspend(!ForceIonCannonToRemainOn && Power_Fraction() < 0x0100);
 
 			/*
 			**	Process the ion cannon AI and if something changed that would affect
@@ -1306,32 +1327,45 @@ void HouseClass::AI(void)
 		}
 
 	} else {
+		auto enableIonCannon = (GameToPlay == GAME_NORMAL || Rule.AllowSuperWeapons) &&
+			(ActiveBScan & STRUCTF_EYE) &&
+			(IsHuman || GameToPlay != GAME_NORMAL);
+
+		// one of: multiplayer game OR playing as GOODGUY OR GDI only rule disabled
+		enableIonCannon = enableIonCannon && (
+				GameToPlay != GAME_NORMAL
+				|| ActLike == HOUSE_GOOD
+				|| !Read_Boolean_Game_Rule(ONLY_GDI_CAN_USE_ION_CANNON_RULE, true)
+			);
+
+		auto enableIonCannonMessageRecieved = SuperweaponMessage.unread && SuperweaponMessage.weapon == &IonCannon;
 
 		/*
 		**	If there is no ion cannon present, but there is an advanced communcation
 		**	center available, then make the ion cannon available as well.
 		*/
-		if ((GameToPlay == GAME_NORMAL || Rule.AllowSuperWeapons) &&
-			(ActiveBScan & STRUCTF_EYE) &&
-			(IsHuman || GameToPlay != GAME_NORMAL)) {
-			// one of: multiplayer game OR playing as GOODGUY OR GDI only rule disabled
-			auto houseCanUseIonCannon = GameToPlay != GAME_NORMAL
-					|| ActLike == HOUSE_GOOD 
-					|| !Read_Boolean_Game_Rule(ONLY_GDI_CAN_USE_ION_CANNON_RULE, true);
-
-			if (houseCanUseIonCannon) {
+		if (enableIonCannon || enableIonCannonMessageRecieved) {
+			if (!enableIonCannonMessageRecieved)
+			{
 				IonCannon.Enable(false, this == PlayerPtr, Power_Fraction() < 0x0100);
+			}
+			else
+			{
+				IonCannon.Enable(SuperweaponMessage.oneTime, this == PlayerPtr);
 
-				/*
-				**	Flag the sidebar to be redrawn if necessary.
-				*/
-				// Add to Glyphx multiplayer sidebar. ST - 3/22/2019 1:50PM
-				if (GameToPlay == GAME_GLYPHX_MULTIPLAYER && IsHuman) {
-					Sidebar_Glyphx_Add(RTTI_SPECIAL, SPC_ION_CANNON, this);
-				} else if (this == PlayerPtr) {
-					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
-					Map.Column[1].Flag_To_Redraw();
-				}
+				ForceIonCannonToRemainOn = !SuperweaponMessage.oneTime;
+				SuperweaponMessage.unread = false;
+			}
+
+			/*
+			**	Flag the sidebar to be redrawn if necessary.
+			*/
+			// Add to Glyphx multiplayer sidebar. ST - 3/22/2019 1:50PM
+			if (GameToPlay == GAME_GLYPHX_MULTIPLAYER && IsHuman) {
+				Sidebar_Glyphx_Add(RTTI_SPECIAL, SPC_ION_CANNON, this);
+			} else if (this == PlayerPtr) {
+				Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
+				Map.Column[1].Flag_To_Redraw();
 			}
 		}
 	}
@@ -1342,8 +1376,16 @@ void HouseClass::AI(void)
 	**	being destroyed is a good example of this.
 	*/
 	if (NukeStrike.Is_Present()) {
-		if (!(ActiveBScan & STRUCTF_TEMPLE) && (!NukeStrike.Is_One_Time() || GameToPlay == GAME_NORMAL)) {
+		auto disableNuke = !ForceNukeToRemainOn
+			&& !(ActiveBScan & STRUCTF_TEMPLE)
+			&& (!NukeStrike.Is_One_Time() || GameToPlay == GAME_NORMAL);
 
+		auto nukeMessageRecieved = SuperweaponMessage.unread
+			&& SuperweaponMessage.weapon == &NukeStrike;
+
+		auto disableNukeMessageRecieved = nukeMessageRecieved && SuperweaponMessage.type == DISABLE_SUPERWEAPON;
+
+		if (disableNuke || disableNukeMessageRecieved) {
 			/*
 			**	Remove the nuke strike when there is no Temple of Nod.
 			**	Note that this will not remove the one time created nuke strike.
@@ -1352,13 +1394,24 @@ void HouseClass::AI(void)
 				IsRecalcNeeded = true;
 				if (this == PlayerPtr) Map.Column[1].Flag_To_Redraw();
 			}
+
+			if (disableNukeMessageRecieved) {
+				ForceNukeToRemainOn = false;
+
+				SuperweaponMessage.unread = false;
+			}
 		} else {
+			if (nukeMessageRecieved && SuperweaponMessage.type == CHARGE_SUPERWEAPON) {
+				NukeStrike.Forced_Charge(this == PlayerPtr);
+
+				SuperweaponMessage.unread = false;
+			}
 
 			/*
 			**	Turn the nuke strike suspension on or off depending on the available
 			**	power. Note that one time nuke strike will not be affected by this.
 			*/
-			NukeStrike.Suspend(Power_Fraction() < 0x0100);
+			NukeStrike.Suspend(!ForceNukeToRemainOn && Power_Fraction() < 0x0100);
 
 			/*
 			**	Process the nuke strike AI and if something changed that would affect
@@ -1377,16 +1430,33 @@ void HouseClass::AI(void)
 		}
 
 	} else {
+		auto enableNukeStrike = (GameToPlay == GAME_NORMAL || Rule.AllowSuperWeapons)
+			&& (ActiveBScan & STRUCTF_TEMPLE) && Has_Nuke_Device() 
+			&& IsHuman;
+
+		auto enableNukeStrikeMessageRecieved = SuperweaponMessage.unread 
+			&& SuperweaponMessage.weapon == &NukeStrike
+			&& SuperweaponMessage.type == ENABLE_SUPERWEAPON;
 
 		/*
 		**	If there is no nuke strike present, but there is a Temple of Nod
 		**	available, then make the nuke strike strike available.
 		*/
-		if ((GameToPlay == GAME_NORMAL || Rule.AllowSuperWeapons) && (ActiveBScan & STRUCTF_TEMPLE) && Has_Nuke_Device() && IsHuman) {
-			NukeStrike.Enable(
-				GameToPlay != GAME_NORMAL || Read_Boolean_Game_Rule(ONE_TIME_NUKE_RULE, true),
-				this == PlayerPtr
-			);
+		if (enableNukeStrike || enableNukeStrikeMessageRecieved) {
+			if (!enableNukeStrikeMessageRecieved) {
+				NukeStrike.Enable(
+					GameToPlay != GAME_NORMAL || Read_Boolean_Game_Rule(ONE_TIME_NUKE_RULE, true),
+					this == PlayerPtr
+				);
+			} else {
+				NukeStrike.Enable(
+					SuperweaponMessage.oneTime,
+					this == PlayerPtr
+				);
+
+				ForceNukeToRemainOn = !SuperweaponMessage.oneTime;
+				SuperweaponMessage.unread = false;
+			}
 
 			/*
 			**	Flag the sidebar to be redrawn if necessary.
@@ -1405,13 +1475,28 @@ void HouseClass::AI(void)
 		}
 	}
 
+	auto airstrikeMessageReceived = SuperweaponMessage.unread
+		&& SuperweaponMessage.weapon == &AirStrike;
+
 	/*
 	**	Process the airstrike AI and if something changed that would affect
 	**	the sidebar, then flag the sidebar to be redrawn.
 	*/
 	if (AirStrike.Is_Present()) {
-		if (AirStrike.AI(this == PlayerPtr)) {
-			if (this == PlayerPtr) Map.Column[1].Flag_To_Redraw();
+		if (airstrikeMessageReceived) {
+			if (SuperweaponMessage.type == DISABLE_SUPERWEAPON) {
+				AirStrike.Remove(true);
+
+				SuperweaponMessage.unread = false;
+			} else if (SuperweaponMessage.type == CHARGE_SUPERWEAPON) {
+				AirStrike.Forced_Charge(this == PlayerPtr);
+
+				SuperweaponMessage.unread = false;
+			}
+		}
+
+		if (AirStrike.AI(this == PlayerPtr) && this == PlayerPtr) {
+			Map.Column[1].Flag_To_Redraw();
 		}
 
 		/*
@@ -1422,10 +1507,12 @@ void HouseClass::AI(void)
 		}
 	}
 
+	auto enableAirstrike = airstrikeMessageReceived && SuperweaponMessage.type == ENABLE_SUPERWEAPON;
+
 	/*
 	**	Add the airstrike option if it is pending.
 	*/
-	if (IsAirstrikePending) {
+	if (IsAirstrikePending || enableAirstrike) {
 		IsAirstrikePending = false;
 		if (AirStrike.Enable(false, this == PlayerPtr)) {
 			AirStrike.Forced_Charge(this == PlayerPtr);
@@ -1441,6 +1528,8 @@ void HouseClass::AI(void)
 				}
 			}
 		}
+
+		SuperweaponMessage.unread = false;
 	}
 
 #ifdef NEVER
@@ -1675,7 +1764,6 @@ void HouseClass::AI(void)
 		Recalculate_Placement_Distances();
 	}
 }
-
 
 /***********************************************************************************************
  * HouseClass::Attacked -- Lets player know if base is under attack.                           *
@@ -2747,7 +2835,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					**	Only in the multiplayer version can the nuclear bomb be
 					**	sent from some off screen source.
 					*/
-					if (GameToPlay == GAME_NORMAL) return(false);
+					if (GameToPlay == GAME_NORMAL && !ForceNukeToRemainOn) return(false);
 
 					/*
 					**	Since no launch site was found, just bring the missile in
