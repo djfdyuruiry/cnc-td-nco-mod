@@ -183,11 +183,7 @@ template<typename T> static int Lua_Set_Game_Rule(
 
     if (argCount < 2)
     {
-        auto errorMessage = Allocate_String(64);
-
-        sprintf(errorMessage, "set%sGameRule requires at least two arguments", typeName);
-
-        luaL_error(lua, errorMessage);
+        luaL_error(lua, "set%sGameRule requires at least two arguments", typeName);
         return 0;
     }
 
