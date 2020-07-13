@@ -74,9 +74,11 @@ function main()
         setGameRule(gameRule, ruleValue)
 
         gameRulesWritten = gameRulesWritten + 1
+  
+        local newRuleValue = getGameRule(gameRule)
 
-        if ruleValue ~= getGameRule(gameRule) then
-          showError(string.format("Validation of game rule value failed %s", gameRule))
+        if newRuleValue ~= ruleValue then
+          showError(string.format("Validation of game rule value failed %s\nExpected: %s - Got: %s", gameRule, tostring(ruleValue), tostring(newRuleValue)))
 
           validationFailed = true
           gameRuleValidationErrors = gameRuleValidationErrors + 1
@@ -98,8 +100,10 @@ function main()
 
           rulesWritten = rulesWritten + 1
 
-          if ruleValue ~= typeArea.getRuleValue(areaType, ruleName) then
-            showError(string.format("Validation of type rule value failed %s -> %s", areaType, ruleName))
+          local newRuleValue = typeArea.getRuleValue(areaType, ruleName) 
+
+          if newRuleValue ~= ruleValue then
+            showError(string.format("Validation of type rule value failed %s -> %s\nExpected: %s - Got: %s", areaType, ruleName, tostring(ruleValue), tostring(newRuleValue)))
 
             validationFailed = true
             validationErrors = validationErrors + 1

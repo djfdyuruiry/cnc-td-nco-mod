@@ -41,6 +41,19 @@
 #include "COORDA.h"
 #include "Credits.h"
 
+enum HouseSuperweaponMessageType : unsigned char {
+	ENABLE_SUPERWEAPON,
+	DISABLE_SUPERWEAPON,
+	CHARGE_SUPERWEAPON
+};
+
+struct HouseSuperweaponMessage {
+	bool unread;
+	HouseSuperweaponMessageType type;
+	SuperClass* weapon;
+	bool oneTime;
+};
+
 //extern "C" {
 //unsigned Cardinal_To_Fixed(unsigned base, unsigned cardinal);
 //}
@@ -407,7 +420,12 @@ class HouseClass {
 		** Start location (waypoint index) passed in from GlyphX
 		*/
 		int StartLocationOverride;
-				
+
+		HouseSuperweaponMessage SuperweaponMessage;
+		
+		bool ForceIonCannonToRemainOn;
+		bool ForceNukeToRemainOn;
+
 		/*---------------------------------------------------------------------
 		**	Constructors, Destructors, and overloaded operators.
 		*/
