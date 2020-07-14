@@ -4398,11 +4398,11 @@ static void Scan_For_Valid_Placement(CELL cell, unsigned char* placement_distanc
 			continue;
 		}
 
-		if (Is_Wall(Map[adjcell].Overlay) && !Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true)) {
+		if (Is_Wall(Map[adjcell].Overlay) && !Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true)) {
 			return;
 		}
 
-		if (Map.In_Radar(adjcell) || !Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true)) {
+		if (Map.In_Radar(adjcell) || !Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true)) {
 			placement_distance[adjcell] = min(placement_distance[adjcell], 1U);
 		}
 

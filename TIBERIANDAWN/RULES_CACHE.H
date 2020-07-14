@@ -36,4 +36,6 @@ bool Get_Cached_Bool_Rule(CacheKey key, bool* cacheHit);
 
 void Cache_Bool_Rule(const char* section, const char* ruleName, bool ruleValue);
 
+void Delete_Rules_Cache();
+
 #endif

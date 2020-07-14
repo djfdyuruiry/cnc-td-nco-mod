@@ -1757,7 +1757,7 @@ void UnitTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = Read_Double_Game_Rule(UNIT_REPAIR_FACTOR_RULE, 1.02f, 0.01f);
+	auto repairFactor = Read_Double_Game_Rule(UNIT_REPAIR_FACTOR_RULE, UNIT_REPAIR_FACTOR_RULE_KEY, 1.02f, 0.01f);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(

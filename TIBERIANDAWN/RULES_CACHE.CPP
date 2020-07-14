@@ -61,6 +61,8 @@ static void Ensure_Rule_Cache_Initialised()
 		return;
 	}
 
+	Log_Debug("Initalising Rule Cache");
+
 	STRING_RULES_CACHE = new map<CacheKey, char*>();
 	INT_RULES_CACHE = new map<CacheKey, int>();
 	UINT_RULES_CACHE = new map<CacheKey, unsigned int>();
@@ -279,4 +281,17 @@ void Cache_Bool_Rule(const char* section, const char* ruleName, bool ruleValue)
 	Ensure_Rule_Cache_Initialised();
 
 	Cache_Rule(*BOOL_RULES_CACHE, section, ruleName, ruleValue);
+}
+
+void Delete_Rules_Cache()
+{
+	Ensure_Rule_Cache_Initialised();
+
+	Log_Debug("Deleting Rule Cache");
+
+	delete INT_RULES_CACHE;
+	delete UINT_RULES_CACHE;
+	delete DOUBLE_RULES_CACHE;
+	delete BOOL_RULES_CACHE;
+	delete STRING_RULES_CACHE;
 }

@@ -624,7 +624,7 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = Read_Double_Game_Rule(AIRCRAFT_REPAIR_FACTOR_RULE, 1.02f, 0.01f);
+	auto repairFactor = Read_Double_Game_Rule(AIRCRAFT_REPAIR_FACTOR_RULE, AIRCRAFT_REPAIR_FACTOR_RULE_KEY, 1.02f, 0.01f);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(

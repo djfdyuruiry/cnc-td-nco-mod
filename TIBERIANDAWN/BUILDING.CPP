@@ -191,7 +191,7 @@ bool BuildingClass::Can_Have_Rally_Point() const
 		return false;
 	}
 
-	auto rallyPointsEnabled = Read_Bool_Enhancements_Rule(RALLY_POINTS_RULE, RALLY_POINTS_RULE_CACHE_KEY, false);
+	auto rallyPointsEnabled = Read_Bool_Enhancements_Rule(RALLY_POINTS_RULE, RALLY_POINTS_RULE_KEY, false);
 
 	return rallyPointsEnabled
 		&& Class->IsFactory
@@ -2016,7 +2016,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 	if (Target_Legal(WhomToRepay)) {
 		odds -= 1;
 
-		IsSurvivorless = !Read_Boolean_Game_Rule(SURVIVORS_FROM_BUILDINGS_RULE, !IsSurvivorless);
+		IsSurvivorless = !Read_Boolean_Game_Rule(SURVIVORS_FROM_BUILDINGS_RULE, SURVIVORS_FROM_BUILDINGS_RULE_KEY, !IsSurvivorless);
 	}
 
 	if (IsCaptured) odds += 6;
@@ -5514,7 +5514,7 @@ static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remaining
 		**	building located there.
 		*/
 		if (Map[newcell].Owner == house->Class->House) {
-			if (!Is_Wall(Map[newcell].Overlay) || Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, true)) {
+			if (!Is_Wall(Map[newcell].Overlay) || Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true)) {
 				return true;
 			}
 		}
@@ -5573,7 +5573,7 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = homecell + *ptr++;
 
-		if (!Map.In_Radar(cell) && Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, true)) {
+		if (!Map.In_Radar(cell) && Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true)) {
 			return false;
 		}
 

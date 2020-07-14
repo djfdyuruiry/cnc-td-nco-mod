@@ -35,4 +35,6 @@ const char* Get_Lua_Value_Type(int index);
 
 void Clear_Lua_Stack();
 
+void Shutdown_Lua();
+
 #endif

@@ -954,8 +954,8 @@ void MapClass::Logic(void)
 			baseGrowthAndSpreadFactor = 2;
 		}
 
-		auto growthFactorMultipler = Read_Double_Game_Rule(TIBERIUM_GROWTH_RATE_RULE, 1.0f, 0.01f);
-		auto spreadFactorMultipler = Read_Double_Game_Rule(TIBERIUM_SPREAD_RATE_RULE, 1.0f, 0.01f);
+		auto growthFactorMultipler = Read_Double_Game_Rule(TIBERIUM_GROWTH_RATE_RULE, TIBERIUM_GROWTH_RATE_RULE_KEY, 1.0f, 0.01f);
+		auto spreadFactorMultipler = Read_Double_Game_Rule(TIBERIUM_SPREAD_RATE_RULE, TIBERIUM_SPREAD_RATE_RULE_KEY, 1.0f, 0.01f);
 
 		auto growthFactor = nearbyint(baseGrowthAndSpreadFactor * growthFactorMultipler);
 		auto spreadFactor = nearbyint(baseGrowthAndSpreadFactor * spreadFactorMultipler);
