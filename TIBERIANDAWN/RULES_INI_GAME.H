@@ -3,6 +3,7 @@
 
 #include <float.h>
 
+#include "rules_cache_key.h"
 #include "rules_ini.h"
 
 #define GAME_RULES_SECTION_NAME "Game"
@@ -288,25 +289,23 @@
     ATTACKER_ADVANTAGE_RULE_TYPE, \
     SPEEDY_BUILDS_RULE_TYPE
 
-#define Read_Game_Rule(ruleName, defaultValue) Read_String_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue)
+#define Read_Boolean_Game_Rule(ruleName, cacheKey, defaultValue) Read_Cached_Bool_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, cacheKey, defaultValue)
 
-#define Read_Boolean_Game_Rule(ruleName, defaultValue) Read_Bool_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue)
+#define Read_Int_Game_Rule(ruleName, cacheKey, defaultValue, minValue, maxValue) Read_Cached_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, cacheKey, defaultValue, minValue, maxValue)
 
-#define Read_Int_Game_Rule(ruleName, defaultValue, minValue, maxValue) Read_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, minValue, maxValue)
+#define Read_Double_Game_Rule(ruleName, cacheKey, defaultValue, minValue) Read_Cached_Double_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, cacheKey, defaultValue, minValue, DBL_MAX)
 
-#define Read_Double_Game_Rule(ruleName, defaultValue, minValue) Read_Double_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, minValue, DBL_MAX)
+#define Read_Build_Distance_Game_Rule() Read_Int_Game_Rule(MAX_BUILD_DISTANCE_RULE, MAX_BUILD_DISTANCE_RULE_KEY, 1, 1, INT_MAX)
 
-#define Read_Build_Distance_Game_Rule() Read_Int_Game_Rule(MAX_BUILD_DISTANCE_RULE, 1, 1, INT_MAX)
+#define Read_Credits_Per_Scoop_Rule() Read_Int_Game_Rule(CREDITS_PER_TIBERIUM_SCOOP_RULE, CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY, 25, 1, INT_MAX)
 
-#define Read_Credits_Per_Scoop_Rule() Read_Int_Game_Rule(CREDITS_PER_TIBERIUM_SCOOP_RULE, 25, 1, INT_MAX)
-
-#define Read_Harvester_Capcity_Rule() Read_Int_Game_Rule(MAX_HARVESTER_CAPACITY_RULE, 28, 1, INT_MAX)
+#define Read_Harvester_Capcity_Rule() Read_Int_Game_Rule(MAX_HARVESTER_CAPACITY_RULE, MAX_HARVESTER_CAPACITY_RULE_KEY, 28, 1, INT_MAX)
 
 #define Read_Harvester_Max_Credits_Rule() \
     Read_Credits_Per_Scoop_Rule() * Read_Harvester_Capcity_Rule()
 
-#define Read_Unit_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(UNIT_REPAIR_STEP_RULE, defaultValue, 1, INT_MAX)
+#define Read_Unit_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(UNIT_REPAIR_STEP_RULE, UNIT_REPAIR_STEP_RULE_KEY, defaultValue, 1, INT_MAX)
 
-#define Read_Aircraft_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(AIRCRAFT_REPAIR_STEP_RULE, defaultValue, 1, INT_MAX)
+#define Read_Aircraft_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(AIRCRAFT_REPAIR_STEP_RULE, AIRCRAFT_REPAIR_STEP_RULE_KEY, defaultValue, 1, INT_MAX)
 
 #endif

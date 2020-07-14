@@ -2,8 +2,8 @@
 #define RULES_INI_H
 
 #include "logger.h"
-
-#include "./lua.h"
+#include "lua.h"
+#include "rules_cache_key.h"
 
 // rules ini sections
 #define NCO_RULES_SECTION_NAME "NCO"
@@ -44,6 +44,7 @@ int Read_Int_From_Rules_Ini(
 	int maxValueInclusive,
 	int valueToAllowAlways
 );
+
 int Read_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -52,9 +53,27 @@ int Read_Int_From_Rules_Ini(
 	int maxValueInclusive
 );
 
+int Read_Cached_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
+	int defaultValue,
+	int minValueInclusive,
+	int maxValueInclusive
+);
+
 unsigned int Read_Unsigned_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive
+);
+
+unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
 	unsigned int defaultValue,
 	unsigned int minValueInclusive,
 	unsigned int maxValueInclusive
@@ -69,6 +88,15 @@ unsigned int Read_Optional_Unsigned_Int_From_Rules_Ini(
 double Read_Double_From_Rules_Ini(
 	const char* section,
 	const char* entry,
+	double defaultValue,
+	double minValueInclusive,
+	double maxValueInclusive
+);
+
+double Read_Cached_Double_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
 	double defaultValue,
 	double minValueInclusive,
 	double maxValueInclusive
@@ -92,13 +120,23 @@ char* Read_String_From_Rules_Ini(
 	const char* entry,
 	const char* defaultValue,
 	const char* validValues[],
-	int validValueCount
+	int validValueCount,
+	bool isForConversion
 );
 
 char* Read_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,
-	const char* defaultValue
+	const char* defaultValue,
+	bool isForConversion
+);
+
+char* Read_Cached_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
+	const char* defaultValue,
+	bool isForConversion
 );
 
 bool Read_Optional_Bool_From_Rules_Ini(
@@ -111,6 +149,13 @@ bool Read_Bool_From_Rules_Ini(
 	const char* section,
 	const char* entry,
 	bool defaultValue
+);
+
+bool Read_Cached_Bool_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
+	bool default
 );
 
 #define Read_Unsigned_Bool_From_Rules_Ini(section, entry, defaultValue) (unsigned)Read_Bool_From_Rules_Ini(section, entry, defaultValue)

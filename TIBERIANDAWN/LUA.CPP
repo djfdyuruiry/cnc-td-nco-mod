@@ -184,3 +184,13 @@ void Clear_Lua_Stack()
 {
     lua_settop(LUA, 0);
 }
+
+void Shutdown_Lua()
+{
+    if (LUA != NULL)
+    {
+        Log_Info("Shutting down %s instance", LUA_VERSION);
+
+        lua_close(LUA);
+    }
+}

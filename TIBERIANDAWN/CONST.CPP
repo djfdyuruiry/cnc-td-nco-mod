@@ -85,7 +85,7 @@ WeaponTypeClass::WeaponTypeClass(
 
 	auto weaponTypeStr = Weapon_Type_To_String(owner);
 
-	FriendlyName = Read_String_From_Rules_Ini(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	FriendlyName = Read_String_From_Rules_Ini(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName), false);
 	Fires = Read_Bullet_From_Rules_Ini(weaponTypeStr, WEAPON_FIRES_RULE, fires);
 	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
 	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
@@ -157,7 +157,7 @@ WarheadTypeClass::WarheadTypeClass(
 
 	auto warheadTypeString = Warhead_Type_To_String(type);
 
-	FriendlyName = Read_String_From_Rules_Ini(warheadTypeString, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	FriendlyName = Read_String_From_Rules_Ini(warheadTypeString, FRIENDLY_NAME_RULE, strdup(friendlyName), false);
 	SpreadFactor = Read_Int_From_Rules_Ini(warheadTypeString, WARHEAD_SPREAD_FACTOR_RULE, spreadFactor, 1, INT_MAX);
 	IsWallDestroyer = Read_Bool_From_Rules_Ini(warheadTypeString, WARHEAD_DESTORY_WALLS_RULE, isWallDestroyer);
 	IsWoodDestroyer = Read_Bool_From_Rules_Ini(warheadTypeString, WARHEAD_DESTORY_WOOD_RULE, isWallDestroyer);

@@ -630,7 +630,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		type->What_Am_I() == RTTI_INFANTRYTYPE &&
 		((InfantryTypeClass const *)type)->Type == INFANTRY_E3 &&
 		level < 7) {
-		if (Read_Boolean_Game_Rule(HIDE_E3_FROM_GDI_RULE, true))
+		if (Read_Boolean_Game_Rule(HIDE_E3_FROM_GDI_RULE, HIDE_E3_FROM_GDI_RULE_KEY, true))
 		{
 			return(false);
 		}
@@ -644,7 +644,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
 		level < 9) {
-		if (Read_Boolean_Game_Rule(HIDE_MSAM_FROM_GDI_RULE, true))
+		if (Read_Boolean_Game_Rule(HIDE_MSAM_FROM_GDI_RULE, HIDE_MSAM_FROM_GDI_RULE_KEY, true))
 		{
 			return(false);
 		}
@@ -656,7 +656,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (house == HOUSE_BAD &&
 		type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_APC) {
-		if (Read_Boolean_Game_Rule(HIDE_APC_FROM_NOD_RULE, true))
+		if (Read_Boolean_Game_Rule(HIDE_APC_FROM_NOD_RULE, HIDE_APC_FROM_NOD_RULE_KEY, true))
 		{
 			return(false);
 		}
@@ -670,11 +670,11 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		(((BuildingTypeClass const *)type)->Type == STRUCT_TEMPLE || ((BuildingTypeClass const *)type)->Type == STRUCT_OBELISK) &&
 		Class->House == HOUSE_GOOD) {
 
-		if (((BuildingTypeClass const*)type)->Type == STRUCT_TEMPLE && Read_Boolean_Game_Rule(HIDE_TMPL_FROM_GDI_RULE, true))
+		if (((BuildingTypeClass const*)type)->Type == STRUCT_TEMPLE && Read_Boolean_Game_Rule(HIDE_TMPL_FROM_GDI_RULE, HIDE_TMPL_FROM_GDI_RULE_KEY, true))
 		{
 			return(false);
 		}
-		else if (((BuildingTypeClass const*)type)->Type == STRUCT_OBELISK && Read_Boolean_Game_Rule(HIDE_OBLI_FROM_GDI_RULE, true))
+		else if (((BuildingTypeClass const*)type)->Type == STRUCT_OBELISK && Read_Boolean_Game_Rule(HIDE_OBLI_FROM_GDI_RULE, HIDE_OBLI_FROM_GDI_RULE_KEY, true))
 		{
 			return(false);
 		}
@@ -686,7 +686,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
 		Class->House == HOUSE_BAD) {
-		if (Read_Boolean_Game_Rule(HIDE_MSAM_FROM_NOD_RULE, true))
+		if (Read_Boolean_Game_Rule(HIDE_MSAM_FROM_NOD_RULE, HIDE_MSAM_FROM_NOD_RULE_KEY, true))
 		{
 			return(false);
 		}
@@ -699,7 +699,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		(((BuildingTypeClass const *)type)->Type == STRUCT_EYE) &&
 		Class->House == HOUSE_BAD) {
-		if (Read_Boolean_Game_Rule(HIDE_ADV_COMM_FROM_NOD_RULE, true))
+		if (Read_Boolean_Game_Rule(HIDE_ADV_COMM_FROM_NOD_RULE, HIDE_ADV_COMM_FROM_NOD_RULE_KEY, true))
 		{
 			return(false);
 		}
@@ -712,7 +712,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		level >= 12 &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_ADVANCED_POWER) {
-		if (Read_Boolean_Game_Rule(ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE, true))
+		if (Read_Boolean_Game_Rule(ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE, ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE_KEY, true))
 		{
 			level = type->Scenario;
 		}
@@ -724,7 +724,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (house == HOUSE_BAD &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_HELIPAD) {
-		if (Read_Boolean_Game_Rule(HIDE_HELIPAD_FROM_NOD_RULE, true))
+		if (Read_Boolean_Game_Rule(HIDE_HELIPAD_FROM_NOD_RULE, HIDE_HELIPAD_FROM_NOD_RULE_KEY, true))
 		{
 			return(false);
 		}
@@ -737,7 +737,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		level < 8 &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_SANDBAG_WALL) {
-		if (Read_Boolean_Game_Rule(HIDE_SBAG_FROM_GDI_RULE, true))
+		if (Read_Boolean_Game_Rule(HIDE_SBAG_FROM_GDI_RULE, HIDE_SBAG_FROM_GDI_RULE_KEY, true))
 		{
 			return(false);
 		}
@@ -748,14 +748,14 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	**	scenario two will still feel like scenario #1.
 	*/
 	if (house == HOUSE_GOOD && level == 2) {
-		if (Read_Boolean_Game_Rule(SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE, true))
+		if (Read_Boolean_Game_Rule(SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE, SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE_KEY, true))
 		{
 			level = 1;
 		}
 	}
 
 	// ST - 8/23/2019 4:53PM
-	if (DebugUnlockBuildables || Read_Boolean_Game_Rule(ALLOW_BUILDING_ALL_FOR_HOUSE_RULE, false)) {
+	if (DebugUnlockBuildables || Read_Boolean_Game_Rule(ALLOW_BUILDING_ALL_FOR_HOUSE_RULE, ALLOW_BUILDING_ALL_FOR_HOUSE_RULE_KEY, false)) {
 		level = 98;
 		pre = 0;
 	}
@@ -1335,7 +1335,7 @@ void HouseClass::AI(void)
 		enableIonCannon = enableIonCannon && (
 				GameToPlay != GAME_NORMAL
 				|| ActLike == HOUSE_GOOD
-				|| !Read_Boolean_Game_Rule(ONLY_GDI_CAN_USE_ION_CANNON_RULE, true)
+				|| !Read_Boolean_Game_Rule(ONLY_GDI_CAN_USE_ION_CANNON_RULE, ONLY_GDI_CAN_USE_ION_CANNON_RULE_KEY, true)
 			);
 
 		auto enableIonCannonMessageRecieved = SuperweaponMessage.unread && SuperweaponMessage.weapon == &IonCannon;
@@ -1445,7 +1445,7 @@ void HouseClass::AI(void)
 		if (enableNukeStrike || enableNukeStrikeMessageRecieved) {
 			if (!enableNukeStrikeMessageRecieved) {
 				NukeStrike.Enable(
-					GameToPlay != GAME_NORMAL || Read_Boolean_Game_Rule(ONE_TIME_NUKE_RULE, true),
+					GameToPlay != GAME_NORMAL || Read_Boolean_Game_Rule(ONE_TIME_NUKE_RULE, ONE_TIME_NUKE_RULE_KEY, true),
 					this == PlayerPtr
 				);
 			} else {
@@ -4793,7 +4793,7 @@ bool HouseClass::Has_Nuke_Device(void)
 	Validate();
 	if (GameToPlay != GAME_NORMAL || !IsHuman) return(true);
 
-	if (!Read_Boolean_Game_Rule(ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE, true))
+	if (!Read_Boolean_Game_Rule(ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE, ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE_KEY, true))
 	{
 		return true;
 	}

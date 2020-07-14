@@ -587,7 +587,7 @@ BulletTypeClass::BulletTypeClass(
 
 	RulesName = rulesName;
 
-	FriendlyName = Read_String_From_Rules_Ini(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	FriendlyName = Read_String_From_Rules_Ini(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName), false);
 	IsHigh = Read_Bool_From_Rules_Ini(RulesName, BULLET_HIGH_RULE, is_high);
 	IsAntiAircraft = Read_Bool_From_Rules_Ini(RulesName, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
 	IsTranslucent = Read_Bool_From_Rules_Ini(RulesName, BULLET_TRANSLUCENT_RULE, is_translucent);

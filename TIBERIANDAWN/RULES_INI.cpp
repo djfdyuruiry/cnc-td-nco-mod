@@ -63,7 +63,8 @@ static void Read_Log_Level_From_Rules_Ini()
 		"LogLevel",
 		"INFO", 
 		validLogLevels,
-		LOG_LEVEL_COUNT
+		LOG_LEVEL_COUNT,
+		false
 	);
 
 	delete validLogLevels;
@@ -337,6 +338,25 @@ int Read_Int_From_Rules_Ini(
 	);
 }
 
+int Read_Cached_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
+	int defaultValue,
+	int minValueInclusive,
+	int maxValueInclusive
+)
+{
+	bool cacheHit = false;
+	auto cacheValue = Get_Cached_Int_Rule(key, &cacheHit);
+
+	if (cacheHit) {
+		return cacheValue;
+	}
+
+	return Read_Int_From_Rules_Ini(section, entry, defaultValue, minValueInclusive, maxValueInclusive);
+}
+
 static unsigned int Read_Unsigned_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
@@ -457,6 +477,25 @@ unsigned int Read_Unsigned_Int_From_Rules_Ini(
 		maxValueInclusive,
 		&valueFound
 	);
+}
+
+unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive
+)
+{
+	bool cacheHit = false;
+	auto cacheValue = Get_Cached_Unsigned_Int_Rule(key, &cacheHit);
+
+	if (cacheHit) {
+		return cacheValue;
+	}
+
+	return Read_Unsigned_Int_From_Rules_Ini(section, entry, defaultValue, minValueInclusive, maxValueInclusive);
 }
 
 static double Read_Double_From_Rules_Ini(
@@ -581,6 +620,25 @@ double Read_Double_From_Rules_Ini(
 	);
 }
 
+double Read_Cached_Double_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
+	double defaultValue,
+	double minValueInclusive,
+	double maxValueInclusive
+)
+{
+	bool cacheHit = false;
+	auto cacheValue = Get_Cached_Double_Rule(key, &cacheHit);
+
+	if (cacheHit) {
+		return cacheValue;
+	}
+
+	return Read_Double_From_Rules_Ini(section, entry, defaultValue, minValueInclusive, maxValueInclusive);
+}
+
 /**
  * Get a string without any default fallback.
  */
@@ -656,7 +714,8 @@ char* Read_String_From_Rules_Ini(
 	const char* entry,
 	const char* defaultValue,
 	const char* validValues[],
-	int validValueCount
+	int validValueCount,
+	bool isForConversion
 )
 {
 	Ensure_Rules_Ini_Is_Loaded();
@@ -665,7 +724,7 @@ char* Read_String_From_Rules_Ini(
 	Log_Trace("Default value: %s", defaultValue);
 
 	bool valueFound = false;
-	auto valueBuffer = Read_Optional_String_From_Rules_Ini(section, entry, &valueFound, false);
+	auto valueBuffer = Read_Optional_String_From_Rules_Ini(section, entry, &valueFound, isForConversion);
 
 	if (valueFound)
 	{
@@ -750,10 +809,30 @@ char* Read_String_From_Rules_Ini(
 char* Read_String_From_Rules_Ini(
 	const char* section,
 	const char* entry,
-	const char* defaultValue
+	const char* defaultValue,
+	bool isForConversion
 )
 {
-	return Read_String_From_Rules_Ini(section, entry, defaultValue, NULL, 0);
+	return Read_String_From_Rules_Ini(section, entry, defaultValue, NULL, 0, isForConversion);
+}
+
+
+char* Read_Cached_String_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
+	const char* defaultValue,
+	bool isForConversion
+)
+{
+	bool cacheHit = false;
+	auto cacheValue = Get_Cached_String_Rule(key, &cacheHit);
+
+	if (cacheHit) {
+		return cacheValue;
+	}
+
+	return Read_String_From_Rules_Ini(section, entry, defaultValue, isForConversion);
 }
 
 bool Read_Optional_Bool_From_Rules_Ini(
@@ -816,7 +895,8 @@ bool Read_Bool_From_Rules_Ini(
 		entry,
 		defaultValueStr,
 		validBoolStrings,
-		VALID_BOOL_STRINGS_COUNT
+		VALID_BOOL_STRINGS_COUNT,
+		true
 	);
 
 	delete validBoolStrings;
@@ -836,7 +916,7 @@ long Read_Prerequisite(
 )
 {
 	auto defaultString = Structure_Type_To_String(defaultValue);
-	auto structValueStr = Read_String_From_Rules_Ini(section, PREREQUISITE_RULE, defaultString);
+	auto structValueStr = Read_String_From_Rules_Ini(section, PREREQUISITE_RULE, defaultString, false);
 
 	Convert_String_To_Upper_Case(structValueStr);
 
@@ -859,6 +939,23 @@ long Read_Prerequisite(
 	}
 
 	return 1L << structValue;
+}
+
+bool Read_Cached_Bool_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	CacheKey key,
+	bool default
+)
+{
+	bool cacheHit = false;
+	auto cacheValue = Get_Cached_Bool_Rule(key, &cacheHit);
+
+	if (cacheHit) {
+		return cacheValue;
+	}
+
+	return Read_Bool_From_Rules_Ini(section, entry, default);
 }
 
 int Read_House_List_From_Rules_Ini(
@@ -897,7 +994,7 @@ WeaponType Read_Weapon_Type_From_Rules_Ini(
 )
 {
 	auto defaultString = Weapon_Type_To_String(defaultValue);
-	auto weaponTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+	auto weaponTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString, false);
 
 	Convert_String_To_Upper_Case(weaponTypeStr);
 
@@ -929,7 +1026,7 @@ ArmorType Read_Armor_Type_From_Rules_Ini(
 )
 {
 	auto defaultString = Armor_Type_To_String(defaultValue);
-	auto armorTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+	auto armorTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString, false);
 
 	Convert_String_To_Upper_Case(armorTypeStr);
 
@@ -958,7 +1055,7 @@ SpeedType Read_Unit_Speed_Type_From_Rules_Ini(
 )
 {
 	auto defaultString = Unit_Speed_Type_To_String(defaultValue);
-	auto unitSpeedTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+	auto unitSpeedTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString, false);
 
 	Convert_String_To_Upper_Case(unitSpeedTypeStr);
 
@@ -990,7 +1087,7 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 )
 {
 	auto defaultString = Factory_Type_To_String(defaultValue);
-	auto factoryTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+	auto factoryTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString, false);
 
 	Convert_String_To_Upper_Case(factoryTypeStr);
 
@@ -1024,7 +1121,7 @@ FactoryType Read_Factory_Type_From_Rules_Ini(
 WarheadType Read_Warhead_From_Rules_Ini(const char* section, const char* entry, WarheadType default)
 {
 	auto defaultString = Warhead_Type_To_String(default);
-	auto warheadTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+	auto warheadTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString, false);
 
 	Convert_String_To_Upper_Case(warheadTypeStr);
 
@@ -1058,7 +1155,7 @@ WarheadType Read_Warhead_From_Rules_Ini(const char* section, const char* entry, 
 BulletType Read_Bullet_From_Rules_Ini(const char* section, const char* entry, BulletType default)
 {
 	auto defaultString = Bullet_Type_To_String(default);
-	auto bulletTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString);
+	auto bulletTypeStr = Read_String_From_Rules_Ini(section, entry, defaultString, false);
 
 	Convert_String_To_Upper_Case(bulletTypeStr);
 

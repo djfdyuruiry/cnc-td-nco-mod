@@ -4524,7 +4524,7 @@ int BuildingTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Full_Name(void) const
 {
-	if (::Scenario == 3 && Type == STRUCT_MISSION && Read_Boolean_Game_Rule(RENAME_TECH_CENTER_TO_PRISON_RULE, true))
+	if (::Scenario == 3 && Type == STRUCT_MISSION && Read_Boolean_Game_Rule(RENAME_TECH_CENTER_TO_PRISON_RULE, RENAME_TECH_CENTER_TO_PRISON_RULE_KEY, true))
 	{
 		Log_Debug("Renaming %s to TXT_PRISON", Structure_Type_To_String(STRUCT_MISSION));
 		return(TXT_PRISON);

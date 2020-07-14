@@ -41,21 +41,21 @@ class SpecialClass
 {
 	public:
 		void Init(void) {
-			IsSpeedBuild = Read_Boolean_Game_Rule(SPEEDY_BUILDS_RULE, false);
-			IsDefenderAdvantage = !Read_Boolean_Game_Rule(ATTACKER_ADVANTAGE_RULE, false);
-			IsSmartDefense = Read_Boolean_Game_Rule(DEFEND_AGAINST_FRIENDLY_FIRE_RULE, false);
-			IsTreeTarget = Read_Boolean_Game_Rule(TARGET_TREES_RULE, false);
-			IsMCVDeploy = Read_Boolean_Game_Rule(MCV_REDEPLOY_RULE, false);
-			IsVisceroids = Read_Boolean_Game_Rule(VISCEROIDS_RULE, false);
-			IsInert = Read_Boolean_Game_Rule(UNITS_INDESTRUCTIBLE_RULE, false);
-			IsThreePoint = Read_Boolean_Game_Rule(THREE_POINT_TURNS_RULE, false);
-			IsTGrowth = Read_Boolean_Game_Rule(TIBERIUM_GROWS_RULE, true);
-			IsTSpread = Read_Boolean_Game_Rule(TIBERIUM_SPREADS_RULE, true);
-			IsTFast = !Read_Boolean_Game_Rule(SLOW_TIBERIUM_RULE, false);
-			IsRoad = Read_Boolean_Game_Rule(SHOW_BIBS_RULE, false);
-			IsScatter = Read_Boolean_Game_Rule(AUTO_SCATTER_RULE, false);
-			IsNamed = Read_Boolean_Game_Rule(NAME_CIVILIAN_BUILDINGS_RULE, false);
-			IsSeparate = Read_Boolean_Game_Rule(CAN_BUY_HELIPAD_ONLY_RULE, false);
+			IsSpeedBuild = Read_Boolean_Game_Rule(SPEEDY_BUILDS_RULE, SPEEDY_BUILDS_RULE_KEY, false);
+			IsDefenderAdvantage = !Read_Boolean_Game_Rule(ATTACKER_ADVANTAGE_RULE, ATTACKER_ADVANTAGE_RULE_KEY, false);
+			IsSmartDefense = Read_Boolean_Game_Rule(DEFEND_AGAINST_FRIENDLY_FIRE_RULE, DEFEND_AGAINST_FRIENDLY_FIRE_RULE_KEY, false);
+			IsTreeTarget = Read_Boolean_Game_Rule(TARGET_TREES_RULE, TARGET_TREES_RULE_KEY, false);
+			IsMCVDeploy = Read_Boolean_Game_Rule(MCV_REDEPLOY_RULE, MCV_REDEPLOY_RULE_KEY, false);
+			IsVisceroids = Read_Boolean_Game_Rule(VISCEROIDS_RULE, VISCEROIDS_RULE_KEY, false);
+			IsInert = Read_Boolean_Game_Rule(UNITS_INDESTRUCTIBLE_RULE, UNITS_INDESTRUCTIBLE_RULE_KEY, false);
+			IsThreePoint = Read_Boolean_Game_Rule(THREE_POINT_TURNS_RULE, THREE_POINT_TURNS_RULE_KEY, false);
+			IsTGrowth = Read_Boolean_Game_Rule(TIBERIUM_GROWS_RULE, TIBERIUM_GROWS_RULE_KEY, true);
+			IsTSpread = Read_Boolean_Game_Rule(TIBERIUM_SPREADS_RULE, TIBERIUM_SPREADS_RULE_KEY, true);
+			IsTFast = !Read_Boolean_Game_Rule(SLOW_TIBERIUM_RULE, SLOW_TIBERIUM_RULE_KEY, false);
+			IsRoad = Read_Boolean_Game_Rule(SHOW_BIBS_RULE, SHOW_BIBS_RULE_KEY, false);
+			IsScatter = Read_Boolean_Game_Rule(AUTO_SCATTER_RULE, AUTO_SCATTER_RULE_KEY, false);
+			IsNamed = Read_Boolean_Game_Rule(NAME_CIVILIAN_BUILDINGS_RULE, NAME_CIVILIAN_BUILDINGS_RULE_KEY, false);
+			IsSeparate = Read_Boolean_Game_Rule(CAN_BUY_HELIPAD_ONLY_RULE, CAN_BUY_HELIPAD_ONLY_RULE_KEY, false);
 
 			IsVisibleTarget = false;
 			IsShowPath = false;

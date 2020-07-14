@@ -1127,6 +1127,11 @@ int AircraftClass::Mission_Unload(void)
 									unit->IsALoaner = false;
 									unit->IsLocked = true;
 									unit->Scatter(0, true);
+
+									if (BuildingClass* const target_building = As_Building(NavCom))
+									{
+										target_building->Rally_Unit(*unit);
+									}
 								}
 								ScenarioInit--;
 

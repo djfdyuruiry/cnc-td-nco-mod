@@ -1,6 +1,7 @@
 #include "function.h"
 
 #include "lua_repl.h"
+#include "rules_cache.h"
 
 static HANDLE LUA_REPL_THREAD;
 static HANDLE LUA_EVENT_THREAD;
@@ -84,8 +85,6 @@ void NCO_Shutdown()
 {
 	Log_Info("New Construction Options mod shutting down");
 
-	Close_Log_File_If_Open();
-
 	#ifndef TEST_CONSOLE
 	if (Lua_Console_Is_Enabled())
 	{
@@ -104,5 +103,11 @@ void NCO_Shutdown()
 		{
 			Show_Error("Error stopping Lua event thread: %s", Get_Win32_Error_Message());
 		}
+
+		Shutdown_Lua();
 	}
+
+	Delete_Rules_Cache();
+
+	Close_Log_File_If_Open();
 }
