@@ -288,8 +288,6 @@
     ATTACKER_ADVANTAGE_RULE_TYPE, \
     SPEEDY_BUILDS_RULE_TYPE
 
-#define Read_Game_Rule(ruleName, defaultValue) Read_String_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue)
-
 #define Read_Boolean_Game_Rule(ruleName, defaultValue) Read_Bool_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue)
 
 #define Read_Int_Game_Rule(ruleName, defaultValue, minValue, maxValue) Read_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, defaultValue, minValue, maxValue)

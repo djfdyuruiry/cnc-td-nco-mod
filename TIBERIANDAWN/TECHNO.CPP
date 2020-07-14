@@ -205,7 +205,7 @@ TechnoTypeClass::TechnoTypeClass(
 	risk = risk;
 	Risk = 0;
 
-	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, friendlyName);
+	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, friendlyName, false);
 	Level = Read_Build_Level(IniName, level);
 	Pre = Read_Prerequisite(IniName, pre);
 	IsTransporter = Read_Is_Transport(IniName, is_transporter);

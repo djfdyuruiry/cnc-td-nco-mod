@@ -646,11 +646,18 @@ CCDebugString ("C&C95 - Primary building packet received\n");
 		*/
 		case IDLE:
 			techno = As_Techno(Data.Target.Whom);
+
 			if (techno && techno->IsActive && !techno->IsInLimbo && !techno->IsTethered) {
 				techno->Assign_Destination(TARGET_NONE);
 				techno->Assign_Target(TARGET_NONE);
 				techno->Enter_Idle_Mode();
+			} else if (techno 
+				&& techno->What_Am_I() == RTTI_BUILDING
+				&& static_cast<const BuildingClass&>(*techno).Can_Have_Rally_Point()
+			) {
+				techno->Assign_Target(TARGET_NONE);
 			}
+
 			break;
 
 		/*
@@ -769,7 +776,16 @@ CCDebugString (flip);
 				}
 			}
 			break;
-
+		case SET_RALLY:
+			if (BuildingClass* const building = As_Building(Data.NavCom.Whom))
+			{
+				if (building->RallyPoint != Data.NavCom.Where)
+				{
+					building->RallyPoint = Data.NavCom.Where;
+					Map.Flag_To_Redraw(true);
+				}
+			}
+			break;
 		/*
 		**	Default: do nothing.
 		*/
