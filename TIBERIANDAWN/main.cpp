@@ -5,7 +5,6 @@
 #include "DllInterface.h"
 
 #include "lua_repl.h"
-#include "rules_cache.h"
 
 static void Test_Lua_Rules() {
 	Log_Info("Testing Lua rules");
@@ -127,28 +126,6 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 	Test_Lua_Rules();
 
 	Dump_Rules();
-
-	//printf("%d\n", Read_Bool_Enhancements_Rule(RALLY_POINTS_RULE, false));
-
-	//while (true)
-	//{
-	//	auto now = Get_Now_In_Epoch_Millis();
-
-	//	bool cacheHit = false;
-
-	//	printf("%d\n", Get_Cached_Bool_Rule(3046730781ul, &cacheHit));
-
-	//	if (!cacheHit) {
-	//		puts("Cache fail");
-	//		return 1;
-	//	}
-
-	//	auto end = Get_Now_In_Epoch_Millis();
-
-	//	printf("%lldms\n", end - now);
-
-	//	Sleep(250);
-	//}
 
 	NCO_Shutdown();
 
