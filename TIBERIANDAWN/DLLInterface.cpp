@@ -698,8 +698,8 @@ extern "C" __declspec(dllexport) bool __cdecl CNC_Set_Multiplayer_Data(int scena
 	Rule.AllowSuperWeapons = game_options.EnableSuperweapons;	// Are superweapons available
 
 	if (MPlayerTiberium) {
-		Special.IsTGrowth = 1;
-		Special.IsTSpread = 1;
+		Special.IsTSpread = Read_Boolean_Game_Rule(TIBERIUM_SPREADS_RULE, TIBERIUM_SPREADS_RULE_KEY, true);
+		Special.IsTFast = !Read_Boolean_Game_Rule(SLOW_TIBERIUM_RULE, SLOW_TIBERIUM_RULE_KEY, false);
 	} else {
 		Special.IsTGrowth = 0;
 		Special.IsTSpread = 0;

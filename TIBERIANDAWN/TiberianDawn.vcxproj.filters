@@ -784,6 +784,9 @@
     <ClInclude Include="RULES_CACHE_KEY.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="RULES_INI_AI.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
