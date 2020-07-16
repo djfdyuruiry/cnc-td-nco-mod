@@ -160,7 +160,14 @@ bool Read_Cached_Bool_From_Rules_Ini(
 
 #define Read_Unsigned_Bool_From_Rules_Ini(section, entry, defaultValue) (unsigned)Read_Bool_From_Rules_Ini(section, entry, defaultValue)
 
-// NCO config
+unsigned int Read_Fixed_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	unsigned int defaultValue,
+	double defaultAsPercentage
+);
+
+//NCO config
 void Rules_Ini_Failed_Validation(bool value);
 
 bool Rules_Ini_Failed_Validation();

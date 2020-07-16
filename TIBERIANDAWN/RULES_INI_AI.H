@@ -21,8 +21,8 @@
 #define ATTACK_DELAY_RULE_UPPER "ATTACKDELAY"
 #define ATTACK_DELAY_RULE_TYPE "int"
 
-#define POWER_EMERGENCY_FRACTION_RULE "PowerEmergencyFraction"
-#define POWER_EMERGENCY_FRACTION_RULE_UPPER "POWEREMERGENCYFRACTION"
+#define POWER_EMERGENCY_FRACTION_RULE "PowerEmergency"
+#define POWER_EMERGENCY_FRACTION_RULE_UPPER "POWEREMERGENCY"
 #define POWER_EMERGENCY_FRACTION_RULE_TYPE "double"
 
 #define HELIPAD_RATIO_RULE "HelipadRatio"
@@ -108,8 +108,8 @@
 	WAR_LIMIT_RULE, \
 	BARRACKS_RATIO_RULE, \
 	BARRACKS_LIMIT_RULE, \
-	REFINERY_LIMIT_RULE, \
 	REFINERY_RATIO_RULE, \
+	REFINERY_LIMIT_RULE, \
 	AIRSTRIP_RATIO_RULE, \
 	AIRSTRIP_LIMIT_RULE, \
 	INFANTRY_RESERVE_RULE, \
@@ -133,16 +133,17 @@
 	WAR_LIMIT_RULE_TYPE, \
 	BARRACKS_RATIO_RULE_TYPE, \
 	BARRACKS_LIMIT_RULE_TYPE, \
-	REFINERY_LIMIT_RULE_TYPE, \
 	REFINERY_RATIO_RULE_TYPE, \
+	REFINERY_LIMIT_RULE_TYPE, \
 	AIRSTRIP_RATIO_RULE_TYPE, \
 	AIRSTRIP_LIMIT_RULE_TYPE, \
 	INFANTRY_RESERVE_RULE_TYPE, \
 	INFANTRY_BASE_MULT_RULE_TYPE, \
 	PARANOID_RULE_TYPE
 
+#define Read_Unsigned_Int_Ai_Rule(entry, defaultValue) Read_Unsigned_Int_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, 0, UINT_MAX)
 #define Read_Bool_Ai_Rule(entry, defaultValue) Read_Bool_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue)
-#define Read_Ratio_Ai_Rule(entry, defaultValue, minValue, maxValue) Read_Double_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, minValue, maxValue)
-#define Read_Fraction_Ai_Rule(entry, defaultValue, minValue, maxValue) Read_Double_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, minValue, maxValue)
+#define Read_Ratio_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, defaultAsPercentage)
+#define Read_Fraction_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, defaultAsPercentage)
 
 #endif

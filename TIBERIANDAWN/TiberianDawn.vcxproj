@@ -446,6 +446,7 @@
     <ClInclude Include="RULES_CACHE.H" />
     <ClInclude Include="RULES_CACHE_KEY.H" />
     <ClInclude Include="RULES_INI.H" />
+    <ClInclude Include="RULES_INI_AI.H" />
     <ClInclude Include="RULES_INI_AIRCRAFT.H" />
     <ClInclude Include="RULES_INI_BUILDING.H" />
     <ClInclude Include="RULES_INI_BULLET.H" />
@@ -454,6 +455,7 @@
     <ClInclude Include="RULES_INI_GAME.H" />
     <ClInclude Include="RULES_INI_GENERIC.H" />
     <ClInclude Include="RULES_INI_INFANTRY.H" />
+    <ClInclude Include="RULES_INI_IQ.H" />
     <ClInclude Include="RULES_INI_SUPERWEAPON.H" />
     <ClInclude Include="RULES_INI_UNIT.H" />
     <ClInclude Include="RULES_INI_WARHEAD.H" />
