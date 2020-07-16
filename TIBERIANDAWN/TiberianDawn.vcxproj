@@ -282,6 +282,7 @@
       <PreserveIdentifierCase Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">1</PreserveIdentifierCase>
       <EnableMASM51Compatibility Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</EnableMASM51Compatibility>
     </MASM>
+    <None Include="GAME_UTILS.H" />
     <None Include="KEYFBUFF.INC" />
     <MASM Include="MMX.ASM">
       <FileType>Document</FileType>
@@ -600,6 +601,7 @@
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="GAME_MESSAGES.CPP" />
+    <ClCompile Include="GAME_UTILS.cpp" />
     <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP" />

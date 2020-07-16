@@ -29,7 +29,8 @@ struct GameLoopMessage {
 enum GameUiMessageType : unsigned char {
 	NO_MESSAGE,
 	SHOW_NOTIFICATION_MESSAGE,
-	REFRESH_SIDEBAR_MESSAGE
+	REFRESH_SIDEBAR_MESSAGE,
+	REFRESH_MAP_MESSAGE
 };
 
 struct GameUiMessage {
@@ -45,6 +46,8 @@ extern GameUiMessage GAME_UI_MESSAGE;
 bool Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds);
 
 bool Push_Refresh_Sidebar_Ui_Message();
+
+bool Push_Refresh_Map_Ui_Message();
 
 // message handlers
 void Process_Game_Ui_Message();

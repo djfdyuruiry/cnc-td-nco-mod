@@ -1469,6 +1469,7 @@ void HouseClass::AI(void)
 			} else {
 				if (this == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
+
 					Map.Column[1].Flag_To_Redraw();
 				}
 			}

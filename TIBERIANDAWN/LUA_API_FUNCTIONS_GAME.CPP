@@ -212,6 +212,18 @@ static int Lua_Game_Busy_Error(lua_State* lua)
     return 0;
 }
 
+static int Lua_Refresh_Map(lua_State* lua)
+{
+    Log_Trace("Lua_Refresh_Map called from Lua");
+
+    if (!Push_Refresh_Map_Ui_Message())
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
+
+    return 0;
+}
+
 static int Lua_Refresh_Sidebar(lua_State* lua)
 {
     Log_Trace("Lua_Refresh_Sidebar called from Lua");

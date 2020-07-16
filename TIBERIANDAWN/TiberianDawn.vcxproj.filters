@@ -122,6 +122,9 @@
     <None Include="..\game\RULES-BASE.INI">
       <Filter>game</Filter>
     </None>
+    <None Include="GAME_UTILS.H">
+      <Filter>Source Files\NCO</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABSTRACT.H">
@@ -1448,6 +1451,9 @@
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="RULES_CACHE_KEY.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="GAME_UTILS.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>
