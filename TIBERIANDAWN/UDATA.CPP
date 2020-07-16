@@ -1348,6 +1348,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	IsAnimating = Read_Has_Constant_Animation(IniName, is_animating); 
 	Speed = Read_Unit_Speed(IniName, speed);
 	ROT = Read_Rate_Of_Turn(IniName, rot);
+	CanSelfRepair = Read_Bool_From_Rules_Ini(IniName, SELF_REPAIR_RULE, Type == UNIT_HTANK);
 }
 
 

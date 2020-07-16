@@ -166,6 +166,17 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->TransportCapacity = capacity;
         }
     }
+    else if (Strings_Are_Equal(ruleName, SELF_REPAIR_RULE_UPPER))
+    {
+        auto canSelfRepair = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_Unit_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->CanSelfRepair), Convert_Boolean_To_String(canSelfRepair));
+
+            type->CanSelfRepair = canSelfRepair;
+        }
+    }
     else
     {
         return false;
@@ -261,6 +272,12 @@ static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* rule
         Log_Trace("Read_Unit_Rule => Rule value: %u", type->TransportCapacity);
 
         lua_pushnumber(lua, type->ROT);
+    }
+    else if (Strings_Are_Equal(ruleName, SELF_REPAIR_RULE_UPPER))
+    {
+        Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->CanSelfRepair));
+
+        lua_pushboolean(lua, type->CanSelfRepair);
     }
     else
     {

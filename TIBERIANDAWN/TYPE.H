@@ -1021,6 +1021,8 @@ class UnitTypeClass : public TechnoTypeClass
 		*/
 		int MaxSize;
 
+		bool CanSelfRepair;
+
 		/*
 		**	This is the explicit unit class constructor.
 		*/

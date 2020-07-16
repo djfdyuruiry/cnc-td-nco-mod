@@ -427,7 +427,7 @@ void UnitClass::AI(void)
 	**	If this is a vehicle that heals itself (e.g., Mammoth Tank), then it will perform
 	**	the heal logic here.
 	*/
-	if (*this == UNIT_HTANK && (Frame % 16) == 0 && Health_Ratio() < 0x0080) {
+	if (Class->CanSelfRepair && (Frame % 16) == 0 && Health_Ratio() < 0x0080) {
 		Strength++;
 		Mark(MARK_CHANGE);
 	}

@@ -321,7 +321,7 @@ bool Parse_Boolean_Or_Default(const char* booleanValue, bool default)
 	return result;
 }
 
-char* Convert_Boolean_To_String(bool booleanValue)
+const char* Convert_Boolean_To_String(bool booleanValue)
 {
 	return booleanValue ? "TRUE" : "FALSE";
 }
