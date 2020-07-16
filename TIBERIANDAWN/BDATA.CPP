@@ -60,7 +60,7 @@
 #define XYCELL(x,y)	(y*MAP_CELL_W+x)
 
 
-const unsigned long DEFAULT_EXIT_COORD = XYP_COORD(30, 33);
+const COORDINATE DEFAULT_EXIT_COORD = XYP_COORD(30, 33);
 
 const short DEFAULT_EXIT_LIST[] = {
 	XYCELL(1,2),

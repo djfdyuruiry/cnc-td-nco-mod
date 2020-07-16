@@ -47,7 +47,7 @@
 #define	DOOR_OPEN_STAGE 9	// frame on which the door is entirely open
 #define	MAX_REPAIR_ANIM_STAGE	5	// # of stages of anim for repair center cycling
 
-extern const unsigned long DEFAULT_EXIT_COORD;
+extern const COORDINATE DEFAULT_EXIT_COORD;
 extern const short DEFAULT_EXIT_LIST[14];
 
 /****************************************************************************
