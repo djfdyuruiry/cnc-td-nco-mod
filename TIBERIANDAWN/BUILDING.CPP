@@ -2298,27 +2298,6 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 		case RTTI_INFANTRY:
 		case RTTI_UNIT:
 			switch (Class->Type) {
-				case STRUCT_REFINERY:
-					if (base->What_Am_I() == RTTI_UNIT) {
-						CELL cell = Coord_Cell(Center_Coord());
-						UnitClass * unit = (UnitClass *)base;
-
-						cell = Adjacent_Cell(cell, FACING_SW);
-						ScenarioInit++;
-						if (unit->Unlimbo(Coord_Add(unit->Coord, 0x00550060L), DIR_SW_X2)) {
-							unit->PrimaryFacing = DIR_SW_X2;
-							Transmit_Message(RADIO_HELLO, unit);
-							Transmit_Message(RADIO_TETHER);
-							unit->Assign_Mission(MISSION_HARVEST);
-							unit->Force_Track(DriveClass::OUT_OF_REFINERY, Cell_Coord(cell));
-							unit->Set_Speed(128);
-						}
-						ScenarioInit--;
-					} else {
-						base->Scatter(true);
-					}
-					break;
-
 				case STRUCT_AIRSTRIP:
 					if (Create_Special_Reinforcement(House, &AircraftTypeClass::As_Reference(AIRCRAFT_CARGO), ttype, TMISSION_UNLOAD, As_Target())) {
 						delete base;
@@ -2342,6 +2321,25 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					}
 					ScenarioInit--;
 					break;
+
+				case STRUCT_REFINERY:
+					if (base->What_Am_I() == RTTI_UNIT && ((UnitClass*)base)->Class->IsToHarvest) {
+						CELL cell = Coord_Cell(Center_Coord());
+						UnitClass* unit = (UnitClass*)base;
+
+						cell = Adjacent_Cell(cell, FACING_SW);
+						ScenarioInit++;
+						if (unit->Unlimbo(Coord_Add(unit->Coord, 0x00550060L), DIR_SW_X2)) {
+							unit->PrimaryFacing = DIR_SW_X2;
+							Transmit_Message(RADIO_HELLO, unit);
+							Transmit_Message(RADIO_TETHER);
+							unit->Assign_Mission(MISSION_HARVEST);
+							unit->Force_Track(DriveClass::OUT_OF_REFINERY, Cell_Coord(cell));
+							unit->Set_Speed(128);
+						}
+						ScenarioInit--;
+						break;
+					}
 
 				default:
 					CELL cell;
