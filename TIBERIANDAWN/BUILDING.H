@@ -47,6 +47,9 @@
 #define	DOOR_OPEN_STAGE 9	// frame on which the door is entirely open
 #define	MAX_REPAIR_ANIM_STAGE	5	// # of stages of anim for repair center cycling
 
+extern const unsigned long DEFAULT_EXIT_COORD;
+extern const short DEFAULT_EXIT_LIST[14];
+
 /****************************************************************************
 **	For each instance of a building in the game, there is one of
 **	these structures. This structure holds information that is specific

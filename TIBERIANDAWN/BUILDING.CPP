@@ -2343,8 +2343,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					ScenarioInit--;
 					break;
 
-				case STRUCT_BARRACKS:
-				case STRUCT_HAND:
+				default:
 					CELL cell;
 					bool found = false;
 
@@ -2367,7 +2366,13 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 
 					if (found) {
 						DirType	dir = Direction(cell);
-						COORDINATE		start = Coord_Add(Coord, Class->ExitPoint);
+						COORDINATE exitPoint = Class->ExitPoint;
+
+						if (!exitPoint) {
+							exitPoint = DEFAULT_EXIT_COORD;
+						}
+
+						COORDINATE start = Coord_Add(Coord, exitPoint);
 
 						ScenarioInit++;
 						if (base->Unlimbo(start, dir)) {
@@ -5461,6 +5466,11 @@ CELL BuildingClass::Find_Exit_Cell(TechnoClass const * techno) const
 	bool found = false;
 
 	ptr = Class->ExitList;
+
+	if (!ptr) {
+		ptr = DEFAULT_EXIT_LIST;
+	}
+
 	if (ptr) {
 		while (*ptr != REFRESH_EOL) {
 			CELL cell = origin + *ptr++;

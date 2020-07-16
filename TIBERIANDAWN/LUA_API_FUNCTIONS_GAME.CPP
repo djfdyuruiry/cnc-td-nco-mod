@@ -149,7 +149,6 @@ static int Lua_Send_House_Super_Weapon_Message(
     return 0;
 }
 
-
 static int Lua_Disable_House_Super_Weapon(lua_State* lua) {
     return Lua_Send_House_Super_Weapon_Message(
         lua,
