@@ -846,7 +846,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 
 
 #ifdef USE_RA_AI
-bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remainingDistance) const
+bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, bool preventBuildingInShroud, bool allowBuildingBesideWalls, int remainingDistance) const
 {
 	if (remainingDistance < 1) {
 		return false;
@@ -859,7 +859,7 @@ bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remaining
 			continue;
 		}
 
-		if (!In_Radar(cell) && Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true))
+		if (preventBuildingInShroud && !In_Radar(cell))
 		{
 			return false;
 		}
@@ -870,7 +870,7 @@ bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remaining
 		**	building located there.
 		*/
 		if ((*this)[newcell].Owner == house) {
-			if (!Is_Wall((*this)[newcell].Overlay) || Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true)) {
+			if (allowBuildingBesideWalls || !Is_Wall((*this)[newcell].Overlay)) {
 				return true;
 			}
 		}
@@ -883,7 +883,7 @@ bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remaining
 			return true;
 		}
 
-		if (Scan_For_Proximity(newcell, house, remainingDistance - 1)) {
+		if (Scan_For_Proximity(newcell, house, preventBuildingInShroud, allowBuildingBesideWalls, remainingDistance - 1)) {
 			return true;
 		}
 	}
@@ -939,6 +939,10 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const * object, Houses
 		return(true);
 	}
 
+	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
+	auto preventBuildingInShroud = Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true);
+	auto allowBuildingBesideWalls = Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true);
+
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent
 	**	cells to these are of friendly persuasion, then consider the proximity check to
@@ -948,9 +952,8 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const * object, Houses
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = trycell + *ptr++;
 
-		auto maximumDistance = Read_Build_Distance_Game_Rule();
-
-		auto proximityDetected = Scan_For_Proximity(cell, house, maximumDistance);
+		auto maximumDistance = maxPlacementDistance;
+		auto proximityDetected = Scan_For_Proximity(cell, house, preventBuildingInShroud, allowBuildingBesideWalls, maximumDistance);
 
 		if (proximityDetected)
 		{

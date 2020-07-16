@@ -5495,7 +5495,7 @@ bool BuildingClass::Can_Player_Move(void) const
 		|| (*this == STRUCT_CONST && (Mission == MISSION_GUARD) && Special.IsMCVDeploy);
 }
 
-static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remainingDistance)
+static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, bool allowBuildingBesideWalls, int remainingDistance)
 {
 	if (remainingDistance < 1) {
 		return false;
@@ -5514,7 +5514,7 @@ static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remaining
 		**	building located there.
 		*/
 		if (Map[newcell].Owner == house->Class->House) {
-			if (!Is_Wall(Map[newcell].Overlay) || Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true)) {
+			if (allowBuildingBesideWalls || !Is_Wall(Map[newcell].Overlay)) {
 				return true;
 			}
 		}
@@ -5527,7 +5527,7 @@ static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remaining
 			return true;
 		}
 
-		if (Scan_For_Proximity_Check(newcell, house, remainingDistance - 1)) {
+		if (Scan_For_Proximity_Check(newcell, house, allowBuildingBesideWalls, remainingDistance - 1)) {
 			return true;
 		}
 	}
@@ -5569,22 +5569,26 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	**	cells to these are of friendly persuasion, then consider the proximity check to
 	**	have been a success.
 	*/
-	short const * ptr = Occupy_List(true);
+	auto ptr = Occupy_List(true);
+	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
+	auto preventBuildingInShroud = Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true);
+	auto allowBuildingBesideWalls = Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true);
+
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = homecell + *ptr++;
 
-		if (!Map.In_Radar(cell) && Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true)) {
+		if (preventBuildingInShroud && !Map.In_Radar(cell)) {
 			return false;
 		}
 
-		auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-
-		auto proximityDetected = Scan_For_Proximity_Check(cell, House, maxPlacementDistance);
+		auto maxDistance = maxPlacementDistance;
+		auto proximityDetected = Scan_For_Proximity_Check(cell, House, allowBuildingBesideWalls, maxDistance);
 
 		if (proximityDetected) {
 			return true;
 		}
 	}
+
 	return(false);
 }
 

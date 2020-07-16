@@ -116,7 +116,7 @@ static int Lua_Send_House_Super_Weapon_Message(
     }
 
     if (house->SuperweaponMessage.unread) {
-        luaL_error(lua, "Given house already has a superweapon change pending, try again when this change is shown ingame");
+        luaL_error(lua, "Given house already has a superweapon change pending");
         return 0;
     }
 
@@ -206,9 +206,27 @@ static int Lua_Modifiy_House_Credits(lua_State* lua)
     return 1;
 }
 
+static int Lua_Game_Busy_Error(lua_State* lua)
+{
+    luaL_error(lua, "The game is has another command pending");
+    return 0;
+}
+
+static int Lua_Refresh_Sidebar(lua_State* lua)
+{
+    Log_Trace("Lua_Refresh_Sidebar called from Lua");
+
+    if (!Push_Refresh_Sidebar_Ui_Message())
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
+
+    return 0;
+}
+
 static int Lua_Show_Game_Message(lua_State* lua)
 {
-    Log_Trace("Lua_Set_Building_Rule called from Lua");
+    Log_Trace("Lua_Show_Game_Message called from Lua");
 
     int argCount = lua_gettop(lua);
 
@@ -239,9 +257,10 @@ static int Lua_Show_Game_Message(lua_State* lua)
         return 0;
     }
 
-    GAME_UI_MESSAGE.message = strdup(message);
-    GAME_UI_MESSAGE.durationInSeconds = durationInSeconds;
-    GAME_UI_MESSAGE.unread = true;
+    if (!Push_Show_Notification_Ui_Message(message, durationInSeconds))
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
 
     return 0;
 }
@@ -251,6 +270,7 @@ bool Register_Game_Functions()
     Log_Debug("Initialising Lua API game functions");
 
     Register_Lua_Function("showGameMessage", Lua_Show_Game_Message);
+    Register_Lua_Function("refreshSidebar", Lua_Refresh_Sidebar);
     Register_Lua_Function("modifyHouseCredits", Lua_Modifiy_House_Credits);
     Register_Lua_Function("enableSuperweaponForHouse", Lua_Enable_House_Super_Weapon);
     Register_Lua_Function("chargeSuperweaponForHouse", Lua_Charge_House_Super_Weapon);
@@ -258,4 +278,3 @@ bool Register_Game_Functions()
 
     return true;
 }
-
