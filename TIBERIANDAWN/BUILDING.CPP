@@ -923,9 +923,8 @@ void BuildingClass::Player_Set_Rally_Point(TARGET target)
 
 bool BuildingClass::Unlimbo_Wall(COORDINATE coord)
 {
-	// TODO: add rules for below
-	const auto wallLength = 3u;
-	const auto fullCostWalls = false;
+	auto wallLength = Read_Multi_Wall_Length_Rule();
+	auto fullCostWalls = Read_Full_Cost_Multi_Wall_Length_Rule();
 
 	auto placecell = Coord_Cell(coord);
 

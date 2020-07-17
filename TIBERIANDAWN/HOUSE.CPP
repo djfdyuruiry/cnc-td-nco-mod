@@ -4859,9 +4859,8 @@ void HouseClass::Sell_Wall(CELL cell)
 						Sound_Effect(VOC_CASHTURN);
 					}
 
-					// TODO: Rule lookups
-					const auto wallLength = 3u;
-					const auto fullCostWalls = false;
+					auto wallLength = Read_Multi_Wall_Length_Rule();
+					auto fullCostWalls = Read_Full_Cost_Multi_Wall_Length_Rule();
 
 					if (!IsHuman || wallLength < 2 || fullCostWalls) {
 						Refund_Money(btype->Cost_Of() / 2); // TODO: add modifier rule for wall sell value

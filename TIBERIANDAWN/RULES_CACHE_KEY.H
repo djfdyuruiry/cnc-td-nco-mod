@@ -55,5 +55,7 @@ extern const CacheKey UNIT_REPAIR_FACTOR_RULE_KEY;
 extern const CacheKey DEBUG_LOGGING_RULE_KEY;
 
 extern const CacheKey RALLY_POINTS_RULE_KEY;
+extern const CacheKey MULTI_WALL_LENGTH_RULE_KEY;
+extern const CacheKey FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY;
 
 #endif

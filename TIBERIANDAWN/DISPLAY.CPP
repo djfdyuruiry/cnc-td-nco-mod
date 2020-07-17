@@ -4475,8 +4475,7 @@ ActionType Best_Object_Action(CELL cell)
 
 void DisplayClass::Update_Placement_Cursor()
 {
-	// TODO: add rules for below
-	const auto wallLength = 3;
+	auto wallLength = Read_Multi_Wall_Length_Rule();
 
 	if (wallLength < 2 || !In_Radar(ZoneCell))
 	{
