@@ -59,7 +59,6 @@
 
 #define XYCELL(x,y)	(y*MAP_CELL_W+x)
 
-
 const COORDINATE DEFAULT_EXIT_COORD = XYP_COORD(30, 33);
 
 const short DEFAULT_EXIT_LIST[] = {
@@ -4489,35 +4488,20 @@ bool BuildingTypeClass::Bib_And_Offset(SmudgeType & bib, CELL & cell) const
 }
 
 /***********************************************************************************************
-
  * BuildingTypeClass::Overlay_Type                                                             *
-
  *                                                                                             *
-
  * Determines the overlay type required to display this building                               *
-
  *                                                                                             *
-
  * INPUT:   none                                                                               *
-
  *                                                                                             *
-
  * OUTPUT:  overlay type to display                                                            *
-
  *                                                                                             *
-
  * WARNINGS:   none                                                                            *
-
  *                                                                                             *
-
  * HISTORY:                                                                                    *
-
  *   12/06/2020 cfehunter : Created.                                                           *
-
  *=============================================================================================*/
-
 OverlayType BuildingTypeClass::Overlay_Type() const
-
 {
 	switch (StructType(*this))
 	{

@@ -4446,33 +4446,19 @@ ActionType Best_Object_Action(CELL cell)
 
 
 /***********************************************************************************************
-
  * DisplayClass::Update_Placement_Cursor -- per-tick logic for the placement cursor            *
-
  *                                                                                             *
-
  *    This routine will run any updates for the cursor while in placement mode                 *
-
  *                                                                                             *
-
  * INPUT:   none                                                                               *
-
  *                                                                                             *
-
  * OUTPUT:  none                                                                               *
-
  *                                                                                             *
-
  * WARNINGS:  none                                                                             *
-
  *                                                                                             *
-
  * HISTORY:                                                                                    *
-
  * 12/06/2020 cfehunter: created                                                               *
-
  *=============================================================================================*/
-
 void DisplayClass::Update_Placement_Cursor()
 {
 	auto wallLength = Read_Multi_Wall_Length_Rule();
