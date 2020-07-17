@@ -211,6 +211,30 @@ static int Lua_Game_Busy_Error(lua_State* lua)
     return 0;
 }
 
+static int Lua_Hide_Map(lua_State* lua)
+{
+    Log_Trace("Lua_Hide_Map called from Lua");
+
+    if (!Push_Hide_Map_Ui_Message())
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
+
+    return 0;
+}
+
+static int Lua_Reveal_Map(lua_State* lua)
+{
+    Log_Trace("Lua_Reveal_Map called from Lua");
+
+    if (!Push_Reveal_Map_Ui_Message())
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
+
+    return 0;
+}
+
 static int Lua_Refresh_Map(lua_State* lua)
 {
     Log_Trace("Lua_Refresh_Map called from Lua");
@@ -281,8 +305,14 @@ bool Register_Game_Functions()
     Log_Debug("Initialising Lua API game functions");
 
     Register_Lua_Function("showGameMessage", Lua_Show_Game_Message);
+    
     Register_Lua_Function("refreshSidebar", Lua_Refresh_Sidebar);
+
+    Register_Lua_Function("revealEntireMap", Lua_Reveal_Map);
+    Register_Lua_Function("hideEntireMap", Lua_Hide_Map);
+
     Register_Lua_Function("modifyHouseCredits", Lua_Modifiy_House_Credits);
+
     Register_Lua_Function("enableSuperweaponForHouse", Lua_Enable_House_Super_Weapon);
     Register_Lua_Function("chargeSuperweaponForHouse", Lua_Charge_House_Super_Weapon);
     Register_Lua_Function("disableSuperweaponForHouse", Lua_Disable_House_Super_Weapon);

@@ -1,8 +1,5 @@
 #include "function.h"
 
-#include "DLLInterface.h"
-#include "SidebarGlyphx.h"
-
 #include "game_utils.h"
 
 GameUiMessage GAME_UI_MESSAGE;
@@ -49,6 +46,32 @@ bool Push_Refresh_Map_Ui_Message()
 	return true;
 }
 
+bool Push_Reveal_Map_Ui_Message()
+{
+	if (GAME_UI_MESSAGE.unread)
+	{
+		return false;
+	}
+
+	GAME_UI_MESSAGE.type = REVEAL_ENTIRE_MAP_MESSAGE;
+	GAME_UI_MESSAGE.unread = true;
+
+	return true;
+}
+
+bool Push_Hide_Map_Ui_Message()
+{
+	if (GAME_UI_MESSAGE.unread)
+	{
+		return false;
+	}
+
+	GAME_UI_MESSAGE.type = HIDE_ENTIRE_MAP_MESSAGE;
+	GAME_UI_MESSAGE.unread = true;
+
+	return true;
+}
+
 void Process_Game_Ui_Message()
 {
 	if (!GAME_UI_MESSAGE.unread)
@@ -71,6 +94,14 @@ void Process_Game_Ui_Message()
 	else if (type == REFRESH_MAP_MESSAGE)
 	{
 		Refresh_Game_Map();
+	}
+	else if (type == REVEAL_ENTIRE_MAP_MESSAGE)
+	{
+		Reveal_Entire_Map_To_Player();
+	}
+	else if (type == HIDE_ENTIRE_MAP_MESSAGE)
+	{
+		Hide_Entire_Map_From_Player();
 	}
 
 	GAME_UI_MESSAGE.unread = false;
