@@ -6002,6 +6002,48 @@ void DLLExportClass::Cell_Class_Draw_It(CNCDynamicMapStruct *dynamic_map, int &e
 
 	}
 		  
+
+	/*cfehunter 12/06/2020
+	*Render wall placement markers.
+	*Special thanks to pchote for this, getting the cursor rendering in classic was easy
+	*getting it to render in glyphX has been difficult
+	*/
+	if (cell_ptr->IsCursorHere && Map.PendingObject) {
+		auto isWall = (*Map.PendingObject).What_Am_I() == RTTI_BUILDINGTYPE 
+			&& static_cast<const BuildingTypeClass&>(*Map.PendingObject).IsWall;
+
+		if (!isWall || Map.ZoneCell == cell_ptr->Cell_Number()) {
+			return;
+		}
+
+		auto& cursorEntry = dynamic_map->Entries[entry_index++];
+
+		strncpy(
+			cursorEntry.AssetName,
+			cell_ptr->Is_Generally_Clear() 
+				? "PLACEMENT_EXTRA"
+				: "PLACEMENT_BAD",
+			CNC_OBJECT_ASSET_NAME_LENGTH
+		);
+
+		cursorEntry.AssetName[CNC_OBJECT_ASSET_NAME_LENGTH - 1] = 0;
+		cursorEntry.Type = -1;
+		cursorEntry.Owner = (char)cell_ptr->Owner;
+		cursorEntry.DrawFlags = SHAPE_CENTER | SHAPE_GHOST | SHAPE_COLOR;
+		cursorEntry.PositionX = xpixel + (ICON_PIXEL_W / 2);
+		cursorEntry.PositionY = ypixel + (ICON_PIXEL_H / 2);
+		cursorEntry.Width = 24;
+		cursorEntry.Height = 24;
+		cursorEntry.CellX = Cell_X(cell);
+		cursorEntry.CellY = Cell_Y(cell);
+		cursorEntry.ShapeIndex = 0;
+		cursorEntry.IsSmudge = true;
+		cursorEntry.IsOverlay = false;
+		cursorEntry.IsResource = false;
+		cursorEntry.IsSellable = false;
+		cursorEntry.IsTheaterShape = false;
+		cursorEntry.IsFlag = false;
+	}
 }			  
 
 

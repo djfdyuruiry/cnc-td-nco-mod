@@ -4488,6 +4488,59 @@ bool BuildingTypeClass::Bib_And_Offset(SmudgeType & bib, CELL & cell) const
 	return(bib != SMUDGE_NONE);
 }
 
+/***********************************************************************************************
+
+ * BuildingTypeClass::Overlay_Type                                                             *
+
+ *                                                                                             *
+
+ * Determines the overlay type required to display this building                               *
+
+ *                                                                                             *
+
+ * INPUT:   none                                                                               *
+
+ *                                                                                             *
+
+ * OUTPUT:  overlay type to display                                                            *
+
+ *                                                                                             *
+
+ * WARNINGS:   none                                                                            *
+
+ *                                                                                             *
+
+ * HISTORY:                                                                                    *
+
+ *   12/06/2020 cfehunter : Created.                                                           *
+
+ *=============================================================================================*/
+
+OverlayType BuildingTypeClass::Overlay_Type() const
+
+{
+	switch (StructType(*this))
+	{
+		case STRUCT_SANDBAG_WALL:
+			return OVERLAY_SANDBAG_WALL;
+
+		case STRUCT_CYCLONE_WALL:
+			return OVERLAY_CYCLONE_WALL;
+
+		case STRUCT_BRICK_WALL:
+			return OVERLAY_BRICK_WALL;
+
+		case STRUCT_BARBWIRE_WALL:
+			return OVERLAY_BARBWIRE_WALL;
+
+		case STRUCT_WOOD_WALL:
+			return OVERLAY_WOOD_WALL;
+
+		default:
+			return OVERLAY_NONE;
+	}
+}
+
 
 /***********************************************************************************************
  * BuildingTypeClass::Max_Pips -- Determines the maximum pips to display.                      *

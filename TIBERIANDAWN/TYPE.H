@@ -868,6 +868,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
 		#endif
 
+		OverlayType Overlay_Type() const;
 
 	private:
 

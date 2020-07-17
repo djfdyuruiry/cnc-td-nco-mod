@@ -94,13 +94,12 @@
  *   BuildingClass::Validate -- validates building pointer												  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#include	"function.h"
+#include "function.h"
 
 /*
 ** New sidebar for GlyphX multiplayer. ST - 3/26/2019 12:24PM
 */
 #include "SidebarGlyphx.h"
-
 
 enum SAMState {
 	SAM_NONE=-1,					// Used for non SAM site buildings.
@@ -922,6 +921,95 @@ void BuildingClass::Player_Set_Rally_Point(TARGET target)
 	OutList.Add(EventClass(EventClass::SET_RALLY, As_Target(), target));
 }
 
+bool BuildingClass::Unlimbo_Wall(COORDINATE coord)
+{
+	// TODO: add rules for below
+	const auto wallLength = 3u;
+	const auto fullCostWalls = false;
+
+	auto placecell = Coord_Cell(coord);
+
+	if (Can_Enter_Cell(placecell, FACING_NONE) != MOVE_OK) {
+		return false;
+	}
+
+	auto otype = Class->Overlay_Type();
+
+	if (otype == OVERLAY_NONE)
+	{
+		return false;
+	}
+
+	//Attempt to place the core pillar
+	auto& oclass = OverlayTypeClass::As_Reference(otype);
+
+	if (!Create_Overlay_At(oclass, placecell))
+	{
+		return false;
+	}
+
+	if (wallLength > 1 && !DLL_Export_Get_Input_Key_State(KN_LCTRL))
+	{
+		/* cfehunter 12/06/2020
+		 * Walk through every cardinal direction and run the same scanning logic as the build cursor
+		 * Then place new wall overlays and transfer cell ownership up to the scan result distance
+		 */
+		for (auto dir : FacingCardinals)
+		{
+			auto scanDist = Map.Scan_For_Overlay(placecell, dir, otype, wallLength);
+			auto adjcell = placecell;
+
+			for (int i = 0; i < scanDist; ++i)
+			{
+				adjcell = Adjacent_Cell(adjcell, dir);
+
+				if (fullCostWalls && House->Available_Money() < Class->Cost_Of())
+				{
+					Speak(VOX_NO_CASH);
+
+					break;
+				}
+
+				//If we fail to create the overlay here, abort this direction and move on
+				if (!Create_Overlay_At(oclass, adjcell)) {
+					break;
+				}
+
+				if (fullCostWalls) {
+					House->Spend_Money(Class->Cost_Of());
+				}
+			}
+		}
+	}
+
+	Transmit_Message(RADIO_OVER_OUT);
+
+	Delete_This();
+
+	return true;
+}
+
+bool BuildingClass::Create_Overlay_At(const OverlayTypeClass& oclass, const CELL cell)
+{
+	/* cfehunter 12/06/2020
+	* The original wall creation code would leak memory if it failed to unlimbo. This shouldn't
+	*/
+	if (auto o = oclass.Create_One_Of(House))
+	{
+		if (o->Unlimbo(Cell_Coord(cell)))
+		{
+			Map[cell].Owner = House->Class->House;
+
+			return true;
+		}
+		else
+		{
+			delete o;
+		}
+	}
+
+	return false;
+}
 
 /***********************************************************************************************
  * BuildingClass::AI -- Handles non-graphic AI processing for buildings.                       *
@@ -1375,40 +1463,7 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
 	**	converted to an overlay type.
 	*/
 	if (Class->IsWall) {
-		if (Can_Enter_Cell(Coord_Cell(coord), FACING_NONE) == MOVE_OK) {
-			OverlayType otype = OVERLAY_NONE;
-			switch (Class->Type) {
-				case STRUCT_SANDBAG_WALL:
-					otype	= OVERLAY_SANDBAG_WALL;
-					break;
-
-				case STRUCT_CYCLONE_WALL:
-					otype = OVERLAY_CYCLONE_WALL;
-					break;
-
-				case STRUCT_BRICK_WALL:
-					otype = OVERLAY_BRICK_WALL;
-					break;
-
-				case STRUCT_BARBWIRE_WALL:
-					otype = OVERLAY_BARBWIRE_WALL;
-					break;
-
-				case STRUCT_WOOD_WALL:
-					otype = OVERLAY_WOOD_WALL;
-					break;
-			}
-			if (otype != OVERLAY_NONE) {
-				ObjectClass * o = OverlayTypeClass::As_Reference(otype).Create_One_Of(House);
-				if (o && o->Unlimbo(coord)) {
-					Map[Coord_Cell(coord)].Owner = House->Class->House;
-					Transmit_Message(RADIO_OVER_OUT);
-					Delete_This();
-					return(true);
-				}
-			}
-		}
-		return(false);
+		return Unlimbo_Wall(coord);
 	}
 
 	/*

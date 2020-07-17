@@ -304,6 +304,9 @@ class BuildingClass : public TechnoClass
 
 		void  Player_Set_Rally_Point(TARGET target);
 
+		bool Unlimbo_Wall(COORDINATE coord);
+		bool Create_Overlay_At(const OverlayTypeClass& oclass, const CELL cell);
+
 		/*
 		** Some additional padding in case we need to add data to the class and maintain backwards compatibility for save/load
 		*/

@@ -1214,6 +1214,8 @@ void DisplayClass::AI(KeyNumType & input, int x, int y)
 			Mouse_Left_Release(-1, Get_Mouse_X(), Get_Mouse_Y(), NULL, ACTION_NONE);
 	}
 
+	Update_Placement_Cursor();
+
 	MapClass::AI(input, x, y);
 }
 
@@ -4440,4 +4442,93 @@ ActionType Best_Object_Action(ObjectClass* object)
 ActionType Best_Object_Action(CELL cell)
 {
 	return Best_Object_Action(CurrentObject.Raw(), cell);
+}
+
+
+/***********************************************************************************************
+
+ * DisplayClass::Update_Placement_Cursor -- per-tick logic for the placement cursor            *
+
+ *                                                                                             *
+
+ *    This routine will run any updates for the cursor while in placement mode                 *
+
+ *                                                                                             *
+
+ * INPUT:   none                                                                               *
+
+ *                                                                                             *
+
+ * OUTPUT:  none                                                                               *
+
+ *                                                                                             *
+
+ * WARNINGS:  none                                                                             *
+
+ *                                                                                             *
+
+ * HISTORY:                                                                                    *
+
+ * 12/06/2020 cfehunter: created                                                               *
+
+ *=============================================================================================*/
+
+void DisplayClass::Update_Placement_Cursor()
+{
+	// TODO: add rules for below
+	const auto wallLength = 3;
+
+	if (wallLength < 2 || !In_Radar(ZoneCell))
+	{
+		return;
+	}
+
+	const auto placementBuilding = PendingObject 
+		&& PendingObject->What_Am_I() == RTTI_BUILDINGTYPE 
+			? static_cast<const BuildingTypeClass*>(PendingObject)
+			: nullptr;
+
+	if (!placementBuilding || !placementBuilding->IsWall)
+	{
+		return;
+	}
+
+	if (!In_Radar(ZoneCell) || wallLength < 2 || DLL_Export_Get_Input_Key_State(KN_LCTRL)) {
+		if (CursorSize[1] != REFRESH_EOL) {
+			Set_Cursor_Shape(placementBuilding->Occupy_List(true));
+		}
+
+		return;
+	}
+
+	short offsetlist[50];
+	auto constexpr MaxOffsets = sizeof(offsetlist) / sizeof(offsetlist[0]) - 1;
+	auto wallOverlay = placementBuilding->Overlay_Type();
+
+	auto offsetslength = 1;
+
+	offsetlist[0] = 0;
+
+	for (auto dir : FacingCardinals)
+	{
+		auto scandist = Scan_For_Overlay(ZoneCell, dir, wallOverlay, wallLength);
+
+		//Break out if we're going to overflow the buffer
+		if (offsetslength + scandist > MaxOffsets) {
+			break;
+		}
+
+		auto current = ZoneCell;
+
+		for (auto i =  0; i < scandist; ++i)
+		{
+			current = Adjacent_Cell(current, dir);
+
+			offsetlist[offsetslength++] = current - ZoneCell - ZoneOffset;
+		}
+	}
+
+	offsetlist[offsetslength] = REFRESH_EOL;
+
+	Set_Cursor_Shape(offsetlist);
 }

@@ -4859,7 +4859,14 @@ void HouseClass::Sell_Wall(CELL cell)
 						Sound_Effect(VOC_CASHTURN);
 					}
 
-					Refund_Money(btype->Cost_Of()/2);
+					// TODO: Rule lookups
+					const auto wallLength = 3u;
+					const auto fullCostWalls = false;
+
+					if (!IsHuman || wallLength < 2 || fullCostWalls) {
+						Refund_Money(btype->Cost_Of() / 2); // TODO: add modifier rule for wall sell value
+					}
+
 					Map[cell].Overlay = OVERLAY_NONE;
 					Map[cell].OverlayData = 0;
 					Map[cell].Owner = HOUSE_NONE;
