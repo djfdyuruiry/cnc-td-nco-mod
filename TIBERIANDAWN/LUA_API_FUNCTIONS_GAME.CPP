@@ -205,6 +205,28 @@ static int Lua_Modifiy_House_Credits(lua_State* lua)
     return 1;
 }
 
+static int Lua_Get_Player_Base_House(lua_State* lua)
+{
+    Log_Trace("Lua_Get_Player_House called from Lua");
+
+    auto playerBaseHouse = House_Type_To_String(PlayerPtr->ActLike);
+
+    lua_pushstring(lua, playerBaseHouse);
+
+    return 1;
+}
+
+static int Lua_Get_Player_House(lua_State* lua)
+{
+    Log_Trace("Lua_Get_Player_House called from Lua");
+
+    auto playerHouse = House_Type_To_String(PlayerPtr->Class->House);
+
+    lua_pushstring(lua, playerHouse);
+
+    return 1;
+}
+
 static int Lua_Game_Busy_Error(lua_State* lua)
 {
     luaL_error(lua, "The game is has another command pending");
@@ -311,6 +333,8 @@ bool Register_Game_Functions()
     Register_Lua_Function("revealEntireMap", Lua_Reveal_Map);
     Register_Lua_Function("hideEntireMap", Lua_Hide_Map);
 
+    Register_Lua_Function("getPlayerHouse", Lua_Get_Player_House);
+    Register_Lua_Function("getPlayerBaseHouse", Lua_Get_Player_Base_House);
     Register_Lua_Function("modifyHouseCredits", Lua_Modifiy_House_Credits);
 
     Register_Lua_Function("enableSuperweaponForHouse", Lua_Enable_House_Super_Weapon);
