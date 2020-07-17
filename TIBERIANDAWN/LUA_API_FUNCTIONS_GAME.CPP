@@ -205,6 +205,26 @@ static int Lua_Modifiy_House_Credits(lua_State* lua)
     return 1;
 }
 
+static int Lua_Get_Active_Houses(lua_State* lua)
+{
+    Log_Trace("Lua_Get_Active_Houses called from Lua");
+
+    auto activeHousesCount = Houses.Count();
+
+    lua_createtable(lua, 0, activeHousesCount);
+
+    for (auto i = 0; i < activeHousesCount; i++)
+    {
+        auto house = Houses.Raw_Ptr(i);
+        auto houseName = House_Type_To_String(house->Class->House);
+
+        lua_pushstring(lua, houseName);
+        lua_rawseti(lua, -2, i + 1);
+    }
+
+    return 1;
+}
+
 static int Lua_Get_Player_Base_House(lua_State* lua)
 {
     Log_Trace("Lua_Get_Player_House called from Lua");
@@ -335,8 +355,9 @@ bool Register_Game_Functions()
 
     Register_Lua_Function("getPlayerHouse", Lua_Get_Player_House);
     Register_Lua_Function("getPlayerBaseHouse", Lua_Get_Player_Base_House);
-    Register_Lua_Function("modifyHouseCredits", Lua_Modifiy_House_Credits);
+    Register_Lua_Function("getActiveHouses", Lua_Get_Active_Houses);
 
+    Register_Lua_Function("modifyHouseCredits", Lua_Modifiy_House_Credits);
     Register_Lua_Function("enableSuperweaponForHouse", Lua_Enable_House_Super_Weapon);
     Register_Lua_Function("chargeSuperweaponForHouse", Lua_Charge_House_Super_Weapon);
     Register_Lua_Function("disableSuperweaponForHouse", Lua_Disable_House_Super_Weapon);
