@@ -1182,6 +1182,8 @@ class InfantryTypeClass : public TechnoTypeClass
 
 		bool IsImmuneToTiberium;
 
+		bool HasC4Charges;
+
 		/*
 		**	This is the explicit unit class constructor.
 		*/

@@ -81,6 +81,17 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsImmuneToTiberium = isImmuneToTiberium;
         }
     }
+    else if (Strings_Are_Equal(ruleName, HAS_C4_CHARGES_RULE_UPPER))
+    {
+        auto hasC4Charges = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_Infantry_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->HasC4Charges), Convert_Boolean_To_String(hasC4Charges));
+
+            type->HasC4Charges = hasC4Charges;
+        }
+    }
     else
     {
         return false;
@@ -132,6 +143,12 @@ static bool Read_Infantry_Rule(lua_State* lua, InfantryTypeClass* type, const ch
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsImmuneToTiberium));
 
         lua_pushboolean(lua, type->IsImmuneToTiberium);
+    }
+    else if (Strings_Are_Equal(ruleName, HAS_C4_CHARGES_RULE_UPPER))
+    {
+        Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->HasC4Charges));
+
+        lua_pushboolean(lua, type->HasC4Charges);
     }
     else
     {
