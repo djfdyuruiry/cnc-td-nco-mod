@@ -20,7 +20,7 @@ Check out the complete wiki here: [url=https://github.com/djfdyuruiry/cnc-td-nco
 
 [b]CFEPatch Ports[/b]
 
-Several features from the populat CFEPatch mod have been added to this mod.
+Several features from the popular CFEPatch mod have been added to this mod.
 
 Note: All features are disabled by default, you need to enable them in the rules file.
 
