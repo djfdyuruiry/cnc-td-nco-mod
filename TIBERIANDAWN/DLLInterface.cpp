@@ -698,8 +698,8 @@ extern "C" __declspec(dllexport) bool __cdecl CNC_Set_Multiplayer_Data(int scena
 	Rule.AllowSuperWeapons = game_options.EnableSuperweapons;	// Are superweapons available
 
 	if (MPlayerTiberium) {
-		Special.IsTGrowth = 1;
-		Special.IsTSpread = 1;
+		Special.IsTSpread = Read_Boolean_Game_Rule(TIBERIUM_SPREADS_RULE, TIBERIUM_SPREADS_RULE_KEY, true);
+		Special.IsTFast = !Read_Boolean_Game_Rule(SLOW_TIBERIUM_RULE, SLOW_TIBERIUM_RULE_KEY, false);
 	} else {
 		Special.IsTGrowth = 0;
 		Special.IsTSpread = 0;
@@ -4383,7 +4383,7 @@ bool DLLExportClass::Get_Sidebar_State(uint64 player_id, unsigned char *buffer_i
 }
 
 
-static void Scan_For_Valid_Placement(CELL cell, unsigned char* placement_distance, int remainingDistance)
+static void Scan_For_Valid_Placement(CELL cell, unsigned char* placement_distance, bool preventBuildingInShroud, bool allowBuildingBesideWalls, int remainingDistance)
 {
 	if (remainingDistance < 1)
 	{
@@ -4398,15 +4398,15 @@ static void Scan_For_Valid_Placement(CELL cell, unsigned char* placement_distanc
 			continue;
 		}
 
-		if (Is_Wall(Map[adjcell].Overlay) && !Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true)) {
+		if (!allowBuildingBesideWalls && Is_Wall(Map[adjcell].Overlay)) {
 			return;
 		}
 
-		if (Map.In_Radar(adjcell) || !Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true)) {
+		if (!preventBuildingInShroud || Map.In_Radar(adjcell)) {
 			placement_distance[adjcell] = min(placement_distance[adjcell], 1U);
 		}
 
-		Scan_For_Valid_Placement(adjcell, placement_distance, remainingDistance - 1);
+		Scan_For_Valid_Placement(adjcell, placement_distance, preventBuildingInShroud, allowBuildingBesideWalls, remainingDistance - 1);
 	}
 }
 
@@ -4435,6 +4435,10 @@ void DLLExportClass::Calculate_Placement_Distances(BuildingTypeClass* placement_
 		map_cell_height++;
 	}
 
+	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
+	auto preventBuildingInShroud = Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true);
+	auto allowBuildingBesideWalls = Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true);
+
 	memset(placement_distance, 255U, MAP_CELL_TOTAL);
 	for (int y = 0; y < map_cell_height; y++) {
 		for (int x = 0; x < map_cell_width; x++) {
@@ -4443,9 +4447,9 @@ void DLLExportClass::Calculate_Placement_Distances(BuildingTypeClass* placement_
 			if ((base && base->House->Class->House == PlayerPtr->Class->House) || (Map[cell].Owner == PlayerPtr->Class->House)) {
 				placement_distance[cell] = 0U;
 
-				auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
+				auto maxPlacement = maxPlacementDistance;
 
-				Scan_For_Valid_Placement(cell, placement_distance, maxPlacementDistance);
+				Scan_For_Valid_Placement(cell, placement_distance, preventBuildingInShroud, allowBuildingBesideWalls, maxPlacement);
 			}
 		}
 	}
@@ -5998,6 +6002,48 @@ void DLLExportClass::Cell_Class_Draw_It(CNCDynamicMapStruct *dynamic_map, int &e
 
 	}
 		  
+
+	/*cfehunter 12/06/2020
+	*Render wall placement markers.
+	*Special thanks to pchote for this, getting the cursor rendering in classic was easy
+	*getting it to render in glyphX has been difficult
+	*/
+	if (cell_ptr->IsCursorHere && Map.PendingObject) {
+		auto isWall = (*Map.PendingObject).What_Am_I() == RTTI_BUILDINGTYPE 
+			&& static_cast<const BuildingTypeClass&>(*Map.PendingObject).IsWall;
+
+		if (!isWall || Map.ZoneCell == cell_ptr->Cell_Number()) {
+			return;
+		}
+
+		auto& cursorEntry = dynamic_map->Entries[entry_index++];
+
+		strncpy(
+			cursorEntry.AssetName,
+			cell_ptr->Is_Generally_Clear() 
+				? "PLACEMENT_EXTRA"
+				: "PLACEMENT_BAD",
+			CNC_OBJECT_ASSET_NAME_LENGTH
+		);
+
+		cursorEntry.AssetName[CNC_OBJECT_ASSET_NAME_LENGTH - 1] = 0;
+		cursorEntry.Type = -1;
+		cursorEntry.Owner = (char)cell_ptr->Owner;
+		cursorEntry.DrawFlags = SHAPE_CENTER | SHAPE_GHOST | SHAPE_COLOR;
+		cursorEntry.PositionX = xpixel + (ICON_PIXEL_W / 2);
+		cursorEntry.PositionY = ypixel + (ICON_PIXEL_H / 2);
+		cursorEntry.Width = 24;
+		cursorEntry.Height = 24;
+		cursorEntry.CellX = Cell_X(cell);
+		cursorEntry.CellY = Cell_Y(cell);
+		cursorEntry.ShapeIndex = 0;
+		cursorEntry.IsSmudge = true;
+		cursorEntry.IsOverlay = false;
+		cursorEntry.IsResource = false;
+		cursorEntry.IsSellable = false;
+		cursorEntry.IsTheaterShape = false;
+		cursorEntry.IsFlag = false;
+	}
 }			  
 
 

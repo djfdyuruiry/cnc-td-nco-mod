@@ -122,6 +122,9 @@
     <None Include="..\game\RULES-BASE.INI">
       <Filter>game</Filter>
     </None>
+    <None Include="GAME_UTILS.H">
+      <Filter>Source Files\NCO</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABSTRACT.H">
@@ -784,6 +787,12 @@
     <ClInclude Include="RULES_CACHE_KEY.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="RULES_INI_AI.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RULES_INI_IQ.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
@@ -1442,6 +1451,9 @@
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="RULES_CACHE_KEY.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="GAME_UTILS.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>

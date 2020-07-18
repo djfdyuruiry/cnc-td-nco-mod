@@ -868,6 +868,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
 		#endif
 
+		OverlayType Overlay_Type() const;
 
 	private:
 
@@ -1020,6 +1021,8 @@ class UnitTypeClass : public TechnoTypeClass
 		**	The width or height of the largest dimension for this unit.
 		*/
 		int MaxSize;
+
+		bool CanSelfRepair;
 
 		/*
 		**	This is the explicit unit class constructor.
@@ -1178,6 +1181,8 @@ class InfantryTypeClass : public TechnoTypeClass
 		char ProneLaunch;
 
 		bool IsImmuneToTiberium;
+
+		bool HasC4Charges;
 
 		/*
 		**	This is the explicit unit class constructor.

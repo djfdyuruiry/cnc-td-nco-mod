@@ -103,18 +103,7 @@ class RulesClass {
 		**	Limit the number of helipads to this amount.
 		*/
 		int HelipadLimit;
-
-		/*
-		**	This specifies the percentage of the base (by building quantity) that should
-		**	be composed of Tesla Coils.
-		*/
-		unsigned short TeslaRatio;
-
-		/*
-		**	Limit tesla coil production to this maximum.
-		*/
-		int TeslaLimit;
-
+		
 		/*
 		**	This specifies the percentage of the base (by building quantity) that should
 		**	be composed of anti-aircraft defense.

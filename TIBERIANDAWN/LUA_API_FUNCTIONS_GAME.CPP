@@ -116,7 +116,7 @@ static int Lua_Send_House_Super_Weapon_Message(
     }
 
     if (house->SuperweaponMessage.unread) {
-        luaL_error(lua, "Given house already has a superweapon change pending, try again when this change is shown ingame");
+        luaL_error(lua, "Given house already has a superweapon change pending");
         return 0;
     }
 
@@ -148,7 +148,6 @@ static int Lua_Send_House_Super_Weapon_Message(
 
     return 0;
 }
-
 
 static int Lua_Disable_House_Super_Weapon(lua_State* lua) {
     return Lua_Send_House_Super_Weapon_Message(
@@ -206,9 +205,105 @@ static int Lua_Modifiy_House_Credits(lua_State* lua)
     return 1;
 }
 
+static int Lua_Get_Active_Houses(lua_State* lua)
+{
+    Log_Trace("Lua_Get_Active_Houses called from Lua");
+
+    auto activeHousesCount = Houses.Count();
+
+    lua_createtable(lua, 0, activeHousesCount);
+
+    for (auto i = 0; i < activeHousesCount; i++)
+    {
+        auto house = Houses.Raw_Ptr(i);
+        auto houseName = House_Type_To_String(house->Class->House);
+
+        lua_pushstring(lua, houseName);
+        lua_rawseti(lua, -2, i + 1);
+    }
+
+    return 1;
+}
+
+static int Lua_Get_Player_Base_House(lua_State* lua)
+{
+    Log_Trace("Lua_Get_Player_House called from Lua");
+
+    auto playerBaseHouse = House_Type_To_String(PlayerPtr->ActLike);
+
+    lua_pushstring(lua, playerBaseHouse);
+
+    return 1;
+}
+
+static int Lua_Get_Player_House(lua_State* lua)
+{
+    Log_Trace("Lua_Get_Player_House called from Lua");
+
+    auto playerHouse = House_Type_To_String(PlayerPtr->Class->House);
+
+    lua_pushstring(lua, playerHouse);
+
+    return 1;
+}
+
+static int Lua_Game_Busy_Error(lua_State* lua)
+{
+    luaL_error(lua, "The game is has another command pending");
+    return 0;
+}
+
+static int Lua_Hide_Map(lua_State* lua)
+{
+    Log_Trace("Lua_Hide_Map called from Lua");
+
+    if (!Push_Hide_Map_Ui_Message())
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
+
+    return 0;
+}
+
+static int Lua_Reveal_Map(lua_State* lua)
+{
+    Log_Trace("Lua_Reveal_Map called from Lua");
+
+    if (!Push_Reveal_Map_Ui_Message())
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
+
+    return 0;
+}
+
+static int Lua_Refresh_Map(lua_State* lua)
+{
+    Log_Trace("Lua_Refresh_Map called from Lua");
+
+    if (!Push_Refresh_Map_Ui_Message())
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
+
+    return 0;
+}
+
+static int Lua_Refresh_Sidebar(lua_State* lua)
+{
+    Log_Trace("Lua_Refresh_Sidebar called from Lua");
+
+    if (!Push_Refresh_Sidebar_Ui_Message())
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
+
+    return 0;
+}
+
 static int Lua_Show_Game_Message(lua_State* lua)
 {
-    Log_Trace("Lua_Set_Building_Rule called from Lua");
+    Log_Trace("Lua_Show_Game_Message called from Lua");
 
     int argCount = lua_gettop(lua);
 
@@ -239,9 +334,10 @@ static int Lua_Show_Game_Message(lua_State* lua)
         return 0;
     }
 
-    GAME_UI_MESSAGE.message = strdup(message);
-    GAME_UI_MESSAGE.durationInSeconds = durationInSeconds;
-    GAME_UI_MESSAGE.unread = true;
+    if (!Push_Show_Notification_Ui_Message(message, durationInSeconds))
+    {
+        return Lua_Game_Busy_Error(lua);
+    }
 
     return 0;
 }
@@ -251,6 +347,16 @@ bool Register_Game_Functions()
     Log_Debug("Initialising Lua API game functions");
 
     Register_Lua_Function("showGameMessage", Lua_Show_Game_Message);
+    
+    Register_Lua_Function("refreshSidebar", Lua_Refresh_Sidebar);
+
+    Register_Lua_Function("revealEntireMap", Lua_Reveal_Map);
+    Register_Lua_Function("hideEntireMap", Lua_Hide_Map);
+
+    Register_Lua_Function("getPlayerHouse", Lua_Get_Player_House);
+    Register_Lua_Function("getPlayerBaseHouse", Lua_Get_Player_Base_House);
+    Register_Lua_Function("getActiveHouses", Lua_Get_Active_Houses);
+
     Register_Lua_Function("modifyHouseCredits", Lua_Modifiy_House_Credits);
     Register_Lua_Function("enableSuperweaponForHouse", Lua_Enable_House_Super_Weapon);
     Register_Lua_Function("chargeSuperweaponForHouse", Lua_Charge_House_Super_Weapon);
@@ -258,4 +364,3 @@ bool Register_Game_Functions()
 
     return true;
 }
-

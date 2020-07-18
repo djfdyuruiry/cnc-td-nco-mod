@@ -846,7 +846,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 
 
 #ifdef USE_RA_AI
-bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remainingDistance) const
+bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, bool preventBuildingInShroud, bool allowBuildingBesideWalls, int remainingDistance) const
 {
 	if (remainingDistance < 1) {
 		return false;
@@ -859,7 +859,7 @@ bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remaining
 			continue;
 		}
 
-		if (!In_Radar(cell) && Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true))
+		if (preventBuildingInShroud && !In_Radar(cell))
 		{
 			return false;
 		}
@@ -870,7 +870,7 @@ bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remaining
 		**	building located there.
 		*/
 		if ((*this)[newcell].Owner == house) {
-			if (!Is_Wall((*this)[newcell].Overlay) || Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true)) {
+			if (allowBuildingBesideWalls || !Is_Wall((*this)[newcell].Overlay)) {
 				return true;
 			}
 		}
@@ -883,7 +883,7 @@ bool DisplayClass::Scan_For_Proximity(CELL cell, HousesType house, int remaining
 			return true;
 		}
 
-		if (Scan_For_Proximity(newcell, house, remainingDistance - 1)) {
+		if (Scan_For_Proximity(newcell, house, preventBuildingInShroud, allowBuildingBesideWalls, remainingDistance - 1)) {
 			return true;
 		}
 	}
@@ -939,6 +939,10 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const * object, Houses
 		return(true);
 	}
 
+	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
+	auto preventBuildingInShroud = Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true);
+	auto allowBuildingBesideWalls = Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true);
+
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent
 	**	cells to these are of friendly persuasion, then consider the proximity check to
@@ -948,9 +952,8 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const * object, Houses
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = trycell + *ptr++;
 
-		auto maximumDistance = Read_Build_Distance_Game_Rule();
-
-		auto proximityDetected = Scan_For_Proximity(cell, house, maximumDistance);
+		auto maximumDistance = maxPlacementDistance;
+		auto proximityDetected = Scan_For_Proximity(cell, house, preventBuildingInShroud, allowBuildingBesideWalls, maximumDistance);
 
 		if (proximityDetected)
 		{
@@ -1210,6 +1213,8 @@ void DisplayClass::AI(KeyNumType & input, int x, int y)
 		Get_Mouse_Y() >= (TacPixelY + Lepton_To_Pixel(TacLeptonHeight)))) {
 			Mouse_Left_Release(-1, Get_Mouse_X(), Get_Mouse_Y(), NULL, ACTION_NONE);
 	}
+
+	Update_Placement_Cursor();
 
 	MapClass::AI(input, x, y);
 }
@@ -4437,4 +4442,78 @@ ActionType Best_Object_Action(ObjectClass* object)
 ActionType Best_Object_Action(CELL cell)
 {
 	return Best_Object_Action(CurrentObject.Raw(), cell);
+}
+
+
+/***********************************************************************************************
+ * DisplayClass::Update_Placement_Cursor -- per-tick logic for the placement cursor            *
+ *                                                                                             *
+ *    This routine will run any updates for the cursor while in placement mode                 *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:  none                                                                             *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ * 12/06/2020 cfehunter: created                                                               *
+ *=============================================================================================*/
+void DisplayClass::Update_Placement_Cursor()
+{
+	auto wallLength = Read_Multi_Wall_Length_Rule();
+
+	if (wallLength < 2 || !In_Radar(ZoneCell))
+	{
+		return;
+	}
+
+	const auto placementBuilding = PendingObject 
+		&& PendingObject->What_Am_I() == RTTI_BUILDINGTYPE 
+			? static_cast<const BuildingTypeClass*>(PendingObject)
+			: nullptr;
+
+	if (!placementBuilding || !placementBuilding->IsWall)
+	{
+		return;
+	}
+
+	if (!In_Radar(ZoneCell) || wallLength < 2 || DLL_Export_Get_Input_Key_State(KN_LCTRL)) {
+		if (CursorSize[1] != REFRESH_EOL) {
+			Set_Cursor_Shape(placementBuilding->Occupy_List(true));
+		}
+
+		return;
+	}
+
+	short offsetlist[50];
+	auto constexpr MaxOffsets = sizeof(offsetlist) / sizeof(offsetlist[0]) - 1;
+	auto wallOverlay = placementBuilding->Overlay_Type();
+
+	auto offsetslength = 1;
+
+	offsetlist[0] = 0;
+
+	for (auto dir : FacingCardinals)
+	{
+		auto scandist = Scan_For_Overlay(ZoneCell, dir, wallOverlay, wallLength);
+
+		//Break out if we're going to overflow the buffer
+		if (offsetslength + scandist > MaxOffsets) {
+			break;
+		}
+
+		auto current = ZoneCell;
+
+		for (auto i =  0; i < scandist; ++i)
+		{
+			current = Adjacent_Cell(current, dir);
+
+			offsetlist[offsetslength++] = current - ZoneCell - ZoneOffset;
+		}
+	}
+
+	offsetlist[offsetslength] = REFRESH_EOL;
+
+	Set_Cursor_Shape(offsetlist);
 }

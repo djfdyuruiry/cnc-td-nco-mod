@@ -1469,6 +1469,7 @@ void HouseClass::AI(void)
 			} else {
 				if (this == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
+
 					Map.Column[1].Flag_To_Redraw();
 				}
 			}
@@ -4858,7 +4859,13 @@ void HouseClass::Sell_Wall(CELL cell)
 						Sound_Effect(VOC_CASHTURN);
 					}
 
-					Refund_Money(btype->Cost_Of()/2);
+					auto wallLength = Read_Multi_Wall_Length_Rule();
+					auto fullCostWalls = Read_Full_Cost_Multi_Wall_Length_Rule();
+
+					if (!IsHuman || wallLength < 2 || fullCostWalls) {
+						Refund_Money(btype->Cost_Of() / 2); // TODO: add modifier rule for wall sell value
+					}
+
 					Map[cell].Overlay = OVERLAY_NONE;
 					Map[cell].OverlayData = 0;
 					Map[cell].Owner = HOUSE_NONE;

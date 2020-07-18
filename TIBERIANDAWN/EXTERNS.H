@@ -402,4 +402,6 @@ extern TheaterType LastTheater;
 
 extern bool ShareAllyVisibility;
 
+extern const FacingType FacingCardinals[4];
+
 #endif

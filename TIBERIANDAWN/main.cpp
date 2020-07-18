@@ -1,7 +1,7 @@
 #ifdef TEST_CONSOLE
 
 #include "function.h"
-#
+
 #include "DllInterface.h"
 
 #include "lua_repl.h"

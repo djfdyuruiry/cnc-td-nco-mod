@@ -58,7 +58,10 @@
 #define	MCW	MAP_CELL_W
 
 #define XYCELL(x,y)	(y*MAP_CELL_W+x)
-static short const ExitPyle[] = {
+
+const COORDINATE DEFAULT_EXIT_COORD = XYP_COORD(30, 33);
+
+const short DEFAULT_EXIT_LIST[] = {
 	XYCELL(1,2),
 	XYCELL(2,2),
 	XYCELL(0,2),
@@ -74,6 +77,7 @@ static short const ExitPyle[] = {
 	XYCELL(-1,1),
 	REFRESH_EOL
 };
+
 static short const ExitHand[] = {
 	XYCELL(2,3),
 	XYCELL(1,3),
@@ -1087,7 +1091,7 @@ static BuildingTypeClass const ClassBarracks(
 	TXT_BARRACKS,							// NAME:			Short name of the structure.
 	TXT_BARRACKS_STRING,
 	"PYLE",									// NAME:			Short name of the structure.
-	XYP_COORD(30,33),						// Exit point for produced units.
+	DEFAULT_EXIT_COORD,						// Exit point for produced units.
 	0,								// Build level.
 	STRUCT_POWER,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
@@ -1127,7 +1131,7 @@ static BuildingTypeClass const ClassBarracks(
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
 	BSIZE_22, 								// SIZE:			Building size.
-	(short const *)ExitPyle,			// Preferred exit cell list.
+	(short const *)DEFAULT_EXIT_LIST,			// Preferred exit cell list.
 	(short const *)List22_1100,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_0011			// OVERLAPLIST:List of overlap cell offset.
 );
@@ -4481,6 +4485,44 @@ bool BuildingTypeClass::Bib_And_Offset(SmudgeType & bib, CELL & cell) const
 		}
 	}
 	return(bib != SMUDGE_NONE);
+}
+
+/***********************************************************************************************
+ * BuildingTypeClass::Overlay_Type                                                             *
+ *                                                                                             *
+ * Determines the overlay type required to display this building                               *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  overlay type to display                                                            *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/06/2020 cfehunter : Created.                                                           *
+ *=============================================================================================*/
+OverlayType BuildingTypeClass::Overlay_Type() const
+{
+	switch (StructType(*this))
+	{
+		case STRUCT_SANDBAG_WALL:
+			return OVERLAY_SANDBAG_WALL;
+
+		case STRUCT_CYCLONE_WALL:
+			return OVERLAY_CYCLONE_WALL;
+
+		case STRUCT_BRICK_WALL:
+			return OVERLAY_BRICK_WALL;
+
+		case STRUCT_BARBWIRE_WALL:
+			return OVERLAY_BARBWIRE_WALL;
+
+		case STRUCT_WOOD_WALL:
+			return OVERLAY_WOOD_WALL;
+
+		default:
+			return OVERLAY_NONE;
+	}
 }
 
 

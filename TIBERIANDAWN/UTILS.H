@@ -39,7 +39,7 @@ bool Parse_Boolean_Or_Default(char* booleanValue, bool default);
 
 bool Parse_Boolean_Or_Default(const char* booleanValue, bool default);
 
-char * Convert_Boolean_To_String(bool booleanValue);
+const char* Convert_Boolean_To_String(bool booleanValue);
 
 char* Get_Mod_Data_Path();
 

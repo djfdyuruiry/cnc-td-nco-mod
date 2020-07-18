@@ -179,7 +179,7 @@ class DisplayClass: public MapClass
 		bool  In_View(register CELL cell);
 		bool  Passes_Proximity_Check(ObjectTypeClass const *object);
 #ifdef USE_RA_AI
-		bool Scan_For_Proximity(CELL cell, HousesType house, int remainingDistance) const;
+		bool Scan_For_Proximity(CELL cell, HousesType house, bool preventBuildingInShroud, bool allowBuildingBesideWalls, int remainingDistance) const;
 		bool Passes_Proximity_Check(ObjectTypeClass const * object, HousesType house, short const * list, CELL trycell) const;
 #endif
 		ObjectClass *  Cell_Object(CELL cell, int x=0, int y=0);
@@ -318,6 +318,8 @@ public:		//ST - 1/21/2019 11:59AM
 		void Redraw_Icons(int draw_flags=0);
 		void Redraw_Shadow(void);
 		void Redraw_Shadow_Rects(void);
+
+		void Update_Placement_Cursor();
 
 		/*
 		**	This bit array is used to flag cells to be redrawn. If the icon needs to

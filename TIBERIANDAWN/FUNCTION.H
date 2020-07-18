@@ -982,6 +982,8 @@ void GlyphX_Debug_Print(const char *debug_text);
 */
 void On_Achievement_Event(const HouseClass* player_ptr, const char *achievement_type, const char *achievement_reason);
 
+extern bool DLL_Export_Get_Input_Key_State(KeyNumType key);
+
 /**
  * -- New construction options -- 
  */

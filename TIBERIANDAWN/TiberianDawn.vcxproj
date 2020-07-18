@@ -282,6 +282,7 @@
       <PreserveIdentifierCase Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">1</PreserveIdentifierCase>
       <EnableMASM51Compatibility Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</EnableMASM51Compatibility>
     </MASM>
+    <None Include="GAME_UTILS.H" />
     <None Include="KEYFBUFF.INC" />
     <MASM Include="MMX.ASM">
       <FileType>Document</FileType>
@@ -446,6 +447,7 @@
     <ClInclude Include="RULES_CACHE.H" />
     <ClInclude Include="RULES_CACHE_KEY.H" />
     <ClInclude Include="RULES_INI.H" />
+    <ClInclude Include="RULES_INI_AI.H" />
     <ClInclude Include="RULES_INI_AIRCRAFT.H" />
     <ClInclude Include="RULES_INI_BUILDING.H" />
     <ClInclude Include="RULES_INI_BULLET.H" />
@@ -454,6 +456,7 @@
     <ClInclude Include="RULES_INI_GAME.H" />
     <ClInclude Include="RULES_INI_GENERIC.H" />
     <ClInclude Include="RULES_INI_INFANTRY.H" />
+    <ClInclude Include="RULES_INI_IQ.H" />
     <ClInclude Include="RULES_INI_SUPERWEAPON.H" />
     <ClInclude Include="RULES_INI_UNIT.H" />
     <ClInclude Include="RULES_INI_WARHEAD.H" />
@@ -598,6 +601,7 @@
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="GAME_MESSAGES.CPP" />
+    <ClCompile Include="GAME_UTILS.cpp" />
     <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP" />

@@ -1523,6 +1523,8 @@ InfantryTypeClass::InfantryTypeClass	(
 
 	IsImmuneToTiberium = Read_Bool_From_Rules_Ini(IniName, IMMUNE_TO_TIBERIUM_RULE, immuneToTiberiumDefault);
 
+	HasC4Charges = Read_Bool_From_Rules_Ini(IniName, HAS_C4_CHARGES_RULE, Type == INFANTRY_RAMBO);
+
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;
 		DoControls[i].Count = *do_table++;

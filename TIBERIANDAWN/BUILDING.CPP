@@ -94,13 +94,12 @@
  *   BuildingClass::Validate -- validates building pointer												  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#include	"function.h"
+#include "function.h"
 
 /*
 ** New sidebar for GlyphX multiplayer. ST - 3/26/2019 12:24PM
 */
 #include "SidebarGlyphx.h"
-
 
 enum SAMState {
 	SAM_NONE=-1,					// Used for non SAM site buildings.
@@ -922,6 +921,94 @@ void BuildingClass::Player_Set_Rally_Point(TARGET target)
 	OutList.Add(EventClass(EventClass::SET_RALLY, As_Target(), target));
 }
 
+bool BuildingClass::Unlimbo_Wall(COORDINATE coord)
+{
+	auto wallLength = Read_Multi_Wall_Length_Rule();
+	auto fullCostWalls = Read_Full_Cost_Multi_Wall_Length_Rule();
+
+	auto placecell = Coord_Cell(coord);
+
+	if (Can_Enter_Cell(placecell, FACING_NONE) != MOVE_OK) {
+		return false;
+	}
+
+	auto otype = Class->Overlay_Type();
+
+	if (otype == OVERLAY_NONE)
+	{
+		return false;
+	}
+
+	//Attempt to place the core pillar
+	auto& oclass = OverlayTypeClass::As_Reference(otype);
+
+	if (!Create_Overlay_At(oclass, placecell))
+	{
+		return false;
+	}
+
+	if (wallLength > 1 && !DLL_Export_Get_Input_Key_State(KN_LCTRL))
+	{
+		/* cfehunter 12/06/2020
+		 * Walk through every cardinal direction and run the same scanning logic as the build cursor
+		 * Then place new wall overlays and transfer cell ownership up to the scan result distance
+		 */
+		for (auto dir : FacingCardinals)
+		{
+			auto scanDist = Map.Scan_For_Overlay(placecell, dir, otype, wallLength);
+			auto adjcell = placecell;
+
+			for (int i = 0; i < scanDist; ++i)
+			{
+				adjcell = Adjacent_Cell(adjcell, dir);
+
+				if (fullCostWalls && House->Available_Money() < Class->Cost_Of())
+				{
+					Speak(VOX_NO_CASH);
+
+					break;
+				}
+
+				//If we fail to create the overlay here, abort this direction and move on
+				if (!Create_Overlay_At(oclass, adjcell)) {
+					break;
+				}
+
+				if (fullCostWalls) {
+					House->Spend_Money(Class->Cost_Of());
+				}
+			}
+		}
+	}
+
+	Transmit_Message(RADIO_OVER_OUT);
+
+	Delete_This();
+
+	return true;
+}
+
+bool BuildingClass::Create_Overlay_At(const OverlayTypeClass& oclass, const CELL cell)
+{
+	/* cfehunter 12/06/2020
+	* The original wall creation code would leak memory if it failed to unlimbo. This shouldn't
+	*/
+	if (auto o = oclass.Create_One_Of(House))
+	{
+		if (o->Unlimbo(Cell_Coord(cell)))
+		{
+			Map[cell].Owner = House->Class->House;
+
+			return true;
+		}
+		else
+		{
+			delete o;
+		}
+	}
+
+	return false;
+}
 
 /***********************************************************************************************
  * BuildingClass::AI -- Handles non-graphic AI processing for buildings.                       *
@@ -1375,40 +1462,7 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
 	**	converted to an overlay type.
 	*/
 	if (Class->IsWall) {
-		if (Can_Enter_Cell(Coord_Cell(coord), FACING_NONE) == MOVE_OK) {
-			OverlayType otype = OVERLAY_NONE;
-			switch (Class->Type) {
-				case STRUCT_SANDBAG_WALL:
-					otype	= OVERLAY_SANDBAG_WALL;
-					break;
-
-				case STRUCT_CYCLONE_WALL:
-					otype = OVERLAY_CYCLONE_WALL;
-					break;
-
-				case STRUCT_BRICK_WALL:
-					otype = OVERLAY_BRICK_WALL;
-					break;
-
-				case STRUCT_BARBWIRE_WALL:
-					otype = OVERLAY_BARBWIRE_WALL;
-					break;
-
-				case STRUCT_WOOD_WALL:
-					otype = OVERLAY_WOOD_WALL;
-					break;
-			}
-			if (otype != OVERLAY_NONE) {
-				ObjectClass * o = OverlayTypeClass::As_Reference(otype).Create_One_Of(House);
-				if (o && o->Unlimbo(coord)) {
-					Map[Coord_Cell(coord)].Owner = House->Class->House;
-					Transmit_Message(RADIO_OVER_OUT);
-					Delete_This();
-					return(true);
-				}
-			}
-		}
-		return(false);
+		return Unlimbo_Wall(coord);
 	}
 
 	/*
@@ -2298,27 +2352,6 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 		case RTTI_INFANTRY:
 		case RTTI_UNIT:
 			switch (Class->Type) {
-				case STRUCT_REFINERY:
-					if (base->What_Am_I() == RTTI_UNIT) {
-						CELL cell = Coord_Cell(Center_Coord());
-						UnitClass * unit = (UnitClass *)base;
-
-						cell = Adjacent_Cell(cell, FACING_SW);
-						ScenarioInit++;
-						if (unit->Unlimbo(Coord_Add(unit->Coord, 0x00550060L), DIR_SW_X2)) {
-							unit->PrimaryFacing = DIR_SW_X2;
-							Transmit_Message(RADIO_HELLO, unit);
-							Transmit_Message(RADIO_TETHER);
-							unit->Assign_Mission(MISSION_HARVEST);
-							unit->Force_Track(DriveClass::OUT_OF_REFINERY, Cell_Coord(cell));
-							unit->Set_Speed(128);
-						}
-						ScenarioInit--;
-					} else {
-						base->Scatter(true);
-					}
-					break;
-
 				case STRUCT_AIRSTRIP:
 					if (Create_Special_Reinforcement(House, &AircraftTypeClass::As_Reference(AIRCRAFT_CARGO), ttype, TMISSION_UNLOAD, As_Target())) {
 						delete base;
@@ -2343,8 +2376,26 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					ScenarioInit--;
 					break;
 
-				case STRUCT_BARRACKS:
-				case STRUCT_HAND:
+				case STRUCT_REFINERY:
+					if (base->What_Am_I() == RTTI_UNIT && ((UnitClass*)base)->Class->IsToHarvest) {
+						CELL cell = Coord_Cell(Center_Coord());
+						UnitClass* unit = (UnitClass*)base;
+
+						cell = Adjacent_Cell(cell, FACING_SW);
+						ScenarioInit++;
+						if (unit->Unlimbo(Coord_Add(unit->Coord, 0x00550060L), DIR_SW_X2)) {
+							unit->PrimaryFacing = DIR_SW_X2;
+							Transmit_Message(RADIO_HELLO, unit);
+							Transmit_Message(RADIO_TETHER);
+							unit->Assign_Mission(MISSION_HARVEST);
+							unit->Force_Track(DriveClass::OUT_OF_REFINERY, Cell_Coord(cell));
+							unit->Set_Speed(128);
+						}
+						ScenarioInit--;
+						break;
+					}
+
+				default:
 					CELL cell;
 					bool found = false;
 
@@ -2367,7 +2418,13 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 
 					if (found) {
 						DirType	dir = Direction(cell);
-						COORDINATE		start = Coord_Add(Coord, Class->ExitPoint);
+						COORDINATE exitPoint = Class->ExitPoint;
+
+						if (!exitPoint) {
+							exitPoint = DEFAULT_EXIT_COORD;
+						}
+
+						COORDINATE start = Coord_Add(Coord, exitPoint);
 
 						ScenarioInit++;
 						if (base->Unlimbo(start, dir)) {
@@ -5461,6 +5518,11 @@ CELL BuildingClass::Find_Exit_Cell(TechnoClass const * techno) const
 	bool found = false;
 
 	ptr = Class->ExitList;
+
+	if (!ptr) {
+		ptr = DEFAULT_EXIT_LIST;
+	}
+
 	if (ptr) {
 		while (*ptr != REFRESH_EOL) {
 			CELL cell = origin + *ptr++;
@@ -5495,7 +5557,7 @@ bool BuildingClass::Can_Player_Move(void) const
 		|| (*this == STRUCT_CONST && (Mission == MISSION_GUARD) && Special.IsMCVDeploy);
 }
 
-static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remainingDistance)
+static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, bool allowBuildingBesideWalls, int remainingDistance)
 {
 	if (remainingDistance < 1) {
 		return false;
@@ -5514,7 +5576,7 @@ static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remaining
 		**	building located there.
 		*/
 		if (Map[newcell].Owner == house->Class->House) {
-			if (!Is_Wall(Map[newcell].Overlay) || Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true)) {
+			if (allowBuildingBesideWalls || !Is_Wall(Map[newcell].Overlay)) {
 				return true;
 			}
 		}
@@ -5527,7 +5589,7 @@ static bool Scan_For_Proximity_Check(CELL cell, HouseClass* house, int remaining
 			return true;
 		}
 
-		if (Scan_For_Proximity_Check(newcell, house, remainingDistance - 1)) {
+		if (Scan_For_Proximity_Check(newcell, house, allowBuildingBesideWalls, remainingDistance - 1)) {
 			return true;
 		}
 	}
@@ -5569,22 +5631,26 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	**	cells to these are of friendly persuasion, then consider the proximity check to
 	**	have been a success.
 	*/
-	short const * ptr = Occupy_List(true);
+	auto ptr = Occupy_List(true);
+	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
+	auto preventBuildingInShroud = Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true);
+	auto allowBuildingBesideWalls = Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true);
+
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = homecell + *ptr++;
 
-		if (!Map.In_Radar(cell) && Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true)) {
+		if (preventBuildingInShroud && !Map.In_Radar(cell)) {
 			return false;
 		}
 
-		auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-
-		auto proximityDetected = Scan_For_Proximity_Check(cell, House, maxPlacementDistance);
+		auto maxDistance = maxPlacementDistance;
+		auto proximityDetected = Scan_For_Proximity_Check(cell, House, allowBuildingBesideWalls, maxDistance);
 
 		if (proximityDetected) {
 			return true;
 		}
 	}
+
 	return(false);
 }
 

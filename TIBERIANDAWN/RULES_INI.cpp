@@ -958,6 +958,59 @@ bool Read_Cached_Bool_From_Rules_Ini(
 	return Read_Bool_From_Rules_Ini(section, entry, default);
 }
 
+/// <summary>
+/// Fixed is a reference to the C++ type used in Red Alert for
+/// it's INI double values that are converted to unsigned integers
+/// </summary>
+/// <returns>The double rules value converted to a `fixed` unsigned int</returns>
+unsigned int Read_Fixed_From_Rules_Ini(
+	const char* section,
+	const char* entry,
+	unsigned int defaultValue,
+	double defaultAsPercentage
+) {
+	bool cacheHit = false;
+	auto cachedValue = Get_Cached_Unsigned_Int_Rule(section, entry, &cacheHit);
+
+	if (cacheHit)
+	{
+		return cachedValue;
+	}
+
+	bool valueFound = false;
+	auto ruleValueAsDouble = Read_Optional_Double_From_Rules_Ini(section, entry, &valueFound);
+
+	if (!valueFound)
+	{
+		Cache_Unsigned_Int_Rule(section, entry, defaultValue);
+
+		return defaultValue;
+	}
+
+	if (ruleValueAsDouble < 0.00f || ruleValueAsDouble > 0.99f)
+	{
+		RULES_VALID = false;
+
+		Show_Error(
+			"Rule [%s -> %s] must be a floating point number between 0.00 and 0.99 (inclusive), value provided: %f",
+			section,
+			entry,
+			ruleValueAsDouble
+		);
+
+		return defaultValue;
+	}
+
+	auto onePercent = defaultValue / (defaultAsPercentage * 100);
+	auto ruleValueAsPercentage = ruleValueAsDouble * 100;
+
+	unsigned int ruleValue = nearbyint(ruleValueAsPercentage * onePercent);
+
+	Cache_Unsigned_Int_Rule(section, entry, ruleValue);
+
+	return ruleValue;
+}
+
 int Read_House_List_From_Rules_Ini(
 	const char* section,
 	int defaultValue,

@@ -47,6 +47,9 @@
 #define	DOOR_OPEN_STAGE 9	// frame on which the door is entirely open
 #define	MAX_REPAIR_ANIM_STAGE	5	// # of stages of anim for repair center cycling
 
+extern const COORDINATE DEFAULT_EXIT_COORD;
+extern const short DEFAULT_EXIT_LIST[14];
+
 /****************************************************************************
 **	For each instance of a building in the game, there is one of
 **	these structures. This structure holds information that is specific
@@ -300,6 +303,9 @@ class BuildingClass : public TechnoClass
 		virtual BulletClass * Fire_At(TARGET target, int which);
 
 		void  Player_Set_Rally_Point(TARGET target);
+
+		bool Unlimbo_Wall(COORDINATE coord);
+		bool Create_Overlay_At(const OverlayTypeClass& oclass, const CELL cell);
 
 		/*
 		** Some additional padding in case we need to add data to the class and maintain backwards compatibility for save/load
