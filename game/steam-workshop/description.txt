@@ -4,7 +4,7 @@
 
 This mod provides an extensive 📃 RULES.INI file 📃 for Tiberian Dawn & ⚙ Lua event scripting ⚙.
 
-Unfortunately only one C&C dll mod can run at a time, this mod aims to fix that problem by providing a rules file and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
+Currently only one C&C dll mod can run at a time, this mod aims to fix that problem by providing a rules file and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
 
 Project Roadmap can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/7.-Roadmap]here[/url].
 
@@ -17,6 +17,21 @@ TL;DR - Setup guide can be found here: [url=https://github.com/djfdyuruiry/cnc-t
 Check out the complete wiki here: [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki]https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki[/url]
 
 [b]Features:[/b]
+
+[b]CFEPatch Ports[/b]
+
+Several features from the populat CFEPatch mod have been added to this mod.
+
+Note: All features are disabled by default, you need to enable them in the rules file.
+
+[list]
+  [*] Rally Points
+  [*] Modern Wall Building
+[/list]
+
+See the Enhancements section in the RULES file. 
+
+[b]Rules[/b]
 
 Ever wanted gunboats that can cloak and shoot laser beams❓❓❓
 How about capturing a Obelisk with an Engineer❓❓❓
@@ -32,22 +47,23 @@ Building Temple of Nod as GDI❓❓❓
   [*] Buildings
 [*] Turn off single player constraints, for example:
   [*] Nod can't build APCs
-  [*] GDI can't build Sandbags until late in the game
-[*] Control superweapon logic (only Nukes for now)
+  [*] GDI can't build Temple of Nod
+[*] Control superweapon logic
 [*] Additional rules for cheats and debug options
 [*] Set distance between buildings (build more than one cell away)
 [/list]
 
-[i]More rules are planned: all superweapons, change graphics, load additional mix files [/i]
+[i]More rules are planned: change graphics, load additional mix files etc. [/i]
 
 A guide on how to edit the RULES.INI file can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/1.-RULES.INI-Full-Guide]here[/url].
 
 [b]Lua Scripting support:[/b]
 
 [list]
-[*] Lua 5.3 support
-[*] Run your scripts when game events happen
-[*] Get/set rules
+  [*] Lua 5.3 support
+  [*] Run your scripts when game events happen
+  [*] Get/set rules
+  [*] Control superweapons, credits and the game UI
 [/list]
 
 A guide on how to use Lua Scripts with the mod can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/2.-Lua-Scripting-Tutorial]here[/url].
