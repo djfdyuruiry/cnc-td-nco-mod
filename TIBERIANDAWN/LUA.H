@@ -33,6 +33,8 @@ const char* Get_Lua_Value_As_String(int index);
 
 const char* Get_Lua_Value_Type(int index);
 
+void Push_String_Array_Onto_Lua_Stack(const char** stringArray, unsigned int arrayLength);
+
 void Clear_Lua_Stack();
 
 void Shutdown_Lua();

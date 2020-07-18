@@ -32,6 +32,18 @@ static void Test_Special_Rules() {
 	special.Init();
 }
 
+static void Test_Game_Loop_Message(GameLoopMessageType message)
+{
+	Push_Game_Loop_Message(message);
+
+	while (Get_Game_Loop_Message().unread)
+	{
+		Sleep(10);
+	}
+
+	Process_Game_Ui_Message();
+}
+
 static void Test_Lua_Events()
 {
 	Log_Debug("Test Console: Testing Lua Events");
@@ -46,9 +58,7 @@ static void Test_Lua_Events()
 
 	Log_Info("Testing game tick event handler");
 
-	// simulate the keyframe.cpp logic
-	Push_Game_Loop_Message(GAME_TICK_ELAPSED);
-	Process_Game_Ui_Message();
+	Test_Game_Loop_Message(GAME_TICK_ELAPSED);
 }
 
 static void Game_Event_Callback(const EventCallbackStruct& event)
@@ -117,6 +127,7 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 		return 1;
 	}
 
+	// mock DLL interface event handler
 	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
 
 	Test_Special_Rules();

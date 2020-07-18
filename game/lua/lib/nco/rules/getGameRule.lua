@@ -1,4 +1,9 @@
 local getGameRule = function (ruleName)
+  if ruleName == nil then
+    -- TODO: throw error on incorrect type
+    return nil
+  end
+
   local gameRules = getGameRuleNames()
   local gameRuleTypes = getGameRuleTypeNames()
 

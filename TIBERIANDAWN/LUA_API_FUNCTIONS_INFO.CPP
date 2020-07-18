@@ -58,47 +58,6 @@ static void Read_Object_Names(
     }
 }
 
-static void Read_Rule_Names(lua_State* lua, const char** ruleNames, unsigned ruleCount)
-{
-    lua_createtable(lua, 0, ruleCount);
-
-    for (unsigned i = 0; i < ruleCount; i++)
-    {
-        Log_Trace("Pushing object rule name onto Lua table: %s", ruleNames[i]);
-
-        lua_pushstring(lua, ruleNames[i]);
-        lua_rawseti(lua, -2, i + 1);
-    }
-}
-
-static int Lua_Get_Game_Rule_Type_Names(lua_State* lua)
-{
-    Read_Rule_Names(lua, GAME_RULE_TYPE_NAMES, GAME_RULE_COUNT);
-
-    return 1;
-}
-
-static int Lua_Get_Weapon_Types(lua_State* lua)
-{
-    Read_Object_Names(lua, WEAPON_FIRST, WEAPON_COUNT, &(Weapon_Type_To_String));
-
-    return 1;
-}
-
-static int Lua_Get_Bullet_Types(lua_State* lua)
-{
-    Read_Object_Names(lua, BULLET_SNIPER, BULLET_COUNT, &(Bullet_Type_To_String));
-
-    return 1;
-}
-
-static int Lua_Get_Warhead_Types(lua_State* lua)
-{
-    Read_Object_Names(lua, WARHEAD_FIRST, WARHEAD_COUNT, &(Warhead_Type_To_String));
-
-    return 1;
-}
-
 static int Lua_Get_Infantry_Types(lua_State* lua)
 {
     Read_Object_Names(lua, INFANTRY_FIRST, INFANTRY_COUNT, &(Infantry_Type_To_String));
@@ -127,58 +86,93 @@ static int Lua_Get_Building_Types(lua_State* lua)
     return 1;
 }
 
-static int Lua_Get_Game_Rule_Names(lua_State* lua)
+static int Lua_Get_Warhead_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, GAME_RULE_NAMES, GAME_RULE_COUNT);
-
-    return 1;
-}
-
-static int Lua_Get_Weapon_Rule_Names(lua_State* lua)
-{
-    Read_Rule_Names(lua, WEAPON_RULE_NAMES, WEAPON_RULE_COUNT);
+    Push_String_Array_Onto_Lua_Stack(WARHEAD_RULE_NAMES, WARHEAD_RULE_COUNT);
 
     return 1;
 }
 
 static int Lua_Get_Bullet_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, BULLET_RULE_NAMES, BULLET_RULE_COUNT);
+    Push_String_Array_Onto_Lua_Stack(BULLET_RULE_NAMES, BULLET_RULE_COUNT);
 
     return 1;
 }
 
-static int Lua_Get_Warhead_Rule_Names(lua_State* lua)
+static int Lua_Get_Weapon_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, WARHEAD_RULE_NAMES, WARHEAD_RULE_COUNT);
+    Push_String_Array_Onto_Lua_Stack(WEAPON_RULE_NAMES, WEAPON_RULE_COUNT);
+
+    return 1;
+}
+
+static int Lua_Get_Game_Rule_Names(lua_State* lua)
+{
+    Push_String_Array_Onto_Lua_Stack(GAME_RULE_NAMES, GAME_RULE_COUNT);
 
     return 1;
 }
 
 static int Lua_Get_Infantry_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, INFANTRY_RULE_NAMES, INFANTRY_RULE_COUNT);
+    Push_String_Array_Onto_Lua_Stack(INFANTRY_RULE_NAMES, INFANTRY_RULE_COUNT);
 
     return 1;
 }
 
 static int Lua_Get_Unit_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, UNIT_RULE_NAMES, UNIT_RULE_COUNT);
+    Push_String_Array_Onto_Lua_Stack(UNIT_RULE_NAMES, UNIT_RULE_COUNT);
 
     return 1;
 }
 
 static int Lua_Get_Aircraft_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, AIRCRAFT_RULE_NAMES, AIRCRAFT_RULE_COUNT);
+    Push_String_Array_Onto_Lua_Stack(AIRCRAFT_RULE_NAMES, AIRCRAFT_RULE_COUNT);
 
     return 1;
 }
 
 static int Lua_Get_Building_Rule_Names(lua_State* lua)
 {
-    Read_Rule_Names(lua, BUILDING_RULE_NAMES, BUILDING_RULE_COUNT);
+    Push_String_Array_Onto_Lua_Stack(BUILDING_RULE_NAMES, BUILDING_RULE_COUNT);
+
+    return 1;
+}
+
+static int Lua_Get_Warhead_Types(lua_State* lua)
+{
+    Read_Object_Names(lua, WARHEAD_FIRST, WARHEAD_COUNT, &(Warhead_Type_To_String));
+
+    return 1;
+}
+
+static int Lua_Get_Bullet_Types(lua_State* lua)
+{
+    Read_Object_Names(lua, BULLET_SNIPER, BULLET_COUNT, &(Bullet_Type_To_String));
+
+    return 1;
+}
+
+static int Lua_Get_Weapon_Types(lua_State* lua)
+{
+    Read_Object_Names(lua, WEAPON_FIRST, WEAPON_COUNT, &(Weapon_Type_To_String));
+
+    return 1;
+}
+
+static int Lua_Get_Game_Rule_Type_Names(lua_State* lua)
+{
+    Push_String_Array_Onto_Lua_Stack(GAME_RULE_TYPE_NAMES, GAME_RULE_COUNT);
+
+    return 1;
+}
+
+static int Lua_Get_Event_Names(lua_State* lua)
+{
+    Push_String_Array_Onto_Lua_Stack(LUA_EVENTS, LUA_EVENT_COUNT);
 
     return 1;
 }
@@ -186,6 +180,8 @@ static int Lua_Get_Building_Rule_Names(lua_State* lua)
 bool Register_Info_Functions()
 {
     Log_Debug("Registering Info Lua API functions");
+
+    Register_Lua_Function("getEventNames", Lua_Get_Event_Names);
 
     Register_Lua_Function("getGameRuleTypeNames", Lua_Get_Game_Rule_Type_Names);
     Register_Lua_Function("getWeaponTypes", Lua_Get_Weapon_Types);

@@ -2,8 +2,6 @@
 
 #include "lua_api.h"
 
-static const auto INIT_GAME_STATE = "_G.Game = {}";
-
 static lua_State* LUA = NULL;
 
 static bool Load_Lua_Scripts()
@@ -28,14 +26,7 @@ static bool Load_Lua_Scripts()
 }
 
 static bool Load_Lua_Components()
-{        
-    if (!Execute_Lua_Script(INIT_GAME_STATE))
-    {
-        return false;
-    }
-
-    Log_Debug("Lua game state intialised");
-
+{
     if (!Initialise_Lua_Api())
     {
         return false;
@@ -200,6 +191,19 @@ const char * Get_Lua_Value_As_String(int index)
 const char* Get_Lua_Value_Type(int index)
 {
     return lua_typename(LUA, lua_type(LUA, index));
+}
+
+void Push_String_Array_Onto_Lua_Stack(const char** stringArray, unsigned int arrayLength)
+{
+    lua_createtable(LUA, 0, arrayLength);
+
+    for (auto i = 0u; i < arrayLength; i++)
+    {
+        Log_Trace("Pushing string onto Lua table: %s", stringArray[i]);
+
+        lua_pushstring(LUA, stringArray[i]);
+        lua_rawseti(LUA, -2, i + 1);
+    }
 }
 
 void Clear_Lua_Stack()
