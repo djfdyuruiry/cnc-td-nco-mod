@@ -1,12 +1,11 @@
-#include <Shlwapi.h>
-
 #include "function.h"
 
 static const auto ONE_HUNDRED_NS_INTERVALS_SINCE_UNIX_EPOCH = 116444736000000000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_MS = 10000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_S = 10000000LL;
 
-static const auto USER_PROFILE_ENV_VAR = "USERPROFILE";
+// length of `\TiberianDawn.xxx`
+static const auto MOD_FILE_NAME_LENGTH = 17u;
 
 void Show_Error(const char* messageFormat, ...)
 {
@@ -328,7 +327,7 @@ const char* Convert_Boolean_To_String(bool booleanValue)
 
 char* Get_Mod_Data_Path()
 {
-	auto modPath = Allocate_String(MAX_PATH);
+	auto modDllPath = Allocate_String(MAX_PATH);
 
 	HMODULE moduleHandle;
 
@@ -342,13 +341,22 @@ char* Get_Mod_Data_Path()
 		exit(1);
 	}
 
-	if (!GetModuleFileName(moduleHandle, modPath, MAX_PATH))
+	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
 	{
 		Show_Error("Unable to get mod data path: %s", Get_Win32_Error_Message());
 		exit(1);
 	}
 
-	PathRemoveFileSpec(modPath);
+	auto modPath = Allocate_String(MAX_PATH);
+	auto modDllPathLength = strlen(modDllPath);
+	auto modPathLength = modDllPathLength - MOD_FILE_NAME_LENGTH;
+
+	for (auto c = 0u; c < modPathLength; c++)
+	{
+		modPath[c] = modDllPath[c];
+	}
+
+	delete modDllPath;
 
 	return modPath;
 }

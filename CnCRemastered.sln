@@ -23,7 +23,6 @@ Global
 		{1380ED08-82A3-49C2-A171-1915574B3382}.TestConsoleLuaRepl|x86.ActiveCfg = TestConsoleLuaRepl|Win32
 		{1380ED08-82A3-49C2-A171-1915574B3382}.TestConsoleLuaRepl|x86.Build.0 = TestConsoleLuaRepl|Win32
 		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.Debug|x86.ActiveCfg = Debug|Win32
-		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.Debug|x86.Build.0 = Debug|Win32
 		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.Release|x86.ActiveCfg = Debug|Win32
 		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.TestConsole|x86.ActiveCfg = Debug|Win32
 		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.TestConsole|x86.Build.0 = Debug|Win32
