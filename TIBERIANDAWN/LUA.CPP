@@ -2,14 +2,33 @@
 
 #include "lua_api.h"
 
-static char * INIT_GAME_STATE = "_G.Game = {}";
+static const auto INIT_GAME_STATE = "_G.Game = {}";
 
 static lua_State* LUA = NULL;
 
 static bool Load_Lua_Scripts()
 {
-    auto executionOK = true;
-        
+    auto executionOk = true;
+    auto scripts = Rules_Get_Lua_Scripts();
+
+    for (auto i = 0; i < scripts.ScriptFileCount; i++)
+    {
+        auto scriptFile = scripts.ScriptFiles[i];
+        auto scriptFilePath = Build_Mod_Data_File_Path(scriptFile);
+
+        if (!Execute_Lua_File(scriptFilePath))
+        {
+            executionOk = false;
+        }
+
+        delete scriptFilePath;
+    }
+
+    return executionOk;
+}
+
+static bool Load_Lua_Components()
+{        
     if (!Execute_Lua_Script(INIT_GAME_STATE))
     {
         return false;
@@ -31,27 +50,28 @@ static bool Load_Lua_Scripts()
 
     Log_Debug("Lua events system initialised");
 
+    return true;
+}
+
+static bool Set_Lua_Package_Path()
+{
     auto modPath = Get_Mod_Data_Path();
-    auto scripts = Rules_Get_Lua_Scripts();
+    auto setPackagePathScript = Allocate_String(MAX_PATH + 64);
 
-    for (auto i = 0; i < scripts.ScriptFileCount; i++)
-    {
-        auto scriptFile = scripts.ScriptFiles[i];
-        auto scriptFilePath = Allocate_String(MAX_PATH);
-
-        sprintf(scriptFilePath, "%s\\%s", modPath, scriptFile);
-
-        if (!Execute_Lua_File(scriptFilePath))
-        {
-            executionOK = false;
-        }
-
-        delete scriptFilePath;
-    }
+    sprintf(setPackagePathScript, "package.path = [[%s\\lib\\?.lua;]] .. package.path", modPath);
 
     delete modPath;
 
-    return executionOK;
+    auto setPackagePathResult = Execute_Lua_Script(setPackagePathScript);
+
+    if (setPackagePathResult)
+    {
+        Log_Debug("Lua package path updated");
+    }
+
+    delete setPackagePathScript;
+
+    return setPackagePathResult;
 }
 
 bool Initialise_Lua()
@@ -69,7 +89,9 @@ bool Initialise_Lua()
 
     Log_Info("%s Initialised", LUA_VERSION);
 
-    return Load_Lua_Scripts();
+    return Set_Lua_Package_Path()
+        && Load_Lua_Components()
+        && Load_Lua_Scripts();
 }
 
 void Register_Lua_Function(const char* name, lua_CFunction function)

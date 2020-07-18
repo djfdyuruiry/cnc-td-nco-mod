@@ -14,11 +14,18 @@
 
 static bool API_INITIALISED = false;
 
+static bool Load_Nco_Lua_Lib()
+{
+    return Execute_Lua_Script("require('nco')");
+}
+
 static bool Load_Api_Functions()
 {
     Log_Debug("Initialising Lua API functions");
 
-    return Register_Util_Functions()
+
+    return Load_Nco_Lua_Lib()
+        && Register_Util_Functions()
         && Register_Info_Functions()
         && Register_Game_Rule_Functions()
         && Register_Weapon_Functions()

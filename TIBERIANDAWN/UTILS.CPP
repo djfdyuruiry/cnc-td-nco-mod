@@ -361,6 +361,19 @@ char* Get_Mod_Data_Path()
 	return modPath;
 }
 
+char* Build_Mod_Data_File_Path(const char* filePath)
+{
+	auto modPath = Get_Mod_Data_Path();
+
+	auto fullFilePath = Allocate_String(MAX_PATH);
+
+	sprintf(fullFilePath, "%s\\%s", modPath, filePath);
+
+	delete modPath;
+
+	return fullFilePath;
+}
+
 long long Get_Now_In_Epoch_Nanos()
 {
 	FILETIME now;

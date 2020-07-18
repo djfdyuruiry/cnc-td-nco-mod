@@ -95,15 +95,10 @@ static char* Read_Buffer_From_Rules_File(RawFileClass* rulesFile, char* rulesFil
 /// </summary>
 /// <returns>The text content of the ini file or a blank string if no file was found.</returns>
 static void Read_Rules_Ini_Buffers() {
-	auto modPath = Get_Mod_Data_Path();
+	Log_Info("Attempting to load rules ini from mod path");
 
-	Log_Info("Attempting to load rules ini from mod path: %s", modPath);
-
-	auto rulesFilename = Allocate_String(MAX_PATH);
-	auto defaultRulesFilename = Allocate_String(MAX_PATH);
-
-	sprintf(rulesFilename, "%s\\%s", modPath, RULES_FILENAME);
-	sprintf(defaultRulesFilename, "%s\\%s", modPath, DEFAULT_RULES_FILENAME);
+	auto rulesFilename = Build_Mod_Data_File_Path(RULES_FILENAME);
+	auto defaultRulesFilename = Build_Mod_Data_File_Path(DEFAULT_RULES_FILENAME);
 
 	auto rulesFile = new RawFileClass(rulesFilename);
 	auto defaultRulesFile = new RawFileClass(defaultRulesFilename);
@@ -133,9 +128,9 @@ static void Read_Rules_Ini_Buffers() {
 		DEFAULT_RULES_INI_BUFFER = Read_Buffer_From_Rules_File(defaultRulesFile, defaultRulesFilename);
 	}
 
-	delete modPath;
 	delete rulesFilename;
 	delete defaultRulesFilename;
+
 	delete rulesFile;
 	delete defaultRulesFile;
 }
