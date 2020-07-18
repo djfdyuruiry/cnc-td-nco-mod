@@ -2,6 +2,7 @@
 
 #include "game_utils.h"
 
+// TODO: make this a FIFO stack
 GameUiMessage GAME_UI_MESSAGE;
 
 bool Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds)

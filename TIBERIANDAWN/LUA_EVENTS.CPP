@@ -2,6 +2,8 @@
 
 static bool EVENTS_INITIALISED = false;
 static long long LAST_TICK_TIME_IN_EPOCH_MILLIS = 0;
+
+// TODO: make this a FIFO stack
 static GameLoopMessage GAME_LOOP_MESSAGE;
 
 static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
