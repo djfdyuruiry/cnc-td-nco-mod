@@ -4,8 +4,14 @@ local Events =
 }
 
 local registerEventHandler = function (eventName, handler)
-  if eventName == nil or handler == nil then
-    -- TODO: throw error on incorrect types
+  if type(eventName) ~= "string" then
+    error("eventName passed to registerEventHandler was not a string")
+  elseif eventName == "" then
+    error("eventName passed to registerEventHandler was empty")
+  elseif type(Events.handlers[eventName]) ~= "table" then
+    error(string.format("eventName passed to registerEventHandler was not a recognised event: %s", eventName))
+  elseif type(handler) ~= "function" then
+    error("handler passed to registerEventHandler was not a function")
     return
   end
 
@@ -27,9 +33,12 @@ Events.initHandlers = function()
 end
 
 Events.fire = function(eventName, ...)
-  if eventName == nil then
-    -- TODO: throw error on incorrect type
-    return
+  if type(eventName) ~= "string" then
+    error("eventName passed to fire was not a string")
+  elseif eventName == "" then
+    error("eventName passed to fire was empty")
+  elseif type(Events.handlers[eventName]) ~= "table" then
+    error(string.format("eventName passed to fire was not a recognised event: %s", eventName))
   end
 
   for _, handler in ipairs(Events.handlers[eventName]) do

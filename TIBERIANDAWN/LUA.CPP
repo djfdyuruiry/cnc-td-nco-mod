@@ -51,8 +51,6 @@ static bool Set_Lua_Package_Path()
 
     sprintf(setPackagePathScript, "package.path = [[%s\\lib\\?.lua;]] .. package.path", modPath);
 
-    delete modPath;
-
     auto setPackagePathResult = Execute_Lua_Script(setPackagePathScript);
 
     if (setPackagePathResult)

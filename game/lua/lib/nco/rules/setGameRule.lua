@@ -1,7 +1,12 @@
 local setGameRule = function (ruleName, ruleValue)
-  if ruleName == nil or ruleValue == nil then
-    -- TODO: throw error on incorrect type
-    return nil
+  if type(ruleName) ~= "string" then
+    error("ruleName passed to setGameRule was not a string")
+  elseif ruleName == "" then
+    error("ruleName passed to setGameRule was empty")
+  elseif ruleValue == nil then
+    error("ruleValue passed to setGameRule was nil")
+  elseif tostring(ruleName) == "" then
+    error("ruleValue passed to setGameRule was empty")
   end
 
   local gameRules = getGameRuleNames()

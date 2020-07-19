@@ -7,6 +7,8 @@ static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_S = 10000000LL;
 // length of `\TiberianDawn.xxx`
 static const auto MOD_FILE_NAME_LENGTH = 17u;
 
+static char* MOD_DATA_PATH = NULL;
+
 void Show_Error(const char* messageFormat, ...)
 {
 	if (messageFormat == NULL)
@@ -325,62 +327,13 @@ const char* Convert_Boolean_To_String(bool booleanValue)
 	return booleanValue ? "TRUE" : "FALSE";
 }
 
-char* Get_Mod_Data_Path()
-{
-	auto modDllPath = Allocate_String(MAX_PATH);
-
-	HMODULE moduleHandle;
-
-	if (!GetModuleHandleEx(
-		GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-		(LPCSTR)&Get_Mod_Data_Path,
-		&moduleHandle
-	))
-	{
-		Show_Error("Unable to get handle on module: %s", Get_Win32_Error_Message());
-		exit(1);
-	}
-
-	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
-	{
-		Show_Error("Unable to get mod data path: %s", Get_Win32_Error_Message());
-		exit(1);
-	}
-
-	auto modPath = Allocate_String(MAX_PATH);
-	auto modDllPathLength = strlen(modDllPath);
-	auto modPathLength = modDllPathLength - MOD_FILE_NAME_LENGTH;
-
-	for (auto c = 0u; c < modPathLength; c++)
-	{
-		modPath[c] = modDllPath[c];
-	}
-
-	delete modDllPath;
-
-	return modPath;
-}
-
-char* Build_Mod_Data_File_Path(const char* filePath)
-{
-	auto modPath = Get_Mod_Data_Path();
-
-	auto fullFilePath = Allocate_String(MAX_PATH);
-
-	sprintf(fullFilePath, "%s\\%s", modPath, filePath);
-
-	delete modPath;
-
-	return fullFilePath;
-}
-
 long long Get_Now_In_Epoch_Nanos()
 {
 	FILETIME now;
 
 	GetSystemTimeAsFileTime(&now);
 
-	LARGE_INTEGER li = { 0 };
+	LARGE_INTEGER li{};
 
 	li.LowPart = now.dwLowDateTime;
 	li.HighPart = now.dwHighDateTime;
@@ -399,6 +352,65 @@ long long Get_Now_In_Epoch_Millis()
 long long Get_Now_In_Epoch_Secs()
 {
 	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_S;
+}
+
+const char* Get_Mod_Data_Path()
+{
+	if (MOD_DATA_PATH != NULL)
+	{
+		return MOD_DATA_PATH;
+	}
+
+	HMODULE moduleHandle;
+
+	if (
+		!GetModuleHandleEx(
+			GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+			(LPCSTR)&Get_Mod_Data_Path,
+			&moduleHandle
+		)
+		|| moduleHandle == NULL 
+		|| moduleHandle == INVALID_HANDLE_VALUE
+	)
+	{
+		Show_Error("Unable to get handle on module: %s", Get_Win32_Error_Message());
+		exit(1);
+	}
+
+	auto modDllPath = Allocate_String(MAX_PATH);
+
+	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
+	{
+		Show_Error("Unable to get mod data path: %s", Get_Win32_Error_Message());
+		exit(1);
+	}
+
+	auto modDllPathLength = strlen(modDllPath);
+	auto modPathLength = modDllPathLength - MOD_FILE_NAME_LENGTH;
+
+	MOD_DATA_PATH = Allocate_String(MAX_PATH);
+
+	for (auto c = 0u; c < modPathLength; c++)
+	{
+		MOD_DATA_PATH[c] = modDllPath[c];
+	}
+
+	delete modDllPath;
+
+	Log_Info("Resolved mod data path: %s", MOD_DATA_PATH);
+
+	return MOD_DATA_PATH;
+}
+
+char* Build_Mod_Data_File_Path(const char* filePath)
+{
+	auto modPath = Get_Mod_Data_Path();
+
+	auto fullFilePath = Allocate_String(MAX_PATH);
+
+	sprintf(fullFilePath, "%s\\%s", modPath, filePath);
+
+	return fullFilePath;
 }
 
 void Start_Console_Output()

@@ -41,15 +41,15 @@ bool Parse_Boolean_Or_Default(const char* booleanValue, bool default);
 
 const char* Convert_Boolean_To_String(bool booleanValue);
 
-char* Get_Mod_Data_Path();
-
-char* Build_Mod_Data_File_Path(const char* filePath);
-
 long long Get_Now_In_Epoch_Nanos();
 
 long long Get_Now_In_Epoch_Millis();
 
 long long Get_Now_In_Epoch_Secs();
+
+const char* Get_Mod_Data_Path();
+
+char* Build_Mod_Data_File_Path(const char* filePath);
 
 void Start_Console_Output();
 

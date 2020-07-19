@@ -65,7 +65,7 @@ function main()
     log(">>Testing get/set game rules")
 
     for _, gameRule in ipairs(getGameRuleNames()) do
-        log(string.format("Game rule: %s", gameRule))
+        log("Game rule: %s", gameRule)
 
         local ruleValue = getGameRule(gameRule)
 
@@ -74,11 +74,11 @@ function main()
         setGameRule(gameRule, ruleValue)
 
         gameRulesWritten = gameRulesWritten + 1
-  
+
         local newRuleValue = getGameRule(gameRule)
 
         if newRuleValue ~= ruleValue then
-          showError(string.format("Validation of game rule value failed %s\nExpected: %s - Got: %s", gameRule, tostring(ruleValue), tostring(newRuleValue)))
+          showError("Validation of game rule value failed %s\nExpected: %s - Got: %s", gameRule, tostring(ruleValue), tostring(newRuleValue))
 
           validationFailed = true
           gameRuleValidationErrors = gameRuleValidationErrors + 1
@@ -86,10 +86,10 @@ function main()
     end
 
     for area, typeArea in pairs(typeAreas) do
-      log(string.format(">>Testing %s get/set rules", area))
+      log(">>Testing %s get/set rules", area)
 
       for _, areaType in ipairs(typeArea.getTypes()) do
-        log(string.format(">>>Testing type %s get/set rules", areaType))
+        log(">>>Testing type %s get/set rules", areaType)
 
         for _, ruleName in ipairs(typeArea.getRuleNames()) do
           local ruleValue = typeArea.getRuleValue(areaType, ruleName)
@@ -103,7 +103,7 @@ function main()
           local newRuleValue = typeArea.getRuleValue(areaType, ruleName) 
 
           if newRuleValue ~= ruleValue then
-            showError(string.format("Validation of type rule value failed %s -> %s\nExpected: %s - Got: %s", areaType, ruleName, tostring(ruleValue), tostring(newRuleValue)))
+            showError("Validation of type rule value failed %s -> %s\nExpected: %s - Got: %s", areaType, ruleName, tostring(ruleValue), tostring(newRuleValue))
 
             validationFailed = true
             validationErrors = validationErrors + 1
@@ -122,8 +122,7 @@ function main()
   setLogLevel(oldLogLevel);
 
   log(
-    string.format(
-      [[Test Lua API rules result: %s
+    [[Test Lua API rules result: %s
 
   Areas processed: %d
   Types processed: %d
@@ -135,15 +134,14 @@ function main()
 
   Validation errors: %d
 ]],
-      status and "PASS" or "FAIL",
-      areasProcessed,
-      typesProcessed,
-      rulesRead,
-      rulesWritten,
-      gameRulesRead,
-      gameRulesWritten,
-      validationErrors
-    )
+    status and "PASS" or "FAIL",
+    areasProcessed,
+    typesProcessed,
+    rulesRead,
+    rulesWritten,
+    gameRulesRead,
+    gameRulesWritten,
+    validationErrors
   )
 
   if not status then
