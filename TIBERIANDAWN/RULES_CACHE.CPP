@@ -23,16 +23,18 @@ template<typename T> static T Get_Cached_Rule(
 {
 	auto key = Build_Rule_Key(section, ruleName);
 
+	Log_Trace("Cache lookup called for rule: %s -> %s", section, ruleName);
+
 	if (cache.find(key) == cache.end())
 	{
-		Log_Trace("Cache miss for key %d", key);
+		Log_Trace("Cache miss for key %ul", key);
 
 		*cacheHit = false;
 
 		return defaultIfMissing;
 	}
 
-	Log_Trace("Cache hit for key %d", key);
+	Log_Trace("Cache hit for key %ul", key);
 
 	*cacheHit = true;
 
@@ -46,6 +48,8 @@ template<typename T> static T Get_Cached_Rule(
 template<typename T> static void Cache_Rule(map<CacheKey, T>& cache, const char* section, const char* ruleName, T ruleValue)
 {
 	auto key = Build_Rule_Key(section, ruleName);
+
+	Log_Trace("Caching rule: %ul = %s -> %s", key, section, ruleName);
 
 	cache[key] = ruleValue;
 }
@@ -68,6 +72,8 @@ static void Ensure_Rule_Cache_Initialised()
 	UINT_RULES_CACHE = new map<CacheKey, unsigned int>();
 	DOUBLE_RULES_CACHE = new map<CacheKey, double>();
 	BOOL_RULES_CACHE = new map<CacheKey, bool>();
+
+	Log_Debug("Rules Cache Initalised");
 }
 
 char* Get_Cached_String_Rule(const char* section, const char* ruleName, bool* cacheHit)
@@ -76,7 +82,7 @@ char* Get_Cached_String_Rule(const char* section, const char* ruleName, bool* ca
 
 	auto value = Get_Cached_Rule(*STRING_RULES_CACHE, section, ruleName, (char*)"", cacheHit);
 
-	if (*cacheHit)
+	if (cacheHit != NULL && *cacheHit)
 	{
 		Log_Trace("Rule value: %s", value);
 	}
@@ -86,6 +92,10 @@ char* Get_Cached_String_Rule(const char* section, const char* ruleName, bool* ca
 
 char* Get_Cached_String_Rule(CacheKey key, bool* cacheHit)
 {
+	Ensure_Rule_Cache_Initialised();
+
+	Log_Trace("Attempting to read cached string rule by key: %ul", key);
+
 	if (STRING_RULES_CACHE->find(key) == STRING_RULES_CACHE->end())
 	{
 		if (cacheHit != NULL)
@@ -96,12 +106,16 @@ char* Get_Cached_String_Rule(CacheKey key, bool* cacheHit)
 		return false;
 	}
 
+	auto value = (*STRING_RULES_CACHE)[key];
+
 	if (cacheHit != NULL)
 	{
 		*cacheHit = true;
 	}
 
-	return (*STRING_RULES_CACHE)[key];
+	Log_Trace("Rule value: %s", value);
+
+	return value;
 }
 
 
@@ -125,7 +139,7 @@ int Get_Cached_Int_Rule(const char* section, const char* ruleName, bool* cacheHi
 
 	auto value = Get_Cached_Rule(*INT_RULES_CACHE, section, ruleName, 0, cacheHit);
 
-	if (*cacheHit)
+	if (cacheHit != NULL && *cacheHit)
 	{
 		Log_Trace("Rule value: %d", value);
 	}
@@ -135,6 +149,10 @@ int Get_Cached_Int_Rule(const char* section, const char* ruleName, bool* cacheHi
 
 int Get_Cached_Int_Rule(CacheKey key, bool* cacheHit)
 {
+	Ensure_Rule_Cache_Initialised();
+
+	Log_Trace("Attempting to read cached int rule by key: %ul", key);
+
 	if (INT_RULES_CACHE->find(key) == INT_RULES_CACHE->end())
 	{
 		if (cacheHit != NULL)
@@ -145,12 +163,16 @@ int Get_Cached_Int_Rule(CacheKey key, bool* cacheHit)
 		return false;
 	}
 
+	auto value = (*INT_RULES_CACHE)[key];
+
 	if (cacheHit != NULL)
 	{
 		*cacheHit = true;
 	}
 
-	return (*INT_RULES_CACHE)[key];
+	Log_Trace("Rule value: %d", value);
+
+	return value;
 }
 
 void Cache_Int_Rule(const char* section, const char* ruleName, int ruleValue)
@@ -166,7 +188,7 @@ unsigned int Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleN
 
 	auto value = Get_Cached_Rule(*UINT_RULES_CACHE, section, ruleName, 0u, cacheHit);
 
-	if (*cacheHit)
+	if (cacheHit != NULL && *cacheHit)
 	{
 		Log_Trace("Rule value: %u", value);
 	}
@@ -176,6 +198,10 @@ unsigned int Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleN
 
 unsigned int Get_Cached_Unsigned_Int_Rule(CacheKey key, bool* cacheHit)
 {
+	Ensure_Rule_Cache_Initialised();
+
+	Log_Trace("Attempting to read cached unsigned int rule by key: %ul", key);
+
 	if (UINT_RULES_CACHE->find(key) == UINT_RULES_CACHE->end())
 	{
 		if (cacheHit != NULL)
@@ -186,12 +212,16 @@ unsigned int Get_Cached_Unsigned_Int_Rule(CacheKey key, bool* cacheHit)
 		return false;
 	}
 
+	auto value = (*UINT_RULES_CACHE)[key];
+
 	if (cacheHit != NULL)
 	{
 		*cacheHit = true;
 	}
 
-	return (*UINT_RULES_CACHE)[key];
+	Log_Trace("Rule value: %u", value);
+
+	return value;
 }
 
 void Cache_Unsigned_Int_Rule(const char* section, const char* ruleName, unsigned int ruleValue)
@@ -207,7 +237,7 @@ double Get_Cached_Double_Rule(const char* section, const char* ruleName, bool* c
 
 	auto value = Get_Cached_Rule(*DOUBLE_RULES_CACHE, section, ruleName, (double)0.0f, cacheHit);
 
-	if (*cacheHit)
+	if (cacheHit != NULL && *cacheHit)
 	{
 		Log_Trace("Rule value: %f", value);
 	}
@@ -217,6 +247,10 @@ double Get_Cached_Double_Rule(const char* section, const char* ruleName, bool* c
 
 double Get_Cached_Double_Rule(CacheKey key, bool* cacheHit)
 {
+	Ensure_Rule_Cache_Initialised();
+
+	Log_Trace("Attempting to read cached double rule by key: %ul", key);
+
 	if (DOUBLE_RULES_CACHE->find(key) == DOUBLE_RULES_CACHE->end())
 	{
 		if (cacheHit != NULL)
@@ -227,12 +261,16 @@ double Get_Cached_Double_Rule(CacheKey key, bool* cacheHit)
 		return false;
 	}
 
+	auto value = (*DOUBLE_RULES_CACHE)[key];
+
 	if (cacheHit != NULL)
 	{
 		*cacheHit = true;
 	}
 
-	return (*DOUBLE_RULES_CACHE)[key];
+	Log_Trace("Rule value: %f", value);
+
+	return value;
 }
 
 void Cache_Double_Rule(const char* section, const char* ruleName, double ruleValue)
@@ -248,7 +286,7 @@ bool Get_Cached_Bool_Rule(const char* section, const char* ruleName, bool* cache
 
 	auto value = Get_Cached_Rule(*BOOL_RULES_CACHE, section, ruleName, false, cacheHit);
 
-	if (*cacheHit)
+	if (cacheHit != NULL && cacheHit)
 	{
 		Log_Trace("Rule value: %s", Convert_Boolean_To_String(value));
 	}
@@ -258,6 +296,10 @@ bool Get_Cached_Bool_Rule(const char* section, const char* ruleName, bool* cache
 
 bool Get_Cached_Bool_Rule(CacheKey key, bool* cacheHit)
 {
+	Ensure_Rule_Cache_Initialised();
+
+	Log_Trace("Attempting to read cached bool rule by key: %ul", key);
+
 	if (BOOL_RULES_CACHE->find(key) == BOOL_RULES_CACHE->end())
 	{
 		if (cacheHit != NULL)
@@ -268,12 +310,16 @@ bool Get_Cached_Bool_Rule(CacheKey key, bool* cacheHit)
 		return false;
 	}
 
+	auto value = (*BOOL_RULES_CACHE)[key];
+
 	if (cacheHit != NULL)
 	{
 		*cacheHit = true;
 	}
 
-	return (*BOOL_RULES_CACHE)[key];
+	Log_Trace("Rule value: %s", Convert_Boolean_To_String(value));
+
+	return value;
 }
 
 void Cache_Bool_Rule(const char* section, const char* ruleName, bool ruleValue)
@@ -294,4 +340,6 @@ void Delete_Rules_Cache()
 	delete DOUBLE_RULES_CACHE;
 	delete BOOL_RULES_CACHE;
 	delete STRING_RULES_CACHE;
+
+	Log_Debug("Rule Cache Deleted");
 }
