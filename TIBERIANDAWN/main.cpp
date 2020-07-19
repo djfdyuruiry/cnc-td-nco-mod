@@ -36,12 +36,12 @@ static void Test_Game_Loop_Message(GameLoopMessageType message)
 {
 	Push_Game_Loop_Message(message);
 
-	while (Get_Game_Loop_Message().unread)
+	while (Game_Loop_Messages_Pending())
 	{
 		Sleep(10);
 	}
 
-	Process_Game_Ui_Message();
+	Process_Game_Ui_Messages();
 }
 
 static void Test_Lua_Events()
@@ -54,7 +54,7 @@ static void Test_Lua_Events()
 
 	Log_Info("Testing setting rules from save load event handler");
 
-	On_Save_Load(HOUSE_GOOD, 4);
+	On_Save_Load(House_Type_To_String(HOUSE_GOOD), 4);
 
 	Log_Info("Testing game tick event handler");
 

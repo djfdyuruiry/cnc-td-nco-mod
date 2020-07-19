@@ -23,7 +23,6 @@ static bool Load_Api_Functions()
 {
     Log_Debug("Initialising Lua API functions");
 
-
     return Load_Nco_Lua_Lib()
         && Register_Util_Functions()
         && Register_Info_Functions()

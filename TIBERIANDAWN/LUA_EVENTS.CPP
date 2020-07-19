@@ -1,12 +1,19 @@
-#include "function.h"
+#include <queue>
+
+#include "game_messages.h"
+#include "lua_events.h"
+#include "rules_ini.h"
+#include "strings.h"
+#include "utils.h"
+
+using namespace std;
+
+static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
 
 static bool EVENTS_INITIALISED = false;
 static long long LAST_TICK_TIME_IN_EPOCH_MILLIS = 0;
 
-// TODO: make this a FIFO stack
-static GameLoopMessage GAME_LOOP_MESSAGE;
-
-static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
+static queue<GameLoopMessage> GAME_LOOP_MESSAGE_QUEUE;
 
 static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil", ...)
 {
@@ -58,6 +65,7 @@ boolean Initialise_Events()
     return Execute_Lua_Script("Game.Events.initHandlers()");
 };
 
+// sync messages
 void On_Scenario_Load(char* name)
 {
     Fire_Lua_Event(
@@ -67,16 +75,17 @@ void On_Scenario_Load(char* name)
     );
 }
 
-void On_Save_Load(HousesType playerHouse, unsigned int scenarioNumber)
+void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber)
 {
     Fire_Lua_Event(
         ON_SAVE_LOAD_EVENT,
         "'%s', %u",
-        House_Type_To_String(playerHouse),
+        playerHouse,
         scenarioNumber
     );
 }
 
+// async messages
 static void On_Game_Tick()
 {
     auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
@@ -95,18 +104,23 @@ static void On_Game_Tick()
 
 DWORD WINAPI Process_Game_Events(LPVOID lpParam)
 {
-    GAME_LOOP_MESSAGE.unread = false;
-
     while (true)
     {
-        if (GAME_LOOP_MESSAGE.unread)
+        while (!GAME_LOOP_MESSAGE_QUEUE.empty())
         {
-            if (GAME_LOOP_MESSAGE.type == GAME_TICK_ELAPSED)
+            auto loopMessage = GAME_LOOP_MESSAGE_QUEUE.front();
+            auto type = loopMessage.type;
+
+            if (type == GAME_TICK_ELAPSED)
             {
                 On_Game_Tick();
             }
+            else
+            {
+                Log_Error("Encountered Unknown Game Loop message type : %u", type);
+            }
 
-            GAME_LOOP_MESSAGE.unread = false;
+            GAME_LOOP_MESSAGE_QUEUE.pop();
         }
 
         Sleep(10);
@@ -115,11 +129,14 @@ DWORD WINAPI Process_Game_Events(LPVOID lpParam)
 
 void Push_Game_Loop_Message(GameLoopMessageType messageType)
 {
-    GAME_LOOP_MESSAGE.type = messageType;
-    GAME_LOOP_MESSAGE.unread = true;
+    GameLoopMessage loopMessage;
+
+    loopMessage.type = messageType;
+
+    GAME_LOOP_MESSAGE_QUEUE.push(loopMessage);
 }
 
-GameLoopMessage Get_Game_Loop_Message()
+bool Game_Loop_Messages_Pending()
 {
-    return GAME_LOOP_MESSAGE;
+    return !GAME_LOOP_MESSAGE_QUEUE.empty();
 }

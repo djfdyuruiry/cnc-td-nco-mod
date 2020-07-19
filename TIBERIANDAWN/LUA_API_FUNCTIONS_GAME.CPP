@@ -116,7 +116,10 @@ static int Lua_Send_House_Super_Weapon_Message(
     }
 
     if (house->SuperweaponMessage.unread) {
-        luaL_error(lua, "Given house already has a superweapon change pending");
+        Log_Trace(
+            "Ignoring superweapon message as given house already has a superweapon change pending: %s",
+            House_Type_To_String(house->Class->House)
+        );
         return 0;
     }
 
@@ -247,20 +250,11 @@ static int Lua_Get_Player_House(lua_State* lua)
     return 1;
 }
 
-static int Lua_Game_Busy_Error(lua_State* lua)
-{
-    luaL_error(lua, "The game is has another command pending");
-    return 0;
-}
-
 static int Lua_Hide_Map(lua_State* lua)
 {
     Log_Trace("Lua_Hide_Map called from Lua");
 
-    if (!Push_Hide_Map_Ui_Message())
-    {
-        return Lua_Game_Busy_Error(lua);
-    }
+    Push_Hide_Map_Ui_Message();
 
     return 0;
 }
@@ -269,10 +263,7 @@ static int Lua_Reveal_Map(lua_State* lua)
 {
     Log_Trace("Lua_Reveal_Map called from Lua");
 
-    if (!Push_Reveal_Map_Ui_Message())
-    {
-        return Lua_Game_Busy_Error(lua);
-    }
+    Push_Reveal_Map_Ui_Message();
 
     return 0;
 }
@@ -281,10 +272,7 @@ static int Lua_Refresh_Map(lua_State* lua)
 {
     Log_Trace("Lua_Refresh_Map called from Lua");
 
-    if (!Push_Refresh_Map_Ui_Message())
-    {
-        return Lua_Game_Busy_Error(lua);
-    }
+    Push_Refresh_Map_Ui_Message();
 
     return 0;
 }
@@ -293,10 +281,7 @@ static int Lua_Refresh_Sidebar(lua_State* lua)
 {
     Log_Trace("Lua_Refresh_Sidebar called from Lua");
 
-    if (!Push_Refresh_Sidebar_Ui_Message())
-    {
-        return Lua_Game_Busy_Error(lua);
-    }
+    Push_Refresh_Sidebar_Ui_Message();
 
     return 0;
 }
@@ -334,11 +319,8 @@ static int Lua_Show_Game_Message(lua_State* lua)
         return 0;
     }
 
-    if (!Push_Show_Notification_Ui_Message(message, durationInSeconds))
-    {
-        return Lua_Game_Busy_Error(lua);
-    }
-
+    Push_Show_Notification_Ui_Message(message, durationInSeconds);
+    
     return 0;
 }
 

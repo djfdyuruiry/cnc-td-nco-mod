@@ -1,21 +1,7 @@
 #ifndef GAME_MESSAGES_H
 #define GAME_MESSAGES_H
 
-#include "super.h"
-
-enum HouseSuperweaponMessageType : unsigned char {
-	ENABLE_SUPERWEAPON,
-	DISABLE_SUPERWEAPON,
-	CHARGE_SUPERWEAPON
-};
-
-struct HouseSuperweaponMessage {
-	bool unread;
-	HouseSuperweaponMessageType type;
-	SuperClass* weapon;
-	bool oneTime;
-};
-
+// Lua event firing
 enum GameLoopMessageType : unsigned char {
 	GAME_TICK_ELAPSED,
 };
@@ -26,6 +12,7 @@ struct GameLoopMessage {
 	char* message;
 };
 
+// UI message processing
 enum GameUiMessageType : unsigned char {
 	NO_MESSAGE,
 	SHOW_NOTIFICATION_MESSAGE,
@@ -36,26 +23,38 @@ enum GameUiMessageType : unsigned char {
 };
 
 struct GameUiMessage {
-	bool unread;
 	GameUiMessageType type;
 	char* message;
 	float durationInSeconds;
 };
 
-extern GameUiMessage GAME_UI_MESSAGE;
+// House message processing
+enum HouseSuperweaponMessageType : unsigned char {
+	ENABLE_SUPERWEAPON,
+	DISABLE_SUPERWEAPON,
+	CHARGE_SUPERWEAPON
+};
+
+struct HouseSuperweaponMessage {
+	bool unread;
+	HouseSuperweaponMessageType type;
+	// weapon is really a pointer to a Superweapon object, void* used here to prevent include conflicts
+	void* weapon;
+	bool oneTime;
+};
 
 // message queuing
-bool Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds);
+void Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds);
 
-bool Push_Refresh_Sidebar_Ui_Message();
+void Push_Refresh_Sidebar_Ui_Message();
 
-bool Push_Refresh_Map_Ui_Message();
+void Push_Refresh_Map_Ui_Message();
 
-bool Push_Reveal_Map_Ui_Message();
+void Push_Reveal_Map_Ui_Message();
 
-bool Push_Hide_Map_Ui_Message();
+void Push_Hide_Map_Ui_Message();
 
 // message handlers
-void Process_Game_Ui_Message();
+void Process_Game_Ui_Messages();
 
 #endif

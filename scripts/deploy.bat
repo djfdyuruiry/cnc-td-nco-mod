@@ -20,11 +20,13 @@ if exist "%MOD_PATH%" (
 mkdir "%MOD_PATH%"
 mkdir "%MOD_PATH%\Data"
 mkdir "%MOD_PATH%\Data\XML"
+mkdir "%MOD_PATH%\Data\lib"
 
 copy "%REPO_PATH%\game\ccmod.json" "%MOD_PATH%\ccmod.json"
 copy "%REPO_PATH%\game\RULES-DEFAULT.INI" "%MOD_PATH%\Data\RULES-DEFAULT.INI"
 copy "%REPO_PATH%\game\XML\CNCModGameCommands.xml" "%MOD_PATH%\Data\XML\CNCModGameCommands.xml"
 copy "%REPO_PATH%\game\RULES.INI" "%MOD_PATH%\Data\RULES.INI"
-copy "%REPO_PATH%\game\lua\test.lua" "%MOD_PATH%\Data"
+copy "%REPO_PATH%\game\lua\test\test.lua" "%MOD_PATH%\Data"
+xcopy /S /E "%REPO_PATH%\game\lua\lib\*.lua" "%MOD_PATH%\Data\lib\" 
 
 copy "%REPO_PATH%\bin\Win32\TiberianDawn.dll" "%MOD_PATH%\Data"

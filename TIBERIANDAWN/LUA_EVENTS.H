@@ -18,14 +18,16 @@ static const auto LUA_EVENTS = new const char*[LUA_EVENT_COUNT]
 
 boolean Initialise_Events();
 
+// sync events
 void On_Scenario_Load(char* name);
 
-void On_Save_Load(HousesType playerHouse, unsigned int scenarioNumber);
+void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber);
 
+// async events
 DWORD WINAPI Process_Game_Events(LPVOID lpParam);
 
 void Push_Game_Loop_Message(GameLoopMessageType messageType);
 
-GameLoopMessage Get_Game_Loop_Message();
+bool Game_Loop_Messages_Pending();
 
 #endif
