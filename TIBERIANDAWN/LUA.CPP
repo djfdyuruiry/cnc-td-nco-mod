@@ -2,21 +2,31 @@
 
 #include "lua_api.h"
 
-static char * INIT_GAME_STATE = "_G.Game = {}";
-
 static lua_State* LUA = NULL;
 
 static bool Load_Lua_Scripts()
 {
-    auto executionOK = true;
-        
-    if (!Execute_Lua_Script(INIT_GAME_STATE))
+    auto executionOk = true;
+    auto scripts = Rules_Get_Lua_Scripts();
+
+    for (auto i = 0; i < scripts.ScriptFileCount; i++)
     {
-        return false;
+        auto scriptFile = scripts.ScriptFiles[i];
+        auto scriptFilePath = Build_Mod_Data_File_Path(scriptFile);
+
+        if (!Execute_Lua_File(scriptFilePath))
+        {
+            executionOk = false;
+        }
+
+        delete scriptFilePath;
     }
 
-    Log_Debug("Lua game state intialised");
+    return executionOk;
+}
 
+static bool Load_Lua_Components()
+{
     if (!Initialise_Lua_Api())
     {
         return false;
@@ -31,27 +41,26 @@ static bool Load_Lua_Scripts()
 
     Log_Debug("Lua events system initialised");
 
+    return true;
+}
+
+static bool Set_Lua_Package_Path()
+{
     auto modPath = Get_Mod_Data_Path();
-    auto scripts = Rules_Get_Lua_Scripts();
+    auto setPackagePathScript = Allocate_String(MAX_PATH + 64);
 
-    for (auto i = 0; i < scripts.ScriptFileCount; i++)
+    sprintf(setPackagePathScript, "package.path = [[%s\\lib\\?.lua;]] .. package.path", modPath);
+
+    auto setPackagePathResult = Execute_Lua_Script(setPackagePathScript);
+
+    if (setPackagePathResult)
     {
-        auto scriptFile = scripts.ScriptFiles[i];
-        auto scriptFilePath = Allocate_String(MAX_PATH);
-
-        sprintf(scriptFilePath, "%s\\%s", modPath, scriptFile);
-
-        if (!Execute_Lua_File(scriptFilePath))
-        {
-            executionOK = false;
-        }
-
-        delete scriptFilePath;
+        Log_Debug("Lua package path updated");
     }
 
-    delete modPath;
+    delete setPackagePathScript;
 
-    return executionOK;
+    return setPackagePathResult;
 }
 
 bool Initialise_Lua()
@@ -69,7 +78,9 @@ bool Initialise_Lua()
 
     Log_Info("%s Initialised", LUA_VERSION);
 
-    return Load_Lua_Scripts();
+    return Set_Lua_Package_Path()
+        && Load_Lua_Components()
+        && Load_Lua_Scripts();
 }
 
 void Register_Lua_Function(const char* name, lua_CFunction function)
@@ -178,6 +189,19 @@ const char * Get_Lua_Value_As_String(int index)
 const char* Get_Lua_Value_Type(int index)
 {
     return lua_typename(LUA, lua_type(LUA, index));
+}
+
+void Push_String_Array_Onto_Lua_Stack(const char** stringArray, unsigned int arrayLength)
+{
+    lua_createtable(LUA, 0, arrayLength);
+
+    for (auto i = 0u; i < arrayLength; i++)
+    {
+        Log_Trace("Pushing string onto Lua table: %s", stringArray[i]);
+
+        lua_pushstring(LUA, stringArray[i]);
+        lua_rawseti(LUA, -2, i + 1);
+    }
 }
 
 void Clear_Lua_Stack()

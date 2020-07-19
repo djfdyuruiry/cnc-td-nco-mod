@@ -84,7 +84,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 end
 
 local function dumpRules()
-  log(string.format("Dumping rules ini to %s", outputFileName))
+  log("Dumping rules ini to %s", outputFileName)
 
   if not os.execute(string.format("copy RULES-BASE.INI %s", outputFileName)) then
     error("Failed to copy RULES-BASE.INI")
@@ -114,7 +114,7 @@ local function main()
     error(string.format("Lua rules dump failed: %s", err))
   end
 
-  log(string.format("Rules ini dump complete, see results @ %s", outputFileName))
+  log("Rules ini dump complete, see results @ %s", outputFileName)
 end
 
 main()

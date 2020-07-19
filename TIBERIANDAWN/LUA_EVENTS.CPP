@@ -1,43 +1,21 @@
-#include "function.h"
+#include <queue>
 
-typedef const char* LuaEvent;
+#include "game_messages.h"
+#include "lua_events.h"
+#include "rules_ini.h"
+#include "strings.h"
+#include "utils.h"
 
-static auto INIT_EVENT_FORMAT = "\
-  _G.Game.%1$sEventHandlers = {}                \n\
-                                                \
-  _G.on%1$s = function (h)                      \n\
-    table.insert(Game.%1$sEventHandlers, h)     \n\
-  end                                           \
-";
+using namespace std;
 
-static auto FIRE_EVENT_FORMAT = "\
-  for _, h in ipairs(Game.%sEventHandlers) do   \n\
-    local ok, err = pcall(h, %s)                \n\
-                                                \
-    if not ok then                              \n\
-      showError(err)                            \n\
-    end                                         \n\
-  end                                           \
-";
-
-static const LuaEvent ON_SCENARIO_START_EVENT = "ScenarioStart";
-static const LuaEvent ON_SAVE_LOAD_EVENT = "SaveLoad";
-static const LuaEvent ON_GAME_TICK_EVENT = "GameTick";
-
-static const auto LUA_EVENT_COUNT = 3;
-
-static const LuaEvent* LUA_EVENTS = new LuaEvent[LUA_EVENT_COUNT]
-{
-    ON_SCENARIO_START_EVENT,
-    ON_SAVE_LOAD_EVENT,
-    ON_GAME_TICK_EVENT
-};
+static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
 
 static bool EVENTS_INITIALISED = false;
 static long long LAST_TICK_TIME_IN_EPOCH_MILLIS = 0;
-static GameLoopMessage GAME_LOOP_MESSAGE;
 
-static void Fire_Lua_Event(LuaEvent name, const char* argumentFormat = "nil", ...)
+static queue<GameLoopMessage> GAME_LOOP_MESSAGE_QUEUE;
+
+static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil", ...)
 {
     if (!Lua_Is_Enabled())
     {
@@ -84,33 +62,10 @@ boolean Initialise_Events()
 
     Log_Trace("Initialising Lua events");
 
-    auto executionOK = true;
-    auto initEventScriptBuffer = Allocate_String(1024);
-
-    for (auto i = 0; i < LUA_EVENT_COUNT; i++)
-    {
-        Log_Trace("Initialising Lua event: %s", LUA_EVENTS[i]);
-
-        _sprintf_p(
-            initEventScriptBuffer,
-            1024,
-            INIT_EVENT_FORMAT,
-            LUA_EVENTS[i]
-        );
-
-        if (!Execute_Lua_Script(initEventScriptBuffer))
-        {
-            executionOK = false;
-        }
-    }
-
-    delete initEventScriptBuffer;
-
-    EVENTS_INITIALISED = executionOK;
-
-    return executionOK;
+    return Execute_Lua_Script("Game.Events.initHandlers()");
 };
 
+// sync messages
 void On_Scenario_Load(char* name)
 {
     Fire_Lua_Event(
@@ -120,16 +75,17 @@ void On_Scenario_Load(char* name)
     );
 }
 
-void On_Save_Load(HousesType playerHouse, unsigned int scenarioNumber)
+void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber)
 {
     Fire_Lua_Event(
         ON_SAVE_LOAD_EVENT,
         "'%s', %u",
-        House_Type_To_String(playerHouse),
+        playerHouse,
         scenarioNumber
     );
 }
 
+// async messages
 static void On_Game_Tick()
 {
     auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
@@ -148,18 +104,23 @@ static void On_Game_Tick()
 
 DWORD WINAPI Process_Game_Events(LPVOID lpParam)
 {
-    GAME_LOOP_MESSAGE.unread = false;
-
     while (true)
     {
-        if (GAME_LOOP_MESSAGE.unread)
+        while (!GAME_LOOP_MESSAGE_QUEUE.empty())
         {
-            if (GAME_LOOP_MESSAGE.type == GAME_TICK_ELAPSED)
+            auto loopMessage = GAME_LOOP_MESSAGE_QUEUE.front();
+            auto type = loopMessage.type;
+
+            if (type == GAME_TICK_ELAPSED)
             {
                 On_Game_Tick();
             }
+            else
+            {
+                Log_Error("Encountered Unknown Game Loop message type : %u", type);
+            }
 
-            GAME_LOOP_MESSAGE.unread = false;
+            GAME_LOOP_MESSAGE_QUEUE.pop();
         }
 
         Sleep(10);
@@ -168,6 +129,14 @@ DWORD WINAPI Process_Game_Events(LPVOID lpParam)
 
 void Push_Game_Loop_Message(GameLoopMessageType messageType)
 {
-    GAME_LOOP_MESSAGE.type = messageType;
-    GAME_LOOP_MESSAGE.unread = true;
+    GameLoopMessage loopMessage;
+
+    loopMessage.type = messageType;
+
+    GAME_LOOP_MESSAGE_QUEUE.push(loopMessage);
+}
+
+bool Game_Loop_Messages_Pending()
+{
+    return !GAME_LOOP_MESSAGE_QUEUE.empty();
 }

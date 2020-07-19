@@ -50,6 +50,7 @@ function Copy-Game-Files {
   Copy-Item -Path "${buildOutPath}\TiberianDawn.dll" -Destination $workshopOutDataPath
   Copy-Item -Path "${gameFilesPath}\RULES-DEFAULT.INI" -Destination $workshopOutDataPath
   Copy-Item -Path "${gameFilesPath}\XML\CNCModGameCommands.xml" -Destination $workshopOutXmlPath
+  Copy-Item -Path "${gameFilesPath}\lua\lib" -Recurse -Destination $workshopOutDataPath
 }
 
 function Main {

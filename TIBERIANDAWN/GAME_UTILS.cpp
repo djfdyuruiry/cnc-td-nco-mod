@@ -56,3 +56,37 @@ void Hide_Entire_Map_From_Player()
 
 	Refresh_Game_Map();
 }
+
+bool Process_Game_Ui_Message(GameUiMessage uiMessage)
+{
+	auto type = uiMessage.type;
+
+	if (type == SHOW_NOTIFICATION_MESSAGE && uiMessage.message != NULL)
+	{
+		Show_Game_Notification(uiMessage.message, uiMessage.durationInSeconds);
+
+		delete uiMessage.message;
+	}
+	else if (type == REFRESH_SIDEBAR_MESSAGE)
+	{
+		Refresh_Sidebar();
+	}
+	else if (type == REFRESH_MAP_MESSAGE)
+	{
+		Refresh_Game_Map();
+	}
+	else if (type == REVEAL_ENTIRE_MAP_MESSAGE)
+	{
+		Reveal_Entire_Map_To_Player();
+	}
+	else if (type == HIDE_ENTIRE_MAP_MESSAGE)
+	{
+		Hide_Entire_Map_From_Player();
+	}
+	else
+	{
+		return false;
+	}
+
+	return true;
+}

@@ -5,56 +5,6 @@
 #include "strings.h"
 #include "utils.h"
 
-static const char* GET_GAME_RULE_FUNCTION = "\
-  function getGameRule(ruleName)                    \n\
-    local gameRules = getGameRuleNames()            \n\
-    local gameRuleTypes = getGameRuleTypeNames()    \n\
-                                                    \n\
-    for idx, rule in ipairs(gameRules) do           \n\
-      if rule == ruleName then                      \n\
-        local value                                 \n\
-                                                    \n\
-        if gameRuleTypes[idx] == 'string' then      \n\
-          value = getStringGameRule(rule)           \n\
-        elseif gameRuleTypes[idx] == 'int' then     \n\
-          value = getIntGameRule(rule)              \n\
-        elseif gameRuleTypes[idx] == 'double' then  \n\
-          value = getDoubleGameRule(rule)           \n\
-        else                                        \n\
-          value = getBoolGameRule(rule)             \n\
-        end                                         \n\
-                                                    \n\
-        return value                                \n\
-      end                                           \n\
-    end                                             \n\
-                                                    \n\
-    return nil                                      \n\
-  end                                               \n\
-";
-
-static const char* SET_GAME_RULE_FUNCTION = "\
-  function setGameRule(ruleName, ruleValue)         \n\
-    local gameRules = getGameRuleNames()            \n\
-    local gameRuleTypes = getGameRuleTypeNames()    \n\
-                                                    \n\
-    for idx, rule in ipairs(gameRules) do           \n\
-      if rule == ruleName then                      \n\
-        local value                                 \n\
-                                                    \n\
-        if gameRuleTypes[idx] == 'string' then      \n\
-          setStringGameRule(rule, ruleValue)        \n\
-        elseif gameRuleTypes[idx] == 'int' then     \n\
-          setIntGameRule(rule, ruleValue)           \n\
-        elseif gameRuleTypes[idx] == 'double' then  \n\
-          setDoubleGameRule(rule, ruleValue)        \n\
-        else                                        \n\
-          setBoolGameRule(rule, ruleValue)          \n\
-        end                                         \n\
-      end                                           \n\
-    end                                             \n\
-  end                                               \n\
-";
-
 static int Lua_Get_String_Game_Rule(lua_State* lua)
 {
     Log_Trace("Lua_Get_String_Game_Rule called from Lua");
@@ -240,12 +190,6 @@ static int Lua_Set_Boolean_Game_Rule(lua_State* lua)
     return Lua_Set_Game_Rule(lua, "Bool", &Lua_To_Bool_Wrapper, Cache_Bool_Rule);
 }
 
-static bool Load_Lua_Api_Functions()
-{
-    return Execute_Lua_Script(GET_GAME_RULE_FUNCTION)
-        && Execute_Lua_Script(SET_GAME_RULE_FUNCTION);
-}
-
 bool Register_Game_Rule_Functions()
 {
     Log_Debug("Registering Game Rules Lua API functions");
@@ -260,5 +204,5 @@ bool Register_Game_Rule_Functions()
     Register_Lua_Function("setDoubleGameRule", Lua_Set_Double_Game_Rule);
     Register_Lua_Function("setBoolGameRule", Lua_Set_Boolean_Game_Rule);
 
-    return Load_Lua_Api_Functions();
+    return true;
 }

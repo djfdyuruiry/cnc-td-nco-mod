@@ -11,4 +11,6 @@ void Reveal_Entire_Map_To_Player();
 
 void Hide_Entire_Map_From_Player();
 
+bool Process_Game_Ui_Message(GameUiMessage uiMessage);
+
 #endif

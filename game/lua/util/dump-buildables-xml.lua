@@ -30,26 +30,22 @@ local typeAreas =
   Infantry = {
     getTypes = getInfantryTypes,
     getRuleNames = getInfantryRuleNames,
-    getRuleValue = getInfantryRule,
-    rules = {}
+    getRuleValue = getInfantryRule
   },
   Units = {
     getTypes = getUnitTypes,
     getRuleNames = getUnitRuleNames,
-    getRuleValue = getUnitRule,
-    rules = {}
+    getRuleValue = getUnitRule
   },
   Aircraft = {
     getTypes = getAircraftTypes,
     getRuleNames = getAircraftRuleNames,
-    getRuleValue = getAircraftRule,
-    rules = {}
+    getRuleValue = getAircraftRule
   },
   Buildings = {
     getTypes = getBuildingTypes,
     getRuleNames = getBuildingRuleNames,
-    getRuleValue = getBuildingRule,
-    rules = {}
+    getRuleValue = getBuildingRule
   }
 }
 
@@ -83,7 +79,7 @@ local function dumpBuildablesForTypeArea(buildablesFile, typeAreaName, typeArea)
 end
 
 local function dumpRules()
-  log(string.format("Write XML buildable file to %s", outputFileName))
+  log("Write XML buildable file to %s", outputFileName)
 
   buildablesFile = io.open(outputFileName, "a+")
 
@@ -109,7 +105,7 @@ local function main()
     error(string.format("XML buildables dump failed: %s", err))
   end
 
-  log(string.format("XML buildables dump complete, see results @ %s", outputFileName))
+  log("XML buildables dump complete, see results @ %s", outputFileName)
 end
 
 main()

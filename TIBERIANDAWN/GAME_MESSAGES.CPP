@@ -1,108 +1,96 @@
-#include "function.h"
+#include <map>
+#include <queue>
 
+#include "game_messages.h"
 #include "game_utils.h"
+#include "logger.h"
 
-GameUiMessage GAME_UI_MESSAGE;
+using namespace std;
 
-bool Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds)
+static queue<GameUiMessage> GAME_UI_MESSAGE_QUEUE;
+
+// message queuing
+static void Push_Message_Of_Type(GameUiMessageType type, GameUiMessage uiMessage)
 {
-	if (GAME_UI_MESSAGE.unread)
-	{
-		return false;
-	}
+	uiMessage.type = type;
 
-	GAME_UI_MESSAGE.type = SHOW_NOTIFICATION_MESSAGE;
-	GAME_UI_MESSAGE.message = strdup(message);
-	GAME_UI_MESSAGE.durationInSeconds = durationInSeconds;
-
-	GAME_UI_MESSAGE.unread = true;
-
-	return true;
+	GAME_UI_MESSAGE_QUEUE.push(uiMessage);
 }
 
-bool Push_Refresh_Sidebar_Ui_Message()
+static void Push_Message_Of_Type(GameUiMessageType type)
 {
-	if (GAME_UI_MESSAGE.unread)
-	{
-		return false;
-	}
+	GameUiMessage uiMessage{};
 
-	GAME_UI_MESSAGE.type = REFRESH_SIDEBAR_MESSAGE;
-	GAME_UI_MESSAGE.unread = true;
-
-	return true;
+	Push_Message_Of_Type(type, uiMessage);
 }
 
-bool Push_Refresh_Map_Ui_Message()
+void Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds)
 {
-	if (GAME_UI_MESSAGE.unread)
-	{
-		return false;
-	}
+	GameUiMessage uiMessage;
 
-	GAME_UI_MESSAGE.type = REFRESH_MAP_MESSAGE;
-	GAME_UI_MESSAGE.unread = true;
+	uiMessage.message = strdup(message);
+	uiMessage.durationInSeconds = durationInSeconds;
 
-	return true;
+	Push_Message_Of_Type(SHOW_NOTIFICATION_MESSAGE, uiMessage);
 }
 
-bool Push_Reveal_Map_Ui_Message()
+void Push_Refresh_Sidebar_Ui_Message()
 {
-	if (GAME_UI_MESSAGE.unread)
-	{
-		return false;
-	}
-
-	GAME_UI_MESSAGE.type = REVEAL_ENTIRE_MAP_MESSAGE;
-	GAME_UI_MESSAGE.unread = true;
-
-	return true;
+	Push_Message_Of_Type(REFRESH_SIDEBAR_MESSAGE);
 }
 
-bool Push_Hide_Map_Ui_Message()
+void Push_Refresh_Map_Ui_Message()
 {
-	if (GAME_UI_MESSAGE.unread)
-	{
-		return false;
-	}
-
-	GAME_UI_MESSAGE.type = HIDE_ENTIRE_MAP_MESSAGE;
-	GAME_UI_MESSAGE.unread = true;
-
-	return true;
+	Push_Message_Of_Type(REFRESH_MAP_MESSAGE);
 }
 
-void Process_Game_Ui_Message()
+void Push_Reveal_Map_Ui_Message()
 {
-	if (!GAME_UI_MESSAGE.unread)
+	Push_Message_Of_Type(REVEAL_ENTIRE_MAP_MESSAGE);
+}
+
+void Push_Hide_Map_Ui_Message()
+{
+	Push_Message_Of_Type(HIDE_ENTIRE_MAP_MESSAGE);
+}
+
+// message handlers
+static void Process_Game_Ui_Message(map<unsigned int, bool>& messageTypesProcessed)
+{
+	auto uiMessage = GAME_UI_MESSAGE_QUEUE.front();
+	auto type = uiMessage.type;
+
+	if (messageTypesProcessed.find(type) != messageTypesProcessed.end())
 	{
+		Log_Trace("Dropping duplicate UI message for game tick: %u", type);
+
+		GAME_UI_MESSAGE_QUEUE.pop();
+
 		return;
 	}
 
-	auto type = GAME_UI_MESSAGE.type;
+	auto processResult = Process_Game_Ui_Message(uiMessage);
+	
+	if (!processResult)
+	{
+		Log_Error("Encountered unknown Game UI message type: %u", type);
 
-	if (type == SHOW_NOTIFICATION_MESSAGE && GAME_UI_MESSAGE.message != NULL)
-	{
-		Show_Game_Notification(GAME_UI_MESSAGE.message, GAME_UI_MESSAGE.durationInSeconds);
+		GAME_UI_MESSAGE_QUEUE.pop();
 
-		delete GAME_UI_MESSAGE.message;
-	}
-	else if (type == REFRESH_SIDEBAR_MESSAGE)
-	{
-		Refresh_Sidebar();
-	}
-	else if (type == REFRESH_MAP_MESSAGE)
-	{
-		Refresh_Game_Map();
-	}
-	else if (type == REVEAL_ENTIRE_MAP_MESSAGE)
-	{
-		Reveal_Entire_Map_To_Player();
-	}
-	else if (type == HIDE_ENTIRE_MAP_MESSAGE)
-	{
-		Hide_Entire_Map_From_Player();
+		return;
 	}
 
-	GAME_UI_MESSAGE.unread = false;
+	messageTypesProcessed[type] = true;
+
+	GAME_UI_MESSAGE_QUEUE.pop();
+}
+
+void Process_Game_Ui_Messages()
+{
+	map<unsigned int, bool> messageTypesProcessed;
+
+	while (!GAME_UI_MESSAGE_QUEUE.empty())
+	{
+		Process_Game_Ui_Message(messageTypesProcessed);
+	}
 }

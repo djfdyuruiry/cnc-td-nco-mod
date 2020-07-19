@@ -275,16 +275,11 @@
       <PreserveIdentifierCase Condition="'$(Configuration)|$(Platform)'=='TestConsole|Win32'">1</PreserveIdentifierCase>
       <PreserveIdentifierCase Condition="'$(Configuration)|$(Platform)'=='TestConsoleLuaRepl|Win32'">1</PreserveIdentifierCase>
     </MASM>
-    <None Include="..\bin\Win32\dump-rules.lua" />
     <None Include="..\bin\Win32\RULES.INI" />
-    <None Include="..\bin\Win32\test.lua" />
     <None Include="..\game\ccmod.json" />
-    <None Include="..\game\lua\dump-rules.lua" />
-    <None Include="..\game\lua\test-lua-rules.lua" />
     <None Include="..\game\RULES-BASE.INI" />
     <None Include="..\game\RULES-DEFAULT.INI" />
     <None Include="..\game\RULES.INI" />
-    <None Include="..\game\lua\test.lua" />
     <None Include="..\README.md" />
     <None Include="COORDA.ASM" />
     <MASM Include="KEYFBUFF.ASM">

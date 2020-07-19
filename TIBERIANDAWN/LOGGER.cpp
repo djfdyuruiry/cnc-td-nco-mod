@@ -50,6 +50,10 @@ LogLevel Parse_Log_Level(char* levelString)
 	{
 		logLevel = OFF;
 	}
+	else if (!Strings_Are_Equal(levelString, "INFO"))
+	{
+		Log_Error("Setting log level to INFO as an unrecognised log level was passed to Parse_Log_Level: %s", levelString);
+	}
 
 	return logLevel;
 }
