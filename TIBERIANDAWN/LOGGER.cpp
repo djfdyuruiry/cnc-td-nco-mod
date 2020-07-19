@@ -1,9 +1,9 @@
 #include "function.h"
 
-static auto LOG_FILE_PATH = "log\\nco.log";
 static auto LOG_LINE_LENGTH = 25600;
 static auto LOG_LEVEL_LENGTH = 5;
 
+static char* LOG_FILE_PATH = NULL;
 static HANDLE LOG_FILE_HANDLE = NULL;
 static bool FAILED_TO_OPEN_LOG_FILE = false;
 static bool ONLY_LOG_ERROR_TO_STD_OUT = false;
@@ -108,16 +108,36 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 
 	if (!FAILED_TO_OPEN_LOG_FILE && LOG_FILE_HANDLE == NULL)
 	{
-		bool errorOccurred = false;
-		LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH, &errorOccurred);
+		bool valueFound = false;
+		auto logDirectory = Get_Env_Var("USERPROFILE", &valueFound);
 
-		if (errorOccurred || LOG_FILE_HANDLE == NULL)
+		LOG_FILE_PATH = Allocate_String(MAX_PATH);
+
+		if (!valueFound)
 		{
+			puts("Failed to read USERPROFILE env var to find home directory, logging to file will be disabled");
 			FAILED_TO_OPEN_LOG_FILE = true;
-			Show_Error(
-				"Failed to open log file:\n\n%s\nCheck env var path is correct and/or default `log` directory is present.",
-				Get_Win32_Error_Message()
-			);
+		}
+		else
+		{
+			#ifdef TEST_CONSOLE
+			sprintf(LOG_FILE_PATH, "log\\nco.log");
+			#else
+			sprintf(LOG_FILE_PATH, "%s\\Documents\\CnCRemastered\\nco.log", logDirectory);
+			#endif	
+	
+			bool errorOccurred = false;
+			LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH, &errorOccurred);
+
+			if (errorOccurred || LOG_FILE_HANDLE == NULL || LOG_FILE_HANDLE == INVALID_HANDLE_VALUE)
+			{
+				FAILED_TO_OPEN_LOG_FILE = true;
+
+				sprintf(
+					"Failed to open log file: %s\nCheck `log` directory is present and you have permission to access it.\n",
+					Get_Win32_Error_Message()
+				);
+			}
 		}
 	}
 
@@ -158,7 +178,11 @@ bool Console_Logging_Enabled()
 
 void Close_Log_File_If_Open()
 {
-	if (LOG_FILE_HANDLE != NULL)
+	if (
+		!FAILED_TO_OPEN_LOG_FILE 
+		&& LOG_FILE_HANDLE != NULL 
+		&& LOG_FILE_HANDLE != INVALID_HANDLE_VALUE
+	)
 	{
 		Log_Debug("Closing handle for log file: %s", LOG_FILE_PATH);
 
@@ -167,6 +191,7 @@ void Close_Log_File_If_Open()
 			printf("ERROR: Failed to close handle for log file '%s': %s", LOG_FILE_PATH, Get_Win32_Error_Message());
 		}
 
+		delete LOG_FILE_PATH;
 		LOG_FILE_HANDLE = NULL;
 	}
 }

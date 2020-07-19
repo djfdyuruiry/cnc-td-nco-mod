@@ -43,35 +43,43 @@ void Show_Error(const char* messageFormat, ...)
 	delete formattedMessageBuffer;
 }
 
-const char* Get_Env_Var_Or_Default(const char* envVarName, char* defaultValue) {
-	if (String_Is_Empty(envVarName) && String_Is_Empty(defaultValue))
-	{
-		Show_Error("No env var or default passed to Get_Env_Var_Or_Default");
-
-		return "";
-	}
-
+const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
 	if (String_Is_Empty(envVarName))
 	{
-		Show_Error("Env var passed to Get_Env_Var_Or_Default was null or empty");
+		puts("Env var name passed to Get_Env_Var_Or_Default was null or empty");
 
-		return defaultValue;
+		if (valueFound != NULL)
+		{
+			*valueFound = false;
+		}
+
+		return NULL;
 	}
 
-	Log_Debug("Attempting to get value of env var: %s", envVarName);
+	sprintf("Attempting to get value of env var: %s\n", envVarName);
 
 	auto requiredSize = GetEnvironmentVariable(envVarName, NULL, 0);
 
 	if (requiredSize == 0)
 	{
-		Log_Warn("Env var missing or empty: %s | Returning default value: %s", envVarName, defaultValue);
+		sprintf("Env var missing or empty: %s\n", envVarName);
 
-		return defaultValue;
+		if (valueFound != NULL)
+		{
+			*valueFound = false;
+		}
+
+		return NULL;
 	}
 
 	auto envVarValue = Allocate_String(requiredSize);
 
 	GetEnvironmentVariable(envVarName, envVarValue, requiredSize);
+
+	if (valueFound != NULL)
+	{
+		*valueFound = true;
+	}
 
 	return envVarValue;
 }
@@ -148,11 +156,13 @@ void Append_To_File(HANDLE file, char* data)
 		return;
 	}
 
+	DWORD written;
+
 	WriteFile(
 		file,
 		data,
 		strlen(data),
-		NULL,
+		&written,
 		NULL
 	);
 }
