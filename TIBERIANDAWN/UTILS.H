@@ -5,7 +5,7 @@
 
 void Show_Error(const char* messageFormat, ...);
 
-const char* Get_Env_Var_Or_Default(const char* envVarName, char* defaultValue);
+const char* Get_Env_Var(const char* envVarName, bool* valueFound);
 
 char* Get_Win32_Error_Message(DWORD error);
 
