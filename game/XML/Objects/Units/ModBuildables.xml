@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ObjectTypeList>
-	<ObjectTypeClass Name="TXT_KILLER" Classification="CNCBuildableObject" CanInstantiate="False">
-		<CNCEncyclopediaComponent>
+	<ObjectTypeClass Name="TD_KILLER" Classification="CNCBuildableObject" CanInstantiate="False">
+		<CNCEncyclopediaComponent>		
 			<ObjectNameTextID>TEXT_UNIT_KILLER</ObjectNameTextID>
 			<ObjectDescriptionTextID>TEXT_UNIT_DESC_KILLER</ObjectDescriptionTextID>
-			<!-- <BuildIcon>BuildIcon_TD_Nuke_Tank</BuildIcon> -->
+			<BuildIcon>BuildIcon_TD_KILLER</BuildIcon>
 			<RequiredTypes>
 				<entry>TD_PYLE</entry>
 			</RequiredTypes>
