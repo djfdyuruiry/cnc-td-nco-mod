@@ -41,7 +41,7 @@ namespace Integration
 			{
 				bool valueFound = false;
 
-				Get_Env_Var("Windows_NT", &valueFound);
+				Get_Env_Var("OS", &valueFound);
 
 				Assert::IsTrue(valueFound);
 			}

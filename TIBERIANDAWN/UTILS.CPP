@@ -46,8 +46,6 @@ void Show_Error(const char* messageFormat, ...)
 const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
 	if (String_Is_Empty(envVarName))
 	{
-		puts("Env var name passed to Get_Env_Var_Or_Default was null or empty");
-
 		if (valueFound != NULL)
 		{
 			*valueFound = false;
@@ -56,14 +54,10 @@ const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
 		return NULL;
 	}
 
-	sprintf("Attempting to get value of env var: %s\n", envVarName);
-
 	auto requiredSize = GetEnvironmentVariable(envVarName, NULL, 0);
 
 	if (requiredSize == 0)
 	{
-		sprintf("Env var missing or empty: %s\n", envVarName);
-
 		if (valueFound != NULL)
 		{
 			*valueFound = false;
