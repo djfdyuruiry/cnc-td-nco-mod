@@ -94,6 +94,8 @@ class WeaponTypeClass
 
 		char* FriendlyName;
 
+		bool IsModType;
+
 		static WeaponTypeClass const* By_Type(WeaponType type);
 
 		static WeaponTypeClass const& As_Reference(WeaponType type);
@@ -142,6 +144,8 @@ class WarheadTypeClass
 		unsigned* Modifier;
 
 		char* FriendlyName;
+
+		bool IsModType;
 
 		static WarheadTypeClass const* By_Type(WarheadType type);
 

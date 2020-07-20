@@ -147,6 +147,17 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
 
         warhead->FriendlyName = strdup(originalValue);
     }
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    {
+        auto isModType = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(warhead->IsModType), Convert_Boolean_To_String(isModType));
+
+            warhead->IsModType = isModType;
+        }
+    }
     else
     {
         return false;
@@ -216,6 +227,12 @@ static bool Read_Warhead_Rule(lua_State* lua, WarheadTypeClass* warhead, const c
         Log_Trace("Read_Warhead_Rule => Rule value: %s", warhead->FriendlyName);
 
         lua_pushstring(lua, warhead->FriendlyName);
+    }
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    {
+        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsModType));
+
+        lua_pushboolean(lua, warhead->IsModType);
     }
     else
     {

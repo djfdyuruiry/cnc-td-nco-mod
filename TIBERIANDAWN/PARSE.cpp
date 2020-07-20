@@ -1156,6 +1156,16 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
             return (InfantryType)(number + 6);
         }
     }
+    else
+    {
+        bool matchFound = false;
+        auto newInfantryType = Get_New_Infantry_Type(infantryTypeString, &matchFound);
+
+        if (matchFound)
+        {
+            return (InfantryType)newInfantryType;
+        }
+    }
 
     if (parseError != NULL)
     {
@@ -1229,6 +1239,10 @@ const char* Infantry_Type_To_String(InfantryType infantryType)
         auto index = infantryType - 7;
 
         infantryTypeString = CIVILIAN_TYPE_MAP[index];
+    }
+    else if (infantryType < Read_Infantry_Count(INFANTRY_COUNT))
+    {
+        infantryTypeString = Get_New_Infantry_Ini_Name(infantryType);
     }
     else
     {

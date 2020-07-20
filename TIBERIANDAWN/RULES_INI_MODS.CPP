@@ -62,7 +62,6 @@ static bool Setup_New_Infantry_Type(char* typeString, InfantryType type, char* b
 		return false;
 	}
 
-
 	Log_Info("Mod infantry type base: %s", baseTypeString);
 
 	auto baseInfantry = InfantryTypeClass::By_Type(baseType);
@@ -97,6 +96,9 @@ void Initialise_Infantry_Mod_Types()
 	{		
 		bool baseTypeFound = false;
 		auto typeString = MOD_INFANTRY_TYPES[type - INFANTRY_COUNT];
+
+		Convert_String_To_Upper_Case(typeString);
+
 		auto baseTypeString = Read_Optional_String_From_Rules_Ini(typeString, BASE_TYPE_RULE, &baseTypeFound, false);
 
 		if (!baseTypeFound)
@@ -115,4 +117,34 @@ void Initialise_Infantry_Mod_Types()
 	}
 
 	Log_Info("Infantry Mods Initialised");
+}
+
+const char* Get_New_Infantry_Ini_Name(char type)
+{
+	return (const char*)MOD_INFANTRY_TYPES[type - INFANTRY_COUNT];
+}
+
+char Get_New_Infantry_Type(char* iniName, bool* matchFound)
+{
+	for (auto type = INFANTRY_COUNT; type < Read_Infantry_Count(INFANTRY_COUNT); type++)
+	{
+		auto typeString = MOD_INFANTRY_TYPES[type - INFANTRY_COUNT];
+
+		if (Strings_Are_Equal(iniName, typeString))
+		{
+			if (matchFound != NULL)
+			{
+				*matchFound = true;
+			}
+
+			return type;
+		}
+	}
+
+	if (matchFound != NULL)
+	{
+		*matchFound = false;
+	}
+
+	return INFANTRY_NONE;
 }

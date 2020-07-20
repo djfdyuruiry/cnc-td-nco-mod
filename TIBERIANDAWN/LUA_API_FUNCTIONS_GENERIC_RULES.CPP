@@ -339,6 +339,17 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsNominal = showName;
         }
     }
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    {
+        auto isModType = Parse_Boolean(uppercaseValue, valueParseError);
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsModType), Convert_Boolean_To_String(isModType));
+
+            type->IsModType = isModType;
+        }
+    }
     else
     {
         return false;
@@ -513,6 +524,12 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsNominal));
 
         lua_pushboolean(lua, type->IsNominal);
+    }
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    {
+        Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsModType));
+
+        lua_pushboolean(lua, type->IsModType);
     }
     else
     {

@@ -14,12 +14,13 @@
 #define WEAPON_RANGE_RULE_UPPER "RANGE"
 
 #define WEAPON_RULES FRIENDLY_NAME_RULE, \
+	IS_MOD_TYPE_RULE, \
     WEAPON_FIRES_RULE, \
 	WEAPON_DAMAGE_RULE, \
 	WEAPON_RATE_OF_FIRE_RULE, \
 	WEAPON_RANGE_RULE
 
-#define WEAPON_RULE_COUNT 5u
+#define WEAPON_RULE_COUNT 6u
 
 #define Read_Weapon_Damage(bulletType, defaultValue) (unsigned char) Read_Unsigned_Int_From_Rules_Ini(bulletType, WEAPON_DAMAGE_RULE, defaultValue, 1, UCHAR_MAX)
 

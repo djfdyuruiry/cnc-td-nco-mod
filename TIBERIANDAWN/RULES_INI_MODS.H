@@ -34,4 +34,8 @@ void Read_Mods();
 
 void Initialise_Infantry_Mod_Types();
 
+const char* Get_New_Infantry_Ini_Name(char infantryType);
+
+char Get_New_Infantry_Type(char* iniName, bool* matchFound);
+
 #endif

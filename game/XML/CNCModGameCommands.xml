@@ -461,6 +461,8 @@
         <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD64</GameCommand>
       </Command>
 
+      <!-- mods -->
+
     </CNCModGameCommands>
   </CNCModGameCommandManager>
 </ModGameCommands>

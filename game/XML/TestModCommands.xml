@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CNCModGameCommandManager>
+  <ModGameCommands>
+
+    <CNCModGameCommands>
+      <Command Name="KILLER">
+        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD20</GameCommand>
+      </Command>
+    </CNCModGameCommands>
+
+  </ModGameCommands>
+</CNCModGameCommandManager>

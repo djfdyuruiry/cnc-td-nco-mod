@@ -24,9 +24,12 @@ mkdir "%MOD_PATH%\Data\lib"
 
 copy "%REPO_PATH%\game\ccmod.json" "%MOD_PATH%\ccmod.json"
 copy "%REPO_PATH%\game\RULES-DEFAULT.INI" "%MOD_PATH%\Data\RULES-DEFAULT.INI"
-copy "%REPO_PATH%\game\XML\CNCModGameCommands.xml" "%MOD_PATH%\Data\XML\CNCModGameCommands.xml"
+copy "%REPO_PATH%\game\XML\ModBuildables.xml" "%MOD_PATH%\Data\XML\ModBuildables.xml"
+copy "%REPO_PATH%\game\XML\ModGameObjectFiles.xml" "%MOD_PATH%\Data\XML\ModGameObjectFiles.xml"
 copy "%REPO_PATH%\game\RULES.INI" "%MOD_PATH%\Data\RULES.INI"
 copy "%REPO_PATH%\game\lua\test\test.lua" "%MOD_PATH%\Data"
 xcopy /S /E "%REPO_PATH%\game\lua\lib\*.lua" "%MOD_PATH%\Data\lib\" 
 
 copy "%REPO_PATH%\bin\Win32\TiberianDawn.dll" "%MOD_PATH%\Data"
+
+call "%~dp0patch-buildables.bat" "%MOD_PATH%\Data\XML\CNCModGameCommands.xml"

@@ -72,6 +72,17 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
 
         weapon->FriendlyName = strdup(originalValue);
     }
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    {
+        auto isModType = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Set_Weapon_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(weapon->IsModType), Convert_Boolean_To_String(isModType));
+
+            weapon->IsModType = isModType;
+        }
+    }
     else
     {
         return false;
@@ -113,6 +124,12 @@ static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char
         Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->FriendlyName);
 
         lua_pushstring(lua, weapon->FriendlyName);
+    }
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    {
+        Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->IsModType);
+
+        lua_pushboolean(lua, weapon->IsModType);
     }
     else
     {
