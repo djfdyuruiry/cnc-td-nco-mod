@@ -97,7 +97,7 @@ int MiniGunnerDos [DO_COUNT][3]={
 	0,		1, 1					//	DO_PLEAD_DEATH		// N/A
 };
 
-static InfantryTypeClass const E1(
+static InfantryTypeClass E1(
 	INFANTRY_E1,				// Infantry type number.
 	TXT_E1,						// Translate name number for infantry type.
 	TXT_E1_STRING,
@@ -168,7 +168,7 @@ int GrenadierDos [DO_COUNT][3]={
 	0,		1, 1					//	DO_PLEAD_DEATH		// N/A
 };
 
-static InfantryTypeClass const E2(
+static InfantryTypeClass E2(
 	INFANTRY_E2,				// Infantry type number.
 	TXT_E2,						// Translate name number for infantry type.
 	TXT_E2_STRING,
@@ -242,7 +242,7 @@ int BazookaDos [DO_COUNT][3]={
 
 
 
-static InfantryTypeClass const E3(
+static InfantryTypeClass E3(
 	INFANTRY_E3,				// Infantry type number.
 	TXT_E3,						// Translate name number for infantry type.
 	TXT_E3_STRING,
@@ -313,7 +313,7 @@ int FlamethrowerDos [DO_COUNT][3]={
 
 
 
-static InfantryTypeClass const E4(
+static InfantryTypeClass E4(
 	INFANTRY_E4,				// Infantry type number.
 	TXT_E4,						// Translate name number for infantry type.
 	TXT_E4_STRING,
@@ -383,7 +383,7 @@ int ChemwarriorDos [DO_COUNT][3]={
 };
 
 
-static InfantryTypeClass const E5(
+static InfantryTypeClass E5(
 	INFANTRY_E5,				// Infantry type number.
 	TXT_E5,						// Translate name number for infantry type.
 	TXT_E5_STRING,
@@ -453,7 +453,7 @@ int EngineerDos[DO_COUNT][3]={
 };
 
 // this unit is `E6` even though the instance is named `E7`
-static InfantryTypeClass const E7(
+static InfantryTypeClass E7(
 	INFANTRY_E7,				// Infantry type number.
 	TXT_E7,						// Translate name number for infantry type.
 	TXT_E7_STRING,
@@ -521,7 +521,7 @@ int CommandoDos[DO_COUNT][3]={
 	0,		1, 1					//	DO_PLEAD_DEATH		// N/A
 
 };
-static InfantryTypeClass const Commando(
+static InfantryTypeClass Commando(
 	INFANTRY_RAMBO,			// Infantry type number.
 	TXT_RAMBO,					// Translate name number for infantry type.
 	TXT_RAMBO_STRING,
@@ -589,7 +589,7 @@ int CivilianDos1[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const C1(
+static InfantryTypeClass C1(
 	INFANTRY_C1,				// Infantry type number.
 	TXT_C1,						// Translate name number for infantry type.
 	TXT_C1_STRING,
@@ -656,7 +656,7 @@ int CivilianDos2[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const C2(
+static InfantryTypeClass C2(
 	INFANTRY_C2,				// Infantry type number.
 	TXT_C2,						// Translate name number for infantry type.
 	TXT_C2_STRING,
@@ -724,7 +724,7 @@ int CivilianDos3[DO_COUNT][3]={
 
 };
 
-static InfantryTypeClass const C3(
+static InfantryTypeClass C3(
 	INFANTRY_C3,				// Infantry type number.
 	TXT_C3,						// Translate name number for infantry type.
 	TXT_C3_STRING,
@@ -792,7 +792,7 @@ int CivilianDos4[DO_COUNT][3]={
 };
 
 
-static InfantryTypeClass const C4(
+static InfantryTypeClass C4(
 	INFANTRY_C4,				// Infantry type number.
 	TXT_C4,						// Translate name number for infantry type.
 	TXT_C4_STRING,
@@ -859,7 +859,7 @@ int CivilianDos5[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const C5(
+static InfantryTypeClass C5(
 	INFANTRY_C5,				// Infantry type number.
 	TXT_C5,						// Translate name number for infantry type.
 	TXT_C5_STRING,
@@ -926,7 +926,7 @@ int CivilianDos6[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const C6(
+static InfantryTypeClass C6(
 	INFANTRY_C6,				// Infantry type number.
 	TXT_C6,						// Translate name number for infantry type.
 	TXT_C6_STRING,
@@ -993,7 +993,7 @@ int CivilianDos7[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const C7(
+static InfantryTypeClass C7(
 	INFANTRY_C7,				// Infantry type number.
 	TXT_C7,						// Translate name number for infantry type.
 	TXT_C7_STRING,
@@ -1059,7 +1059,7 @@ int CivilianDos8[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const C8(
+static InfantryTypeClass C8(
 	INFANTRY_C8,				// Infantry type number.
 	TXT_C8,						// Translate name number for infantry type.
 	TXT_C8_STRING,
@@ -1126,7 +1126,7 @@ int CivilianDos9[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const C9(
+static InfantryTypeClass C9(
 	INFANTRY_C9,				// Infantry type number.
 	TXT_C9,						// Translate name number for infantry type.
 	TXT_C9_STRING,
@@ -1195,7 +1195,7 @@ int NikoombaDos[DO_COUNT][3]={
 };
 
 // Nikoomba
-static InfantryTypeClass const C10(
+static InfantryTypeClass C10(
 	INFANTRY_C10,				// Infantry type number.
 	TXT_C10,						// Translate name number for infantry type.
 	TXT_C10_STRING,
@@ -1261,7 +1261,7 @@ int MoebiusDos[DO_COUNT][3]={
 	151,		14,0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const Moebius(
+static InfantryTypeClass Moebius(
 	INFANTRY_MOEBIUS,			// Infantry type number.
 	TXT_MOEBIUS,				// Translate name number for infantry type.
 	TXT_MOEBIUS_STRING,
@@ -1327,7 +1327,7 @@ int DelphiDos[DO_COUNT][3]={
 	277,		6, 0,				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const Delphi(
+static InfantryTypeClass Delphi(
 	INFANTRY_DELPHI,			// Infantry type number.
 	TXT_DELPHI,					// Translate name number for infantry type.
 	TXT_DELPHI_STRING,
@@ -1394,7 +1394,7 @@ int DrChanDos[DO_COUNT][3]={
 	151,		14,0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass const DrChan(
+static InfantryTypeClass DrChan(
 	INFANTRY_CHAN,				// Infantry type number.
 	TXT_CHAN,					// Translate name number for infantry type.
 	TXT_CHAN_STRING,
@@ -1429,30 +1429,64 @@ static InfantryTypeClass const DrChan(
 **	This is the array of pointers to the static data associated with each
 **	infantry type.
 */
-InfantryTypeClass const * const InfantryTypeClass::Pointers[INFANTRY_COUNT] = {
-	&E1,
-	&E2,
-	&E3,
-	&E4,
-	&E5,
-//	&E6,
-	&E7,
-	&Commando,
-	&C1,
-	&C2,
-	&C3,
-	&C4,
-	&C5,
-	&C6,
-	&C7,
-	&C8,
-	&C9,
-	&C10,
-	&Moebius,
-	&Delphi,
-	&DrChan
-};
+InfantryTypeClass** InfantryTypeClass::Pointers = NULL;
 
+InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
+{
+	if (Pointers != NULL) {
+		return Pointers[type];
+	}
+
+	auto infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+	Pointers = new InfantryTypeClass*[infantryCount]{
+		&E1,
+		&E2,
+		&E3,
+		&E4,
+		&E5,
+		//	&E6,
+		&E7,
+		&Commando,
+		&C1,
+		&C2,
+		&C3,
+		&C4,
+		&C5,
+		&C6,
+		&C7,
+		&C8,
+		&C9,
+		&C10,
+		&Moebius,
+		&Delphi,
+		&DrChan
+	};
+
+	Initialise_Infantry_Mod_Types();
+
+	return Pointers[type];
+}
+
+void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
+{
+	auto iniName = infantry->IniName;
+
+	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
+	infantry->IsCrawling = Read_Is_Crawling(iniName, infantry->IsCrawling);
+	infantry->IsCapture = Read_Can_Capture_Buildings(iniName, infantry->IsCapture);
+	infantry->IsFraidyCat = Read_Is_Fraidy_Cat(iniName, infantry->IsFraidyCat);
+	infantry->IsCivilian = Read_Is_Civilian(iniName, infantry->IsCivilian);
+	infantry->IsAvoidingTiberium = Read_Avoids_Tiberium(iniName, infantry->IsAvoidingTiberium);
+	infantry->IsImmuneToTiberium = Read_Bool_From_Rules_Ini(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
+	infantry->HasC4Charges = Read_Bool_From_Rules_Ini(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
+	
+}
+
+void InfantryTypeClass::Add_Infantry_Type(InfantryType type, InfantryTypeClass* infantryObject)
+{
+	Pointers[type] = infantryObject;
+}
 
 /***********************************************************************************************
  * InfantryTypeClass::InfantryTypeClass -- Constructor for infantry type class objects.        *
@@ -1512,18 +1546,17 @@ InfantryTypeClass::InfantryTypeClass	(
 	**	Set the animation sequence custom values.
 	*/
 
-	IsFemale = Read_Is_Female(IniName, is_female);
-	IsCrawling = Read_Is_Crawling(IniName, is_crawling);
-	IsCapture = Read_Can_Capture_Buildings(IniName, is_capture);
-	IsFraidyCat = Read_Is_Fraidy_Cat(IniName, is_fraidycat);
-	IsCivilian = Read_Is_Civilian(IniName, is_civilian);
-	IsAvoidingTiberium = Read_Avoids_Tiberium(IniName, false);
+	IsFemale = is_female;
+	IsCrawling = is_crawling;
+	IsCapture = is_capture;
+	IsFraidyCat = is_fraidycat;
+	IsCivilian = is_civilian;
+	IsAvoidingTiberium = false;
 
-	auto immuneToTiberiumDefault = type == INFANTRY_E5;
+	IsImmuneToTiberium = type == INFANTRY_E5;
+	HasC4Charges = Type == INFANTRY_RAMBO;
 
-	IsImmuneToTiberium = Read_Bool_From_Rules_Ini(IniName, IMMUNE_TO_TIBERIUM_RULE, immuneToTiberiumDefault);
-
-	HasC4Charges = Read_Bool_From_Rules_Ini(IniName, HAS_C4_CHARGES_RULE, Type == INFANTRY_RAMBO);
+	Read_Infantry_Rules(this);
 
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;
@@ -1807,7 +1840,7 @@ void InfantryTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void InfantryTypeClass::Prep_For_Add(void)
 {
-	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+	for (InfantryType index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
 		Map.Add_To_List(&As_Reference(index));
 	}
 }
@@ -1834,8 +1867,8 @@ void InfantryTypeClass::Prep_For_Add(void)
 InfantryType InfantryTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (InfantryType classid = INFANTRY_FIRST; classid < INFANTRY_COUNT; classid++) {
-			if (stricmp(Pointers[classid]->IniName, name) == 0) {
+		for (InfantryType classid = INFANTRY_FIRST; classid < Read_Infantry_Count(INFANTRY_COUNT); classid++) {
+			if (stricmp(By_Type(classid)->IniName, name) == 0) {
 				return(classid);
 			}
 		}
@@ -1863,17 +1896,18 @@ void InfantryTypeClass::One_Time(void)
 {
 	InfantryType index;
 
-	for (index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+	for (index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		InfantryTypeClass	const *uclass;
+
+		InfantryTypeClass* uclass = (InfantryTypeClass*)&As_Reference(index);
 		CCFileClass	file;
 
-		uclass = &As_Reference(index);
+		char* iniName = uclass->Resolve_Ini_Name();
 
 		/*
 		**	Generic shape for all houses load method.
 		*/
-		_makepath(fullname, NULL, NULL, uclass->IniName, ".SHP");
+		_makepath(fullname, NULL, NULL, iniName, ".SHP");
 		((void const *&)uclass->ImageData) = MixFileClass::Retrieve(fullname);
 
 		/*
@@ -1881,9 +1915,9 @@ void InfantryTypeClass::One_Time(void)
 		*/
 		char buffer[_MAX_FNAME];
 		if ( Get_Resolution_Factor() ) {
-			sprintf(buffer, "%.4sICNH", uclass->IniName);
+			sprintf(buffer, "%.4sICNH", iniName);
 		} else {
-			sprintf(buffer, "%.4sICON", uclass->IniName);
+			sprintf(buffer, "%.4sICON", iniName);
 		}
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
 		((void const *&)uclass->CameoData) = MixFileClass::Retrieve(fullname);
@@ -1920,7 +1954,7 @@ void InfantryTypeClass::Init(TheaterType theater)
 			char fullname[_MAX_FNAME+_MAX_EXT];
 			void const * cameo_ptr;
 
-			for (index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+			for (index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
 				InfantryTypeClass	const *uclass;
 				CCFileClass	file;
 
@@ -2018,4 +2052,11 @@ int InfantryTypeClass::Full_Name(void) const
 		return(TechnoTypeClass::Full_Name());
 	}
 	return(TXT_CIVILIAN);
+}
+
+char* InfantryTypeClass::Resolve_Ini_Name()
+{
+	return IsModType 
+		? ModBaseIniName 
+		: IniName;
 }

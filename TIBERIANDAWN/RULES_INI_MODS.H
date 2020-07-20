@@ -7,6 +7,10 @@
 #define NEW_INFANTRY_RULE_UPPER "NEWINFANTRY"
 #define NEW_INFANTRY_RULE_TYPE "string"
 
+#define BASE_TYPE_RULE "BaseType"
+#define BASE_TYPE_RULE_UPPER "BASETYPE"
+#define BASE_TYPE_RULE_TYPE "string"
+
 // virtual rules calculated on load of the rules file
 #define NEW_INFANTRY_COUNT_RULE "NewInfantryCount"
 #define NEW_INFANTRY_COUNT_RULE_UPPER "NEWINFANTRYCOUNT"
@@ -28,6 +32,6 @@
 
 void Read_Mods();
 
-void Initialise_Infantry_Mod_Types(void* infantryTypeClasses);
+void Initialise_Infantry_Mod_Types();
 
 #endif

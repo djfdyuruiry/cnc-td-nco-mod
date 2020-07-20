@@ -173,6 +173,12 @@ long Read_Prerequisite(
 int Read_House_List_From_Rules_Ini(
     const char* section,
     int defaultValue,
+    char* defaultValueAsString
+);
+
+int Read_House_List_From_Rules_Ini(
+    const char* section,
+    int defaultValue,
     const char* defaultValueAsString
 );
 

@@ -2,6 +2,8 @@
 
 #include "rules_cache.h"
 
+static const auto MAX_INFANTRY_TYPE_NAME_LENGTH = 32u;
+
 static char** MOD_INFANTRY_TYPES = NULL;
 
 void Read_Infantry_Mods()
@@ -18,7 +20,7 @@ void Read_Infantry_Mods()
 
 	auto newInfantryCount = 0u;
 
-	MOD_INFANTRY_TYPES = Parse_Csv_String(newInfantryCsv, 32, &newInfantryCount);
+	MOD_INFANTRY_TYPES = Parse_Csv_String(newInfantryCsv, MAX_INFANTRY_TYPE_NAME_LENGTH, &newInfantryCount);
 
 	if (newInfantryCount < 1u || MOD_INFANTRY_TYPES == NULL) {
 		Log_Debug("No infantry mods found");
@@ -41,7 +43,7 @@ void Read_Mods()
 	Read_Infantry_Mods();
 }
 
-static bool Setup_New_Infantry_Type(char* typeString, char* baseTypeString)
+static bool Setup_New_Infantry_Type(char* typeString, InfantryType type, char* baseTypeString)
 {
 	if (String_Is_Empty(typeString))
 	{
@@ -51,13 +53,6 @@ static bool Setup_New_Infantry_Type(char* typeString, char* baseTypeString)
 	}
 
 	Log_Info("Setting up new mod infantry type: %s", typeString);
-
-	if (String_Is_Empty(baseTypeString))
-	{
-		Show_Error("Missing `BaseType` rule for mod infantry type: %s", typeString);
-
-		return false;
-	}
 
 	bool parseError = false;
 	auto baseType = Parse_Infantry_Type(baseTypeString, &parseError);
@@ -77,11 +72,17 @@ static bool Setup_New_Infantry_Type(char* typeString, char* baseTypeString)
 	memcpy(infantryClone, baseInfantry, sizeof(InfantryTypeClass));
 
 	infantryClone->IsModType = true;
-	infantryClone->ModIniName = typeString;
+
+	strcpy(infantryClone->ModBaseIniName, baseTypeString);
+	strcpy(infantryClone->IniName, typeString);
+
+	infantryClone->Type = type;
 
 	InfantryTypeClass::Read_Infantry_Rules(infantryClone);
 	TechnoTypeClass::Read_Techno_Rules(infantryClone);
 	ObjectTypeClass::Read_Object_Rules(infantryClone);
+
+	InfantryTypeClass::Add_Infantry_Type(type, infantryClone);
 
 	Log_Info("Mod infantry type setup successful");
 
@@ -93,15 +94,23 @@ void Initialise_Infantry_Mod_Types()
 	Log_Info("Initialising Infantry Mods");
 
 	for (auto type = INFANTRY_COUNT; type < Read_Infantry_Count(INFANTRY_COUNT); type++)
-	{
-		auto typeString = MOD_INFANTRY_TYPES[type];
-		auto baseTypeString = MOD_INFANTRY_TYPES[type];
+	{		
+		bool baseTypeFound = false;
+		auto typeString = MOD_INFANTRY_TYPES[type - INFANTRY_COUNT];
+		auto baseTypeString = Read_Optional_String_From_Rules_Ini(typeString, BASE_TYPE_RULE, &baseTypeFound, false);
 
-		if (!Setup_New_Infantry_Type(typeString, baseTypeString))
+		if (!baseTypeFound)
 		{
+			Show_Error("Mod infantry type has no %s rule provided: %s", typeString, BASE_TYPE_RULE);
+
 			Rules_Ini_Failed_Validation(true);
 
-			return;
+			continue;
+		}
+
+		if (!Setup_New_Infantry_Type(typeString, type, baseTypeString))
+		{
+			Rules_Ini_Failed_Validation(true);
 		}
 	}
 

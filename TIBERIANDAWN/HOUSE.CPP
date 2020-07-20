@@ -492,11 +492,15 @@ HouseClass::HouseClass(HousesType house) :
 	RadarSpied = 0;
 	PointTotal = 0;
 
+	auto iquantitySize = Read_Infantry_Count(INFANTRY_COUNT) * sizeof(int);
+
+	IQuantity = (int*)malloc(iquantitySize);
+
 	memset(BQuantity, '\0', sizeof(BQuantity));
 	memset(UQuantity, '\0', sizeof(UQuantity));
-	memset(IQuantity, '\0', sizeof(IQuantity));
+	memset(IQuantity, '\0', iquantitySize);
 	memset(AQuantity, '\0', sizeof(AQuantity));
-		
+
 	Attack = 0;
 
 	Enemy = HOUSE_NONE;
@@ -3781,11 +3785,11 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 		case RTTI_INFANTRY:
 		case RTTI_INFANTRYTYPE:
 			if (CurUnits < MaxUnit) {
-				int counter[INFANTRY_COUNT];
+				int* counter = new int[Read_Infantry_Count(INFANTRY_COUNT)];
 				if (GameToPlay == GAME_NORMAL) {
 					memset(counter, 0x00, sizeof(counter));
 				} else {
-					for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+					for (InfantryType index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
 						if (Can_Build(index, Class->House) && InfantryTypeClass::As_Reference(index).Level <= BuildLevel) {
 							counter[index] = 16;
 						} else {
@@ -3852,8 +3856,8 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				*/
 				int bestval = -1;
 				int bestcount = 0;
-				InfantryType bestlist[INFANTRY_COUNT];
-				for (InfantryType utype = INFANTRY_FIRST; utype < INFANTRY_COUNT; utype++) {
+				InfantryType* bestlist = new InfantryType[Read_Infantry_Count(INFANTRY_COUNT)];
+				for (InfantryType utype = INFANTRY_FIRST; utype < Read_Infantry_Count(INFANTRY_COUNT); utype++) {
 					if (counter[utype] > 0 && Can_Build(utype, Class->House) && InfantryTypeClass::As_Reference(utype).Cost_Of() <= Available_Money()) {
 						if (bestval == -1 || bestval < counter[utype]) {
 							bestval = counter[utype];
@@ -3869,6 +3873,9 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				if (bestcount) {
 					techno = &InfantryTypeClass::As_Reference(bestlist[Random_Pick(0, bestcount-1)]);
 				}
+
+				delete counter;
+				delete bestlist;
 			}
 			break;
 
@@ -4968,12 +4975,12 @@ void HouseClass::Check_Pertinent_Structures(void)
 void HouseClass::Init_Unit_Trackers(void)
 {		
 	AircraftTotals = new UnitTrackerClass( (int) AIRCRAFT_COUNT);
-	InfantryTotals = new UnitTrackerClass( (int) INFANTRY_COUNT);
+	InfantryTotals = new UnitTrackerClass( (int) Read_Infantry_Count(INFANTRY_COUNT));
 	UnitTotals = new UnitTrackerClass ( (int) UNIT_COUNT);
 	BuildingTotals = new UnitTrackerClass ( (int) STRUCT_COUNT);
 
 	DestroyedAircraft = new UnitTrackerClass ( (int) AIRCRAFT_COUNT);
-	DestroyedInfantry = new UnitTrackerClass( (int) INFANTRY_COUNT);
+	DestroyedInfantry = new UnitTrackerClass( (int) Read_Infantry_Count(INFANTRY_COUNT));
 	DestroyedUnits = new UnitTrackerClass ( (int) UNIT_COUNT);
 	DestroyedBuildings = new UnitTrackerClass ( (int) STRUCT_COUNT);
 
@@ -6998,7 +7005,7 @@ int HouseClass::AI_Infantry(void)
 	if (GameToPlay == GAME_NORMAL) {		// Not used for skirmish? ST - 7/24/2019 2:59PM
 #if (0)		
 		TechnoTypeClass const * techno = 0;
-		int counter[INFANTRY_COUNT];
+		int counter[Read_Infantry_Count(INFANTRY_COUNT)];
 		memset(counter, 0x00, sizeof(counter));
 
 		/*
@@ -7063,8 +7070,8 @@ int HouseClass::AI_Infantry(void)
 		*/
 		int bestval = -1;
 		int bestcount = 0;
-		InfantryType bestlist[INFANTRY_COUNT];
-		for (InfantryType utype = INFANTRY_FIRST; utype < INFANTRY_COUNT; utype++) {
+		InfantryType bestlist[Read_Infantry_Count(INFANTRY_COUNT)];
+		for (InfantryType utype = INFANTRY_FIRST; utype < Read_Infantry_Count(INFANTRY_COUNT); utype++) {
 
 			if (utype != INFANTRY_DOG || !(IScan & INFANTRYF_DOG)) {
 				if (counter[utype] > 0 && Can_Build(&InfantryTypeClass::As_Reference(utype), Class->House) && InfantryTypeClass::As_Reference(utype).Cost_Of() <= Available_Money()) {
@@ -7097,13 +7104,16 @@ int HouseClass::AI_Infantry(void)
 		**	This structure is used to keep track of the list of infantry types that should be
 		**	built. The infantry type and the value assigned to it is recorded.
 		*/
-		struct {
+		struct TypeTrack {
 			InfantryType	Type;		// Infantry type.
 			int				Value;	// Relative value assigned.
-		} typetrack[INFANTRY_COUNT];
+		};
+
+		TypeTrack* typetrack = new TypeTrack[Read_Infantry_Count(INFANTRY_COUNT)];
+
 		int count = 0;
 		int total = 0;
-		for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+		for (InfantryType index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
 			//if (Can_Build(&InfantryTypeClass::As_Reference(index), ActLike) && InfantryTypeClass::As_Reference(index).Level <= (unsigned)Control.TechLevel) {
 			if (Can_Build(&InfantryTypeClass::As_Reference(index), ActLike) && InfantryTypeClass::As_Reference(index).Level <= (unsigned)BuildLevel) {
 				typetrack[count].Value = 0;
@@ -7173,6 +7183,8 @@ int HouseClass::AI_Infantry(void)
 				pick -= typetrack[index].Value;
 			}
 		}
+
+		delete typetrack;
 	}
 	return(TICKS_PER_SECOND);
 }

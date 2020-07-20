@@ -2586,7 +2586,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_INFANTRYTYPE:
-				for (f = INFANTRY_FIRST; f < INFANTRY_COUNT; f++) {
+				for (f = INFANTRY_FIRST; f < Read_Infantry_Count(INFANTRY_COUNT); f++) {
 					if (PlayerPtr->Can_Build(f, ActLike)) {
 //						if (InfantryTypeClass::As_Reference(f).Who_Can_Build_Me(true, true, ActLike)) {
 							if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
@@ -2665,7 +2665,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_INFANTRYTYPE:
-				for (f = INFANTRY_FIRST; f < INFANTRY_COUNT; f++) {
+				for (f = INFANTRY_FIRST; f < Read_Infantry_Count(INFANTRY_COUNT); f++) {
 					if (PlayerPtr->Can_Build(f, ActLike)) {
 //						if (InfantryTypeClass::As_Reference(f).Who_Can_Build_Me(true, true, ActLike)) {
 							Map.Add(RTTI_INFANTRYTYPE, f);

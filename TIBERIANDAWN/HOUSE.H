@@ -791,7 +791,7 @@ class HouseClass {
 		*/
 		int BQuantity[STRUCT_COUNT];
 		int UQuantity[UNIT_COUNT];
-		int IQuantity[INFANTRY_COUNT];
+		int* IQuantity;
 		int AQuantity[AIRCRAFT_COUNT];
 
 		/*

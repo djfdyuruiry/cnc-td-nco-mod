@@ -5,7 +5,7 @@
 
 typedef struct LuaScripts {
 	char** ScriptFiles;
-	int ScriptFileCount;
+	unsigned int ScriptFileCount;
 } LuaScripts;
 
 typedef struct LuaFunction {

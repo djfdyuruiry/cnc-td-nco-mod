@@ -9,7 +9,7 @@ static bool Load_Lua_Scripts()
     auto executionOk = true;
     auto scripts = Rules_Get_Lua_Scripts();
 
-    for (auto i = 0; i < scripts.ScriptFileCount; i++)
+    for (auto i = 0u; i < scripts.ScriptFileCount; i++)
     {
         auto scriptFile = scripts.ScriptFiles[i];
         auto scriptFilePath = Build_Mod_Data_File_Path(scriptFile);

@@ -783,7 +783,7 @@ void Fixup_Scenario(void)
 	** "Fraidycat" civilians avoid wandering into Tiberium for SCG08EB, since they're mission-critical.
 	*/
 	bool is_scg08ea = GameToPlay == GAME_NORMAL && PlayerPtr->ActLike == HOUSE_GOOD && Scenario == 8 && ScenVar == SCEN_VAR_B;
-	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+	for (InfantryType index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
 		InfantryTypeClass& infantry_type = (InfantryTypeClass&)InfantryTypeClass::As_Reference(index);
 		if (infantry_type.IsFraidyCat) {
 			infantry_type.IsAvoidingTiberium = is_scg08ea;

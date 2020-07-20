@@ -12,7 +12,7 @@ static const auto TICK_INTERVAL_IN_MILLIS = ONE_SEC_IN_MILLIS / TICKS_PER_SECOND
 
 static char* RULES_INI_BUFFER = NULL;
 static char* DEFAULT_RULES_INI_BUFFER = NULL;
-static auto LOG_LEVEL = INFO;
+static auto LOG_LEVEL = TRACE;
 
 static bool RULES_VALID = true;
 static bool LUA_IS_ENABLED = false;
@@ -154,6 +154,8 @@ void Ensure_Rules_Ini_Is_Loaded() {
 	);
 
 	Read_Lua_Scripts_From_Rules_Ini();
+
+	Read_Mods();
 }
 
 int Read_Optional_Int_From_Rules_Ini(
@@ -1008,7 +1010,7 @@ unsigned int Read_Fixed_From_Rules_Ini(
 int Read_House_List_From_Rules_Ini(
 	const char* section,
 	int defaultValue,
-	const char* defaultValueAsString
+	char* defaultValueAsString
 )
 {
 	bool valueFound = false;
@@ -1032,6 +1034,21 @@ int Read_House_List_From_Rules_Ini(
 	}
 
 	return houseListBitField;
+}
+
+int Read_House_List_From_Rules_Ini(
+	const char* section,
+	int defaultValue,
+	const char* defaultValueAsString
+)
+{
+	auto defaultValueAsStr = strdup(defaultValueAsString);
+
+	auto houseList = Read_House_List_From_Rules_Ini(section, defaultValue, defaultValueAsStr);
+
+	delete defaultValueAsStr;
+
+	return houseList;
 }
 
 WeaponType Read_Weapon_Type_From_Rules_Ini(
