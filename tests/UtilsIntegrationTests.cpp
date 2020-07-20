@@ -29,20 +29,30 @@ namespace Integration
 				}
 			}
 
-			TEST_METHOD(When_Get_Env_Var_Or_Default_IsCalled_WithPresentVarName_ThenValueIsReturned)
+			TEST_METHOD(When_Get_Env_Var_IsCalled_WithPresentVarName_ThenValueIsReturned)
 			{
 				Assert::AreEqual(
 					"Windows_NT",
-					Get_Env_Var_Or_Default("OS", "Ubuntu 20.04 LTS")
+					Get_Env_Var("OS", NULL)
 				);
 			}
 
-			TEST_METHOD(When_Get_Env_Var_Or_Default_IsCalled_WithMissingVarName_ThenDefaultIsReturned)
+			TEST_METHOD(When_Get_Env_Var_IsCalled_WithPresentVarName_ThenValueFoundIsSetToTrue)
 			{
-				Assert::AreEqual(
-					"4200KG",
-					Get_Env_Var_Or_Default("CARGO_SIZE", "4200KG")
-				);
+				bool valueFound = false;
+
+				Get_Env_Var("OS", &valueFound);
+
+				Assert::IsTrue(valueFound);
+			}
+
+			TEST_METHOD(When_Get_Env_Var_Or_WithMissingVarName_ThenValueFoundIsSetToFalse)
+			{
+				bool valueFound = true;
+
+				Get_Env_Var("CARGO_SIZE", &valueFound);
+
+				Assert::IsFalse(valueFound);
 			}
 
 			TEST_METHOD(When_Open_File_For_Appending_IsCalled_WithValidNewFileName_ThenNoErrorIsReturned)
