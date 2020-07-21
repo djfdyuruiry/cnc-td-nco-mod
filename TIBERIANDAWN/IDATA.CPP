@@ -97,7 +97,7 @@ int MiniGunnerDos [DO_COUNT][3]={
 	0,		1, 1					//	DO_PLEAD_DEATH		// N/A
 };
 
-static InfantryTypeClass E1(
+static InfantryTypeClass const E1(
 	INFANTRY_E1,				// Infantry type number.
 	TXT_E1,						// Translate name number for infantry type.
 	TXT_E1_STRING,
@@ -168,7 +168,7 @@ int GrenadierDos [DO_COUNT][3]={
 	0,		1, 1					//	DO_PLEAD_DEATH		// N/A
 };
 
-static InfantryTypeClass E2(
+static InfantryTypeClass const E2(
 	INFANTRY_E2,				// Infantry type number.
 	TXT_E2,						// Translate name number for infantry type.
 	TXT_E2_STRING,
@@ -242,7 +242,7 @@ int BazookaDos [DO_COUNT][3]={
 
 
 
-static InfantryTypeClass E3(
+static InfantryTypeClass const E3(
 	INFANTRY_E3,				// Infantry type number.
 	TXT_E3,						// Translate name number for infantry type.
 	TXT_E3_STRING,
@@ -313,7 +313,7 @@ int FlamethrowerDos [DO_COUNT][3]={
 
 
 
-static InfantryTypeClass E4(
+static InfantryTypeClass const E4(
 	INFANTRY_E4,				// Infantry type number.
 	TXT_E4,						// Translate name number for infantry type.
 	TXT_E4_STRING,
@@ -383,7 +383,7 @@ int ChemwarriorDos [DO_COUNT][3]={
 };
 
 
-static InfantryTypeClass E5(
+static InfantryTypeClass const E5(
 	INFANTRY_E5,				// Infantry type number.
 	TXT_E5,						// Translate name number for infantry type.
 	TXT_E5_STRING,
@@ -453,7 +453,7 @@ int EngineerDos[DO_COUNT][3]={
 };
 
 // this unit is `E6` even though the instance is named `E7`
-static InfantryTypeClass E7(
+static InfantryTypeClass const E7(
 	INFANTRY_E7,				// Infantry type number.
 	TXT_E7,						// Translate name number for infantry type.
 	TXT_E7_STRING,
@@ -521,7 +521,7 @@ int CommandoDos[DO_COUNT][3]={
 	0,		1, 1					//	DO_PLEAD_DEATH		// N/A
 
 };
-static InfantryTypeClass Commando(
+static InfantryTypeClass const Commando(
 	INFANTRY_RAMBO,			// Infantry type number.
 	TXT_RAMBO,					// Translate name number for infantry type.
 	TXT_RAMBO_STRING,
@@ -589,7 +589,7 @@ int CivilianDos1[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass C1(
+static InfantryTypeClass const C1(
 	INFANTRY_C1,				// Infantry type number.
 	TXT_C1,						// Translate name number for infantry type.
 	TXT_C1_STRING,
@@ -656,7 +656,7 @@ int CivilianDos2[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass C2(
+static InfantryTypeClass const C2(
 	INFANTRY_C2,				// Infantry type number.
 	TXT_C2,						// Translate name number for infantry type.
 	TXT_C2_STRING,
@@ -724,7 +724,7 @@ int CivilianDos3[DO_COUNT][3]={
 
 };
 
-static InfantryTypeClass C3(
+static InfantryTypeClass const C3(
 	INFANTRY_C3,				// Infantry type number.
 	TXT_C3,						// Translate name number for infantry type.
 	TXT_C3_STRING,
@@ -792,7 +792,7 @@ int CivilianDos4[DO_COUNT][3]={
 };
 
 
-static InfantryTypeClass C4(
+static InfantryTypeClass const C4(
 	INFANTRY_C4,				// Infantry type number.
 	TXT_C4,						// Translate name number for infantry type.
 	TXT_C4_STRING,
@@ -859,7 +859,7 @@ int CivilianDos5[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass C5(
+static InfantryTypeClass const C5(
 	INFANTRY_C5,				// Infantry type number.
 	TXT_C5,						// Translate name number for infantry type.
 	TXT_C5_STRING,
@@ -926,7 +926,7 @@ int CivilianDos6[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass C6(
+static InfantryTypeClass const C6(
 	INFANTRY_C6,				// Infantry type number.
 	TXT_C6,						// Translate name number for infantry type.
 	TXT_C6_STRING,
@@ -993,7 +993,7 @@ int CivilianDos7[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass C7(
+static InfantryTypeClass const C7(
 	INFANTRY_C7,				// Infantry type number.
 	TXT_C7,						// Translate name number for infantry type.
 	TXT_C7_STRING,
@@ -1059,7 +1059,7 @@ int CivilianDos8[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass C8(
+static InfantryTypeClass const C8(
 	INFANTRY_C8,				// Infantry type number.
 	TXT_C8,						// Translate name number for infantry type.
 	TXT_C8_STRING,
@@ -1126,7 +1126,7 @@ int CivilianDos9[DO_COUNT][3]={
 	277,		6, 0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass C9(
+static InfantryTypeClass const C9(
 	INFANTRY_C9,				// Infantry type number.
 	TXT_C9,						// Translate name number for infantry type.
 	TXT_C9_STRING,
@@ -1195,7 +1195,7 @@ int NikoombaDos[DO_COUNT][3]={
 };
 
 // Nikoomba
-static InfantryTypeClass C10(
+static InfantryTypeClass const C10(
 	INFANTRY_C10,				// Infantry type number.
 	TXT_C10,						// Translate name number for infantry type.
 	TXT_C10_STRING,
@@ -1261,7 +1261,7 @@ int MoebiusDos[DO_COUNT][3]={
 	151,		14,0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass Moebius(
+static InfantryTypeClass const Moebius(
 	INFANTRY_MOEBIUS,			// Infantry type number.
 	TXT_MOEBIUS,				// Translate name number for infantry type.
 	TXT_MOEBIUS_STRING,
@@ -1327,7 +1327,7 @@ int DelphiDos[DO_COUNT][3]={
 	277,		6, 0,				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass Delphi(
+static InfantryTypeClass const Delphi(
 	INFANTRY_DELPHI,			// Infantry type number.
 	TXT_DELPHI,					// Translate name number for infantry type.
 	TXT_DELPHI_STRING,
@@ -1394,7 +1394,7 @@ int DrChanDos[DO_COUNT][3]={
 	151,		14,0				//	DO_PLEAD_DEATH
 };
 
-static InfantryTypeClass DrChan(
+static InfantryTypeClass const DrChan(
 	INFANTRY_CHAN,				// Infantry type number.
 	TXT_CHAN,					// Translate name number for infantry type.
 	TXT_CHAN_STRING,
@@ -1429,17 +1429,21 @@ static InfantryTypeClass DrChan(
 **	This is the array of pointers to the static data associated with each
 **	infantry type.
 */
-InfantryTypeClass** InfantryTypeClass::Pointers = NULL;
+InfantryTypeClass const** InfantryTypeClass::Pointers = NULL;
 
 InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 {
 	if (Pointers != NULL) {
+		Log_Trace("Infantry lookup by type: %d", type);
+
 		return Pointers[type];
 	}
 
+	Log_Debug("Initialising infantry types");
+
 	auto infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
 
-	Pointers = new InfantryTypeClass*[infantryCount]{
+	Pointers = new InfantryTypeClass const *[infantryCount]{
 		&E1,
 		&E2,
 		&E3,
@@ -1465,6 +1469,7 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 
 	Initialise_Infantry_Mod_Types();
 
+	Log_Trace("Infantry lookup by type: %d", type);
 	return Pointers[type];
 }
 

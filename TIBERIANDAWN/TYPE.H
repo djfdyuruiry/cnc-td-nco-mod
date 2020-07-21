@@ -1131,7 +1131,7 @@ class UnitTypeClass : public TechnoTypeClass
 class InfantryTypeClass : public TechnoTypeClass
 {
 	private:
-		static InfantryTypeClass** Pointers;
+		static InfantryTypeClass const** Pointers;
 
 	public:
 

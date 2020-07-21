@@ -3668,6 +3668,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 
 
 	switch (objecttype) {
+		Log_Trace("Resolving new type for AI to build from factory type: %s", Factory_Type_To_String((FactoryType)objecttype));
 
 		/*
 		**	Unit construction is based on the rule that up to twice the number required
@@ -3787,15 +3788,17 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 			if (CurUnits < MaxUnit) {
 				char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
 
-				int* counter = new int[infantryCount];
+				int* counter = (int*) calloc(infantryCount, sizeof(int));
 
-				if (GameToPlay == GAME_NORMAL) {
-					memset(counter, 0x00, sizeof(infantryCount * sizeof(int)));
-				} else {
+				if (GameToPlay != GAME_NORMAL) {
 					for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 						if (Can_Build(index, Class->House) && InfantryTypeClass::As_Reference(index).Level <= BuildLevel) {
+							Log_Trace("Adding type to counter: %s", Infantry_Type_To_String(index));
+
 							counter[index] = 16;
 						} else {
+							Log_Trace("Omitting type from counter: %s", Infantry_Type_To_String(index));
+
 							counter[index] = 0;
 						}
 					}
@@ -3814,7 +3817,10 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 						if ((team->IsReinforcable || !tptr->IsFullStrength) && team->House == Class->House) {
 							for (int subindex = 0; subindex < team->ClassCount; subindex++) {
 								if (team->Class[subindex]->What_Am_I() == RTTI_INFANTRYTYPE) {
-									counter[((InfantryTypeClass const *)(team->Class[subindex]))->Type] += team->DesiredNum[subindex]+1;
+									auto infantry = ((InfantryTypeClass const*)(team->Class[subindex]));
+									auto type = infantry->Type;
+									
+									counter[type] += team->DesiredNum[subindex]+1;
 								}
 							}
 						}
@@ -3832,7 +3838,9 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 						if (team->House == Class->House && team->IsPrebuilt && (!team->IsAutocreate || IsAlerted)) {
 							for (int subindex = 0; subindex < team->ClassCount; subindex++) {
 								if (team->Class[subindex]->What_Am_I() == RTTI_INFANTRYTYPE) {
-									int subtype = ((InfantryTypeClass const *)(team->Class[subindex]))->Type;
+									auto infantry = ((InfantryTypeClass const*)(team->Class[subindex]));
+									auto subtype = infantry->Type;
+
 //									counter[subtype] = 1;
 									counter[subtype] = MAX(counter[subtype], (int)team->DesiredNum[subindex]);
 									counter[subtype] = MIN(counter[subtype], 5);
@@ -3865,11 +3873,16 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				memset(bestlist, 0x00, infantryCount * sizeof(InfantryType));
 
 				for (InfantryType utype = INFANTRY_FIRST; utype < infantryCount; utype++) {
+					Log_Trace("AI counter for type %s: %d", Infantry_Type_To_String(utype), counter[utype]);
+
 					if (counter[utype] > 0 && Can_Build(utype, Class->House) && InfantryTypeClass::As_Reference(utype).Cost_Of() <= Available_Money()) {
 						if (bestval == -1 || bestval < counter[utype]) {
 							bestval = counter[utype];
 							bestcount = 0;
 						}
+
+						Log_Debug("Adding type to best list: %s", Infantry_Type_To_String(utype));
+
 						bestlist[bestcount++] = utype;
 					}
 				}
