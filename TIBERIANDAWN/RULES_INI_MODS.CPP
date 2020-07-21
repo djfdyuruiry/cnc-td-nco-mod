@@ -91,8 +91,10 @@ static bool Setup_New_Infantry_Type(char* typeString, InfantryType type, char* b
 void Initialise_Infantry_Mod_Types()
 {
 	Log_Info("Initialising Infantry Mods");
+	
+	auto infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
 
-	for (auto type = INFANTRY_COUNT; type < Read_Infantry_Count(INFANTRY_COUNT); type++)
+	for (auto type = INFANTRY_COUNT; type < infantryCount; type++)
 	{		
 		bool baseTypeFound = false;
 		auto typeString = MOD_INFANTRY_TYPES[type - INFANTRY_COUNT];
@@ -126,7 +128,9 @@ const char* Get_New_Infantry_Ini_Name(char type)
 
 char Get_New_Infantry_Type(char* iniName, bool* matchFound)
 {
-	for (auto type = INFANTRY_COUNT; type < Read_Infantry_Count(INFANTRY_COUNT); type++)
+	auto infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+	for (auto type = INFANTRY_COUNT; type < infantryCount; type++)
 	{
 		auto typeString = MOD_INFANTRY_TYPES[type - INFANTRY_COUNT];
 

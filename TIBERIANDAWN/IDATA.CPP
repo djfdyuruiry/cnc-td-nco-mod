@@ -1867,7 +1867,9 @@ void InfantryTypeClass::Prep_For_Add(void)
 InfantryType InfantryTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (InfantryType classid = INFANTRY_FIRST; classid < Read_Infantry_Count(INFANTRY_COUNT); classid++) {
+		char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+		for (InfantryType classid = INFANTRY_FIRST; classid < infantryCount; classid++) {
 			if (stricmp(By_Type(classid)->IniName, name) == 0) {
 				return(classid);
 			}
@@ -1894,9 +1896,10 @@ InfantryType InfantryTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void InfantryTypeClass::One_Time(void)
 {
+	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
 	InfantryType index;
 
-	for (index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
+	for (index = INFANTRY_FIRST; index < infantryCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
 
 		InfantryTypeClass* uclass = (InfantryTypeClass*)&As_Reference(index);
@@ -1954,7 +1957,9 @@ void InfantryTypeClass::Init(TheaterType theater)
 			char fullname[_MAX_FNAME+_MAX_EXT];
 			void const * cameo_ptr;
 
-			for (index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
+			char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+			for (index = INFANTRY_FIRST; index < infantryCount; index++) {
 				InfantryTypeClass	const *uclass;
 				CCFileClass	file;
 
