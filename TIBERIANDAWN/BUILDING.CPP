@@ -190,7 +190,7 @@ bool BuildingClass::Can_Have_Rally_Point() const
 		return false;
 	}
 
-	auto rallyPointsEnabled = Read_Bool_Enhancements_Rule(RALLY_POINTS_RULE, RALLY_POINTS_RULE_KEY, false);
+	auto rallyPointsEnabled = Read_Bool_Enhancements_Rule(RALLY_POINTS_RULE, RALLY_POINTS_RULE_KEY);
 
 	return rallyPointsEnabled
 		&& Class->IsFactory

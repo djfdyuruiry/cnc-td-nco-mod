@@ -152,6 +152,8 @@ ObjectTypeClass::ObjectTypeClass(
 
 		Read_Object_Rules(this);
 	}
+
+	IsModType = false;
 }
 
 

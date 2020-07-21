@@ -11,6 +11,7 @@ CacheKey Build_Rule_Key(const char* section, const char* ruleName);
 extern const CacheKey RALLY_POINTS_RULE_KEY;
 extern const CacheKey MULTI_WALL_LENGTH_RULE_KEY;
 extern const CacheKey FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY;
+extern const CacheKey COMMANDO_GUARD_RULE_KEY;
 
 // mod rules
 extern const CacheKey INFANTRY_COUNT_RULE_KEY;
