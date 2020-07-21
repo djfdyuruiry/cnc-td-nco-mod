@@ -17,6 +17,8 @@ function Main {
     exit 1
   }
 
+  Write-Log-Info "Patching buildables XML file @ ${destFile}"
+
   [xml] $modCommands = Get-Content "${gameFilesPath}\XML\CNCModGameCommands.xml"
   [xml] $testModCommands = Get-Content "${gameFilesPath}\XML\TestModCommands.xml"
 
@@ -26,7 +28,7 @@ function Main {
     $modCommands.ModGameCommands.`
       CNCModGameCommandManager.`
       CNCModGameCommands.AppendChild($importedCommand)
-  }
+  } | Out-Null
 
   if (Test-Path $destFile -ErrorAction SilentlyContinue) {
     Remove-Item -Force $destFile
