@@ -494,7 +494,7 @@ HouseClass::HouseClass(HousesType house) :
 
 	auto iquantitySize = Read_Infantry_Count(INFANTRY_COUNT) * sizeof(int);
 
-	IQuantity = (int*)malloc(iquantitySize);
+	IQuantity = (int*) calloc(iquantitySize, sizeof(int));
 
 	memset(BQuantity, '\0', sizeof(BQuantity));
 	memset(UQuantity, '\0', sizeof(UQuantity));
@@ -3817,10 +3817,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 						if ((team->IsReinforcable || !tptr->IsFullStrength) && team->House == Class->House) {
 							for (int subindex = 0; subindex < team->ClassCount; subindex++) {
 								if (team->Class[subindex]->What_Am_I() == RTTI_INFANTRYTYPE) {
-									auto infantry = ((InfantryTypeClass const*)(team->Class[subindex]));
-									auto type = infantry->Type;
-									
-									counter[type] += team->DesiredNum[subindex]+1;
+									counter[((InfantryTypeClass const*)(team->Class[subindex]))->Type] += team->DesiredNum[subindex] + 1;
 								}
 							}
 						}
@@ -3838,8 +3835,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 						if (team->House == Class->House && team->IsPrebuilt && (!team->IsAutocreate || IsAlerted)) {
 							for (int subindex = 0; subindex < team->ClassCount; subindex++) {
 								if (team->Class[subindex]->What_Am_I() == RTTI_INFANTRYTYPE) {
-									auto infantry = ((InfantryTypeClass const*)(team->Class[subindex]));
-									auto subtype = infantry->Type;
+									int subtype = ((InfantryTypeClass const*)(team->Class[subindex]))->Type;
 
 //									counter[subtype] = 1;
 									counter[subtype] = MAX(counter[subtype], (int)team->DesiredNum[subindex]);
@@ -3867,10 +3863,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				*/
 				int bestval = -1;
 				int bestcount = 0;
-
-				InfantryType* bestlist = new InfantryType[infantryCount];
-
-				memset(bestlist, 0x00, infantryCount * sizeof(InfantryType));
+				InfantryType* bestlist = (InfantryType*) calloc(infantryCount, sizeof(InfantryType));
 
 				for (InfantryType utype = INFANTRY_FIRST; utype < infantryCount; utype++) {
 					Log_Trace("AI counter for type %s: %d", Infantry_Type_To_String(utype), counter[utype]);
@@ -7027,7 +7020,7 @@ int HouseClass::AI_Infantry(void)
 	if (GameToPlay == GAME_NORMAL) {		// Not used for skirmish? ST - 7/24/2019 2:59PM
 #if (0)		
 		TechnoTypeClass const * techno = 0;
-		int counter[Read_Infantry_Count(INFANTRY_COUNT)];
+		int counter[INFANTRY_COUNT];
 		memset(counter, 0x00, sizeof(counter));
 
 		/*
@@ -7092,8 +7085,8 @@ int HouseClass::AI_Infantry(void)
 		*/
 		int bestval = -1;
 		int bestcount = 0;
-		InfantryType bestlist[Read_Infantry_Count(INFANTRY_COUNT)];
-		for (InfantryType utype = INFANTRY_FIRST; utype < Read_Infantry_Count(INFANTRY_COUNT); utype++) {
+		InfantryType bestlist[INFANTRY_COUNT];
+		for (InfantryType utype = INFANTRY_FIRST; utype < INFANTRY_COUNT; utype++) {
 
 			if (utype != INFANTRY_DOG || !(IScan & INFANTRYF_DOG)) {
 				if (counter[utype] > 0 && Can_Build(&InfantryTypeClass::As_Reference(utype), Class->House) && InfantryTypeClass::As_Reference(utype).Cost_Of() <= Available_Money()) {
@@ -7132,10 +7125,7 @@ int HouseClass::AI_Infantry(void)
 		};
 
 		char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
-
-		TypeTrack* typetrack = new TypeTrack[infantryCount];
-
-		memset(typetrack, 0x00, infantryCount * sizeof(TypeTrack));
+		TypeTrack* typetrack = (TypeTrack*) calloc(infantryCount, sizeof(TypeTrack));
 
 		int count = 0;
 		int total = 0;

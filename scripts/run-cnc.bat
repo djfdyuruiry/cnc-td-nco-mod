@@ -10,8 +10,8 @@ call "%~dp0kill-cnc.bat"
 pushd "%CNC_PATH%"
 
 :: reset log file
-if exist log\nco.log (
-  del log\nco.log
+if exist %USERPROFILE%\Documents\CnCRemastered\nco.log (
+  del %USERPROFILE%\Documents\CnCRemastered\nco.log
 )
 
 :: start game like the launcher does

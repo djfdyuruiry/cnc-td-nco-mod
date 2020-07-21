@@ -1845,7 +1845,9 @@ void InfantryTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void InfantryTypeClass::Prep_For_Add(void)
 {
-	for (InfantryType index = INFANTRY_FIRST; index < Read_Infantry_Count(INFANTRY_COUNT); index++) {
+	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		Map.Add_To_List(&As_Reference(index));
 	}
 }
@@ -1906,8 +1908,8 @@ void InfantryTypeClass::One_Time(void)
 
 	for (index = INFANTRY_FIRST; index < infantryCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-
 		InfantryTypeClass* uclass = (InfantryTypeClass*)&As_Reference(index);
+
 		CCFileClass	file;
 
 		char* iniName = uclass->Resolve_Ini_Name();
