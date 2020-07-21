@@ -176,6 +176,8 @@ LogLevel Current_Log_Level();
 
 void Set_Current_Log_Level(LogLevel level);
 
+char* Current_Log_Path();
+
 bool Lua_Is_Enabled();
 
 bool Lua_Console_Is_Enabled();

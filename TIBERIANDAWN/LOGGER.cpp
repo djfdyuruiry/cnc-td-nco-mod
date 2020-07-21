@@ -69,6 +69,56 @@ LogLevel Parse_Log_Level(const char* levelString)
 	return level;
 }
 
+static void Load_Default_Log_File_Path()
+{
+	#ifdef TEST_CONSOLE
+	LOG_FILE_PATH = Allocate_String(MAX_PATH);
+
+	sprintf(LOG_FILE_PATH, "log\\nco.log");
+	#else
+	bool valueFound = false;
+	auto userProfileDirectory = Get_Env_Var("USERPROFILE", &valueFound);
+
+	if (!valueFound)
+	{
+		puts("Failed to read USERPROFILE env var to find home directory, logging to file will be disabled");
+		FAILED_TO_OPEN_LOG_FILE = true;
+	}
+
+	LOG_FILE_PATH = Allocate_String(MAX_PATH);
+
+	sprintf(LOG_FILE_PATH, "%s\\Documents\\CnCRemastered\\nco.log", userProfileDirectory);
+	#endif	
+}
+
+static void Open_Log_File()
+{
+	LOG_FILE_PATH = Current_Log_Path();
+
+	if (String_Is_Empty(LOG_FILE_PATH))
+	{
+		Load_Default_Log_File_Path();
+	}
+
+	if (FAILED_TO_OPEN_LOG_FILE)
+	{
+		return;
+	}
+
+	bool errorOccurred = false;
+	LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH, &errorOccurred);
+
+	if (errorOccurred || LOG_FILE_HANDLE == NULL || LOG_FILE_HANDLE == INVALID_HANDLE_VALUE)
+	{
+		FAILED_TO_OPEN_LOG_FILE = true;
+
+		sprintf(
+			"Failed to open log file: %s\nCheck `log` directory is present and you have permission to access it.\n",
+			Get_Win32_Error_Message()
+		);
+	}
+}
+
 void Log(LogLevel logLevel, const char* messageFormat, ...)
 {
 	if (logLevel > Current_Log_Level())
@@ -108,37 +158,7 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 
 	if (!FAILED_TO_OPEN_LOG_FILE && LOG_FILE_HANDLE == NULL)
 	{
-		bool valueFound = false;
-		auto logDirectory = Get_Env_Var("USERPROFILE", &valueFound);
-
-		LOG_FILE_PATH = Allocate_String(MAX_PATH);
-
-		if (!valueFound)
-		{
-			puts("Failed to read USERPROFILE env var to find home directory, logging to file will be disabled");
-			FAILED_TO_OPEN_LOG_FILE = true;
-		}
-		else
-		{
-			#ifdef TEST_CONSOLE
-			sprintf(LOG_FILE_PATH, "log\\nco.log");
-			#else
-			sprintf(LOG_FILE_PATH, "%s\\Documents\\CnCRemastered\\nco.log", logDirectory);
-			#endif	
-	
-			bool errorOccurred = false;
-			LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH, &errorOccurred);
-
-			if (errorOccurred || LOG_FILE_HANDLE == NULL || LOG_FILE_HANDLE == INVALID_HANDLE_VALUE)
-			{
-				FAILED_TO_OPEN_LOG_FILE = true;
-
-				sprintf(
-					"Failed to open log file: %s\nCheck `log` directory is present and you have permission to access it.\n",
-					Get_Win32_Error_Message()
-				);
-			}
-		}
+		Open_Log_File();
 	}
 
 	// output to log file and console

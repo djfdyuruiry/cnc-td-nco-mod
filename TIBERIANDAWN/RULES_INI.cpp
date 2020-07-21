@@ -12,7 +12,8 @@ static const auto TICK_INTERVAL_IN_MILLIS = ONE_SEC_IN_MILLIS / TICKS_PER_SECOND
 
 static char* RULES_INI_BUFFER = NULL;
 static char* DEFAULT_RULES_INI_BUFFER = NULL;
-static auto LOG_LEVEL = TRACE;
+static auto LOG_LEVEL = OFF;
+static char* LOG_PATH = NULL;
 
 static bool RULES_VALID = true;
 static bool LUA_IS_ENABLED = false;
@@ -44,7 +45,7 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 	);
 }
 
-static void Read_Log_Level_From_Rules_Ini()
+static void Read_Log_Settings_From_Rules_Ini()
 {
 	Log_Info("Parsing Log Level from rules ini");
 
@@ -61,7 +62,7 @@ static void Read_Log_Level_From_Rules_Ini()
 	auto logLevelBuffer = Read_String_From_Rules_Ini(
 		NCO_RULES_SECTION_NAME,
 		"LogLevel",
-		"INFO", 
+		"OFF", 
 		validLogLevels,
 		LOG_LEVEL_COUNT,
 		false
@@ -74,6 +75,13 @@ static void Read_Log_Level_From_Rules_Ini()
 	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
 
 	Log_Info("Resolved Log Level: %s", Log_Level_To_String(LOG_LEVEL));
+
+	LOG_PATH = Read_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, "LogFile", "", NULL, 0, false);
+
+	if (!String_Is_Empty(LOG_PATH))
+	{
+		Log_Info("Resolved Log Path: %s", LOG_PATH);
+	}
 }
 
 static char* Read_Buffer_From_Rules_File(RawFileClass* rulesFile, char* rulesFilename)
@@ -141,7 +149,7 @@ void Ensure_Rules_Ini_Is_Loaded() {
 
 	Read_Rules_Ini_Buffers();
 
-	Read_Log_Level_From_Rules_Ini();
+	Read_Log_Settings_From_Rules_Ini();
 
 	LUA_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE, true);
 	LUA_CONSOLE_IS_ENABLED = Read_Bool_From_Rules_Ini(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE, false);
@@ -1268,6 +1276,11 @@ LogLevel Current_Log_Level()
 void Set_Current_Log_Level(LogLevel level)
 {
 	LOG_LEVEL = level;
+}
+
+char* Current_Log_Path()
+{
+	return LOG_PATH;
 }
 
 bool Lua_Is_Enabled()
