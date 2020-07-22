@@ -92,7 +92,13 @@ bool ObjectClass::Is_Infantry(void) const
 	return(false);
 }
 
+void ObjectTypeClass::Read_Object_Rules(ObjectTypeClass* type)
+{
+	auto iniName = type->IniName;
 
+	type->Armor = Read_Armor(iniName, type->Armor);
+	type->MaxStrength = Read_Strength(iniName, type->MaxStrength);
+}
 
 /***********************************************************************************************
  * ObjectTypeClass::ObjectTypeClass -- Normal constructor for object type class objects.       *
@@ -141,9 +147,13 @@ ObjectTypeClass::ObjectTypeClass(
 
 	if (loadObjectRules)
 	{
-		Armor = Read_Armor(IniName, armor);
-		MaxStrength = Read_Strength(IniName, strength);
+		Armor = armor;
+		MaxStrength = strength;
+
+		Read_Object_Rules(this);
 	}
+
+	IsModType = false;
 }
 
 

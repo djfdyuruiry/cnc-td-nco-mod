@@ -27,6 +27,6 @@ void Convert_String_To_Upper_Case(char* subject);
 
 char* Convert_String_To_Upper_Case(const char* subject);
 
-char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCount);
+char** Parse_Csv_String(char* csvString, unsigned int entrySize, unsigned int* csvEntryCount);
 
 #endif

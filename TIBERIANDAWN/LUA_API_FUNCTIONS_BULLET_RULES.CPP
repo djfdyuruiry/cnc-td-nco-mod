@@ -217,6 +217,17 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
 
         bullet->FriendlyName = strdup(originalValue);
     }
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    {
+        auto isModType = Parse_Boolean(value, valueParseError);
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_Bullet_Rule => %s -> %s", Convert_Boolean_To_String(bullet->IsModType), Convert_Boolean_To_String(isModType));
+
+            bullet->IsModType = isModType;
+        }
+    }
     else
     {
         return false;
@@ -229,73 +240,73 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
 {
     if (Strings_Are_Equal(ruleName, BULLET_HIGH_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsHigh));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsHigh));
 
         lua_pushboolean(lua, bullet->IsHigh);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_ANTI_AIRCRAFT_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsAntiAircraft));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsAntiAircraft));
 
         lua_pushboolean(lua, bullet->IsAntiAircraft);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_TRANSLUCENT_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsTranslucent));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsTranslucent));
 
         lua_pushboolean(lua, bullet->IsTranslucent);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_ARCING_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsArcing));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsArcing));
 
         lua_pushboolean(lua, bullet->IsArcing);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_HOMING_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsHoming));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsHoming));
 
         lua_pushboolean(lua, bullet->IsHoming);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_DROPPING_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsDropping));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsDropping));
 
         lua_pushboolean(lua, bullet->IsDropping);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_INVISIBLE_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsInvisible));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsInvisible));
 
         lua_pushboolean(lua, bullet->IsInvisible);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_PROXIMITY_ARMED_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsProximityArmed));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsProximityArmed));
 
         lua_pushboolean(lua, bullet->IsProximityArmed);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_FLAME_EQUIPPED_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFlameEquipped));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFlameEquipped));
 
         lua_pushboolean(lua, bullet->IsFlameEquipped);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_FUELED_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFueled));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFueled));
 
         lua_pushboolean(lua, bullet->IsFueled);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_FACELESS_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFaceless));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFaceless));
 
         lua_pushboolean(lua, bullet->IsFaceless);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_INACCURATE_RULE_UPPER))
     {
-        Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsInaccurate));
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsInaccurate));
 
         lua_pushboolean(lua, bullet->IsInaccurate);
     }
@@ -336,6 +347,12 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
         Log_Trace("Read_Bullet_Rule => Rule value: %s", bullet->FriendlyName);
 
         lua_pushstring(lua, bullet->FriendlyName);
+    }
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    {
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsModType));
+
+        lua_pushboolean(lua, bullet->IsModType);
     }
     else
     {

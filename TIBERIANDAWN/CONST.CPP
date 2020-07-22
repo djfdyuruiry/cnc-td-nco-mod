@@ -90,6 +90,8 @@ WeaponTypeClass::WeaponTypeClass(
 	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
 	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
 	Range = Read_Weapon_Range(weaponTypeStr, range);
+
+	IsModType = false;
 }
 
 WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
@@ -169,6 +171,8 @@ WarheadTypeClass::WarheadTypeClass(
 
 		Modifier[armorType] = Read_Unsigned_Int_From_Rules_Ini(warheadTypeString, modifierRule, Modifier[armorType], 0, UINT_MAX);
 	}
+
+	IsModType = false;
 }
 
 WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)

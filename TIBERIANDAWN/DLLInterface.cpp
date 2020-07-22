@@ -7063,8 +7063,9 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}
 	}
 
+	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
 
-	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		InfantryTypeClass	const &infantry_type = InfantryTypeClass::As_Reference(index);
 
 		/*

@@ -130,6 +130,37 @@ extern bool DLL_Export_Get_Input_Key_State(KeyNumType key);
 */
 int const TechnoClass::BodyShape[32] = {0,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
 
+void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
+{
+	auto iniName = type->IniName;
+
+	type->FriendlyName = Read_String_From_Rules_Ini(iniName, FRIENDLY_NAME_RULE, type->FriendlyName, false);
+	type->Level = Read_Build_Level(iniName, type->Level);
+	type->Pre = Read_Prerequisite(iniName, Prerequisite_To_Structure_Type(type->Pre));
+	type->IsTransporter = Read_Is_Transport(iniName, type->IsTransporter);
+	type->TransportCapacity = type->IsTransporter
+		? Read_Unsigned_Int_From_Rules_Ini(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity, 0, INT_MAX)
+		: 0;
+	type->IsBuildable = Read_Is_Buildable(iniName, type->IsBuildable);
+	type->MaxAmmo = Read_Ammo(iniName, type->MaxAmmo);
+	type->SightRange = Read_Sight_Range(iniName, type->SightRange);
+	type->Cost = Read_Cost(iniName, type->Cost);
+	type->Scenario = Read_Scenario_Level(iniName, type->Scenario);
+	type->Reward = Read_Reward(iniName, type->Reward);
+	type->HouseListCsv = Read_String_From_Rules_Ini(iniName, HOUSES_RULE, type->HouseListCsv, false);
+	type->Ownable = Read_House_List_From_Rules_Ini(iniName, type->Ownable, type->HouseListCsv);
+	type->Primary = Read_Primary_Weapon(iniName, type->Primary);
+	type->Secondary = Read_Secondary_Weapon(iniName, type->Secondary);
+	type->MaxSpeed = Read_Speed(iniName, type->MaxSpeed);
+	type->IsScanner = Read_Unsigned_Bool_From_Rules_Ini(iniName, DETECT_CLOAKED_OBJECTS_RULE, type->IsScanner);
+	type->IsRepairable = Read_Unsigned_Bool_From_Rules_Ini(iniName, REPAIRABLE_RULE, type->IsRepairable);
+	type->IsCrew = Read_Unsigned_Bool_From_Rules_Ini(iniName, HAS_CREW_RULE, type->IsCrew);
+	type->IsLeader = Read_Unsigned_Bool_From_Rules_Ini(iniName, LEADER_RULE, type->IsLeader);
+	type->IsTwoShooter = Read_Unsigned_Bool_From_Rules_Ini(iniName, TWO_SHOOTER_RULE, type->IsTwoShooter);
+	type->IsTheater = Read_Unsigned_Bool_From_Rules_Ini(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
+	type->IsTurretEquipped = Read_Unsigned_Bool_From_Rules_Ini(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
+	type->IsNominal = Read_Unsigned_Bool_From_Rules_Ini(iniName, SHOW_NAME_RULE, type->IsNominal);
+}
 
 /***********************************************************************************************
  * TechnoTypeClass::TechnoTypeClass -- Constructor for techno type objects.                    *
@@ -205,32 +236,32 @@ TechnoTypeClass::TechnoTypeClass(
 	risk = risk;
 	Risk = 0;
 
-	FriendlyName = Read_String_From_Rules_Ini(IniName, FRIENDLY_NAME_RULE, friendlyName, false);
-	Level = Read_Build_Level(IniName, level);
-	Pre = Read_Prerequisite(IniName, pre);
-	IsTransporter = Read_Is_Transport(IniName, is_transporter);
-	TransportCapacity = IsTransporter
-		? Read_Unsigned_Int_From_Rules_Ini(IniName, TRANSPORT_CAPACITY_RULE, DEFAULT_TRANSPORT_CAPACITY, 0, INT_MAX)
-		: 0;
-	IsBuildable = Read_Is_Buildable(IniName, is_buildable);
-	MaxAmmo = Read_Ammo(IniName, ammo);
-	SightRange = Read_Sight_Range(IniName, sightrange);
-	Cost = Read_Cost(IniName, cost);
-	Scenario = Read_Scenario_Level(IniName, scenario);
-	Reward = Read_Reward(IniName, reward);
+	FriendlyName = strdup(friendlyName);
+	Level = level;
+	Pre = Structure_Type_To_Prerequisite(pre, NULL);
+	IsTransporter = is_transporter;
+	TransportCapacity = IsTransporter ? DEFAULT_TRANSPORT_CAPACITY : 0;
+	IsBuildable = is_buildable;
+	MaxAmmo = ammo;
+	SightRange = sightrange;
+	Cost = cost;
+	Scenario = scenario;
+	Reward = reward;
 	HouseListCsv = strdup(houseListCsv);
-	Ownable = Read_House_List_From_Rules_Ini(IniName, ownable, HouseListCsv);
-	Primary = Read_Primary_Weapon(IniName, primary);
-	Secondary =  Read_Secondary_Weapon(IniName, secondary);
-	MaxSpeed = Read_Speed(IniName, maxspeed);
-	IsScanner = Read_Unsigned_Bool_From_Rules_Ini(IniName, DETECT_CLOAKED_OBJECTS_RULE, is_scanner);
-	IsRepairable = Read_Unsigned_Bool_From_Rules_Ini(IniName, REPAIRABLE_RULE, is_repairable);
-	IsCrew = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_CREW_RULE, is_crew);
-	IsLeader = Read_Unsigned_Bool_From_Rules_Ini(IniName, LEADER_RULE, is_leader);
-	IsTwoShooter = Read_Unsigned_Bool_From_Rules_Ini(IniName, TWO_SHOOTER_RULE, is_twoshooter);
-	IsTheater = Read_Unsigned_Bool_From_Rules_Ini(IniName, HAS_THEATER_GFX_RULE, is_theater);
-	IsTurretEquipped = Read_Unsigned_Bool_From_Rules_Ini(IniName, TURRET_EQUIPPED_RULE, is_turret_equipped);
-	IsNominal = Read_Unsigned_Bool_From_Rules_Ini(IniName, SHOW_NAME_RULE, is_nominal);
+	Ownable = ownable;
+	Primary = primary;
+	Secondary =  secondary;
+	MaxSpeed = maxspeed;
+	IsScanner = is_scanner;
+	IsRepairable = is_repairable;
+	IsCrew = is_crew;
+	IsLeader = is_leader;
+	IsTwoShooter = is_twoshooter;
+	IsTheater = is_theater;
+	IsTurretEquipped = is_turret_equipped;
+	IsNominal = is_nominal;
+
+	Read_Techno_Rules(this);
 
 	Calculate_Risk();
 }

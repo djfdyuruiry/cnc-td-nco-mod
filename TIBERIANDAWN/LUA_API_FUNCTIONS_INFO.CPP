@@ -60,7 +60,7 @@ static void Read_Object_Names(
 
 static int Lua_Get_Infantry_Types(lua_State* lua)
 {
-    Read_Object_Names(lua, INFANTRY_FIRST, INFANTRY_COUNT, &(Infantry_Type_To_String));
+    Read_Object_Names(lua, INFANTRY_FIRST, Read_Infantry_Count(INFANTRY_COUNT), &(Infantry_Type_To_String));
 
     return 1;
 }

@@ -63,11 +63,20 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 
   for _, areaType in ipairs(typeArea.getTypes()) do
     local friendlyName = typeArea.getRuleValue(areaType, "FriendlyName")
+    local isModType = typeArea.getRuleValue(areaType, "IsModType")
+
+    if isModType then
+      goto areaType
+    end
 
     rulesFile:write(string.format("; %s\n", friendlyName))
     rulesFile:write(string.format("[%s]\n", areaType))
 
     for _, ruleName in ipairs(typeArea.getRuleNames()) do
+      if ruleName == "IsModType" then
+        goto areaRule
+      end
+
       local ruleValue = typeArea.getRuleValue(areaType, ruleName)
 
       rulesFile:write(
@@ -77,9 +86,13 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
           tostring(ruleValue):gsub(".0$", "")
           )
       )
+
+      ::areaRule::
     end
 
     rulesFile:write("\n")
+
+    ::areaType::
   end
 end
 

@@ -70,6 +70,9 @@
 #define SHOW_NAME_RULE "ShowName"
 #define SHOW_NAME_RULE_UPPER "SHOWNAME"
 
+#define IS_MOD_TYPE_RULE "IsModType"
+#define IS_MOD_TYPE_RULE_UPPER "ISMODTYPE"
+
 #define SHARED_RULES FRIENDLY_NAME_RULE, \
     BUILD_LEVEL_RULE, \
     SCENARIO_LEVEL_RULE, \
@@ -91,9 +94,10 @@
     LEADER_RULE, \
     TWO_SHOOTER_RULE, \
     HAS_THEATER_GFX_RULE, \
-    SHOW_NAME_RULE
+    SHOW_NAME_RULE, \
+    IS_MOD_TYPE_RULE
 
-#define SHARED_RULE_COUNT 22u
+#define SHARED_RULE_COUNT 23u
 
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
@@ -168,6 +172,12 @@
 long Read_Prerequisite(
     const char* section,
     StructType defaultValue
+);
+
+int Read_House_List_From_Rules_Ini(
+    const char* section,
+    int defaultValue,
+    char* defaultValueAsString
 );
 
 int Read_House_List_From_Rules_Ini(

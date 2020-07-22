@@ -121,7 +121,7 @@ The `RULES.INI` file and Lua Scripts are stored inside the mod folder. To find t
 
 If you are having issues with the mod, you can:
 
-- Read the [Troubleshooting page](https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/10.-Troubleshooting)
+- Read the [Troubleshooting page](https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/11.-Troubleshooting)
 
 - Report an [issue on GitHub](https://github.com/djfdyuruiry/cnc-td-nco-mod/issues)
 

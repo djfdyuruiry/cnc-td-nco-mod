@@ -96,19 +96,18 @@ static char* Read_Buffer_From_Rules_File(RawFileClass* rulesFile, char* rulesFil
 	return rulesBuffer;
 }
 
-/// <summary>
-/// Load the content of the rules ini file, the location is read from the env var pointed to by
-/// <ref>RULES_FILE_ENV_VAR</ref> or defaults to <ref>DEFAULT_RULES_FILENAME</ref> stored in the
-/// mod path.
-/// </summary>
-/// <returns>The text content of the ini file or a blank string if no file was found.</returns>
 static void Read_Rules_Ini_Buffers() {
 	Log_Info("Attempting to load rules ini from mod path");
 
 	auto rulesFilename = Build_Mod_Data_File_Path(RULES_FILENAME);
 	auto defaultRulesFilename = Build_Mod_Data_File_Path(DEFAULT_RULES_FILENAME);
 
+	Log_Trace("Attempting to open rules file: %s", rulesFilename);
+
 	auto rulesFile = new RawFileClass(rulesFilename);
+
+	Log_Trace("Attempting to open default rules file: %s", defaultRulesFilename);
+
 	auto defaultRulesFile = new RawFileClass(defaultRulesFilename);
 
 	DEFAULT_RULES_INI_BUFFER = "";
@@ -163,6 +162,8 @@ void Ensure_Rules_Ini_Is_Loaded() {
 	);
 
 	Read_Lua_Scripts_From_Rules_Ini();
+
+	Read_Mods();
 }
 
 int Read_Optional_Int_From_Rules_Ini(
@@ -1017,7 +1018,7 @@ unsigned int Read_Fixed_From_Rules_Ini(
 int Read_House_List_From_Rules_Ini(
 	const char* section,
 	int defaultValue,
-	const char* defaultValueAsString
+	char* defaultValueAsString
 )
 {
 	bool valueFound = false;
@@ -1041,6 +1042,21 @@ int Read_House_List_From_Rules_Ini(
 	}
 
 	return houseListBitField;
+}
+
+int Read_House_List_From_Rules_Ini(
+	const char* section,
+	int defaultValue,
+	const char* defaultValueAsString
+)
+{
+	auto defaultValueAsStr = strdup(defaultValueAsString);
+
+	auto houseList = Read_House_List_From_Rules_Ini(section, defaultValue, defaultValueAsStr);
+
+	delete defaultValueAsStr;
+
+	return houseList;
 }
 
 WeaponType Read_Weapon_Type_From_Rules_Ini(

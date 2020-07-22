@@ -492,11 +492,15 @@ HouseClass::HouseClass(HousesType house) :
 	RadarSpied = 0;
 	PointTotal = 0;
 
+	auto iquantitySize = Read_Infantry_Count(INFANTRY_COUNT) * sizeof(int);
+
+	IQuantity = (int*) calloc(iquantitySize, sizeof(int));
+
 	memset(BQuantity, '\0', sizeof(BQuantity));
 	memset(UQuantity, '\0', sizeof(UQuantity));
-	memset(IQuantity, '\0', sizeof(IQuantity));
+	memset(IQuantity, '\0', iquantitySize);
 	memset(AQuantity, '\0', sizeof(AQuantity));
-		
+
 	Attack = 0;
 
 	Enemy = HOUSE_NONE;
@@ -3664,6 +3668,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 
 
 	switch (objecttype) {
+		Log_Trace("Resolving new type for AI to build from factory type: %s", Factory_Type_To_String((FactoryType)objecttype));
 
 		/*
 		**	Unit construction is based on the rule that up to twice the number required
@@ -3781,14 +3786,19 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 		case RTTI_INFANTRY:
 		case RTTI_INFANTRYTYPE:
 			if (CurUnits < MaxUnit) {
-				int counter[INFANTRY_COUNT];
-				if (GameToPlay == GAME_NORMAL) {
-					memset(counter, 0x00, sizeof(counter));
-				} else {
-					for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+				char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+				int* counter = (int*) calloc(infantryCount, sizeof(int));
+
+				if (GameToPlay != GAME_NORMAL) {
+					for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 						if (Can_Build(index, Class->House) && InfantryTypeClass::As_Reference(index).Level <= BuildLevel) {
+							Log_Trace("Adding type to counter: %s", Infantry_Type_To_String(index));
+
 							counter[index] = 16;
 						} else {
+							Log_Trace("Omitting type from counter: %s", Infantry_Type_To_String(index));
+
 							counter[index] = 0;
 						}
 					}
@@ -3807,7 +3817,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 						if ((team->IsReinforcable || !tptr->IsFullStrength) && team->House == Class->House) {
 							for (int subindex = 0; subindex < team->ClassCount; subindex++) {
 								if (team->Class[subindex]->What_Am_I() == RTTI_INFANTRYTYPE) {
-									counter[((InfantryTypeClass const *)(team->Class[subindex]))->Type] += team->DesiredNum[subindex]+1;
+									counter[((InfantryTypeClass const*)(team->Class[subindex]))->Type] += team->DesiredNum[subindex] + 1;
 								}
 							}
 						}
@@ -3825,7 +3835,8 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 						if (team->House == Class->House && team->IsPrebuilt && (!team->IsAutocreate || IsAlerted)) {
 							for (int subindex = 0; subindex < team->ClassCount; subindex++) {
 								if (team->Class[subindex]->What_Am_I() == RTTI_INFANTRYTYPE) {
-									int subtype = ((InfantryTypeClass const *)(team->Class[subindex]))->Type;
+									int subtype = ((InfantryTypeClass const*)(team->Class[subindex]))->Type;
+
 //									counter[subtype] = 1;
 									counter[subtype] = MAX(counter[subtype], (int)team->DesiredNum[subindex]);
 									counter[subtype] = MIN(counter[subtype], 5);
@@ -3852,13 +3863,19 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				*/
 				int bestval = -1;
 				int bestcount = 0;
-				InfantryType bestlist[INFANTRY_COUNT];
-				for (InfantryType utype = INFANTRY_FIRST; utype < INFANTRY_COUNT; utype++) {
+				InfantryType* bestlist = (InfantryType*) calloc(infantryCount, sizeof(InfantryType));
+
+				for (InfantryType utype = INFANTRY_FIRST; utype < infantryCount; utype++) {
+					Log_Trace("AI counter for type %s: %d", Infantry_Type_To_String(utype), counter[utype]);
+
 					if (counter[utype] > 0 && Can_Build(utype, Class->House) && InfantryTypeClass::As_Reference(utype).Cost_Of() <= Available_Money()) {
 						if (bestval == -1 || bestval < counter[utype]) {
 							bestval = counter[utype];
 							bestcount = 0;
 						}
+
+						Log_Debug("Adding type to best list: %s", Infantry_Type_To_String(utype));
+
 						bestlist[bestcount++] = utype;
 					}
 				}
@@ -3869,6 +3886,9 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				if (bestcount) {
 					techno = &InfantryTypeClass::As_Reference(bestlist[Random_Pick(0, bestcount-1)]);
 				}
+
+				delete counter;
+				delete bestlist;
 			}
 			break;
 
@@ -4966,14 +4986,16 @@ void HouseClass::Check_Pertinent_Structures(void)
  *   4/23/2020 11:06PM ST : Created.                                                           *
  *=============================================================================================*/
 void HouseClass::Init_Unit_Trackers(void)
-{		
+{
+	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
 	AircraftTotals = new UnitTrackerClass( (int) AIRCRAFT_COUNT);
-	InfantryTotals = new UnitTrackerClass( (int) INFANTRY_COUNT);
+	InfantryTotals = new UnitTrackerClass( (int) infantryCount);
 	UnitTotals = new UnitTrackerClass ( (int) UNIT_COUNT);
 	BuildingTotals = new UnitTrackerClass ( (int) STRUCT_COUNT);
 
 	DestroyedAircraft = new UnitTrackerClass ( (int) AIRCRAFT_COUNT);
-	DestroyedInfantry = new UnitTrackerClass( (int) INFANTRY_COUNT);
+	DestroyedInfantry = new UnitTrackerClass( (int) infantryCount);
 	DestroyedUnits = new UnitTrackerClass ( (int) UNIT_COUNT);
 	DestroyedBuildings = new UnitTrackerClass ( (int) STRUCT_COUNT);
 
@@ -7097,13 +7119,18 @@ int HouseClass::AI_Infantry(void)
 		**	This structure is used to keep track of the list of infantry types that should be
 		**	built. The infantry type and the value assigned to it is recorded.
 		*/
-		struct {
+		struct TypeTrack {
 			InfantryType	Type;		// Infantry type.
 			int				Value;	// Relative value assigned.
-		} typetrack[INFANTRY_COUNT];
+		};
+
+		char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+		TypeTrack* typetrack = (TypeTrack*) calloc(infantryCount, sizeof(TypeTrack));
+
 		int count = 0;
 		int total = 0;
-		for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+
+		for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 			//if (Can_Build(&InfantryTypeClass::As_Reference(index), ActLike) && InfantryTypeClass::As_Reference(index).Level <= (unsigned)Control.TechLevel) {
 			if (Can_Build(&InfantryTypeClass::As_Reference(index), ActLike) && InfantryTypeClass::As_Reference(index).Level <= (unsigned)BuildLevel) {
 				typetrack[count].Value = 0;
@@ -7173,6 +7200,8 @@ int HouseClass::AI_Infantry(void)
 				pick -= typetrack[index].Value;
 			}
 		}
+
+		delete typetrack;
 	}
 	return(TICKS_PER_SECOND);
 }

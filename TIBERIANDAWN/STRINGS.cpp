@@ -190,20 +190,20 @@ char* Convert_String_To_Upper_Case(const char* subject)
 	return uppercaseSubject;
 }
 
-char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCount)
+char** Parse_Csv_String(char* csvString, unsigned int entrySize, unsigned int* csvEntryCount)
 {
 	if (String_Is_Empty(csvString))
 	{
 		Show_Error("CSV string passed to Parse_Csv_String was null or empty");
 
-		*csvEntryCount = 0;
+		*csvEntryCount = 0u;
 
 		return NULL;
 	}
 
 	// get a count for the csv list size
 	auto countCsvStringBuffer = strdup(csvString);
-	auto entryCount = 0;
+	auto entryCount = 0u;
 	
 	auto token = strtok(countCsvStringBuffer, COMMA);
 
@@ -218,7 +218,7 @@ char** Parse_Csv_String(char* csvString, unsigned int entrySize, int* csvEntryCo
 	auto csvEntries = new char* [entryCount];
 
 	auto readStringBuffer = strdup(csvString);
-	auto entryIdx = 0;
+	auto entryIdx = 0u;
 
 	token = strtok(readStringBuffer, COMMA);
 

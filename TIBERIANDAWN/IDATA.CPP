@@ -1429,30 +1429,69 @@ static InfantryTypeClass const DrChan(
 **	This is the array of pointers to the static data associated with each
 **	infantry type.
 */
-InfantryTypeClass const * const InfantryTypeClass::Pointers[INFANTRY_COUNT] = {
-	&E1,
-	&E2,
-	&E3,
-	&E4,
-	&E5,
-//	&E6,
-	&E7,
-	&Commando,
-	&C1,
-	&C2,
-	&C3,
-	&C4,
-	&C5,
-	&C6,
-	&C7,
-	&C8,
-	&C9,
-	&C10,
-	&Moebius,
-	&Delphi,
-	&DrChan
-};
+InfantryTypeClass const** InfantryTypeClass::Pointers = NULL;
 
+InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
+{
+	if (Pointers != NULL) {
+		Log_Trace("Infantry lookup by type: %d", type);
+
+		return Pointers[type];
+	}
+
+	Log_Debug("Initialising infantry types");
+
+	auto infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+	Pointers = new InfantryTypeClass const *[infantryCount]{
+		&E1,
+		&E2,
+		&E3,
+		&E4,
+		&E5,
+		//	&E6,
+		&E7,
+		&Commando,
+		&C1,
+		&C2,
+		&C3,
+		&C4,
+		&C5,
+		&C6,
+		&C7,
+		&C8,
+		&C9,
+		&C10,
+		&Moebius,
+		&Delphi,
+		&DrChan
+	};
+
+	Initialise_Infantry_Mod_Types();
+
+	Log_Trace("Infantry lookup by type: %d", type);
+	return Pointers[type];
+}
+
+void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
+{
+	auto iniName = infantry->IniName;
+
+	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
+	infantry->IsCrawling = Read_Is_Crawling(iniName, infantry->IsCrawling);
+	infantry->IsCapture = Read_Can_Capture_Buildings(iniName, infantry->IsCapture);
+	infantry->IsFraidyCat = Read_Is_Fraidy_Cat(iniName, infantry->IsFraidyCat);
+	infantry->IsCivilian = Read_Is_Civilian(iniName, infantry->IsCivilian);
+	infantry->IsAvoidingTiberium = Read_Avoids_Tiberium(iniName, infantry->IsAvoidingTiberium);
+	infantry->IsImmuneToTiberium = Read_Bool_From_Rules_Ini(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
+	infantry->HasC4Charges = Read_Bool_From_Rules_Ini(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
+	
+}
+
+void InfantryTypeClass::Add_Infantry_Type(InfantryType type, InfantryTypeClass* infantryObject)
+{
+	Pointers[type] = infantryObject;
+}
 
 /***********************************************************************************************
  * InfantryTypeClass::InfantryTypeClass -- Constructor for infantry type class objects.        *
@@ -1512,18 +1551,17 @@ InfantryTypeClass::InfantryTypeClass	(
 	**	Set the animation sequence custom values.
 	*/
 
-	IsFemale = Read_Is_Female(IniName, is_female);
-	IsCrawling = Read_Is_Crawling(IniName, is_crawling);
-	IsCapture = Read_Can_Capture_Buildings(IniName, is_capture);
-	IsFraidyCat = Read_Is_Fraidy_Cat(IniName, is_fraidycat);
-	IsCivilian = Read_Is_Civilian(IniName, is_civilian);
-	IsAvoidingTiberium = Read_Avoids_Tiberium(IniName, false);
+	IsFemale = is_female;
+	IsCrawling = is_crawling;
+	IsCapture = is_capture;
+	IsFraidyCat = is_fraidycat;
+	IsCivilian = is_civilian;
+	IsAvoidingTiberium = false;
 
-	auto immuneToTiberiumDefault = type == INFANTRY_E5;
+	IsImmuneToTiberium = type == INFANTRY_E5;
+	HasC4Charges = Type == INFANTRY_RAMBO;
 
-	IsImmuneToTiberium = Read_Bool_From_Rules_Ini(IniName, IMMUNE_TO_TIBERIUM_RULE, immuneToTiberiumDefault);
-
-	HasC4Charges = Read_Bool_From_Rules_Ini(IniName, HAS_C4_CHARGES_RULE, Type == INFANTRY_RAMBO);
+	Read_Infantry_Rules(this);
 
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;
@@ -1807,7 +1845,9 @@ void InfantryTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void InfantryTypeClass::Prep_For_Add(void)
 {
-	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		Map.Add_To_List(&As_Reference(index));
 	}
 }
@@ -1834,8 +1874,10 @@ void InfantryTypeClass::Prep_For_Add(void)
 InfantryType InfantryTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (InfantryType classid = INFANTRY_FIRST; classid < INFANTRY_COUNT; classid++) {
-			if (stricmp(Pointers[classid]->IniName, name) == 0) {
+		char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+		for (InfantryType classid = INFANTRY_FIRST; classid < infantryCount; classid++) {
+			if (stricmp(By_Type(classid)->IniName, name) == 0) {
 				return(classid);
 			}
 		}
@@ -1861,19 +1903,21 @@ InfantryType InfantryTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void InfantryTypeClass::One_Time(void)
 {
+	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
 	InfantryType index;
 
-	for (index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+	for (index = INFANTRY_FIRST; index < infantryCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		InfantryTypeClass	const *uclass;
+		InfantryTypeClass* uclass = (InfantryTypeClass*)&As_Reference(index);
+
 		CCFileClass	file;
 
-		uclass = &As_Reference(index);
+		char* iniName = uclass->Resolve_Ini_Name();
 
 		/*
 		**	Generic shape for all houses load method.
 		*/
-		_makepath(fullname, NULL, NULL, uclass->IniName, ".SHP");
+		_makepath(fullname, NULL, NULL, iniName, ".SHP");
 		((void const *&)uclass->ImageData) = MixFileClass::Retrieve(fullname);
 
 		/*
@@ -1881,9 +1925,9 @@ void InfantryTypeClass::One_Time(void)
 		*/
 		char buffer[_MAX_FNAME];
 		if ( Get_Resolution_Factor() ) {
-			sprintf(buffer, "%.4sICNH", uclass->IniName);
+			sprintf(buffer, "%.4sICNH", iniName);
 		} else {
-			sprintf(buffer, "%.4sICON", uclass->IniName);
+			sprintf(buffer, "%.4sICON", iniName);
 		}
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
 		((void const *&)uclass->CameoData) = MixFileClass::Retrieve(fullname);
@@ -1920,7 +1964,9 @@ void InfantryTypeClass::Init(TheaterType theater)
 			char fullname[_MAX_FNAME+_MAX_EXT];
 			void const * cameo_ptr;
 
-			for (index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+			char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+
+			for (index = INFANTRY_FIRST; index < infantryCount; index++) {
 				InfantryTypeClass	const *uclass;
 				CCFileClass	file;
 
@@ -2018,4 +2064,11 @@ int InfantryTypeClass::Full_Name(void) const
 		return(TechnoTypeClass::Full_Name());
 	}
 	return(TXT_CIVILIAN);
+}
+
+char* InfantryTypeClass::Resolve_Ini_Name()
+{
+	return IsModType 
+		? ModBaseIniName 
+		: IniName;
 }

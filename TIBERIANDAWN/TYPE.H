@@ -94,6 +94,8 @@ class WeaponTypeClass
 
 		char* FriendlyName;
 
+		bool IsModType;
+
 		static WeaponTypeClass const* By_Type(WeaponType type);
 
 		static WeaponTypeClass const& As_Reference(WeaponType type);
@@ -142,6 +144,8 @@ class WarheadTypeClass
 		unsigned* Modifier;
 
 		char* FriendlyName;
+
+		bool IsModType;
 
 		static WarheadTypeClass const* By_Type(WarheadType type);
 
@@ -268,7 +272,7 @@ class AbstractTypeClass
 		**	used in scenario control files and for other text based unique
 		**	identification purposes.
 		*/
-		char IniName[9];
+		char IniName[32];
 
 		/*
 		**	The translated (language specific) text name number of this object.
@@ -378,6 +382,11 @@ class ObjectTypeClass : public AbstractTypeClass
 		*/
 		void const * RadarIcon;
 
+		// NCO mods
+		bool IsModType;
+
+		char ModBaseIniName[32];
+
 		//--------------------------------------------------------------------
 		ObjectTypeClass(bool is_sentient,
 						bool is_flammable,
@@ -394,6 +403,8 @@ class ObjectTypeClass : public AbstractTypeClass
 			            bool loadObjectRules);
 
 		static void One_Time(void);
+
+		static void Read_Object_Rules(ObjectTypeClass* type);
 
 		virtual int  Max_Pips(void) const;
 		virtual void  Dimensions(int &width, int &height) const;
@@ -607,6 +618,8 @@ class TechnoTypeClass : public ObjectTypeClass
 				WeaponType primary,
 				WeaponType secondary,
 				ArmorType armor);
+
+		static void Read_Techno_Rules(TechnoTypeClass* type);
 
 		virtual void Calculate_Risk(void) const;
 		virtual int  Raw_Cost(void) const;
@@ -1118,7 +1131,7 @@ class UnitTypeClass : public TechnoTypeClass
 class InfantryTypeClass : public TechnoTypeClass
 {
 	private:
-		static InfantryTypeClass const * const Pointers[INFANTRY_COUNT];
+		static InfantryTypeClass const** Pointers;
 
 	public:
 
@@ -1180,6 +1193,7 @@ class InfantryTypeClass : public TechnoTypeClass
 		char FireLaunch;
 		char ProneLaunch;
 
+		// NCO rules
 		bool IsImmuneToTiberium;
 
 		bool HasC4Charges;
@@ -1220,10 +1234,16 @@ class InfantryTypeClass : public TechnoTypeClass
 		virtual RTTIType  What_Am_I(void) const {return RTTI_INFANTRYTYPE;};
 
 		static InfantryType  From_Name(char const *name);
-		static InfantryTypeClass const &  As_Reference(InfantryType type) {return *Pointers[type];};
+		static InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type);
+		static InfantryTypeClass const&  As_Reference(InfantryType type) {return *By_Type(type);};
 		static void  Init(TheaterType );
 		static void One_Time(void);
 		static void Prep_For_Add(void);
+
+		static void Read_Infantry_Rules(InfantryTypeClass* infantry);
+		static void Add_Infantry_Type(InfantryType type, InfantryTypeClass* infantryObject);
+
+		char* Resolve_Ini_Name();
 
 		virtual void  Dimensions(int &width, int &height) const {width = 12;height = 16;};
 		virtual bool  Create_And_Place(CELL cell, HousesType house) const;

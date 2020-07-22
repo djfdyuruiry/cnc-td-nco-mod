@@ -17,6 +17,7 @@
 #include "./rules_ini_generic.h"
 #include "./rules_ini_infantry.h"
 #include "./rules_ini_iq.h"
+#include "./rules_ini_mods.h"
 #include "./rules_ini_superweapon.h"
 #include "./rules_ini_unit.h"
 #include "./rules_ini_warhead.h"

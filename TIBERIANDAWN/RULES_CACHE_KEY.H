@@ -7,6 +7,16 @@ typedef unsigned long CacheKey;
 
 CacheKey Build_Rule_Key(const char* section, const char* ruleName);
 
+// enhancement rules
+extern const CacheKey RALLY_POINTS_RULE_KEY;
+extern const CacheKey MULTI_WALL_LENGTH_RULE_KEY;
+extern const CacheKey FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY;
+extern const CacheKey COMMANDO_GUARD_RULE_KEY;
+
+// mod rules
+extern const CacheKey INFANTRY_COUNT_RULE_KEY;
+
+// game rules
 extern const CacheKey MAX_BUILD_DISTANCE_RULE_KEY;
 extern const CacheKey CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY;
 extern const CacheKey MAX_HARVESTER_CAPACITY_RULE_KEY;
@@ -53,9 +63,5 @@ extern const CacheKey NAME_CIVILIAN_BUILDINGS_RULE_KEY;
 extern const CacheKey CAN_BUY_HELIPAD_ONLY_RULE_KEY;
 extern const CacheKey UNIT_REPAIR_FACTOR_RULE_KEY;
 extern const CacheKey DEBUG_LOGGING_RULE_KEY;
-
-extern const CacheKey RALLY_POINTS_RULE_KEY;
-extern const CacheKey MULTI_WALL_LENGTH_RULE_KEY;
-extern const CacheKey FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY;
 
 #endif

@@ -148,7 +148,7 @@ HousesType Parse_House_Type(const char* houseTypeString, bool* parseError)
 
 int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
 {
-    auto houseNameListSize = 0;
+    auto houseNameListSize = 0u;
     auto houseNameList = Parse_Csv_String(houseListCsv, HOUSE_NAME_MAX_LENGTH, &houseNameListSize);
 
     if (houseNameList == NULL)
@@ -164,7 +164,7 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
     auto houseListInitialised = false;
     auto houseList = 0;
 
-    for (auto i = 0; i < houseNameListSize; i++)
+    for (auto i = 0u; i < houseNameListSize; i++)
     {
         bool houseParseError = false;
         auto house = Parse_House_Type(houseNameList[i], &houseParseError);
@@ -287,7 +287,7 @@ StructType Prerequisite_To_Structure_Type(long prerequisite)
 {
     auto structType = STRUCT_NONE;
     
-    if (prerequisite == STRUCTF_NONE)
+    if (prerequisite == STRUCTF_NONE || prerequisite < 0l)
     {
         structType = STRUCT_NONE;
     }
@@ -385,7 +385,7 @@ StructType Prerequisite_To_Structure_Type(long prerequisite)
     }
     else
     {
-        Show_Error("Unable to convert structure type to string: %d", structType);
+        Show_Error("Unable to convert prerequiste to structure type: %d", structType);
     }
 
     return structType;
@@ -1156,6 +1156,16 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
             return (InfantryType)(number + 6);
         }
     }
+    else
+    {
+        bool matchFound = false;
+        auto newInfantryType = Get_New_Infantry_Type(infantryTypeString, &matchFound);
+
+        if (matchFound)
+        {
+            return (InfantryType)newInfantryType;
+        }
+    }
 
     if (parseError != NULL)
     {
@@ -1229,6 +1239,10 @@ const char* Infantry_Type_To_String(InfantryType infantryType)
         auto index = infantryType - 7;
 
         infantryTypeString = CIVILIAN_TYPE_MAP[index];
+    }
+    else if (infantryType < Read_Infantry_Count(INFANTRY_COUNT))
+    {
+        infantryTypeString = Get_New_Infantry_Ini_Name(infantryType);
     }
     else
     {

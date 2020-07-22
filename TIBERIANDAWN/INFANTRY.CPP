@@ -2517,7 +2517,7 @@ TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
 		**	unless specifically in hunt mode.
 		*/
 		case WEAPON_RIFLE:
-			if (House->IsHuman && (Mission == MISSION_GUARD || Mission == MISSION_GUARD_AREA)) {
+			if (House->IsHuman && (Mission == MISSION_GUARD || Mission == MISSION_GUARD_AREA) && !Read_Commando_Guard_Rule()) {
 				return(TARGET_NONE);
 			}
 			return(TechnoClass::Greatest_Threat(threat | THREAT_INFANTRY|THREAT_BUILDINGS));
