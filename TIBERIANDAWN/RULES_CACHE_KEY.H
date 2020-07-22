@@ -64,4 +64,7 @@ extern const CacheKey CAN_BUY_HELIPAD_ONLY_RULE_KEY;
 extern const CacheKey UNIT_REPAIR_FACTOR_RULE_KEY;
 extern const CacheKey DEBUG_LOGGING_RULE_KEY;
 
+extern const CacheKey AI_HARVESTERS_PER_REFINERY_RULE_KEY;
+extern const CacheKey HUMAN_HARVESTERS_PER_REFINERY_RULE_KEY;
+
 #endif

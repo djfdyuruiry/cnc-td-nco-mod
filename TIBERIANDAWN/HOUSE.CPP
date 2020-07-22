@@ -1093,8 +1093,13 @@ void HouseClass::AI(void)
 		** Randomly create a Visceroid or other disastrous multiplayer object.
 		** Create the object, and use Scan_Place_Object to place the object near
 		** the center of the map.
+		**
+		** NCO: Allowed spawning neutral visceroids in normal mode 
 		*/
-		if ((GameToPlay != GAME_NORMAL || Special.IsVisceroids) && Class->House==HOUSE_JP) {
+		if (
+			(GameToPlay == GAME_NORMAL && Special.IsVisceroids && Class->House == HOUSE_NEUTRAL) 
+			|| (Special.IsVisceroids && Class->House==HOUSE_JP)
+		) {
 			int rlimit;
 
 			if (Special.IsJurassic && AreThingiesEnabled) {
