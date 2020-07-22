@@ -2990,7 +2990,7 @@ void BuildingClass::Grand_Opening(bool captured)
 	if (*this == STRUCT_REFINERY && !ScenarioInit && !captured && !Debug_Map) { // removed cost check as it stopped giving harvesters with extremly low difficulty rules
 		CELL cell = Coord_Cell(Adjacent_Cell(Center_Coord(), DIR_SW));
 //		if (!Map[cell].Cell_Unit()) {
-			// NCO: added rules to adf
+			// NCO: added rules to add more harvesters per refinery - both for AI and human players
 			int numHarversters = !House->IsHuman 
 				? Read_Ai_Harvesters_Per_Refinery_Rule()
 				: Read_Human_Harvesters_Per_Refinery_Rule();
