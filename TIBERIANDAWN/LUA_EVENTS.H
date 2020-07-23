@@ -30,4 +30,6 @@ void Push_Game_Loop_Message(GameLoopMessageType messageType);
 
 bool Game_Loop_Messages_Pending();
 
+void Clear_Game_Loop_Messages();
+
 #endif

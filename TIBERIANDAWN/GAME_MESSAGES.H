@@ -57,4 +57,6 @@ void Push_Hide_Map_Ui_Message();
 // message handlers
 void Process_Game_Ui_Messages();
 
+void Clear_Game_Ui_Messages();
+
 #endif

@@ -140,3 +140,11 @@ bool Game_Loop_Messages_Pending()
 {
     return !GAME_LOOP_MESSAGE_QUEUE.empty();
 }
+
+void Clear_Game_Loop_Messages()
+{
+    while (!GAME_LOOP_MESSAGE_QUEUE.empty())
+    {
+        GAME_LOOP_MESSAGE_QUEUE.pop();
+    }
+}

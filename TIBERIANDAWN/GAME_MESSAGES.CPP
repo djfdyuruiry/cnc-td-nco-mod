@@ -94,3 +94,20 @@ void Process_Game_Ui_Messages()
 		Process_Game_Ui_Message(messageTypesProcessed);
 	}
 }
+
+void Clear_Game_Ui_Messages()
+{
+	while (!GAME_UI_MESSAGE_QUEUE.empty())
+	{
+		auto uiMessage = GAME_UI_MESSAGE_QUEUE.front();
+
+		if (uiMessage.type == SHOW_NOTIFICATION_MESSAGE && uiMessage.message != NULL)
+		{
+			Show_Game_Notification(uiMessage.message, uiMessage.durationInSeconds);
+
+			delete uiMessage.message;
+		}
+
+		GAME_UI_MESSAGE_QUEUE.pop();
+	}
+}

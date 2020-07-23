@@ -1,5 +1,19 @@
 #include "function.h"
 
+static int Lua_Clear_Game_Loop_Messages(lua_State* lua)
+{
+    Clear_Game_Loop_Messages();
+
+    return 0;
+}
+
+static int Lua_Clear_Game_Ui_Messages(lua_State* lua)
+{
+    Clear_Game_Ui_Messages();
+
+    return 0;
+}
+
 static SuperClass* Get_House_Superweapon(lua_State* lua, int index, HouseClass* house, const char* callingFunctionName)
 {
     auto superWeaponName = Get_Lua_Value_As_String(index);
@@ -343,6 +357,9 @@ bool Register_Game_Functions()
     Register_Lua_Function("enableSuperweaponForHouse", Lua_Enable_House_Super_Weapon);
     Register_Lua_Function("chargeSuperweaponForHouse", Lua_Charge_House_Super_Weapon);
     Register_Lua_Function("disableSuperweaponForHouse", Lua_Disable_House_Super_Weapon);
+
+    Register_Lua_Function("clearGameUiMessages", Lua_Clear_Game_Ui_Messages);
+    Register_Lua_Function("clearGameLoopMessages", Lua_Clear_Game_Loop_Messages);
 
     return true;
 }
