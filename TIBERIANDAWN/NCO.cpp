@@ -65,7 +65,7 @@ bool NCO_Startup()
 		LUA_EVENT_THREAD = CreateThread(
 			NULL,
 			0,
-			&Process_Game_Events,
+			&Process_Game_Loop_Messages,
 			NULL,
 			NULL,
 			NULL

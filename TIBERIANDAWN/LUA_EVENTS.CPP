@@ -1,5 +1,3 @@
-#include <queue>
-
 #include "game_messages.h"
 #include "lua_events.h"
 #include "rules_ini.h"
@@ -11,9 +9,6 @@ using namespace std;
 static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
 
 static bool EVENTS_INITIALISED = false;
-static long long LAST_TICK_TIME_IN_EPOCH_MILLIS = 0;
-
-static queue<GameLoopMessage> GAME_LOOP_MESSAGE_QUEUE;
 
 static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil", ...)
 {
@@ -86,65 +81,9 @@ void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber)
 }
 
 // async messages
-static void On_Game_Tick()
+void On_Game_Tick()
 {
     auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
-    auto msSinceLastTick = nowInEpochMillis - LAST_TICK_TIME_IN_EPOCH_MILLIS;
-
-    if (msSinceLastTick < Rules_Get_Game_Tick_Interval_In_Ms())
-    {
-        // fire game tick at most every GAME_TICK_INTERVAL_IN_MS millis
-        return;
-    }
 
     Fire_Lua_Event(ON_GAME_TICK_EVENT);
-
-    LAST_TICK_TIME_IN_EPOCH_MILLIS = nowInEpochMillis;
-}
-
-DWORD WINAPI Process_Game_Events(LPVOID lpParam)
-{
-    while (true)
-    {
-        while (!GAME_LOOP_MESSAGE_QUEUE.empty())
-        {
-            auto loopMessage = GAME_LOOP_MESSAGE_QUEUE.front();
-            auto type = loopMessage.type;
-
-            if (type == GAME_TICK_ELAPSED)
-            {
-                On_Game_Tick();
-            }
-            else
-            {
-                Log_Error("Encountered Unknown Game Loop message type : %u", type);
-            }
-
-            GAME_LOOP_MESSAGE_QUEUE.pop();
-        }
-
-        Sleep(10);
-    }
-}
-
-void Push_Game_Loop_Message(GameLoopMessageType messageType)
-{
-    GameLoopMessage loopMessage;
-
-    loopMessage.type = messageType;
-
-    GAME_LOOP_MESSAGE_QUEUE.push(loopMessage);
-}
-
-bool Game_Loop_Messages_Pending()
-{
-    return !GAME_LOOP_MESSAGE_QUEUE.empty();
-}
-
-void Clear_Game_Loop_Messages()
-{
-    while (!GAME_LOOP_MESSAGE_QUEUE.empty())
-    {
-        GAME_LOOP_MESSAGE_QUEUE.pop();
-    }
 }

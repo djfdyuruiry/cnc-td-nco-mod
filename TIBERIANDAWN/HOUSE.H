@@ -410,8 +410,6 @@ class HouseClass {
 		*/
 		int StartLocationOverride;
 
-		HouseSuperweaponMessage SuperweaponMessage;
-		
 		bool ForceIonCannonToRemainOn;
 		bool ForceNukeToRemainOn;
 

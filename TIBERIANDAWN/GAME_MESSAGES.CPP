@@ -1,13 +1,21 @@
 #include <map>
 #include <queue>
+#include <vector>
 
 #include "game_messages.h"
 #include "game_utils.h"
 #include "logger.h"
+#include "lua_events.h"
+#include "rules_ini.h"
+#include "utils.h"
 
 using namespace std;
 
 static queue<GameUiMessage> GAME_UI_MESSAGE_QUEUE;
+static queue<GameLoopMessage> GAME_LOOP_MESSAGE_QUEUE;
+static map<char, map<HouseMessageType, queue<HouseMessage>>> HOUSE_MESSAGE_QUEUES;
+
+static auto LAST_TICK_TIME_IN_EPOCH_MILLIS = 0LL;
 
 // message queuing
 static void Push_Message_Of_Type(GameUiMessageType type, GameUiMessage uiMessage)
@@ -54,7 +62,8 @@ void Push_Hide_Map_Ui_Message()
 	Push_Message_Of_Type(HIDE_ENTIRE_MAP_MESSAGE);
 }
 
-// message handlers
+// game ui message handlers
+
 static void Process_Game_Ui_Message(map<unsigned int, bool>& messageTypesProcessed)
 {
 	auto uiMessage = GAME_UI_MESSAGE_QUEUE.front();
@@ -103,11 +112,140 @@ void Clear_Game_Ui_Messages()
 
 		if (uiMessage.type == SHOW_NOTIFICATION_MESSAGE && uiMessage.message != NULL)
 		{
-			Show_Game_Notification(uiMessage.message, uiMessage.durationInSeconds);
-
 			delete uiMessage.message;
 		}
 
 		GAME_UI_MESSAGE_QUEUE.pop();
 	}
+}
+
+// game loop message handlers
+static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
+{
+	auto type = loopMessage.type;
+
+	if (type == GAME_TICK_ELAPSED)
+	{
+		auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
+		auto msSinceLastTick = nowInEpochMillis - LAST_TICK_TIME_IN_EPOCH_MILLIS;
+
+		if (msSinceLastTick < Rules_Get_Game_Tick_Interval_In_Ms())
+		{
+			// fire game tick at most every GAME_TICK_INTERVAL_IN_MS millis
+			return;
+		}
+
+		On_Game_Tick();
+
+		LAST_TICK_TIME_IN_EPOCH_MILLIS = nowInEpochMillis;
+	}
+	else
+	{
+		Log_Error("Encountered Unknown Game Loop message type : %u", type);
+	}
+}
+
+DWORD WINAPI Process_Game_Loop_Messages(LPVOID lpParam)
+{
+	while (true)
+	{
+		while (!GAME_LOOP_MESSAGE_QUEUE.empty())
+		{
+			auto loopMessage = GAME_LOOP_MESSAGE_QUEUE.front();
+			
+			Process_Game_Loop_Message(loopMessage);
+
+			GAME_LOOP_MESSAGE_QUEUE.pop();
+		}
+
+		Sleep(10);
+	}
+}
+
+void Push_Game_Loop_Message(GameLoopMessageType messageType)
+{
+	GameLoopMessage loopMessage;
+
+	loopMessage.type = messageType;
+
+	GAME_LOOP_MESSAGE_QUEUE.push(loopMessage);
+}
+
+bool Game_Loop_Messages_Pending()
+{
+	return !GAME_LOOP_MESSAGE_QUEUE.empty();
+}
+
+void Clear_Game_Loop_Messages()
+{
+	while (!GAME_LOOP_MESSAGE_QUEUE.empty())
+	{
+		GAME_LOOP_MESSAGE_QUEUE.pop();
+	}
+}
+
+// house message handlers
+static void Ensure_House_Message_Queue_Initialised(char houseType, HouseMessageType messageType)
+{
+	if (HOUSE_MESSAGE_QUEUES.find(houseType) == HOUSE_MESSAGE_QUEUES.end())
+	{
+		HOUSE_MESSAGE_QUEUES[houseType] = map<HouseMessageType, queue<HouseMessage>>();
+	}
+
+	auto houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
+
+	if (houseMessageQueues.find(messageType) == houseMessageQueues.end())
+	{
+		houseMessageQueues[messageType] = queue<HouseMessage>();
+	}
+}
+
+void Push_House_Message(char houseType, HouseMessageType messageType, HouseMessage message)
+{
+	Ensure_House_Message_Queue_Initialised(houseType, messageType);
+
+	HOUSE_MESSAGE_QUEUES[houseType][messageType].push(message);
+}
+
+bool Is_House_Message_Present(char houseType, HouseMessageType messageType)
+{
+	Ensure_House_Message_Queue_Initialised(houseType, messageType);
+
+	auto houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
+
+	return !houseMessageQueues[messageType].empty();
+}
+
+HouseMessage Pop_House_Message(char houseType, HouseMessageType messageType)
+{
+	Ensure_House_Message_Queue_Initialised(houseType, messageType);
+
+	auto messageQueue = HOUSE_MESSAGE_QUEUES[houseType][messageType];
+	auto message = messageQueue.front();
+
+	messageQueue.pop();
+
+	HOUSE_MESSAGE_QUEUES[houseType][messageType] = messageQueue;
+
+	return message;
+}
+
+void Clear_House_Messages(char houseType)
+{
+	if (HOUSE_MESSAGE_QUEUES.find(houseType) == HOUSE_MESSAGE_QUEUES.end())
+	{
+		return;
+	}
+
+	for (auto const& messageQueueKvp : HOUSE_MESSAGE_QUEUES[houseType])
+	{
+		auto messageQueue = messageQueueKvp.second;
+
+		while (!messageQueue.empty())
+		{
+			messageQueue.pop();
+		}
+	}
+
+	HOUSE_MESSAGE_QUEUES[houseType].clear();
 }

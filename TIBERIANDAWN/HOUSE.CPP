@@ -526,8 +526,6 @@ HouseClass::HouseClass(HousesType house) :
 
 #endif
 
-	SuperweaponMessage.unread = false;
-
 	ForceIonCannonToRemainOn = false;
 	ForceNukeToRemainOn = false;
 }
@@ -1277,6 +1275,17 @@ void HouseClass::AI(void)
 		TriggerTime = TICKS_PER_MINUTE/10;
 	}
 
+	bool superweaponMessagePresent = Is_House_Message_Present(Class->House, SUPERWEAPON_MESSAGE);
+
+	HouseMessage houseMessage{};
+
+	if (superweaponMessagePresent) {
+		houseMessage = Pop_House_Message(Class->House, SUPERWEAPON_MESSAGE);
+	}
+
+	auto ionCannonMessageRecieved = superweaponMessagePresent
+		&& houseMessage.superweapon == ION_CANNON;
+
 	/*
 	**	Check to see if the ion cannon should be removed from the sidebar
 	**	because of outside circumstances. The advanced communications facility
@@ -1285,10 +1294,8 @@ void HouseClass::AI(void)
 	if (IonCannon.Is_Present()) {
 		auto disableIonCannon = !ForceIonCannonToRemainOn && !(ActiveBScan & STRUCTF_EYE) && !IonCannon.Is_One_Time();
 
-		auto ionCannonMessageRecieved = SuperweaponMessage.unread
-			&& SuperweaponMessage.weapon == &IonCannon;
-
-		auto disableIonCannonMessageRecieved = ionCannonMessageRecieved && SuperweaponMessage.type == DISABLE_SUPERWEAPON;
+		auto disableIonCannonMessageRecieved = ionCannonMessageRecieved 
+			&& houseMessage.superweaponMessage == DISABLE_SUPERWEAPON;
 
 		if (disableIonCannon || disableIonCannonMessageRecieved) {
 
@@ -1304,13 +1311,13 @@ void HouseClass::AI(void)
 			}
 
 			if (disableIonCannonMessageRecieved) {
-				SuperweaponMessage.unread = false;
+				superweaponMessagePresent = false;
 			}
 		} else {
-			if (ionCannonMessageRecieved && SuperweaponMessage.type == CHARGE_SUPERWEAPON) {
+			if (ionCannonMessageRecieved && houseMessage.superweaponMessage == CHARGE_SUPERWEAPON) {
 				IonCannon.Forced_Charge(this == PlayerPtr);
 
-				SuperweaponMessage.unread = false;
+				superweaponMessagePresent = false;
 			}
 
 			/*
@@ -1347,7 +1354,8 @@ void HouseClass::AI(void)
 				|| !Read_Boolean_Game_Rule(ONLY_GDI_CAN_USE_ION_CANNON_RULE, ONLY_GDI_CAN_USE_ION_CANNON_RULE_KEY, true)
 			);
 
-		auto enableIonCannonMessageRecieved = SuperweaponMessage.unread && SuperweaponMessage.weapon == &IonCannon;
+		auto enableIonCannonMessageRecieved = ionCannonMessageRecieved
+			&& houseMessage.superweaponMessage == ENABLE_SUPERWEAPON;
 
 		/*
 		**	If there is no ion cannon present, but there is an advanced communcation
@@ -1360,10 +1368,9 @@ void HouseClass::AI(void)
 			}
 			else
 			{
-				IonCannon.Enable(SuperweaponMessage.oneTime, this == PlayerPtr);
+				IonCannon.Enable(houseMessage.oneTime, this == PlayerPtr);
 
-				ForceIonCannonToRemainOn = !SuperweaponMessage.oneTime;
-				SuperweaponMessage.unread = false;
+				ForceIonCannonToRemainOn = !houseMessage.oneTime;
 			}
 
 			/*
@@ -1379,6 +1386,9 @@ void HouseClass::AI(void)
 		}
 	}
 
+	auto nukeMessageRecieved = superweaponMessagePresent
+		&& houseMessage.superweapon == NUCLEAR_STRIKE;
+
 	/*
 	**	Check to see if the nuke strike should be removed from the sidebar
 	**	because of outside circumstances. The Temple of Nod
@@ -1389,10 +1399,8 @@ void HouseClass::AI(void)
 			&& !(ActiveBScan & STRUCTF_TEMPLE)
 			&& (!NukeStrike.Is_One_Time() || GameToPlay == GAME_NORMAL);
 
-		auto nukeMessageRecieved = SuperweaponMessage.unread
-			&& SuperweaponMessage.weapon == &NukeStrike;
-
-		auto disableNukeMessageRecieved = nukeMessageRecieved && SuperweaponMessage.type == DISABLE_SUPERWEAPON;
+		auto disableNukeMessageRecieved = nukeMessageRecieved
+			&& houseMessage.superweaponMessage == DISABLE_SUPERWEAPON;
 
 		if (disableNuke || disableNukeMessageRecieved) {
 			/*
@@ -1406,14 +1414,10 @@ void HouseClass::AI(void)
 
 			if (disableNukeMessageRecieved) {
 				ForceNukeToRemainOn = false;
-
-				SuperweaponMessage.unread = false;
 			}
 		} else {
-			if (nukeMessageRecieved && SuperweaponMessage.type == CHARGE_SUPERWEAPON) {
+			if (nukeMessageRecieved && houseMessage.superweaponMessage == CHARGE_SUPERWEAPON) {
 				NukeStrike.Forced_Charge(this == PlayerPtr);
-
-				SuperweaponMessage.unread = false;
 			}
 
 			/*
@@ -1443,9 +1447,8 @@ void HouseClass::AI(void)
 			&& (ActiveBScan & STRUCTF_TEMPLE) && Has_Nuke_Device() 
 			&& IsHuman;
 
-		auto enableNukeStrikeMessageRecieved = SuperweaponMessage.unread 
-			&& SuperweaponMessage.weapon == &NukeStrike
-			&& SuperweaponMessage.type == ENABLE_SUPERWEAPON;
+		auto enableNukeStrikeMessageRecieved = nukeMessageRecieved
+			&& houseMessage.superweaponMessage == ENABLE_SUPERWEAPON;
 
 		/*
 		**	If there is no nuke strike present, but there is a Temple of Nod
@@ -1459,12 +1462,12 @@ void HouseClass::AI(void)
 				);
 			} else {
 				NukeStrike.Enable(
-					SuperweaponMessage.oneTime,
+					houseMessage.oneTime,
 					this == PlayerPtr
 				);
 
-				ForceNukeToRemainOn = !SuperweaponMessage.oneTime;
-				SuperweaponMessage.unread = false;
+				ForceNukeToRemainOn = !houseMessage.oneTime;
+				superweaponMessagePresent = false;
 			}
 
 			/*
@@ -1485,8 +1488,8 @@ void HouseClass::AI(void)
 		}
 	}
 
-	auto airstrikeMessageReceived = SuperweaponMessage.unread
-		&& SuperweaponMessage.weapon == &AirStrike;
+	auto airstrikeMessageReceived = superweaponMessagePresent
+		&& houseMessage.superweapon == AIRSTRIKE;
 
 	/*
 	**	Process the airstrike AI and if something changed that would affect
@@ -1494,14 +1497,14 @@ void HouseClass::AI(void)
 	*/
 	if (AirStrike.Is_Present()) {
 		if (airstrikeMessageReceived) {
-			if (SuperweaponMessage.type == DISABLE_SUPERWEAPON) {
+			if (houseMessage.superweaponMessage == DISABLE_SUPERWEAPON) {
 				AirStrike.Remove(true);
 
-				SuperweaponMessage.unread = false;
-			} else if (SuperweaponMessage.type == CHARGE_SUPERWEAPON) {
+				superweaponMessagePresent = false;
+			} else if (houseMessage.superweaponMessage == CHARGE_SUPERWEAPON) {
 				AirStrike.Forced_Charge(this == PlayerPtr);
 
-				SuperweaponMessage.unread = false;
+				superweaponMessagePresent = false;
 			}
 		}
 
@@ -1517,7 +1520,8 @@ void HouseClass::AI(void)
 		}
 	}
 
-	auto enableAirstrike = airstrikeMessageReceived && SuperweaponMessage.type == ENABLE_SUPERWEAPON;
+	auto enableAirstrike = airstrikeMessageReceived 
+		&& houseMessage.superweaponMessage == ENABLE_SUPERWEAPON;
 
 	/*
 	**	Add the airstrike option if it is pending.
@@ -1539,7 +1543,7 @@ void HouseClass::AI(void)
 			}
 		}
 
-		SuperweaponMessage.unread = false;
+		superweaponMessagePresent = false;
 	}
 
 #ifdef NEVER
