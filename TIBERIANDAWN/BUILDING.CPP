@@ -190,7 +190,7 @@ bool BuildingClass::Can_Have_Rally_Point() const
 		return false;
 	}
 
-	auto rallyPointsEnabled = Read_Bool_Enhancements_Rule(RALLY_POINTS_RULE, RALLY_POINTS_RULE_KEY);
+	auto rallyPointsEnabled = Read_Rally_Points_Rule();
 
 	return rallyPointsEnabled
 		&& Class->IsFactory
@@ -2990,8 +2990,23 @@ void BuildingClass::Grand_Opening(bool captured)
 	if (*this == STRUCT_REFINERY && !ScenarioInit && !captured && !Debug_Map) { // removed cost check as it stopped giving harvesters with extremly low difficulty rules
 		CELL cell = Coord_Cell(Adjacent_Cell(Center_Coord(), DIR_SW));
 //		if (!Map[cell].Cell_Unit()) {
-			UnitClass * unit = new UnitClass(UNIT_HARVESTER, House->Class->House);
-			if (unit) {
+			// NCO: added rules to add more harvesters per refinery - both for AI and human players
+			int numHarversters = !House->IsHuman 
+				? Read_Ai_Harvesters_Per_Refinery_Rule()
+				: Read_Human_Harvesters_Per_Refinery_Rule();
+
+			for (int i = 0; i < numHarversters; i++) {
+				UnitClass* unit = new UnitClass(UNIT_HARVESTER, House->Class->House);
+
+				if (!unit) {
+					/*
+					**	If the harvester could not be created in the first place, then give
+					**	the full refund price to the owning player.
+					*/
+					House->Refund_Money(UnitTypeClass::As_Reference(UNIT_HARVESTER).Cost_Of());
+
+					continue;
+				}
 
 				/*
 				**	Try to place down the harvesters. If it could not be placed, then try
@@ -3009,13 +3024,6 @@ void BuildingClass::Grand_Opening(bool captured)
 						delete unit;
 					}
 				}
-			} else {
-
-				/*
-				**	If the harvester could not be created in the first place, then give
-				**	the full refund price to the owning player.
-				*/
-				House->Refund_Money(UnitTypeClass::As_Reference(UNIT_HARVESTER).Cost_Of());
 			}
 		}
 //	}

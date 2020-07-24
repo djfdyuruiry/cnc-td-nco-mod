@@ -24,10 +24,6 @@ void On_Scenario_Load(char* name);
 void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber);
 
 // async events
-DWORD WINAPI Process_Game_Events(LPVOID lpParam);
-
-void Push_Game_Loop_Message(GameLoopMessageType messageType);
-
-bool Game_Loop_Messages_Pending();
+void On_Game_Tick();
 
 #endif

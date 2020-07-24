@@ -43,7 +43,7 @@
 
 #include	"function.h"
 #include "vector.h"
-//#include	<mem.h>
+ //#include	<mem.h>
 #include	<stdio.h>
 
 /*
@@ -74,7 +74,7 @@
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-VectorClass<T>::VectorClass(unsigned size, T const * array)
+VectorClass<T>::VectorClass(unsigned size, T const* array)
 {
 	Vector = 0;
 	VectorMax = size;
@@ -87,7 +87,8 @@ VectorClass<T>::VectorClass(unsigned size, T const * array)
 	if (size) {
 		if (array) {
 			Vector = new((void*)array) T[size];
-		} else {
+		}
+		else {
 			Vector = new T[size];
 			IsAllocated = true;
 		}
@@ -133,7 +134,7 @@ VectorClass<T>::~VectorClass(void)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-VectorClass<T>::VectorClass(VectorClass<T> const & vector)
+VectorClass<T>::VectorClass(VectorClass<T> const& vector)
 {
 	VectorMax = 0;
 	IsAllocated = false;
@@ -158,7 +159,7 @@ VectorClass<T>::VectorClass(VectorClass<T> const & vector)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vector)
+VectorClass<T>& VectorClass<T>::operator =(VectorClass<T> const& vector)
 {
 	Clear();
 	VectorMax = vector.Length();
@@ -170,7 +171,8 @@ VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vector)
 				Vector[index] = vector[index];
 			}
 		}
-	} else {
+	}
+	else {
 		Vector = 0;
 		IsAllocated = false;
 	}
@@ -195,7 +197,7 @@ VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vector)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-int VectorClass<T>::operator == (VectorClass<T> const & vector) const
+int VectorClass<T>::operator == (VectorClass<T> const& vector) const
 {
 	if (VectorMax == vector.Length()) {
 		for (int index = 0; index < (int)VectorMax; index++) {
@@ -228,7 +230,7 @@ int VectorClass<T>::operator == (VectorClass<T> const & vector) const
  *   03/13/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-inline int VectorClass<T>::ID(T const * ptr)
+inline int VectorClass<T>::ID(T const* ptr)
 {
 	return(((unsigned long)ptr - (unsigned long)&(*this)[0]) / sizeof(T));
 }
@@ -251,7 +253,7 @@ inline int VectorClass<T>::ID(T const * ptr)
  *   03/13/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-int VectorClass<T>::ID(T const & object)
+int VectorClass<T>::ID(T const& object)
 {
 	for (int index = 0; index < (int)VectorMax; index++) {
 		if ((*this)[index] == object) {
@@ -310,7 +312,7 @@ void VectorClass<T>::Clear(void)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-int VectorClass<T>::Resize(unsigned newsize, T const * array)
+int VectorClass<T>::Resize(unsigned newsize, T const* array)
 {
 	if (newsize) {
 
@@ -318,10 +320,11 @@ int VectorClass<T>::Resize(unsigned newsize, T const * array)
 		**	Allocate a new vector of the size specified. The default constructor
 		**	will be called for every object in this vector.
 		*/
-		T * newptr;
+		T* newptr;
 		if (!array) {
 			newptr = new T[newsize];
-		} else {
+		}
+		else {
 			newptr = new((void*)array) T[newsize];
 		}
 		if (!newptr) {
@@ -363,7 +366,8 @@ int VectorClass<T>::Resize(unsigned newsize, T const * array)
 		VectorMax = newsize;
 		IsAllocated = (Vector && !array);
 
-	} else {
+	}
+	else {
 
 		/*
 		**	Resizing to zero is the same as clearing the vector.
@@ -395,7 +399,7 @@ int VectorClass<T>::Resize(unsigned newsize, T const * array)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-DynamicVectorClass<T>::DynamicVectorClass(unsigned size, T const * array)
+DynamicVectorClass<T>::DynamicVectorClass(unsigned size, T const* array)
 	: VectorClass<T>(size, array)
 {
 	GrowthStep = 10;
@@ -423,7 +427,7 @@ DynamicVectorClass<T>::DynamicVectorClass(unsigned size, T const * array)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-int DynamicVectorClass<T>::Resize(unsigned newsize, T const * array)
+int DynamicVectorClass<T>::Resize(unsigned newsize, T const* array)
 {
 	if (VectorClass<T>::Resize(newsize, array)) {
 		if (Length() < (unsigned)ActiveCount) ActiveCount = Length();
@@ -452,7 +456,7 @@ int DynamicVectorClass<T>::Resize(unsigned newsize, T const * array)
  *   03/13/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-int DynamicVectorClass<T>::ID(T const & object)
+int DynamicVectorClass<T>::ID(T const& object)
 {
 	for (int index = 0; index < Count(); index++) {
 		if ((*this)[index] == object) return(index);
@@ -479,7 +483,7 @@ int DynamicVectorClass<T>::ID(T const & object)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-int DynamicVectorClass<T>::Add(T const & object)
+int DynamicVectorClass<T>::Add(T const& object)
 {
 	if ((unsigned)ActiveCount >= Length()) {
 		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
@@ -491,7 +495,8 @@ int DynamicVectorClass<T>::Add(T const & object)
 				*/
 				return(false);
 			}
-		} else {
+		}
+		else {
 
 			/*
 			**	Increasing the size of this vector is not allowed! Bail this
@@ -510,7 +515,7 @@ int DynamicVectorClass<T>::Add(T const & object)
 
 
 template<class T>
-int DynamicVectorClass<T>::Add_Head(T const & object)
+int DynamicVectorClass<T>::Add_Head(T const& object)
 {
 	if (ActiveCount >= Length()) {
 		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
@@ -522,7 +527,8 @@ int DynamicVectorClass<T>::Add_Head(T const & object)
 				*/
 				return(false);
 			}
-		} else {
+		}
+		else {
 
 			/*
 			**	Increasing the size of this vector is not allowed! Bail this
@@ -540,7 +546,7 @@ int DynamicVectorClass<T>::Add_Head(T const & object)
 	}
 	(*this)[0] = object;
 	ActiveCount++;
-//	(*this)[ActiveCount++] = object;
+	//	(*this)[ActiveCount++] = object;
 	return(true);
 }
 
@@ -562,12 +568,13 @@ int DynamicVectorClass<T>::Add_Head(T const & object)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-int DynamicVectorClass<T>::Delete(T const & object)
+int DynamicVectorClass<T>::Delete(T const& object)
 {
 	int index = ID(object);
-	if (index != -1){
+	if (index != -1) {
 		return(Delete(index));
-	}else{
+	}
+	else {
 		return (false);
 	}
 }
@@ -603,7 +610,7 @@ int DynamicVectorClass<T>::Delete(int index)
 		**	need to use the assignment operator for movement.
 		*/
 		for (int i = index; i < ActiveCount; i++) {
-			(*this)[i] = (*this)[i+1];
+			(*this)[i] = (*this)[i + 1];
 		}
 		return(true);
 	}
@@ -633,9 +640,9 @@ int DynamicVectorClass<T>::Delete(int index)
  * HISTORY:                                                                                    *
  *   07/18/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-BooleanVectorClass::BooleanVectorClass(unsigned size, unsigned char * array)
+BooleanVectorClass::BooleanVectorClass(unsigned size, unsigned char* array)
 {
-	BitArray.Resize(((size + (8-1)) / 8), array);
+	BitArray.Resize(((size + (8 - 1)) / 8), array);
 	LastIndex = -1;
 	BitCount = size;
 }
@@ -656,7 +663,7 @@ BooleanVectorClass::BooleanVectorClass(unsigned size, unsigned char * array)
  * HISTORY:                                                                                    *
  *   07/18/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-BooleanVectorClass::BooleanVectorClass(BooleanVectorClass const & vector)
+BooleanVectorClass::BooleanVectorClass(BooleanVectorClass const& vector)
 {
 	LastIndex = -1;
 	*this = vector;
@@ -679,7 +686,7 @@ BooleanVectorClass::BooleanVectorClass(BooleanVectorClass const & vector)
  * HISTORY:                                                                                    *
  *   07/18/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-BooleanVectorClass & BooleanVectorClass::operator =(BooleanVectorClass const & vector)
+BooleanVectorClass& BooleanVectorClass::operator =(BooleanVectorClass const& vector)
 {
 	Fixup();
 	Copy = vector.Copy;
@@ -705,7 +712,7 @@ BooleanVectorClass & BooleanVectorClass::operator =(BooleanVectorClass const & v
  * HISTORY:                                                                                    *
  *   07/18/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-int BooleanVectorClass::operator == (const BooleanVectorClass & vector)
+int BooleanVectorClass::operator == (const BooleanVectorClass& vector)
 {
 	Fixup(LastIndex);
 	return(BitCount == vector.BitCount && BitArray == vector.BitArray);
@@ -744,7 +751,7 @@ int BooleanVectorClass::Resize(unsigned size)
 		**	Actually resize the bit array. Since this is a bit packed array,
 		**	there are 8 elements per byte (rounded up).
 		*/
-		int success = BitArray.Resize(((size + (8-1)) / 8));
+		int success = BitArray.Resize(((size + (8 - 1)) / 8));
 
 		/*
 		**	Since there is no default constructor for bit packed integers, a manual
@@ -892,7 +899,7 @@ void BooleanVectorClass::Fixup(int index) const
 			((unsigned char&)Copy) = Get_Bit(&BitArray[0], index);
 		}
 
-		((int &)LastIndex) = index;
+		((int&)LastIndex) = index;
 	}
 }
 

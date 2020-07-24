@@ -546,12 +546,45 @@ bool FootClass::Basic_Path(void)
  *=============================================================================================*/
 int FootClass::Mission_Move(void)
 {
-	if (!Target_Legal(NavCom) && !IsDriving && MissionQueue == MISSION_NONE) {
-		Enter_Idle_Mode();
+	enum {
+		MOVING,
+		ATTACKING
+	};
+
+	switch (Status)
+	{
+	case MOVING:
+		if (!Target_Legal(NavCom) && !IsDriving && MissionQueue == MISSION_NONE) {
+			Enter_Idle_Mode();
+		}
+
+		if (!Target_Legal(TarCom)) {
+			if (!House->IsHuman) {
+				Target_Something_Nearby(THREAT_RANGE);
+			}
+		}
+		if (IsAttackMoving && Target_Something_Nearby(THREAT_AREA)) {
+			ArchiveTarget = NavCom;
+			NavCom = TARGET_NONE;
+			Status = ATTACKING;
+			Path[0] = FACING_NONE;
+			return 1;
+		}
+
+		break;
+	case ATTACKING:
+		if (Target_Legal(TarCom)) {
+			Approach_Target();
+		}
+		else {
+			NavCom = ArchiveTarget;
+			Status = MOVING;
+			return 1;
+		}
+		break;
 	}
-	if (!Target_Legal(TarCom) && !House->IsHuman) {
-		Target_Something_Nearby(THREAT_RANGE);
-	}
+
+	
 	return(TICKS_PER_SECOND+3);
 }
 
@@ -1074,6 +1107,11 @@ void FootClass::Assign_Mission(MissionType order)
 	if (What_Am_I() != RTTI_UNIT || *(UnitClass*)this != UNIT_GUNBOAT) {
 		Path[0] = FACING_NONE;
 	}
+
+	if (order != MISSION_MOVE) {
+		IsAttackMoving = false;
+	}
+
 	TechnoClass::Assign_Mission(order);
 }
 
@@ -1473,7 +1511,6 @@ bool FootClass::Restore_Mission(void)
 	}
 	return(false);
 }
-
 
 /***********************************************************************************************
  * FootClass::Receive_Message -- Movement related radio messages are handled here.             *
@@ -2059,4 +2096,76 @@ COORDINATE FootClass::Likely_Coord(void) const
 		return(Head_To_Coord());
 	}
 	return(Target_Coord());
+}
+
+/***********************************************************************************************
+ * FootClass::Find_Docking_Bay -- Searches for a close docking bay.                            *
+ *                                                                                             *
+ *    This routine will be used to find a building that can serve as a docking bay. The        *
+ *    closest building that qualifies will be returned. If no building could be found then     *
+ *    return with NULL. Unlike the version in Techo, this checks if the bay is reachable       *
+ *                                                                                             *
+ * INPUT:   b  -- The structure type to look for.                                              *
+ *                                                                                             *
+ *          friendly -- Allow searching for allied buildings as well.                          *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the building that can serve as the best docking bay.     *
+ *                                                                                             *
+ * WARNINGS:   This routine might return NULL even if there are buildings of the specified     *
+ *             type available. This is the case when the building(s) are currently busy and    *
+ *             cannot serve as a docking bay at the moment.                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   13/06/2020 cfehunter : Created.                                                           *
+ *   22/06/2020 cfheunter : Use best by direct distance if no target is pathable               *
+ *=============================================================================================*/
+BuildingClass* FootClass::Find_Docking_Bay(StructType b, bool friendly) const
+{
+	BuildingClass* as_best = nullptr;
+	BuildingClass* direct_best = nullptr;
+	/*
+	**	First check to see if there are ANY buildings of the specified
+	**	type in thi house's inventory. If not, then don't bother to scan
+	**	for one.
+	*/
+	if (House->BScan & (1L << b)) {
+		int as_bestval = (std::numeric_limits<int>::max)();
+		int direct_bestval = (std::numeric_limits<int>::max)();
+
+		const bool is_aircraft = What_Am_I() == RTTI_AIRCRAFT;
+
+		/*
+		**	Loop through all the buildings and find the one that matches the specification
+		**	and is willing to dock with this object.
+		*/
+		for (void* raw_building : Buildings.ActivePointers) {
+			BuildingClass* building = reinterpret_cast<BuildingClass*>(raw_building);
+
+			/*
+			**	Check to see if the building qualifies (preliminary scan).
+			*/
+			if (!building->IsInLimbo &&
+				*building == b &&
+				(friendly ? building->House->Is_Ally(this) : building->House == House) &&
+				const_cast<FootClass&>(*this).TechnoClass::Transmit_Message(RADIO_CAN_LOAD, building) == RADIO_ROGER) {
+
+				/*
+				**	If the building qualifies and this building is better than the
+				**	last qualifying building (as rated by distance), then record
+				**	this building and keep scanning.
+				*/
+				const int direct_distance = Distance(building);
+				const int as_distance = is_aircraft ? direct_distance : Find_Path_AStar(nullptr, Coord_Cell(Coord), building->Nearby_Location(), 1, MOVE_NO, -1);
+				if (direct_distance && (direct_distance < direct_bestval || building->IsLeader)) {
+					direct_best = building;
+					direct_bestval = direct_distance;
+				}
+				if (as_distance && (as_distance < as_bestval || building->IsLeader)) {
+					as_best = building;
+					as_bestval = as_distance;
+				}
+			}
+		}
+	}
+	return as_best ? as_best : direct_best;
 }
