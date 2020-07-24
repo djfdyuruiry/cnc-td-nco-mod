@@ -233,10 +233,11 @@ static int Lua_Modifiy_House_Credits(lua_State* lua)
         return 0;
     }
 
+    bool housePresent = false;
     auto creditsModifier = luaL_checknumber(lua, 2);
-    auto house = Get_House_By_Type(houseType, &invalidValue);
+    auto house = Get_House_By_Type(houseType, &housePresent);
 
-    if (invalidValue)
+    if (!housePresent)
     {
         Log_Error("Ignoring modifyHouseCredits call as house '%s' is not in the current game", House_Type_To_String(houseType));
 
