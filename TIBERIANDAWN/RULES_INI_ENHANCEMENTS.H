@@ -51,7 +51,7 @@
 	MULTI_WALL_LENGTH_RULE_TYPE, \
 	FULL_COST_MULTI_WALLS_RULE_TYPE
 
-#define Read_Bool_Enhancements_Rule(entry, cacheKey) Read_Cached_Bool_From_Rules_Ini(ENHANCEMENTS_RULES_SECTION_NAME, entry, cacheKey, false)
+#define Read_Bool_Enhancements_Rule(entry, cacheKey) Read_Cached_Bool_From_Rules_Ini(ENHANCEMENTS_RULES_SECTION_NAME, entry, cacheKey, true)
 
 #define Read_Int_Enhancements_Rule(entry, cacheKey, defaultValue, minValue, maxValue) Read_Cached_Int_From_Rules_Ini(ENHANCEMENTS_RULES_SECTION_NAME, entry, cacheKey, defaultValue, minValue, maxValue)
 
