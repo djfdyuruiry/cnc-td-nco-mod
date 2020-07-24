@@ -52,18 +52,19 @@ local typeAreas =
 local typeAreaOrder =
 {
   "Infantry",
-  "Units",
   "Aircraft",
+  "Units",
   "Buildings"
 }
 
 local outputFileName = "CNCModGameCommands.xml"
 local buildablesFile = nil
+local lastBuildableIndex = 0
 
 local function dumpBuildablesForTypeArea(buildablesFile, typeAreaName, typeArea)
   buildablesFile:write(string.format("      <!-- %s -->\n", typeAreaName))
-  
-  local buildableIndex = 0
+
+  local buildableIndex = typeAreaName == "Units" and lastBuildableIndex or 0
 
   for _, areaType in ipairs(typeArea.getTypes()) do
     buildablesFile:write(
@@ -76,6 +77,8 @@ local function dumpBuildablesForTypeArea(buildablesFile, typeAreaName, typeArea)
 
     buildableIndex = buildableIndex + 1
   end
+
+  lastBuildableIndex = buildableIndex
 end
 
 local function dumpRules()
