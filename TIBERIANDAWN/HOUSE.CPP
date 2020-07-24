@@ -1309,15 +1309,9 @@ void HouseClass::AI(void)
 
 				ForceIonCannonToRemainOn = false;
 			}
-
-			if (disableIonCannonMessageRecieved) {
-				superweaponMessagePresent = false;
-			}
 		} else {
 			if (ionCannonMessageRecieved && houseMessage.superweaponMessage == CHARGE_SUPERWEAPON) {
 				IonCannon.Forced_Charge(this == PlayerPtr);
-
-				superweaponMessagePresent = false;
 			}
 
 			/*
@@ -1467,7 +1461,6 @@ void HouseClass::AI(void)
 				);
 
 				ForceNukeToRemainOn = !houseMessage.oneTime;
-				superweaponMessagePresent = false;
 			}
 
 			/*
@@ -1499,12 +1492,8 @@ void HouseClass::AI(void)
 		if (airstrikeMessageReceived) {
 			if (houseMessage.superweaponMessage == DISABLE_SUPERWEAPON) {
 				AirStrike.Remove(true);
-
-				superweaponMessagePresent = false;
 			} else if (houseMessage.superweaponMessage == CHARGE_SUPERWEAPON) {
 				AirStrike.Forced_Charge(this == PlayerPtr);
-
-				superweaponMessagePresent = false;
 			}
 		}
 
@@ -1542,8 +1531,6 @@ void HouseClass::AI(void)
 				}
 			}
 		}
-
-		superweaponMessagePresent = false;
 	}
 
 #ifdef NEVER
