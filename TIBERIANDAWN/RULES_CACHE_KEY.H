@@ -23,12 +23,19 @@ extern const CacheKey INFANTRY_COUNT_RULE_KEY;
 
 // game rules
 extern const CacheKey MAX_BUILD_DISTANCE_RULE_KEY;
+
 extern const CacheKey CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY;
 extern const CacheKey MAX_HARVESTER_CAPACITY_RULE_KEY;
+
+extern const CacheKey PRODUCTION_STEPS_PER_TICK_RULE_KEY;
+extern const CacheKey FACTORY_COUNT_STEP_MULTIPLER_RULE_KEY;
+extern const CacheKey TOTAL_PRODUCTION_STEPS_RULE_KEY;
+
+extern const CacheKey UNIT_REPAIR_FACTOR_RULE_KEY;
 extern const CacheKey UNIT_REPAIR_STEP_RULE_KEY;
+extern const CacheKey AIRCRAFT_REPAIR_FACTOR_RULE_KEY;
 extern const CacheKey AIRCRAFT_REPAIR_STEP_RULE_KEY;
 
-extern const CacheKey AIRCRAFT_REPAIR_FACTOR_RULE_KEY;
 extern const CacheKey RENAME_TECH_CENTER_TO_PRISON_RULE_KEY;
 extern const CacheKey SURVIVORS_FROM_BUILDINGS_RULE_KEY;
 extern const CacheKey ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY;
@@ -66,7 +73,6 @@ extern const CacheKey SHOW_BIBS_RULE_KEY;
 extern const CacheKey AUTO_SCATTER_RULE_KEY;
 extern const CacheKey NAME_CIVILIAN_BUILDINGS_RULE_KEY;
 extern const CacheKey CAN_BUY_HELIPAD_ONLY_RULE_KEY;
-extern const CacheKey UNIT_REPAIR_FACTOR_RULE_KEY;
 extern const CacheKey DEBUG_LOGGING_RULE_KEY;
 
 #endif
