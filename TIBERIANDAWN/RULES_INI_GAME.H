@@ -1,5 +1,4 @@
-#ifndef RULES_INI_GAME
-#define RULES_INI_GAME
+#pragma once
 
 #include <float.h>
 
@@ -332,5 +331,3 @@
 #define Read_Unit_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(UNIT_REPAIR_STEP_RULE, UNIT_REPAIR_STEP_RULE_KEY, defaultValue, 1, INT_MAX)
 
 #define Read_Aircraft_Repair_Step_Rule(defaultValue) Read_Int_Game_Rule(AIRCRAFT_REPAIR_STEP_RULE, AIRCRAFT_REPAIR_STEP_RULE_KEY, defaultValue, 1, INT_MAX)
-
-#endif

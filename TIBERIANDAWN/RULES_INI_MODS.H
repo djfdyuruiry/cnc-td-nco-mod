@@ -1,5 +1,4 @@
-#ifndef RULES_INI_MODS_H
-#define RULES_INI_MODS_H
+#pragma once
 
 #define MOD_RULES_SECTION_NAME "Mods"
 
@@ -37,5 +36,3 @@ void Initialise_Infantry_Mod_Types();
 const char* Get_New_Infantry_Ini_Name(char infantryType);
 
 char Get_New_Infantry_Type(char* iniName, bool* matchFound);
-
-#endif

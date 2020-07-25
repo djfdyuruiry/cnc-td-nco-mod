@@ -1,5 +1,4 @@
-#ifndef RULES_CACHE_H
-#define RULES_CACHE_H
+#pragma once
 
 #include "rules_cache_key.h"
 #include "utils.h"
@@ -37,5 +36,3 @@ bool Get_Cached_Bool_Rule(CacheKey key, bool* cacheHit);
 void Cache_Bool_Rule(const char* section, const char* ruleName, bool ruleValue);
 
 void Delete_Rules_Cache();
-
-#endif

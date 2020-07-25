@@ -1,6 +1,3 @@
-#ifndef LUA_API_FUNCTIONS_AIR_RULES_H
-#define LUA_API_FUNCTIONS_AIR_RULES_H
+#pragma once
 
 bool Register_Aircraft_Rule_Functions();
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef RULES_INI_API_H
-#define RULES_INI_API_H
+#pragma once
 
 #include "rules_ini.h"
 
@@ -145,5 +144,3 @@
 #define Read_Bool_Ai_Rule(entry, defaultValue) Read_Bool_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue)
 #define Read_Ratio_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, defaultAsPercentage)
 #define Read_Fraction_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, defaultAsPercentage)
-
-#endif

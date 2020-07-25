@@ -394,6 +394,7 @@
     <ClInclude Include="HEAP.H" />
     <ClInclude Include="HELP.H" />
     <ClInclude Include="HOUSE.H" />
+    <ClInclude Include="HOUSES_TYPE.H" />
     <ClInclude Include="INFANTRY.H" />
     <ClInclude Include="INTRO.H" />
     <ClInclude Include="IPX.H" />
@@ -454,7 +455,9 @@
     <ClInclude Include="REAL.H" />
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
+    <ClInclude Include="RulesIniRule.h" />
     <ClInclude Include="RULES.H" />
+    <ClInclude Include="RulesIniSection.h" />
     <ClInclude Include="RULES_CACHE.H" />
     <ClInclude Include="RULES_CACHE_KEY.H" />
     <ClInclude Include="RULES_INI.H" />
@@ -631,6 +634,7 @@
     <ClCompile Include="NCO.cpp" />
     <ClCompile Include="RULES_CACHE.CPP" />
     <ClCompile Include="RULES_CACHE_KEY.CPP" />
+    <ClCompile Include="RULES_INI_IQ.CPP" />
     <ClCompile Include="RULES_INI_MODS.CPP" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />
     <ClCompile Include="UTILS.CPP" />

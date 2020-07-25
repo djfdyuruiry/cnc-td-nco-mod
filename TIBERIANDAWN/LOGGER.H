@@ -1,5 +1,4 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#pragma once
 
 typedef enum LogLevel : unsigned short {
 	LOG_LEVEL_COUNT = 6,
@@ -38,5 +37,3 @@ void Toggle_Console_Logging();
 bool Console_Logging_Enabled();
 
 void Close_Log_File_If_Open();
-
-#endif

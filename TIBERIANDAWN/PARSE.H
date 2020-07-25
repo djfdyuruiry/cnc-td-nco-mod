@@ -1,5 +1,4 @@
-#ifndef PARSE_H
-#define PARSE_H
+#pragma once
 
 #include "defines.h"
 
@@ -88,5 +87,3 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError);
 FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError);
 
 const char* Factory_Type_To_String(FactoryType factoryType);
-
-#endif

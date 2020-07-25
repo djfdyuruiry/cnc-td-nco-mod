@@ -1,9 +1,9 @@
-#ifndef RULES_INI_H
-#define RULES_INI_H
+#pragma once
 
 #include "logger.h"
 #include "lua.h"
 #include "rules_cache_key.h"
+#include "RulesIniRule.h"
 
 // rules ini sections
 #define NCO_RULES_SECTION_NAME "NCO"
@@ -74,6 +74,20 @@ unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
 	const char* section,
 	const char* entry,
 	CacheKey key,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive
+);
+
+unsigned int Read_Unsigned_Int_From_Rules_Ini(
+	RulesIniRule* rule,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive
+);
+
+unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
+	RulesIniRule* rule,
 	unsigned int defaultValue,
 	unsigned int minValueInclusive,
 	unsigned int maxValueInclusive
@@ -185,5 +199,3 @@ bool Lua_Console_Is_Enabled();
 LuaScripts Rules_Get_Lua_Scripts();
 
 int Rules_Get_Game_Tick_Interval_In_Ms();
-
-#endif

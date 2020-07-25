@@ -1,5 +1,4 @@
-#ifndef RULES_INI_BULLET_H
-#define RULES_INI_BULLET_H
+#pragma once
 
 #include "rules_ini_generic.h"
 
@@ -69,5 +68,3 @@
 	BULLET_RANGE_RULE
 
 #define BULLET_RULE_COUNT 19u
-
-#endif

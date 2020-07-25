@@ -1,6 +1,3 @@
-#ifndef LUA_H
-#define LUA_H
-
 #include "lua.hpp"
 
 typedef struct LuaScripts {
@@ -39,4 +36,4 @@ void Clear_Lua_Stack();
 
 void Shutdown_Lua();
 
-#endif
+#pragma once

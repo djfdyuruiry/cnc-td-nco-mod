@@ -1,5 +1,4 @@
-#ifndef LUA_EVENTS_H
-#define LUA_EVENTS_H
+#pragma once
 
 #include <windows.h>
 
@@ -25,5 +24,3 @@ void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber);
 
 // async events
 void On_Game_Tick();
-
-#endif

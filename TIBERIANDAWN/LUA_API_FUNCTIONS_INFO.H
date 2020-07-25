@@ -1,6 +1,3 @@
-#ifndef LUA_API_FUNCTIONS_INFO_H
-#define LUA_API_FUNCTIONS_INFO_H
+#pragma once
 
 bool Register_Info_Functions();
-
-#endif

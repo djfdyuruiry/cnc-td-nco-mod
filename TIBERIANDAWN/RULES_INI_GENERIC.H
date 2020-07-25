@@ -1,5 +1,4 @@
-#ifndef RULES_INI_GENERIC
-#define RULES_INI_GENERIC
+#pragma once
 
 #include "defines.h"
 
@@ -197,5 +196,3 @@ ArmorType Read_Armor_Type_From_Rules_Ini(
     const char* entry,
     ArmorType defaultValue
 );
-
-#endif

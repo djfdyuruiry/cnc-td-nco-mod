@@ -1,6 +1,3 @@
-#ifndef LUA_API_FUNCTIONS_UTILS_H
-#define LUA_API_FUNCTIONS_UTILS_H
+#pragma once
 
 bool Register_Util_Functions();
-
-#endif

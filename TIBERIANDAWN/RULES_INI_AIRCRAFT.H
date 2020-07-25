@@ -1,5 +1,4 @@
-#ifndef RULES_INI_AIRCRAFT
-#define RULES_INI_AIRCRAFT
+#pragma once
 
 // aircraft rules
 #define CANT_HOVER_RULE "CantHover"
@@ -26,5 +25,3 @@
 #define Read_Has_Rotor(section, defaultValue) Read_Bool_From_Rules_Ini(section, HAS_ROTOR_RULE, defaultValue)
 
 #define Read_Can_Land(section, defaultValue) Read_Bool_From_Rules_Ini(section, CAN_LAND_RULE, defaultValue)
-
-#endif

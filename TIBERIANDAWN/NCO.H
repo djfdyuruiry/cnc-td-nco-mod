@@ -1,5 +1,4 @@
-#ifndef NCO_H
-#define NCO_H
+#pragma once
 
 #include "./logger.h"
 #include "./lua.h"
@@ -28,5 +27,3 @@
 bool NCO_Startup();
 
 void NCO_Shutdown();
-
-#endif

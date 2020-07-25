@@ -1,5 +1,4 @@
-#ifndef LUA_API_FUNCTIONS_GENERIC_RULES_H
-#define LUA_API_FUNCTIONS_GENERIC_RULES_H
+#pragma once
 
 #include "type.h"
 
@@ -217,5 +216,3 @@ template<typename T> int Lua_Set_Rule(
 
     return 0;
 }
-
-#endif

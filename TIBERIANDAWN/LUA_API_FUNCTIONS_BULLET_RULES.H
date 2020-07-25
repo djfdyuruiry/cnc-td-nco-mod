@@ -1,6 +1,3 @@
-#ifndef LUA_API_FUNCTIONS_BULLET_H
-#define LUA_API_FUNCTIONS_BULLET_H
+#pragma once
 
 bool Register_Bullet_Functions();
-
-#endif

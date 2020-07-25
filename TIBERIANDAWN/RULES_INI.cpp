@@ -502,6 +502,45 @@ unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
 	return Read_Unsigned_Int_From_Rules_Ini(section, entry, defaultValue, minValueInclusive, maxValueInclusive);
 }
 
+
+unsigned int Read_Unsigned_Int_From_Rules_Ini(
+	RulesIniRule* rule,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive
+)
+{
+	bool valueFound = false;
+
+	return Read_Unsigned_Int_From_Rules_Ini(
+		rule->GetSection(),
+		rule->GetName(),
+		rule->HasDefaultValue() 
+			? *rule->GetDefaultValue<unsigned int>()
+			: defaultValue,
+		minValueInclusive,
+		maxValueInclusive,
+		&valueFound
+	);
+}
+
+unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
+	RulesIniRule* rule,
+	unsigned int defaultValue,
+	unsigned int minValueInclusive,
+	unsigned int maxValueInclusive
+)
+{
+	bool cacheHit = false;
+	auto cacheValue = Get_Cached_Unsigned_Int_Rule(rule->GetKey(), &cacheHit);
+
+	if (cacheHit) {
+		return cacheValue;
+	}
+
+	return Read_Unsigned_Int_From_Rules_Ini(rule, defaultValue, minValueInclusive, maxValueInclusive);
+}
+
 static double Read_Double_From_Rules_Ini(
 	const char* section,
 	const char* entry,

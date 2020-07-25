@@ -1,5 +1,4 @@
-#ifndef RULES_INI_INFANTRY
-#define RULES_INI_INFANTRY
+#pragma once
 
 // infantry rules
 #define FEMALE_RULE "Female"
@@ -50,5 +49,3 @@
 #define Read_Is_Civilian(section, defaultValue) Read_Bool_From_Rules_Ini(section, CIVILIAN_RULE, defaultValue)
 
 #define Read_Avoids_Tiberium(section, defaultValue) Read_Bool_From_Rules_Ini(section, AVOIDS_TIBERIUM_RULE, defaultValue)
-
-#endif

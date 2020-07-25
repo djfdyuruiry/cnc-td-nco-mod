@@ -1,5 +1,4 @@
-#ifndef RULES_INI_ENHANCEMENTS_H
-#define RULES_INI_ENHANCEMENTS_H
+#pragma once
 
 #include "rules_ini.h"
 
@@ -68,5 +67,3 @@
 #define Read_Multi_Wall_Length_Rule() Read_Int_Enhancements_Rule(MULTI_WALL_LENGTH_RULE, MULTI_WALL_LENGTH_RULE_KEY, 1, 1, 10)
 
 #define Read_Full_Cost_Multi_Wall_Length_Rule() Read_Bool_Enhancements_Rule(FULL_COST_MULTI_WALLS_LENGTH_RULE, FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)
-
-#endif

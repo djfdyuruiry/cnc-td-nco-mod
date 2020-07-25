@@ -1,5 +1,4 @@
-#ifndef RULES_INI_WEAPON_H
-#define RULES_INI_WEAPON_H
+#pragma once
 
 #define WEAPON_FIRES_RULE "Fires"
 #define WEAPON_FIRES_RULE_UPPER "FIRES"
@@ -29,5 +28,3 @@
 #define Read_Weapon_Range(bulletType, defaultValue) Read_Int_From_Rules_Ini(bulletType, WEAPON_RANGE_RULE, defaultValue, 1, INT_MAX)
 
 BulletType Read_Bullet_From_Rules_Ini(const char* section, const char* entry, BulletType default);
-
-#endif

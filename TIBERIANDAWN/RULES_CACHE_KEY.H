@@ -1,5 +1,4 @@
-#ifndef RULES_CACHE_KEY_H
-#define RULES_CACHE_KEY_H
+#pragma once
 
 const unsigned int MAX_KEY_LENGTH = 1024;
 
@@ -74,5 +73,3 @@ extern const CacheKey AUTO_SCATTER_RULE_KEY;
 extern const CacheKey NAME_CIVILIAN_BUILDINGS_RULE_KEY;
 extern const CacheKey CAN_BUY_HELIPAD_ONLY_RULE_KEY;
 extern const CacheKey DEBUG_LOGGING_RULE_KEY;
-
-#endif

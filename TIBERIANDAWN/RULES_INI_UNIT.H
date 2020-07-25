@@ -1,5 +1,4 @@
-#ifndef RULES_INI_UNIT
-#define RULES_INI_UNIT
+#pragma once
 
 #include "defines.h"
 
@@ -92,5 +91,3 @@ SpeedType Read_Unit_Speed_Type_From_Rules_Ini(
     const char* entry,
     SpeedType defaultValue
 );
-
-#endif

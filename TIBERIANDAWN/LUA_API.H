@@ -1,6 +1,3 @@
-#ifndef LUA_API_H
-#define LUA_API_H
+#pragma once
 
 bool Initialise_Lua_Api();
-
-#endif
