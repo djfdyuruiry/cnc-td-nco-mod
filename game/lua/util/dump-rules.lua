@@ -78,12 +78,18 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
       end
 
       local ruleValue = typeArea.getRuleValue(areaType, ruleName)
+      local postfix = ""
+
+      if ruleName == "FriendlyName" and ruleValue:find("'") then
+        postfix = "\n;'"
+      end
 
       rulesFile:write(
           string.format(
-          "%s=%s\n",
+          "%s=%s%s\n",
           ruleName,
-          tostring(ruleValue):gsub(".0$", "")
+          tostring(ruleValue):gsub(".0$", ""),
+          postfix
           )
       )
 

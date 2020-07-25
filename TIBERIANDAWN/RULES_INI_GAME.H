@@ -69,7 +69,7 @@
 #define TARGET_TREES_RULE_UPPER "TARGETTREES"
 #define TARGET_TREES_RULE_TYPE "bool"
 
-#define MCV_REDEPLOY_RULE "MvcRedeployable"
+#define MCV_REDEPLOY_RULE "McvRedeployable"
 #define MCV_REDEPLOY_RULE_UPPER "MCVREDEPLOYABLE"
 #define MCV_REDEPLOY_RULE_TYPE "bool"
 
