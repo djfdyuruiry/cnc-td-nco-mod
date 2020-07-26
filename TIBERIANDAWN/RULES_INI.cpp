@@ -21,6 +21,9 @@ static bool LUA_CONSOLE_IS_ENABLED = false;
 static LuaScripts RULES_LUA_SCRIPTS;
 static int GAME_TICK_INTERVAL_IN_MS;
 
+const char* TRUE_STRING = "TRUE";
+const char* FALSE_STRING = "FALSE";
+
 static void Read_Lua_Scripts_From_Rules_Ini()
 {
 	Log_Info("Reading Lua scripts from rules ini");

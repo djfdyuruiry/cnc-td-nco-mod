@@ -51,6 +51,15 @@ public:
 		return *(new RulesIniRule(section, ruleName));
 	}
 
+	static RulesIniRule& BuildBoolRule(SectionName section, RuleName ruleName)
+	{
+		std::vector<const char*> validBoolStrings { TRUE_STRING, FALSE_STRING };
+
+		return BuildRule(section, ruleName)
+			.OfType(BOOL_RULE)
+			.OnlyAccept(validBoolStrings);
+	}
+
 	RulesIniRule& OfType(RulesIniType type)
 	{
 		this->type = type;

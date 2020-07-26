@@ -1,5 +1,8 @@
 #pragma once
 
+extern const char* TRUE_STRING;
+extern const char* FALSE_STRING;
+
 typedef const char* RuleName;
 typedef void* RuleValue;
 

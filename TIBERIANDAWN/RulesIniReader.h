@@ -7,12 +7,30 @@ class RulesIniReader
 private:
 	RulesIni* rulesIni;
 
+	bool ReadBoolRule(RulesIniRule* rule)
+	{
+		auto defaultValue = rule->GetDefaultValueOr(false);
+
+		rule->SetDefaultValue(Convert_Boolean_To_String(defaultValue));
+
+		auto ruleValue = rulesIni->ReadStringRule(rule);
+
+		rule->SetDefaultValue(defaultValue);
+
+		Convert_String_To_Upper_Case(ruleValue);
+
+		auto boolValue = Strings_Are_Equal(ruleValue, TRUE_STRING);
+
+		return boolValue;
+	}
+
 public:
 	RulesIniReader(RulesIni* rulesIni)
 	{
 		this->rulesIni = rulesIni;
 	}
 
+	// TODO: Add optional equivalent that uses the `Optional` class
 	template<class T> T ReadRuleValue(RulesIniRule* rule)
 	{
 		if (!rulesIni->HasSectionForRule(rule))
@@ -50,18 +68,20 @@ public:
 		}
 		else if (ruleType == BOOL_RULE)
 		{
-			// TODO: port rule function to this class
+			rule->SetValue(
+				ReadBoolRule(rule);
+			)
 		}
 		else if (ruleType == STRING_RULE)
 		{
 			rule->SetValue(
-				rulesIni->ReadStringRule(rule, defaultValue)
+				rulesIni->ReadStringRule(rule)
 			);
 		}
 		else
 		{
 			rule->SetValue(
-				rule->GetDefaultValueOr(defaultValue)
+				rule->GetDefaultValue()
 			);
 		}
 

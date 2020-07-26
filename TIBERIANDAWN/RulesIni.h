@@ -117,6 +117,7 @@ public:
 		return SourceRulesFrom(rulesFilePath);
 	}
 
+	// TODO: Use the `Optional` class
 	char* ReadOptionalStringRule(
 		RulesIniRule* rule,
 		bool* valueFound
@@ -193,6 +194,7 @@ public:
 		return valueBuffer;
 	}
 
+	// TODO: Use the `Optional` class
 	int ReadOptionalIntRule(RulesIniRule* rule, bool* valueFound)
 	{
 		if (valueFound == NULL)
