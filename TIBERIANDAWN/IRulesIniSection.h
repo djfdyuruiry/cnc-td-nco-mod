@@ -16,15 +16,19 @@ public:
 
 	virtual CacheKey GetKey() = 0;
 
-	virtual bool HasRule(RulesIniRule* rule) = 0;
+	virtual void SetDefaultType(RulesIniType type) = 0;
 
-	virtual const RulesIniRule* GetRule(CacheKey key) = 0;
+	virtual bool HasRule(CacheKey key) = 0;
+
+	virtual bool HasRule(RulesIniRule& rule) = 0;
+
+	virtual const RulesIniRule& GetRule(CacheKey key) = 0;
 
 	virtual std::vector<RuleName>& GetRuleNames() = 0;
 
 	virtual std::vector<CacheKey>& GetRuleKeys() = 0;
 
-	virtual IRulesIniSection& operator<<(RulesIniRule* rule) = 0;
+	virtual IRulesIniSection& operator<<(RulesIniRule& rule) = 0;
 
 	virtual IRulesIniSection& operator<<(RuleName ruleName) = 0;
 
@@ -37,9 +41,9 @@ public:
 		return *this;
 	}
 
-	virtual RulesIniRule* operator[](RuleName ruleName) = 0;
+	virtual RulesIniRule& operator[](RuleName ruleName) = 0;
 
-	virtual RulesIniRule* operator[](CacheKey ruleKey) = 0;
+	virtual RulesIniRule& operator[](CacheKey ruleKey) = 0;
 };
 
 typedef void (*RulesSectionInitialiser)(IRulesIniSection&);

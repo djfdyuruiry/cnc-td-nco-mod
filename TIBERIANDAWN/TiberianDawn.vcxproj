@@ -450,6 +450,7 @@
     <ClInclude Include="PARSE.H" />
     <ClInclude Include="PHONE.H" />
     <ClInclude Include="POWER.H" />
+    <ClInclude Include="PROFILE.H" />
     <ClInclude Include="QUEUE.H" />
     <ClInclude Include="RADAR.H" />
     <ClInclude Include="RADIO.H" />
@@ -461,6 +462,7 @@
     <ClInclude Include="RulesIniReader.h" />
     <ClInclude Include="RulesIniRule.h" />
     <ClInclude Include="RULES.H" />
+    <ClInclude Include="RulesIniRuleKey.h" />
     <ClInclude Include="RulesIniSection.h" />
     <ClInclude Include="RulesIniTypes.h" />
     <ClInclude Include="RULES_CACHE.H" />

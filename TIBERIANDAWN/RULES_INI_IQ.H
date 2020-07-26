@@ -1,7 +1,7 @@
 #pragma once
 
 #include "rules_ini.h"
-#include "RulesIniSection.h"
+#include "IRulesIniSection.h"
 
 #define MAX_IQ_RULE "MaxIQ"
 #define IQ_SUPER_WEAPONS_RULE "SuperWeapons"
@@ -15,7 +15,7 @@
 #define IQ_HARVESTER_RULE "Harvester"
 #define IQ_SELL_BACK_RULE "SellBack"
 
-extern RulesIniSection IqRules;
+extern IRulesIniSection& IqRules;
 
 #define Read_Max_Iq_Rule() Read_Unsigned_Int_From_Rules_Ini(IqRules[MAX_IQ_RULE], 0, 0, UINT_MAX)
 #define Read_Iq_Rule(entry, defaultValue) Read_Unsigned_Int_From_Rules_Ini(IqRules[entry], defaultValue, 1, Read_Max_Iq_Rule())

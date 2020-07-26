@@ -2,15 +2,15 @@
 
 #include <map>
 
-#include "function.h"
+#include "profile.h"
+#include "RawFile.h"
 
 #include "RulesIniSection.h"
+#include "utils.h"
 
 class RulesIni
 {
 private:
-	static const unsigned int RULES_STRING_LENGTH = MAX_PATH * 15u;
-
 	std::vector<char*> rulesIniBuffers;
 
 	std::map<CacheKey, IRulesIniSection*> sections;
@@ -19,20 +19,27 @@ private:
 	
 	bool rulesAreValid;
 
-	SectionName sectionNameInStream;
-	RulesIniType sectionDefaultTypeInStream;
+	IRulesIniSection* sectionInStream;
 
-	RulesIni()
+	RulesIni(const char* rulesFilePath)
 	{
 		rulesAreValid = true;
+
+		DoSourceRulesFrom(rulesFilePath);
 	}
 
-	RulesIni& SourceRulesFrom(const char* rulesFilePath)
+	RulesIni& DoSourceRulesFrom(const char* rulesFileName)
 	{
-		auto rulesFile = RawFileClass(rulesFilePath);
+		auto fullRulesFilePath = Allocate_String(MAX_PATH);
+
+		sprintf(fullRulesFilePath, "%s\\%s", Get_Mod_Data_Path(), rulesFileName);
+
+		auto rulesFile = RawFileClass(fullRulesFilePath);
 
 		if (!rulesFile.Is_Available())
 		{
+			delete fullRulesFilePath;
+
 			return *this;
 		}
 
@@ -42,6 +49,8 @@ private:
 		rulesFile.Close();
 
 		rulesIniBuffers.push_back(rulesIniBuffer);
+
+		delete fullRulesFilePath;
 
 		return *this;
 	}
@@ -55,10 +64,10 @@ private:
 		sectionKeys.push_back(key);
 	}
 
-	void ValidateStringRuleValue(RulesIniRule* rule, char* valueBuffer)
+	void ValidateStringRuleValue(RulesIniRule& rule, char* valueBuffer)
 	{
 		auto valueIsValid = false;
-		auto validValues = rule->GetValidValues<const char*>();
+		auto validValues = rule.GetValidValues<const char*>();
 
 		for (auto validValue : validValues)
 		{
@@ -94,7 +103,7 @@ private:
 
 		Show_Error(
 			"Rule [%s] must be in the list (%s). Value provided: %s",
-			rule->AsString(),
+			rule.AsString(),
 			validValuesCsv,
 			valueBuffer
 		);
@@ -103,152 +112,151 @@ private:
 	}
 
 public:
+	static constexpr unsigned int RULES_STRING_LENGTH = MAX_PATH * 15u;
+
 	static RulesIni& SourceRulesFrom(const char* rulesFilePath)
 	{
-		auto rules = new RulesIni();
-
-		rules->SourceRulesFrom(rulesFilePath);
-
-		return *rules;
+		return *(new RulesIni(rulesFilePath));
 	}
 
 	RulesIni& AndThenFrom(const char* rulesFilePath)
 	{
-		return SourceRulesFrom(rulesFilePath);
+		return DoSourceRulesFrom(rulesFilePath);
 	}
 
-	// TODO: Use the `Optional` class
-	char* ReadOptionalStringRule(
-		RulesIniRule* rule,
-		bool* valueFound
-	)
+	RulesIni& WithSections(void (*rulesSetup)(RulesIni&))
 	{
-		if (valueFound == NULL)
+		if (rulesSetup != NULL)
 		{
-			bool fallbackValueFound = false;
-			valueFound = &fallbackValueFound;
+			rulesSetup(*this);
 		}
 
-		Log_Trace("Resolving optional rule value: %s", rule->AsString());
+		return *this;
+	}
 
+	Optional ReadOptionalStringRule(RulesIniRule& rule)
+	{
+		Log_Trace("Resolving optional rule value: %s", rule.AsString());
+
+		bool valueFound = false;
+		auto valueBufferOptional = Optional();
 		auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 
 		for (auto buffer: rulesIniBuffers)
 		{
 			WWGetPrivateProfileString(
-				rule->GetSection(),
-				rule->GetName(),
+				rule.GetSection(),
+				rule.GetName(),
 				valueBuffer,
 				RULES_STRING_LENGTH,
 				buffer,
-				valueFound
+				&valueFound
 			);
 
-			if (*valueFound)
+			if (valueFound)
 			{
+				valueBufferOptional.Set<char*>(valueBuffer);
 				break;
 			}
 		}
 
-		return valueBuffer;
+		return valueBufferOptional;
 	}
 
-	const char* ReadStringRule(RulesIniRule* rule)
+	const char* ReadStringRule(RulesIniRule& rule)
 	{
-		auto defaultValue = rule->GetDefaultValueOr("");
+		auto defaultValue = rule.GetDefaultValueOr("");
 
-		Log_Trace("Resolving rule value: %s", rule->AsString());
+		Log_Trace("Resolving rule value: %s", rule.AsString());
 		Log_Trace("Default value: %s", defaultValue);
 
-		bool valueFound = false;
-		auto valueBuffer = ReadOptionalStringRule(rule, &valueFound);
+		auto valueBufferOptional = ReadOptionalStringRule(rule);
 
-		if (!valueFound)
+		if (!valueBufferOptional.Present())
 		{
 			Log_Trace("No rules ini value found, default will be returned");
 
-			auto defaultCopy = strdup(rule->GetDefaultValueOr(defaultValue));
+			auto defaultCopy = strdup(rule.GetDefaultValueOr(defaultValue));
 
 			return defaultCopy;
 		}
+
+		auto valueBuffer = valueBufferOptional.Get<char*>();
 
 		if (String_Is_Empty(valueBuffer))
 		{
 			Log_Trace("Resolved rule value was empty, default will be returned");
 
-			auto defaultCopy = strdup(rule->GetDefaultValueOr(defaultValue));
+			auto defaultCopy = strdup(rule.GetDefaultValueOr(defaultValue));
 
 			return defaultCopy;
 		}
 
 		strupr(valueBuffer);
 
-		if(rule->HasValidValues())
+		if(rule.HasValidValues())
 		{
 			ValidateStringRuleValue(rule, valueBuffer);
 		}
 
 		Log_Trace("Resolved value: %s", valueBuffer);
-		Log_Debug("Setting rule [%s] = %s", rule->AsString(), valueBuffer);
+		Log_Debug("Setting rule [%s] = %s", rule.AsString(), valueBuffer);
 
 		return valueBuffer;
 	}
 
-	// TODO: Use the `Optional` class
-	int ReadOptionalIntRule(RulesIniRule* rule, bool* valueFound)
+	Optional ReadOptionalIntRule(RulesIniRule& rule)
 	{
-		if (valueFound == NULL)
-		{
-			bool fallbackValueFound = false;
-			valueFound = &fallbackValueFound;
-		}
+		Log_Trace("Resolving optional rule value: %s", rule.AsString());
 
-		Log_Trace("Resolving optional rule value: %s", rule->AsString());
-
-		auto value = 0;
+		bool valueFound = false;
+		auto valueOptional = Optional();
 
 		for (auto buffer : rulesIniBuffers)
 		{
-			value = WWGetPrivateProfileInt(
-				rule->GetSection(),
-				rule->GetName(),
+			auto value = WWGetPrivateProfileInt(
+				rule.GetSection(),
+				rule.GetName(),
 				buffer,
-				valueFound
+				&valueFound
 			);
 
-			if (*valueFound)
+			if (valueFound)
 			{
+				valueOptional.Set<int>(value);
 				break;
 			}
 		}
 
-		return value;
+		return valueOptional;
 	}
 
-	int ReadIntRule(RulesIniRule* rule)
+	int ReadIntRule(RulesIniRule& rule)
 	{
-		auto defaultValue = rule->GetDefaultValueOr(0);
+		auto defaultValue = rule.GetDefaultValueOr(0);
 
-		Log_Trace("Resolving rule value: %s", rule->AsString());
+		Log_Trace("Resolving rule value: %s", rule.AsString());
 		Log_Trace("Default value: %d", defaultValue);
 
 		bool valueFound = false;
 
-		auto ruleValue = ReadOptionalIntRule(rule, &valueFound);
+		auto ruleValueOptional = ReadOptionalIntRule(rule);
 
-		if (!valueFound)
+		if (!ruleValueOptional.Present())
 		{
 			Log_Trace("No rules ini value found, default will be used");
 
 			return defaultValue;
 		}
 
+		auto ruleValue = ruleValueOptional.Get<int>();
+
 		Log_Trace("Rules ini value: %d", ruleValue);
 
-		if (!rule->HasValueToAllowAlways() || ruleValue == rule->GetValueToAllowAlways<int>())
+		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<int>())
 		{
-			auto minValueInclusive = rule->GetMinOrDefault(INT_MIN);
-			auto maxValueInclusive = rule->GetMaxOrDefault(INT_MAX);
+			auto minValueInclusive = rule.GetMinOrDefault(INT_MIN);
+			auto maxValueInclusive = rule.GetMaxOrDefault(INT_MAX);
 
 			if (ruleValue < minValueInclusive || ruleValue > maxValueInclusive)
 			{
@@ -256,7 +264,7 @@ public:
 
 				Show_Error(
 					"Rule [%s] must be between %d and %d (inclusive). Value provided: %d",
-					rule->AsString(),
+					rule.AsString(),
 					minValueInclusive,
 					maxValueInclusive,
 					ruleValue
@@ -265,65 +273,76 @@ public:
 		}
 
 		Log_Trace("Resolved value: %d", ruleValue);
-		Log_Debug("Setting rule [%s] = %d", rule->AsString(), ruleValue);
+		Log_Debug("Setting rule [%s] = %d", rule.AsString(), ruleValue);
 
 		return ruleValue;
 	}
 
 	bool HasSection(CacheKey key)
 	{
-		return sections.find(key) == sections.end();
+		return sections.find(key) != sections.end();
 	}
 
-	bool HasSectionForRule(RulesIniRule* rule)
+	bool HasSectionForRule(RulesIniRule& rule)
 	{
-		return HasSection(rule->GetSectionKey());
+		return HasSection(rule.GetSectionKey());
 	}
 
-	IRulesIniSection* GetSectionForRule(RulesIniRule* rule)
+	IRulesIniSection& GetSectionForRule(RulesIniRule& rule)
 	{
-		return (*this)[rule->GetSectionKey()];
+		return (*this)[rule.GetSectionKey()];
+	}
+
+	void MarkAsInvalid()
+	{
+		rulesAreValid = false;
+	}
+
+	bool IsValid()
+	{
+		return rulesAreValid;
 	}
 
 	RulesIni& operator<<(SectionName section)
 	{
-		sectionNameInStream = section;
-		sectionDefaultTypeInStream = IRulesIniSection::DEFAULT_RULE_TYPE;
+		sectionInStream = &RulesIniSection::BuildSection(section);
+
+		AddSection(sectionInStream);
 
 		return *this;
 	}
 
 	RulesIni& operator<<(RulesIniType sectionDefaultType)
 	{
-		sectionDefaultTypeInStream = sectionDefaultType;
+		sectionInStream->SetDefaultType(sectionDefaultType);
 
 		return *this;
 	}
 
-	RulesIni& operator<<(RulesSectionInitialiser initialiser)
+	RulesIni& operator<<(IRulesIniSection& section)
 	{		
-		AddSection(new RulesIniSection(sectionNameInStream, sectionDefaultTypeInStream, initialiser));
+		AddSection(&section);
 
 		return *this;
 	}
 
-	RulesIni& operator<<(RulesIniRule* rule)
+	RulesIni& operator<<(RulesIniRule& rule)
 	{
-		auto section = new RulesIniSection(rule->GetSection());
+		IRulesIniSection& section = RulesIniSection::BuildSection(rule.GetSection());
 
-		(*section) << rule;
+		section << rule;
 
-		AddSection(section);
+		AddSection(&section);
 
 		return *this;
 	}
 
-	IRulesIniSection* operator[](CacheKey sectionKey)
+	IRulesIniSection& operator[](CacheKey sectionKey)
 	{
-		return sections[sectionKey];
+		return *sections[sectionKey];
 	}
 
-	IRulesIniSection* operator[](SectionName name)
+	IRulesIniSection& operator[](SectionName name)
 	{
 		auto sectionKey = Build_Rule_Key(name);
 

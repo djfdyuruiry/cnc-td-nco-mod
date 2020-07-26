@@ -24,8 +24,30 @@ static int GAME_TICK_INTERVAL_IN_MS;
 const char* TRUE_STRING = "TRUE";
 const char* FALSE_STRING = "FALSE";
 
+static RulesIni* Rules;
+static RulesIniReader* RuleReader;
+
+static void InitRulesObjs()
+{
+	RulesIni& rules = RulesIni::SourceRulesFrom("RULES.INI")
+		.AndThenFrom("RULES-DEFAULT.INI")
+		.WithSections([](RulesIni& r) {
+			r << RulesIniSection::BuildSection(NCO_RULES_SECTION_NAME)
+				.WithRules([](IRulesIniSection& s) {
+					s << LUA_SCRIPTS_RULE << STRING_RULE;
+				});
+		});
+
+	RulesIniReader& ruleReader = RulesIniReader::ReaderFor(rules);
+
+	Rules = &rules;
+	RuleReader = &ruleReader;
+}
+
 static void Read_Lua_Scripts_From_Rules_Ini()
 {
+	InitRulesObjs();
+
 	Log_Info("Reading Lua scripts from rules ini");
 
 	RULES_LUA_SCRIPTS = {
@@ -33,10 +55,9 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 		0
 	};
 
-	bool valueFound = false;
-	auto onScenarioLoadCsv = Read_Optional_String_From_Rules_Ini(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE, &valueFound, false);
+	auto onScenarioLoadCsv = RuleReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE);
 
-	if (!valueFound)
+	if (String_Is_Empty(onScenarioLoadCsv))
 	{
 		return;
 	}
@@ -507,7 +528,7 @@ unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
 
 
 unsigned int Read_Unsigned_Int_From_Rules_Ini(
-	RulesIniRule* rule,
+	RulesIniRule& rule,
 	unsigned int defaultValue,
 	unsigned int minValueInclusive,
 	unsigned int maxValueInclusive
@@ -516,9 +537,9 @@ unsigned int Read_Unsigned_Int_From_Rules_Ini(
 	bool valueFound = false;
 
 	return Read_Unsigned_Int_From_Rules_Ini(
-		rule->GetSection(),
-		rule->GetName(),
-		rule->GetDefaultValueOr(defaultValue),
+		rule.GetSection(),
+		rule.GetName(),
+		rule.GetDefaultValueOr(defaultValue),
 		minValueInclusive,
 		maxValueInclusive,
 		&valueFound
@@ -526,14 +547,14 @@ unsigned int Read_Unsigned_Int_From_Rules_Ini(
 }
 
 unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
-	RulesIniRule* rule,
+	RulesIniRule& rule,
 	unsigned int defaultValue,
 	unsigned int minValueInclusive,
 	unsigned int maxValueInclusive
 )
 {
 	bool cacheHit = false;
-	auto cacheValue = Get_Cached_Unsigned_Int_Rule(rule->GetKey(), &cacheHit);
+	auto cacheValue = Get_Cached_Unsigned_Int_Rule(rule.GetKey(), &cacheHit);
 
 	if (cacheHit) {
 		return cacheValue;
@@ -955,11 +976,11 @@ bool Read_Bool_From_Rules_Ini(
 }
 
 bool Read_Bool_From_Rules_Ini(
-	RulesIniRule* rule,
+	RulesIniRule& rule,
 	bool defaultValue
 )
 {
-	return Read_Bool_From_Rules_Ini(rule->GetSection(), rule->GetName(), rule->GetDefaultValueOr(defaultValue));
+	return Read_Bool_From_Rules_Ini(rule.GetSection(), rule.GetName(), rule.GetDefaultValueOr(defaultValue));
 }
 
 long Read_Prerequisite(
@@ -1016,13 +1037,13 @@ bool Read_Cached_Bool_From_Rules_Ini(
 /// </summary>
 /// <returns>The double rules value converted to a `fixed` unsigned int</returns>
 unsigned int Read_Fixed_From_Rules_Ini(
-	RulesIniRule* rule,
+	RulesIniRule& rule,
 	unsigned int defaultValue,
 	double defaultAsPercentage
 )
 {
 	bool cacheHit = false;
-	auto cachedValue = Get_Cached_Unsigned_Int_Rule(rule->GetKey(), &cacheHit);
+	auto cachedValue = Get_Cached_Unsigned_Int_Rule(rule.GetKey(), &cacheHit);
 
 	if (cacheHit)
 	{
@@ -1030,13 +1051,13 @@ unsigned int Read_Fixed_From_Rules_Ini(
 	}
 
 	bool valueFound = false;
-	auto ruleValueAsDouble = Read_Optional_Double_From_Rules_Ini(rule->GetSection(), rule->GetName(), &valueFound);
+	auto ruleValueAsDouble = Read_Optional_Double_From_Rules_Ini(rule.GetSection(), rule.GetName(), &valueFound);
 
 	if (!valueFound)
 	{
-		auto resolvedValue = rule->GetDefaultValueOr(defaultValue);
+		auto resolvedValue = rule.GetDefaultValueOr(defaultValue);
 
-		Cache_Unsigned_Int_Rule(rule->GetKey(), resolvedValue);
+		Cache_Unsigned_Int_Rule(rule.GetKey(), resolvedValue);
 
 		return resolvedValue;
 	}
@@ -1047,20 +1068,20 @@ unsigned int Read_Fixed_From_Rules_Ini(
 
 		Show_Error(
 			"Rule [%s -> %s] must be a floating point number between 0.00 and 0.99 (inclusive), value provided: %f",
-			rule->GetSection(),
-			rule->GetName(),
+			rule.GetSection(),
+			rule.GetName(),
 			ruleValueAsDouble
 		);
 
-		return rule->GetDefaultValueOr(defaultValue);
+		return rule.GetDefaultValueOr(defaultValue);
 	}
 
-	auto onePercent = rule->GetDefaultValueOr(defaultValue) / (defaultAsPercentage * 100);
+	auto onePercent = rule.GetDefaultValueOr(defaultValue) / (defaultAsPercentage * 100);
 	auto ruleValueAsPercentage = ruleValueAsDouble * 100;
 
 	unsigned int ruleValue = nearbyint(ruleValueAsPercentage * onePercent);
 
-	Cache_Unsigned_Int_Rule(rule->GetKey(), ruleValue);
+	Cache_Unsigned_Int_Rule(rule.GetKey(), ruleValue);
 
 	return ruleValue;
 }

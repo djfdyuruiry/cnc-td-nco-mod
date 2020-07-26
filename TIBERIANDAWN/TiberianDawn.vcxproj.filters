@@ -805,6 +805,12 @@
     <ClInclude Include="Optional.h">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="RulesIniRuleKey.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="PROFILE.H">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">

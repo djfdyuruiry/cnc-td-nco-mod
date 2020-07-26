@@ -3,7 +3,8 @@
 #include "logger.h"
 #include "lua.h"
 #include "rules_cache_key.h"
-#include "RulesIniRule.h"
+#include "RulesIni.h"
+#include "RulesIniReader.h"
 
 // rules ini sections
 #define NCO_RULES_SECTION_NAME "NCO"
@@ -80,14 +81,14 @@ unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
 );
 
 unsigned int Read_Unsigned_Int_From_Rules_Ini(
-	RulesIniRule* rule,
+	RulesIniRule& rule,
 	unsigned int defaultValue,
 	unsigned int minValueInclusive,
 	unsigned int maxValueInclusive
 );
 
 unsigned int Read_Cached_Unsigned_Int_From_Rules_Ini(
-	RulesIniRule* rule,
+	RulesIniRule& rule,
 	unsigned int defaultValue,
 	unsigned int minValueInclusive,
 	unsigned int maxValueInclusive
@@ -166,7 +167,7 @@ bool Read_Bool_From_Rules_Ini(
 );
 
 bool Read_Bool_From_Rules_Ini(
-	RulesIniRule* rule,
+	RulesIniRule& rule,
 	bool defaultValue
 );
 
@@ -180,7 +181,7 @@ bool Read_Cached_Bool_From_Rules_Ini(
 #define Read_Unsigned_Bool_From_Rules_Ini(section, entry, defaultValue) (unsigned)Read_Bool_From_Rules_Ini(section, entry, defaultValue)
 
 unsigned int Read_Fixed_From_Rules_Ini(
-	RulesIniRule * rule,
+	RulesIniRule& rule,
 	unsigned int defaultValue,
 	double defaultAsPercentage
 );

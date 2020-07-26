@@ -17,34 +17,43 @@ private:
 	std::vector<RuleName> ruleNames;
 	std::vector<CacheKey> ruleKeys;
 
-	void AddRule(RulesIniRule* rule)
+	void AddRule(RulesIniRule& rule)
 	{
-		auto key = rule->GetKey();
+		auto key = rule.GetKey();
 
-		rules[key] = rule;
-		ruleNames.push_back(rule->GetName());
+		rules[key] = &rule;
+		ruleNames.push_back(rule.GetName());
 		ruleKeys.push_back(key);
 	}
 
-public:
-	RulesIniSection(SectionName name, RulesIniType defaultType, RulesSectionInitialiser initialiser)
+	RulesIniSection(SectionName name)
 	{
 		this->name = name;
 		this->key = Build_Rule_Key(this->name);
-		this->defaultType = defaultType;
+		this->defaultType = DEFAULT_RULE_TYPE;
+	}
 
+public:
+	static RulesIniSection& BuildSection(SectionName name)
+	{
+		return *(new RulesIniSection(name));
+	}
+
+	RulesIniSection& WithDefaultType(RulesIniType type)
+	{
+		defaultType = type;
+
+		return *this;
+	}
+
+	IRulesIniSection& WithRules(RulesSectionInitialiser initialiser)
+	{
 		if (initialiser != NULL)
 		{
 			initialiser(*this);
 		}
-	}
 
-	RulesIniSection(SectionName name, RulesSectionInitialiser initialiser) : RulesIniSection(name, DEFAULT_RULE_TYPE, initialiser)
-	{
-	}
-
-	RulesIniSection(SectionName name) : RulesIniSection(name, NULL)
-	{
+		return *this;
 	}
 
 	const char* GetName()
@@ -57,14 +66,24 @@ public:
 		return key;
 	}
 
-	bool HasRule(RulesIniRule* rule)
+	void SetDefaultType(RulesIniType type)
 	{
-		return rules.find(rule->GetKey()) != rules.end();
+		defaultType = type;
 	}
 
-	const RulesIniRule* GetRule(CacheKey key)
+	bool HasRule(CacheKey key)
 	{
-		return rules[key];
+		return rules.find(key) != rules.end();
+	}
+
+	bool HasRule(RulesIniRule& rule)
+	{
+		return HasRule(rule.GetKey());
+	}
+
+	const RulesIniRule& GetRule(CacheKey key)
+	{
+		return *rules[key];
 	}
 
 	std::vector<RuleName>& GetRuleNames()
@@ -77,7 +96,7 @@ public:
 		return ruleKeys;
 	}
 
-	IRulesIniSection& operator<<(RulesIniRule* rule)
+	IRulesIniSection& operator<<(RulesIniRule& rule)
 	{
 		AddRule(rule);
 
@@ -88,7 +107,7 @@ public:
 	{
 		ruleInStream = &RulesIniRule::BuildRule(this->name, ruleName).WithDefault(defaultType);
 
-		AddRule(ruleInStream);
+		AddRule(*ruleInStream);
 
 		return *this;
 	}
@@ -100,13 +119,13 @@ public:
 		return *this;
 	}
 
-	RulesIniRule* operator[](RuleName ruleName)
+	RulesIniRule& operator[](RuleName ruleName)
 	{
-		return rules[Build_Rule_Key(name, ruleName)];
+		return *rules[Build_Rule_Key(name, ruleName)];
 	}
 
-	RulesIniRule* operator[](CacheKey ruleKey)
+	RulesIniRule& operator[](CacheKey ruleKey)
 	{
-		return rules[ruleKey];
+		return *rules[ruleKey];
 	}
 };

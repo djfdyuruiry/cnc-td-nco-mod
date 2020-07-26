@@ -27,7 +27,7 @@ private:
 	Optional minValue;
 	Optional maxValue;
 	Optional valueToAllowAlways;
-	Optional validValues;
+	std::vector<const char*> validValues;
 
 	RulesIniRule(SectionName section, RuleName name)
 	{
@@ -69,28 +69,28 @@ public:
 
 	template<class T> RulesIniRule& WithDefault(T defaultValue)
 	{
-		this->defaultValue.Set(defaultValue);
+		this->defaultValue.Set<T>(defaultValue);
 
 		return (*this);
 	}
 
 	template<class T> RulesIniRule& WithDefaultAsPercentage(T defaultValue)
 	{
-		this->defaultValueAsPercentage.Set(defaultValue);
+		this->defaultValueAsPercentage.Set<T>(defaultValue);
 
 		return (*this);
 	}
 
 	template<class T> RulesIniRule& WithMin(T min)
 	{
-		this->min.Set(min);
+		minValue.Set<T>(min);
 
 		return (*this);
 	}
 
 	template<class T> RulesIniRule& WithMax(T max)
 	{
-		this->max.Set(max);
+		maxValue.Set<T>(max);
 
 		return (*this);
 	}
@@ -104,7 +104,10 @@ public:
 
 	template<class T> RulesIniRule& OnlyAccept(std::vector<T>& validStrings)
 	{
-		validValues.Set(validStrings);
+		for (auto validString : validStrings)
+		{
+			validValues.push_back(validString);
+		}
 
 		return (*this);
 	}
@@ -146,17 +149,22 @@ public:
 
 	template<class T> T GetDefaultValue()
 	{
-		return defaultValue.Get();
+		return defaultValue.Get<T>();
 	}
 
 	template<class T> T GetDefaultValueOr(T fallback)
 	{
-		return defaultValue.GetOrDefault(fallback);
+		return defaultValue.GetOrDefault<T>(fallback);
 	}
 
 	template<class T> void SetDefaultValue(T value)
 	{
-		return defaultValue.Set(value);
+		return defaultValue.Set<T>(value);
+	}
+
+	template<class T> T GetDefaultValueAsPercentage()
+	{
+		return defaultValueAsPercentage.Get<T>();
 	}
 
 	bool HasValue()
@@ -166,32 +174,32 @@ public:
 
 	template<class T> T GetValue()
 	{
-		return value.Get<();
+		return value.Get<T>();
 	}
 
 	template<class T> void SetValue(T value)
 	{
-		return value.Set(value);
+		return this->value.Set<T>(value);
 	}
 
 	template<class T> T GetMin()
 	{
-		return min.Get();
+		return minValue.Get<T>();
 	}
 
 	template<class T> T GetMinOrDefault(T defaultValue)
 	{
-		return min.GetOrDefault(defaultValue);
+		return minValue.GetOrDefault<T>(defaultValue);
 	}
 
 	template<class T> T GetMax()
 	{
-		return max.Get();
+		return maxValue.Get<T>();
 	}
 
 	template<class T> T GetMaxOrDefault(T defaultValue)
 	{
-		return max.GetOrDefault(defaultValue);
+		return maxValue.GetOrDefault<T>(defaultValue);
 	}
 
 	bool HasValueToAllowAlways()
@@ -201,21 +209,21 @@ public:
 	
 	template<class T> T GetValueToAllowAlways()
 	{
-		return valueToAllowAlways.Get();
+		return valueToAllowAlways.Get<T>();
 	}
 
 	bool HasValidValues()
 	{
-		return validValues.Present();
+		return !validValues.empty();
 	}
 
 	template<class T> std::vector<T>& GetValidValues()
 	{
-		return validValues.Get();
+		return validValues;
 	}
 
 	const char* AsString()
 	{
-		asString;
+		return asString;
 	}
 };
