@@ -9,12 +9,19 @@ typedef void* RuleValue;
 enum RulesIniType : char
 {
 	NO_RULE_TYPE = -1,
-	BOOL_RULE,
+	STRING_RULE,
 	INT_RULE,
+	BOOL_RULE,
 	UNSIGNED_INT_RULE,
 	DOUBLE_RULE,
 	FIXED_RULE,
-	STRING_RULE
+	HOUSE_LIST_RULE,
+	WEAPON_RULE,
+	ARMOR_RULE,
+	UNIT_SPEED_RULE,
+	FACTORY_RULE,
+	WARHEAD_RULE,
+	BULLET_RULE,
 };
 
 typedef const char* SectionName;

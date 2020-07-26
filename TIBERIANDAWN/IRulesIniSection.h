@@ -24,6 +24,8 @@ public:
 
 	virtual const RulesIniRule& GetRule(CacheKey key) = 0;
 
+	virtual RulesIniRule& BuildRule(RuleName name) = 0;
+
 	virtual std::vector<RuleName>& GetRuleNames() = 0;
 
 	virtual std::vector<CacheKey>& GetRuleKeys() = 0;

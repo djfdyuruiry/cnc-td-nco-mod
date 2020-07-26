@@ -1,5 +1,7 @@
 #pragma once
 
+#include "defines.h"
+
 #include "RulesIni.h"
 #include "RulesIniRuleKey.h"
 
@@ -8,6 +10,11 @@ class RulesIniReader
 private:
 	RulesIni& rulesIni;
 
+	RulesIniReader(RulesIni& rulesIniToRead) : rulesIni(rulesIniToRead)
+	{
+	}
+
+	// TODO: move all these private converters into seperate classes with a interface and mapping from type to converter
 	bool ReadBoolRule(RulesIniRule& rule)
 	{
 		auto defaultValue = rule.GetDefaultValueOr(false);
@@ -87,7 +94,7 @@ private:
 				);
 			}
 		}
-		
+
 
 		Log_Trace("Resolved value: %u", ruleValue);
 		Log_Debug("Setting rule [%s] = %u", rule.AsString(), ruleValue);
@@ -103,7 +110,7 @@ private:
 
 		Log_Trace("Resolving rule value: %s", rule.AsString());
 		Log_Trace("Default value: %f", defaultValue);
-		
+
 		auto ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
@@ -205,14 +212,113 @@ private:
 
 		auto defaultValueAsPercentage = rule.GetDefaultValueAsPercentage<double>();
 
-		auto onePercent = defaultValue  / (defaultValueAsPercentage * 100);
+		auto onePercent = defaultValue / (defaultValueAsPercentage * 100);
 		auto ruleValueAsPercentage = ruleValueAsDouble * 100;
 
 		return nearbyint(ruleValueAsPercentage * onePercent);
 	}
 
-	RulesIniReader(RulesIni& rulesIniToRead) : rulesIni(rulesIniToRead)
+	template<class T> T GetParsedStringRule(
+		RulesIniRule& rule,
+		const char* typeName,
+		T(*parser)(char*, bool*),
+		T defaultValue
+	)
 	{
+		auto stringValueOptional = rulesIni.ReadOptionalStringRule(rule);
+
+		if (!stringValueOptional.Present())
+		{
+			return rule.GetDefaultValue<T>(defaultValue);
+		}
+
+		auto stringValue = stringValueOptional.Get<char*>();
+
+		Convert_String_To_Upper_Case(stringValue);
+
+		bool parseError = false;
+		auto parsedValue = parser(stringValue, &parseError);
+
+		if (parseError)
+		{
+			rulesIni.MarkAsInvalid();
+
+			Show_Error("Failed to parse %s for [%s]: %s", typeName, rule.AsString(), stringValue);
+
+			return rule.GetDefaultValue<T>(defaultValue);
+		}
+
+		return parsedValue;
+	}
+
+	int ReadHouseListRule(RulesIniRule& rule)
+	{
+		return GetParsedStringRule(
+			rule,
+			"houses",
+			&Parse_House_Name_List_Csv,
+			(int)HOUSEF_NONE
+		);
+	}
+
+	WeaponType ReadWeaponRule(RulesIniRule& rule)
+	{
+		return GetParsedStringRule(
+			rule,
+			"weapon",
+			&Parse_Weapon_Type,
+			WEAPON_NONE
+		);
+	}
+
+	ArmorType ReadArmorRule(RulesIniRule& rule)
+	{
+		return GetParsedStringRule(
+			rule,
+			"armor",
+			&Parse_Armor_Type,
+			ARMOR_NONE
+		);
+	}
+
+	SpeedType ReadUnitSpeedRule(RulesIniRule& rule)
+	{
+		return GetParsedStringRule(
+			rule,
+			"unit speed",
+			&Parse_Unit_Speed_Type,
+			SPEED_NONE
+		);
+	}
+
+	FactoryType ReadFactoryRule(RulesIniRule& rule)
+	{
+		return GetParsedStringRule(
+			rule,
+			"factory type",
+			&Parse_Factory_Type,
+			FACTORY_TYPE_NONE
+		);
+	}
+
+	WarheadType ReadWarheadRule(RulesIniRule& rule)
+	{
+		return GetParsedStringRule(
+			rule,
+			"warhead",
+			&Parse_Warhead_Type,
+			WARHEAD_NONE
+		);
+	}
+
+	BulletType ReadBulletRule(RulesIniRule& rule)
+	{
+		return GetParsedStringRule(
+			rule,
+			"bullet",
+			&Parse_Bullet_Type,
+			BULLET_NONE
+		);
 	}
 
 public:
@@ -247,10 +353,23 @@ public:
 
 		auto ruleType = rule.GetType();
 
-		if (ruleType == INT_RULE)
+
+		if (ruleType == STRING_RULE)
+		{
+			rule.SetValue(
+				rulesIni.ReadStringRule(rule)
+			);
+		}
+		 else if (ruleType == INT_RULE)
 		{
 			rule.SetValue(
 				rulesIni.ReadIntRule(rule)
+			);
+		}
+		else if (ruleType == BOOL_RULE)
+		{
+			rule.SetValue(
+				ReadBoolRule(rule)
 			);
 		}
 		else if (ruleType == UNSIGNED_INT_RULE)
@@ -271,16 +390,46 @@ public:
 				ReadFixedRule(rule)
 			);
 		}
-		else if (ruleType == BOOL_RULE)
+		else if (ruleType == HOUSE_LIST_RULE)
 		{
 			rule.SetValue(
-				ReadBoolRule(rule)
+				ReadHouseListRule(rule)
 			);
 		}
-		else if (ruleType == STRING_RULE)
+		else if (ruleType == WEAPON_RULE)
 		{
 			rule.SetValue(
-				rulesIni.ReadStringRule(rule)
+				ReadWeaponRule(rule)
+			);
+		}
+		else if (ruleType == ARMOR_RULE)
+		{
+			rule.SetValue(
+				ReadArmorRule(rule)
+			);
+		}
+		else if (ruleType == UNIT_SPEED_RULE)
+		{
+			rule.SetValue(
+				ReadUnitSpeedRule(rule)
+			);
+		}
+		else if (ruleType == FACTORY_RULE)
+		{
+			rule.SetValue(
+				ReadFactoryRule(rule)
+			);
+		}
+		else if (ruleType == WARHEAD_RULE)
+		{
+			rule.SetValue(
+				ReadWarheadRule(rule)
+			);
+		}
+		else if (ruleType == BULLET_RULE)
+		{
+			rule.SetValue(
+				ReadBulletRule(rule)
 			);
 		}
 		else

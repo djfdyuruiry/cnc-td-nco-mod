@@ -86,6 +86,11 @@ public:
 		return *rules[key];
 	}
 
+	RulesIniRule& BuildRule(RuleName name)
+	{
+		return RulesIniRule::BuildRule(this->name, name);
+	}
+
 	std::vector<RuleName>& GetRuleNames()
 	{
 		return ruleNames;

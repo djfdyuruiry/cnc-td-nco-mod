@@ -642,7 +642,6 @@
     <ClCompile Include="RULES_CACHE.CPP" />
     <ClCompile Include="RULES_CACHE_KEY.CPP" />
     <ClCompile Include="RULES_INI_MODS.CPP" />
-    <ClCompile Include="RULES_INI_SECTIONS.CPP" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />
     <ClCompile Include="UTILS.CPP" />
     <ClCompile Include="EVENT.CPP" />

@@ -1477,9 +1477,6 @@
     <ClCompile Include="RULES_INI_MODS.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="RULES_INI_SECTIONS.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="win32lib\FACINGFF.ASM">
