@@ -6,6 +6,8 @@ typedef unsigned long CacheKey;
 
 CacheKey Build_Rule_Key(const char* section, const char* ruleName);
 
+CacheKey Build_Rule_Key(const char* section);
+
 // enhancement rules
 extern const CacheKey RALLY_POINTS_RULE_KEY;
 extern const CacheKey A_STAR_PATH_FINDING_RULE_KEY;

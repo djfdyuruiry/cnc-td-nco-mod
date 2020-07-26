@@ -1,146 +1,34 @@
 #pragma once
 
 #include "rules_ini.h"
-
-#define AI_RULES_SECTION_NAME "AI"
+#include "RulesIniSection.h"
 
 #define ATTACK_INTERVAL_RULE "AttackInterval"
-#define ATTACK_INTERVAL_RULE_UPPER "ATTACKINTERVAL"
-#define ATTACK_INTERVAL_RULE_TYPE "int"
-
 #define BASE_SIZE_ADD_RULE "BaseSizeAdd"
-#define BASE_SIZE_ADD_RULE_UPPER "BASESIZEADD"
-#define BASE_SIZE_ADD_RULE_TYPE "int"
-
 #define POWER_SURPLUS_RULE "PowerSurplus"
-#define POWER_SURPLUS_RULE_UPPER "POWERSURPLUS"
-#define POWER_SURPLUS_RULE_TYPE "int"
-
 #define ATTACK_DELAY_RULE "AttackDelay"
-#define ATTACK_DELAY_RULE_UPPER "ATTACKDELAY"
-#define ATTACK_DELAY_RULE_TYPE "int"
-
 #define POWER_EMERGENCY_FRACTION_RULE "PowerEmergency"
-#define POWER_EMERGENCY_FRACTION_RULE_UPPER "POWEREMERGENCY"
-#define POWER_EMERGENCY_FRACTION_RULE_TYPE "double"
-
 #define HELIPAD_RATIO_RULE "HelipadRatio"
-#define HELIPAD_RATIO_RULE_UPPER "HELIPADRATIO"
-#define HELIPAD_RATIO_RULE_TYPE "double"
-
 #define HELIPAD_LIMIT_RULE "HelipadLimit"
-#define HELIPAD_LIMIT_RULE_UPPER "HELIPADLIMIT"
-#define HELIPAD_LIMIT_RULE_TYPE "int"
-
 #define AA_RATIO_RULE "AARatio"
-#define AA_RATIO_RULE_UPPER "AARATIO"
-#define AA_RATIO_RULE_TYPE "int"
-
 #define AA_LIMIT_RULE "AALimit"
-#define AA_LIMIT_RULE_UPPER "AALIMIT"
-#define AA_LIMIT_RULE_TYPE "int"
-
 #define DEFENSE_RATIO_RULE "DefenseRatio"
-#define DEFENSE_RATIO_RULE_UPPER "DEFENSERATIO"
-#define DEFENSE_RATIO_RULE_TYPE "double"
-
 #define DEFENSE_LIMIT_RULE "DefenseLimit"
-#define DEFENSE_LIMIT_RULE_UPPER "DEFENSELIMIT"
-#define DEFENSE_LIMIT_RULE_TYPE "int"
-
 #define WAR_RATIO_RULE "WarRatio"
-#define WAR_RATIO_RULE_UPPER "WARRATIO"
-#define WAR_RATIO_RULE_TYPE "double"
-
 #define WAR_LIMIT_RULE "WarLimit"
-#define WAR_LIMIT_RULE_UPPER "WARLIMIT"
-#define WAR_LIMIT_RULE_TYPE "int"
-
 #define BARRACKS_RATIO_RULE "BarracksRatio"
-#define BARRACKS_RATIO_RULE_UPPER "BARRACKSRATIO"
-#define BARRACKS_RATIO_RULE_TYPE "double"
-
 #define BARRACKS_LIMIT_RULE "BarracksLimit"
-#define BARRACKS_LIMIT_RULE_UPPER "BARRACKSLIMIT"
-#define BARRACKS_LIMIT_RULE_TYPE "int"
-
 #define REFINERY_LIMIT_RULE "RefineryLimit"
-#define REFINERY_LIMIT_RULE_UPPER "REFINERYLIMIT"
-#define REFINERY_LIMIT_RULE_TYPE "int"
-
 #define REFINERY_RATIO_RULE "RefineryRatio"
-#define REFINERY_RATIO_RULE_UPPER "REFINERYRATIO"
-#define REFINERY_RATIO_RULE_TYPE "double"
-
 #define AIRSTRIP_RATIO_RULE "AirstripRatio"
-#define AIRSTRIP_RATIO_RULE_UPPER "AIRSTRIPRATIO"
-#define AIRSTRIP_RATIO_RULE_TYPE "double"
-
 #define AIRSTRIP_LIMIT_RULE "AirstripLimit"
-#define AIRSTRIP_LIMIT_RULE_UPPER "AIRSTRIPLIMIT"
-#define AIRSTRIP_LIMIT_RULE_TYPE "int"
-
 #define INFANTRY_RESERVE_RULE "InfantryReserve"
-#define INFANTRY_RESERVE_RULE_UPPER "INFANTRYRESERVE"
-#define INFANTRY_RESERVE_RULE_TYPE "int"
-
 #define INFANTRY_BASE_MULT_RULE "InfantryBaseMult"
-#define INFANTRY_BASE_MULT_RULE_UPPER "INFANTRYBASEMULT"
-#define INFANTRY_BASE_MULT_RULE_TYPE "int"
-
 #define PARANOID_RULE "Paranoid"
-#define PARANOID_RULE_UPPER "PARANOID"
-#define PARANOID_RULE_TYPE "bool"
 
-#define AI_RULES ATTACK_INTERVAL_RULE, \
-	BASE_SIZE_ADD_RULE, \
-	POWER_SURPLUS_RULE, \
-	ATTACK_DELAY_RULE, \
-	POWER_EMERGENCY_FRACTION_RULE, \
-	HELIPAD_RATIO_RULE, \
-	HELIPAD_LIMIT_RULE, \
-	AA_RATIO_RULE, \
-	AA_LIMIT_RULE, \
-	DEFENSE_RATIO_RULE, \
-	DEFENSE_LIMIT_RULE, \
-	WAR_RATIO_RULE, \
-	WAR_LIMIT_RULE, \
-	BARRACKS_RATIO_RULE, \
-	BARRACKS_LIMIT_RULE, \
-	REFINERY_RATIO_RULE, \
-	REFINERY_LIMIT_RULE, \
-	AIRSTRIP_RATIO_RULE, \
-	AIRSTRIP_LIMIT_RULE, \
-	INFANTRY_RESERVE_RULE, \
-	INFANTRY_BASE_MULT_RULE, \
-	PARANOID_RULE
+extern RulesIniSection AiRules;
 
-#define AI_RULE_COUNT 22u
-
-#define AI_RULE_TYPES ATTACK_INTERVAL_RULE_TYPE, \
-	BASE_SIZE_ADD_RULE_TYPE, \
-	POWER_SURPLUS_RULE_TYPE, \
-	ATTACK_DELAY_RULE_TYPE, \
-	POWER_EMERGENCY_FRACTION_RULE_TYPE, \
-	HELIPAD_RATIO_RULE_TYPE, \
-	HELIPAD_LIMIT_RULE_TYPE, \
-	AA_RATIO_RULE_TYPE, \
-	AA_LIMIT_RULE_TYPE, \
-	DEFENSE_RATIO_RULE_TYPE, \
-	DEFENSE_LIMIT_RULE_TYPE, \
-	WAR_RATIO_RULE_TYPE, \
-	WAR_LIMIT_RULE_TYPE, \
-	BARRACKS_RATIO_RULE_TYPE, \
-	BARRACKS_LIMIT_RULE_TYPE, \
-	REFINERY_RATIO_RULE_TYPE, \
-	REFINERY_LIMIT_RULE_TYPE, \
-	AIRSTRIP_RATIO_RULE_TYPE, \
-	AIRSTRIP_LIMIT_RULE_TYPE, \
-	INFANTRY_RESERVE_RULE_TYPE, \
-	INFANTRY_BASE_MULT_RULE_TYPE, \
-	PARANOID_RULE_TYPE
-
-#define Read_Unsigned_Int_Ai_Rule(entry, defaultValue) Read_Unsigned_Int_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, 0, UINT_MAX)
-#define Read_Bool_Ai_Rule(entry, defaultValue) Read_Bool_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue)
-#define Read_Ratio_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, defaultAsPercentage)
-#define Read_Fraction_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AI_RULES_SECTION_NAME, entry, defaultValue, defaultAsPercentage)
+#define Read_Unsigned_Int_Ai_Rule(entry, defaultValue) Read_Unsigned_Int_From_Rules_Ini(AiRules[entry], defaultValue, 0, UINT_MAX)
+#define Read_Bool_Ai_Rule(entry, defaultValue) Read_Bool_From_Rules_Ini(AiRules[entry], defaultValue)
+#define Read_Ratio_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AiRules[entry], defaultValue, defaultAsPercentage)
+#define Read_Fraction_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AiRules[entry], defaultValue, defaultAsPercentage)

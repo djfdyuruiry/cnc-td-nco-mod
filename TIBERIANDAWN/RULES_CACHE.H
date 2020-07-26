@@ -11,6 +11,8 @@ void Cache_String_Rule(const char* section, const char* ruleName, char* ruleValu
 
 void Cache_String_Rule(const char* section, const char* ruleName, const char* ruleValue);
 
+void Cache_String_Rule(CacheKey key, char* ruleValue);
+
 int Get_Cached_Int_Rule(const char* section, const char* ruleName, bool* cacheHit);
 
 int Get_Cached_Int_Rule(CacheKey key, bool* cacheHit);
@@ -22,6 +24,8 @@ unsigned int Get_Cached_Unsigned_Int_Rule(const char* section, const char* ruleN
 unsigned int Get_Cached_Unsigned_Int_Rule(CacheKey key, bool* cacheHit);
 
 void Cache_Unsigned_Int_Rule(const char* section, const char* ruleName, unsigned int ruleValue);
+
+void Cache_Unsigned_Int_Rule(CacheKey key, unsigned int ruleValue);
 
 double Get_Cached_Double_Rule(const char* section, const char* ruleName, bool* cacheHit);
 

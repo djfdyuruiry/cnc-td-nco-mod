@@ -790,6 +790,21 @@
     <ClInclude Include="HOUSES_TYPE.H">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="RulesIniTypes.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="IRulesIniSection.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniReader.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIni.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="Optional.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
@@ -1456,7 +1471,7 @@
     <ClCompile Include="RULES_INI_MODS.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="RULES_INI_IQ.CPP">
+    <ClCompile Include="RULES_INI_SECTIONS.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>

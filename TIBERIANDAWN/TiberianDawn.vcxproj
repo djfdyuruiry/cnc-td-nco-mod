@@ -403,6 +403,7 @@
     <ClInclude Include="IPXCONN.H" />
     <ClInclude Include="IPXGCONN.H" />
     <ClInclude Include="IPXMGR.H" />
+    <ClInclude Include="IRulesIniSection.h" />
     <ClInclude Include="JSHELL.H" />
     <ClInclude Include="LAYER.H" />
     <ClInclude Include="LED.H" />
@@ -442,6 +443,7 @@
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />
     <ClInclude Include="OBJECT.H" />
+    <ClInclude Include="Optional.h" />
     <ClInclude Include="OPTIONS.H" />
     <ClInclude Include="OVERLAY.H" />
     <ClInclude Include="PACKET.H" />
@@ -455,9 +457,12 @@
     <ClInclude Include="REAL.H" />
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
+    <ClInclude Include="RulesIni.h" />
+    <ClInclude Include="RulesIniReader.h" />
     <ClInclude Include="RulesIniRule.h" />
     <ClInclude Include="RULES.H" />
     <ClInclude Include="RulesIniSection.h" />
+    <ClInclude Include="RulesIniTypes.h" />
     <ClInclude Include="RULES_CACHE.H" />
     <ClInclude Include="RULES_CACHE_KEY.H" />
     <ClInclude Include="RULES_INI.H" />
@@ -634,8 +639,8 @@
     <ClCompile Include="NCO.cpp" />
     <ClCompile Include="RULES_CACHE.CPP" />
     <ClCompile Include="RULES_CACHE_KEY.CPP" />
-    <ClCompile Include="RULES_INI_IQ.CPP" />
     <ClCompile Include="RULES_INI_MODS.CPP" />
+    <ClCompile Include="RULES_INI_SECTIONS.CPP" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />
     <ClCompile Include="UTILS.CPP" />
     <ClCompile Include="EVENT.CPP" />

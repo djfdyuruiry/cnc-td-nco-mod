@@ -33,6 +33,11 @@ CacheKey Build_Rule_Key(const char* section, const char* ruleName)
 	return hash;
 }
 
+CacheKey Build_Rule_Key(const char* section)
+{
+	return Build_Rule_Key(section, "SECTION__KEY");
+}
+
 /**
  *  Cache calculated constant keys - only cache entries which require a high 
  *  performance get call should be listed here. (game loop rules etc.)

@@ -515,9 +515,7 @@ unsigned int Read_Unsigned_Int_From_Rules_Ini(
 	return Read_Unsigned_Int_From_Rules_Ini(
 		rule->GetSection(),
 		rule->GetName(),
-		rule->HasDefaultValue() 
-			? *rule->GetDefaultValue<unsigned int>()
-			: defaultValue,
+		rule->GetDefaultValueOr(defaultValue),
 		minValueInclusive,
 		maxValueInclusive,
 		&valueFound
@@ -953,6 +951,14 @@ bool Read_Bool_From_Rules_Ini(
 	return boolValue;
 }
 
+bool Read_Bool_From_Rules_Ini(
+	RulesIniRule* rule,
+	bool defaultValue
+)
+{
+	return Read_Bool_From_Rules_Ini(rule->GetSection(), rule->GetName(), rule->GetDefaultValueOr(defaultValue));
+}
+
 long Read_Prerequisite(
 	const char* section,
 	StructType defaultValue
@@ -1007,13 +1013,13 @@ bool Read_Cached_Bool_From_Rules_Ini(
 /// </summary>
 /// <returns>The double rules value converted to a `fixed` unsigned int</returns>
 unsigned int Read_Fixed_From_Rules_Ini(
-	const char* section,
-	const char* entry,
+	RulesIniRule* rule,
 	unsigned int defaultValue,
 	double defaultAsPercentage
-) {
+)
+{
 	bool cacheHit = false;
-	auto cachedValue = Get_Cached_Unsigned_Int_Rule(section, entry, &cacheHit);
+	auto cachedValue = Get_Cached_Unsigned_Int_Rule(rule->GetKey(), &cacheHit);
 
 	if (cacheHit)
 	{
@@ -1021,13 +1027,15 @@ unsigned int Read_Fixed_From_Rules_Ini(
 	}
 
 	bool valueFound = false;
-	auto ruleValueAsDouble = Read_Optional_Double_From_Rules_Ini(section, entry, &valueFound);
+	auto ruleValueAsDouble = Read_Optional_Double_From_Rules_Ini(rule->GetSection(), rule->GetName(), &valueFound);
 
 	if (!valueFound)
 	{
-		Cache_Unsigned_Int_Rule(section, entry, defaultValue);
+		auto resolvedValue = rule->GetDefaultValueOr(defaultValue);
 
-		return defaultValue;
+		Cache_Unsigned_Int_Rule(rule->GetKey(), resolvedValue);
+
+		return resolvedValue;
 	}
 
 	if (ruleValueAsDouble < 0.00f || ruleValueAsDouble > 0.99f)
@@ -1036,20 +1044,20 @@ unsigned int Read_Fixed_From_Rules_Ini(
 
 		Show_Error(
 			"Rule [%s -> %s] must be a floating point number between 0.00 and 0.99 (inclusive), value provided: %f",
-			section,
-			entry,
+			rule->GetSection(),
+			rule->GetName(),
 			ruleValueAsDouble
 		);
 
-		return defaultValue;
+		return rule->GetDefaultValueOr(defaultValue);
 	}
 
-	auto onePercent = defaultValue / (defaultAsPercentage * 100);
+	auto onePercent = rule->GetDefaultValueOr(defaultValue) / (defaultAsPercentage * 100);
 	auto ruleValueAsPercentage = ruleValueAsDouble * 100;
 
 	unsigned int ruleValue = nearbyint(ruleValueAsPercentage * onePercent);
 
-	Cache_Unsigned_Int_Rule(section, entry, ruleValue);
+	Cache_Unsigned_Int_Rule(rule->GetKey(), ruleValue);
 
 	return ruleValue;
 }

@@ -133,6 +133,11 @@ void Cache_String_Rule(const char* section, const char* ruleName, const char* ru
 	Cache_Rule(*STRING_RULES_CACHE, section, ruleName, strdup(ruleValue));
 }
 
+void Cache_String_Rule(CacheKey key, char* ruleValue)
+{
+	(*STRING_RULES_CACHE)[key] = ruleValue;
+}
+
 int Get_Cached_Int_Rule(const char* section, const char* ruleName, bool* cacheHit)
 {
 	Ensure_Rule_Cache_Initialised();
@@ -229,6 +234,13 @@ void Cache_Unsigned_Int_Rule(const char* section, const char* ruleName, unsigned
 	Ensure_Rule_Cache_Initialised();
 
 	Cache_Rule(*UINT_RULES_CACHE, section, ruleName, ruleValue);
+}
+
+void Cache_Unsigned_Int_Rule(CacheKey key, unsigned int ruleValue)
+{
+	Ensure_Rule_Cache_Initialised();
+
+	(*UINT_RULES_CACHE)[key] = ruleValue;
 }
 
 double Get_Cached_Double_Rule(const char* section, const char* ruleName, bool* cacheHit)

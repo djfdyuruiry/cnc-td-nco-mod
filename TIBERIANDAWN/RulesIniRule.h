@@ -1,53 +1,108 @@
 #pragma once
 
-#include "rules_cache_key.h"
+#include <malloc.h>
+#include <vector>
+
+#include "Optional.h"
+#include "RulesIniTypes.h"
 #include "strings.h"
-
-typedef const char* SectionName;
-typedef const char* RuleName;
-typedef void* RuleValue;
-
-enum RulesIniType
-{
-	BOOL_RULE,
-	INT_RULE,
-	UNSIGNED_INT_RULE,
-	DOUBLE_RULE,
-	STRING_RULE
-};
 
 class RulesIniRule
 {
 private:
 	SectionName section;
 	RuleName name;
+
+	CacheKey sectionKey;
 	RuleName uppercaseName;
-
-	RulesIniType type;
 	CacheKey key;
+	RulesIniType type;
 
-	RuleValue defaultValue;
+	char* asString;
 
-public:
+	Optional defaultValue;
+	Optional defaultValueAsPercentage;
+	Optional value;
+
+	Optional minValue;
+	Optional maxValue;
+	Optional valueToAllowAlways;
+	Optional validValues;
+
 	RulesIniRule(SectionName section, RuleName name)
 	{
 		this->section = section;
 		this->name = name;
-		this->uppercaseName = Convert_String_To_Upper_Case(name);
 
-		this->key = Build_Rule_Key(section, name);
+		sectionKey = Build_Rule_Key(this->section);
+		uppercaseName = Convert_String_To_Upper_Case(name);
+		key = Build_Rule_Key(section, name);
+		type = NO_RULE_TYPE;
 
-		this->defaultValue = NULL;
+		asString = Allocate_String(RULES_INI_ID_SIZE * 2 + 4);
+
+		sprintf(asString, "%s -> %s", this->section, this->name);
+	}
+public:
+	static const unsigned int RULES_INI_ID_SIZE = 32u;
+
+	static RulesIniRule& BuildRule(SectionName section, RuleName ruleName)
+	{
+		return *(new RulesIniRule(section, ruleName));
 	}
 
-	void SetRuleType(RulesIniType ruleType)
+	RulesIniRule& OfType(RulesIniType type)
 	{
-		this->type = ruleType;
+		this->type = type;
+
+		return (*this);
 	}
 
-	void SetDefaultValue(RuleValue defaultValue)
+	template<class T> RulesIniRule& WithDefault(T defaultValue)
 	{
-		this->defaultValue = defaultValue;
+		this->defaultValue.Set(defaultValue);
+
+		return (*this);
+	}
+
+	template<class T> RulesIniRule& WithDefaultAsPercentage(T defaultValue)
+	{
+		this->defaultValueAsPercentage.Set(defaultValue);
+
+		return (*this);
+	}
+
+	template<class T> RulesIniRule& WithMin(T min)
+	{
+		this->min.Set(min);
+
+		return (*this);
+	}
+
+	template<class T> RulesIniRule& WithMax(T max)
+	{
+		this->max.Set(max);
+
+		return (*this);
+	}
+
+	template<class T> RulesIniRule& AlwaysAllow(T alwaysAllowThisValue)
+	{
+		valueToAllowAlways.Set(alwaysAllowThisValue);
+
+		return (*this);
+	}
+
+	template<class T> RulesIniRule& OnlyAccept(std::vector<T>& validStrings)
+	{
+		validValues.Set(validStrings);
+
+		return (*this);
+	}
+
+	void SetType(RulesIniType type)
+	{
+		this->type = type;
 	}
 
 	SectionName GetSection()
@@ -55,9 +110,19 @@ public:
 		return section;
 	}
 
+	CacheKey GetSectionKey()
+	{
+		return sectionKey;
+	}
+
 	RuleName GetName()
 	{
 		return name;
+	}
+
+	const CacheKey GetKey()
+	{
+		return key;
 	}
 
 	const RulesIniType GetType()
@@ -67,16 +132,81 @@ public:
 
 	bool HasDefaultValue()
 	{
-		return defaultValue != NULL;
+		return defaultValue.Present();
 	}
 
-	template<class T> T* GetDefaultValue()
+	template<class T> T GetDefaultValue()
 	{
-		return (T*)defaultValue;
+		return defaultValue.Get();
 	}
 
-	const CacheKey GetKey()
+	template<class T> T GetDefaultValueOr(T fallback)
 	{
-		return key;
+		return defaultValue.GetOrDefault(fallback);
+	}
+
+	template<class T> void SetDefaultValue(T value)
+	{
+		return defaultValue.Set(value);
+	}
+
+	bool HasValue()
+	{
+		return value.Present();
+	}
+
+	template<class T> T GetValue()
+	{
+		return value.Get<();
+	}
+
+	template<class T> void SetValue(T value)
+	{
+		return value.Set(value);
+	}
+
+	template<class T> T GetMin()
+	{
+		return min.Get();
+	}
+
+	template<class T> T GetMinOrDefault(T defaultValue)
+	{
+		return min.GetOrDefault(defaultValue);
+	}
+
+	template<class T> T GetMax()
+	{
+		return max.Get();
+	}
+
+	template<class T> T GetMaxOrDefault(T defaultValue)
+	{
+		return max.GetOrDefault(defaultValue);
+	}
+
+	bool HasValueToAllowAlways()
+	{
+		return valueToAllowAlways.Present();
+	}
+	
+	template<class T> T GetValueToAllowAlways()
+	{
+		return valueToAllowAlways.Get();
+	}
+
+	bool HasValidValues()
+	{
+		return validValues.Present();
+	}
+
+	template<class T> std::vector<T>& GetValidValues()
+	{
+		return validValues.Get();
+	}
+
+	const char* AsString()
+	{
+		asString;
 	}
 };

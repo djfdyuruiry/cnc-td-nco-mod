@@ -4,23 +4,34 @@
 #include <vector>
 
 #include "rules_cache_key.h"
-#include "RulesIniRule.h"
+#include "IRulesIniSection.h"
 
-class RulesIniSection
+class RulesIniSection : public IRulesIniSection
 {
 private:
 	SectionName name;
+	CacheKey key;
+	RulesIniType defaultType;
 
 	std::map<CacheKey, RulesIniRule*> rules;
 	std::vector<RuleName> ruleNames;
 	std::vector<CacheKey> ruleKeys;
 
-	RulesIniRule* ruleInStream;
+	void AddRule(RulesIniRule* rule)
+	{
+		auto key = rule->GetKey();
+
+		rules[key] = rule;
+		ruleNames.push_back(rule->GetName());
+		ruleKeys.push_back(key);
+	}
 
 public:
-	RulesIniSection(SectionName name, void (*initialiser)(RulesIniSection&))
+	RulesIniSection(SectionName name, RulesIniType defaultType, RulesSectionInitialiser initialiser)
 	{
 		this->name = name;
+		this->key = Build_Rule_Key(this->name);
+		this->defaultType = defaultType;
 
 		if (initialiser != NULL)
 		{
@@ -28,9 +39,27 @@ public:
 		}
 	}
 
+	RulesIniSection(SectionName name, RulesSectionInitialiser initialiser) : RulesIniSection(name, DEFAULT_RULE_TYPE, initialiser)
+	{
+	}
+
+	RulesIniSection(SectionName name) : RulesIniSection(name, NULL)
+	{
+	}
+
 	const char* GetName()
 	{
 		return name;
+	}
+
+	CacheKey GetKey()
+	{
+		return key;
+	}
+
+	bool HasRule(RulesIniRule* rule)
+	{
+		return rules.find(rule->GetKey()) != rules.end();
 	}
 
 	const RulesIniRule* GetRule(CacheKey key)
@@ -38,34 +67,35 @@ public:
 		return rules[key];
 	}
 
-	RulesIniSection& operator<<(RuleName ruleName)
+	std::vector<RuleName>& GetRuleNames()
 	{
-		auto rule = new RulesIniRule(this->name, ruleName);
-		auto key = rule->GetKey();
+		return ruleNames;
+	}
 
-		rules[key] = rule;
-		ruleNames.push_back(ruleName);
-		ruleKeys.push_back(key);
+	std::vector<CacheKey>& GetRuleKeys()
+	{
+		return ruleKeys;
+	}
 
-		ruleInStream = rule;
+	IRulesIniSection& operator<<(RulesIniRule* rule)
+	{
+		AddRule(rule);
 
 		return *this;
 	}
 
-	RulesIniSection& operator<<(RulesIniType type)
+	IRulesIniSection& operator<<(RuleName ruleName)
 	{
-		ruleInStream->SetRuleType(type);
+		ruleInStream = &RulesIniRule::BuildRule(this->name, ruleName).WithDefault(defaultType);
+
+		AddRule(ruleInStream);
 
 		return *this;
 	}
 
-	template<class T> RulesIniSection& operator<<(T defaultValue)
+	IRulesIniSection& operator<<(RulesIniType type)
 	{
-		void* defaultValueCopy = calloc(1, sizeof(T));
-
-		memcpy(defaultValueCopy, &defaultValue, sizeof(T));
-
-		ruleInStream->SetDefaultValue(defaultValueCopy);
+		ruleInStream->SetType(type);
 
 		return *this;
 	}
@@ -78,15 +108,5 @@ public:
 	RulesIniRule* operator[](CacheKey ruleKey)
 	{
 		return rules[ruleKey];
-	}
-
-	std::vector<RuleName>& GetRuleNames()
-	{
-		return ruleNames;
-	}
-
-	std::vector<CacheKey>& GetRuleKeys()
-	{
-		return ruleKeys;
 	}
 };
