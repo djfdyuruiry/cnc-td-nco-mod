@@ -88,7 +88,7 @@ public:
 
 	RulesIniRule& BuildRule(RuleName name)
 	{
-		return RulesIniRule::BuildRule(this->name, name);
+		return RulesIniRule::BuildRule(this->name, name).OfType(defaultType);
 	}
 
 	std::vector<RuleName>& GetRuleNames()

@@ -1,8 +1,6 @@
 #include "function.h"
 
-#include "rules_cache.h"
-
-static const auto MAX_INFANTRY_TYPE_NAME_LENGTH = 32u;
+#include "rules_ini.h"
 
 static char** MOD_INFANTRY_TYPES = NULL;
 
@@ -10,17 +8,16 @@ void Read_Infantry_Mods()
 {
 	Log_Info("Reading Infantry Mods");
 
-	bool valueFound = false;
-	auto newInfantryCsv = Read_Optional_String_From_Rules_Ini(MOD_RULES_SECTION_NAME, NEW_INFANTRY_RULE, &valueFound, true);
+	auto newInfantryCsv = ReadRuleValue<char*>(MOD_RULES_SECTION_NAME, NEW_INFANTRY_RULE);
 
-	if (valueFound = false || String_Is_Empty(newInfantryCsv)) {
+	if (String_Is_Empty(newInfantryCsv)) {
 		Log_Debug("No infantry mods found");
 		return;
 	}
 
 	auto newInfantryCount = 0u;
 
-	MOD_INFANTRY_TYPES = Parse_Csv_String(newInfantryCsv, MAX_INFANTRY_TYPE_NAME_LENGTH, &newInfantryCount);
+	MOD_INFANTRY_TYPES = Parse_Csv_String(newInfantryCsv, RulesIniRule::RULES_INI_ID_SIZE, &newInfantryCount);
 
 	if (newInfantryCount < 1u || MOD_INFANTRY_TYPES == NULL) {
 		Log_Debug("No infantry mods found");
@@ -29,8 +26,13 @@ void Read_Infantry_Mods()
 
 	auto totalInfantryCount = INFANTRY_COUNT + newInfantryCount;
 
-	Cache_Unsigned_Int_Rule(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE, newInfantryCount);
-	Cache_Unsigned_Int_Rule(MOD_RULES_SECTION_NAME, INFANTRY_COUNT_RULE, totalInfantryCount);
+	Get_Rules_Reader()
+		.GetRule(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE)
+		.SetValue(newInfantryCount);
+
+	Get_Rules_Reader()
+		.GetRule(INFANTRY_COUNT_RULE_KEY)
+		.SetValue(totalInfantryCount);
 
 	Log_Info("Mod infantry types read: %s", newInfantryCsv);
 	Log_Info("Total game infantry types: %u", newInfantryCount, totalInfantryCount);
@@ -101,20 +103,20 @@ void Initialise_Infantry_Mod_Types()
 
 		Convert_String_To_Upper_Case(typeString);
 
-		auto baseTypeString = Read_Optional_String_From_Rules_Ini(typeString, BASE_TYPE_RULE, &baseTypeFound, false);
+		auto baseTypeString = ReadRuleValue<char*>(typeString, BASE_TYPE_RULE);
 
-		if (!baseTypeFound)
+		if (String_Is_Empty(baseTypeString))
 		{
 			Show_Error("Mod infantry type has no %s rule provided: %s", typeString, BASE_TYPE_RULE);
 
-			Rules_Ini_Failed_Validation(true);
+			MarkRulesIniAsInvalid();
 
 			continue;
 		}
 
 		if (!Setup_New_Infantry_Type(typeString, type, baseTypeString))
 		{
-			Rules_Ini_Failed_Validation(true);
+			MarkRulesIniAsInvalid();
 		}
 	}
 

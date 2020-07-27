@@ -155,7 +155,7 @@ private:
 
 		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<double>())
 		{
-			auto minValueInclusive = rule.GetMinOrDefault(0.0);
+			auto minValueInclusive = rule.GetMinOrDefault(DBL_MIN);
 			auto maxValueInclusive = rule.GetMaxOrDefault(DBL_MAX);
 
 			if (ruleValue < minValueInclusive || ruleValue > maxValueInclusive)
@@ -327,7 +327,7 @@ public:
 		return *(new RulesIniReader(rulesIni));
 	}
 
-	RulesIniRule& GetRule(RulesIniRuleKey key)
+	RulesIniRule& GetRule(const RulesIniRuleKey key)
 	{
 		if (!rulesIni.HasSection(key.SectionKey))
 		{
@@ -342,6 +342,13 @@ public:
 		}
 
 		return section[key.RuleKey];
+	}
+
+	RulesIniRule& GetRule(SectionName section, RuleName rule)
+	{
+		const auto key = RulesIniRuleKey(section, rule);
+
+		return GetRule(key);
 	}
 
 	template<class T> T ReadRuleValue(RulesIniRule& rule)
@@ -442,18 +449,17 @@ public:
 		return rule.GetValue<T>();
 	}
 
-	template<class T> T ReadRuleValue(RulesIniRuleKey key)
+	template<class T> T ReadRuleValue(const RulesIniRuleKey key)
 	{
 		return ReadRuleValue<T>(
 			GetRule(key)
 		);
 	}
+
 	template<class T> T ReadRuleValue(SectionName section, RuleName rule)
 	{
-		return ReadRuleValue<T>(
-			GetRule(
-				RulesIniRuleKey(section, rule)
-			)
-		);
+		const auto key = RulesIniRuleKey(section, rule);
+
+		return ReadRuleValue<T>(key);
 	}
 };

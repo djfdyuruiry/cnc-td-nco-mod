@@ -3,6 +3,8 @@
 #include "rules_ini.h"
 #include "IRulesIniSection.h"
 
+#define IQ_SECTION_NAME "IQ"
+
 #define MAX_IQ_RULE "MaxIQ"
 #define IQ_SUPER_WEAPONS_RULE "SuperWeapons"
 #define IQ_PRODUCTION_RULE "Production"
@@ -15,7 +17,5 @@
 #define IQ_HARVESTER_RULE "Harvester"
 #define IQ_SELL_BACK_RULE "SellBack"
 
-extern IRulesIniSection& IqRules;
-
-#define Read_Max_Iq_Rule() Read_Unsigned_Int_From_Rules_Ini(IqRules[MAX_IQ_RULE], 0, 0, UINT_MAX)
-#define Read_Iq_Rule(entry, defaultValue) Read_Unsigned_Int_From_Rules_Ini(IqRules[entry], defaultValue, 1, Read_Max_Iq_Rule())
+#define Read_Max_Iq_Rule() ReadRuleValue<unsigned int>(IQ_SECTION_NAME, MAX_IQ_RULE)
+#define Read_Iq_Rule(entry) ReadRuleValue<unsigned int>(IQ_SECTION_NAME, entry)

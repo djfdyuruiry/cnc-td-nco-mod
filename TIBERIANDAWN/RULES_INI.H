@@ -26,8 +26,35 @@ void Ensure_Rules_Ini_Is_Loaded();
 
 RulesIniReader& Get_Rules_Reader();
 
+template<class T> T ReadRuleValue(SectionName section, RuleName rule);
+
+template<class T> T ReadRuleValue(RulesIniRuleKey key);
+
+#define BuildDifficultySection(name, firepower, groundspeed, airspeed, armor, rof, cost, repairDelay, buildDelay, buildSpeed, buildSlowdown) \
+	RulesIniSection::BuildSection(name)\
+		.WithDefaultType(DOUBLE_RULE)\
+		.WithRules([](IRulesIniSection& s) {\
+			s << FIREPOWER_DIFFICULTY_RULE << firepower                         \
+			  << GROUNDSPEED_DIFFICULTY_RULE << groundspeed                     \
+			  << AIRSPEED_DIFFICULTY_RULE << airspeed                           \
+			  << ARMOR_DIFFICULTY_RULE << armor                                 \
+			  << RATE_OF_FIRE_DIFFICULTY_RULE << rof                            \
+			  << COST_DIFFICULTY_RULE << cost                                   \
+			  << REPAIR_DELAY_DIFFICULTY_RULE << repairDelay                    \
+			  << BUILD_DELAY_DIFFICULTY_RULE << buildDelay                      \
+			  << BUILD_SPEED_DIFFICULTY_RULE << buildSpeed                      \
+			  << BUILD_SLOWDOWN_DIFFICULTY_RULE << BOOL_RULE << buildSlowdown;  \
+		})
+
+#define BuildSuperweaponSection(name, rechargeTime)               \
+	RulesIniSection::BuildSection(name)                           \
+		.WithDefaultType(UNSIGNED_INT_RULE)                       \
+		.WithRules([](IRulesIniSection& s) {                      \
+			s << SUPERWEAPON_RECHARGE_TIME_RULE << rechargeTime;  \
+		})                                                        \
+
 //NCO config
-void Rules_Ini_Failed_Validation(bool value);
+void MarkRulesIniAsInvalid();
 
 bool Rules_Ini_Failed_Validation();
 

@@ -3,6 +3,8 @@
 #include "rules_ini.h"
 #include "IRulesIniSection.h"
 
+#define AI_SECTION_NAME "AI"
+
 #define ATTACK_INTERVAL_RULE "AttackInterval"
 #define BASE_SIZE_ADD_RULE "BaseSizeAdd"
 #define POWER_SURPLUS_RULE "PowerSurplus"
@@ -26,9 +28,7 @@
 #define INFANTRY_BASE_MULT_RULE "InfantryBaseMult"
 #define PARANOID_RULE "Paranoid"
 
-extern IRulesIniSection& AiRules;
-
-#define Read_Unsigned_Int_Ai_Rule(entry, defaultValue) Read_Unsigned_Int_From_Rules_Ini(AiRules[entry], defaultValue, 0, UINT_MAX)
-#define Read_Bool_Ai_Rule(entry, defaultValue) Read_Bool_From_Rules_Ini(AiRules[entry], defaultValue)
-#define Read_Ratio_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AiRules[entry], defaultValue, defaultAsPercentage)
-#define Read_Fraction_Ai_Rule(entry, defaultValue, defaultAsPercentage) Read_Fixed_From_Rules_Ini(AiRules[entry], defaultValue, defaultAsPercentage)
+#define Read_Unsigned_Int_Ai_Rule(entry) ReadRuleValue<unsigned int>(AI_SECTION_NAME, entry)
+#define Read_Bool_Ai_Rule(entry) ReadRuleValue<bool>(AI_SECTION_NAME, entry)
+#define Read_Ratio_Ai_Rule(entry) Read_Unsigned_Int_Ai_Rule(entry)
+#define Read_Fraction_Ai_Rule(entry) Read_Unsigned_Int_Ai_Rule(entry)

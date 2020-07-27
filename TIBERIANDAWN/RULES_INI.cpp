@@ -1,7 +1,5 @@
 #include "function.h"
 
-#include "rules_cache.h"
-
 static const auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static const auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
 static const auto RULES_FILENAME = "RULES.INI";
@@ -72,9 +70,9 @@ static void Read_Log_Settings_From_Rules_Ini()
 
 static void DefineRulesSections(RulesIni& r) {
 	r << RulesIniSection::BuildSection(NCO_RULES_SECTION_NAME)
+			.WithDefaultType(STRING_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << s.BuildRule("LogLevel")
-						.OfType(STRING_RULE)
 						.OnlyAccept(std::vector<const char*> {
 							Log_Level_To_String(OFF),
 							Log_Level_To_String(ERR),
@@ -85,60 +83,239 @@ static void DefineRulesSections(RulesIni& r) {
 						})
 						.WithDefault("OFF")
 
-				  << "LogFile"                << STRING_RULE
-				  << LUA_SCRIPTS_RULE         << STRING_RULE
-				  << ENABLE_LUA_SCRIPTS_RULE  << BOOL_RULE
+				  << "LogFile"  
+				  << LUA_SCRIPTS_RULE
+				  << ENABLE_LUA_SCRIPTS_RULE  << BOOL_RULE << true
 				  << ENABLE_LUA_CONSOLE_RULE  << BOOL_RULE
 
 				  << s.BuildRule(GAME_TICK_INTERVAL_IN_MS_RULE)
-						.OfType(INT_RULE)
+						.OfType(UNSIGNED_INT_RULE)
 						.WithDefault(TICK_INTERVAL_IN_MILLIS)
-						.WithMin(1)
-						.WithMax(INT_MAX);
+						.WithMin(1u);
 			})
-	  // TODO: mod rules
-	  // TODO: game rules
-	  << RulesIniSection::BuildSection("AI")
-			.WithDefaultType(INT_RULE)
+
+	  << RulesIniSection::BuildSection(ENHANCEMENTS_RULES_SECTION_NAME)
+			.WithDefaultType(UNSIGNED_INT_RULE)
 			.WithRules([](IRulesIniSection& s) {
-				s << ATTACK_INTERVAL_RULE
-				  << BASE_SIZE_ADD_RULE
-				  << POWER_SURPLUS_RULE
-				  << ATTACK_DELAY_RULE
-				  << POWER_EMERGENCY_FRACTION_RULE  << DOUBLE_RULE
-				  << HELIPAD_RATIO_RULE             << DOUBLE_RULE
-				  << HELIPAD_LIMIT_RULE
-				  << AA_RATIO_RULE
-				  << AA_LIMIT_RULE
-				  << DEFENSE_RATIO_RULE             << DOUBLE_RULE
-				  << DEFENSE_LIMIT_RULE
-				  << WAR_RATIO_RULE                 << DOUBLE_RULE
-				  << WAR_LIMIT_RULE
-				  << BARRACKS_RATIO_RULE            << DOUBLE_RULE
-				  << BARRACKS_LIMIT_RULE
-				  << REFINERY_LIMIT_RULE
-				  << REFINERY_RATIO_RULE            << DOUBLE_RULE
-				  << AIRSTRIP_RATIO_RULE            << DOUBLE_RULE
-				  << AIRSTRIP_LIMIT_RULE
-				  << INFANTRY_RESERVE_RULE
-				  << INFANTRY_BASE_MULT_RULE
-				  << PARANOID_RULE                  << BOOL_RULE;
+				s << RALLY_POINTS_RULE << BOOL_RULE << true
+				  << A_STAR_PATH_FINDING_RULE << BOOL_RULE << true
+				  << COMMANDO_GUARD_RULE << BOOL_RULE << true
+
+				  << s.BuildRule(AI_HARVESTERS_PER_REFINERY_RULE)
+						.WithDefault(1u)
+						.WithMin(1u)
+
+				  << s.BuildRule(HUMAN_HARVESTERS_PER_REFINERY_RULE)
+						.WithDefault(1u)
+						.WithMin(1u)
+
+				  << s.BuildRule(MULTI_WALL_LENGTH_RULE)
+						.WithDefault(1u)
+						.WithMin(1u)
+						.WithMax(10u)
+
+				  << FULL_COST_MULTI_WALLS_LENGTH_RULE << BOOL_RULE;
 			})
-	  << RulesIniSection::BuildSection("IQ")
-			.WithDefaultType(INT_RULE)
+				
+	  << RulesIniSection::BuildSection(MOD_RULES_SECTION_NAME)
+			.WithDefaultType(UNSIGNED_INT_RULE)
 			.WithRules([](IRulesIniSection& s) {
-				s << MAX_IQ_RULE            << 5
-				  << IQ_SUPER_WEAPONS_RULE
-				  << IQ_PRODUCTION_RULE
-				  << IQ_GUARD_AREA_RULE
-				  << IQ_REPAIR_SELL_RULE
-				  << IQ_CRUSH_RULE
-				  << IQ_SCATTER_RULE
-				  << IQ_CONTENT_SCAN_RULE
-				  << IQ_AIRCRAFT_RULE
-				  << IQ_HARVESTER_RULE
-				  << IQ_SELL_BACK_RULE;
-			});
+				s << NEW_INFANTRY_RULE << STRING_RULE
+				  << s.BuildRule(NEW_INFANTRY_COUNT_RULE)
+						.WithMax(CHAR_MAX)
+				  << s.BuildRule(INFANTRY_COUNT_RULE)
+						.WithDefault(INFANTRY_COUNT)
+					    .WithMin(INFANTRY_FIRST)
+						.WithMax(CHAR_MAX);
+			})
+				
+	  << RulesIniSection::BuildSection(GAME_RULES_SECTION_NAME)
+			.WithDefaultType(BOOL_RULE)
+			.WithRules([](IRulesIniSection& s) {
+				s << DEBUG_LOGGING_RULE
+
+				  << MAX_BUILD_DISTANCE_RULE << UNSIGNED_INT_RULE << 1u
+				  << PREVENT_BUILDING_IN_SHROUD_RULE << true
+				  << ALLOW_BUILDING_BESIDE_WALLS_RULE << true
+				  << TIBERIUM_GROWS_RULE << true
+				  << TIBERIUM_SPREADS_RULE << true
+				  << SLOW_TIBERIUM_RULE
+				  << TIBERIUM_GROWTH_RATE_RULE << DOUBLE_RULE << 1.0
+				  << TIBERIUM_SPREAD_RATE_RULE << DOUBLE_RULE << 1.0
+				  << TIBERIUM_INFANTRY_DAMAGE_RULE << UNSIGNED_INT_RULE << 2u
+
+				  << CREDITS_PER_TIBERIUM_SCOOP_RULE << UNSIGNED_INT_RULE << 25u
+				  << MAX_HARVESTER_CAPACITY_RULE << UNSIGNED_INT_RULE << 28u
+
+				  << PRODUCTION_STEPS_PER_TICK_RULE << UNSIGNED_INT_RULE << 1u
+				  << FACTORY_COUNT_STEP_MULTIPLER_RULE << DOUBLE_RULE << 1.0
+				  << TOTAL_PRODUCTION_STEPS_RULE << UNSIGNED_INT_RULE << 108u
+
+				  << UNIT_REPAIR_FACTOR_RULE << DOUBLE_RULE << 1.02
+				  << UNIT_REPAIR_STEP_RULE << UNSIGNED_INT_RULE << 4u
+				  << AIRCRAFT_REPAIR_FACTOR_RULE << DOUBLE_RULE << 1.02
+				  << AIRCRAFT_REPAIR_STEP_RULE << UNSIGNED_INT_RULE << 2u
+
+				  << DEFEND_AGAINST_FRIENDLY_FIRE_RULE
+				  << TARGET_TREES_RULE
+				  << MCV_REDEPLOY_RULE
+				  << VISCEROIDS_RULE
+				  << UNITS_INDESTRUCTIBLE_RULE
+				  << THREE_POINT_TURNS_RULE
+				  << SHOW_BIBS_RULE
+				  << NAME_CIVILIAN_BUILDINGS_RULE
+				  << ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE << true
+				  << ONE_TIME_NUKE_RULE << true
+				  << CAN_BUY_HELIPAD_ONLY_RULE
+				  << SURVIVORS_FROM_BUILDINGS_RULE << true
+
+				  << HIDE_TMPL_FROM_GDI_RULE << true
+				  << HIDE_OBLI_FROM_GDI_RULE << true
+				  << HIDE_APC_FROM_NOD_RULE << true
+				  << HIDE_MSAM_FROM_NOD_RULE << true
+				  << HIDE_HELIPAD_FROM_NOD_RULE << true
+				  << HIDE_ADV_COMM_FROM_NOD_RULE << true
+				  << ONLY_GDI_CAN_USE_ION_CANNON_RULE << true
+
+				  << SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE << true
+				  << RENAME_TECH_CENTER_TO_PRISON_RULE << true
+				  << HIDE_E3_FROM_GDI_RULE << true
+				  << HIDE_MSAM_FROM_GDI_RULE << true
+				  << HIDE_SBAG_FROM_GDI_RULE << true
+				  << ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE << true
+
+				  << ALLOW_BUILDING_ALL_FOR_HOUSE_RULE
+				  << AUTO_SCATTER_RULE
+				  << ATTACKER_ADVANTAGE_RULE
+				  << SPEEDY_BUILDS_RULE;
+			})
+
+	  << BuildDifficultySection(
+			"Easy",
+		    1.2,
+		    1.2,
+		    1.2,
+		    0.3,
+		    0.8,
+		    0.8,
+		    0.001,
+		    0.001,
+		    0.6,
+		    false
+		 )
+
+	  << BuildDifficultySection(
+			"Normal",
+		    1.0,
+		    1.0,
+		    1.0,
+		    1.0,
+		    1.0,
+		    1.0,
+		    0.02,
+		    0.03,
+		    1.0,
+		    true
+		 )
+
+	  << BuildDifficultySection(
+			"Hard",
+		    0.9,
+		    0.9,
+		    0.9,
+		    1.05,
+		    1.05,
+		    1.0,
+		    1.0,
+		    0.05,
+		    0.1,
+			true
+		 )
+
+	  << RulesIniSection::BuildSection(AI_SECTION_NAME)
+			.WithDefaultType(UNSIGNED_INT_RULE)
+			.WithRules([](IRulesIniSection& s) {
+				s << ATTACK_INTERVAL_RULE << 3u
+				  << BASE_SIZE_ADD_RULE << 3u
+				  << POWER_SURPLUS_RULE << 50u
+				  << ATTACK_DELAY_RULE << 1u
+
+				  << s.BuildRule(POWER_EMERGENCY_FRACTION_RULE)
+					    .OfType(FIXED_RULE)
+						.WithDefault(0x00C0)
+						.WithDefaultAsPercentage(0.75f)
+
+				  << s.BuildRule(HELIPAD_RATIO_RULE)
+						.OfType(FIXED_RULE)
+						.WithDefault(0x1E)
+						.WithDefaultAsPercentage(0.12f)
+
+				  << HELIPAD_LIMIT_RULE << 5u
+
+				  << s.BuildRule(AA_RATIO_RULE)
+						.OfType(FIXED_RULE)
+						.WithDefault(0x0024)
+						.WithDefaultAsPercentage(0.14f)
+
+				  << AA_LIMIT_RULE << 10u
+
+				  << s.BuildRule(DEFENSE_RATIO_RULE)
+						.OfType(FIXED_RULE)
+						.WithDefault(0x0066)
+						.WithDefaultAsPercentage(0.4f)
+
+				  << DEFENSE_LIMIT_RULE << 40u
+
+				  << s.BuildRule(WAR_RATIO_RULE)
+						.OfType(FIXED_RULE)
+						.WithDefault(0x0019)
+						.WithDefaultAsPercentage(0.4f)
+
+				  << WAR_LIMIT_RULE << 2u
+
+				  << s.BuildRule(BARRACKS_RATIO_RULE)
+						.OfType(FIXED_RULE)
+						.WithDefault(0x0028)
+						.WithDefaultAsPercentage(0.16f)
+
+				  << BARRACKS_LIMIT_RULE << 2u
+				  << REFINERY_LIMIT_RULE << 4u
+
+				  << s.BuildRule(REFINERY_RATIO_RULE)
+						.OfType(FIXED_RULE)
+						.WithDefault(0x0028)
+						.WithDefaultAsPercentage(0.16f)
+
+				  << s.BuildRule(AIRSTRIP_RATIO_RULE)
+					.OfType(FIXED_RULE)
+						.WithDefault(0x001E)
+						.WithDefaultAsPercentage(0.12f)
+
+				  << AIRSTRIP_LIMIT_RULE << 5u
+				  << INFANTRY_RESERVE_RULE << 3000u
+				  << INFANTRY_BASE_MULT_RULE << 1u
+				  << PARANOID_RULE << BOOL_RULE << true;
+			})
+
+	  << RulesIniSection::BuildSection(IQ_SECTION_NAME)
+			.WithDefaultType(UNSIGNED_INT_RULE)
+			.WithRules([](IRulesIniSection& s) {
+				s << MAX_IQ_RULE << 5
+				  << IQ_SUPER_WEAPONS_RULE << 4u
+				  << IQ_PRODUCTION_RULE << 5u
+				  << IQ_GUARD_AREA_RULE << 4u
+				  << IQ_REPAIR_SELL_RULE << 1u
+				  << IQ_CRUSH_RULE << 2u
+				  << IQ_SCATTER_RULE << 3u
+				  << IQ_CONTENT_SCAN_RULE << 4u
+				  << IQ_AIRCRAFT_RULE << 4u
+				  << IQ_HARVESTER_RULE << 2u
+				  << IQ_SELL_BACK_RULE << 2u;
+			})
+
+	  << BuildSuperweaponSection(AIRSTRIKE_SECTION_NAME, 8u)
+      << BuildSuperweaponSection(ION_CANNON_SECTION_NAME, 10u)
+	  << BuildSuperweaponSection(NUCLEAR_STRIKE_SECTION_NAME, 14u);
 }
 
 void Ensure_Rules_Ini_Is_Loaded() {
@@ -171,12 +348,23 @@ RulesIniReader& Get_Rules_Reader()
 	return *RuleReader;
 }
 
-void Rules_Ini_Failed_Validation(bool value)
+template<class T> T ReadRuleValue(SectionName section, RuleName rule)
 {
-	if (!value)
-	{
-		Rules->MarkAsInvalid();
-	}
+	Ensure_Rules_Ini_Is_Loaded();
+
+	return RuleReader->ReadRuleValue<T>(section, rule);
+}
+
+template<class T> T ReadRuleValue(const RulesIniRuleKey key)
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	return RuleReader->ReadRuleValue<T>(key);
+}
+
+void MarkRulesIniAsInvalid()
+{
+	Rules->MarkAsInvalid();
 }
 
 bool Rules_Ini_Failed_Validation()

@@ -1994,16 +1994,16 @@ void DLLExportClass::Config(const CNCRulesDataStruct& rules)
 	{
 		auto difficultyName = Difficulty_Type_To_String(d);
 
-		Rule.Diff[d].FirepowerBias = Read_Double_Difficulty_Rule(difficultyName, FIREPOWER_DIFFICULTY_RULE, rules.Difficulties[d].FirepowerBias);
-		Rule.Diff[d].GroundspeedBias = Read_Double_Difficulty_Rule(difficultyName, GROUNDSPEED_DIFFICULTY_RULE, rules.Difficulties[d].GroundspeedBias);
-		Rule.Diff[d].AirspeedBias = Read_Double_Difficulty_Rule(difficultyName, AIRSPEED_DIFFICULTY_RULE, rules.Difficulties[d].AirspeedBias);
-		Rule.Diff[d].ArmorBias = Read_Double_Difficulty_Rule(difficultyName, ARMOR_DIFFICULTY_RULE, rules.Difficulties[d].ArmorBias);
-		Rule.Diff[d].ROFBias = Read_Double_Difficulty_Rule(difficultyName, RATE_OF_FIRE_DIFFICULTY_RULE, rules.Difficulties[d].ROFBias);
-		Rule.Diff[d].CostBias = Read_Double_Difficulty_Rule(difficultyName, COST_DIFFICULTY_RULE, rules.Difficulties[d].CostBias);
-		Rule.Diff[d].BuildSpeedBias = Read_Double_Difficulty_Rule(difficultyName, BUILD_SPEED_DIFFICULTY_RULE, rules.Difficulties[d].BuildSpeedBias);
-		Rule.Diff[d].RepairDelay = Read_Double_Difficulty_Rule(difficultyName, REPAIR_DELAY_DIFFICULTY_RULE, rules.Difficulties[d].RepairDelay);
-		Rule.Diff[d].BuildDelay = Read_Double_Difficulty_Rule(difficultyName, BUILD_DELAY_DIFFICULTY_RULE, rules.Difficulties[d].BuildDelay);
-		Rule.Diff[d].IsBuildSlowdown = Read_Bool_From_Rules_Ini(difficultyName, BUILD_SLOWDOWN_DIFFICULTY_RULE, rules.Difficulties[d].IsBuildSlowdown);
+		Rule.Diff[d].FirepowerBias = Read_Double_Difficulty_Rule(difficultyName, FIREPOWER_DIFFICULTY_RULE);
+		Rule.Diff[d].GroundspeedBias = Read_Double_Difficulty_Rule(difficultyName, GROUNDSPEED_DIFFICULTY_RULE);
+		Rule.Diff[d].AirspeedBias = Read_Double_Difficulty_Rule(difficultyName, AIRSPEED_DIFFICULTY_RULE);
+		Rule.Diff[d].ArmorBias = Read_Double_Difficulty_Rule(difficultyName, ARMOR_DIFFICULTY_RULE);
+		Rule.Diff[d].ROFBias = Read_Double_Difficulty_Rule(difficultyName, RATE_OF_FIRE_DIFFICULTY_RULE);
+		Rule.Diff[d].CostBias = Read_Double_Difficulty_Rule(difficultyName, COST_DIFFICULTY_RULE);
+		Rule.Diff[d].BuildSpeedBias = Read_Double_Difficulty_Rule(difficultyName, BUILD_SPEED_DIFFICULTY_RULE);
+		Rule.Diff[d].RepairDelay = Read_Double_Difficulty_Rule(difficultyName, REPAIR_DELAY_DIFFICULTY_RULE);
+		Rule.Diff[d].BuildDelay = Read_Double_Difficulty_Rule(difficultyName, BUILD_DELAY_DIFFICULTY_RULE);
+		Rule.Diff[d].IsBuildSlowdown = ReadRuleValue<bool>(difficultyName, BUILD_SLOWDOWN_DIFFICULTY_RULE);
 
 		// below two rules are never used for C&C (RA only)
 		Rule.Diff[d].IsWallDestroyer = rules.Difficulties[d].IsWallDestroyer ? 1 : 0;

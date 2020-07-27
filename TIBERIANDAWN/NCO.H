@@ -21,6 +21,7 @@
 #include "./rules_ini_unit.h"
 #include "./rules_ini_warhead.h"
 #include "./rules_ini_weapon.h"
+#include "./RulesIniRuleKey.h"
 #include "./strings.h"
 
 bool NCO_Startup();
