@@ -1,0 +1,17 @@
+#pragma once
+
+// rules ini sections
+#define NCO_RULES_SECTION_NAME "NCO"
+
+// nco config
+#define ENABLE_LUA_SCRIPTS_RULE "EnableLuaScripts"
+#define ENABLE_LUA_SCRIPTS_RULE_UPPER "ENABLELUASCRIPTS"
+
+#define LUA_SCRIPTS_RULE "LuaScripts"
+#define LUA_SCRIPTS_RULE_UPPER "LUASCRIPTS"
+
+#define ENABLE_LUA_CONSOLE_RULE "EnableLuaConsole"
+#define ENABLE_LUA_CONSOLE_RULE_UPPER "ENABLELUACONSOLE"
+
+#define GAME_TICK_INTERVAL_IN_MS_RULE "GameTickIntervalInMs"
+#define GAME_TICK_INTERVAL_IN_MS_RULE_UPPER "LUASCRIPTS"

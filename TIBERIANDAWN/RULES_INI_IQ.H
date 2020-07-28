@@ -1,7 +1,5 @@
 #pragma once
 
-#include "rules_ini.h"
-
 #define IQ_SECTION_NAME "IQ"
 
 #define MAX_IQ_RULE "MaxIQ"
@@ -15,6 +13,3 @@
 #define IQ_AIRCRAFT_RULE "Aircraft"
 #define IQ_HARVESTER_RULE "Harvester"
 #define IQ_SELL_BACK_RULE "SellBack"
-
-#define Read_Max_Iq_Rule() ReadRuleValue<unsigned int>(IQ_SECTION_NAME, MAX_IQ_RULE)
-#define Read_Iq_Rule(entry) ReadRuleValue<unsigned int>(IQ_SECTION_NAME, entry)

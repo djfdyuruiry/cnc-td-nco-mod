@@ -1,7 +1,5 @@
 #pragma once
 
-#include "rules_ini.h"
-
 #define AI_SECTION_NAME "AI"
 
 #define ATTACK_INTERVAL_RULE "AttackInterval"
@@ -26,8 +24,3 @@
 #define INFANTRY_RESERVE_RULE "InfantryReserve"
 #define INFANTRY_BASE_MULT_RULE "InfantryBaseMult"
 #define PARANOID_RULE "Paranoid"
-
-#define Read_Unsigned_Int_Ai_Rule(entry) ReadRuleValue<unsigned int>(AI_SECTION_NAME, entry)
-#define Read_Bool_Ai_Rule(entry) ReadRuleValue<bool>(AI_SECTION_NAME, entry)
-#define Read_Ratio_Ai_Rule(entry) Read_Unsigned_Int_Ai_Rule(entry)
-#define Read_Fraction_Ai_Rule(entry) Read_Unsigned_Int_Ai_Rule(entry)

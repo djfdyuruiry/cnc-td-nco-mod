@@ -35,7 +35,7 @@
 #ifndef SPECIAL_H
 #define SPECIAL_H
 
-#include "rules_ini_game.h"
+#include "rules_ini.h"
 
 class SpecialClass
 {

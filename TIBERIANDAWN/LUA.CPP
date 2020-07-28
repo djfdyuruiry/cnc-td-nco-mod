@@ -204,6 +204,23 @@ void Push_String_Array_Onto_Lua_Stack(const char** stringArray, unsigned int arr
     }
 }
 
+void Push_String_Vector_Onto_Lua_Stack(std::vector<const char*>& stringArray)
+{
+    lua_createtable(LUA, 0, stringArray.size());
+
+    auto idx = 1;
+
+    for (auto str : stringArray)
+    {
+        Log_Trace("Pushing string onto Lua table: %s", str);
+
+        lua_pushstring(LUA, str);
+        lua_rawseti(LUA, -2, idx);
+
+        idx++;
+    }
+}
+
 void Clear_Lua_Stack()
 {
     lua_settop(LUA, 0);

@@ -1,5 +1,7 @@
 #include "function.h"
 
+#include "rules_ini_nco.h"
+
 static const auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static const auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
 static const auto RULES_FILENAME = "RULES.INI";
@@ -24,6 +26,7 @@ const char* FALSE_STRING = "FALSE";
 
 static RulesIni* RULES;
 static RulesIniReader* RULE_READER;
+static RulesIniInfo* RULE_INFO;
 
 static void Read_Lua_Scripts_From_Rules_Ini()
 {
@@ -66,6 +69,40 @@ static void Read_Log_Settings_From_Rules_Ini()
 	{
 		Log_Info("Resolved Log Path: %s", LOG_PATH);
 	}
+}
+
+static IRulesIniSection& BuildDifficultySection(
+	SectionName name,
+	double firepower,
+	double groundspeed,
+	double airspeed,
+	double armor,
+	double rof,
+	double cost,
+	double repairDelay,
+	double buildDelay,
+	double buildSpeed,
+	bool buildSlowdown)
+{
+	return RulesIniSection::BuildSection(name)
+		.WithDefaultType(DOUBLE_RULE)
+			<< FIREPOWER_DIFFICULTY_RULE << firepower
+			<< GROUNDSPEED_DIFFICULTY_RULE << groundspeed
+			<< AIRSPEED_DIFFICULTY_RULE << airspeed
+			<< ARMOR_DIFFICULTY_RULE << armor
+			<< RATE_OF_FIRE_DIFFICULTY_RULE << rof
+			<< COST_DIFFICULTY_RULE << cost
+			<< REPAIR_DELAY_DIFFICULTY_RULE << repairDelay
+			<< BUILD_DELAY_DIFFICULTY_RULE << buildDelay
+			<< BUILD_SPEED_DIFFICULTY_RULE << buildSpeed
+			<< BUILD_SLOWDOWN_DIFFICULTY_RULE << BOOL_RULE << buildSlowdown;
+}
+
+static IRulesIniSection& BuildSuperweaponSection(SectionName name, unsigned int rechargeTime)
+{
+	return RulesIniSection::BuildSection(name)
+		.WithDefaultType(UNSIGNED_INT_RULE)
+			<< SUPERWEAPON_RECHARGE_TIME_RULE << rechargeTime;
 }
 
 static void DefineRulesSections(RulesIni& r) {
@@ -348,6 +385,13 @@ RulesIniReader& GetRulesReader()
 	Ensure_Rules_Ini_Is_Loaded();
 
 	return *RULE_READER;
+}
+
+RulesIniInfo& GetRulesInfo()
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	return *RULE_INFO;
 }
 
 template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName rule, U defaultValue)

@@ -20,7 +20,7 @@
 
 class RulesIniTemplates
 {
-public:
+private:
 	static IRulesIniSection& BuildFriendlyNameRule(IRulesIniSection& s)
 	{
 		return s << FRIENDLY_NAME_RULE << STRING_RULE;
@@ -29,60 +29,74 @@ public:
 	static IRulesIniSection& BuildSpeedRule(IRulesIniSection& s)
 	{
 		return s << s.BuildRule(SPEED_RULE)
-					 .OfType(UNSIGNED_INT_RULE)
-					 .WithMax(UCHAR_MAX);
-	}
-
-	static IRulesIniSection& BuildGenericRules(IRulesIniSection& s)
-	{
-		return s << BuildFriendlyNameRule(s)
-			     << s.BuildRule(BUILD_LEVEL_RULE)
-			         .OfType(UNSIGNED_INT_RULE)
-			         .WithMax(99u)
-			     << s.BuildRule(SCENARIO_LEVEL_RULE)
-			         .OfType(UNSIGNED_INT_RULE)
-			         .WithMax(99u)
-			     << PREREQUISITE_RULE << PREREQ_RULE
-			     << COST_RULE << UNSIGNED_INT_RULE
-			     << BUILDABLE_RULE << BOOL_RULE
-			     << FLAMMABLE_RULE << BOOL_RULE		
-			     << BuildSpeedRule(s)
-		     
-			     << s.BuildRule(STRENGTH_RULE)
-			     	 .OfType(UNSIGNED_INT_RULE)
-			     	 .WithMax(USHRT_MAX)
-     
-			     << HOUSES_RULE << STRING_RULE
-			     << OWNER_RULE << HOUSE_LIST_RULE
-			     << PRIMARY_WEAPON_RULE << WEAPON_RULE
-			     << SECONDARY_WEAPON_RULE << WEAPON_RULE
-			     << ARMOR_RULE << ARMOR_RULE
-     
-			     << s.BuildRule(AMMO_RULE)
-			     	 .OfType(INT_RULE)
-			     	 .WithMin(-1)
-     
-			     << SIGHT_RANGE_RULE << UNSIGNED_INT_RULE
-			     << REWARD_RULE << UNSIGNED_INT_RULE
-			     << CRUSHABLE_RULE << BOOL_RULE
-			     << DETECT_CLOAKED_OBJECTS_RULE << BOOL_RULE
-			     << LEADER_RULE << BOOL_RULE
-			     << TWO_SHOOTER_RULE << BOOL_RULE
-			     << HAS_THEATER_GFX_RULE << BOOL_RULE
-			     << SHOW_NAME_RULE << BOOL_RULE
-			     << IS_MOD_TYPE_RULE << BOOL_RULE
-			     << TRANSPORTER_RULE << BOOL_RULE
-			     << TRANSPORT_CAPACITY_RULE
-			     << REPAIRABLE_RULE << BOOL_RULE;
+			.OfType(UNSIGNED_INT_RULE)
+			.WithMax(UCHAR_MAX);
 	}
 
 	static IRulesIniSection& BuildRateOfTurnRule(IRulesIniSection& s)
 	{
 		return s << s.BuildRule(RATE_OF_TURN_RULE)
-					 .OfType(UNSIGNED_INT_RULE)
-					 .WithMax(UCHAR_MAX);
+			.OfType(UNSIGNED_INT_RULE)
+			.WithMax(UCHAR_MAX);
 	}
 
+	static IRulesIniSection& BuildUnitAndAircraftSharedRules(IRulesIniSection& s)
+	{
+		s << BuildRateOfTurnRule(s)
+			<< TRANSPORTER_RULE << BOOL_RULE
+			<< TRANSPORT_CAPACITY_RULE << UNSIGNED_INT_RULE;
+	}
+
+	static IRulesIniSection& BuildNonInfantrySharedRules(IRulesIniSection& s)
+	{
+		s << HAS_CREW_RULE << BOOL_RULE
+			<< TURRET_EQUIPPED_RULE << BOOL_RULE;
+	}
+
+	static IRulesIniSection& BuildGenericRules(IRulesIniSection& s)
+	{
+		return s << BuildFriendlyNameRule(s)
+			<< s.BuildRule(BUILD_LEVEL_RULE)
+			.OfType(UNSIGNED_INT_RULE)
+			.WithMax(99u)
+			<< s.BuildRule(SCENARIO_LEVEL_RULE)
+			.OfType(UNSIGNED_INT_RULE)
+			.WithMax(99u)
+			<< PREREQUISITE_RULE << PREREQ_RULE
+			<< COST_RULE << UNSIGNED_INT_RULE
+			<< BUILDABLE_RULE << BOOL_RULE
+			<< FLAMMABLE_RULE << BOOL_RULE
+			<< BuildSpeedRule(s)
+
+			<< s.BuildRule(STRENGTH_RULE)
+			.OfType(UNSIGNED_INT_RULE)
+			.WithMax(USHRT_MAX)
+
+			<< HOUSES_RULE << STRING_RULE
+			<< OWNER_RULE << HOUSE_LIST_RULE
+			<< PRIMARY_WEAPON_RULE << WEAPON_RULE
+			<< SECONDARY_WEAPON_RULE << WEAPON_RULE
+			<< ARMOR_RULE << ARMOR_RULE
+
+			<< s.BuildRule(AMMO_RULE)
+			.OfType(INT_RULE)
+			.WithMin(-1)
+
+			<< SIGHT_RANGE_RULE << UNSIGNED_INT_RULE
+			<< REWARD_RULE << UNSIGNED_INT_RULE
+			<< CRUSHABLE_RULE << BOOL_RULE
+			<< DETECT_CLOAKED_OBJECTS_RULE << BOOL_RULE
+			<< LEADER_RULE << BOOL_RULE
+			<< TWO_SHOOTER_RULE << BOOL_RULE
+			<< HAS_THEATER_GFX_RULE << BOOL_RULE
+			<< SHOW_NAME_RULE << BOOL_RULE
+			<< IS_MOD_TYPE_RULE << BOOL_RULE
+			<< TRANSPORTER_RULE << BOOL_RULE
+			<< TRANSPORT_CAPACITY_RULE
+			<< REPAIRABLE_RULE << BOOL_RULE;
+	}
+
+public:
 	static IRulesIniSection& BuildWeaponSection(SectionName name)
 	{
 		return RulesIniSection::BuildSection(name)
@@ -159,19 +173,6 @@ public:
 				  << IMMUNE_TO_TIBERIUM_RULE
 				  << HAS_C4_CHARGES_RULE;
 			});
-	}
-
-	static IRulesIniSection& BuildUnitAndAircraftSharedRules(IRulesIniSection& s)
-	{
-		s << BuildRateOfTurnRule(s)
-		  << TRANSPORTER_RULE << BOOL_RULE
-		  << TRANSPORT_CAPACITY_RULE << UNSIGNED_INT_RULE;
-	}
-
-	static IRulesIniSection& BuildNonInfantrySharedRules(IRulesIniSection& s)
-	{
-		s << HAS_CREW_RULE << BOOL_RULE
-		  << TURRET_EQUIPPED_RULE << BOOL_RULE;
 	}
 
 	static IRulesIniSection& BuildUnitSection(SectionName name)

@@ -1,8 +1,5 @@
 #pragma once
 
-#include "rules_ini.h"
-#include "RulesIniRuleKey.h"
-
 #define GAME_RULES_SECTION_NAME "Game"
 
 // C&C internal debug rules
@@ -109,22 +106,3 @@
 #define ATTACKER_ADVANTAGE_RULE "GiveAttackersAnAdvantage"
 
 #define SPEEDY_BUILDS_RULE "SpeedyBuilds"
-
-// lookups
-#define Read_Build_Distance_Game_Rule() ReadRuleValue<unsigned int>(MAX_BUILD_DISTANCE_RULE_KEY)
-
-#define Read_Credits_Per_Scoop_Rule() ReadRuleValue<unsigned int>(CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY)
-
-#define Read_Harvester_Capacity_Rule() ReadRuleValue<unsigned int>(MAX_HARVESTER_CAPACITY_RULE_KEY)
-
-#define Read_Harvester_Max_Credits_Rule() Read_Credits_Per_Scoop_Rule() * Read_Harvester_Capacity_Rule()
-
-#define Read_Production_Steps_Per_Tick_Rule() ReadRuleValue<unsigned int>(PRODUCTION_STEPS_PER_TICK_RULE_KEY)
-
-#define Read_Factory_Count_Multiplier_Rule() ReadRuleValue<double>(FACTORY_COUNT_STEP_MULTIPLER_RULE_KEY)
-
-#define Read_Total_Production_Steps_Rule() ReadRuleValue<unsigned int>(TOTAL_PRODUCTION_STEPS_RULE_KEY)
-
-#define Read_Unit_Repair_Step_Rule() ReadRuleValue<unsigned int>(UNIT_REPAIR_STEP_RULE_KEY)
-
-#define Read_Aircraft_Repair_Step_Rule() ReadRuleValue<unsigned int>(AIRCRAFT_REPAIR_STEP_RULE_KEY)

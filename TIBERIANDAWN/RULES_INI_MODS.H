@@ -1,7 +1,5 @@
 #pragma once
 
-#include "rules_ini.h"
-
 #define MOD_RULES_SECTION_NAME "Mods"
 
 #define NEW_INFANTRY_RULE "NewInfantry"
@@ -11,10 +9,6 @@
 // virtual rules calculated on load of the rules file
 #define NEW_INFANTRY_COUNT_RULE "NewInfantryCount"
 #define INFANTRY_COUNT_RULE "InfantryCount"
-
-#define Read_New_Infantry_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE)
-
-#define Read_Infantry_Count() (char)ReadRuleValue<unsigned int>(INFANTRY_COUNT_RULE_KEY)
 
 void Read_Mods();
 

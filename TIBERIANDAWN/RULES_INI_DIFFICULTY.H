@@ -1,7 +1,5 @@
 #pragma once
 
-#include "rules_ini.h"
-
 #define FIREPOWER_DIFFICULTY_RULE "Firepower"
 
 #define GROUNDSPEED_DIFFICULTY_RULE "GroundSpeed"
@@ -21,5 +19,3 @@
 #define BUILD_SPEED_DIFFICULTY_RULE "BuildSpeed"
 
 #define BUILD_SLOWDOWN_DIFFICULTY_RULE "BuildSlowdown"
-
-#define Read_Double_Difficulty_Rule(difficultyName, rule) ReadRuleValue<double>(difficultyName, rule)
