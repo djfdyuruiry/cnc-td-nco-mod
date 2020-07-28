@@ -1240,7 +1240,7 @@ const char* Infantry_Type_To_String(InfantryType infantryType)
 
         infantryTypeString = CIVILIAN_TYPE_MAP[index];
     }
-    else if (infantryType < Read_Infantry_Count(INFANTRY_COUNT))
+    else if (infantryType < Read_Infantry_Count())
     {
         infantryTypeString = Get_New_Infantry_Ini_Name(infantryType);
     }

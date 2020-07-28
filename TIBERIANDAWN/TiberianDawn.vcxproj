@@ -464,6 +464,7 @@
     <ClInclude Include="RULES.H" />
     <ClInclude Include="RulesIniRuleKey.h" />
     <ClInclude Include="RulesIniSection.h" />
+    <ClInclude Include="RulesIniTemplates.h" />
     <ClInclude Include="RulesIniTypes.h" />
     <ClInclude Include="RULES_CACHE.H" />
     <ClInclude Include="RULES_CACHE_KEY.H" />

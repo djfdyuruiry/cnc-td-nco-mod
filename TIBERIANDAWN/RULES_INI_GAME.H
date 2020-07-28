@@ -1,9 +1,7 @@
 #pragma once
 
-#include <float.h>
-
-#include "rules_cache_key.h"
 #include "rules_ini.h"
+#include "RulesIniRuleKey.h"
 
 #define GAME_RULES_SECTION_NAME "Game"
 
@@ -113,26 +111,20 @@
 #define SPEEDY_BUILDS_RULE "SpeedyBuilds"
 
 // lookups
-#define Read_Boolean_Game_Rule(ruleName, cacheKey, defaultValue) Read_Cached_Bool_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, cacheKey, defaultValue)
+#define Read_Build_Distance_Game_Rule() ReadRuleValue<unsigned int>(MAX_BUILD_DISTANCE_RULE_KEY)
 
-#define Read_Int_Game_Rule(ruleName, cacheKey, defaultValue, minValue, maxValue) Read_Cached_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, cacheKey, defaultValue, minValue, maxValue)
+#define Read_Credits_Per_Scoop_Rule() ReadRuleValue<unsigned int>(CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY)
 
-#define Read_Double_Game_Rule(ruleName, cacheKey, defaultValue, minValue) Read_Cached_Double_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, cacheKey, defaultValue, minValue, DBL_MAX)
+#define Read_Harvester_Capacity_Rule() ReadRuleValue<unsigned int>(MAX_HARVESTER_CAPACITY_RULE_KEY)
 
-#define Read_Build_Distance_Game_Rule() Read_Int_Game_Rule(MAX_BUILD_DISTANCE_RULE, MAX_BUILD_DISTANCE_RULE_KEY, 1, 1, INT_MAX)
+#define Read_Harvester_Max_Credits_Rule() Read_Credits_Per_Scoop_Rule() * Read_Harvester_Capacity_Rule()
 
-#define Read_Credits_Per_Scoop_Rule() Read_Int_Game_Rule(CREDITS_PER_TIBERIUM_SCOOP_RULE, CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY, 25, 1, INT_MAX)
+#define Read_Production_Steps_Per_Tick_Rule() ReadRuleValue<unsigned int>(PRODUCTION_STEPS_PER_TICK_RULE_KEY)
 
-#define Read_Harvester_Capcity_Rule() Read_Int_Game_Rule(MAX_HARVESTER_CAPACITY_RULE, MAX_HARVESTER_CAPACITY_RULE_KEY, 28, 1, INT_MAX)
+#define Read_Factory_Count_Multiplier_Rule() ReadRuleValue<double>(FACTORY_COUNT_STEP_MULTIPLER_RULE_KEY)
 
-#define Read_Harvester_Max_Credits_Rule() Read_Credits_Per_Scoop_Rule() * Read_Harvester_Capcity_Rule()
+#define Read_Total_Production_Steps_Rule() ReadRuleValue<unsigned int>(TOTAL_PRODUCTION_STEPS_RULE_KEY)
 
-#define Read_Production_Steps_Per_Tick_Rule() Read_Int_Game_Rule(PRODUCTION_STEPS_PER_TICK_RULE, PRODUCTION_STEPS_PER_TICK_RULE_KEY, 1, 1, INT_MAX)
+#define Read_Unit_Repair_Step_Rule() ReadRuleValue<unsigned int>(UNIT_REPAIR_STEP_RULE_KEY)
 
-#define Read_Factory_Count_Multiplier_Rule() Read_Double_Game_Rule(FACTORY_COUNT_STEP_MULTIPLER_RULE, FACTORY_COUNT_STEP_MULTIPLER_RULE_KEY, 1.0f, 1.0f)
-
-#define Read_Total_Production_Steps_Rule() Read_Int_Game_Rule(TOTAL_PRODUCTION_STEPS_RULE, TOTAL_PRODUCTION_STEPS_RULE_KEY, 108, 1, INT_MAX)
-
-#define Read_Unit_Repair_Step_Rule() Read_Int_Game_Rule(UNIT_REPAIR_STEP_RULE, UNIT_REPAIR_STEP_RULE_KEY, defaultValue, 1, INT_MAX)
-
-#define Read_Aircraft_Repair_Step_Rule() Read_Int_Game_Rule(AIRCRAFT_REPAIR_STEP_RULE, AIRCRAFT_REPAIR_STEP_RULE_KEY, defaultValue, 1, INT_MAX)
+#define Read_Aircraft_Repair_Step_Rule() ReadRuleValue<unsigned int>(AIRCRAFT_REPAIR_STEP_RULE_KEY)

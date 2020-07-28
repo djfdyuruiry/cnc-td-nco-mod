@@ -1,6 +1,7 @@
 #include "function.h"
 
 #include "lua_api_functions_generic_rules.h"
+#include "rules_ini_bullet.h"
 
 static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {

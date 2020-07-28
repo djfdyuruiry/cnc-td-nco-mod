@@ -1,5 +1,6 @@
-#ifndef RULES_INI_DIFFICULTY
-#define RULES_INI_DIFFICULTY
+#pragma once
+
+#include "rules_ini.h"
 
 #define FIREPOWER_DIFFICULTY_RULE "Firepower"
 
@@ -22,5 +23,3 @@
 #define BUILD_SLOWDOWN_DIFFICULTY_RULE "BuildSlowdown"
 
 #define Read_Double_Difficulty_Rule(difficultyName, rule) ReadRuleValue<double>(difficultyName, rule)
-
-#endif

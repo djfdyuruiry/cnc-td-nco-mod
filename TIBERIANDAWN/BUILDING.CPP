@@ -2072,7 +2072,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 	if (Target_Legal(WhomToRepay)) {
 		odds -= 1;
 
-		IsSurvivorless = !Read_Boolean_Game_Rule(SURVIVORS_FROM_BUILDINGS_RULE, SURVIVORS_FROM_BUILDINGS_RULE_KEY, !IsSurvivorless);
+		IsSurvivorless = !ReadRuleValue<bool>(SURVIVORS_FROM_BUILDINGS_RULE_KEY);
 	}
 
 	if (IsCaptured) odds += 6;
@@ -2553,7 +2553,7 @@ void BuildingClass::Update_Buildables(void)
 	bool buildable_via_capture = (IsCaptured && ActLike != House->ActLike) ? true : false;
 
 	if (!IsInLimbo && Is_Discovered_By_Player()) {
-		char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+		char infantryCount = Read_Infantry_Count();
 
 		switch (Class->ToBuild) {
 			StructType i;
@@ -2669,7 +2669,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_INFANTRYTYPE:
-				char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+				char infantryCount = Read_Infantry_Count();
 
 				for (f = INFANTRY_FIRST; f < infantryCount; f++) {
 					if (PlayerPtr->Can_Build(f, ActLike)) {
@@ -5647,8 +5647,8 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	*/
 	auto ptr = Occupy_List(true);
 	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-	auto preventBuildingInShroud = Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true);
-	auto allowBuildingBesideWalls = Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true);
+	auto preventBuildingInShroud = ReadRuleValue<bool>(PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
+	auto allowBuildingBesideWalls = ReadRuleValue<bool>(ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
 
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = homecell + *ptr++;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "rules_ini.h"
+
 #define MOD_RULES_SECTION_NAME "Mods"
 
 #define NEW_INFANTRY_RULE "NewInfantry"

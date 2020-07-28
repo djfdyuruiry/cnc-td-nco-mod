@@ -5,65 +5,29 @@
 #define ENHANCEMENTS_RULES_SECTION_NAME "Enhancements"
 
 #define RALLY_POINTS_RULE "RallyPoints"
-#define RALLY_POINTS_RULE_UPPER "RALLYPOINTS"
-#define RALLY_POINTS_RULE_TYPE "bool"
 
 #define A_STAR_PATH_FINDING_RULE "AStarPathFinding"
-#define A_STAR_PATH_FINDING_RULE_UPPER "ASTARPATHFINDING"
-#define A_STAR_PATH_FINDING_RULE_TYPE "bool"
 
 #define COMMANDO_GUARD_RULE "CommandoGuard"
-#define COMMANDO_GUARD_RULE_UPPER "COMMANDOGUARD"
-#define COMMANDO_GUARD_RULE_TYPE "bool"
 
 #define AI_HARVESTERS_PER_REFINERY_RULE "AiHarvestersPerRefinery"
-#define AI_HARVESTERS_PER_REFINERY_RULE_UPPER "AIHARVESTERSPERREFINERY"
-#define AI_HARVESTERS_PER_REFINERY_RULE_TYPE "int"
 
 #define HUMAN_HARVESTERS_PER_REFINERY_RULE "HumanHarvestersPerRefinery"
-#define HUMAN_HARVESTERS_PER_REFINERY_RULE_UPPER "HUMANHARVESTERSPERREFINERY"
-#define HUMAN_HARVESTERS_PER_REFINERY_RULE_TYPE "int"
 
 #define MULTI_WALL_LENGTH_RULE "MultiWallLength"
-#define MULTI_WALL_LENGTH_RULE_UPPER "MULTIWALLLENGTH"
-#define MULTI_WALL_LENGTH_RULE_TYPE "int"
 
 #define FULL_COST_MULTI_WALLS_LENGTH_RULE "FullCostMultiWalls"
-#define FULL_COST_MULTI_WALLS_LENGTH_RULE_UPPER "FULLCOSTMULTIWALLLS"
-#define FULL_COST_MULTI_WALLS_RULE_TYPE "bool"
 
-#define ENHANCEMENTS_RULES RALLY_POINTS_RULE, \
-	A_STAR_PATH_FINDING_RULE, \
-	COMMANDO_GUARD_RULE, \
-	AI_HARVESTERS_PER_REFINERY_RULE, \
-	HUMAN_HARVESTERS_PER_REFINERY_RULE, \
-	MULTI_WALL_LENGTH_RULE, \
-	FULL_COST_MULTI_WALLS_LENGTH_RULE
+#define Read_Rally_Points_Rule() ReadRuleValue<bool>(RALLY_POINTS_RULE_KEY)
 
-#define ENHANCEMENTS_RULE_COUNT 7u
+#define Read_A_Star_Path_Finding_Rule() ReadRuleValue<bool>(A_STAR_PATH_FINDING_RULE_KEY)
 
-#define ENHANCEMENTS_RULE_TYPES RALLY_POINTS_RULE_TYPE, \
-	A_STAR_PATH_FINDING_RULE_TYPE, \
-	COMMANDO_GUARD_RULE_TYPE, \
-	AI_HARVESTERS_PER_REFINERY_RULE_TYPE, \
-	HUMAN_HARVESTERS_PER_REFINERY_RULE_TYPE, \
-	MULTI_WALL_LENGTH_RULE_TYPE, \
-	FULL_COST_MULTI_WALLS_RULE_TYPE
+#define Read_Commando_Guard_Rule() ReadRuleValue<bool>(COMMANDO_GUARD_RULE_KEY)
 
-#define Read_Bool_Enhancements_Rule(entry, cacheKey) Read_Cached_Bool_From_Rules_Ini(ENHANCEMENTS_RULES_SECTION_NAME, entry, cacheKey, true)
+#define Read_Ai_Harvesters_Per_Refinery_Rule() ReadRuleValue<unsigned int>(AI_HARVESTERS_PER_REFINERY_RULE_KEY)
 
-#define Read_Int_Enhancements_Rule(entry, cacheKey, defaultValue, minValue, maxValue) Read_Cached_Int_From_Rules_Ini(ENHANCEMENTS_RULES_SECTION_NAME, entry, cacheKey, defaultValue, minValue, maxValue)
+#define Read_Human_Harvesters_Per_Refinery_Rule() ReadRuleValue<unsigned int>(HUMAN_HARVESTERS_PER_REFINERY_RULE_KEY)
 
-#define Read_Rally_Points_Rule() Read_Bool_Enhancements_Rule(RALLY_POINTS_RULE, RALLY_POINTS_RULE_KEY)
+#define Read_Multi_Wall_Length_Rule() ReadRuleValue<unsigned int>(MULTI_WALL_LENGTH_RULE_KEY)
 
-#define Read_A_Star_Path_Finding_Rule() Read_Bool_Enhancements_Rule(A_STAR_PATH_FINDING_RULE, A_STAR_PATH_FINDING_RULE_KEY)
-
-#define Read_Commando_Guard_Rule() Read_Bool_Enhancements_Rule(COMMANDO_GUARD_RULE, COMMANDO_GUARD_RULE_KEY)
-
-#define Read_Ai_Harvesters_Per_Refinery_Rule() Read_Int_Enhancements_Rule(AI_HARVESTERS_PER_REFINERY_RULE, AI_HARVESTERS_PER_REFINERY_RULE_KEY, 1, 1, INT_MAX)
-
-#define Read_Human_Harvesters_Per_Refinery_Rule() Read_Int_Enhancements_Rule(HUMAN_HARVESTERS_PER_REFINERY_RULE, HUMAN_HARVESTERS_PER_REFINERY_RULE_KEY, 1, 1, INT_MAX)
-
-#define Read_Multi_Wall_Length_Rule() Read_Int_Enhancements_Rule(MULTI_WALL_LENGTH_RULE, MULTI_WALL_LENGTH_RULE_KEY, 1, 1, 10)
-
-#define Read_Full_Cost_Multi_Wall_Length_Rule() Read_Bool_Enhancements_Rule(FULL_COST_MULTI_WALLS_LENGTH_RULE, FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)
+#define Read_Full_Cost_Multi_Wall_Length_Rule() ReadRuleValue<bool>(FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)

@@ -1,7 +1,5 @@
 #include "function.h"
 
-#include "rules_ini.h"
-
 static char** MOD_INFANTRY_TYPES = NULL;
 
 void Read_Infantry_Mods()
@@ -26,11 +24,11 @@ void Read_Infantry_Mods()
 
 	auto totalInfantryCount = INFANTRY_COUNT + newInfantryCount;
 
-	Get_Rules_Reader()
+	GetRulesReader()
 		.GetRule(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE)
 		.SetValue(newInfantryCount);
 
-	Get_Rules_Reader()
+	GetRulesReader()
 		.GetRule(INFANTRY_COUNT_RULE_KEY)
 		.SetValue(totalInfantryCount);
 
@@ -79,6 +77,8 @@ static bool Setup_New_Infantry_Type(char* typeString, InfantryType type, char* b
 
 	infantryClone->Type = type;
 
+	GetRules() << RulesIniTemplates::BuildInfantrySection(typeString);
+
 	InfantryTypeClass::Read_Infantry_Rules(infantryClone);
 	TechnoTypeClass::Read_Techno_Rules(infantryClone);
 	ObjectTypeClass::Read_Object_Rules(infantryClone);
@@ -94,7 +94,7 @@ void Initialise_Infantry_Mod_Types()
 {
 	Log_Info("Initialising Infantry Mods");
 	
-	auto infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+	auto infantryCount = Read_Infantry_Count();
 
 	for (auto type = INFANTRY_COUNT; type < infantryCount; type++)
 	{		
@@ -130,7 +130,7 @@ const char* Get_New_Infantry_Ini_Name(char type)
 
 char Get_New_Infantry_Type(char* iniName, bool* matchFound)
 {
-	auto infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+	auto infantryCount = Read_Infantry_Count();
 
 	for (auto type = INFANTRY_COUNT; type < infantryCount; type++)
 	{

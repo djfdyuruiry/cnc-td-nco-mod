@@ -1,7 +1,6 @@
 #pragma once
 
 #include "rules_ini.h"
-#include "IRulesIniSection.h"
 
 #define IQ_SECTION_NAME "IQ"
 

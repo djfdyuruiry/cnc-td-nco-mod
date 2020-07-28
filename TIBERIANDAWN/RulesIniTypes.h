@@ -18,10 +18,11 @@ enum RulesIniType : char
 	HOUSE_LIST_RULE,
 	WEAPON_RULE,
 	ARMOR_RULE,
-	UNIT_SPEED_RULE,
+	UNIT_SPEED_TYPE_RULE,
 	FACTORY_RULE,
 	WARHEAD_RULE,
 	BULLET_RULE,
+	PREREQ_RULE
 };
 
 typedef const char* SectionName;

@@ -2,6 +2,7 @@
 
 #include "defines.h"
 
+#include "parse.h"
 #include "RulesIni.h"
 #include "RulesIniRuleKey.h"
 
@@ -218,6 +219,40 @@ private:
 		return nearbyint(ruleValueAsPercentage * onePercent);
 	}
 
+	long ReadPrerequisiteRule(RulesIniRule& rule)
+	{
+		auto structValueStrOptional = rulesIni.ReadOptionalStringRule(rule);
+		
+		if (!structValueStrOptional.Present())
+		{
+			return rule.GetDefaultValueOr(STRUCTF_NONE);
+		}
+		
+		auto structValueStr = structValueStrOptional.Get<char*>();
+
+		Convert_String_To_Upper_Case(structValueStr);
+
+		bool parseError = false;
+		auto structValue = Parse_Structure_Type(structValueStr, &parseError);
+
+		if (parseError)
+		{
+			// unable to parse entry as a structure type
+			rulesIni.MarkAsInvalid();
+
+			Show_Error("Failed to parse prerequisite for [%s]: %s", rule.AsString(), structValueStr);
+
+			return STRUCTF_NONE;
+		}
+
+		if (structValue == STRUCT_NONE)
+		{
+			return STRUCTF_NONE;
+		}
+
+		return 1L << structValue;
+	}
+
 	template<class T> T GetParsedStringRule(
 		RulesIniRule& rule,
 		const char* typeName,
@@ -415,7 +450,7 @@ public:
 				ReadArmorRule(rule)
 			);
 		}
-		else if (ruleType == UNIT_SPEED_RULE)
+		else if (ruleType == UNIT_SPEED_TYPE_RULE)
 		{
 			rule.SetValue(
 				ReadUnitSpeedRule(rule)
@@ -439,6 +474,12 @@ public:
 				ReadBulletRule(rule)
 			);
 		}
+		else if (ruleType == PREREQ_RULE)
+		{
+			rule.SetValue(
+				ReadPrerequisiteRule(rule)
+			);
+		}		
 		else
 		{
 			rule.SetValue(
@@ -461,5 +502,29 @@ public:
 		const auto key = RulesIniRuleKey(section, rule);
 
 		return ReadRuleValue<T>(key);
+	}
+
+	template<class T> T ReadRuleValue(SectionName section, RuleName ruleName, T defaultValue)
+	{
+		const auto key = RulesIniRuleKey(section, ruleName);
+		RulesIniRule& rule = GetRule(key);
+
+		rule.SetDefaultValue<T>(
+			rule.GetDefaultValueOr(defaultValue)
+		);
+
+		return ReadRuleValue<T>(rule);
+	}
+
+	template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName ruleName, U defaultValue)
+	{
+		const auto key = RulesIniRuleKey(section, ruleName);
+		RulesIniRule& rule = GetRule(key);
+
+		rule.SetDefaultValue<U>(
+			rule.GetDefaultValueOr(defaultValue)
+		);
+
+		return ReadRuleValue<T>(rule);
 	}
 };

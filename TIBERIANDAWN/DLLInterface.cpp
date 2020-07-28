@@ -698,8 +698,8 @@ extern "C" __declspec(dllexport) bool __cdecl CNC_Set_Multiplayer_Data(int scena
 	Rule.AllowSuperWeapons = game_options.EnableSuperweapons;	// Are superweapons available
 
 	if (MPlayerTiberium) {
-		Special.IsTSpread = Read_Boolean_Game_Rule(TIBERIUM_SPREADS_RULE, TIBERIUM_SPREADS_RULE_KEY, true);
-		Special.IsTFast = !Read_Boolean_Game_Rule(SLOW_TIBERIUM_RULE, SLOW_TIBERIUM_RULE_KEY, false);
+		Special.IsTSpread = ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
+		Special.IsTFast = !ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
 	} else {
 		Special.IsTGrowth = 0;
 		Special.IsTSpread = 0;
@@ -4436,8 +4436,8 @@ void DLLExportClass::Calculate_Placement_Distances(BuildingTypeClass* placement_
 	}
 
 	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-	auto preventBuildingInShroud = Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true);
-	auto allowBuildingBesideWalls = Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true);
+	auto preventBuildingInShroud = ReadRuleValue<bool>(PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
+	auto allowBuildingBesideWalls = ReadRuleValue<bool>(ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
 
 	memset(placement_distance, 255U, MAP_CELL_TOTAL);
 	for (int y = 0; y < map_cell_height; y++) {
@@ -7063,7 +7063,7 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}
 	}
 
-	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+	char infantryCount = Read_Infantry_Count();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		InfantryTypeClass	const &infantry_type = InfantryTypeClass::As_Reference(index);

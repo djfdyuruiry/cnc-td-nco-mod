@@ -36,6 +36,8 @@ public:
 
 	virtual IRulesIniSection& operator<<(RulesIniType type) = 0;
 
+	virtual IRulesIniSection& operator<<(IRulesIniSection& type) = 0;
+
 	template<class T> IRulesIniSection& operator<<(T defaultValue)
 	{
 		ruleInStream->SetDefaultValue(defaultValue);

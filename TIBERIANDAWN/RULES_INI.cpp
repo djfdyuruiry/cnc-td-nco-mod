@@ -22,8 +22,8 @@ static int GAME_TICK_INTERVAL_IN_MS;
 const char* TRUE_STRING = "TRUE";
 const char* FALSE_STRING = "FALSE";
 
-static RulesIni* Rules;
-static RulesIniReader* RuleReader;
+static RulesIni* RULES;
+static RulesIniReader* RULE_READER;
 
 static void Read_Lua_Scripts_From_Rules_Ini()
 {
@@ -34,7 +34,7 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 		0
 	};
 
-	auto onScenarioLoadCsv = RuleReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE);
+	auto onScenarioLoadCsv = RULE_READER->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE);
 
 	if (String_Is_Empty(onScenarioLoadCsv))
 	{
@@ -52,7 +52,7 @@ static void Read_Log_Settings_From_Rules_Ini()
 {
 	Log_Info("Parsing Log Level from rules ini");
 
-	auto logLevelBuffer = RuleReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogLevel");
+	auto logLevelBuffer = RULE_READER->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogLevel");
 
 	Convert_String_To_Upper_Case(logLevelBuffer);
 
@@ -60,7 +60,7 @@ static void Read_Log_Settings_From_Rules_Ini()
 
 	Log_Info("Resolved Log Level: %s", Log_Level_To_String(LOG_LEVEL));
 
-	LOG_PATH = RuleReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile");
+	LOG_PATH = RULE_READER->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile");
 
 	if (!String_Is_Empty(LOG_PATH))
 	{
@@ -90,8 +90,7 @@ static void DefineRulesSections(RulesIni& r) {
 
 				  << s.BuildRule(GAME_TICK_INTERVAL_IN_MS_RULE)
 						.OfType(UNSIGNED_INT_RULE)
-						.WithDefault(TICK_INTERVAL_IN_MILLIS)
-						.WithMin(1u);
+						.WithDefault(TICK_INTERVAL_IN_MILLIS);
 			})
 
 	  << RulesIniSection::BuildSection(ENHANCEMENTS_RULES_SECTION_NAME)
@@ -103,11 +102,9 @@ static void DefineRulesSections(RulesIni& r) {
 
 				  << s.BuildRule(AI_HARVESTERS_PER_REFINERY_RULE)
 						.WithDefault(1u)
-						.WithMin(1u)
 
 				  << s.BuildRule(HUMAN_HARVESTERS_PER_REFINERY_RULE)
 						.WithDefault(1u)
-						.WithMin(1u)
 
 				  << s.BuildRule(MULTI_WALL_LENGTH_RULE)
 						.WithDefault(1u)
@@ -319,7 +316,7 @@ static void DefineRulesSections(RulesIni& r) {
 }
 
 void Ensure_Rules_Ini_Is_Loaded() {
-	if (Rules != NULL && RuleReader != NULL) {
+	if (RULES != NULL && RULE_READER != NULL) {
 		return;
 	}
 
@@ -329,47 +326,66 @@ void Ensure_Rules_Ini_Is_Loaded() {
 
 	RulesIniReader& ruleReader = RulesIniReader::ReaderFor(rules);
 
-	Rules = &rules;
-	RuleReader = &ruleReader;
+	RULES = &rules;
+	RULE_READER = &ruleReader;
 
-	LUA_IS_ENABLED = RuleReader->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE);
-	LUA_CONSOLE_IS_ENABLED = RuleReader->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
-	GAME_TICK_INTERVAL_IN_MS = RuleReader->ReadRuleValue<int>(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE);
+	LUA_IS_ENABLED = RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE);
+	LUA_CONSOLE_IS_ENABLED = RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
+	GAME_TICK_INTERVAL_IN_MS = RULE_READER->ReadRuleValue<int>(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE);
 
 	Read_Lua_Scripts_From_Rules_Ini();
 
 	Read_Mods();
 }
 
-RulesIniReader& Get_Rules_Reader()
+RulesIni& GetRules()
+{
+	return *RULES;
+}
+
+RulesIniReader& GetRulesReader()
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
-	return *RuleReader;
+	return *RULE_READER;
+}
+
+template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName rule, U defaultValue)
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	return RULE_READER->ReadRuleValueWithSpecialDefault<T, U>(section, rule, defaultValue);
+}
+
+template<class T> T ReadRuleValue(SectionName section, RuleName rule, T defaultValue)
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	return RULE_READER->ReadRuleValue<T>(section, rule, defaultValue);
 }
 
 template<class T> T ReadRuleValue(SectionName section, RuleName rule)
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
-	return RuleReader->ReadRuleValue<T>(section, rule);
+	return RULE_READER->ReadRuleValue<T>(section, rule);
 }
 
 template<class T> T ReadRuleValue(const RulesIniRuleKey key)
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
-	return RuleReader->ReadRuleValue<T>(key);
+	return RULE_READER->ReadRuleValue<T>(key);
 }
 
 void MarkRulesIniAsInvalid()
 {
-	Rules->MarkAsInvalid();
+	RULES->MarkAsInvalid();
 }
 
 bool Rules_Ini_Failed_Validation()
 {
-	return !Rules->IsValid();
+	return !RULES->IsValid();
 }
 
 LogLevel Current_Log_Level()

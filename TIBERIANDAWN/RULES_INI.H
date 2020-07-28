@@ -24,12 +24,19 @@
 
 void Ensure_Rules_Ini_Is_Loaded();
 
-RulesIniReader& Get_Rules_Reader();
+RulesIni& GetRules();
+
+RulesIniReader& GetRulesReader();
+
+template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName rule, U defaultValue);
+
+template<class T> T ReadRuleValue(SectionName section, RuleName rule, T defaultValue);
 
 template<class T> T ReadRuleValue(SectionName section, RuleName rule);
 
 template<class T> T ReadRuleValue(RulesIniRuleKey key);
 
+// TODO: move into stack builder methods
 #define BuildDifficultySection(name, firepower, groundspeed, airspeed, armor, rof, cost, repairDelay, buildDelay, buildSpeed, buildSlowdown) \
 	RulesIniSection::BuildSection(name)\
 		.WithDefaultType(DOUBLE_RULE)\

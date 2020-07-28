@@ -124,6 +124,11 @@ public:
 		return *this;
 	}
 
+	IRulesIniSection& operator<<(IRulesIniSection& section)
+	{
+		return section;
+	}
+
 	RulesIniRule& operator[](RuleName ruleName)
 	{
 		return *rules[Build_Rule_Key(name, ruleName)];
