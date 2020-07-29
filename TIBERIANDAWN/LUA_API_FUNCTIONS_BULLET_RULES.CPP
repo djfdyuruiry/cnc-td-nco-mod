@@ -4,7 +4,7 @@
 
 static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, BULLET_HIGH_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, BULLET_HIGH_RULE))
     {
         auto isHigh = Parse_Boolean(value, valueParseError);
 
@@ -15,7 +15,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsHigh = isHigh;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_ANTI_AIRCRAFT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_ANTI_AIRCRAFT_RULE))
     {
         auto antiAircraft = Parse_Boolean(value, valueParseError);
 
@@ -26,7 +26,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsAntiAircraft = antiAircraft;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_TRANSLUCENT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_TRANSLUCENT_RULE))
     {
         auto translucent = Parse_Boolean(value, valueParseError);
 
@@ -37,7 +37,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsTranslucent = translucent;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_ARCING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_ARCING_RULE))
     {
         auto arcing = Parse_Boolean(value, valueParseError);
 
@@ -48,7 +48,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsArcing = arcing;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_HOMING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_HOMING_RULE))
     {
         auto homing = Parse_Boolean(value, valueParseError);
 
@@ -59,7 +59,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsHoming = homing;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_DROPPING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_DROPPING_RULE))
     {
         auto dropping = Parse_Boolean(value, valueParseError);
 
@@ -70,7 +70,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsDropping = dropping;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_INVISIBLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_INVISIBLE_RULE))
     {
         auto invisibile = Parse_Boolean(value, valueParseError);
 
@@ -81,7 +81,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsInvisible = invisibile;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_PROXIMITY_ARMED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_PROXIMITY_ARMED_RULE))
     {
         auto proximityArmed = Parse_Boolean(value, valueParseError);
 
@@ -92,7 +92,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsProximityArmed = proximityArmed;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_FLAME_EQUIPPED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_FLAME_EQUIPPED_RULE))
     {
         auto flameEquipped = Parse_Boolean(value, valueParseError);
 
@@ -103,7 +103,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsProximityArmed = flameEquipped;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_FUELED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_FUELED_RULE))
     {
         auto fueled = Parse_Boolean(value, valueParseError);
 
@@ -114,7 +114,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsFueled = fueled;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_FACELESS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_FACELESS_RULE))
     {
         auto faceless = Parse_Boolean(value, valueParseError);
 
@@ -125,7 +125,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsFaceless = faceless;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_INACCURATE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_INACCURATE_RULE))
     {
         auto inaccurate = Parse_Boolean(value, valueParseError);
 
@@ -136,7 +136,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->IsInaccurate = inaccurate;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_WARHEAD_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_WARHEAD_RULE))
     {
         auto warheadType = Parse_Warhead_Type(value, valueParseError);
 
@@ -149,7 +149,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->Warhead = warheadType;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_ARMING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_ARMING_RULE))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -162,7 +162,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->Arming = arming;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_RANGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_RANGE_RULE))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -175,7 +175,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             bullet->Range = range;
         }
     }
-    else if (Strings_Are_Equal(ruleName, SPEED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SPEED_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
         
@@ -193,7 +193,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
         
@@ -211,13 +211,13 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Write_Bullet_Rule => Rule value: %s -> %s", bullet->FriendlyName,  originalValue);
 
         bullet->FriendlyName = strdup(originalValue);
     }
-    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         auto isModType = Parse_Boolean(value, valueParseError);
 
@@ -238,79 +238,79 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
 
 static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, BULLET_HIGH_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, BULLET_HIGH_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsHigh));
 
         lua_pushboolean(lua, bullet->IsHigh);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_ANTI_AIRCRAFT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_ANTI_AIRCRAFT_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsAntiAircraft));
 
         lua_pushboolean(lua, bullet->IsAntiAircraft);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_TRANSLUCENT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_TRANSLUCENT_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsTranslucent));
 
         lua_pushboolean(lua, bullet->IsTranslucent);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_ARCING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_ARCING_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsArcing));
 
         lua_pushboolean(lua, bullet->IsArcing);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_HOMING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_HOMING_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsHoming));
 
         lua_pushboolean(lua, bullet->IsHoming);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_DROPPING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_DROPPING_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsDropping));
 
         lua_pushboolean(lua, bullet->IsDropping);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_INVISIBLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_INVISIBLE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsInvisible));
 
         lua_pushboolean(lua, bullet->IsInvisible);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_PROXIMITY_ARMED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_PROXIMITY_ARMED_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsProximityArmed));
 
         lua_pushboolean(lua, bullet->IsProximityArmed);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_FLAME_EQUIPPED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_FLAME_EQUIPPED_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFlameEquipped));
 
         lua_pushboolean(lua, bullet->IsFlameEquipped);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_FUELED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_FUELED_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFueled));
 
         lua_pushboolean(lua, bullet->IsFueled);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_FACELESS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_FACELESS_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFaceless));
 
         lua_pushboolean(lua, bullet->IsFaceless);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_INACCURATE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_INACCURATE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsInaccurate));
 
         lua_pushboolean(lua, bullet->IsInaccurate);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_WARHEAD_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_WARHEAD_RULE))
     {
         auto value = Warhead_Type_To_String(bullet->Warhead);
 
@@ -318,37 +318,37 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
 
         lua_pushstring(lua, value);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_ARMING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_ARMING_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %d", bullet->Arming);
 
         lua_pushnumber(lua, bullet->Arming);
     }
-    else if (Strings_Are_Equal(ruleName, BULLET_RANGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BULLET_RANGE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %d", bullet->Range);
 
         lua_pushnumber(lua, bullet->Range);
     }
-    else if (Strings_Are_Equal(ruleName, SPEED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SPEED_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %u", bullet->MaxSpeed);
 
         lua_pushnumber(lua, bullet->MaxSpeed);
     }
-    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %u", bullet->ROT);
 
         lua_pushnumber(lua, bullet->ROT);
     }
-    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", bullet->FriendlyName);
 
         lua_pushstring(lua, bullet->FriendlyName);
     }
-    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsModType));
 
@@ -405,6 +405,7 @@ static int Lua_Set_Bullet_Rule(lua_State* lua)
         "Bullet",
         "bulletTypeName",
         &ResolveBullet,
+        GetRulesInfo().GetBulletRules(),
         &Write_Bullet_Rule,
         false
     );
@@ -417,6 +418,7 @@ static int Lua_Get_Bullet_Rule(lua_State* lua)
         "Bullets",
         "bulletTypeName",
         &ResolveBullet,
+        GetRulesInfo().GetBulletRules(),
         &Read_Bullet_Rule,
         false
     );

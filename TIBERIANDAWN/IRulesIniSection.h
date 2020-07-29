@@ -12,15 +12,19 @@ protected:
 public:
 	static const RulesIniType DEFAULT_RULE_TYPE = BOOL_RULE;
 
-	virtual const char* GetName() = 0;
+	virtual SectionName GetName() = 0;
 
 	virtual CacheKey GetKey() = 0;
+
+	virtual CacheKey BuildKey(RuleName rule) = 0;
 
 	virtual void SetDefaultType(RulesIniType type) = 0;
 
 	virtual bool HasRule(CacheKey key) = 0;
 
 	virtual bool HasRule(RulesIniRule& rule) = 0;
+
+	virtual bool HasRule(RuleName rule) = 0;
 
 	virtual const RulesIniRule& GetRule(CacheKey key) = 0;
 

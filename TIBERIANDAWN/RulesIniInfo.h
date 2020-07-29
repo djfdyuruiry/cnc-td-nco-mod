@@ -6,7 +6,7 @@
 #include "RulesIni.h"
 #include "RulesIniTemplates.h"
 
-static auto INFO = "INFO";
+const char* INFO_SECTION = "INFO";
 
 class RulesIniInfo
 {
@@ -23,13 +23,13 @@ private:
 
 	RulesIniInfo(RulesIni& rulesIni)
 		: rules(rulesIni),
-		weaponRules(RulesIniTemplates::BuildWeaponSection(INFO)),
-		bulletRules(RulesIniTemplates::BuildBulletSection(INFO)),
-		warheadRules(RulesIniTemplates::BuildWarheadSection(INFO)),
-		infantryRules(RulesIniTemplates::BuildInfantrySection(INFO)),
-		unitRules(RulesIniTemplates::BuildUnitSection(INFO)),
-		aircraftRules(RulesIniTemplates::BuildAircraftSection(INFO)),
-		buildingRules(RulesIniTemplates::BuildBuildingSection(INFO))
+		weaponRules(RulesIniTemplates::BuildWeaponSection(INFO_SECTION)),
+		bulletRules(RulesIniTemplates::BuildBulletSection(INFO_SECTION)),
+		warheadRules(RulesIniTemplates::BuildWarheadSection(INFO_SECTION)),
+		infantryRules(RulesIniTemplates::BuildInfantrySection(INFO_SECTION)),
+		unitRules(RulesIniTemplates::BuildUnitSection(INFO_SECTION)),
+		aircraftRules(RulesIniTemplates::BuildAircraftSection(INFO_SECTION)),
+		buildingRules(RulesIniTemplates::BuildBuildingSection(INFO_SECTION))
 	{
 	}
 

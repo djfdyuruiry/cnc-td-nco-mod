@@ -4,7 +4,7 @@
 
 static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, FEMALE_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, FEMALE_RULE))
     {
         auto isFemale = Parse_Boolean(value, valueParseError);
 
@@ -15,7 +15,7 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsFemale = isFemale;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CRAWLING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CRAWLING_RULE))
     {
         auto isCrawling = Parse_Boolean(value, valueParseError);
 
@@ -26,7 +26,7 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsCrawling = isCrawling;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CAN_CAPTURE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_CAPTURE_RULE))
     {
         auto isCapture = Parse_Boolean(value, valueParseError);
 
@@ -37,7 +37,7 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsCapture = isCapture;
         }
     }
-    else if (Strings_Are_Equal(ruleName, FRAIDY_CAT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRAIDY_CAT_RULE))
     {
         auto isFraidyCat = Parse_Boolean(value, valueParseError);
 
@@ -48,7 +48,7 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsFraidyCat = isFraidyCat;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CIVILIAN_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CIVILIAN_RULE))
     {
         auto isCivilian = Parse_Boolean(value, valueParseError);
 
@@ -59,7 +59,7 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsCivilian = isCivilian;
         }
     }
-    else if (Strings_Are_Equal(ruleName, AVOIDS_TIBERIUM_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, AVOIDS_TIBERIUM_RULE))
     {
         auto isAvoidingTiberium = Parse_Boolean(value, valueParseError);
 
@@ -70,7 +70,7 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsAvoidingTiberium = isAvoidingTiberium;
         }
     }
-    else if (Strings_Are_Equal(ruleName, IMMUNE_TO_TIBERIUM_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IMMUNE_TO_TIBERIUM_RULE))
     {
         auto isImmuneToTiberium = Parse_Boolean(value, valueParseError);
 
@@ -81,7 +81,7 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
             type->IsImmuneToTiberium = isImmuneToTiberium;
         }
     }
-    else if (Strings_Are_Equal(ruleName, HAS_C4_CHARGES_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_C4_CHARGES_RULE))
     {
         auto hasC4Charges = Parse_Boolean(value, valueParseError);
 
@@ -102,49 +102,49 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 
 static bool Read_Infantry_Rule(lua_State* lua, InfantryTypeClass* type, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, FEMALE_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, FEMALE_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFemale));
 
         lua_pushboolean(lua, type->IsFemale);
     }
-    else if (Strings_Are_Equal(ruleName, CRAWLING_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CRAWLING_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrawling));
 
         lua_pushboolean(lua, type->IsCrawling);
     }
-    else if (Strings_Are_Equal(ruleName, CAN_CAPTURE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_CAPTURE_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCapture));
 
         lua_pushboolean(lua, type->IsCapture);
     }
-    else if (Strings_Are_Equal(ruleName, FRAIDY_CAT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRAIDY_CAT_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFraidyCat));
 
         lua_pushboolean(lua, type->IsFraidyCat);
     }
-    else if (Strings_Are_Equal(ruleName, CIVILIAN_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CIVILIAN_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCivilian));
 
         lua_pushboolean(lua, type->IsCivilian);
     }
-    else if (Strings_Are_Equal(ruleName, AVOIDS_TIBERIUM_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, AVOIDS_TIBERIUM_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsAvoidingTiberium));
 
         lua_pushboolean(lua, type->IsAvoidingTiberium);
     }
-    else if (Strings_Are_Equal(ruleName, IMMUNE_TO_TIBERIUM_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IMMUNE_TO_TIBERIUM_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsImmuneToTiberium));
 
         lua_pushboolean(lua, type->IsImmuneToTiberium);
     }
-    else if (Strings_Are_Equal(ruleName, HAS_C4_CHARGES_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_C4_CHARGES_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->HasC4Charges));
 
@@ -200,6 +200,7 @@ int Lua_Get_Infantry_Rule(lua_State* lua)
         "Infantry",
         "infantryTypeName",
         &ResolveInfantry,
+        GetRulesInfo().GetInfantryRules(),
         &Read_Infantry_Rule
     );
 }
@@ -211,6 +212,7 @@ int Lua_Set_Infantry_Rule(lua_State* lua)
         "Infantry",
         "infantryTypeName",
         &ResolveInfantry,
+        GetRulesInfo().GetInfantryRules(),
         &Write_Infantry_Rule
     );
 }

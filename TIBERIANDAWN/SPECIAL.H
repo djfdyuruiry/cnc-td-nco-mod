@@ -43,10 +43,10 @@ class SpecialClass
 		void Init(void) {
 			IsSpeedBuild = ReadRuleValue<bool>(SPEEDY_BUILDS_RULE_KEY);
 			IsDefenderAdvantage = !ReadRuleValue<bool>(ATTACKER_ADVANTAGE_RULE_KEY);
-			IsSmartDefense = ReadRuleValue<bool>( DEFEND_AGAINST_FRIENDLY_FIRE_RULE_KEY);
-			IsTreeTarget = ReadRuleValue<bool>( TARGET_TREES_RULE_KEY);
-			IsMCVDeploy = ReadRuleValue<bool>( MCV_REDEPLOY_RULE_KEY);
-			IsVisceroids = ReadRuleValue<bool>( VISCEROIDS_RULE_KEY);
+			IsSmartDefense = ReadRuleValue<bool>(DEFEND_AGAINST_FRIENDLY_FIRE_RULE_KEY);
+			IsTreeTarget = ReadRuleValue<bool>(TARGET_TREES_RULE_KEY);
+			IsMCVDeploy = ReadRuleValue<bool>(MCV_REDEPLOY_RULE_KEY);
+			IsVisceroids = ReadRuleValue<bool>(VISCEROIDS_RULE_KEY);
 			IsInert = ReadRuleValue<bool>(UNITS_INDESTRUCTIBLE_RULE_KEY);
 			IsThreePoint = ReadRuleValue<bool>(THREE_POINT_TURNS_RULE_KEY);
 			IsTGrowth = ReadRuleValue<bool>(TIBERIUM_GROWS_RULE_KEY);

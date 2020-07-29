@@ -5,127 +5,45 @@
 #include "strings.h"
 #include "utils.h"
 
-static int Lua_Get_String_Game_Rule(lua_State* lua)
+template<typename T> static int Lua_Get_Game_Rule(
+    lua_State* lua,
+    const char* typeName,
+    void(*writeValue)(lua_State*, T)
+)
 {
-    Log_Trace("Lua_Get_String_Game_Rule called from Lua");
+    Log_Trace("Lua_Get_%s_Game_Rule called from Lua", typeName);
 
     int argCount = lua_gettop(lua);
 
     if (argCount < 1)
     {
-        luaL_error(lua, "getStringGameRule requires at least one argument");
+        luaL_error(lua, "get%sGameRule requires at least one argument", typeName);
         return 0;
     }
 
     auto ruleName = Get_Lua_Value_As_String(1);
 
-    bool valueFound = false;
-    auto ruleValue = Read_Optional_String_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound, false);
+    IRulesIniSection& gameRules = GetRulesInfo().GetGameRules();
+    auto ruleKey = gameRules.BuildKey(ruleName);
 
-    if (valueFound)
+    if (!gameRules.HasRule(ruleKey))
     {
-        lua_pushstring(lua, ruleValue);
-    }
-    else
-    {
-        lua_pushnil(lua);
-    }
-
-    return 1;
-}
-
-static int Lua_Get_Int_Game_Rule(lua_State* lua)
-{
-    Log_Trace("Lua_Get_Int_Game_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 1)
-    {
-        luaL_error(lua, "getIntGameRule requires at least one argument");
+        luaL_error(lua, "Rule '%s' passed to get%sGameRule was not recognised", ruleName);
         return 0;
     }
 
-    auto ruleName = Get_Lua_Value_As_String(1);
+    auto rule = gameRules[ruleKey];
 
-    bool valueFound = false;
-    auto ruleValue = Read_Optional_Int_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound);
+    writeValue(lua, rule.GetValue<T>());
 
-    if (valueFound)
-    {
-        lua_pushnumber(lua, ruleValue);
-    }
-    else
-    {
-        lua_pushnil(lua);
-    }
-
-    return 1;
-}
-
-static int Lua_Get_Double_Game_Rule(lua_State* lua)
-{
-    Log_Trace("Lua_Get_Double_Game_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 1)
-    {
-        luaL_error(lua, "getDoubleGameRule requires at least one argument");
-        return 0;
-    }
-
-    auto ruleName = Get_Lua_Value_As_String(1);
-
-    bool valueFound = false;
-    auto ruleValue = Read_Optional_Double_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound);
-
-    if (valueFound)
-    {
-        lua_pushnumber(lua, ruleValue);
-    }
-    else
-    {
-        lua_pushnil(lua);
-    }
-
-    return 1;
-}
-
-static int Lua_Get_Boolean_Game_Rule(lua_State* lua)
-{
-    Log_Trace("Lua_Get_Boolean_Game_Rule called from Lua");
-
-    int argCount = lua_gettop(lua);
-
-    if (argCount < 1)
-    {
-        luaL_error(lua, "getBoolGameRule requires at least one argument");
-        return 0;
-    }
-
-    auto ruleName = Get_Lua_Value_As_String(1);
-
-    bool valueFound = false;
-    auto ruleValue = Read_Optional_Bool_From_Rules_Ini(GAME_RULES_SECTION_NAME, ruleName, &valueFound);
-
-    if (valueFound)
-    {
-        lua_pushboolean(lua, ruleValue);
-    }
-    else
-    {
-        lua_pushnil(lua);
-    }
-
-    return 1;
+    return 0;
 }
 
 template<typename T> static int Lua_Set_Game_Rule(
     lua_State* lua,
     const char* typeName,
-    T(*readValue)(lua_State*, int),
-    void(*writeCacheValue)(const char*, const char*, T))
+    T(*readValue)(lua_State*, int)
+)
 {
     Log_Trace("Lua_Set_%s_Game_Rule called from Lua", typeName);
 
@@ -138,39 +56,30 @@ template<typename T> static int Lua_Set_Game_Rule(
     }
 
     auto ruleName = Get_Lua_Value_As_String(1);
+
+    IRulesIniSection& gameRules = GetRulesInfo().GetGameRules();
+    auto ruleKey = gameRules.BuildKey(ruleName);
+
+    if (!gameRules.HasRule(ruleKey))
+    {
+        luaL_error(lua, "Rule '%s' passed to set%sGameRule was not recognised", ruleName);
+        return 0;
+    }
+
     auto ruleValue = readValue(lua, 2);
 
-    writeCacheValue(GAME_RULES_SECTION_NAME, ruleName, ruleValue);
+    auto rule = gameRules[ruleKey];
+
+    rule.SetValue<T>(ruleValue);
 
     return 0;
 }
 
-static const char* Lua_To_String_Wrapper(lua_State* lua, int index)
+static void Lua_From_String_Wrapper(lua_State* lua, char* str)
 {
-    return Convert_String_To_Upper_Case(
-        Get_Lua_Value_As_String(index)
-    );
+    lua_pushstring(lua, str);
 }
 
-static int Lua_Set_String_Game_Rule(lua_State* lua)
-{
-    return Lua_Set_Game_Rule(lua, "String", &Lua_To_String_Wrapper, Cache_String_Rule);
-}
-
-static int Lua_To_Int_Wrapper(lua_State* lua, int index)
-{
-    return luaL_checknumber(lua, index);
-}
-
-static int Lua_Set_Int_Game_Rule(lua_State* lua)
-{
-    return Lua_Set_Game_Rule(lua, "Int", &Lua_To_Int_Wrapper, Cache_Int_Rule);
-}
-
-static int Lua_Set_Double_Game_Rule(lua_State* lua)
-{
-    return Lua_Set_Game_Rule(lua, "Double", &luaL_checknumber, Cache_Double_Rule);
-}
 
 static bool Lua_To_Bool_Wrapper(lua_State* lua, int index)
 {
@@ -185,9 +94,54 @@ static bool Lua_To_Bool_Wrapper(lua_State* lua, int index)
     return value;
 }
 
+static int Lua_To_Int_Wrapper(lua_State* lua, int index)
+{
+    return luaL_checknumber(lua, index);
+}
+
+static const char* Lua_To_String_Wrapper(lua_State* lua, int index)
+{
+    return Get_Lua_Value_As_String(index);
+}
+
+static int Lua_Get_String_Game_Rule(lua_State* lua)
+{
+    return Lua_Get_Game_Rule(lua, "String", &Lua_From_String_Wrapper);
+}
+
+static int Lua_Get_Int_Game_Rule(lua_State* lua)
+{
+    return Lua_Get_Game_Rule(lua, "Int", &lua_pushnumber);
+}
+
+static int Lua_Get_Double_Game_Rule(lua_State* lua)
+{
+    return Lua_Get_Game_Rule(lua, "Double", &lua_pushnumber);
+}
+
+static int Lua_Get_Boolean_Game_Rule(lua_State* lua)
+{
+    return Lua_Get_Game_Rule(lua, "Bool", &lua_pushboolean);
+}
+
+static int Lua_Set_String_Game_Rule(lua_State* lua)
+{
+    return Lua_Set_Game_Rule(lua, "String", &Lua_To_String_Wrapper);
+}
+
+static int Lua_Set_Int_Game_Rule(lua_State* lua)
+{
+    return Lua_Set_Game_Rule(lua, "Int", &Lua_To_Int_Wrapper);
+}
+
+static int Lua_Set_Double_Game_Rule(lua_State* lua)
+{
+    return Lua_Set_Game_Rule(lua, "Double", &luaL_checknumber);
+}
+
 static int Lua_Set_Boolean_Game_Rule(lua_State* lua)
 {
-    return Lua_Set_Game_Rule(lua, "Bool", &Lua_To_Bool_Wrapper, Cache_Bool_Rule);
+    return Lua_Set_Game_Rule(lua, "Bool", &Lua_To_Bool_Wrapper);
 }
 
 bool Register_Game_Rule_Functions()

@@ -4,7 +4,7 @@
 
 static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, WEAPON_FIRES_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, WEAPON_FIRES_RULE))
     {
         auto bullet = Parse_Bullet_Type(value, valueParseError);
 
@@ -15,7 +15,7 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
             weapon->Fires = bullet;
         }
     }
-    else if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -32,7 +32,7 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, WEAPON_RATE_OF_FIRE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WEAPON_RATE_OF_FIRE_RULE))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -49,7 +49,7 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, WEAPON_RANGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WEAPON_RANGE_RULE))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -66,13 +66,13 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Set_Weapon_Rule => Rule value: %s -> %s", weapon->FriendlyName, originalValue);
 
         weapon->FriendlyName = strdup(originalValue);
     }
-    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         auto isModType = Parse_Boolean(value, valueParseError);
 
@@ -93,7 +93,7 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
 
 static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, WEAPON_FIRES_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, WEAPON_FIRES_RULE))
     {
         auto bullet = Bullet_Type_To_String(weapon->Fires);
 
@@ -101,31 +101,31 @@ static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char
 
         lua_pushstring(lua, bullet);
     }
-    else if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %u", weapon->Attack);
 
         lua_pushnumber(lua, weapon->Attack);
     }
-    else if (Strings_Are_Equal(ruleName, WEAPON_RATE_OF_FIRE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WEAPON_RATE_OF_FIRE_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %u", weapon->ROF);
 
         lua_pushnumber(lua, weapon->ROF);
     }
-    else if (Strings_Are_Equal(ruleName, WEAPON_RANGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WEAPON_RANGE_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %u", weapon->Range);
 
         lua_pushnumber(lua, weapon->Range);
     }
-    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->FriendlyName);
 
         lua_pushstring(lua, weapon->FriendlyName);
     }
-    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->IsModType);
 
@@ -181,6 +181,7 @@ static int Lua_Set_Weapon_Rule(lua_State* lua)
         "Weapon",
         "weaponTypeName",
         &ResolveWeapon,
+        GetRulesInfo().GetWeaponRules(),
         &Write_Weapon_Rule,
         false
     );
@@ -193,6 +194,7 @@ static int Lua_Get_Weapon_Rule(lua_State* lua)
         "Weapon",
         "weaponTypeName",
         &ResolveWeapon,
+        GetRulesInfo().GetWeaponRules(),
         &Read_Weapon_Rule,
         false
     );

@@ -459,6 +459,7 @@
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
     <ClInclude Include="RulesIni.h" />
+    <ClInclude Include="RulesIniInfo.h" />
     <ClInclude Include="RulesIniReader.h" />
     <ClInclude Include="RulesIniRule.h" />
     <ClInclude Include="RULES.H" />
@@ -480,6 +481,7 @@
     <ClInclude Include="RULES_INI_INFANTRY.H" />
     <ClInclude Include="RULES_INI_IQ.H" />
     <ClInclude Include="RULES_INI_MODS.H" />
+    <ClInclude Include="RULES_INI_NCO.H" />
     <ClInclude Include="RULES_INI_SUPERWEAPON.H" />
     <ClInclude Include="RULES_INI_UNIT.H" />
     <ClInclude Include="RULES_INI_WARHEAD.H" />

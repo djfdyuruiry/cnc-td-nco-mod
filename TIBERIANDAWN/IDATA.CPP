@@ -1477,14 +1477,16 @@ void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
 {
 	auto iniName = infantry->IniName;
 
+	GetRules() << RulesIniTemplates::BuildInfantrySection(iniName);
+
 	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
 	infantry->IsCrawling = Read_Is_Crawling(iniName, infantry->IsCrawling);
 	infantry->IsCapture = Read_Can_Capture_Buildings(iniName, infantry->IsCapture);
 	infantry->IsFraidyCat = Read_Is_Fraidy_Cat(iniName, infantry->IsFraidyCat);
 	infantry->IsCivilian = Read_Is_Civilian(iniName, infantry->IsCivilian);
 	infantry->IsAvoidingTiberium = Read_Avoids_Tiberium(iniName, infantry->IsAvoidingTiberium);
-	infantry->IsImmuneToTiberium = Read_Bool_From_Rules_Ini(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
-	infantry->HasC4Charges = Read_Bool_From_Rules_Ini(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
+	infantry->IsImmuneToTiberium = ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
+	infantry->HasC4Charges = ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
 	
 }
 

@@ -132,6 +132,11 @@ public:
 		return name;
 	}
 
+	RuleName GetNameAsUppercase()
+	{
+		return name;
+	}
+
 	const CacheKey GetKey()
 	{
 		return key;

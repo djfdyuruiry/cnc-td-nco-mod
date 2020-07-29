@@ -1335,6 +1335,8 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	TurretOffset = toffset;
 	Type = type;
 
+	GetRules() << RulesIniTemplates::BuildUnitSection(IniName);
+
 	IsCrateGoodie = Read_Can_Be_Found_In_Crate(IniName, is_goodie);
 	IsPieceOfEight = Read_Limited_Facings(IniName, is_eight);
 	IsCrusher = Read_Can_Crush_Infantry(IniName, is_crusher);
@@ -1348,7 +1350,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	IsAnimating = Read_Has_Constant_Animation(IniName, is_animating); 
 	Speed = Read_Unit_Speed(IniName, speed);
 	ROT = Read_Rate_Of_Turn(IniName, rot);
-	CanSelfRepair = Read_Bool_From_Rules_Ini(IniName, SELF_REPAIR_RULE, Type == UNIT_HTANK);
+	CanSelfRepair = ReadRuleValue<bool>(IniName, SELF_REPAIR_RULE, Type == UNIT_HTANK);
 }
 
 

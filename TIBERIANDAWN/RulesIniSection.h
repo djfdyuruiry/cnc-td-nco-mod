@@ -56,7 +56,7 @@ public:
 		return *this;
 	}
 
-	const char* GetName()
+	SectionName GetName()
 	{
 		return name;
 	}
@@ -64,6 +64,11 @@ public:
 	CacheKey GetKey()
 	{
 		return key;
+	}
+
+	CacheKey BuildKey(RuleName rule)
+	{
+		return Build_Rule_Key(name, rule);
 	}
 
 	void SetDefaultType(RulesIniType type)
@@ -79,6 +84,11 @@ public:
 	bool HasRule(RulesIniRule& rule)
 	{
 		return HasRule(rule.GetKey());
+	}
+
+	bool HasRule(RuleName rule)
+	{
+		return HasRule(BuildKey(rule));
 	}
 
 	const RulesIniRule& GetRule(CacheKey key)
@@ -131,7 +141,7 @@ public:
 
 	RulesIniRule& operator[](RuleName ruleName)
 	{
-		return *rules[Build_Rule_Key(name, ruleName)];
+		return *rules[BuildKey(ruleName)];
 	}
 
 	RulesIniRule& operator[](CacheKey ruleKey)

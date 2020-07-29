@@ -77,8 +77,6 @@ static bool Setup_New_Infantry_Type(char* typeString, InfantryType type, char* b
 
 	infantryClone->Type = type;
 
-	GetRules() << RulesIniTemplates::BuildInfantrySection(typeString);
-
 	InfantryTypeClass::Read_Infantry_Rules(infantryClone);
 	TechnoTypeClass::Read_Techno_Rules(infantryClone);
 	ObjectTypeClass::Read_Object_Rules(infantryClone);

@@ -2,7 +2,10 @@
 
 #include "type.h"
 
+#include "IRulesIniSection.h"
 #include "lua.h"
+#include "rules_cache_key.h"
+#include "RulesIniInfo.h"
 #include "strings.h"
 
 bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const char* uppercaseValue, const char* originalValue, bool* valueParseError);
@@ -17,6 +20,7 @@ template<typename T> int Lua_Get_Rule(
     const char* typeName,
     const char* paramName,
     T* (*typeParser)(lua_State*, const char*),
+    IRulesIniSection& rulesInfo,
     bool(*readTypeRule)(lua_State*, T*, const char*),
     bool searchTechnoType = true
 )
@@ -45,32 +49,38 @@ template<typename T> int Lua_Get_Rule(
         return 0;
     }
 
-    auto ruleName = Get_Lua_Value_As_String(2);
-    auto uppercaseRuleName = Convert_String_To_Upper_Case(ruleName);
+    auto ruleNameParameter = Get_Lua_Value_As_String(2);
 
-    if (ruleName == NULL)
+    if (ruleNameParameter == NULL)
     {
         luaL_error(lua, "get%sRule argument `ruleName` was nil", typeName);
         return 0;
     }
 
-    Log_Debug("Lua_Get_%s_Rule => attempting to read value of rule '%s'", typeName, ruleName);
+    auto ruleKey = rulesInfo..BuildKey(ruleNameParameter);
+    auto ruleIsValid = rulesInfo.HasRule(ruleKey);
 
+    if (!ruleIsValid)
+    {
+        luaL_error(lua, "rule name type passed get%sRule was not recognised: %s", typeName, ruleNameParameter);
+
+        return 0;
+    }
+
+    Log_Debug("Lua_Get_%s_Rule => attempting to read value of rule '%s'", typeName, ruleNameParameter);
+
+    auto ruleName = rulesInfo[ruleKey].GetName();
     auto ruleMatched = false;
 
     if (searchTechnoType)
     {
-        Log_Trace("Lua_Get_%s_Rule => looking for rule '%s' in Techno Type", typeName, ruleName);
+        Log_Trace("Lua_Get_%s_Rule => looking for rule '%s' in Techno Type", typeName, ruleNameParameter);
 
-        auto uppercaseRuleName = Convert_String_To_Upper_Case(ruleName);
-
-        ruleMatched = Read_TechnoType_Rule(lua, (TechnoTypeClass*)typeInstance, uppercaseRuleName);
+        ruleMatched = Read_TechnoType_Rule(lua, (TechnoTypeClass*)typeInstance, ruleName);
 
         if (ruleMatched)
         {
             Log_Debug("Lua_Get_%s_Rule => Rule matched in Techno Type", typeName);
-
-            delete uppercaseRuleName;
 
             return 1;
         }
@@ -78,20 +88,16 @@ template<typename T> int Lua_Get_Rule(
 
     Log_Trace("Lua_Get_%s_Rule => looking for rule in %s Type", typeName, typeName);
 
-    ruleMatched = readTypeRule(lua, typeInstance, uppercaseRuleName);
+    ruleMatched = readTypeRule(lua, typeInstance, ruleName);
 
     if (ruleMatched)
     {
         Log_Debug("Lua_Get_%s_Rule => Rule matched in %s Type", typeName, typeName);
 
-        delete uppercaseRuleName;
-
         return 1;
     }
 
-    luaL_error(lua, "rule name type passed get%sRule was not recognised: %s", typeName, ruleName);
-
-    delete uppercaseRuleName;
+    luaL_error(lua, "rule name type passed get%sRule was not recognised: %s", typeName, ruleNameParameter);
 
     return 0;
 }
@@ -101,6 +107,7 @@ template<typename T> int Lua_Set_Rule(
     const char* typeName,
     const char* paramName,
     T* (*typeParser)(lua_State*, const char*),
+    IRulesIniSection& rulesInfo,
     bool(*writeTypeRule)(T*, const char*, const char*, const char*, bool*),
     bool searchTechnoType = true
 )
@@ -130,10 +137,10 @@ template<typename T> int Lua_Set_Rule(
         return 0;
     }
 
-    auto ruleName = Get_Lua_Value_As_String(2);
+    auto ruleNameParameter = Get_Lua_Value_As_String(2);
     auto ruleValue = Get_Lua_Value_As_String(3);
 
-    if (String_Is_Empty(ruleName))
+    if (String_Is_Empty(ruleNameParameter))
     {
         luaL_error(lua, "set%sRule argument `ruleName` was nil or blank", typeName);
 
@@ -146,10 +153,23 @@ template<typename T> int Lua_Set_Rule(
         return 0;
     }
 
-    auto uppercaseRuleName = Convert_String_To_Upper_Case(ruleName);
     auto uppercaseRuleValue = Convert_String_To_Upper_Case(ruleValue);
 
-    Log_Debug("Lua_Set_%s_Rule => attempting to set rule '%s' to value: %s", typeName, ruleName, ruleValue);
+    Log_Debug("Lua_Set_%s_Rule => attempting to set rule '%s' to value: %s", typeName, ruleNameParameter, ruleValue);
+
+    auto ruleKey = rulesInfo.BuildKey(ruleNameParameter);
+    auto ruleIsValid = rulesInfo.HasRule(ruleKey);
+
+    if (!ruleIsValid)
+    {
+        luaL_error(lua, "rule name type passed get%sRule was not recognised: %s", typeName, ruleNameParameter);
+
+        return 0;
+    }
+
+    Log_Debug("Lua_Get_%s_Rule => attempting to read value of rule '%s'", typeName, ruleNameParameter);
+
+    auto ruleName = rulesInfo[ruleKey].GetName();
 
     auto ruleMatched = false;
     bool parseError = false;
@@ -160,7 +180,7 @@ template<typename T> int Lua_Set_Rule(
 
         ruleMatched = Write_TechnoType_Rule(
             (TechnoTypeClass*)typeInstance,
-            uppercaseRuleName,
+            ruleName,
             uppercaseRuleValue,
             ruleValue,
             &parseError
@@ -170,7 +190,6 @@ template<typename T> int Lua_Set_Rule(
         {
             Log_Debug("Lua_Set_%s_Rule => Rule matched in Techno Type", typeName);
 
-            delete uppercaseRuleName;
             delete uppercaseRuleValue;
 
             return 0;
@@ -183,7 +202,7 @@ template<typename T> int Lua_Set_Rule(
 
         ruleMatched = writeTypeRule(
             typeInstance,
-            uppercaseRuleName,
+            ruleName,
             uppercaseRuleValue,
             ruleValue,
             &parseError
@@ -193,7 +212,6 @@ template<typename T> int Lua_Set_Rule(
         {
             Log_Debug("Lua_Set_%s_Rule => Rule matched in %s Type", typeName, typeName);
 
-            delete uppercaseRuleName;
             delete uppercaseRuleValue;
 
             return 0;
@@ -201,17 +219,15 @@ template<typename T> int Lua_Set_Rule(
     }
     else
     {
-        luaL_error(lua, "value for rule `%s` passed to set%sRule was not valid: %s", typeName, ruleName, ruleValue);
+        luaL_error(lua, "value for rule `%s` passed to set%sRule was not valid: %s", typeName, ruleNameParameter, ruleValue);
 
-        delete uppercaseRuleName;
         delete uppercaseRuleValue;
 
         return 0;
     }
 
-    luaL_error(lua, "rule name passed to set%sRule was not recognised: %s", typeName, ruleName);
+    luaL_error(lua, "rule name passed to set%sRule was not recognised: %s", typeName, ruleNameParameter);
 
-    delete uppercaseRuleName;
     delete uppercaseRuleValue;
 
     return 0;
