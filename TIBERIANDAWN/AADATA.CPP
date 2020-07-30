@@ -351,13 +351,11 @@ AircraftTypeClass::AircraftTypeClass(
 										houseListCsv,
 										primary,
 										secondary,
-										armor)
+						                armor)
 {
 	IsRotorCustom = is_rotorcustom;
 	Type = airtype;
 	Mission = deforder;
-
-	GetRules() << RulesIniTemplates::BuildAircraftSection(IniName);
 	
 	IsFixedWing = Read_Cant_Hover(IniName, is_fixedwing);
 	IsLandable = Read_Can_Land(IniName, is_landable);
@@ -626,7 +624,7 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = ReadRuleValue<double>(AIRCRAFT_REPAIR_FACTOR_RULE_KEY);
+	auto repairFactor = ReadRuleValue<double>(*AIRCRAFT_REPAIR_FACTOR_RULE_KEY);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(

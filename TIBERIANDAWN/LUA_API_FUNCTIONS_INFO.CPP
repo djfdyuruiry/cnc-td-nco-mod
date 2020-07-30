@@ -1,10 +1,4 @@
-#include "defines.h"
-#include "special.h"
-#include "wwstd.h"
-
-#include "lua_events.h"
-#include "parse.h"
-#include "rules_ini.h"
+#include "function.h"
 
 static void Push_Rules_Section_Table_Onto_Lua_Stack(lua_State* lua, IRulesIniSection& section)
 {
@@ -80,7 +74,7 @@ static int Lua_Get_Building_Types(lua_State* lua)
 
 static int Lua_Get_Warhead_Rule_Names(lua_State* lua)
 {
-    std::vector<const char*> warheadRules = GetRulesInfo()
+    std::vector<const char*>& warheadRules = GetRulesInfo()
         .GetWarheadRules()
         .GetRuleNames();
 
@@ -91,7 +85,7 @@ static int Lua_Get_Warhead_Rule_Names(lua_State* lua)
 
 static int Lua_Get_Bullet_Rule_Names(lua_State* lua)
 {
-    std::vector<const char*> bulletRules = GetRulesInfo()
+    std::vector<const char*>& bulletRules = GetRulesInfo()
         .GetBulletRules()
         .GetRuleNames();
 
@@ -102,7 +96,7 @@ static int Lua_Get_Bullet_Rule_Names(lua_State* lua)
 
 static int Lua_Get_Weapon_Rule_Names(lua_State* lua)
 {
-    std::vector<const char*> weaponRules = GetRulesInfo()
+    std::vector<const char*>& weaponRules = GetRulesInfo()
         .GetWeaponRules()
         .GetRuleNames();
 
@@ -113,7 +107,7 @@ static int Lua_Get_Weapon_Rule_Names(lua_State* lua)
 
 static int Lua_Get_Game_Rule_Names(lua_State* lua)
 {
-    std::vector<const char*> gameRules = GetRulesInfo()
+    std::vector<const char*>& gameRules = GetRulesInfo()
         .GetGameRules()
         .GetRuleNames();
 
@@ -124,7 +118,7 @@ static int Lua_Get_Game_Rule_Names(lua_State* lua)
 
 static int Lua_Get_Infantry_Rule_Names(lua_State* lua)
 {
-    std::vector<const char*> infantryRules = GetRulesInfo()
+    std::vector<const char*>& infantryRules = GetRulesInfo()
         .GetInfantryRules()
         .GetRuleNames();
 
@@ -135,7 +129,7 @@ static int Lua_Get_Infantry_Rule_Names(lua_State* lua)
 
 static int Lua_Get_Unit_Rule_Names(lua_State* lua)
 {
-    std::vector<const char*> unitRules = GetRulesInfo()
+    std::vector<const char*>& unitRules = GetRulesInfo()
         .GetUnitRules()
         .GetRuleNames();
 
@@ -146,7 +140,7 @@ static int Lua_Get_Unit_Rule_Names(lua_State* lua)
 
 static int Lua_Get_Aircraft_Rule_Names(lua_State* lua)
 {
-    std::vector<const char*> aircraftRules = GetRulesInfo()
+    std::vector<const char*>& aircraftRules = GetRulesInfo()
         .GetAircraftRules()
         .GetRuleNames();
 
@@ -157,7 +151,7 @@ static int Lua_Get_Aircraft_Rule_Names(lua_State* lua)
 
 static int Lua_Get_Building_Rule_Names(lua_State* lua)
 {
-    std::vector<const char*> buildingRules = GetRulesInfo()
+    std::vector<const char*>& buildingRules = GetRulesInfo()
         .GetBuildingRules()
         .GetRuleNames();
 
@@ -189,9 +183,11 @@ static int Lua_Get_Weapon_Types(lua_State* lua)
 
 static int Lua_Get_Game_Rule_Type_Names(lua_State* lua)
 {
-    auto gameRules = GetRules()[GAME_RULES_SECTION_NAME];
+    std::vector<const char*>& gameRules = GetRulesInfo()
+        .GetGameRules()
+        .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(gameRules.GetRuleNames());
+    Push_String_Vector_Onto_Lua_Stack(gameRules);
 
     return 1;
 }

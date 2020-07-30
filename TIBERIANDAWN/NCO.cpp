@@ -1,7 +1,7 @@
 #include "function.h"
 
+#include "lua.h"
 #include "lua_repl.h"
-#include "rules_cache.h"
 
 static HANDLE LUA_REPL_THREAD;
 static HANDLE LUA_EVENT_THREAD;
@@ -106,8 +106,6 @@ void NCO_Shutdown()
 
 		Shutdown_Lua();
 	}
-
-	Delete_Rules_Cache();
 
 	Close_Log_File_If_Open();
 }

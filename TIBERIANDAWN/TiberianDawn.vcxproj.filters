@@ -712,9 +712,6 @@
     <ClInclude Include="RULES_INI_DIFFICULTY.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="RULES_CACHE.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="RULES_INI_WEAPON.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
@@ -1432,9 +1429,6 @@
     <ClCompile Include="LUA_REPL.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="RULES_CACHE.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
@@ -1486,7 +1480,7 @@
     <ClCompile Include="RULES_INI_MODS.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="RulesIniKey.cpp">
+    <ClCompile Include="RulesIniKeys.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>

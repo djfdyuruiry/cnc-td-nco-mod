@@ -467,7 +467,6 @@
     <ClInclude Include="RulesIniSection.h" />
     <ClInclude Include="RulesIniTemplates.h" />
     <ClInclude Include="RulesIniTypes.h" />
-    <ClInclude Include="RULES_CACHE.H" />
     <ClInclude Include="RULES_CACHE_KEY.H" />
     <ClInclude Include="RULES_INI.H" />
     <ClInclude Include="RULES_INI_AI.H" />
@@ -642,8 +641,7 @@
     <ClCompile Include="LUA_API_FUNCTIONS_WEAPON_RULES.CPP" />
     <ClCompile Include="LUA_REPL.CPP" />
     <ClCompile Include="NCO.cpp" />
-    <ClCompile Include="RulesIniKey.cpp" />
-    <ClCompile Include="RULES_CACHE.CPP" />
+    <ClCompile Include="RulesIniKeys.cpp" />
     <ClCompile Include="RULES_CACHE_KEY.CPP" />
     <ClCompile Include="RULES_INI_MODS.CPP" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />

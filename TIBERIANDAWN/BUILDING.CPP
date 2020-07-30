@@ -2072,7 +2072,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 	if (Target_Legal(WhomToRepay)) {
 		odds -= 1;
 
-		IsSurvivorless = !ReadRuleValue<bool>(SURVIVORS_FROM_BUILDINGS_RULE_KEY);
+		IsSurvivorless = !ReadRuleValue<bool>(*SURVIVORS_FROM_BUILDINGS_RULE_KEY);
 	}
 
 	if (IsCaptured) odds += 6;
@@ -5647,8 +5647,8 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	*/
 	auto ptr = Occupy_List(true);
 	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-	auto preventBuildingInShroud = ReadRuleValue<bool>(PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
-	auto allowBuildingBesideWalls = ReadRuleValue<bool>(ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
+	auto preventBuildingInShroud = ReadRuleValue<bool>(*PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
+	auto allowBuildingBesideWalls = ReadRuleValue<bool>(*ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
 
 	while (*ptr != REFRESH_EOL) {
 		CELL cell = homecell + *ptr++;

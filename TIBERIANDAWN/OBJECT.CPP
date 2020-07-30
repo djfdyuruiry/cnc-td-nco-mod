@@ -129,8 +129,7 @@ ObjectTypeClass::ObjectTypeClass(
 						char const *ini,
 						ArmorType armor,
 						unsigned short strength,
-						bool loadObjectRules) :
-	AbstractTypeClass(name, ini)
+						bool loadObjectRules) : AbstractTypeClass(name, ini)
 {
 	IsSentient = is_sentient;
 	IsFlammable = is_flammable;

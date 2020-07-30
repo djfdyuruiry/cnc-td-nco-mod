@@ -1,6 +1,5 @@
 #pragma once
 
-#include "defines.h"
 #include "logger.h"
 #include "lua.h"
 #include "RulesIni.h"
@@ -16,13 +15,33 @@ RulesIniReader& GetRulesReader();
 
 RulesIniInfo& GetRulesInfo();
 
-template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName rule, U defaultValue);
+template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName rule, U defaultValue)
+{
+	Ensure_Rules_Ini_Is_Loaded();
 
-template<class T> T ReadRuleValue(SectionName section, RuleName rule, T defaultValue);
+	return GetRulesReader().ReadRuleValueWithSpecialDefault<T, U>(section, rule, defaultValue);
+}
 
-template<class T> T ReadRuleValue(SectionName section, RuleName rule);
+template<class T> T ReadRuleValue(SectionName section, RuleName rule, T defaultValue)
+{
+	Ensure_Rules_Ini_Is_Loaded();
 
-template<class T> T ReadRuleValue(RulesIniRuleKey key);
+	return GetRulesReader().ReadRuleValue<T>(section, rule, defaultValue);
+}
+
+template<class T> T ReadRuleValue(SectionName section, RuleName rule)
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	return GetRulesReader().ReadRuleValue<T>(section, rule);
+}
+
+template<class T> T ReadRuleValue(const RulesIniRuleKey& key)
+{
+	Ensure_Rules_Ini_Is_Loaded();
+
+	return GetRulesReader().ReadRuleValue<T>(key);
+}
 
 //NCO config
 void MarkRulesIniAsInvalid();
@@ -43,44 +62,46 @@ LuaScripts Rules_Get_Lua_Scripts();
 
 int Rules_Get_Game_Tick_Interval_In_Ms();
 
+void Free_Rules_Memory();
+
 // enhancement lookups
-#define Read_Rally_Points_Rule() ReadRuleValue<bool>(RALLY_POINTS_RULE_KEY)
+#define Read_Rally_Points_Rule() ReadRuleValue<bool>(*RALLY_POINTS_RULE_KEY)
 
-#define Read_A_Star_Path_Finding_Rule() ReadRuleValue<bool>(A_STAR_PATH_FINDING_RULE_KEY)
+#define Read_A_Star_Path_Finding_Rule() ReadRuleValue<bool>(*A_STAR_PATH_FINDING_RULE_KEY)
 
-#define Read_Commando_Guard_Rule() ReadRuleValue<bool>(COMMANDO_GUARD_RULE_KEY)
+#define Read_Commando_Guard_Rule() ReadRuleValue<bool>(*COMMANDO_GUARD_RULE_KEY)
 
-#define Read_Ai_Harvesters_Per_Refinery_Rule() ReadRuleValue<unsigned int>(AI_HARVESTERS_PER_REFINERY_RULE_KEY)
+#define Read_Ai_Harvesters_Per_Refinery_Rule() ReadRuleValue<unsigned int>(*AI_HARVESTERS_PER_REFINERY_RULE_KEY)
 
-#define Read_Human_Harvesters_Per_Refinery_Rule() ReadRuleValue<unsigned int>(HUMAN_HARVESTERS_PER_REFINERY_RULE_KEY)
+#define Read_Human_Harvesters_Per_Refinery_Rule() ReadRuleValue<unsigned int>(*HUMAN_HARVESTERS_PER_REFINERY_RULE_KEY)
 
-#define Read_Multi_Wall_Length_Rule() ReadRuleValue<unsigned int>(MULTI_WALL_LENGTH_RULE_KEY)
+#define Read_Multi_Wall_Length_Rule() ReadRuleValue<unsigned int>(*MULTI_WALL_LENGTH_RULE_KEY)
 
-#define Read_Full_Cost_Multi_Wall_Length_Rule() ReadRuleValue<bool>(FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)
+#define Read_Full_Cost_Multi_Wall_Length_Rule() ReadRuleValue<bool>(*FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)
 
 // mod lookups
 #define Read_New_Infantry_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE)
 
-#define Read_Infantry_Count() (char)ReadRuleValue<unsigned int>(INFANTRY_COUNT_RULE_KEY)
+#define Read_Infantry_Count() (char)ReadRuleValue<unsigned int>(*INFANTRY_COUNT_RULE_KEY)
 
 // game lookups
-#define Read_Build_Distance_Game_Rule() ReadRuleValue<unsigned int>(MAX_BUILD_DISTANCE_RULE_KEY)
+#define Read_Build_Distance_Game_Rule() ReadRuleValue<unsigned int>(*MAX_BUILD_DISTANCE_RULE_KEY)
 
-#define Read_Credits_Per_Scoop_Rule() ReadRuleValue<unsigned int>(CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY)
+#define Read_Credits_Per_Scoop_Rule() ReadRuleValue<unsigned int>(*CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY)
 
-#define Read_Harvester_Capacity_Rule() ReadRuleValue<unsigned int>(MAX_HARVESTER_CAPACITY_RULE_KEY)
+#define Read_Harvester_Capacity_Rule() ReadRuleValue<unsigned int>(*MAX_HARVESTER_CAPACITY_RULE_KEY)
 
 #define Read_Harvester_Max_Credits_Rule() Read_Credits_Per_Scoop_Rule() * Read_Harvester_Capacity_Rule()
 
-#define Read_Production_Steps_Per_Tick_Rule() ReadRuleValue<unsigned int>(PRODUCTION_STEPS_PER_TICK_RULE_KEY)
+#define Read_Production_Steps_Per_Tick_Rule() ReadRuleValue<unsigned int>(*PRODUCTION_STEPS_PER_TICK_RULE_KEY)
 
-#define Read_Factory_Count_Multiplier_Rule() ReadRuleValue<double>(FACTORY_COUNT_STEP_MULTIPLER_RULE_KEY)
+#define Read_Factory_Count_Multiplier_Rule() ReadRuleValue<double>(*FACTORY_COUNT_STEP_MULTIPLER_RULE_KEY)
 
-#define Read_Total_Production_Steps_Rule() ReadRuleValue<unsigned int>(TOTAL_PRODUCTION_STEPS_RULE_KEY)
+#define Read_Total_Production_Steps_Rule() ReadRuleValue<unsigned int>(*TOTAL_PRODUCTION_STEPS_RULE_KEY)
 
-#define Read_Unit_Repair_Step_Rule() ReadRuleValue<unsigned int>(UNIT_REPAIR_STEP_RULE_KEY)
+#define Read_Unit_Repair_Step_Rule() ReadRuleValue<unsigned int>(*UNIT_REPAIR_STEP_RULE_KEY)
 
-#define Read_Aircraft_Repair_Step_Rule() ReadRuleValue<unsigned int>(AIRCRAFT_REPAIR_STEP_RULE_KEY)
+#define Read_Aircraft_Repair_Step_Rule() ReadRuleValue<unsigned int>(*AIRCRAFT_REPAIR_STEP_RULE_KEY)
 
 // difficulty lookups
 #define Read_Double_Difficulty_Rule(difficultyName, rule) ReadRuleValue<double>(difficultyName, rule)

@@ -2407,7 +2407,7 @@ bool UnitClass::Harvesting(void)
 		**	than the harvester can carry.
 		*/
 		int reducer = (ptr->OverlayData % 6) + 1;
-		reducer = ptr->Reduce_Tiberium(MIN(reducer, Read_Harvester_Capacity_Rule()-Tiberium));
+		reducer = ptr->Reduce_Tiberium(MIN(reducer, (int)Read_Harvester_Capacity_Rule() - Tiberium));
 		Tiberium += reducer;
 		Set_Stage(0);
 		Set_Rate(2);

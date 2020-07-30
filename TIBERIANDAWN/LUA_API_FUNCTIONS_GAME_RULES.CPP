@@ -1,5 +1,4 @@
 #include "lua.h"
-#include "rules_cache.h"
 #include "rules_ini.h"
 #include "rules_ini_game.h"
 #include "strings.h"
@@ -34,7 +33,22 @@ template<typename T> static int Lua_Get_Game_Rule(
 
     auto rule = gameRules[ruleKey];
 
-    writeValue(lua, rule.GetValue<T>());
+    if (rule.HasValue())
+    {
+        T value = rule.GetValue<T>();
+
+        writeValue(lua, value);
+    }
+    else if (rule.HasDefaultValue())
+    {
+        T value = rule.GetDefaultValue<T>();
+
+        writeValue(lua, value);
+    }
+    else
+    {
+        lua_pushnil(lua);
+    }
 
     return 0;
 }

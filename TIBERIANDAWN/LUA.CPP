@@ -1,6 +1,7 @@
-#include "function.h"
-
+#include "lua.h"
 #include "lua_api.h"
+#include "lua_events.h"
+#include "rules_ini.h"
 
 static lua_State* LUA = NULL;
 

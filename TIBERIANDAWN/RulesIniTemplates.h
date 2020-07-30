@@ -42,14 +42,14 @@ private:
 
 	static IRulesIniSection& BuildUnitAndAircraftSharedRules(IRulesIniSection& s)
 	{
-		s << BuildRateOfTurnRule(s)
+		return s << BuildRateOfTurnRule(s)
 			<< TRANSPORTER_RULE << BOOL_RULE
 			<< TRANSPORT_CAPACITY_RULE << UNSIGNED_INT_RULE;
 	}
 
 	static IRulesIniSection& BuildNonInfantrySharedRules(IRulesIniSection& s)
 	{
-		s << HAS_CREW_RULE << BOOL_RULE
+		return s << HAS_CREW_RULE << BOOL_RULE
 			<< TURRET_EQUIPPED_RULE << BOOL_RULE;
 	}
 
@@ -76,7 +76,7 @@ private:
 			<< OWNER_RULE << HOUSE_LIST_RULE
 			<< PRIMARY_WEAPON_RULE << WEAPON_RULE
 			<< SECONDARY_WEAPON_RULE << WEAPON_RULE
-			<< ARMOR_RULE << ARMOR_RULE
+			<< ARMOR_RULE << ARMOR_TYPE_RULE
 
 			<< s.BuildRule(AMMO_RULE)
 			.OfType(INT_RULE)
@@ -229,7 +229,7 @@ public:
 					<< CAPTUREABLE_RULE
 					<< FIXED_SPEED_ANIMATION_RULE
 					<< UNSELLABLE_RULE
-					<< FACTORY_TYPE_RULE << FACTORY_RULE
+					<< FACTORY_TYPE_RULE << FACTORY_RULE_TYPE
 					<< STORAGE_CAPACITY_RULE << UNSIGNED_INT_RULE
 					<< POWER_OUTPUT_RULE << UNSIGNED_INT_RULE
 					<< POWER_INPUT_RULE << UNSIGNED_INT_RULE;

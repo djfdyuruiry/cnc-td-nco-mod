@@ -120,7 +120,8 @@ public:
 
 	IRulesIniSection& operator<<(RuleName ruleName)
 	{
-		ruleInStream = &RulesIniRule::BuildRule(this->name, ruleName).WithDefault(defaultType);
+		ruleInStream = &RulesIniRule::BuildRule(this->name, ruleName)
+			.OfType(defaultType);
 
 		AddRule(*ruleInStream);
 

@@ -6,7 +6,7 @@
 #include "RulesIni.h"
 #include "RulesIniTemplates.h"
 
-const char* INFO_SECTION = "INFO";
+static auto INFO_SECTION = "INFO";
 
 class RulesIniInfo
 {

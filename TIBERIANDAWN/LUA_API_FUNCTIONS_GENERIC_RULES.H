@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type.h"
+#include "function.h"
 
 #include "IRulesIniSection.h"
 #include "lua.h"
@@ -57,7 +57,7 @@ template<typename T> int Lua_Get_Rule(
         return 0;
     }
 
-    auto ruleKey = rulesInfo..BuildKey(ruleNameParameter);
+    auto ruleKey = rulesInfo.BuildKey(ruleNameParameter);
     auto ruleIsValid = rulesInfo.HasRule(ruleKey);
 
     if (!ruleIsValid)

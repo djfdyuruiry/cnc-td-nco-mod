@@ -1,5 +1,7 @@
 #pragma once
 
+#include "game_messages.h"
+
 void Show_Game_Notification(char* message, float durationInSeconds);
 
 void Refresh_Sidebar();

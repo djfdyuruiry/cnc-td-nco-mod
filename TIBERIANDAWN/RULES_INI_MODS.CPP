@@ -1,4 +1,10 @@
+#include <stdlib.h>
+
 #include "function.h"
+
+#include "logger.h"
+#include "rules_ini.h"
+#include "RulesIniRuleKey.h"
 
 static char** MOD_INFANTRY_TYPES = NULL;
 
@@ -29,7 +35,7 @@ void Read_Infantry_Mods()
 		.SetValue(newInfantryCount);
 
 	GetRulesReader()
-		.GetRule(INFANTRY_COUNT_RULE_KEY)
+		.GetRule(*INFANTRY_COUNT_RULE_KEY)
 		.SetValue(totalInfantryCount);
 
 	Log_Info("Mod infantry types read: %s", newInfantryCsv);

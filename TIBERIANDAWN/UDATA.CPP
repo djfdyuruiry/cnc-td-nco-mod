@@ -1760,12 +1760,12 @@ void UnitTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = Read_Double_Game_Rule(UNIT_REPAIR_FACTOR_RULE, UNIT_REPAIR_FACTOR_RULE_KEY, 1.02f, 0.01f);
+	auto repairFactor = ReadRuleValue<double>(*UNIT_REPAIR_FACTOR_RULE_KEY);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(
 		Fixed_To_Cardinal(
-			Cost / (MaxStrength/ Read_Unit_Repair_Step_Rule(4)),
+			Cost / (MaxStrength/ Read_Unit_Repair_Step_Rule()),
 			repairPercent
 		)
 	);
@@ -1789,7 +1789,7 @@ int UnitTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Step(void) const
 {
-	return(Read_Unit_Repair_Step_Rule(4));
+	return(Read_Unit_Repair_Step_Rule());
 }
 
 

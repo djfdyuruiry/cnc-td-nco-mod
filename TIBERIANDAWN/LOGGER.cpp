@@ -1,4 +1,10 @@
-#include "function.h"
+#include <string>
+#include <windows.h>
+
+#include "logger.h"
+#include "rules_ini.h"
+#include "strings.h"
+#include "utils.h"
 
 static auto LOG_LINE_LENGTH = 25600;
 static auto LOG_LEVEL_LENGTH = 5;

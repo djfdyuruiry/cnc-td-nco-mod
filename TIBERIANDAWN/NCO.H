@@ -1,13 +1,12 @@
 #pragma once
 
-#include "./logger.h"
-#include "./lua.h"
-#include "./lua_events.h"
-#include "./nco.h"
-#include "./parse.h"
-#include "./rules_ini.h"
-#include "./RulesIniTemplates.h"
-#include "./strings.h"
+#include "logger.h"
+#include "lua_events.h"
+#include "nco.h"
+#include "parse.h"
+#include "rules_ini.h"
+#include "RulesIniTemplates.h"
+#include "strings.h"
 
 bool NCO_Startup();
 

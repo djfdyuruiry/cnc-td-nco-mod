@@ -954,8 +954,8 @@ void MapClass::Logic(void)
 			baseGrowthAndSpreadFactor = 2;
 		}
 
-		auto growthFactorMultipler = ReadRuleValue<double>(TIBERIUM_GROWTH_RATE_RULE_KEY);
-		auto spreadFactorMultipler = ReadRuleValue<double>(TIBERIUM_SPREAD_RATE_RULE_KEY);
+		auto growthFactorMultipler = ReadRuleValue<double>(*TIBERIUM_GROWTH_RATE_RULE_KEY);
+		auto spreadFactorMultipler = ReadRuleValue<double>(*TIBERIUM_SPREAD_RATE_RULE_KEY);
 
 		auto growthFactor = nearbyint(baseGrowthAndSpreadFactor * growthFactorMultipler);
 		auto spreadFactor = nearbyint(baseGrowthAndSpreadFactor * spreadFactorMultipler);

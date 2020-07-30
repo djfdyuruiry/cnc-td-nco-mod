@@ -43,6 +43,36 @@ private:
 
 		sprintf(asString, "%s -> %s", this->section, this->name);
 	}
+
+	void SetDefaultForRuleType()
+	{
+		if (type == INT_RULE || type == HOUSE_LIST_RULE)
+		{
+			SetDefaultValue<int>(0);
+		}
+		else if (type == BOOL_RULE)
+		{
+			SetDefaultValue<bool>(false);
+		}
+		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
+		{
+			SetDefaultValue<unsigned int>(0u);
+		}
+		else if (type == DOUBLE_RULE || type == FIXED_RULE)
+		{
+			SetDefaultValue<double>(0.0);
+		}
+		else if (type == WEAPON_RULE 
+			|| type == UNIT_SPEED_TYPE_RULE 
+			|| type == FACTORY_RULE_TYPE
+			|| type == WARHEAD_RULE
+			|| type == BULLET_RULE
+			|| type == PREREQ_RULE)
+		{
+			SetDefaultValue<double>(0L);
+		}
+	}
+
 public:
 	static const unsigned int RULES_INI_ID_SIZE = 32u;
 
@@ -63,6 +93,11 @@ public:
 	RulesIniRule& OfType(RulesIniType type)
 	{
 		this->type = type;
+
+		if (!HasDefaultValue())
+		{
+			SetDefaultForRuleType();
+		}
 
 		return (*this);
 	}

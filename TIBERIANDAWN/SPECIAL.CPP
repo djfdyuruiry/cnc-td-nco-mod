@@ -265,7 +265,37 @@ void Special_Dialog(void)
 	Map.Render();
 }
 
+void SpecialClass::Init(void) {
+	IsSpeedBuild = ReadRuleValue<bool>(*SPEEDY_BUILDS_RULE_KEY);
+	IsDefenderAdvantage = !ReadRuleValue<bool>(*ATTACKER_ADVANTAGE_RULE_KEY);
+	IsSmartDefense = ReadRuleValue<bool>(*DEFEND_AGAINST_FRIENDLY_FIRE_RULE_KEY);
+	IsTreeTarget = ReadRuleValue<bool>(*TARGET_TREES_RULE_KEY);
+	IsMCVDeploy = ReadRuleValue<bool>(*MCV_REDEPLOY_RULE_KEY);
+	IsVisceroids = ReadRuleValue<bool>(*VISCEROIDS_RULE_KEY);
+	IsInert = ReadRuleValue<bool>(*UNITS_INDESTRUCTIBLE_RULE_KEY);
+	IsThreePoint = ReadRuleValue<bool>(*THREE_POINT_TURNS_RULE_KEY);
+	IsTGrowth = ReadRuleValue<bool>(*TIBERIUM_GROWS_RULE_KEY);
+	IsTSpread = ReadRuleValue<bool>(*TIBERIUM_SPREADS_RULE_KEY);
+	IsTFast = !ReadRuleValue<bool>(*SLOW_TIBERIUM_RULE_KEY);
+	IsRoad = ReadRuleValue<bool>(*SHOW_BIBS_RULE_KEY);
+	IsScatter = ReadRuleValue<bool>(*AUTO_SCATTER_RULE_KEY);
+	IsNamed = ReadRuleValue<bool>(*NAME_CIVILIAN_BUILDINGS_RULE_KEY);
+	IsSeparate = ReadRuleValue<bool>(*CAN_BUY_HELIPAD_ONLY_RULE_KEY);
 
-
-
-
+	IsVisibleTarget = false;
+	IsShowPath = false;
+	IsGross = false;
+	IsJuvenile = false;
+	IsScrollMod = false;
+	IsEasy = false;
+	IsDifficult = false;
+	IsVariation = false;
+	IsJurassic = false;
+	IsMonoEnabled = false;
+	IsCaptureTheFlag = false;
+	IsFromInstall = false;
+	IsFromWChat = false;
+	IsEarlyWin = false;
+	HealthBarDisplayMode = HB_SELECTED;
+	ResourceBarDisplayMode = RB_SELECTED;
+}

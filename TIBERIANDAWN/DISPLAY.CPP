@@ -940,8 +940,8 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const * object, Houses
 	}
 
 	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-	auto preventBuildingInShroud = ReadRuleValue<bool>( PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
-	auto allowBuildingBesideWalls = ReadRuleValue<bool>(ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
+	auto preventBuildingInShroud = ReadRuleValue<bool>(* PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
+	auto allowBuildingBesideWalls = ReadRuleValue<bool>(*ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
 
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent

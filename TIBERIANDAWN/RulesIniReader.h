@@ -1,7 +1,5 @@
 #pragma once
 
-#include "defines.h"
-
 #include "parse.h"
 #include "RulesIni.h"
 #include "RulesIniRuleKey.h"
@@ -264,7 +262,7 @@ private:
 
 		if (!stringValueOptional.Present())
 		{
-			return rule.GetDefaultValue<T>(defaultValue);
+			return rule.GetDefaultValueOr<T>(defaultValue);
 		}
 
 		auto stringValue = stringValueOptional.Get<char*>();
@@ -280,7 +278,7 @@ private:
 
 			Show_Error("Failed to parse %s for [%s]: %s", typeName, rule.AsString(), stringValue);
 
-			return rule.GetDefaultValue<T>(defaultValue);
+			return rule.GetDefaultValueOr<T>(defaultValue);
 		}
 
 		return parsedValue;
@@ -362,7 +360,7 @@ public:
 		return *(new RulesIniReader(rulesIni));
 	}
 
-	RulesIniRule& GetRule(const RulesIniRuleKey key)
+	RulesIniRule& GetRule(const RulesIniRuleKey& key)
 	{
 		if (!rulesIni.HasSection(key.SectionKey))
 		{
@@ -379,11 +377,15 @@ public:
 		return section[key.RuleKey];
 	}
 
-	RulesIniRule& GetRule(SectionName section, RuleName rule)
+	RulesIniRule& GetRule(SectionName section, RuleName ruleName)
 	{
-		const auto key = RulesIniRuleKey(section, rule);
+		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
 
-		return GetRule(key);
+		RulesIniRule& rule = GetRule(key);
+
+		delete &key;
+
+		return rule;
 	}
 
 	template<class T> T ReadRuleValue(RulesIniRule& rule)
@@ -444,7 +446,7 @@ public:
 				ReadWeaponRule(rule)
 			);
 		}
-		else if (ruleType == ARMOR_RULE)
+		else if (ruleType == ARMOR_TYPE_RULE)
 		{
 			rule.SetValue(
 				ReadArmorRule(rule)
@@ -456,7 +458,7 @@ public:
 				ReadUnitSpeedRule(rule)
 			);
 		}
-		else if (ruleType == FACTORY_RULE)
+		else if (ruleType == FACTORY_RULE_TYPE)
 		{
 			rule.SetValue(
 				ReadFactoryRule(rule)
@@ -490,40 +492,52 @@ public:
 		return rule.GetValue<T>();
 	}
 
-	template<class T> T ReadRuleValue(const RulesIniRuleKey key)
+	template<class T> T ReadRuleValue(const RulesIniRuleKey& key)
 	{
 		return ReadRuleValue<T>(
 			GetRule(key)
 		);
 	}
 
-	template<class T> T ReadRuleValue(SectionName section, RuleName rule)
+	template<class T> T ReadRuleValue(SectionName section, RuleName ruleName)
 	{
-		const auto key = RulesIniRuleKey(section, rule);
+		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
 
-		return ReadRuleValue<T>(key);
+		auto ruleValue = ReadRuleValue<T>(key);
+
+		delete &key;
+
+		return ruleValue;
 	}
 
 	template<class T> T ReadRuleValue(SectionName section, RuleName ruleName, T defaultValue)
 	{
-		const auto key = RulesIniRuleKey(section, ruleName);
+		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
+
 		RulesIniRule& rule = GetRule(key);
 
-		rule.SetDefaultValue<T>(
-			rule.GetDefaultValueOr(defaultValue)
-		);
+		delete &key;
+
+		if (!rule.HasValue())
+		{
+			rule.SetDefaultValue<T>(defaultValue);
+		}
 
 		return ReadRuleValue<T>(rule);
 	}
 
 	template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName ruleName, U defaultValue)
 	{
-		const auto key = RulesIniRuleKey(section, ruleName);
+		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
+
 		RulesIniRule& rule = GetRule(key);
 
-		rule.SetDefaultValue<U>(
-			rule.GetDefaultValueOr(defaultValue)
-		);
+		delete &key;
+
+		if (!rule.HasValue())
+		{
+			rule.SetDefaultValue<U>(defaultValue);
+		}
 
 		return ReadRuleValue<T>(rule);
 	}

@@ -185,6 +185,8 @@
 #pragma warning (disable:4341)
 
 #include "houses_type.h"
+#include "special.h"
+#include "wwstd.h"
 
 /**********************************************************************
 **	These enumerations are used to implement RTTI.

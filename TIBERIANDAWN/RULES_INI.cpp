@@ -1,6 +1,6 @@
-#include "function.h"
-
+#include "rules_ini.h"
 #include "rules_ini_nco.h"
+#include "RulesIniRuleKey.h"
 
 static const auto RULES_FILE_ENV_VAR = "TD_RULES_FILE";
 static const auto DEFAULT_RULES_FILENAME = "RULES-DEFAULT.INI";
@@ -353,18 +353,19 @@ static void DefineRulesSections(RulesIni& r) {
 }
 
 void Ensure_Rules_Ini_Is_Loaded() {
-	if (RULES != NULL && RULE_READER != NULL) {
+	if (RULES != NULL && RULE_READER != NULL && RULE_INFO != NULL) {
 		return;
 	}
+
+	InitaliseRuleKeys();
 
 	RulesIni& rules = RulesIni::SourceRulesFrom("RULES.INI")
 		.AndThenFrom("RULES-DEFAULT.INI")
 		.WithSections(&DefineRulesSections);
 
-	RulesIniReader& ruleReader = RulesIniReader::ReaderFor(rules);
-
 	RULES = &rules;
-	RULE_READER = &ruleReader;
+	RULE_READER = &RulesIniReader::ReaderFor(rules);
+	RULE_INFO = &RulesIniInfo::BuildRuleInfo(rules);
 
 	LUA_IS_ENABLED = RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE);
 	LUA_CONSOLE_IS_ENABLED = RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
@@ -392,34 +393,6 @@ RulesIniInfo& GetRulesInfo()
 	Ensure_Rules_Ini_Is_Loaded();
 
 	return *RULE_INFO;
-}
-
-template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName rule, U defaultValue)
-{
-	Ensure_Rules_Ini_Is_Loaded();
-
-	return RULE_READER->ReadRuleValueWithSpecialDefault<T, U>(section, rule, defaultValue);
-}
-
-template<class T> T ReadRuleValue(SectionName section, RuleName rule, T defaultValue)
-{
-	Ensure_Rules_Ini_Is_Loaded();
-
-	return RULE_READER->ReadRuleValue<T>(section, rule, defaultValue);
-}
-
-template<class T> T ReadRuleValue(SectionName section, RuleName rule)
-{
-	Ensure_Rules_Ini_Is_Loaded();
-
-	return RULE_READER->ReadRuleValue<T>(section, rule);
-}
-
-template<class T> T ReadRuleValue(const RulesIniRuleKey key)
-{
-	Ensure_Rules_Ini_Is_Loaded();
-
-	return RULE_READER->ReadRuleValue<T>(key);
 }
 
 void MarkRulesIniAsInvalid()
@@ -473,4 +446,24 @@ int Rules_Get_Game_Tick_Interval_In_Ms()
 	Ensure_Rules_Ini_Is_Loaded();
 
 	return GAME_TICK_INTERVAL_IN_MS;
+}
+
+void Free_Rules_Memory()
+{
+	Log_Debug("Deleting rule objects to free memory");
+
+	if (RULES != NULL)
+	{
+		delete RULES;
+	}
+
+	if (RULE_READER != NULL)
+	{
+		delete RULE_READER;
+	}
+
+	if (RULE_INFO != NULL)
+	{
+		delete RULE_INFO;
+	}
 }
