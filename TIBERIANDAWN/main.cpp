@@ -132,11 +132,11 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 	Test_Special_Rules();
 
-	Test_Lua_Events();
-
 	Test_Lua_Rules();
 
 	Dump_Rules();
+
+	Test_Lua_Events();
 
 	NCO_Shutdown();
 
