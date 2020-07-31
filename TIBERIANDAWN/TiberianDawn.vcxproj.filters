@@ -808,13 +808,13 @@
     <ClInclude Include="PROFILE.H">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="RulesIniTemplates.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="RulesIniInfo.h">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="RULES_INI_NCO.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniSectionBuilder.h">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
   </ItemGroup>

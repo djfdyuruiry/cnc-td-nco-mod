@@ -3675,7 +3675,7 @@ BuildingTypeClass::BuildingTypeClass(
 	StartFace = sframe;
 	Type = type;
 
-	GetRules() << RulesIniTemplates::BuildBuildingSection(IniName);
+	GetRules() << RulesIniSectionBuilder::BuildBuildingSection(IniName);
 
 	Read_Object_Rules(this);
 	Read_Techno_Rules(this);

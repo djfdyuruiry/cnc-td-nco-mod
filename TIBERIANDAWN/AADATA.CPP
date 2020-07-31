@@ -357,7 +357,7 @@ AircraftTypeClass::AircraftTypeClass(
 	Type = airtype;
 	Mission = deforder;
 	
-	GetRules() << RulesIniTemplates::BuildAircraftSection(IniName);
+	GetRules() << RulesIniSectionBuilder::BuildAircraftSection(IniName);
 
 	Read_Object_Rules(this);
 	Read_Techno_Rules(this);

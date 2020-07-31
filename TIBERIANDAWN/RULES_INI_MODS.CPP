@@ -105,7 +105,7 @@ void Initialise_Infantry_Mod_Types()
 
 		Convert_String_To_Upper_Case(typeString);
 
-		GetRules() << RulesIniTemplates::BuildInfantrySection(typeString);
+		GetRules() << RulesIniSectionBuilder::BuildInfantrySection(typeString);
 
 		auto baseTypeString = ReadRuleValue<char*>(typeString, BASE_TYPE_RULE);
 

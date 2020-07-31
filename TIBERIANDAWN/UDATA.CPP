@@ -1335,7 +1335,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	TurretOffset = toffset;
 	Type = type;
 
-	GetRules() << RulesIniTemplates::BuildUnitSection(IniName);
+	GetRules() << RulesIniSectionBuilder::BuildUnitSection(IniName);
 
 	Read_Object_Rules(this);
 	Read_Techno_Rules(this);

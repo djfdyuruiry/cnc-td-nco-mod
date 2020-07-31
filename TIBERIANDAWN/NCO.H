@@ -5,7 +5,7 @@
 #include "nco.h"
 #include "parse.h"
 #include "rules_ini.h"
-#include "RulesIniTemplates.h"
+#include "RulesIniSectionBuilder.h"
 #include "strings.h"
 
 bool NCO_Startup();

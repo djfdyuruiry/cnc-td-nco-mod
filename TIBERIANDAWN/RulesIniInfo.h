@@ -4,7 +4,7 @@
 #include "rules_ini_nco.h"
 #include "rules_ini_game.h"
 #include "RulesIni.h"
-#include "RulesIniTemplates.h"
+#include "RulesIniSectionBuilder.h"
 
 static auto INFO_SECTION = "INFO";
 
@@ -23,13 +23,13 @@ private:
 
 	RulesIniInfo(RulesIni& rulesIni)
 		: rules(rulesIni),
-		weaponRules(RulesIniTemplates::BuildWeaponSection(INFO_SECTION)),
-		bulletRules(RulesIniTemplates::BuildBulletSection(INFO_SECTION)),
-		warheadRules(RulesIniTemplates::BuildWarheadSection(INFO_SECTION)),
-		infantryRules(RulesIniTemplates::BuildInfantrySection(INFO_SECTION)),
-		unitRules(RulesIniTemplates::BuildUnitSection(INFO_SECTION)),
-		aircraftRules(RulesIniTemplates::BuildAircraftSection(INFO_SECTION)),
-		buildingRules(RulesIniTemplates::BuildBuildingSection(INFO_SECTION))
+		weaponRules(RulesIniSectionBuilder::BuildWeaponSection(INFO_SECTION)),
+		bulletRules(RulesIniSectionBuilder::BuildBulletSection(INFO_SECTION)),
+		warheadRules(RulesIniSectionBuilder::BuildWarheadSection(INFO_SECTION)),
+		infantryRules(RulesIniSectionBuilder::BuildInfantrySection(INFO_SECTION)),
+		unitRules(RulesIniSectionBuilder::BuildUnitSection(INFO_SECTION)),
+		aircraftRules(RulesIniSectionBuilder::BuildAircraftSection(INFO_SECTION)),
+		buildingRules(RulesIniSectionBuilder::BuildBuildingSection(INFO_SECTION))
 	{
 	}
 

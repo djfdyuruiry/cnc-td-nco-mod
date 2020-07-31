@@ -587,7 +587,7 @@ BulletTypeClass::BulletTypeClass(
 
 	RulesName = rulesName;
 
-	GetRules() << RulesIniTemplates::BuildBulletSection(rulesName);
+	GetRules() << RulesIniSectionBuilder::BuildBulletSection(rulesName);
 
 	FriendlyName = ReadRuleValue<char*>(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	IsHigh = ReadRuleValue<bool>(RulesName, BULLET_HIGH_RULE, is_high);

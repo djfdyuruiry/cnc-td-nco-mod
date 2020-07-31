@@ -85,7 +85,7 @@ WeaponTypeClass::WeaponTypeClass(
 
 	auto weaponTypeStr = Weapon_Type_To_String(owner);
 	
-	GetRules() << RulesIniTemplates::BuildWeaponSection(weaponTypeStr);
+	GetRules() << RulesIniSectionBuilder::BuildWeaponSection(weaponTypeStr);
 
 	FriendlyName = ReadRuleValue<char*>(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	Fires = ReadRuleValue<BulletType>(weaponTypeStr, WEAPON_FIRES_RULE, fires);
@@ -161,7 +161,7 @@ WarheadTypeClass::WarheadTypeClass(
 
 	auto warheadTypeString = Warhead_Type_To_String(type);
 
-	GetRules() << RulesIniTemplates::BuildWarheadSection(warheadTypeString);
+	GetRules() << RulesIniSectionBuilder::BuildWarheadSection(warheadTypeString);
 
 	FriendlyName = ReadRuleValue<char*>(warheadTypeString, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	SpreadFactor = ReadRuleValue<unsigned int>(warheadTypeString, WARHEAD_SPREAD_FACTOR_RULE, spreadFactor);

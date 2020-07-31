@@ -1564,7 +1564,7 @@ InfantryTypeClass::InfantryTypeClass(
 	IsImmuneToTiberium = type == INFANTRY_E5;
 	HasC4Charges = Type == INFANTRY_RAMBO;
 
-	GetRules() << RulesIniTemplates::BuildInfantrySection(IniName);
+	GetRules() << RulesIniSectionBuilder::BuildInfantrySection(IniName);
 
 	Read_Infantry_Rules(this);
 
