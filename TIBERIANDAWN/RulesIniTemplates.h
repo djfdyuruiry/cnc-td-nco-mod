@@ -49,7 +49,8 @@ private:
 
 	static IRulesIniSection& BuildNonInfantrySharedRules(IRulesIniSection& s)
 	{
-		return s << HAS_CREW_RULE << BOOL_RULE
+		return s << REPAIRABLE_RULE << BOOL_RULE 
+			<< HAS_CREW_RULE << BOOL_RULE
 			<< TURRET_EQUIPPED_RULE << BOOL_RULE;
 	}
 
@@ -91,7 +92,6 @@ private:
 			<< HAS_THEATER_GFX_RULE << BOOL_RULE
 			<< SHOW_NAME_RULE << BOOL_RULE
 			<< IS_MOD_TYPE_RULE << BOOL_RULE
-			<< REPAIRABLE_RULE << BOOL_RULE
 			<< BASE_TYPE_RULE << STRING_RULE;
 	}
 
