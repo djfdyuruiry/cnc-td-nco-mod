@@ -160,7 +160,7 @@ static int Lua_Get_Aircraft_Rule(lua_State* lua)
         "Aircraft",
         "aircraftTypeName",
         &ResolveAircraft,
-        GetRulesInfo().GetUnitRules(),
+        GetRulesInfo().GetAircraftRules(),
         &Read_Aircraft_Rule
     );
 }
@@ -172,7 +172,7 @@ static int Lua_Set_Aircraft_Rule(lua_State* lua)
         "Aircraft",
         "aircraftTypeName",
         &ResolveAircraft,
-        GetRulesInfo().GetUnitRules(),
+        GetRulesInfo().GetAircraftRules(),
         &Write_Aircraft_Rule
     );
 }

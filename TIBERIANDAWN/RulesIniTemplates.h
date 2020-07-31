@@ -109,7 +109,8 @@ public:
 				  << s.BuildRule(WEAPON_RATE_OF_FIRE_RULE)
 					  .WithMax(UCHAR_MAX)
 
-				  << WEAPON_RANGE_RULE;
+				  << WEAPON_RANGE_RULE
+				  << IS_MOD_TYPE_RULE << BOOL_RULE;
 			});
 	}
 
@@ -135,7 +136,8 @@ public:
 				  << BuildSpeedRule(s)
 				  << BuildRateOfTurnRule(s)
 				  << BULLET_ARMING_RULE << INT_RULE
-				  << BULLET_RANGE_RULE << INT_RULE;
+				  << BULLET_RANGE_RULE << INT_RULE
+				  << IS_MOD_TYPE_RULE << BOOL_RULE;
 			});
 	}
 
@@ -153,7 +155,8 @@ public:
 				  << WARHEAD_WOOD_ARMOR_MODIFIER_RULE
 				  << WARHEAD_ALUMINUM_ARMOR_MODIFIER_RULE
 				  << WARHEAD_STEEL_ARMOR_MODIFIER_RULE
-				  << WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE;
+				  << WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE
+				  << IS_MOD_TYPE_RULE << BOOL_RULE;
 			});
 	}
 

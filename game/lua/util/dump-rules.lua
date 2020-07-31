@@ -73,7 +73,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
     rulesFile:write(string.format("[%s]\n", areaType))
 
     for _, ruleName in ipairs(typeArea.getRuleNames()) do
-      if ruleName == "IsModType" then
+      if ruleName == "IsModType" or ruleName == "Owner" or ruleName == "BaseType" then
         goto areaRule
       end
 

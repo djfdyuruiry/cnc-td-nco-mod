@@ -62,7 +62,7 @@ template<typename T> int Lua_Get_Rule(
 
     if (!ruleIsValid)
     {
-        luaL_error(lua, "rule name type passed get%sRule was not recognised: %s", typeName, ruleNameParameter);
+        luaL_error(lua, "rule name type passed get%sRule was not recognised for this type: %s", typeName, ruleNameParameter);
 
         return 0;
     }
@@ -97,7 +97,7 @@ template<typename T> int Lua_Get_Rule(
         return 1;
     }
 
-    luaL_error(lua, "rule name type passed get%sRule was not recognised: %s", typeName, ruleNameParameter);
+    luaL_error(lua, "rule name type passed get%sRule was not matched: %s", typeName, ruleNameParameter);
 
     return 0;
 }
@@ -162,7 +162,7 @@ template<typename T> int Lua_Set_Rule(
 
     if (!ruleIsValid)
     {
-        luaL_error(lua, "rule name type passed get%sRule was not recognised: %s", typeName, ruleNameParameter);
+        luaL_error(lua, "rule name type passed get%sRule was not recognised for this type: %s", typeName, ruleNameParameter);
 
         return 0;
     }
@@ -226,7 +226,7 @@ template<typename T> int Lua_Set_Rule(
         return 0;
     }
 
-    luaL_error(lua, "rule name passed to set%sRule was not recognised: %s", typeName, ruleNameParameter);
+    luaL_error(lua, "rule name passed to set%sRule was not matched: %s", typeName, ruleNameParameter);
 
     delete uppercaseRuleValue;
 
