@@ -103,7 +103,7 @@ private:
 
 		Show_Error(
 			"Rule [%s] must be in the list (%s). Value provided: %s",
-			rule.AsString(),
+			rule.GetStringKey(),
 			validValuesCsv,
 			valueBuffer
 		);
@@ -136,7 +136,7 @@ public:
 
 	Optional ReadOptionalStringRule(RulesIniRule& rule)
 	{
-		Log_Trace("Resolving optional rule value: %s", rule.AsString());
+		Log_Trace("Resolving optional rule value: %s", rule.GetStringKey());
 
 		bool valueFound = false;
 		auto valueBufferOptional = Optional();
@@ -167,7 +167,7 @@ public:
 	{
 		auto defaultValue = rule.GetDefaultValueOr("");
 
-		Log_Trace("Resolving rule value: %s", rule.AsString());
+		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
 		Log_Trace("Default value: %s", defaultValue);
 
 		auto valueBufferOptional = ReadOptionalStringRule(rule);
@@ -200,14 +200,14 @@ public:
 		}
 
 		Log_Trace("Resolved value: %s", valueBuffer);
-		Log_Debug("Setting rule [%s] = %s", rule.AsString(), valueBuffer);
+		Log_Debug("Setting rule [%s] = %s", rule.GetStringKey(), valueBuffer);
 
 		return valueBuffer;
 	}
 
 	Optional ReadOptionalIntRule(RulesIniRule& rule)
 	{
-		Log_Trace("Resolving optional rule value: %s", rule.AsString());
+		Log_Trace("Resolving optional rule value: %s", rule.GetStringKey());
 
 		bool valueFound = false;
 		auto valueOptional = Optional();
@@ -235,7 +235,7 @@ public:
 	{
 		auto defaultValue = rule.GetDefaultValueOr(0);
 
-		Log_Trace("Resolving rule value: %s", rule.AsString());
+		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
 		Log_Trace("Default value: %d", defaultValue);
 
 		bool valueFound = false;
@@ -264,7 +264,7 @@ public:
 
 				Show_Error(
 					"Rule [%s] must be between %d and %d (inclusive). Value provided: %d",
-					rule.AsString(),
+					rule.GetStringKey(),
 					minValueInclusive,
 					maxValueInclusive,
 					ruleValue
@@ -273,7 +273,7 @@ public:
 		}
 
 		Log_Trace("Resolved value: %d", ruleValue);
-		Log_Debug("Setting rule [%s] = %d", rule.AsString(), ruleValue);
+		Log_Debug("Setting rule [%s] = %d", rule.GetStringKey(), ruleValue);
 
 		return ruleValue;
 	}

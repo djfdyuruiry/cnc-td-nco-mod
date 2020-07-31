@@ -30,6 +30,11 @@ public:
 
 	template<class T> void Set(T value)
 	{
+		if (Present())
+		{
+			delete (T*)data;
+		}
+
 		data = calloc(1, sizeof(T));
 
 		*(T*)data = value;

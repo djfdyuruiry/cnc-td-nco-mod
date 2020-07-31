@@ -74,7 +74,7 @@ bool Enter_Lua_Repl(bool initialiseLua = true)
 	puts("=======================");
 	puts("  NCO Mod Lua Console  ");
 	puts("=======================");
-	printf("\nHelp: https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/9.-Lua-Scripting-API\n\n");
+	printf("\nHelp: https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/09.-Lua-Scripting-API\n\n");
 
 	while (true)
 	{

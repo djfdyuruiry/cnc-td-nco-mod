@@ -132,7 +132,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, HOUSES_RULE))
+    else if (Strings_Are_Equal(ruleName, OWNER_RULE) || Strings_Are_Equal(ruleName, HOUSES_RULE))
     {
         auto owner = Parse_House_Name_List_Csv(uppercaseValue, valueParseError);
 
@@ -357,6 +357,19 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsModType = isModType;
         }
     }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        auto baseType = uppercaseValue;
+
+        *valueParseError = String_Is_Empty(baseType) || strlen(baseType) > 32;
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", type->ModBaseIniName, baseType);
+
+            strcpy(type->ModBaseIniName, strdup(baseType));
+        }
+    }
     else
     {
         return false;
@@ -418,7 +431,7 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         lua_pushnumber(lua, type->MaxStrength);
     }
-    else if (Strings_Are_Equal(ruleName, HOUSES_RULE))
+    else if (Strings_Are_Equal(ruleName, OWNER_RULE) || Strings_Are_Equal(ruleName, HOUSES_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->HouseListCsv);
 
@@ -537,6 +550,22 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsModType));
 
         lua_pushboolean(lua, type->IsModType);
+    }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        if (type->IsModType)
+        {
+            Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->ModBaseIniName);
+
+            lua_pushstring(lua, type->ModBaseIniName);
+        }
+        else
+        {
+            // fallback to ini name for non-mod type instances
+            Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->IniName);
+
+            lua_pushstring(lua, type->IniName);
+        }
     }
     else
     {

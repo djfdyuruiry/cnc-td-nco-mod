@@ -94,6 +94,11 @@ bool ObjectClass::Is_Infantry(void) const
 
 void ObjectTypeClass::Read_Object_Rules(ObjectTypeClass* type)
 {
+	if (!type->LoadObjectRules)
+	{
+		return;
+	}
+
 	auto iniName = type->IniName;
 
 	type->Armor = Read_Armor(iniName, type->Armor);
@@ -144,13 +149,7 @@ ObjectTypeClass::ObjectTypeClass(
 	ImageData = NULL;
 	//RadarIcon = NULL;
 
-	if (loadObjectRules)
-	{
-		Armor = armor;
-		MaxStrength = strength;
-
-		Read_Object_Rules(this);
-	}
+	LoadObjectRules = loadObjectRules;
 
 	IsModType = false;
 }

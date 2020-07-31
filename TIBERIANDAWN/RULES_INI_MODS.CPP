@@ -84,8 +84,6 @@ static bool Setup_New_Infantry_Type(char* typeString, InfantryType type, char* b
 	infantryClone->Type = type;
 
 	InfantryTypeClass::Read_Infantry_Rules(infantryClone);
-	TechnoTypeClass::Read_Techno_Rules(infantryClone);
-	ObjectTypeClass::Read_Object_Rules(infantryClone);
 
 	InfantryTypeClass::Add_Infantry_Type(type, infantryClone);
 
@@ -106,6 +104,8 @@ void Initialise_Infantry_Mod_Types()
 		auto typeString = MOD_INFANTRY_TYPES[type - INFANTRY_COUNT];
 
 		Convert_String_To_Upper_Case(typeString);
+
+		GetRules() << RulesIniTemplates::BuildInfantrySection(typeString);
 
 		auto baseTypeString = ReadRuleValue<char*>(typeString, BASE_TYPE_RULE);
 

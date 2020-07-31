@@ -181,17 +181,6 @@ static int Lua_Get_Weapon_Types(lua_State* lua)
     return 1;
 }
 
-static int Lua_Get_Game_Rule_Type_Names(lua_State* lua)
-{
-    std::vector<const char*>& gameRules = GetRulesInfo()
-        .GetGameRules()
-        .GetRuleNames();
-
-    Push_String_Vector_Onto_Lua_Stack(gameRules);
-
-    return 1;
-}
-
 static int Lua_Get_Event_Names(lua_State* lua)
 {
     Push_String_Array_Onto_Lua_Stack(LUA_EVENTS, LUA_EVENT_COUNT);
@@ -205,7 +194,6 @@ bool Register_Info_Functions()
 
     Register_Lua_Function("getEventNames", Lua_Get_Event_Names);
 
-    Register_Lua_Function("getGameRuleTypeNames", Lua_Get_Game_Rule_Type_Names);
     Register_Lua_Function("getWeaponTypes", Lua_Get_Weapon_Types);
     Register_Lua_Function("getBulletTypes", Lua_Get_Bullet_Types);
     Register_Lua_Function("getWarheadTypes", Lua_Get_Warhead_Types);

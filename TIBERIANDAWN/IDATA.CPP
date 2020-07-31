@@ -1477,7 +1477,8 @@ void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
 {
 	auto iniName = infantry->IniName;
 
-	GetRules() << RulesIniTemplates::BuildInfantrySection(iniName);
+	Read_Object_Rules(infantry);
+	Read_Techno_Rules(infantry);
 
 	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
 	infantry->IsCrawling = Read_Is_Crawling(iniName, infantry->IsCrawling);
@@ -1487,7 +1488,6 @@ void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
 	infantry->IsAvoidingTiberium = Read_Avoids_Tiberium(iniName, infantry->IsAvoidingTiberium);
 	infantry->IsImmuneToTiberium = ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
 	infantry->HasC4Charges = ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
-	
 }
 
 void InfantryTypeClass::Add_Infantry_Type(InfantryType type, InfantryTypeClass* infantryObject)
@@ -1510,7 +1510,7 @@ void InfantryTypeClass::Add_Infantry_Type(InfantryType type, InfantryTypeClass* 
  * HISTORY:                                                                                    *
  *   09/24/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-InfantryTypeClass::InfantryTypeClass	(
+InfantryTypeClass::InfantryTypeClass(
 						InfantryType type,
 						int name,
 						const char* friendlyName,
@@ -1562,6 +1562,8 @@ InfantryTypeClass::InfantryTypeClass	(
 
 	IsImmuneToTiberium = type == INFANTRY_E5;
 	HasC4Charges = Type == INFANTRY_RAMBO;
+
+	GetRules() << RulesIniTemplates::BuildInfantrySection(IniName);
 
 	Read_Infantry_Rules(this);
 

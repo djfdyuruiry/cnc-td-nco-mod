@@ -40,7 +40,7 @@ private:
 	{
 		auto defaultValue = rule.GetDefaultValueOr(0u);
 
-		Log_Trace("Resolving rule value: %s", rule.AsString());
+		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
 		Log_Trace("Default value: %u", defaultValue);
 
 		auto ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
@@ -62,7 +62,7 @@ private:
 
 			Show_Error(
 				"Rule [%s] must be a unsigned integer number. Value provided: %s",
-				rule.AsString(),
+				rule.GetStringKey(),
 				ruleValueStr
 			);
 
@@ -86,7 +86,7 @@ private:
 
 				Show_Error(
 					"Rule [%s] must be between %u and %u (inclusive). Value provided: %u",
-					rule.AsString(),
+					rule.GetStringKey(),
 					minValueInclusive,
 					maxValueInclusive,
 					ruleValue
@@ -96,7 +96,7 @@ private:
 
 
 		Log_Trace("Resolved value: %u", ruleValue);
-		Log_Debug("Setting rule [%s] = %u", rule.AsString(), ruleValue);
+		Log_Debug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
 
@@ -107,7 +107,7 @@ private:
 	{
 		auto defaultValue = rule.GetDefaultValueOr(0.0);
 
-		Log_Trace("Resolving rule value: %s", rule.AsString());
+		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
 		Log_Trace("Default value: %f", defaultValue);
 
 		auto ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
@@ -139,7 +139,7 @@ private:
 
 			Show_Error(
 				"Rule [%s] must be a floating point number. Value provided: %s",
-				rule.AsString(),
+				rule.GetStringKey(),
 				ruleValueStr
 			);
 
@@ -163,7 +163,7 @@ private:
 
 				Show_Error(
 					"Rule [%s] must be between %f and %f (inclusive). Value provided: %f",
-					rule.AsString(),
+					rule.GetStringKey(),
 					minValueInclusive,
 					maxValueInclusive,
 					ruleValue
@@ -172,7 +172,7 @@ private:
 		}
 
 		Log_Trace("Resolved value: %f", ruleValue);
-		Log_Debug("Setting rule [%s] = %f", rule.AsString(), ruleValue);
+		Log_Debug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
 
@@ -202,7 +202,7 @@ private:
 
 			Show_Error(
 				"Rule [%s] must be a floating point number between 0.00 and 0.99 (inclusive), value provided: %f",
-				rule.AsString(),
+				rule.GetStringKey(),
 				ruleValueAsDouble
 			);
 
@@ -238,7 +238,7 @@ private:
 			// unable to parse entry as a structure type
 			rulesIni.MarkAsInvalid();
 
-			Show_Error("Failed to parse prerequisite for [%s]: %s", rule.AsString(), structValueStr);
+			Show_Error("Failed to parse prerequisite for [%s]: %s", rule.GetStringKey(), structValueStr);
 
 			return STRUCTF_NONE;
 		}
@@ -276,7 +276,7 @@ private:
 		{
 			rulesIni.MarkAsInvalid();
 
-			Show_Error("Failed to parse %s for [%s]: %s", typeName, rule.AsString(), stringValue);
+			Show_Error("Failed to parse %s for [%s]: %s", typeName, rule.GetStringKey(), stringValue);
 
 			return rule.GetDefaultValueOr<T>(defaultValue);
 		}

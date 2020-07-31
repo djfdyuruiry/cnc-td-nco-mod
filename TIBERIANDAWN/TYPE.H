@@ -387,6 +387,8 @@ class ObjectTypeClass : public AbstractTypeClass
 
 		char ModBaseIniName[32];
 
+		bool LoadObjectRules;
+
 		//--------------------------------------------------------------------
 		ObjectTypeClass(bool is_sentient,
 						bool is_flammable,
@@ -796,7 +798,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		/*---------------------------------------------------------------------------
 		**	This is the building type explicit constructor.
 		*/
-		BuildingTypeClass	(
+		BuildingTypeClass(
 						StructType type,
 						int name,
 						const char* friendlyName,
@@ -1040,7 +1042,7 @@ class UnitTypeClass : public TechnoTypeClass
 		/*
 		**	This is the explicit unit class constructor.
 		*/
-		UnitTypeClass	(
+		UnitTypeClass(
 						UnitType type,
 						int name,
 						const char* friendlyName,
@@ -1201,7 +1203,7 @@ class InfantryTypeClass : public TechnoTypeClass
 		/*
 		**	This is the explicit unit class constructor.
 		*/
-		InfantryTypeClass	(
+		InfantryTypeClass(
 						InfantryType type,
 						int name,
 						const char* friendlyName,

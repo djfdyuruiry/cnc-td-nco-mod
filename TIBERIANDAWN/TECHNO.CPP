@@ -136,7 +136,7 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 
 	type->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, type->FriendlyName);
 	type->Level = Read_Build_Level(iniName, type->Level);
-	type->Pre = ReadRuleValue<StructType>(iniName, PREREQUISITE_RULE, Prerequisite_To_Structure_Type(type->Pre));
+	type->Pre = ReadRuleValue<long>(iniName, PREREQUISITE_RULE, type->Pre);
 	type->IsTransporter = Read_Is_Transport(iniName, type->IsTransporter);
 	type->TransportCapacity = type->IsTransporter
 		? ReadRuleValue<unsigned int>(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity)
@@ -160,6 +160,8 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 	type->IsTheater = ReadRuleValue<bool>(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
 	type->IsTurretEquipped = ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
 	type->IsNominal = ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, type->IsNominal);
+
+	type->Calculate_Risk();
 }
 
 /***********************************************************************************************
@@ -260,8 +262,6 @@ TechnoTypeClass::TechnoTypeClass(
 	IsTheater = is_theater;
 	IsTurretEquipped = is_turret_equipped;
 	IsNominal = is_nominal;
-
-	Read_Techno_Rules(this);
 
 	Calculate_Risk();
 }

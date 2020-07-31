@@ -91,9 +91,8 @@ private:
 			<< HAS_THEATER_GFX_RULE << BOOL_RULE
 			<< SHOW_NAME_RULE << BOOL_RULE
 			<< IS_MOD_TYPE_RULE << BOOL_RULE
-			<< TRANSPORTER_RULE << BOOL_RULE
-			<< TRANSPORT_CAPACITY_RULE
-			<< REPAIRABLE_RULE << BOOL_RULE;
+			<< REPAIRABLE_RULE << BOOL_RULE
+			<< BASE_TYPE_RULE << STRING_RULE;
 	}
 
 public:
@@ -219,7 +218,6 @@ public:
 			.WithDefaultType(BOOL_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << BuildGenericRules(s)
-				  << BuildUnitAndAircraftSharedRules(s)
 				  << BuildNonInfantrySharedRules(s)
 					<< BIBBED_RULE
 					<< WALL_RULE

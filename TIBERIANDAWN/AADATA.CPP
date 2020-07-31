@@ -357,6 +357,11 @@ AircraftTypeClass::AircraftTypeClass(
 	Type = airtype;
 	Mission = deforder;
 	
+	GetRules() << RulesIniTemplates::BuildAircraftSection(IniName);
+
+	Read_Object_Rules(this);
+	Read_Techno_Rules(this);
+
 	IsFixedWing = Read_Cant_Hover(IniName, is_fixedwing);
 	IsLandable = Read_Can_Land(IniName, is_landable);
 	IsRotorEquipped = Read_Has_Rotor(IniName, is_rotorequipped);

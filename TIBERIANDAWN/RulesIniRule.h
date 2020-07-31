@@ -3,9 +3,11 @@
 #include <malloc.h>
 #include <vector>
 
+#include "lua.h"
 #include "Optional.h"
 #include "RulesIniTypes.h"
 #include "strings.h"
+#include "utils.h"
 
 class RulesIniRule
 {
@@ -18,7 +20,7 @@ private:
 	CacheKey key;
 	RulesIniType type;
 
-	char* asString;
+	const char* stringKey;
 
 	Optional defaultValue;
 	Optional defaultValueAsPercentage;
@@ -39,14 +41,24 @@ private:
 		key = Build_Rule_Key(section, name);
 		type = NO_RULE_TYPE;
 
-		asString = Allocate_String(RULES_INI_ID_SIZE * 2 + 4);
+		auto keyStr = Allocate_String(RULES_INI_ID_SIZE * 2 + 4);
 
-		sprintf(asString, "%s -> %s", this->section, this->name);
+		sprintf(keyStr, "%s -> %s", this->section, this->name);
+
+		stringKey = keyStr;
 	}
 
 	void SetDefaultForRuleType()
 	{
-		if (type == INT_RULE || type == HOUSE_LIST_RULE)
+		if (
+			type == INT_RULE
+			  || type == HOUSE_LIST_RULE
+			  || type == WEAPON_RULE
+			  || type == UNIT_SPEED_TYPE_RULE
+			  || type == FACTORY_RULE_TYPE
+			  || type == WARHEAD_RULE
+			  || type == BULLET_RULE
+		)
 		{
 			SetDefaultValue<int>(0);
 		}
@@ -62,14 +74,89 @@ private:
 		{
 			SetDefaultValue<double>(0.0);
 		}
-		else if (type == WEAPON_RULE 
-			|| type == UNIT_SPEED_TYPE_RULE 
+		else if (type == PREREQ_RULE)
+		{
+			SetDefaultValue<long>(0L);
+		}
+	}
+
+	void PushRuleValueOntoLuaState(lua_State* lua, Optional ruleValue)
+	{
+		if (
+			type == INT_RULE
+			|| type == HOUSE_LIST_RULE
+			|| type == WEAPON_RULE
+			|| type == UNIT_SPEED_TYPE_RULE
 			|| type == FACTORY_RULE_TYPE
 			|| type == WARHEAD_RULE
 			|| type == BULLET_RULE
-			|| type == PREREQ_RULE)
+		)
 		{
-			SetDefaultValue<double>(0L);
+			lua_pushinteger(lua, ruleValue.Get<int>());
+		}
+		else if (type == BOOL_RULE)
+		{
+			lua_pushboolean(lua, ruleValue.Get<bool>());
+		}
+		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
+		{
+			lua_pushinteger(lua, ruleValue.Get<unsigned int>());
+		}
+		else if (type == DOUBLE_RULE || type == FIXED_RULE)
+		{
+			lua_pushnumber(lua, ruleValue.Get<double>());
+		}
+		else if (type == PREREQ_RULE)
+		{
+			lua_pushinteger(lua, ruleValue.Get<long>());
+		}
+		else if (type == STRING_RULE)
+		{
+			lua_pushstring(lua, ruleValue.Get<char*>());
+		}
+		else
+		{
+			lua_pushnil(lua);
+		}
+	}
+
+	void WriteRuleValueToString(char* string, Optional ruleValue)
+	{
+		if (
+			type == INT_RULE
+			|| type == HOUSE_LIST_RULE
+			|| type == WEAPON_RULE
+			|| type == UNIT_SPEED_TYPE_RULE
+			|| type == FACTORY_RULE_TYPE
+			|| type == WARHEAD_RULE
+			|| type == BULLET_RULE
+			)
+		{
+			sprintf(string, "%d", ruleValue.Get<int>());
+		}
+		else if (type == BOOL_RULE)
+		{
+			sprintf(string, "%s", Convert_Boolean_To_String(ruleValue.Get<bool>()));
+		}
+		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
+		{
+			sprintf(string, "%u", ruleValue.Get<int>());
+		}
+		else if (type == DOUBLE_RULE || type == FIXED_RULE)
+		{
+			sprintf(string, "%f", ruleValue.Get<double>());
+		}
+		else if (type == PREREQ_RULE)
+		{
+			sprintf(string, "%ld", ruleValue.Get<long>());
+		}
+		else if (type == STRING_RULE)
+		{
+			sprintf(string, "%s", ruleValue.Get<char*>());
+		}
+		else
+		{
+			sprintf(string, "%s", "(null)");
 		}
 	}
 
@@ -262,8 +349,96 @@ public:
 		return validValues;
 	}
 
-	const char* AsString()
+	const char* GetStringKey()
 	{
-		return asString;
+		return stringKey;
+	}
+
+	void PushDefaultValueOntoLuaState(lua_State* lua)
+	{
+		PushRuleValueOntoLuaState(lua, defaultValue);
+	}
+
+	void PushValueOntoLuaState(lua_State* lua)
+	{
+		PushRuleValueOntoLuaState(lua, value);
+	}
+
+	bool SetValueFromLuaState(lua_State* lua, int index)
+	{
+		if (lua_isnil(lua, index))
+		{
+			luaL_error(lua, "Value for rule %s must not be nil", GetStringKey());
+			return false;
+		}
+
+		if (type != BOOL_RULE && !lua_isnumber(lua, index))
+		{
+			luaL_error(lua, "Value for rule %s must be an integer", GetStringKey());
+			return false;
+		}
+
+		auto setOk = true;
+
+		if (
+			type == INT_RULE
+			|| type == HOUSE_LIST_RULE
+			|| type == WEAPON_RULE
+			|| type == UNIT_SPEED_TYPE_RULE
+			|| type == FACTORY_RULE_TYPE
+			|| type == WARHEAD_RULE
+			|| type == BULLET_RULE
+			)
+		{
+			SetValue<int>((int)lua_tointeger(lua, index));
+		}
+		else if (type == BOOL_RULE)
+		{
+			if (!lua_isboolean(lua, index))
+			{
+				luaL_error(lua, "Value for rule %s must be a boolean", GetStringKey());
+				return false;
+			}
+
+			SetValue<bool>((bool)lua_toboolean(lua, index));
+		}
+		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
+		{
+			auto value = lua_tointeger(lua, index);
+
+			if (value < 0)
+			{
+				luaL_error(lua, "Value for rule %s must be an integer with a value of at least zero", GetStringKey());
+				return false;
+			}
+
+			SetValue<unsigned int>((unsigned int)value);
+		}
+		else if (type == DOUBLE_RULE || type == FIXED_RULE)
+		{
+			SetValue<double>((double)lua_tonumber(lua, index));
+		}
+		else if (type == PREREQ_RULE)
+		{
+			SetValue<long>((long)lua_tointeger(lua, index));
+		}
+		else
+		{
+			luaL_error(lua, "Unable to convert value for rule %s to a lua type", GetStringKey());
+
+			setOk = false;
+		}
+
+		return setOk;
+	}
+
+	void WriteDefaultValueToString(char* string)
+	{
+		WriteRuleValueToString(string, defaultValue);
+	}
+
+	void WriteValueToString(char* string)
+	{
+		WriteRuleValueToString(string, value);
 	}
 };

@@ -1337,6 +1337,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 
 	GetRules() << RulesIniTemplates::BuildUnitSection(IniName);
 
+	Read_Object_Rules(this);
+	Read_Techno_Rules(this);
+
 	IsCrateGoodie = Read_Can_Be_Found_In_Crate(IniName, is_goodie);
 	IsPieceOfEight = Read_Limited_Facings(IniName, is_eight);
 	IsCrusher = Read_Can_Crush_Infantry(IniName, is_crusher);

@@ -3675,6 +3675,11 @@ BuildingTypeClass::BuildingTypeClass(
 	StartFace = sframe;
 	Type = type;
 
+	GetRules() << RulesIniTemplates::BuildBuildingSection(IniName);
+
+	Read_Object_Rules(this);
+	Read_Techno_Rules(this);
+
 	IsBibbed = Read_Is_Bibbed(IniName, is_bibbed);
 	IsWall = Read_Is_Wall(IniName, is_wall);
 	IsFactory = Read_Is_Factory(IniName, is_factory);
