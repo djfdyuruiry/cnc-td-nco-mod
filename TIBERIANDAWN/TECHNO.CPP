@@ -148,7 +148,7 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 	type->Scenario = Read_Scenario_Level(iniName, type->Scenario);
 	type->Reward = Read_Reward(iniName, type->Reward);
 	type->HouseListCsv = ReadRuleValue<char*>(iniName, HOUSES_RULE, type->HouseListCsv);
-	type->Ownable = ReadRuleValueWithSpecialDefault<int, char*>(iniName, OWNER_RULE, type->HouseListCsv);
+	type->Ownable = ReadRuleValue<int>(iniName, OWNER_RULE, type->Ownable);
 	type->Primary = Read_Primary_Weapon(iniName, type->Primary);
 	type->Secondary = Read_Secondary_Weapon(iniName, type->Secondary);
 	type->MaxSpeed = Read_Speed(iniName, type->MaxSpeed);

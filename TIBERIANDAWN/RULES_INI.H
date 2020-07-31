@@ -15,13 +15,6 @@ RulesIniReader& GetRulesReader();
 
 RulesIniInfo& GetRulesInfo();
 
-template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName rule, U defaultValue)
-{
-	Ensure_Rules_Ini_Is_Loaded();
-
-	return GetRulesReader().ReadRuleValueWithSpecialDefault<T, U>(section, rule, defaultValue);
-}
-
 template<class T> T ReadRuleValue(SectionName section, RuleName rule, T defaultValue)
 {
 	Ensure_Rules_Ini_Is_Loaded();
@@ -174,7 +167,7 @@ void Free_Rules_Memory();
 #define Read_Avoids_Tiberium(section, defaultValue) ReadRuleValue<bool>(section, AVOIDS_TIBERIUM_RULE, defaultValue)
 
 // unit/aircraft lookups
-#define Read_Rate_Of_Turn(section, defaultValue) (unsigned char)ReadRuleValue<unsigned int>(section, RATE_OF_TURN_RULE)
+#define Read_Rate_Of_Turn(section, defaultValue) (unsigned char)ReadRuleValue<unsigned int>(section, RATE_OF_TURN_RULE, defaultValue)
 
 // unit lookups
 #define Read_Can_Cloak(section, defaultValue) ReadRuleValue<bool>(section, CAN_CLOAK_RULE, defaultValue)
@@ -232,4 +225,3 @@ void Free_Rules_Memory();
 #define Read_Is_Unsellable(section, defaultValue) ReadRuleValue<bool>(section, UNSELLABLE_RULE, defaultValue)
 
 #define Read_Is_Sturdy(section, defaultValue) ReadRuleValue<bool>(section, STURDY_RULE, defaultValue)
-

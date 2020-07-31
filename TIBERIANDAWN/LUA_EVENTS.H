@@ -15,7 +15,7 @@ static const auto LUA_EVENTS = new const char*[LUA_EVENT_COUNT]
     ON_GAME_TICK_EVENT
 };
 
-boolean Initialise_Events();
+bool Initialise_Events();
 
 // sync events
 void On_Scenario_Load(char* name);

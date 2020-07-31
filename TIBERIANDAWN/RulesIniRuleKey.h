@@ -13,6 +13,7 @@ private:
 		SectionKey = Build_Rule_Key(sectionName);
 		RuleKey = Build_Rule_Key(sectionName, ruleName);
 	}
+
 public:
 	SectionName Section;
 	RuleName Rule;

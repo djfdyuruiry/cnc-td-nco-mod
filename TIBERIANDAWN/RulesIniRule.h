@@ -22,16 +22,23 @@ private:
 
 	const char* stringKey;
 
-	Optional defaultValue;
-	Optional defaultValueAsPercentage;
-	Optional value;
+	Optional& defaultValue;
+	Optional& defaultValueAsPercentage;
+	Optional& value;
 
-	Optional minValue;
-	Optional maxValue;
-	Optional valueToAllowAlways;
-	std::vector<const char*> validValues;
+	Optional& minValue;
+	Optional& maxValue;
+	Optional& valueToAllowAlways;
+	std::vector<const char*>& validValues;
 
 	RulesIniRule(SectionName section, RuleName name)
+		: defaultValue(Optional::BuildOptional()),
+		  defaultValueAsPercentage(Optional::BuildOptional()),
+		  value(Optional::BuildOptional()),
+		  minValue(Optional::BuildOptional()),
+		  maxValue(Optional::BuildOptional()),
+		  valueToAllowAlways(Optional::BuildOptional()),
+	      validValues(*(new std::vector<const char*>()))
 	{
 		this->section = section;
 		this->name = name;
@@ -80,7 +87,7 @@ private:
 		}
 	}
 
-	void PushRuleValueOntoLuaState(lua_State* lua, Optional ruleValue)
+	void PushRuleValueOntoLuaState(lua_State* lua, Optional& ruleValue)
 	{
 		if (
 			type == INT_RULE
@@ -120,7 +127,7 @@ private:
 		}
 	}
 
-	void WriteRuleValueToString(char* string, Optional ruleValue)
+	void WriteRuleValueToString(char* string, Optional& ruleValue)
 	{
 		if (
 			type == INT_RULE

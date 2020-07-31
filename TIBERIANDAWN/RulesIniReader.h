@@ -18,11 +18,13 @@ private:
 	{
 		auto defaultValue = rule.GetDefaultValueOr(false);
 
-		auto ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
 			Log_Trace("No rules ini value found, default will be used");
+
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -32,6 +34,8 @@ private:
 		Convert_String_To_Upper_Case(ruleValue);
 
 		auto boolValue = Strings_Are_Equal(ruleValue, TRUE_STRING);
+
+		delete& ruleValueOptional;
 
 		return boolValue;
 	}
@@ -43,11 +47,13 @@ private:
 		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
 		Log_Trace("Default value: %u", defaultValue);
 
-		auto ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
 			Log_Trace("No rules ini value found, default will be used");
+
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -67,6 +73,7 @@ private:
 			);
 
 			delete ruleValueStr;
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -99,6 +106,7 @@ private:
 		Log_Debug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
+		delete &ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -110,7 +118,7 @@ private:
 		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
 		Log_Trace("Default value: %f", defaultValue);
 
-		auto ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
@@ -120,6 +128,8 @@ private:
 			{
 				*valueFound = false;
 			}
+
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -144,6 +154,7 @@ private:
 			);
 
 			delete ruleValueStr;
+			delete& ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -175,6 +186,7 @@ private:
 		Log_Debug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
+		delete& ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -219,10 +231,12 @@ private:
 
 	long ReadPrerequisiteRule(RulesIniRule& rule)
 	{
-		auto structValueStrOptional = rulesIni.ReadOptionalStringRule(rule);
+		Optional& structValueStrOptional = rulesIni.ReadOptionalStringRule(rule);
 		
 		if (!structValueStrOptional.Present())
 		{
+			delete &structValueStrOptional;
+
 			return rule.GetDefaultValueOr(STRUCTF_NONE);
 		}
 		
@@ -232,6 +246,8 @@ private:
 
 		bool parseError = false;
 		auto structValue = Parse_Structure_Type(structValueStr, &parseError);
+
+		delete &structValueStrOptional;
 
 		if (parseError)
 		{
@@ -521,22 +537,6 @@ public:
 		if (!rule.HasValue())
 		{
 			rule.SetDefaultValue<T>(defaultValue);
-		}
-
-		return ReadRuleValue<T>(rule);
-	}
-
-	template<class T, class U> T ReadRuleValueWithSpecialDefault(SectionName section, RuleName ruleName, U defaultValue)
-	{
-		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
-
-		RulesIniRule& rule = GetRule(key);
-
-		delete &key;
-
-		if (!rule.HasValue())
-		{
-			rule.SetDefaultValue<U>(defaultValue);
 		}
 
 		return ReadRuleValue<T>(rule);

@@ -371,6 +371,8 @@ void Ensure_Rules_Ini_Is_Loaded() {
 	LUA_CONSOLE_IS_ENABLED = RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
 	GAME_TICK_INTERVAL_IN_MS = RULE_READER->ReadRuleValue<int>(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE);
 
+	Read_Log_Settings_From_Rules_Ini();
+
 	Read_Lua_Scripts_From_Rules_Ini();
 
 	Read_Mods();

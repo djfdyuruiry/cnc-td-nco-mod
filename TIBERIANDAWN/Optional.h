@@ -5,10 +5,15 @@ class Optional
 private:
 	void* data;
 
-public:
 	Optional()
 	{
 		data = NULL;
+	}
+
+public:
+	static Optional& BuildOptional()
+	{
+		return *(new Optional());
 	}
 
 	bool Present()

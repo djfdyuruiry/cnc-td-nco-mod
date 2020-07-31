@@ -134,12 +134,12 @@ public:
 		return *this;
 	}
 
-	Optional ReadOptionalStringRule(RulesIniRule& rule)
+	Optional& ReadOptionalStringRule(RulesIniRule& rule)
 	{
 		Log_Trace("Resolving optional rule value: %s", rule.GetStringKey());
 
 		bool valueFound = false;
-		auto valueBufferOptional = Optional();
+		Optional& valueBufferOptional = Optional::BuildOptional();
 		auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 
 		for (auto buffer: rulesIniBuffers)
@@ -205,12 +205,12 @@ public:
 		return valueBuffer;
 	}
 
-	Optional ReadOptionalIntRule(RulesIniRule& rule)
+	Optional& ReadOptionalIntRule(RulesIniRule& rule)
 	{
 		Log_Trace("Resolving optional rule value: %s", rule.GetStringKey());
 
 		bool valueFound = false;
-		auto valueOptional = Optional();
+		Optional& valueOptional = Optional::BuildOptional();
 
 		for (auto buffer : rulesIniBuffers)
 		{
