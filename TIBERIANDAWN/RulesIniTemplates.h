@@ -58,11 +58,11 @@ private:
 	{
 		return s << BuildFriendlyNameRule(s)
 			<< s.BuildRule(BUILD_LEVEL_RULE)
-			.OfType(UNSIGNED_INT_RULE)
-			.WithMax(99u)
+				.OfType(UNSIGNED_INT_RULE)
+				.WithMax(99u)
 			<< s.BuildRule(SCENARIO_LEVEL_RULE)
-			.OfType(UNSIGNED_INT_RULE)
-			.WithMax(99u)
+				.OfType(UNSIGNED_INT_RULE)
+				.WithMax(99u)
 			<< PREREQUISITE_RULE << PREREQ_RULE
 			<< COST_RULE << UNSIGNED_INT_RULE
 			<< BUILDABLE_RULE << BOOL_RULE
@@ -70,8 +70,8 @@ private:
 			<< BuildSpeedRule(s)
 
 			<< s.BuildRule(STRENGTH_RULE)
-			.OfType(UNSIGNED_INT_RULE)
-			.WithMax(USHRT_MAX)
+				.OfType(UNSIGNED_INT_RULE)
+				.WithMax(USHRT_MAX)
 
 			<< HOUSES_RULE << STRING_RULE
 			<< OWNER_RULE << HOUSE_LIST_RULE
@@ -80,12 +80,11 @@ private:
 			<< ARMOR_RULE << ARMOR_TYPE_RULE
 
 			<< s.BuildRule(AMMO_RULE)
-			.OfType(INT_RULE)
-			.WithMin(-1)
+				.OfType(INT_RULE)
+				.WithMin(-1)
 
 			<< SIGHT_RANGE_RULE << UNSIGNED_INT_RULE
 			<< REWARD_RULE << UNSIGNED_INT_RULE
-			<< CRUSHABLE_RULE << BOOL_RULE
 			<< DETECT_CLOAKED_OBJECTS_RULE << BOOL_RULE
 			<< LEADER_RULE << BOOL_RULE
 			<< TWO_SHOOTER_RULE << BOOL_RULE
@@ -166,6 +165,7 @@ public:
 			.WithDefaultType(BOOL_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << BuildGenericRules(s)
+				  << CRUSHABLE_RULE << BOOL_RULE
 				  << FEMALE_RULE
 				  << CRAWLING_RULE
 				  << CAN_CAPTURE_RULE

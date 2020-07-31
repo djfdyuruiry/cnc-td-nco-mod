@@ -1480,6 +1480,7 @@ void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
 	Read_Object_Rules(infantry);
 	Read_Techno_Rules(infantry);
 
+	infantry->IsCrushable = Read_Is_Crushable(iniName, infantry->IsCrushable);
 	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
 	infantry->IsCrawling = Read_Is_Crawling(iniName, infantry->IsCrawling);
 	infantry->IsCapture = Read_Can_Capture_Buildings(iniName, infantry->IsCapture);
@@ -1538,7 +1539,7 @@ InfantryTypeClass::InfantryTypeClass(
 						WeaponType primary, WeaponType secondary,
 						MPHType maxspeed)
 	: TechnoTypeClass(name, friendlyName, ininame, level, pre,
-							is_leader, true, is_nominal, false, Read_Is_Flammable(ininame, false), Read_Is_Crushable(ininame, true), true, true, true, false, false,
+							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
 							is_theater, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable, houseListCsv,

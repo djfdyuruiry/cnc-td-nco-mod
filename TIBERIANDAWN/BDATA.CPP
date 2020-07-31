@@ -3652,7 +3652,7 @@ BuildingTypeClass::BuildingTypeClass(
 													is_repairable,
 													is_buildable,
 													is_crew,
-													Read_Ammo(ininame, -1),
+													-1,
 													strength*2,
 													MPH_IMMOBILE,
 													sightrange,

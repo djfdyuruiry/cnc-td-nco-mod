@@ -84,7 +84,7 @@ WeaponTypeClass::WeaponTypeClass(
 	Anim = anim;
 
 	auto weaponTypeStr = Weapon_Type_To_String(owner);
-
+	
 	GetRules() << RulesIniTemplates::BuildWeaponSection(weaponTypeStr);
 
 	FriendlyName = ReadRuleValue<char*>(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));

@@ -380,6 +380,8 @@ void Ensure_Rules_Ini_Is_Loaded() {
 
 RulesIni& GetRules()
 {
+	Ensure_Rules_Ini_Is_Loaded();
+
 	return *RULES;
 }
 

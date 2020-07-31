@@ -326,7 +326,7 @@ AircraftTypeClass::AircraftTypeClass(
 										false,
 										false,
 										is_transporter,
-										Read_Is_Flammable(ininame, false),
+										false,
 										is_crushable,
 										is_stealthy,
 										is_selectable,

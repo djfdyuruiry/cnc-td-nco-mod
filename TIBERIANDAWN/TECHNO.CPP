@@ -160,6 +160,7 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 	type->IsTheater = ReadRuleValue<bool>(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
 	type->IsTurretEquipped = ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
 	type->IsNominal = ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, type->IsNominal);
+	type->IsFlammable = Read_Is_Flammable(iniName, type->IsFlammable);
 
 	type->Calculate_Risk();
 }
