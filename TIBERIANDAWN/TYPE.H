@@ -1243,7 +1243,7 @@ class InfantryTypeClass : public TechnoTypeClass
 		static void Prep_For_Add(void);
 
 		static void Read_Infantry_Rules(InfantryTypeClass* infantry);
-		static void Add_Infantry_Type(InfantryType type, InfantryTypeClass* infantryObject);
+		static void Add_Infantry_Type(InfantryTypeClass* infantryObject);
 
 		char* Resolve_Ini_Name();
 

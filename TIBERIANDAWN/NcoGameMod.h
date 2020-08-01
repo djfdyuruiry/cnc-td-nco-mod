@@ -11,22 +11,23 @@
 // TODO: create subclasses to describe different mod types (infantry, unit etc.)
 template<class T, class U> class NcoGameMod
 {
-private:
+protected:
 	const char* typeName;
 	RuleName modTypesRule;
 	RuleName modTypeCountRule;
 	const RulesIniRuleKey& typeCountRule;
 
-	char originalTypeCount;
+	T originalTypeCount;
 
+	bool initialised;
 	std::map<T, U*> modTypeInstances;
-	std::vector<char*> modTypes;
+	std::vector<char*>& modTypes;
 	
 	virtual void ReadRulesAndAddType(U* newType) = 0;
 
-	virtual T ParseType(char* typeString, bool* parseError) = 0;
+	virtual T ParseType(SectionName typeString, bool* parseError) = 0;
 
-	bool SetupNewType(char* typeString, T type, char* baseTypeString)
+	bool SetupNewType(SectionName typeString, T type, SectionName baseTypeString)
 	{
 		if (String_Is_Empty(typeString))
 		{
@@ -69,26 +70,47 @@ private:
 		return true;
 	}
 
-	virtual void AddRulesSection(char* typeString) = 0;
+	virtual void AddRulesSection(SectionName typeString) = 0;
 
-public:
+	void EnsureTypesInitialised()
+	{
+		if (initialised)
+		{
+			return;
+		}
+
+		InitialiseTypes();
+
+		initialised = true;
+	}
+
 	NcoGameMod(
 		const char* modTypeName,
 		RuleName modTypesRuleName,
 		RuleName modTypeCountRuleName,
 		const RulesIniRuleKey& typeCountRuleKey,
-		char totalTypeCount
+		T totalTypeCount
 	)
 		: typeName(modTypeName),
 		modTypesRule(modTypesRuleName),
 		modTypeCountRule(modTypeCountRuleName),
 		typeCountRule(typeCountRuleKey),
-		originalTypeCount(totalTypeCount)
+		originalTypeCount(totalTypeCount),
+		initialised(false),
+		modTypes(*(new std::vector<char*>))
 	{
 	}
 
+public:
+
 	void ReadTypes()
 	{
+		if (modTypes.size() > 0)
+		{
+			Log_Debug("Attempt was made to initialise %s mod types more than once, ignoring", typeName);
+			return;
+		}
+
 		Log_Info("Reading %s Mod Types", typeName);
 
 		auto newTypesCsv = ReadRuleValue<char*>(MOD_RULES_SECTION_NAME, modTypesRule);
@@ -106,7 +128,7 @@ public:
 			return;
 		}
 
-		for (auto i = 0; i < newTypesCount; i++)
+		for (auto i = 0u; i < newTypesCount; i++)
 		{
 			Convert_String_To_Upper_Case(modTypeCsvEntries[i]);
 
@@ -129,9 +151,14 @@ public:
 
 	void InitialiseTypes()
 	{
+		if (initialised)
+		{
+			return;
+		}
+
 		Log_Info("Initialising %s Mod Types", typeName);
 
-		auto type = originalTypeCount;
+		T type = originalTypeCount;
 
 		for (auto typeString : modTypes)
 		{
@@ -143,7 +170,7 @@ public:
 
 			if (String_Is_Empty(baseTypeString))
 			{
-				Show_Error("Mod %s type has no %s rule provided: %s" typeName, typeString, BASE_TYPE_RULE);
+				Show_Error("Mod %s type has no %s rule provided: %s", typeName, typeString, BASE_TYPE_RULE);
 
 				MarkRulesIniAsInvalid();
 
@@ -155,24 +182,28 @@ public:
 				MarkRulesIniAsInvalid();
 			}
 
-			type++;
+			type = (T)((char)type + 1);
 		}
 
 		Log_Info("%s Mod Types Initialised", typeName);
 	}
 
-	const char* GetTypeIniName(T type)
+	SectionName GetTypeIniName(T type)
 	{
-		return (const char*)modTypeInstances[type]->IniName;
+		EnsureTypesInitialised();
+
+		return modTypeInstances[type]->IniName;
 	}
 
-	T GetTypeByIniName(char* iniName, bool* matchFound)
+	T GetTypeByIniName(SectionName iniName, bool* matchFound)
 	{
+		EnsureTypesInitialised();
+
 		for (auto typeKvp : modTypeInstances)
 		{
-			auto iniName = typeKvp.second->IniName;
+			auto typeIniName = typeKvp.second->IniName;
 
-			if (Strings_Are_Equal(iniName, typeString))
+			if (Strings_Are_Equal(iniName, typeIniName))
 			{
 				if (matchFound != NULL)
 				{
@@ -188,7 +219,6 @@ public:
 			*matchFound = false;
 		}
 
-		return -1;
+		return (T)-1;
 	}
-
 };

@@ -1162,7 +1162,7 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
     else
     {
         bool matchFound = false;
-        auto newInfantryType = Get_New_Infantry_Type(infantryTypeString, &matchFound);
+        auto newInfantryType = GetNewInfantryType(infantryTypeString, &matchFound);
 
         if (matchFound)
         {
@@ -1245,7 +1245,7 @@ const char* Infantry_Type_To_String(InfantryType infantryType)
     }
     else if (infantryType < Read_Infantry_Count())
     {
-        infantryTypeString = Get_New_Infantry_Ini_Name(infantryType);
+        infantryTypeString = GetNewInfantryIniName(infantryType);
     }
     else
     {

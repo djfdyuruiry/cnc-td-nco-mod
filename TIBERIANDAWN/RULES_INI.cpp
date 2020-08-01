@@ -174,7 +174,7 @@ void Ensure_Rules_Ini_Is_Loaded() {
 
 	Read_Lua_Scripts_From_Rules_Ini();
 
-	Read_Mods();
+	ReadMods();
 }
 
 RulesIni& GetRules()

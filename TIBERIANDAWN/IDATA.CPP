@@ -1467,7 +1467,7 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 		&DrChan
 	};
 
-	Initialise_Infantry_Mod_Types();
+	InitialiseInfantryModTypes();
 
 	Log_Trace("Infantry lookup by type: %d", type);
 	return Pointers[type];
@@ -1491,9 +1491,9 @@ void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
 	infantry->HasC4Charges = ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
 }
 
-void InfantryTypeClass::Add_Infantry_Type(InfantryType type, InfantryTypeClass* infantryObject)
+void InfantryTypeClass::Add_Infantry_Type(InfantryTypeClass* infantryObject)
 {
-	Pointers[type] = infantryObject;
+	Pointers[infantryObject->Type] = infantryObject;
 }
 
 /***********************************************************************************************

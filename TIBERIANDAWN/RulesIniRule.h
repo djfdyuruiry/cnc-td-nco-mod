@@ -29,15 +29,16 @@ private:
 	Optional& minValue;
 	Optional& maxValue;
 	Optional& valueToAllowAlways;
-	std::vector<const char*> validValues;
+	std::vector<const char*>& validValues;
 
 	RulesIniRule(SectionName section, RuleName name)
 		: defaultValue(Optional::BuildOptional()),
-		  defaultValueAsPercentage(Optional::BuildOptional()),
-		  value(Optional::BuildOptional()),
-		  minValue(Optional::BuildOptional()),
-		  maxValue(Optional::BuildOptional()),
-		  valueToAllowAlways(Optional::BuildOptional())
+		defaultValueAsPercentage(Optional::BuildOptional()),
+		value(Optional::BuildOptional()),
+		minValue(Optional::BuildOptional()),
+		maxValue(Optional::BuildOptional()),
+		valueToAllowAlways(Optional::BuildOptional()),
+		validValues(*(new std::vector<const char*>()))
 	{
 		this->section = section;
 		this->name = name;
@@ -232,7 +233,7 @@ public:
 
 	template<class T> RulesIniRule& OnlyAccept(std::vector<T>& validStrings)
 	{
-		for (auto validString : validStrings)
+		for (T validString : validStrings)
 		{
 			validValues.push_back(validString);
 		}

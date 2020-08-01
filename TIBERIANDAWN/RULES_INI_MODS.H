@@ -1,8 +1,24 @@
 #pragma once
 
+#include "defines.h"
+
+#include "RulesIniTypes.h"
+
 #define MOD_RULES_SECTION_NAME "Mods"
 
+//#define NEW_WEAPONS_RULE "NewWeapons"
+
+//#define NEW_BULLETS_RULE "NewBullets"
+
+//#define NEW_WARHEADS_RULE "NewWarheads"
+
 #define NEW_INFANTRY_RULE "NewInfantry"
+
+//#define NEW_UNITS_RULE "NewUnits"
+
+//#define NEW_AIRCRAFT_RULE "NewAircraft"
+
+//#define NEW_BUILDINGS_RULE "NewBuildings"
 
 #define BASE_TYPE_RULE "BaseType"
 
@@ -10,10 +26,14 @@
 #define NEW_INFANTRY_COUNT_RULE "NewInfantryCount"
 #define INFANTRY_COUNT_RULE "InfantryCount"
 
-void Read_Mods();
+void ReadMods();
 
-void Initialise_Infantry_Mod_Types();
+//void InitialiseWeaponModTypes();
+//void InitialiseBulletModTypes();
+//void InitialiseWarheadModTypes();
+void InitialiseInfantryModTypes();
+//void InitialiseUnitModTypes();
+//void InitialiseBuildingModTypes();
 
-const char* Get_New_Infantry_Ini_Name(char infantryType);
-
-char Get_New_Infantry_Type(char* iniName, bool* matchFound);
+SectionName GetNewInfantryIniName(InfantryType infantryType);
+InfantryType GetNewInfantryType(SectionName iniName, bool* matchFound);

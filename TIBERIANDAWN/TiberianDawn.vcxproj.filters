@@ -817,6 +817,12 @@
     <ClInclude Include="RulesIniSectionBuilder.h">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="NcoGameMod.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="InfantryTypeMod.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
