@@ -1113,7 +1113,7 @@ const char* Warhead_Type_To_String(WarheadType warheadType)
     return warheadTypeString;
 }
 
-InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
+InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError, bool ignoreModTypes)
 {
     InfantryType infantryType = INFANTRY_NONE;
 
@@ -1141,25 +1141,29 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
     {
         return INFANTRY_CHAN;
     }
-    else if (!String_Is_Empty(infantryTypeString) && infantryTypeString[0] == 'E')
-    {
-        auto number = Parse_Number(infantryTypeString[1]);
 
-        if (number > 0 && number < 7)
+    if (strlen(infantryTypeString) == 2) {
+        if (infantryTypeString[0] == 'E')
         {
-            return (InfantryType)(number - 1);
+            auto number = Parse_Number(infantryTypeString[1]);
+
+            if (number > 0 && number < 7)
+            {
+                return (InfantryType)(number - 1);
+            }
+        }
+        else if (infantryTypeString[0] == 'C')
+        {
+            auto number = Parse_Number(infantryTypeString[1]);
+
+            if (number > 0 && number < 10)
+            {
+                return (InfantryType)(number + 6);
+            }
         }
     }
-    else if (!String_Is_Empty(infantryTypeString) && infantryTypeString[0] == 'C')
-    {
-        auto number = Parse_Number(infantryTypeString[1]);
 
-        if (number > 0 && number < 10)
-        {
-            return (InfantryType)(number + 6);
-        }
-    }
-    else
+    if (!ignoreModTypes)
     {
         bool matchFound = false;
         auto newInfantryType = GetNewInfantryType(infantryTypeString, &matchFound);
@@ -1180,7 +1184,7 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError)
     return infantryType;
 }
 
-InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError)
+InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(infantryTypeString))
     {
@@ -1196,14 +1200,14 @@ InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseErro
 
     auto infantryTypeStr = strdup(infantryTypeString);
 
-    InfantryType result = Parse_Infantry_Type(infantryTypeStr, parseError);
+    InfantryType result = Parse_Infantry_Type(infantryTypeStr, parseError, ignoreModTypes);
 
     delete infantryTypeStr;
 
     return result;
 }
 
-const char* Infantry_Type_To_String(InfantryType infantryType)
+const char* Infantry_Type_To_String(InfantryType infantryType, bool ignoreModTypes)
 {
     const char* infantryTypeString;
 
@@ -1243,7 +1247,7 @@ const char* Infantry_Type_To_String(InfantryType infantryType)
 
         infantryTypeString = CIVILIAN_TYPE_MAP[index];
     }
-    else if (infantryType < Read_Infantry_Count())
+    else if (!ignoreModTypes && infantryType < Read_Infantry_Count())
     {
         infantryTypeString = GetNewInfantryIniName(infantryType);
     }
@@ -1255,116 +1259,122 @@ const char* Infantry_Type_To_String(InfantryType infantryType)
     return infantryTypeString;
 }
 
-UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError)
+UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError, bool ignoreModTypes)
 {
-    UnitType unitType = UNIT_NONE;
-
     if (Strings_Are_Equal(unitTypeString, "NONE"))
     {
-        unitType = UNIT_NONE;
+        return UNIT_NONE;
     }
     else if (Strings_Are_Equal(unitTypeString, "HTNK"))
     {
-        unitType = UNIT_HTANK;
+        return UNIT_HTANK;
     }
     else if (Strings_Are_Equal(unitTypeString, "MTNK"))
     {
-        unitType = UNIT_MTANK;
+        return UNIT_MTANK;
     }
     else if (Strings_Are_Equal(unitTypeString, "LTNK"))
     {
-        unitType = UNIT_LTANK;
+        return UNIT_LTANK;
     }
     else if (Strings_Are_Equal(unitTypeString, "STNK"))
     {
-        unitType = UNIT_STANK;
+        return UNIT_STANK;
     }
     else if (Strings_Are_Equal(unitTypeString, "FTNK"))
     {
-        unitType = UNIT_FTANK;
+        return UNIT_FTANK;
     }
     else if (Strings_Are_Equal(unitTypeString, "VICE"))
     {
-        unitType = UNIT_VICE;
+        return UNIT_VICE;
     }
     else if (Strings_Are_Equal(unitTypeString, "APC"))
     {
-        unitType = UNIT_APC;
+        return UNIT_APC;
     }
     else if (Strings_Are_Equal(unitTypeString, "MSAM"))
     {
-        unitType = UNIT_MLRS;
+        return UNIT_MLRS;
     }
     else if (Strings_Are_Equal(unitTypeString, "JEEP"))
     {
-        unitType = UNIT_JEEP;
+        return UNIT_JEEP;
     }
     else if (Strings_Are_Equal(unitTypeString, "BGGY"))
     {
-        unitType = UNIT_BUGGY;
+        return UNIT_BUGGY;
     }
     else if (Strings_Are_Equal(unitTypeString, "HARV"))
     {
-        unitType = UNIT_HARVESTER;
+        return UNIT_HARVESTER;
     }
     else if (Strings_Are_Equal(unitTypeString, "ARTY"))
     {
-        unitType = UNIT_ARTY;
+        return UNIT_ARTY;
     }
     else if (Strings_Are_Equal(unitTypeString, "MLRS"))
     {
-        unitType = UNIT_MSAM;
+        return UNIT_MSAM;
     }
     else if (Strings_Are_Equal(unitTypeString, "LST"))
     {
-        unitType = UNIT_HOVER;
+        return UNIT_HOVER;
     }
     else if (Strings_Are_Equal(unitTypeString, "MHQ"))
     {
-        unitType = UNIT_MHQ;
+        return UNIT_MHQ;
     }
     else if (Strings_Are_Equal(unitTypeString, "BOAT"))
     {
-        unitType = UNIT_GUNBOAT;
+        return UNIT_GUNBOAT;
     }
     else if (Strings_Are_Equal(unitTypeString, "MCV"))
     {
-        unitType = UNIT_MCV;
+        return UNIT_MCV;
     }
     else if (Strings_Are_Equal(unitTypeString, "BIKE"))
     {
-        unitType = UNIT_BIKE;
+        return UNIT_BIKE;
     }
     else if (Strings_Are_Equal(unitTypeString, "TRIC"))
     {
-        unitType = UNIT_TRIC;
+        return UNIT_TRIC;
     }
     else if (Strings_Are_Equal(unitTypeString, "TREX"))
     {
-        unitType = UNIT_TREX;
+        return UNIT_TREX;
     }
     else if (Strings_Are_Equal(unitTypeString, "RAPT"))
     {
-        unitType = UNIT_RAPT;
+        return UNIT_RAPT;
     }
     else if (Strings_Are_Equal(unitTypeString, "STEG"))
     {
-        unitType = UNIT_STEG;
+        return UNIT_STEG;
     }
-    else
+    else if (!ignoreModTypes)
     {
-        if (parseError != NULL)
-        {
-            *parseError = true;
-        }
+        bool matchFound = false;
+        auto newUnitType = GetNewUnitType(unitTypeString, &matchFound);
 
-        Show_Error("Unable to parse unit type from string: %s", unitTypeString);
+        if (matchFound)
+        {
+            return (UnitType)newUnitType;
+        }
     }
 
-    return unitType;
+    if (parseError != NULL)
+    {
+        *parseError = true;
+    }
+
+    Show_Error("Unable to parse unit type from string: %s", unitTypeString);
+
+    return UNIT_NONE;
 }
 
-UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError)
+UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(unitTypeString))
     {
@@ -1380,14 +1390,14 @@ UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError)
 
     auto unitTypeStr = strdup(unitTypeString);
 
-    UnitType result = Parse_Unit_Type(unitTypeStr, parseError);
+    UnitType result = Parse_Unit_Type(unitTypeStr, parseError, ignoreModTypes);
 
     delete unitTypeStr;
 
     return result;
 }
 
-const char* Unit_Type_To_String(UnitType unitType)
+const char* Unit_Type_To_String(UnitType unitType, bool ignoreModTypes)
 {
     const char* unitTypeString;
 
@@ -1482,6 +1492,10 @@ const char* Unit_Type_To_String(UnitType unitType)
     else if (unitType == UNIT_STEG)
     {
         unitTypeString = "STEG";
+    }
+    else if (!ignoreModTypes && unitType < Read_Unit_Count())
+    {
+        unitTypeString = GetNewUnitIniName(unitType);
     }
     else
     {

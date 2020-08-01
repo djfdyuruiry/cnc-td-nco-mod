@@ -1449,7 +1449,6 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 		&E3,
 		&E4,
 		&E5,
-		//	&E6,
 		&E7,
 		&Commando,
 		&C1,
@@ -1467,10 +1466,9 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 		&DrChan
 	};
 
-	InitialiseInfantryModTypes();
+	InitialiseModsIfRequired();
 
-	Log_Trace("Infantry lookup by type: %d", type);
-	return Pointers[type];
+	return By_Type(type);
 }
 
 void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
@@ -1491,9 +1489,9 @@ void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
 	infantry->HasC4Charges = ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
 }
 
-void InfantryTypeClass::Add_Infantry_Type(InfantryTypeClass* infantryObject)
+void InfantryTypeClass::Add_Infantry_Type(InfantryTypeClass* infantryInstance)
 {
-	Pointers[infantryObject->Type] = infantryObject;
+	Pointers[infantryInstance->Type] = infantryInstance;
 }
 
 /***********************************************************************************************
@@ -1961,31 +1959,27 @@ void InfantryTypeClass::One_Time(void)
 
 void InfantryTypeClass::Init(TheaterType theater)
 {
-	if ( Get_Resolution_Factor() ) {
+	if (!Get_Resolution_Factor() || theater == LastTheater) {
+		return;
+	}
 
-		if (theater != LastTheater){
-			InfantryType index;
-			char buffer[_MAX_FNAME];
-			char fullname[_MAX_FNAME+_MAX_EXT];
-			void const * cameo_ptr;
+	char infantryCount = Read_Infantry_Count();
 
-			char infantryCount = Read_Infantry_Count();
+	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
+		InfantryTypeClass const *uclass = &As_Reference(index);
 
-			for (index = INFANTRY_FIRST; index < infantryCount; index++) {
-				InfantryTypeClass	const *uclass;
-				CCFileClass	file;
+		((void const *&)uclass->CameoData) = NULL;
 
-				uclass = &As_Reference(index);
+		char buffer[_MAX_FNAME];
+		char fullname[_MAX_FNAME + _MAX_EXT];
 
-				((void const *&)uclass->CameoData) = NULL;
+		sprintf(buffer, "%.4sICNH", uclass->IniName);
+		_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
 
-				sprintf(buffer, "%.4sICNH", uclass->IniName);
-				_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-				cameo_ptr = MixFileClass::Retrieve(fullname);
-				if (cameo_ptr){
-					((void const *&)uclass->CameoData) = cameo_ptr;
-				}
-			}
+		void const* cameo_ptr = MixFileClass::Retrieve(fullname);
+
+		if (cameo_ptr){
+			((void const *&)uclass->CameoData) = cameo_ptr;
 		}
 	}
 }

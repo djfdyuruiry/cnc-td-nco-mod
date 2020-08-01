@@ -152,23 +152,31 @@ static void DefineRulesSections(RulesIni& r) {
 }
 
 void Ensure_Rules_Ini_Is_Loaded() {
-	if (RULES != NULL && RULE_READER != NULL && RULE_INFO != NULL) {
+	if (
+		RULES != NULL 
+		&& RULE_READER != NULL 
+		&& RULE_INFO != NULL
+	) {
 		return;
 	}
 
 	InitaliseRuleKeys();
 
-	RulesIni& rules = RulesIni::SourceRulesFrom("RULES.INI")
+	RULES = &RulesIni::SourceRulesFrom("RULES.INI")
 		.AndThenFrom("RULES-DEFAULT.INI")
 		.WithSections(&DefineRulesSections);
 
-	RULES = &rules;
-	RULE_READER = &RulesIniReader::ReaderFor(rules);
-	RULE_INFO = &RulesIniInfo::BuildRuleInfo(rules);
+	RULE_READER = &RulesIniReader::ReaderFor(*RULES);
+	RULE_INFO = &RulesIniInfo::BuildRuleInfo(*RULES);
 
-	LUA_IS_ENABLED = RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE);
-	LUA_CONSOLE_IS_ENABLED = RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
-	GAME_TICK_INTERVAL_IN_MS = RULE_READER->ReadRuleValue<int>(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE);
+	LUA_IS_ENABLED = 
+		RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE);
+
+	LUA_CONSOLE_IS_ENABLED = LUA_IS_ENABLED
+		&& RULE_READER->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
+
+	GAME_TICK_INTERVAL_IN_MS = 
+		RULE_READER->ReadRuleValue<int>(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE);
 
 	Read_Log_Settings_From_Rules_Ini();
 
@@ -200,11 +208,15 @@ RulesIniInfo& GetRulesInfo()
 
 void MarkRulesIniAsInvalid()
 {
+	Ensure_Rules_Ini_Is_Loaded();
+
 	RULES->MarkAsInvalid();
 }
 
 bool Rules_Ini_Failed_Validation()
 {
+	Ensure_Rules_Ini_Is_Loaded();
+
 	return !RULES->IsValid();
 }
 

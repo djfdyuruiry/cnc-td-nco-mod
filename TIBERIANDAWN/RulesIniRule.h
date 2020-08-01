@@ -31,26 +31,25 @@ private:
 	Optional& valueToAllowAlways;
 	std::vector<const char*>& validValues;
 
-	RulesIniRule(SectionName section, RuleName name)
-		: defaultValue(Optional::BuildOptional()),
-		defaultValueAsPercentage(Optional::BuildOptional()),
-		value(Optional::BuildOptional()),
-		minValue(Optional::BuildOptional()),
-		maxValue(Optional::BuildOptional()),
-		valueToAllowAlways(Optional::BuildOptional()),
-		validValues(*(new std::vector<const char*>()))
+	RulesIniRule(SectionName sectionName, RuleName ruleName)
+		: section(sectionName),
+		  name(ruleName),
+		  type(NO_RULE_TYPE),
+		  defaultValue(Optional::BuildOptional()),
+		  defaultValueAsPercentage(Optional::BuildOptional()),
+		  value(Optional::BuildOptional()),
+		  minValue(Optional::BuildOptional()),
+		  maxValue(Optional::BuildOptional()),
+		  valueToAllowAlways(Optional::BuildOptional()),
+		  validValues(*(new std::vector<const char*>()))
 	{
-		this->section = section;
-		this->name = name;
-
-		sectionKey = Build_Rule_Key(this->section);
+		sectionKey = Build_Rule_Key(section);
 		uppercaseName = Convert_String_To_Upper_Case(name);
 		key = Build_Rule_Key(section, name);
-		type = NO_RULE_TYPE;
 
 		auto keyStr = Allocate_String(RULES_INI_ID_SIZE * 2 + 4);
 
-		sprintf(keyStr, "%s -> %s", this->section, this->name);
+		sprintf(keyStr, "%s -> %s", section, name);
 
 		stringKey = keyStr;
 	}
@@ -182,6 +181,19 @@ public:
 		return BuildRule(section, ruleName)
 			.OfType(BOOL_RULE)
 			.OnlyAccept(validBoolStrings);
+	}
+
+	~RulesIniRule()
+	{
+		delete& defaultValue;
+		delete& defaultValueAsPercentage;
+		delete& value;
+
+		delete& minValue;
+		delete& maxValue;
+		delete& valueToAllowAlways;
+
+		delete& validValues;
 	}
 
 	RulesIniRule& OfType(RulesIniType type)
@@ -447,5 +459,10 @@ public:
 	void WriteValueToString(char* string)
 	{
 		WriteRuleValueToString(string, value);
+	}
+
+	void Dispose()
+	{
+
 	}
 };

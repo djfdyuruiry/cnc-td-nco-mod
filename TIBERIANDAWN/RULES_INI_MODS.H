@@ -14,7 +14,7 @@
 
 #define NEW_INFANTRY_RULE "NewInfantry"
 
-//#define NEW_UNITS_RULE "NewUnits"
+#define NEW_UNITS_RULE "NewUnits"
 
 //#define NEW_AIRCRAFT_RULE "NewAircraft"
 
@@ -26,14 +26,14 @@
 #define NEW_INFANTRY_COUNT_RULE "NewInfantryCount"
 #define INFANTRY_COUNT_RULE "InfantryCount"
 
-void ReadMods();
+#define NEW_UNIT_COUNT_RULE "NewUnitCount"
+#define UNIT_COUNT_RULE "UnitCount"
 
-//void InitialiseWeaponModTypes();
-//void InitialiseBulletModTypes();
-//void InitialiseWarheadModTypes();
-void InitialiseInfantryModTypes();
-//void InitialiseUnitModTypes();
-//void InitialiseBuildingModTypes();
+void ReadMods();
+void InitialiseModsIfRequired();
 
 SectionName GetNewInfantryIniName(InfantryType infantryType);
 InfantryType GetNewInfantryType(SectionName iniName, bool* matchFound);
+
+SectionName GetNewUnitIniName(UnitType type);
+UnitType GetNewUnitType(SectionName iniName, bool* matchFound);

@@ -17,6 +17,13 @@ private:
 	std::vector<RuleName> ruleNames;
 	std::vector<CacheKey> ruleKeys;
 
+	RulesIniSection(SectionName name)
+	{
+		this->name = name;
+		this->key = Build_Rule_Key(this->name);
+		this->defaultType = DEFAULT_RULE_TYPE;
+	}
+
 	void AddRule(RulesIniRule& rule)
 	{
 		auto key = rule.GetKey();
@@ -26,17 +33,18 @@ private:
 		ruleKeys.push_back(key);
 	}
 
-	RulesIniSection(SectionName name)
-	{
-		this->name = name;
-		this->key = Build_Rule_Key(this->name);
-		this->defaultType = DEFAULT_RULE_TYPE;
-	}
-
 public:
 	static RulesIniSection& BuildSection(SectionName name)
 	{
 		return *(new RulesIniSection(name));
+	}
+
+	~RulesIniSection()
+	{
+		for (auto key : ruleKeys)
+		{
+			delete rules[key];
+		}
 	}
 
 	RulesIniSection& WithDefaultType(RulesIniType type)

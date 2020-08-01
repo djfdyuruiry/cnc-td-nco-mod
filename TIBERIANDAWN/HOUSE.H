@@ -788,7 +788,7 @@ class HouseClass {
 		**	building is in construction, it will be reflected in this total.
 		*/
 		int BQuantity[STRUCT_COUNT];
-		int UQuantity[UNIT_COUNT];
+		int* UQuantity;
 		int* IQuantity;
 		int AQuantity[AIRCRAFT_COUNT];
 

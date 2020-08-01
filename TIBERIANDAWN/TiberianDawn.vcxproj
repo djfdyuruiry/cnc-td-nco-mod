@@ -521,6 +521,7 @@
     <ClInclude Include="TXTLABEL.H" />
     <ClInclude Include="TYPE.H" />
     <ClInclude Include="UNIT.H" />
+    <ClInclude Include="UnitTypeMod.h" />
     <ClInclude Include="UTILS.H" />
     <ClInclude Include="UTRACKER.H" />
     <ClInclude Include="VECTOR.H" />

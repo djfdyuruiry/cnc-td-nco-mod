@@ -46,18 +46,18 @@ WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError);
 const char* Warhead_Type_To_String(WarheadType warheadType);
 
 // infantry specific
-InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError);
+InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError, bool ignoreModTypes = false);
 
-InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError);
+InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError, bool ignoreModTypes = false);
 
-const char* Infantry_Type_To_String(InfantryType infantryType);
+const char* Infantry_Type_To_String(InfantryType infantryType, bool ignoreModTypes = false);
 
 // unit specific
-UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError);
+UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError, bool ignoreModTypes = false);
 
-UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError);
+UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError, bool ignoreModTypes = false);
 
-const char* Unit_Type_To_String(UnitType unitType);
+const char* Unit_Type_To_String(UnitType unitType, bool ignoreModTypes = false);
 
 SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError);
 

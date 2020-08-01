@@ -5,7 +5,7 @@ class Optional
 private:
 	void* data;
 
-	Optional()
+	Optional() 
 	{
 		data = NULL;
 	}
@@ -14,6 +14,14 @@ public:
 	static Optional& BuildOptional()
 	{
 		return *(new Optional());
+	}
+
+	~Optional()
+	{
+		if (Present())
+		{
+			delete data;
+		}
 	}
 
 	bool Present()

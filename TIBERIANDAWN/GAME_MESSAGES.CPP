@@ -138,7 +138,7 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 	}
 	else
 	{
-		Log_Error("Encountered Unknown Game Loop message type : %u", type);
+		Log_Debug("Encountered Unknown Game Loop message type : %u", type);
 	}
 }
 
@@ -149,7 +149,7 @@ DWORD WINAPI Process_Game_Loop_Messages(LPVOID lpParam)
 		while (!GAME_LOOP_MESSAGE_QUEUE.empty())
 		{
 			auto loopMessage = GAME_LOOP_MESSAGE_QUEUE.front();
-			
+
 			Process_Game_Loop_Message(loopMessage);
 
 			GAME_LOOP_MESSAGE_QUEUE.pop();

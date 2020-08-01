@@ -17,6 +17,8 @@ bool NCO_Startup()
 {
 	puts("New Construction Options mod starting up");
 
+	Ensure_Rules_Ini_Is_Loaded();
+
 	if (Rules_Ini_Failed_Validation())
 	{
 		Log_Error("Aborting game launch as their validation errors in the rules INI");

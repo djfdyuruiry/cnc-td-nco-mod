@@ -2,9 +2,17 @@
 <CNCModGameCommandManager>
   <ModGameCommands>
 
+    <!-- Infantry -->
     <CNCModGameCommands>
-      <Command Name="KILLER">
+      <Command Name="ERIC">
         <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD20</GameCommand>
+      </Command>
+    </CNCModGameCommands>
+
+    <!-- Units -->
+    <CNCModGameCommands>
+      <Command Name="CHEMTNK">
+        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD27</GameCommand>
       </Command>
     </CNCModGameCommands>
 

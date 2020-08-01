@@ -2554,6 +2554,7 @@ void BuildingClass::Update_Buildables(void)
 
 	if (!IsInLimbo && Is_Discovered_By_Player()) {
 		char infantryCount = Read_Infantry_Count();
+		char unitCount = Read_Unit_Count();
 
 		switch (Class->ToBuild) {
 			StructType i;
@@ -2576,7 +2577,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_UNITTYPE:
-				for (u = UNIT_FIRST; u < UNIT_COUNT; u++) {
+				for (u = UNIT_FIRST; u < unitCount; u++) {
 					if (PlayerPtr->Can_Build(u, ActLike)) {
 //						if (UnitTypeClass::As_Reference(u).Who_Can_Build_Me(true, true, ActLike)) {
 							if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
@@ -2642,6 +2643,9 @@ void BuildingClass::Update_Buildables(void)
 	Validate();
 
 	if (House == PlayerPtr && !IsInLimbo && IsDiscoveredByPlayer) {
+		char infantryCount = Read_Infantry_Count();
+		char unitCount = Read_Unit_Count();
+
 		switch (Class->ToBuild) {
 			StructType i;
 			UnitType u;
@@ -2659,7 +2663,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_UNITTYPE:
-				for (u = UNIT_FIRST; u < UNIT_COUNT; u++) {
+				for (u = UNIT_FIRST; u < unitCount; u++) {
 					if (PlayerPtr->Can_Build(u, ActLike)) {
 //						if (UnitTypeClass::As_Reference(u).Who_Can_Build_Me(true, true, ActLike)) {
 							Map.Add(RTTI_UNITTYPE, u);
@@ -2669,8 +2673,6 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_INFANTRYTYPE:
-				char infantryCount = Read_Infantry_Count();
-
 				for (f = INFANTRY_FIRST; f < infantryCount; f++) {
 					if (PlayerPtr->Can_Build(f, ActLike)) {
 //						if (InfantryTypeClass::As_Reference(f).Who_Can_Build_Me(true, true, ActLike)) {

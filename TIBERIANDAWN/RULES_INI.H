@@ -77,6 +77,10 @@ void Free_Rules_Memory();
 
 #define Read_Infantry_Count() (char)ReadRuleValue<unsigned int>(*INFANTRY_COUNT_RULE_KEY)
 
+#define Read_New_Unit_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_UNIT_COUNT_RULE)
+
+#define Read_Unit_Count() (char)ReadRuleValue<unsigned int>(*UNIT_COUNT_RULE_KEY)
+
 // game lookups
 #define Read_Build_Distance_Game_Rule() ReadRuleValue<unsigned int>(*MAX_BUILD_DISTANCE_RULE_KEY)
 

@@ -493,11 +493,13 @@ HouseClass::HouseClass(HousesType house) :
 	PointTotal = 0;
 
 	auto iquantitySize = Read_Infantry_Count() * sizeof(int);
+	auto uquantitySize = Read_Unit_Count() * sizeof(int);
 
 	IQuantity = (int*) calloc(iquantitySize, sizeof(int));
+	UQuantity = (int*) calloc(uquantitySize, sizeof(int));
 
 	memset(BQuantity, '\0', sizeof(BQuantity));
-	memset(UQuantity, '\0', sizeof(UQuantity));
+	memset(UQuantity, '\0', uquantitySize);
 	memset(IQuantity, '\0', iquantitySize);
 	memset(AQuantity, '\0', sizeof(AQuantity));
 
@@ -3685,11 +3687,12 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 					techno = 0;
 				}
 
-				int counter[UNIT_COUNT];
-				if (GameToPlay == GAME_NORMAL) {
-					memset(counter, 0x00, sizeof(counter));
-				} else {
-					for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+				char unitCount = Read_Unit_Count();
+
+				int* counter = (int*) calloc(unitCount, sizeof(int));
+
+				if (GameToPlay != GAME_NORMAL) {
+					for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
 						if (Can_Build(index, Class->House) && UnitTypeClass::As_Reference(index).Level <= BuildLevel) {
 							counter[index] = 16;
 						} else {
@@ -3755,8 +3758,10 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				*/
 				int bestval = -1;
 				int bestcount = 0;
-				UnitType bestlist[UNIT_COUNT];
-				for (UnitType utype = UNIT_FIRST; utype < UNIT_COUNT; utype++) {
+				
+				UnitType* bestlist = (UnitType*) calloc(unitCount, sizeof(UnitType));
+		
+				for (UnitType utype = UNIT_FIRST; utype < unitCount; utype++) {
 					if (counter[utype] > 0 && Can_Build(utype, Class->House) && UnitTypeClass::As_Reference(utype).Cost_Of() <= Available_Money()) {
 						if (bestval == -1 || bestval < counter[utype]) {
 							bestval = counter[utype];
@@ -3772,6 +3777,9 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				if (bestcount) {
 					techno = &UnitTypeClass::As_Reference(bestlist[Random_Pick(0, bestcount-1)]);
 				}
+
+				delete counter;
+				delete bestlist;
 			}
 			break;
 
@@ -4984,15 +4992,16 @@ void HouseClass::Check_Pertinent_Structures(void)
 void HouseClass::Init_Unit_Trackers(void)
 {
 	char infantryCount = Read_Infantry_Count();
+	char unitCount = Read_Unit_Count();
 
 	AircraftTotals = new UnitTrackerClass( (int) AIRCRAFT_COUNT);
 	InfantryTotals = new UnitTrackerClass( (int) infantryCount);
-	UnitTotals = new UnitTrackerClass ( (int) UNIT_COUNT);
+	UnitTotals = new UnitTrackerClass ( (int) unitCount);
 	BuildingTotals = new UnitTrackerClass ( (int) STRUCT_COUNT);
 
 	DestroyedAircraft = new UnitTrackerClass ( (int) AIRCRAFT_COUNT);
 	DestroyedInfantry = new UnitTrackerClass( (int) infantryCount);
-	DestroyedUnits = new UnitTrackerClass ( (int) UNIT_COUNT);
+	DestroyedUnits = new UnitTrackerClass ( (int) unitCount);
 	DestroyedBuildings = new UnitTrackerClass ( (int) STRUCT_COUNT);
 
 	CapturedBuildings = new UnitTrackerClass ( (int) STRUCT_COUNT);
@@ -6758,8 +6767,9 @@ int HouseClass::AI_Unit(void)
 
 	//if (Session.Type == GAME_NORMAL) {  // Why? ST - 7/24/2019 2:38PM	
 
-		int counter[UNIT_COUNT];
-		memset(counter, 0x00, sizeof(counter));
+		char unitCount = Read_Unit_Count();
+
+		int* counter = (int*) calloc(unitCount, sizeof(int));
 
 		/*
 		**	Build a list of the maximum of each type we wish to produce. This will be
@@ -6822,8 +6832,10 @@ int HouseClass::AI_Unit(void)
 		*/
 		int bestval = -1;
 		int bestcount = 0;
-		UnitType bestlist[UNIT_COUNT];
-		for (UnitType utype = UNIT_FIRST; utype < UNIT_COUNT; utype++) {
+				
+		UnitType* bestlist = (UnitType*) calloc(unitCount, sizeof(UnitType));
+
+		for (UnitType utype = UNIT_FIRST; utype < unitCount; utype++) {
 			if (counter[utype] > 0 && Can_Build(&UnitTypeClass::As_Reference(utype), Class->House) && UnitTypeClass::As_Reference(utype).Cost_Of() <= Available_Money()) {
 				if (bestval == -1 || bestval < counter[utype]) {
 					bestval = counter[utype];
@@ -6842,11 +6854,11 @@ int HouseClass::AI_Unit(void)
 	//}
 
 	if (IsBaseBuilding) {
+		int* counter = (int*) calloc(unitCount, sizeof(int));
 
-		int counter[UNIT_COUNT];
 		int total = 0;
 		UnitType index;
-		for (index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+		for (index = UNIT_FIRST; index < unitCount; index++) {
 			UnitTypeClass const * utype = &UnitTypeClass::As_Reference(index);
 			if (Can_Build(utype, ActLike) && utype->Type != UNIT_HARVESTER) {
 				//if (utype->PrimaryWeapon != NULL) {
@@ -6863,7 +6875,7 @@ int HouseClass::AI_Unit(void)
 
 		if (total > 0) {
 			int choice = Random_Pick(0, total-1);
-			for (index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+			for (index = UNIT_FIRST; index < unitCount; index++) {
 				if (choice < counter[index]) {
 					BuildUnit = index;
 					break;
@@ -6871,7 +6883,12 @@ int HouseClass::AI_Unit(void)
 				choice -= counter[index];
 			}
 		}
+
+		delete counter;
 	}
+
+	delete counter;
+	delete bestlist;
 
 	return(TICKS_PER_SECOND);
 }

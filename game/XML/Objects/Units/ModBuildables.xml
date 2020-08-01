@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ObjectTypeList>
-	<ObjectTypeClass Name="TD_KILLER" Classification="CNCBuildableObject" CanInstantiate="False">
+	<ObjectTypeClass Name="TD_ERIC" Classification="CNCBuildableObject" CanInstantiate="False">
 		<CNCEncyclopediaComponent>		
-			<ObjectNameTextID>TEXT_UNIT_KILLER</ObjectNameTextID>
-			<ObjectDescriptionTextID>TEXT_UNIT_DESC_KILLER</ObjectDescriptionTextID>
-			<BuildIcon>BuildIcon_TD_KILLER</BuildIcon>
+			<ObjectNameTextID>TEXT_UNIT_ERIC</ObjectNameTextID>
+			<ObjectDescriptionTextID>TEXT_UNIT_DESC_ERIC</ObjectDescriptionTextID>
+			<BuildIcon>BuildIcon_TD_ERIC</BuildIcon>
 			<RequiredTypes>
 				<entry>TD_PYLE</entry>
+			</RequiredTypes>
+			<CategoryTypesWeakAgainst>
+				<entry>Category_Tanks</entry>
+			</CategoryTypesWeakAgainst>
+			<CategoryTypesStrongAgainst>
+				<entry>Category_Infantry</entry>
+			</CategoryTypesStrongAgainst>
+		</CNCEncyclopediaComponent>
+	</ObjectTypeClass>	
+
+	<ObjectTypeClass Name="TD_CHEMTNK" Classification="CNCBuildableObject" CanInstantiate="False">
+		<CNCEncyclopediaComponent>		
+			<ObjectNameTextID>TEXT_UNIT_CHEMTNK</ObjectNameTextID>
+			<ObjectDescriptionTextID>TEXT_UNIT_DESC_CHEMTNK</ObjectDescriptionTextID>
+			<BuildIcon>BuildIcon_TD_CHEMTNK</BuildIcon>
+			<RequiredTypes>
+				<entry>TD_AFLD</entry>
 			</RequiredTypes>
 			<CategoryTypesWeakAgainst>
 				<entry>Category_Tanks</entry>

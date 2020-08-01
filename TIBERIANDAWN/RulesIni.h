@@ -119,6 +119,14 @@ public:
 		return *(new RulesIni(rulesFilePath));
 	}
 
+	~RulesIni()
+	{
+		for (auto key : sectionKeys)
+		{
+			delete sections[key];
+		}
+	}
+
 	RulesIni& AndThenFrom(const char* rulesFilePath)
 	{
 		return DoSourceRulesFrom(rulesFilePath);

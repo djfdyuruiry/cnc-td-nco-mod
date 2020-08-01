@@ -18,7 +18,7 @@ static int Lua_Get_Game_Rule(lua_State* lua)
 
     auto ruleName = Get_Lua_Value_As_String(1);
 
-    IRulesIniSection& gameRules = GetRulesInfo().GetGameRules();
+    auto& gameRules = GetRulesInfo().GetGameRules();
     auto ruleKey = gameRules.BuildKey(ruleName);
 
     if (!gameRules.HasRule(ruleKey))
@@ -27,7 +27,7 @@ static int Lua_Get_Game_Rule(lua_State* lua)
         return 0;
     }
 
-    auto rule = gameRules[ruleKey];
+    auto& rule = gameRules[ruleKey];
 
     if (rule.HasValue())
     {
@@ -83,7 +83,7 @@ static int Lua_Set_Game_Rule(lua_State* lua)
 
     auto ruleName = Get_Lua_Value_As_String(1);
 
-    IRulesIniSection& gameRules = GetRulesInfo().GetGameRules();
+    auto& gameRules = GetRulesInfo().GetGameRules();
     auto ruleKey = gameRules.BuildKey(ruleName);
 
     if (!gameRules.HasRule(ruleKey))
@@ -92,7 +92,7 @@ static int Lua_Set_Game_Rule(lua_State* lua)
         return 0;
     }
 
-    auto rule = gameRules[ruleKey];
+    auto& rule = gameRules[ruleKey];
 
     auto setOk = rule.SetValueFromLuaState(lua, 2);
 

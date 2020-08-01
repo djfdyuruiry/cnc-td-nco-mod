@@ -72,18 +72,6 @@ protected:
 
 	virtual void AddRulesSection(SectionName typeString) = 0;
 
-	void EnsureTypesInitialised()
-	{
-		if (initialised)
-		{
-			return;
-		}
-
-		InitialiseTypes();
-
-		initialised = true;
-	}
-
 	NcoGameMod(
 		const char* modTypeName,
 		RuleName modTypesRuleName,
@@ -156,6 +144,8 @@ public:
 			return;
 		}
 
+		initialised = true;
+
 		Log_Info("Initialising %s Mod Types", typeName);
 
 		T type = originalTypeCount;
@@ -190,15 +180,11 @@ public:
 
 	SectionName GetTypeIniName(T type)
 	{
-		EnsureTypesInitialised();
-
 		return modTypeInstances[type]->IniName;
 	}
 
 	T GetTypeByIniName(SectionName iniName, bool* matchFound)
 	{
-		EnsureTypesInitialised();
-
 		for (auto typeKvp : modTypeInstances)
 		{
 			auto typeIniName = typeKvp.second->IniName;

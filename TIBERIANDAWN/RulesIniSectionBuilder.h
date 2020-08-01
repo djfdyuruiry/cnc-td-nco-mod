@@ -132,6 +132,14 @@ public:
 				  << s.BuildRule(INFANTRY_COUNT_RULE)
 					  .WithDefault(INFANTRY_COUNT)
 					  .WithMin(INFANTRY_FIRST)
+					  .WithMax(CHAR_MAX)
+				  
+				  << NEW_UNITS_RULE << STRING_RULE
+				  << s.BuildRule(NEW_UNIT_COUNT_RULE)
+					  .WithMax(CHAR_MAX)
+				  << s.BuildRule(UNIT_COUNT_RULE)
+					  .WithDefault(UNIT_COUNT)
+					  .WithMin(UNIT_FIRST)
 					  .WithMax(CHAR_MAX);
 			});
 	}

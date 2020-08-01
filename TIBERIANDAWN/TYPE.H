@@ -920,6 +920,9 @@ class BuildingTypeClass : public TechnoTypeClass {
 */
 class UnitTypeClass : public TechnoTypeClass
 {
+private:
+	static UnitTypeClass const** Pointers;
+
 	public:
 		/*
 		**	If this unit can appear out of a crate, then this flag will be true.
@@ -1096,10 +1099,14 @@ class UnitTypeClass : public TechnoTypeClass
 		virtual RTTIType  What_Am_I(void) const {return RTTI_UNITTYPE;};
 
 		static UnitType  From_Name(char const *name);
-		static UnitTypeClass const &  As_Reference(UnitType type);
+		static UnitTypeClass const* UnitTypeClass::By_Type(UnitType type);
+		static UnitTypeClass const &  As_Reference(UnitType type) { return *By_Type(type); };
 		static void  Init(TheaterType );
 		static void One_Time(void);
 		static void Prep_For_Add(void);
+
+		static void Read_Unit_Rules(UnitTypeClass* type);
+		static void Add_Unit_Type(UnitTypeClass* type);
 
 		virtual void  Dimensions(int &width, int &height) const;
 		virtual bool  Create_And_Place(CELL cell, HousesType house) const;
@@ -1111,6 +1118,8 @@ class UnitTypeClass : public TechnoTypeClass
 		virtual int  Repair_Cost(void) const;
 		virtual int  Repair_Step(void) const;
 
+		char* Resolve_Ini_Name();
+
 		#ifdef SCENARIO_EDITOR
 		virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
 		#endif
@@ -1119,11 +1128,7 @@ class UnitTypeClass : public TechnoTypeClass
 		**	This is a pointer to the wake shape (as needed by the gunboat).
 		*/
 		static void const * WakeShapes;
-
-	private:
-		static UnitTypeClass const * const Pointers[UNIT_COUNT];
 };
-
 
 /***************************************************************************
 **	The various unit types need specific data that is unique to units as

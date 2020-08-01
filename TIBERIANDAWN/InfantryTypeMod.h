@@ -21,7 +21,7 @@ private:
 protected:
 	InfantryType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Infantry_Type(typeString, parseError);
+		return Parse_Infantry_Type(typeString, parseError, true);
 	}
 
 	void AddRulesSection(SectionName typeString)

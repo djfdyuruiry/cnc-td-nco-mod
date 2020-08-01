@@ -29,13 +29,13 @@ static void Read_Object_Names(
     void* toStringFunctionPtr
 )
 {
-    auto toStringFunction = (char* (*)(char))toStringFunctionPtr;
+    auto toStringFunction = (char* (*)(char, bool))toStringFunctionPtr;
 
     lua_createtable(lua, 0, count);
 
     for (char i = first; i < count; i++)
     {
-        auto name = toStringFunction(i);
+        auto name = toStringFunction(i, false);
 
         Log_Trace("Pushing object name onto Lua table: %s", name);
 
@@ -46,6 +46,8 @@ static void Read_Object_Names(
 
 static int Lua_Get_Infantry_Types(lua_State* lua)
 {
+    InitialiseModsIfRequired();
+
     Read_Object_Names(lua, INFANTRY_FIRST, Read_Infantry_Count(), &(Infantry_Type_To_String));
 
     return 1;
@@ -53,7 +55,9 @@ static int Lua_Get_Infantry_Types(lua_State* lua)
 
 static int Lua_Get_Unit_Types(lua_State* lua)
 {
-    Read_Object_Names(lua, UNIT_FIRST, UNIT_COUNT, &(Unit_Type_To_String));
+    InitialiseModsIfRequired();
+
+    Read_Object_Names(lua, UNIT_FIRST, Read_Unit_Count(), &(Unit_Type_To_String));
 
     return 1;
 }

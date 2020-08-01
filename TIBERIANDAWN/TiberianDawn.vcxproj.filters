@@ -823,6 +823,9 @@
     <ClInclude Include="InfantryTypeMod.h">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="UnitTypeMod.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">

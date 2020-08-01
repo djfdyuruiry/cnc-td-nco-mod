@@ -39,6 +39,17 @@ public:
 		return *(new RulesIniInfo(rulesIni));
 	}
 
+	~RulesIniInfo()
+	{
+		delete& weaponRules;
+		delete& bulletRules;
+		delete& warheadRules;
+		delete& infantryRules;
+		delete& unitRules;
+		delete& aircraftRules;
+		delete& buildingRules;
+	}
+
 	IRulesIniSection& GetNcoRules()
 	{
 		return rules[NCO_RULES_SECTION_NAME];

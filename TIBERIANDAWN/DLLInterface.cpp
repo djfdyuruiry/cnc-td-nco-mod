@@ -7039,8 +7039,9 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}	
 	}
 
+	char unitCount = Read_Unit_Count();
 
-	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
 		UnitTypeClass const & unit_type = UnitTypeClass::As_Reference(index);
 
 		/*

@@ -101,7 +101,6 @@ private:
 			}
 		}
 
-
 		Log_Trace("Resolved value: %u", ruleValue);
 		Log_Debug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
 
