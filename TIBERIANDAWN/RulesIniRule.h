@@ -29,7 +29,7 @@ private:
 	Optional& minValue;
 	Optional& maxValue;
 	Optional& valueToAllowAlways;
-	std::vector<const char*>& validValues;
+	std::vector<const char*> validValues;
 
 	RulesIniRule(SectionName section, RuleName name)
 		: defaultValue(Optional::BuildOptional()),
@@ -37,8 +37,7 @@ private:
 		  value(Optional::BuildOptional()),
 		  minValue(Optional::BuildOptional()),
 		  maxValue(Optional::BuildOptional()),
-		  valueToAllowAlways(Optional::BuildOptional()),
-	      validValues(*(new std::vector<const char*>()))
+		  valueToAllowAlways(Optional::BuildOptional())
 	{
 		this->section = section;
 		this->name = name;
