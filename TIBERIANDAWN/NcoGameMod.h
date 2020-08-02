@@ -8,7 +8,6 @@
 #include "RulesIniRule.h"
 #include "RulesIniRuleKey.h"
 
-// TODO: create subclasses to describe different mod types (infantry, unit etc.)
 template<class T, class U> class NcoGameMod
 {
 protected:
@@ -90,7 +89,6 @@ protected:
 	}
 
 public:
-
 	void ReadTypes()
 	{
 		if (modTypes.size() > 0)

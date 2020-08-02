@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 
 #include "lua.hpp"
@@ -39,5 +41,3 @@ void Push_String_Vector_Onto_Lua_Stack(std::vector<const char*>& stringArray);
 void Clear_Lua_Stack();
 
 void Shutdown_Lua();
-
-#pragma once

@@ -24,6 +24,15 @@ Several new gameplay features have been added and some ported from the popular C
 
 See the Enhancements section in the RULES file. 
 
+[b]Mods[/b]
+
+This mod allows you to add new units and infantry using just the rules file, no code changes required.
+
+[list]
+  [*] Add new infantry types
+  [*] Add new unit types
+[/list]
+
 ****
 
 [u]Getting Started:[/u]
@@ -57,7 +66,6 @@ Building Temple of Nod as GDI❓❓❓
 [list]
   [*] Set distance between buildings (build more than one cell away)
   [*] Full rules for: Aircraft, Infantry, Units, Buildings, Weapons, Bullets & Warheads
-  [*] Add new infantry types
   [*] Turn off single player constraints, for example: Nod can't build APCs, GDI can't build Temple of Nod
   [*] Superweapons, AI and difficulty
   [*] Additional rules for tweaks and cheats and debug options
