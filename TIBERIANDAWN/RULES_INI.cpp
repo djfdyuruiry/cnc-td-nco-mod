@@ -281,4 +281,6 @@ void Free_Rules_Memory()
 	{
 		delete RULE_INFO;
 	}
+
+	Log_Debug("Rule objects deleted");
 }

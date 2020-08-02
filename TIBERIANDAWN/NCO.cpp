@@ -15,13 +15,13 @@ static DWORD WINAPI Start_Lua_Repl(LPVOID lpParam)
 
 bool NCO_Startup()
 {
-	puts("New Construction Options mod starting up");
-
 	Ensure_Rules_Ini_Is_Loaded();
+
+	Log_Info("New Construction Options mod starting up");
 
 	if (Rules_Ini_Failed_Validation())
 	{
-		Log_Error("Aborting game launch as their validation errors in the rules INI");
+		Show_Error("Aborting game launch because rules INI failed validation.\n\nPlease check your rules are valid.");
 		return false;
 	}
 
@@ -29,7 +29,7 @@ bool NCO_Startup()
 	{
 		if (!Initialise_Lua())
 		{
-			Log_Error("Aborting game launch as their were errors initialising Lua");
+			Show_Error("Aborting game launch as their were errors initialising Lua");
 			return false;
 		}
 	}
@@ -59,11 +59,15 @@ bool NCO_Startup()
 		{
 			Show_Error("Failed to start Lua console: %s", Get_Win32_Error_Message());
 		}
+
+		Log_Info("Lua console opened");
 	}
 	#endif
 
 	if (Lua_Is_Enabled())
 	{
+		Log_Info("Attempting to start Lua Event thread");
+
 		LUA_EVENT_THREAD = CreateThread(
 			NULL,
 			0,
@@ -78,6 +82,8 @@ bool NCO_Startup()
 			Show_Error("Failed to start Lua event thread: %s", Get_Win32_Error_Message());
 			return false;
 		}
+
+		Log_Info("Lua Event thread started");
 	}
 
 	return true;
@@ -92,7 +98,7 @@ void NCO_Shutdown()
 	{
 		if (!TerminateThread(LUA_REPL_THREAD, 0))
 		{
-			Show_Error("Error closing Lua console: %s", Get_Win32_Error_Message());
+			Log_Error("Error closing Lua console: %s", Get_Win32_Error_Message());
 		}
 
 		Stop_Console_Output();
@@ -103,7 +109,7 @@ void NCO_Shutdown()
 	{
 		if (LUA_EVENT_THREAD != NULL && !TerminateThread(LUA_EVENT_THREAD, 0))
 		{
-			Show_Error("Error stopping Lua event thread: %s", Get_Win32_Error_Message());
+			Log_Error("Error stopping Lua event thread: %s", Get_Win32_Error_Message());
 		}
 
 		Shutdown_Lua();
@@ -111,6 +117,6 @@ void NCO_Shutdown()
 
 	Free_Rules_Memory();
 
-	// this must be the last call - otherwise the file might be reopened byby a log call
+	// this must be the last call - otherwise the file might be reopened by a log call
 	Close_Log_File_If_Open();
 }
