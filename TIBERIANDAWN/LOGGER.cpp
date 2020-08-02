@@ -87,7 +87,7 @@ static void Load_Default_Log_File_Path()
 
 	if (!valueFound)
 	{
-		puts("Failed to read USERPROFILE env var to find home directory, logging to file will be disabled");
+		Show_Error("Failed to read USERPROFILE env var to find home directory, logging to file will be disabled");
 		FAILED_TO_OPEN_LOG_FILE = true;
 	}
 
@@ -114,11 +114,12 @@ static void Open_Log_File()
 	bool errorOccurred = false;
 	LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH, &errorOccurred);
 
+	// todo: fix crash when quitting skirmish and starting mission (cannot open log file)
 	if (errorOccurred || LOG_FILE_HANDLE == NULL || LOG_FILE_HANDLE == INVALID_HANDLE_VALUE)
 	{
 		FAILED_TO_OPEN_LOG_FILE = true;
 
-		sprintf(
+		Show_Error(
 			"Failed to open log file: %s\nCheck `log` directory is present and you have permission to access it.\n",
 			Get_Win32_Error_Message()
 		);
@@ -214,7 +215,7 @@ void Close_Log_File_If_Open()
 
 		if (!CloseHandle(LOG_FILE_HANDLE))
 		{
-			printf("ERROR: Failed to close handle for log file '%s': %s", LOG_FILE_PATH, Get_Win32_Error_Message());
+			Show_Error("ERROR: Failed to close handle for log file '%s': %s", LOG_FILE_PATH, Get_Win32_Error_Message());
 		}
 
 		delete LOG_FILE_PATH;

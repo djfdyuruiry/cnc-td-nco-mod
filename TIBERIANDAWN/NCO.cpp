@@ -109,7 +109,8 @@ void NCO_Shutdown()
 		Shutdown_Lua();
 	}
 
-	Close_Log_File_If_Open();
-
 	Free_Rules_Memory();
+
+	// this must be the last call - otherwise the file might be reopened byby a log call
+	Close_Log_File_If_Open();
 }
