@@ -698,8 +698,8 @@ extern "C" __declspec(dllexport) bool __cdecl CNC_Set_Multiplayer_Data(int scena
 	Rule.AllowSuperWeapons = game_options.EnableSuperweapons;	// Are superweapons available
 
 	if (MPlayerTiberium) {
-		Special.IsTSpread = Read_Boolean_Game_Rule(TIBERIUM_SPREADS_RULE, TIBERIUM_SPREADS_RULE_KEY, true);
-		Special.IsTFast = !Read_Boolean_Game_Rule(SLOW_TIBERIUM_RULE, SLOW_TIBERIUM_RULE_KEY, false);
+		Special.IsTSpread = ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
+		Special.IsTFast = !ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
 	} else {
 		Special.IsTGrowth = 0;
 		Special.IsTSpread = 0;
@@ -1994,16 +1994,16 @@ void DLLExportClass::Config(const CNCRulesDataStruct& rules)
 	{
 		auto difficultyName = Difficulty_Type_To_String(d);
 
-		Rule.Diff[d].FirepowerBias = Read_Double_Difficulty_Rule(difficultyName, FIREPOWER_DIFFICULTY_RULE, rules.Difficulties[d].FirepowerBias);
-		Rule.Diff[d].GroundspeedBias = Read_Double_Difficulty_Rule(difficultyName, GROUNDSPEED_DIFFICULTY_RULE, rules.Difficulties[d].GroundspeedBias);
-		Rule.Diff[d].AirspeedBias = Read_Double_Difficulty_Rule(difficultyName, AIRSPEED_DIFFICULTY_RULE, rules.Difficulties[d].AirspeedBias);
-		Rule.Diff[d].ArmorBias = Read_Double_Difficulty_Rule(difficultyName, ARMOR_DIFFICULTY_RULE, rules.Difficulties[d].ArmorBias);
-		Rule.Diff[d].ROFBias = Read_Double_Difficulty_Rule(difficultyName, RATE_OF_FIRE_DIFFICULTY_RULE, rules.Difficulties[d].ROFBias);
-		Rule.Diff[d].CostBias = Read_Double_Difficulty_Rule(difficultyName, COST_DIFFICULTY_RULE, rules.Difficulties[d].CostBias);
-		Rule.Diff[d].BuildSpeedBias = Read_Double_Difficulty_Rule(difficultyName, BUILD_SPEED_DIFFICULTY_RULE, rules.Difficulties[d].BuildSpeedBias);
-		Rule.Diff[d].RepairDelay = Read_Double_Difficulty_Rule(difficultyName, REPAIR_DELAY_DIFFICULTY_RULE, rules.Difficulties[d].RepairDelay);
-		Rule.Diff[d].BuildDelay = Read_Double_Difficulty_Rule(difficultyName, BUILD_DELAY_DIFFICULTY_RULE, rules.Difficulties[d].BuildDelay);
-		Rule.Diff[d].IsBuildSlowdown = Read_Bool_From_Rules_Ini(difficultyName, BUILD_SLOWDOWN_DIFFICULTY_RULE, rules.Difficulties[d].IsBuildSlowdown);
+		Rule.Diff[d].FirepowerBias = Read_Double_Difficulty_Rule(difficultyName, FIREPOWER_DIFFICULTY_RULE);
+		Rule.Diff[d].GroundspeedBias = Read_Double_Difficulty_Rule(difficultyName, GROUNDSPEED_DIFFICULTY_RULE);
+		Rule.Diff[d].AirspeedBias = Read_Double_Difficulty_Rule(difficultyName, AIRSPEED_DIFFICULTY_RULE);
+		Rule.Diff[d].ArmorBias = Read_Double_Difficulty_Rule(difficultyName, ARMOR_DIFFICULTY_RULE);
+		Rule.Diff[d].ROFBias = Read_Double_Difficulty_Rule(difficultyName, RATE_OF_FIRE_DIFFICULTY_RULE);
+		Rule.Diff[d].CostBias = Read_Double_Difficulty_Rule(difficultyName, COST_DIFFICULTY_RULE);
+		Rule.Diff[d].BuildSpeedBias = Read_Double_Difficulty_Rule(difficultyName, BUILD_SPEED_DIFFICULTY_RULE);
+		Rule.Diff[d].RepairDelay = Read_Double_Difficulty_Rule(difficultyName, REPAIR_DELAY_DIFFICULTY_RULE);
+		Rule.Diff[d].BuildDelay = Read_Double_Difficulty_Rule(difficultyName, BUILD_DELAY_DIFFICULTY_RULE);
+		Rule.Diff[d].IsBuildSlowdown = ReadRuleValue<bool>(difficultyName, BUILD_SLOWDOWN_DIFFICULTY_RULE);
 
 		// below two rules are never used for C&C (RA only)
 		Rule.Diff[d].IsWallDestroyer = rules.Difficulties[d].IsWallDestroyer ? 1 : 0;
@@ -4436,8 +4436,8 @@ void DLLExportClass::Calculate_Placement_Distances(BuildingTypeClass* placement_
 	}
 
 	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-	auto preventBuildingInShroud = Read_Boolean_Game_Rule(PREVENT_BUILDING_IN_SHROUD_RULE, PREVENT_BUILDING_IN_SHROUD_RULE_KEY, true);
-	auto allowBuildingBesideWalls = Read_Boolean_Game_Rule(ALLOW_BUILDING_BESIDE_WALLS_RULE, ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY, true);
+	auto preventBuildingInShroud = ReadRuleValue<bool>(PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
+	auto allowBuildingBesideWalls = ReadRuleValue<bool>(ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
 
 	memset(placement_distance, 255U, MAP_CELL_TOTAL);
 	for (int y = 0; y < map_cell_height; y++) {
@@ -7039,8 +7039,9 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}	
 	}
 
+	char unitCount = Read_Unit_Count();
 
-	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
 		UnitTypeClass const & unit_type = UnitTypeClass::As_Reference(index);
 
 		/*
@@ -7063,7 +7064,7 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}
 	}
 
-	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+	char infantryCount = Read_Infantry_Count();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		InfantryTypeClass	const &infantry_type = InfantryTypeClass::As_Reference(index);

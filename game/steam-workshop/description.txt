@@ -1,74 +1,49 @@
 [h1]🛠New Construction Options🛠[/h1]
 
-[url=https://github.com/djfdyuruiry/cnc-td-nco-mod]Github Repository[/url]
+This mod provides an new gameplay features, a 📃 RULES.INI file 📃 for Tiberian Dawn & ⚙ Lua event scripting ⚙.
 
-This mod provides an extensive 📃 RULES.INI file 📃 for Tiberian Dawn & ⚙ Lua event scripting ⚙.
+Currently only one C&C code mod can run at once, this mod aims to fix that problem by providing a rules file and a scripting API. 
 
-Currently only one C&C dll mod can run at a time, this mod aims to fix that problem by providing a rules file and a scripting API. Simply write your mod using this interface instead of editing the source code directly. 
+Simply write your mod using this interface instead of editing the source code directly. 
 
-Project Roadmap can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/7.-Roadmap]here[/url].
+****
 
-[i]I stream coding on twitch: [/i][url=https://www.twitch.tv/djfdyuruiry]https://www.twitch.tv/djfdyuruiry[/url]
+[u]Features:[/u]
 
-[b]Getting Started:[/b]
+Several new gameplay features have been added and some ported from the popular CFEPatch.
 
-TL;DR - Setup guide can be found here: [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/blob/master/README.md]https://github.com/djfdyuruiry/cnc-td-nco-mod/blob/master/README.md[/url]
-
-Check out the complete wiki here: [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki]https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki[/url]
-
-[b]Features:[/b]
-
-[b]CFEPatch Ports[/b]
-
-Several features from the popular CFEPatch mod have been added to this mod.
-
-Note: All features are disabled by default, you need to enable them in the rules file.
+[b]Note:[/b] All features are enabled by default, you can disable them in the rules file.
 
 [list]
   [*] Rally Points
+  [*] A* Path Finding
+  [*] Multiple Harvesters per Refinery
+  [*] Commando Guard Rule
   [*] Modern Wall Building
 [/list]
 
 See the Enhancements section in the RULES file. 
 
-[b]Rules[/b]
+[b]Mods[/b]
 
-Ever wanted gunboats that can cloak and shoot laser beams❓❓❓
-How about capturing a Obelisk with an Engineer❓❓❓
-Building Temple of Nod as GDI❓❓❓
-
-[b]You can do all this and more![/b]
+This mod allows you to add new units and infantry using just the rules file, no code changes required.
 
 [list]
-[*] Set indivual rules for:
-  [*] Aircraft
-  [*] Infantry
-  [*] Units
-  [*] Buildings
-[*] Turn off single player constraints, for example:
-  [*] Nod can't build APCs
-  [*] GDI can't build Temple of Nod
-[*] Control superweapon logic
-[*] Additional rules for cheats and debug options
-[*] Set distance between buildings (build more than one cell away)
+  [*] Add new infantry types
+  [*] Add new unit types
 [/list]
 
-[i]More rules are planned: change graphics, load additional mix files etc. [/i]
+****
 
-A guide on how to edit the RULES.INI file can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/1.-RULES.INI-Full-Guide]here[/url].
+[u]Getting Started:[/u]
 
-[b]Lua Scripting support:[/b]
+TL;DR - Setup guide: [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/blob/master/README.md]https://github.com/djfdyuruiry/cnc-td-nco-mod/blob/master/README.md[/url]
 
-[list]
-  [*] Lua 5.3 support
-  [*] Run your scripts when game events happen
-  [*] Get/set rules
-  [*] Control superweapons, credits and the game UI
-[/list]
+Complete wiki: [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki]https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki[/url]
 
-A guide on how to use Lua Scripts with the mod can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/2.-Lua-Scripting-Tutorial]here[/url].
+****
 
-[b]Help[/b]
+[u]Help[/u]
 
 If you are having issues with the mod, you can:
 
@@ -77,3 +52,48 @@ If you are having issues with the mod, you can:
   [*] Report an [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/issues]issue on GitHub[/url]
   [*] Leave a comment in the [url=https://steamcommunity.com/workshop/filedetails/discussion/2147631402/2568690592367526149]bugs workshop discussion[/url]
 [/list]
+
+****
+
+[u]Rules[/u]
+
+Ever wanted gunboats that can cloak and shoot laser beams❓❓❓
+How about capturing a Obelisk with an Engineer❓❓❓
+Building Temple of Nod as GDI❓❓❓
+
+[b]You can do all this and more![/b]
+
+[list]
+  [*] Set distance between buildings (build more than one cell away)
+  [*] Full rules for: Aircraft, Infantry, Units, Buildings, Weapons, Bullets & Warheads
+  [*] Turn off single player constraints, for example: Nod can't build APCs, GDI can't build Temple of Nod
+  [*] Superweapons, AI and difficulty
+  [*] Additional rules for tweaks and cheats and debug options
+[/list]
+
+[i]More rules are planned: change graphics, load additional mix files etc. [/i]
+
+Guide on how to edit the RULES.INI file can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/1.-RULES.INI-Full-Guide]here[/url].
+
+****
+
+[u]Lua Scripting:[/u]
+
+[list]
+  [*] Lua 5.3 support
+  [*] Run your scripts when game events happen
+  [*] Get/set rules - affecting units etc. in real-time
+  [*] Control superweapons, credits and the game UI
+[/list]
+
+A guide on how to use Lua Scripts with the mod can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/2.-Lua-Scripting-Tutorial]here[/url].
+
+****
+
+[u]Links[/u]
+
+Project Roadmap can be found [url=https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/7.-Roadmap]here[/url].
+
+[url=https://github.com/djfdyuruiry/cnc-td-nco-mod]Github Repository[/url]
+
+[i]I stream coding on twitch: [/i][url=https://www.twitch.tv/djfdyuruiry]https://www.twitch.tv/djfdyuruiry[/url]

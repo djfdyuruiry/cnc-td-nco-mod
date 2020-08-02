@@ -1,5 +1,4 @@
-#ifndef STRING_H
-#define STRING_H
+#pragma once
 
 char* Allocate_String(unsigned int length);
 
@@ -28,5 +27,3 @@ void Convert_String_To_Upper_Case(char* subject);
 char* Convert_String_To_Upper_Case(const char* subject);
 
 char** Parse_Csv_String(char* csvString, unsigned int entrySize, unsigned int* csvEntryCount);
-
-#endif

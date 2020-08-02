@@ -587,25 +587,27 @@ BulletTypeClass::BulletTypeClass(
 
 	RulesName = rulesName;
 
-	FriendlyName = Read_String_From_Rules_Ini(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName), false);
-	IsHigh = Read_Bool_From_Rules_Ini(RulesName, BULLET_HIGH_RULE, is_high);
-	IsAntiAircraft = Read_Bool_From_Rules_Ini(RulesName, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
-	IsTranslucent = Read_Bool_From_Rules_Ini(RulesName, BULLET_TRANSLUCENT_RULE, is_translucent);
-	IsArcing = Read_Bool_From_Rules_Ini(RulesName, BULLET_ARCING_RULE, is_arcing);
-	IsHoming = Read_Bool_From_Rules_Ini(RulesName, BULLET_HOMING_RULE, is_homing);
-	IsDropping = Read_Bool_From_Rules_Ini(RulesName, BULLET_DROPPING_RULE, is_dropping);
-	IsInvisible = Read_Bool_From_Rules_Ini(RulesName, BULLET_INVISIBLE_RULE, is_invisible);
-	IsProximityArmed = Read_Bool_From_Rules_Ini(RulesName, BULLET_PROXIMITY_ARMED_RULE, is_proximity_armed);
-	IsFlameEquipped = Read_Bool_From_Rules_Ini(RulesName, BULLET_FLAME_EQUIPPED_RULE, is_flame_equipped);
-	IsFueled = Read_Bool_From_Rules_Ini(RulesName, BULLET_FUELED_RULE, is_fueled);
-	IsFaceless = Read_Bool_From_Rules_Ini(RulesName, BULLET_FACELESS_RULE, is_faceless);
-	IsInaccurate = Read_Bool_From_Rules_Ini(RulesName, BULLET_INACCURATE_RULE, is_inaccurate);
+	GetRules() << RulesIniSectionBuilder::BuildBulletSection(rulesName);
 
-	Warhead = Read_Warhead_From_Rules_Ini(RulesName, BULLET_WARHEAD_RULE, warhead);
+	FriendlyName = ReadRuleValue<char*>(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	IsHigh = ReadRuleValue<bool>(RulesName, BULLET_HIGH_RULE, is_high);
+	IsAntiAircraft = ReadRuleValue<bool>(RulesName, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
+	IsTranslucent = ReadRuleValue<bool>(RulesName, BULLET_TRANSLUCENT_RULE, is_translucent);
+	IsArcing = ReadRuleValue<bool>(RulesName, BULLET_ARCING_RULE, is_arcing);
+	IsHoming = ReadRuleValue<bool>(RulesName, BULLET_HOMING_RULE, is_homing);
+	IsDropping = ReadRuleValue<bool>(RulesName, BULLET_DROPPING_RULE, is_dropping);
+	IsInvisible = ReadRuleValue<bool>(RulesName, BULLET_INVISIBLE_RULE, is_invisible);
+	IsProximityArmed = ReadRuleValue<bool>(RulesName, BULLET_PROXIMITY_ARMED_RULE, is_proximity_armed);
+	IsFlameEquipped = ReadRuleValue<bool>(RulesName, BULLET_FLAME_EQUIPPED_RULE, is_flame_equipped);
+	IsFueled = ReadRuleValue<bool>(RulesName, BULLET_FUELED_RULE, is_fueled);
+	IsFaceless = ReadRuleValue<bool>(RulesName, BULLET_FACELESS_RULE, is_faceless);
+	IsInaccurate = ReadRuleValue<bool>(RulesName, BULLET_INACCURATE_RULE, is_inaccurate);
+
+	Warhead = ReadRuleValue<WarheadType>(RulesName, BULLET_WARHEAD_RULE, warhead);
 	MaxSpeed = Read_Speed(RulesName, maxspeed);
 	ROT = Read_Rate_Of_Turn(RulesName, rot);
-	Arming = Read_Int_From_Rules_Ini(RulesName, BULLET_ARMING_RULE, arming, INT_MIN, INT_MAX);
-	Range = Read_Int_From_Rules_Ini(RulesName, BULLET_RANGE_RULE, range, INT_MIN, INT_MAX);
+	Arming = ReadRuleValue<int>(RulesName, BULLET_ARMING_RULE, arming);
+	Range = ReadRuleValue<int>(RulesName, BULLET_RANGE_RULE, range);
 }
 
 

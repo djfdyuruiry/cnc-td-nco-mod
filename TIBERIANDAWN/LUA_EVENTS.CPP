@@ -47,7 +47,7 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
     delete scriptBuffer;
 }
 
-boolean Initialise_Events()
+bool Initialise_Events()
 {
     if (EVENTS_INITIALISED)
     {

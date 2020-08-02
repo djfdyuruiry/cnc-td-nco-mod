@@ -1441,7 +1441,7 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 
 	Log_Debug("Initialising infantry types");
 
-	auto infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+	auto infantryCount = Read_Infantry_Count();
 
 	Pointers = new InfantryTypeClass const *[infantryCount]{
 		&E1,
@@ -1449,7 +1449,6 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 		&E3,
 		&E4,
 		&E5,
-		//	&E6,
 		&E7,
 		&Commando,
 		&C1,
@@ -1467,30 +1466,32 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 		&DrChan
 	};
 
-	Initialise_Infantry_Mod_Types();
+	InitialiseModsIfRequired();
 
-	Log_Trace("Infantry lookup by type: %d", type);
-	return Pointers[type];
+	return By_Type(type);
 }
 
 void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
 {
 	auto iniName = infantry->IniName;
 
+	Read_Object_Rules(infantry);
+	Read_Techno_Rules(infantry);
+
+	infantry->IsCrushable = Read_Is_Crushable(iniName, infantry->IsCrushable);
 	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
 	infantry->IsCrawling = Read_Is_Crawling(iniName, infantry->IsCrawling);
 	infantry->IsCapture = Read_Can_Capture_Buildings(iniName, infantry->IsCapture);
 	infantry->IsFraidyCat = Read_Is_Fraidy_Cat(iniName, infantry->IsFraidyCat);
 	infantry->IsCivilian = Read_Is_Civilian(iniName, infantry->IsCivilian);
 	infantry->IsAvoidingTiberium = Read_Avoids_Tiberium(iniName, infantry->IsAvoidingTiberium);
-	infantry->IsImmuneToTiberium = Read_Bool_From_Rules_Ini(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
-	infantry->HasC4Charges = Read_Bool_From_Rules_Ini(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
-	
+	infantry->IsImmuneToTiberium = ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
+	infantry->HasC4Charges = ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
 }
 
-void InfantryTypeClass::Add_Infantry_Type(InfantryType type, InfantryTypeClass* infantryObject)
+void InfantryTypeClass::Add_Infantry_Type(InfantryTypeClass* infantryInstance)
 {
-	Pointers[type] = infantryObject;
+	Pointers[infantryInstance->Type] = infantryInstance;
 }
 
 /***********************************************************************************************
@@ -1508,7 +1509,7 @@ void InfantryTypeClass::Add_Infantry_Type(InfantryType type, InfantryTypeClass* 
  * HISTORY:                                                                                    *
  *   09/24/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-InfantryTypeClass::InfantryTypeClass	(
+InfantryTypeClass::InfantryTypeClass(
 						InfantryType type,
 						int name,
 						const char* friendlyName,
@@ -1536,7 +1537,7 @@ InfantryTypeClass::InfantryTypeClass	(
 						WeaponType primary, WeaponType secondary,
 						MPHType maxspeed)
 	: TechnoTypeClass(name, friendlyName, ininame, level, pre,
-							is_leader, true, is_nominal, false, Read_Is_Flammable(ininame, false), Read_Is_Crushable(ininame, true), true, true, true, false, false,
+							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
 							is_theater, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable, houseListCsv,
@@ -1560,6 +1561,8 @@ InfantryTypeClass::InfantryTypeClass	(
 
 	IsImmuneToTiberium = type == INFANTRY_E5;
 	HasC4Charges = Type == INFANTRY_RAMBO;
+
+	GetRules() << RulesIniSectionBuilder::BuildInfantrySection(IniName);
 
 	Read_Infantry_Rules(this);
 
@@ -1845,7 +1848,7 @@ void InfantryTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void InfantryTypeClass::Prep_For_Add(void)
 {
-	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+	char infantryCount = Read_Infantry_Count();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		Map.Add_To_List(&As_Reference(index));
@@ -1874,7 +1877,7 @@ void InfantryTypeClass::Prep_For_Add(void)
 InfantryType InfantryTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+		char infantryCount = Read_Infantry_Count();
 
 		for (InfantryType classid = INFANTRY_FIRST; classid < infantryCount; classid++) {
 			if (stricmp(By_Type(classid)->IniName, name) == 0) {
@@ -1903,7 +1906,7 @@ InfantryType InfantryTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void InfantryTypeClass::One_Time(void)
 {
-	char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+	char infantryCount = Read_Infantry_Count();
 	InfantryType index;
 
 	for (index = INFANTRY_FIRST; index < infantryCount; index++) {
@@ -1956,31 +1959,27 @@ void InfantryTypeClass::One_Time(void)
 
 void InfantryTypeClass::Init(TheaterType theater)
 {
-	if ( Get_Resolution_Factor() ) {
+	if (!Get_Resolution_Factor() || theater == LastTheater) {
+		return;
+	}
 
-		if (theater != LastTheater){
-			InfantryType index;
-			char buffer[_MAX_FNAME];
-			char fullname[_MAX_FNAME+_MAX_EXT];
-			void const * cameo_ptr;
+	char infantryCount = Read_Infantry_Count();
 
-			char infantryCount = Read_Infantry_Count(INFANTRY_COUNT);
+	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
+		InfantryTypeClass const *uclass = &As_Reference(index);
 
-			for (index = INFANTRY_FIRST; index < infantryCount; index++) {
-				InfantryTypeClass	const *uclass;
-				CCFileClass	file;
+		((void const *&)uclass->CameoData) = NULL;
 
-				uclass = &As_Reference(index);
+		char buffer[_MAX_FNAME];
+		char fullname[_MAX_FNAME + _MAX_EXT];
 
-				((void const *&)uclass->CameoData) = NULL;
+		sprintf(buffer, "%.4sICNH", uclass->IniName);
+		_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
 
-				sprintf(buffer, "%.4sICNH", uclass->IniName);
-				_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-				cameo_ptr = MixFileClass::Retrieve(fullname);
-				if (cameo_ptr){
-					((void const *&)uclass->CameoData) = cameo_ptr;
-				}
-			}
+		void const* cameo_ptr = MixFileClass::Retrieve(fullname);
+
+		if (cameo_ptr){
+			((void const *&)uclass->CameoData) = cameo_ptr;
 		}
 	}
 }

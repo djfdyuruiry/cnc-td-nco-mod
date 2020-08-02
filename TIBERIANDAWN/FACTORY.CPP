@@ -48,23 +48,24 @@
  *   FactoryClass::operator delete -- Returns a factory to the free factory pool.              *
  *   FactoryClass::operator new -- Allocates a factory object from the free factory pool.      *
  *   FactoryClass::~FactoryClass -- Default destructor for factory objects.                    *
- *   FactoryClass::Validate -- validates factory pointer													  *
+ *   FactoryClass::Validate -- validates factory pointer									   *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#include	"function.h"
+#include "function.h"
 
+int FactoryClass::STEP_COUNT = Read_Total_Production_Steps_Rule();
 
 /***********************************************************************************************
- * FactoryClass::Validate -- validates factory pointer													  *
+ * FactoryClass::Validate -- validates factory pointer										   *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *		none.																				   *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *		1 = ok, 0 = error																	   *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *		none.																				   *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *
@@ -232,33 +233,38 @@ void FactoryClass::AI(void)
 {
 	Validate();
 	if (!IsSuspended && (Object != NULL || SpecialItem)) {
-		int stages = 1;
+		int stages = Read_Production_Steps_Per_Tick_Rule();
 
 		/*
 		**	Determine the acceleration factor for factory production.
 		**	This applies only to human players. The computer builds
 		**	units on a building by building basis -- quantity of building
 		**	factory types doesn't affect individual factories.
+		**
+		**  NCO: added rule lookups and seperated stages from factory count multiplier calculation
 		*/
 		if (Object && House->IsHuman) {
+			double factoryCountMultiplier = Read_Factory_Count_Multiplier_Rule();
+			int modifiedStages = stages;
+
 			switch (Object->What_Am_I()) {
 				case RTTI_AIRCRAFT:
-					stages = House->AircraftFactories;
+					modifiedStages = nearbyint(House->AircraftFactories * factoryCountMultiplier);
 					break;
 
 				case RTTI_INFANTRY:
-					stages = House->InfantryFactories;
+					modifiedStages = nearbyint(House->InfantryFactories * factoryCountMultiplier);
 					break;
 
 				case RTTI_UNIT:
-					stages = House->UnitFactories;
+					modifiedStages = nearbyint(House->UnitFactories * factoryCountMultiplier);
 					break;
 
 				case RTTI_BUILDING:
-					stages = House->BuildingFactories;
+					modifiedStages = nearbyint(House->BuildingFactories * factoryCountMultiplier);
 					break;
 			}
-			stages = MAX(stages, 1);
+			stages = MAX(modifiedStages, stages);
 		}
 
 

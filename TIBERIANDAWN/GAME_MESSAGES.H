@@ -1,7 +1,8 @@
-#ifndef GAME_MESSAGES_H
-#define GAME_MESSAGES_H
+#pragma once
 
 #include <windows.h>
+
+#include "houses_type.h"
 
 // Game Loop messages
 enum GameLoopMessageType : unsigned char {
@@ -84,12 +85,10 @@ void Clear_Game_Loop_Messages();
 
 // house message handlers
 
-void Push_House_Message(char houseType, HouseMessageType messageType, HouseMessage message);
+void Push_House_Message(HousesType houseType, HouseMessageType messageType, HouseMessage message);
 
-bool Is_House_Message_Present(char houseType, HouseMessageType messageType);
+bool Is_House_Message_Present(HousesType houseType, HouseMessageType messageType);
 
-HouseMessage Pop_House_Message(char houseType, HouseMessageType messageType);
+HouseMessage Pop_House_Message(HousesType houseType, HouseMessageType messageType);
 
-void Clear_House_Messages(char houseType);
-
-#endif
+void Clear_House_Messages(HousesType houseType);

@@ -1,4 +1,8 @@
-#include "function.h"
+#include <string>
+#include <windows.h>
+
+#include "logger.h"
+#include "strings.h"
 
 static const auto ONE_HUNDRED_NS_INTERVALS_SINCE_UNIX_EPOCH = 116444736000000000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_MS = 10000LL;
@@ -78,13 +82,6 @@ const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
 	return envVarValue;
 }
 
-char* Get_Win32_Error_Message()
-{
-	return Get_Win32_Error_Message(
-		GetLastError()
-	);
-}
-
 char* Get_Win32_Error_Message(DWORD error)
 {
 	LPSTR messageBuffer = nullptr;
@@ -100,6 +97,13 @@ char* Get_Win32_Error_Message(DWORD error)
 	);
 
 	return messageBuffer;
+}
+
+char* Get_Win32_Error_Message()
+{
+	return Get_Win32_Error_Message(
+		GetLastError()
+	);
 }
 
 HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)

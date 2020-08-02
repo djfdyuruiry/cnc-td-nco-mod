@@ -93,9 +93,7 @@ class FactoryClass : private StageClass
 		unsigned IsActive:1;
 
 	protected:
-		enum StepCountEnum {
-			STEP_COUNT=108			// Number of steps to break production down into.
-		};
+		static int STEP_COUNT; // Number of steps to break production down into.
 
 		int Cost_Per_Tick(void);
 

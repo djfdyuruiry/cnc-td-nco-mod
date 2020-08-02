@@ -1202,31 +1202,7 @@ static UnitTypeClass const UnitSteg(
 **	This is the array of pointers to the static data associated with each
 **	vehicle type.
 */
-UnitTypeClass const * const UnitTypeClass::Pointers[UNIT_COUNT] = {
-	&UnitHTank,			//	UNIT_HTANK
-	&UnitMTank,			//	UNIT_MTANK
-	&UnitLTank,			//	UNIT_LTANK
-	&UnitSTank,			//	UNIT_STANK
-	&UnitFTank,			//	UNIT_FTANK
-	&UnitVisceroid,	// UNIT_VICE
-	&UnitAPC,			//	UNIT_APC
-	&UnitMLRS,			//	UNIT_MLRS
-	&UnitJeep,			//	UNIT_JEEP
-	&UnitBuggy,			//	UNIT_BUGGY
-	&UnitHarvester,	//	UNIT_HARVESTER
-	&UnitArty,			//	UNIT_ARTY
-	&UnitSAM,			//	UNIT_MSAM
-	&UnitHover,			//	UNIT_HOVER
-	&UnitMHQ,			//	UNIT_MHQ
-	&UnitGunBoat,		//	UNIT_GUNBOAT
-	&UnitMCV,			// UNIT_MCV
-	&UnitBike,			// UNIT_BIKE
-	&UnitTric,			// UNIT_TRIC
-	&UnitTrex,			// UNIT_TREX
-	&UnitRapt,			// UNIT_RAPT
-	&UnitSteg,			// UNIT_STEG
-};
-
+UnitTypeClass const** UnitTypeClass::Pointers = NULL;
 
 /***********************************************************************************************
  * UnitTypeClass::UnitTypeClass -- Constructor for unit types.                                 *
@@ -1303,7 +1279,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										false,
 										is_nominal,
 										is_transporter,
-										Read_Is_Flammable(ininame, false),
+										ininame,
 										is_crushable,
 										is_stealthy,
 										is_selectable,
@@ -1335,20 +1311,24 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	TurretOffset = toffset;
 	Type = type;
 
-	IsCrateGoodie = Read_Can_Be_Found_In_Crate(IniName, is_goodie);
-	IsPieceOfEight = Read_Limited_Facings(IniName, is_eight);
-	IsCrusher = Read_Can_Crush_Infantry(IniName, is_crusher);
-	IsToHarvest = Read_Can_Harvest(IniName, is_harvest);
-	IsRadarEquipped = Read_Radar_Equipped(IniName, is_radar_equipped);
-	IsFireAnim = Read_Has_Fire_Animation(IniName, is_fire_anim);
-	IsLockTurret = Read_Lock_Turret(IniName, is_lock_turret);
-	IsTracked = Read_Has_Tracks(IniName, is_tracked);
-	IsGigundo = Read_Is_Huge(IniName, is_gigundo);
-	IsCloakable = Read_Can_Cloak(IniName, is_cloakable);
-	IsAnimating = Read_Has_Constant_Animation(IniName, is_animating); 
-	Speed = Read_Unit_Speed(IniName, speed);
-	ROT = Read_Rate_Of_Turn(IniName, rot);
-	CanSelfRepair = Read_Bool_From_Rules_Ini(IniName, SELF_REPAIR_RULE, Type == UNIT_HTANK);
+	IsCrateGoodie = is_goodie;
+	IsPieceOfEight = is_eight;
+	IsCrusher = is_crusher;
+	IsToHarvest = is_harvest;
+	IsRadarEquipped = is_radar_equipped;
+	IsFireAnim = is_fire_anim;
+	IsLockTurret = is_lock_turret;
+	IsTracked = is_tracked;
+	IsGigundo = is_gigundo;
+	IsCloakable = is_cloakable;
+	IsAnimating = is_animating;
+	Speed = speed;
+	ROT = rot;
+	CanSelfRepair = Type == UNIT_HTANK;
+
+	GetRules() << RulesIniSectionBuilder::BuildUnitSection(IniName);
+
+	Read_Unit_Rules(this);
 }
 
 
@@ -1400,7 +1380,9 @@ short const * UnitTypeClass::Occupy_List(bool ) const
 UnitType UnitTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (UnitType classid = UNIT_FIRST; classid < UNIT_COUNT; classid++) {
+		char unitCount = Read_Unit_Count();
+
+		for (UnitType classid = UNIT_FIRST; classid < unitCount; classid++) {
 			if (stricmp(Pointers[classid]->IniName, name) == 0) {
 				return(classid);
 			}
@@ -1461,7 +1443,9 @@ void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType ho
  *=============================================================================================*/
 void UnitTypeClass::Prep_For_Add(void)
 {
-	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+	char unitCount = Read_Unit_Count();
+
+	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
 		if (As_Reference(index).Get_Image_Data() != NULL) {
 			Map.Add_To_List(&As_Reference(index));
 		}
@@ -1487,42 +1471,44 @@ void UnitTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 void UnitTypeClass::One_Time(void)
 {
-	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
-		char	fullname[_MAX_FNAME+_MAX_EXT];
-		char	buffer[_MAX_FNAME];
-		UnitTypeClass const & uclass = As_Reference(index);
+	char unitCount = Read_Unit_Count();
+
+	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
+		char fullname[_MAX_FNAME+_MAX_EXT];
+
+		UnitTypeClass* uclass = (UnitTypeClass*)&As_Reference(index);
+
 		CCFileClass	file;
-		int			largest;			// Largest dimension of shape (so far).
 
-		void const 	*ptr = NULL;		// Shape pointer and set pointer.
+		char* iniName = uclass->Resolve_Ini_Name();
 
-		largest = 0;
-		if (uclass.IsBuildable) {
+		if (uclass->IsBuildable) {
+			char buffer[_MAX_FNAME];
 
 			/*
 			**	Fetch the supporting data files for the unit.
 			*/
 			if ( Get_Resolution_Factor() ) {
-				sprintf(buffer, "%sICNH", uclass.IniName);
+				sprintf(buffer, "%sICNH", iniName);
 			} else {
-				sprintf(buffer, "%sICON", uclass.IniName);
+				sprintf(buffer, "%sICON", iniName);
 			}
+
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			((void const *&)uclass.CameoData) = MixFileClass::Retrieve(fullname);
+			((void const *&)uclass->CameoData) = MixFileClass::Retrieve(fullname);
 		}
+
+		void const* ptr = NULL;		// Shape pointer and set pointer.
 
 		/*
 		**	Fetch a pointer to the unit's shape data.
 		*/
-		// Assume funpark mode might be required. ST - 10/14/2019 11:53AM
-		//if (!uclass.IsPieceOfEight || (Special.IsJurassic && AreThingiesEnabled) ) {
-			_makepath(fullname, NULL, NULL, uclass.IniName, ".SHP");
-			ptr = MixFileClass::Retrieve(fullname);
-		//} else {
-		//	ptr = NULL;
-		//}
+		_makepath(fullname, NULL, NULL, iniName, ".SHP");
+		ptr = MixFileClass::Retrieve(fullname);
 
-		((void const *&)uclass.ImageData) = ptr;
+		int largest = 0; // Largest dimension of shape (so far).
+
+		((void const *&)uclass->ImageData) = ptr;
 		if (ptr) {
 
 			if (index == UNIT_MLRS || index == UNIT_MSAM) {
@@ -1533,7 +1519,7 @@ void UnitTypeClass::One_Time(void)
 			}
 		}
 
-		((int &)uclass.MaxSize) = MAX(largest, 8);
+		((int &)uclass->MaxSize) = MAX(largest, 8);
 	}
 
 	/*
@@ -1563,29 +1549,28 @@ void UnitTypeClass::One_Time(void)
 
 void UnitTypeClass::Init(TheaterType theater)
 {
+	if (!Get_Resolution_Factor() || theater == LastTheater) {
+		return;
+	}
 
-	if (Get_Resolution_Factor()){
+	char unitCount = Read_Unit_Count();
 
-		if (theater != LastTheater){
+	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
+		UnitTypeClass const* uclass = &As_Reference(index);
 
-			void const * cameo_ptr;
-			char	fullname[_MAX_FNAME+_MAX_EXT];
-			char	buffer[_MAX_FNAME];
+		((void const *&)uclass->CameoData) = NULL;
 
-			for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+		if (uclass->IsBuildable) {
+			char fullname[_MAX_FNAME + _MAX_EXT];
+			char buffer[_MAX_FNAME];
 
-				UnitTypeClass const & uclass = As_Reference(index);
+			sprintf(buffer, "%sICNH", uclass->IniName);
+			_makepath(fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
 
-				((void const *&)uclass.CameoData) = NULL;
+			void const* cameo_ptr = MixFileClass::Retrieve(fullname);
 
-				if (uclass.IsBuildable) {
-					sprintf(buffer, "%sICNH", uclass.IniName);
-					_makepath(fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-					cameo_ptr = MixFileClass::Retrieve(fullname);
-					if (cameo_ptr){
-						((void const *&)uclass.CameoData) = cameo_ptr;
-					}
-				}
+			if (cameo_ptr){
+				((void const *&)uclass->CameoData) = cameo_ptr;
 			}
 		}
 	}
@@ -1705,11 +1690,75 @@ BuildingClass * UnitTypeClass::Who_Can_Build_Me(bool intheory, bool legal, House
  * HISTORY:                                                                                    *
  *   01/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-UnitTypeClass const & UnitTypeClass::As_Reference(UnitType type)
+UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 {
-	return(*Pointers[type]);
+	if (Pointers != NULL) {
+		Log_Trace("Unit lookup by type: %d", type);
+
+		return Pointers[type];
+	}
+
+	Log_Debug("Initialising unit types");
+
+	auto unitCount = Read_Unit_Count();
+
+	Pointers = new UnitTypeClass const* [unitCount] {
+		&UnitHTank,		
+		&UnitMTank,		
+		&UnitLTank,		
+		&UnitSTank,		
+		&UnitFTank,		
+		&UnitVisceroid,	 
+		&UnitAPC,		
+		&UnitMLRS,		
+		&UnitJeep,		
+		&UnitBuggy,		
+		&UnitHarvester,	
+		&UnitArty,		
+		&UnitSAM,		
+		&UnitHover,		
+		&UnitMHQ,		
+		&UnitGunBoat,	
+		&UnitMCV,		
+		&UnitBike,
+		&UnitTric,		
+		&UnitTrex,		
+		&UnitRapt,		
+		&UnitSteg,		
+	};
+
+	InitialiseModsIfRequired();
+
+	return By_Type(type);
 }
 
+void UnitTypeClass::Read_Unit_Rules(UnitTypeClass* unit)
+{
+	auto iniName = unit->IniName;
+
+	Read_Object_Rules(unit);
+	Read_Techno_Rules(unit);
+
+	unit->IsCrateGoodie = Read_Can_Be_Found_In_Crate(iniName, unit->IsCrateGoodie);
+	unit->IsPieceOfEight = Read_Limited_Facings(iniName, unit->IsPieceOfEight);
+	unit->IsCrusher = Read_Can_Crush_Infantry(iniName, unit->IsCrusher);
+	unit->IsToHarvest = Read_Can_Harvest(iniName, unit->IsToHarvest);
+	unit->IsRadarEquipped = Read_Radar_Equipped(iniName, unit->IsRadarEquipped);
+	unit->IsFireAnim = Read_Has_Fire_Animation(iniName, unit->IsFireAnim);
+	unit->IsLockTurret = Read_Lock_Turret(iniName, unit->IsLockTurret);
+	unit->IsTracked = Read_Has_Tracks(iniName, unit->IsTracked);
+	unit->IsGigundo = Read_Is_Huge(iniName, unit->IsGigundo);
+	unit->IsCloakable = Read_Can_Cloak(iniName, unit->IsCloakable);
+	unit->IsAnimating = Read_Has_Constant_Animation(iniName, unit->IsAnimating);
+	unit->Speed = Read_Unit_Speed(iniName, unit->Speed);
+	unit->ROT = Read_Rate_Of_Turn(iniName, unit->ROT);
+	unit->CanSelfRepair = ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, unit->CanSelfRepair);
+}
+
+void UnitTypeClass::Add_Unit_Type(UnitTypeClass* unitInstance)
+{
+	Pointers[unitInstance->Type] = unitInstance;
+}
 
 /***********************************************************************************************
  * UnitTypeClass::Dimensions -- Determines the unit's pixel dimensions.                        *
@@ -1758,12 +1807,12 @@ void UnitTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = Read_Double_Game_Rule(UNIT_REPAIR_FACTOR_RULE, UNIT_REPAIR_FACTOR_RULE_KEY, 1.02f, 0.01f);
+	auto repairFactor = ReadRuleValue<double>(UNIT_REPAIR_FACTOR_RULE_KEY);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(
 		Fixed_To_Cardinal(
-			Cost / (MaxStrength/ Read_Unit_Repair_Step_Rule(4)),
+			Cost / (MaxStrength/ Read_Unit_Repair_Step_Rule()),
 			repairPercent
 		)
 	);
@@ -1787,7 +1836,7 @@ int UnitTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Step(void) const
 {
-	return(Read_Unit_Repair_Step_Rule(4));
+	return(Read_Unit_Repair_Step_Rule());
 }
 
 
@@ -1822,3 +1871,9 @@ int UnitTypeClass::Max_Pips(void) const
 	return(0);
 }
 
+char* UnitTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
+}

@@ -4,7 +4,7 @@
 
 static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE))
     {
         auto isFixedWing = Parse_Boolean(value, valueParseError);
 
@@ -15,7 +15,7 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
             type->IsFixedWing = isFixedWing;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CAN_LAND_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_LAND_RULE))
     {
         auto isLandable = Parse_Boolean(value, valueParseError);
 
@@ -26,7 +26,7 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
             type->IsLandable = isLandable;
         }
     }
-    else if (Strings_Are_Equal(ruleName, HAS_ROTOR_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_ROTOR_RULE))
     {
         auto hasRotor = Parse_Boolean(value, valueParseError);
 
@@ -37,7 +37,7 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
             type->IsRotorEquipped = hasRotor;
         }
     }
-    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -54,7 +54,7 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
 
@@ -80,31 +80,31 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
 
 static bool Read_Aircraft_Rule(lua_State* lua, AircraftTypeClass* type, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFixedWing));
 
         lua_pushboolean(lua, type->IsFixedWing);
     }
-    else if (Strings_Are_Equal(ruleName, CAN_LAND_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_LAND_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsLandable));
 
         lua_pushboolean(lua, type->IsLandable);
     }
-    else if (Strings_Are_Equal(ruleName, HAS_ROTOR_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_ROTOR_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRotorEquipped));
 
         lua_pushboolean(lua, type->IsRotorEquipped);
     }
-    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %u", type->ROT);
 
         lua_pushnumber(lua, type->ROT);
     }
-    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %u", type->TransportCapacity);
 
@@ -160,6 +160,7 @@ static int Lua_Get_Aircraft_Rule(lua_State* lua)
         "Aircraft",
         "aircraftTypeName",
         &ResolveAircraft,
+        GetRulesInfo().GetAircraftRules(),
         &Read_Aircraft_Rule
     );
 }
@@ -171,6 +172,7 @@ static int Lua_Set_Aircraft_Rule(lua_State* lua)
         "Aircraft",
         "aircraftTypeName",
         &ResolveAircraft,
+        GetRulesInfo().GetAircraftRules(),
         &Write_Aircraft_Rule
     );
 }

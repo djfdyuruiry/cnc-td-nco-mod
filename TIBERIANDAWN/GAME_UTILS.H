@@ -1,5 +1,6 @@
-#ifndef GAME_UTILS_H
-#define GAME_UTILS_H
+#pragma once
+
+#include "game_messages.h"
 
 void Show_Game_Notification(char* message, float durationInSeconds);
 
@@ -12,5 +13,3 @@ void Reveal_Entire_Map_To_Player();
 void Hide_Entire_Map_From_Player();
 
 bool Process_Game_Ui_Message(GameUiMessage uiMessage);
-
-#endif

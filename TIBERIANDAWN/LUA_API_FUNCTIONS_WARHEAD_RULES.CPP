@@ -4,7 +4,7 @@
 
 static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, WARHEAD_SPREAD_FACTOR_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, WARHEAD_SPREAD_FACTOR_RULE))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -21,7 +21,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WALLS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WALLS_RULE))
     {
         auto destroysWalls = Parse_Boolean(value, valueParseError);
 
@@ -32,7 +32,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             warhead->IsWallDestroyer = destroysWalls;
         }
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WOOD_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WOOD_RULE))
     {
         auto destroysWoodWalls = Parse_Boolean(value, valueParseError);
 
@@ -43,7 +43,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             warhead->IsWoodDestroyer = destroysWoodWalls;
         }
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_TIBERIUM_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_TIBERIUM_RULE))
     {
         auto destroysTiberium = Parse_Boolean(value, valueParseError);
 
@@ -54,7 +54,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             warhead->IsTiberiumDestroyer = destroysTiberium;
         }
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_NO_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_NO_ARMOR_MODIFIER_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
 
@@ -71,7 +71,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_WOOD_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_WOOD_ARMOR_MODIFIER_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
 
@@ -88,7 +88,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_ALUMINUM_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_ALUMINUM_ARMOR_MODIFIER_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
 
@@ -105,7 +105,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_STEEL_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_STEEL_ARMOR_MODIFIER_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
 
@@ -122,7 +122,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
 
@@ -139,7 +139,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Write_Warhead_Rule => Rule value: %s -> %s", warhead->FriendlyName, originalValue);
 
@@ -147,7 +147,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
 
         warhead->FriendlyName = strdup(originalValue);
     }
-    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         auto isModType = Parse_Boolean(value, valueParseError);
 
@@ -168,67 +168,67 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
 
 static bool Read_Warhead_Rule(lua_State* lua, WarheadTypeClass* warhead, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, WARHEAD_SPREAD_FACTOR_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, WARHEAD_SPREAD_FACTOR_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %d", warhead->SpreadFactor);
 
         lua_pushnumber(lua, warhead->SpreadFactor);
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WALLS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WALLS_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsWallDestroyer));
 
         lua_pushboolean(lua, warhead->IsWallDestroyer);
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WOOD_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WOOD_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsWoodDestroyer));
 
         lua_pushboolean(lua, warhead->IsWoodDestroyer);
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_TIBERIUM_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_TIBERIUM_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsTiberiumDestroyer));
 
         lua_pushboolean(lua, warhead->IsTiberiumDestroyer);
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_NO_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_NO_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_NONE]);
 
         lua_pushnumber(lua, warhead->Modifier[ARMOR_NONE]);
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_WOOD_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_WOOD_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_WOOD]);
 
         lua_pushnumber(lua, warhead->Modifier[ARMOR_WOOD]);
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_ALUMINUM_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_ALUMINUM_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_ALUMINUM]);
 
         lua_pushnumber(lua, warhead->Modifier[ARMOR_ALUMINUM]);
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_STEEL_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_STEEL_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_STEEL]);
 
         lua_pushnumber(lua, warhead->Modifier[ARMOR_STEEL]);
     }
-    else if (Strings_Are_Equal(ruleName, WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_CONCRETE]);
 
         lua_pushnumber(lua, warhead->Modifier[ARMOR_CONCRETE]);
     }
-    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", warhead->FriendlyName);
 
         lua_pushstring(lua, warhead->FriendlyName);
     }
-    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsModType));
 
@@ -285,6 +285,7 @@ static int Lua_Set_Warhead_Rule(lua_State* lua)
         "Warhead",
         "warheadTypeName",
         &ResolveWarhead,
+        GetRulesInfo().GetWarheadRules(),
         &Write_Warhead_Rule,
         false
     );
@@ -297,6 +298,7 @@ static int Lua_Get_Warhead_Rule(lua_State* lua)
         "Warhead",
         "warheadTypeName",
         &ResolveWarhead,
+        GetRulesInfo().GetWarheadRules(),
         &Read_Warhead_Rule,
         false
     );

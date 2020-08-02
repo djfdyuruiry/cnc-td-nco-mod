@@ -1,8 +1,15 @@
 #include "function.h"
 
+#include "logger.h"
+#include "lua.h"
+#include "parse.h"
+#include "rules_ini_generic.h"
+#include "strings.h"
+#include "utils.h"
+
 bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const char* uppercaseValue, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, BUILD_LEVEL_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, BUILD_LEVEL_RULE))
     {
         *valueParseError = !Is_Int_String(uppercaseValue);
 
@@ -19,7 +26,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, SCENARIO_LEVEL_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SCENARIO_LEVEL_RULE))
     {
         *valueParseError = !Is_Int_String(uppercaseValue);
 
@@ -36,7 +43,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, PREREQUISITE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, PREREQUISITE_RULE))
     {
         auto scructType = Parse_Structure_Type(uppercaseValue, valueParseError);
 
@@ -56,7 +63,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, COST_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, COST_RULE))
     {
         *valueParseError = !Is_Int_String(uppercaseValue);
 
@@ -69,7 +76,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->Cost = numValue;
         }
     }
-    else if (Strings_Are_Equal(ruleName, BUILDABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BUILDABLE_RULE))
     {
         auto isBuildable = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -80,7 +87,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsBuildable = isBuildable;
         }
     }
-    else if (Strings_Are_Equal(ruleName, FLAMMABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FLAMMABLE_RULE))
     {
         auto isFlammable = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -91,7 +98,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsFlammable = isFlammable;
         }
     }
-    else if (Strings_Are_Equal(ruleName, SPEED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SPEED_RULE))
     {
         *valueParseError = !Is_Int_String(uppercaseValue);
 
@@ -108,7 +115,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, STRENGTH_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, STRENGTH_RULE))
     {
         *valueParseError = !Is_Int_String(uppercaseValue);
 
@@ -125,7 +132,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, HOUSES_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, OWNER_RULE) || Strings_Are_Equal(ruleName, HOUSES_RULE))
     {
         auto owner = Parse_House_Name_List_Csv(uppercaseValue, valueParseError);
 
@@ -137,7 +144,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->HouseListCsv = strdup(uppercaseValue); // ensure house list csv is up-to-date for future reference
         }
     }
-    else if (Strings_Are_Equal(ruleName, PRIMARY_WEAPON_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, PRIMARY_WEAPON_RULE))
     {
         auto weapon = Parse_Weapon_Type(uppercaseValue, valueParseError);
 
@@ -150,7 +157,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
         }
     }
-    else if (Strings_Are_Equal(ruleName, SECONDARY_WEAPON_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SECONDARY_WEAPON_RULE))
     {
         auto weapon = Parse_Weapon_Type(uppercaseValue, valueParseError);
 
@@ -161,7 +168,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->Secondary = weapon;
         }
     }
-    else if (Strings_Are_Equal(ruleName, ARMOR_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, ARMOR_RULE))
     {
         auto armourType = Parse_Armor_Type(uppercaseValue, valueParseError);
 
@@ -172,7 +179,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->Armor = armourType;
         }
     }
-    else if (Strings_Are_Equal(ruleName, AMMO_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, AMMO_RULE))
     {
         *valueParseError = !Is_Int_String(uppercaseValue);
 
@@ -189,7 +196,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE))
     {
         *valueParseError = !Is_Int_String(uppercaseValue);
 
@@ -206,7 +213,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, REWARD_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, REWARD_RULE))
     {
         *valueParseError = !Is_Int_String(uppercaseValue);
 
@@ -223,7 +230,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, DETECT_CLOAKED_OBJECTS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, DETECT_CLOAKED_OBJECTS_RULE))
     {
         auto isScanner = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -234,7 +241,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsScanner = isScanner;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CRUSHABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CRUSHABLE_RULE))
     {
         auto isCrushable = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -245,7 +252,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsCrushable = isCrushable;
         }
     }
-    else if (Strings_Are_Equal(ruleName, TRANSPORTER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TRANSPORTER_RULE))
     {
         auto isTransporter = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -256,13 +263,13 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsTransporter = isTransporter;
         }
     }
-    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", type->FriendlyName, originalValue);
 
         type->FriendlyName = strdup(originalValue);
     }
-    else if (Strings_Are_Equal(ruleName, REPAIRABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, REPAIRABLE_RULE))
     {
         auto isRepairable = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -273,7 +280,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsRepairable = isRepairable;
         }
     }
-    else if (Strings_Are_Equal(ruleName, HAS_CREW_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_CREW_RULE))
     {
         auto hasCrew = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -284,7 +291,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsCrew = hasCrew;
         }
     }
-    else if (Strings_Are_Equal(ruleName, LEADER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, LEADER_RULE))
     {
         auto isLeader = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -295,7 +302,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsLeader = isLeader;
         }
     }
-    else if (Strings_Are_Equal(ruleName, TWO_SHOOTER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TWO_SHOOTER_RULE))
     {
         auto isTwoShooter = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -306,7 +313,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsTwoShooter = isTwoShooter;
         }
     }
-    else if (Strings_Are_Equal(ruleName, HAS_THEATER_GFX_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_THEATER_GFX_RULE))
     {
         auto hasTheaterGfx = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -317,7 +324,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsTheater = hasTheaterGfx;
         }
     }
-    else if (Strings_Are_Equal(ruleName, TURRED_EQUIPPED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TURRET_EQUIPPED_RULE))
     {
         auto turretEquipped = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -328,7 +335,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsTurretEquipped = turretEquipped;
         }
     }
-    else if (Strings_Are_Equal(ruleName, SHOW_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SHOW_NAME_RULE))
     {
         auto showName = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -339,7 +346,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             type->IsNominal = showName;
         }
     }
-    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         auto isModType = Parse_Boolean(uppercaseValue, valueParseError);
 
@@ -348,6 +355,19 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
             Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", Convert_Boolean_To_String(type->IsModType), Convert_Boolean_To_String(isModType));
 
             type->IsModType = isModType;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        auto baseType = uppercaseValue;
+
+        *valueParseError = String_Is_Empty(baseType) || strlen(baseType) > 32;
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", type->ModBaseIniName, baseType);
+
+            strcpy(type->ModBaseIniName, strdup(baseType));
         }
     }
     else
@@ -360,19 +380,19 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
 
 bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, BUILD_LEVEL_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, BUILD_LEVEL_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %u", type->Level);
 
         lua_pushnumber(lua, type->Level);
     }
-    else if (Strings_Are_Equal(ruleName, SCENARIO_LEVEL_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SCENARIO_LEVEL_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %u", type->Scenario);
 
         lua_pushnumber(lua, type->Scenario);
     }
-    else if (Strings_Are_Equal(ruleName, PREREQUISITE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, PREREQUISITE_RULE))
     {
         auto structType = Prerequisite_To_Structure_Type(type->Pre);
         auto structTypeStr = Structure_Type_To_String(structType);
@@ -381,43 +401,43 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         lua_pushstring(lua, structTypeStr);
     }
-    else if (Strings_Are_Equal(ruleName, COST_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, COST_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %d", type->Cost);
 
         lua_pushnumber(lua, type->Cost);
     }
-    else if (Strings_Are_Equal(ruleName, BUILDABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, BUILDABLE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsBuildable));
 
         lua_pushboolean(lua, type->IsBuildable);
     }
-    else if (Strings_Are_Equal(ruleName, FLAMMABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FLAMMABLE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFlammable));
 
         lua_pushboolean(lua, type->IsFlammable);
     }
-    else if (Strings_Are_Equal(ruleName, SPEED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SPEED_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %u", type->MaxSpeed);
 
         lua_pushnumber(lua, type->MaxSpeed);
     }
-    else if (Strings_Are_Equal(ruleName, STRENGTH_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, STRENGTH_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %u", type->MaxStrength);
 
         lua_pushnumber(lua, type->MaxStrength);
     }
-    else if (Strings_Are_Equal(ruleName, HOUSES_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, OWNER_RULE) || Strings_Are_Equal(ruleName, HOUSES_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->HouseListCsv);
 
         lua_pushstring(lua, type->HouseListCsv);
     }
-    else if (Strings_Are_Equal(ruleName, PRIMARY_WEAPON_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, PRIMARY_WEAPON_RULE))
     {
         auto weaponStr = Weapon_Type_To_String(type->Primary);
 
@@ -425,7 +445,7 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         lua_pushstring(lua, weaponStr);
     }
-    else if (Strings_Are_Equal(ruleName, SECONDARY_WEAPON_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SECONDARY_WEAPON_RULE))
     {
         auto weaponStr = Weapon_Type_To_String(type->Secondary);
 
@@ -433,7 +453,7 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         lua_pushstring(lua, weaponStr);
     }
-    else if (Strings_Are_Equal(ruleName, ARMOR_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, ARMOR_RULE))
     {
         auto armorStr = Armor_Type_To_String(type->Armor);
 
@@ -441,95 +461,111 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         lua_pushstring(lua, armorStr);
     }
-    else if (Strings_Are_Equal(ruleName, AMMO_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, AMMO_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %d", type->MaxAmmo);
 
         lua_pushnumber(lua, type->MaxAmmo);
     }
-    else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %d", type->SightRange);
 
         lua_pushnumber(lua, type->SightRange);
     }
-    else if (Strings_Are_Equal(ruleName, REWARD_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, REWARD_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %d", type->Reward);
 
         lua_pushnumber(lua, type->Reward);
     }
-    else if (Strings_Are_Equal(ruleName, DETECT_CLOAKED_OBJECTS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, DETECT_CLOAKED_OBJECTS_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsScanner));
 
         lua_pushboolean(lua, type->IsScanner);
     }
-    else if (Strings_Are_Equal(ruleName, CRUSHABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CRUSHABLE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrushable));
 
         lua_pushboolean(lua, type->IsCrushable);
     }
-    else if (Strings_Are_Equal(ruleName, TRANSPORTER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TRANSPORTER_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTransporter));
 
         lua_pushboolean(lua, type->IsTransporter);
     }
-    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->FriendlyName);
 
         lua_pushstring(lua, type->FriendlyName);
     }
-    else if (Strings_Are_Equal(ruleName, REPAIRABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, REPAIRABLE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRepairable));
 
         lua_pushboolean(lua, type->IsRepairable);
     }
-    else if (Strings_Are_Equal(ruleName, HAS_CREW_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_CREW_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrew));
 
         lua_pushboolean(lua, type->IsCrew);
     }
-    else if (Strings_Are_Equal(ruleName, LEADER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, LEADER_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsLeader));
 
         lua_pushboolean(lua, type->IsLeader);
     }
-    else if (Strings_Are_Equal(ruleName, TWO_SHOOTER_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TWO_SHOOTER_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTwoShooter));
 
         lua_pushboolean(lua, type->IsTwoShooter);
     }
-    else if (Strings_Are_Equal(ruleName, HAS_THEATER_GFX_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_THEATER_GFX_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTheater));
 
         lua_pushboolean(lua, type->IsTheater);
     }
-    else if (Strings_Are_Equal(ruleName, TURRED_EQUIPPED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TURRET_EQUIPPED_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTurretEquipped));
 
         lua_pushboolean(lua, type->IsTurretEquipped);
     }
-    else if (Strings_Are_Equal(ruleName, SHOW_NAME_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SHOW_NAME_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsNominal));
 
         lua_pushboolean(lua, type->IsNominal);
     }
-    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsModType));
 
         lua_pushboolean(lua, type->IsModType);
+    }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        if (type->IsModType)
+        {
+            Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->ModBaseIniName);
+
+            lua_pushstring(lua, type->ModBaseIniName);
+        }
+        else
+        {
+            // fallback to ini name for non-mod type instances
+            Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->IniName);
+
+            lua_pushstring(lua, type->IniName);
+        }
     }
     else
     {

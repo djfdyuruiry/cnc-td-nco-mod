@@ -2174,9 +2174,11 @@ bool CellClass::Goodie_Check(FootClass * object)
 					if (!utp && (object->House->BScan & STRUCTF_REFINERY) && !(object->House->UScan & UNITF_HARVESTER)) {
 						utp = &UnitTypeClass::As_Reference(UNIT_HARVESTER);
 					}
+					
+					char unitCount = Read_Unit_Count();
 
 					while (!utp) {
-						UnitType utype = Random_Pick(UNIT_FIRST, (UnitType)(UNIT_COUNT-1));
+						UnitType utype = Random_Pick(UNIT_FIRST, (UnitType)(unitCount-1));
 						if (utype != UNIT_MCV || MPlayerBases) {
 							utp = &UnitTypeClass::As_Reference(utype);
 							if (utp->IsCrateGoodie && (utp->Ownable & (1 << object->Owner())) && utp->Level <= BuildLevel+2) break;

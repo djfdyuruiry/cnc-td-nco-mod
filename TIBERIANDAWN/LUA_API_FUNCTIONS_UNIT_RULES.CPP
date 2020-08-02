@@ -4,7 +4,7 @@
 
 static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE))
     {
         auto isCrateGoodie = Parse_Boolean(value, valueParseError);
 
@@ -15,7 +15,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsCrateGoodie = isCrateGoodie;
         }
     }
-    else if (Strings_Are_Equal(ruleName, LIMITED_FACINGS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, LIMITED_FACINGS_RULE))
     {
         auto isPieceOfEight = Parse_Boolean(value, valueParseError);
 
@@ -26,7 +26,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsPieceOfEight = isPieceOfEight;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CAN_CRUSH_INFANTRY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_CRUSH_INFANTRY_RULE))
     {
         auto isCrusher = Parse_Boolean(value, valueParseError);
 
@@ -37,7 +37,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsCrusher = isCrusher;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CAN_HARVEST_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_HARVEST_RULE))
     {
         auto isHarvester = Parse_Boolean(value, valueParseError);
 
@@ -48,7 +48,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsToHarvest = isHarvester;
         }
     }
-    else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE))
     {
         auto isRadarEquipped = Parse_Boolean(value, valueParseError);
 
@@ -59,7 +59,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsRadarEquipped = isRadarEquipped;
         }
     }
-    else if (Strings_Are_Equal(ruleName, HAS_FIRE_ANIMATION_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_FIRE_ANIMATION_RULE))
     {
         auto hasFireAnim = Parse_Boolean(value, valueParseError);
 
@@ -70,7 +70,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsFireAnim = hasFireAnim;
         }
     }
-    else if (Strings_Are_Equal(ruleName, LOCK_TURRET_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, LOCK_TURRET_RULE))
     {
         auto lockTurret = Parse_Boolean(value, valueParseError);
 
@@ -81,7 +81,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsLockTurret = lockTurret;
         }
     }
-    else if (Strings_Are_Equal(ruleName, HAS_TRACKS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_TRACKS_RULE))
     {
         auto hasTracks = Parse_Boolean(value, valueParseError);
 
@@ -92,7 +92,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsTracked = hasTracks;
         }
     }
-    else if (Strings_Are_Equal(ruleName, HUGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HUGE_RULE))
     {
         auto isHuge = Parse_Boolean(value, valueParseError);
 
@@ -103,7 +103,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsGigundo = isHuge;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CAN_CLOAK_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_CLOAK_RULE))
     {
         auto canCloak = Parse_Boolean(value, valueParseError);
 
@@ -114,7 +114,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsCloakable = canCloak;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CONSTANT_ANIMATION_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CONSTANT_ANIMATION_RULE))
     {
         auto constAnim = Parse_Boolean(value, valueParseError);
 
@@ -125,7 +125,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->IsAnimating = constAnim;
         }
     }
-    else if (Strings_Are_Equal(ruleName, UNIT_SPEED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, UNIT_SPEED_RULE))
     {
         auto speed = Parse_Unit_Speed_Type(value, valueParseError);
 
@@ -136,7 +136,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->Speed = speed;
         }
     }
-    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         *valueParseError = !Is_Int_String(value);
 
@@ -153,7 +153,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
 
@@ -166,7 +166,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
             type->TransportCapacity = capacity;
         }
     }
-    else if (Strings_Are_Equal(ruleName, SELF_REPAIR_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SELF_REPAIR_RULE))
     {
         auto canSelfRepair = Parse_Boolean(value, valueParseError);
 
@@ -187,73 +187,73 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
 static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrateGoodie));
 
         lua_pushboolean(lua, type->IsCrateGoodie);
     }
-    else if (Strings_Are_Equal(ruleName, LIMITED_FACINGS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, LIMITED_FACINGS_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsPieceOfEight));
 
         lua_pushboolean(lua, type->IsPieceOfEight);
     }
-    else if (Strings_Are_Equal(ruleName, CAN_CRUSH_INFANTRY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_CRUSH_INFANTRY_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrusher));
 
         lua_pushboolean(lua, type->IsCrusher);
     }
-    else if (Strings_Are_Equal(ruleName, CAN_HARVEST_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_HARVEST_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsToHarvest));
 
         lua_pushboolean(lua, type->IsToHarvest);
     }
-    else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRadarEquipped));
 
         lua_pushboolean(lua, type->IsRadarEquipped);
     }
-    else if (Strings_Are_Equal(ruleName, HAS_FIRE_ANIMATION_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_FIRE_ANIMATION_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFireAnim));
 
         lua_pushboolean(lua, type->IsFireAnim);
     }
-    else if (Strings_Are_Equal(ruleName, LOCK_TURRET_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, LOCK_TURRET_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsLockTurret));
 
         lua_pushboolean(lua, type->IsLockTurret);
     }
-    else if (Strings_Are_Equal(ruleName, HAS_TRACKS_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HAS_TRACKS_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTracked));
 
         lua_pushboolean(lua, type->IsTracked);
     }
-    else if (Strings_Are_Equal(ruleName, HUGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, HUGE_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsGigundo));
 
         lua_pushboolean(lua, type->IsGigundo);
     }
-    else if (Strings_Are_Equal(ruleName, CAN_CLOAK_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAN_CLOAK_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCloakable));
 
         lua_pushboolean(lua, type->IsCloakable);
     }
-    else if (Strings_Are_Equal(ruleName, CONSTANT_ANIMATION_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CONSTANT_ANIMATION_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsAnimating));
 
         lua_pushboolean(lua, type->IsAnimating);
     }
-    else if (Strings_Are_Equal(ruleName, UNIT_SPEED_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, UNIT_SPEED_RULE))
     {
         auto unitSpeed = Unit_Speed_Type_To_String(type->Speed);
 
@@ -261,19 +261,19 @@ static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* rule
 
         lua_pushstring(lua, unitSpeed);
     }
-    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %u", type->ROT);
 
         lua_pushnumber(lua, type->ROT);
     }
-    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %u", type->TransportCapacity);
 
         lua_pushnumber(lua, type->ROT);
     }
-    else if (Strings_Are_Equal(ruleName, SELF_REPAIR_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SELF_REPAIR_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->CanSelfRepair));
 
@@ -329,6 +329,7 @@ static int Lua_Get_Unit_Rule(lua_State* lua)
         "Unit",
         "unitTypeName",
         &ResolveUnit,
+        GetRulesInfo().GetUnitRules(),
         &Read_Unit_Rule
     );
 }
@@ -340,6 +341,7 @@ static int Lua_Set_Unit_Rule(lua_State* lua)
         "Unit",
         "unitTypeName",
         &ResolveUnit,
+        GetRulesInfo().GetUnitRules(),
         &Write_Unit_Rule
     );
 }

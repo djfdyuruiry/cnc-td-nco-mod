@@ -4,7 +4,7 @@
 
 static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, BIBBED_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, BIBBED_RULE))
     {
         auto isBibbed = Parse_Boolean(value, valueParseError);
 
@@ -15,7 +15,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->IsBibbed = isBibbed;
         }
     }
-    else if (Strings_Are_Equal(ruleName, WALL_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WALL_RULE))
     {
         auto isWall = Parse_Boolean(value, valueParseError);
 
@@ -26,7 +26,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->IsWall = isWall;
         }
     }
-    else if (Strings_Are_Equal(ruleName, FACTORY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FACTORY_RULE))
     {
         auto isFactory = Parse_Boolean(value, valueParseError);
 
@@ -37,7 +37,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->IsFactory = isFactory;
         }
     }
-    else if (Strings_Are_Equal(ruleName, SIMPLE_DAMAGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SIMPLE_DAMAGE_RULE))
     {
         auto isSimpleDamage = Parse_Boolean(value, valueParseError);
 
@@ -48,7 +48,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->IsSimpleDamage = isSimpleDamage;
         }
     }
-    else if (Strings_Are_Equal(ruleName, STURDY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, STURDY_RULE))
     {
         auto isSturdy = Parse_Boolean(value, valueParseError);
 
@@ -59,7 +59,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->IsSturdy = isSturdy;
         }
     }
-    else if (Strings_Are_Equal(ruleName, CAPTUREABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAPTUREABLE_RULE))
     {
         auto isCaptureable = Parse_Boolean(value, valueParseError);
 
@@ -70,7 +70,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->IsCaptureable = isCaptureable;
         }
     }
-    else if (Strings_Are_Equal(ruleName, FIXED_SPEED_ANIMATION_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FIXED_SPEED_ANIMATION_RULE))
     {
         auto isRegulated = Parse_Boolean(value, valueParseError);
 
@@ -81,7 +81,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->IsRegulated = isRegulated;
         }
     }
-    else if (Strings_Are_Equal(ruleName, UNSELLABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, UNSELLABLE_RULE))
     {
         auto isUnsellable = Parse_Boolean(value, valueParseError);
 
@@ -92,7 +92,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->IsUnsellable = isUnsellable;
         }
     }
-    else if (Strings_Are_Equal(ruleName, FACTORY_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FACTORY_TYPE_RULE))
     {
         auto factoryType = Parse_Factory_Type(value, valueParseError);
 
@@ -107,7 +107,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->ToBuild = (RTTIType)factoryType;
         }
     }
-    else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE))
     {
         *valueParseError = !Is_Unsigned_Int_String(value);
     
@@ -120,7 +120,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             type->Capacity = capacity;
         }
     }
-    else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE))
     {
         *valueParseError = !Is_Int_String(value);
     
@@ -137,7 +137,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
             }
         }
     }
-    else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE))
     {
         *valueParseError = !Is_Int_String(value);
     
@@ -164,55 +164,55 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
 static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, BIBBED_RULE_UPPER))
+    if (Strings_Are_Equal(ruleName, BIBBED_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsBibbed));
 
         lua_pushboolean(lua, type->IsBibbed);
     }
-    else if (Strings_Are_Equal(ruleName, WALL_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, WALL_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsWall));
 
         lua_pushboolean(lua, type->IsWall);
     }
-    else if (Strings_Are_Equal(ruleName, FACTORY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FACTORY_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFactory));
 
         lua_pushboolean(lua, type->IsFactory);
     }
-    else if (Strings_Are_Equal(ruleName, SIMPLE_DAMAGE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, SIMPLE_DAMAGE_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsSimpleDamage));
 
         lua_pushboolean(lua, type->IsSimpleDamage);
     }
-    else if (Strings_Are_Equal(ruleName, STURDY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, STURDY_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsSturdy));
 
         lua_pushboolean(lua, type->IsSturdy);
     }
-    else if (Strings_Are_Equal(ruleName, CAPTUREABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, CAPTUREABLE_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCaptureable));
 
         lua_pushboolean(lua, type->IsCaptureable);
     }
-    else if (Strings_Are_Equal(ruleName, FIXED_SPEED_ANIMATION_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FIXED_SPEED_ANIMATION_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRegulated));
 
         lua_pushboolean(lua, type->IsRegulated);
     }
-    else if (Strings_Are_Equal(ruleName, UNSELLABLE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, UNSELLABLE_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsUnsellable));
 
         lua_pushboolean(lua, type->IsUnsellable);
     }
-    else if (Strings_Are_Equal(ruleName, FACTORY_TYPE_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, FACTORY_TYPE_RULE))
     {
         auto factoryType = Factory_Type_To_String((FactoryType)type->ToBuild);
 
@@ -220,19 +220,19 @@ static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const ch
 
         lua_pushstring(lua, factoryType);
     }
-    else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %u", type->Capacity);
 
         lua_pushnumber(lua, type->Capacity);
     }
-    else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %d", type->Power);
 
         lua_pushnumber(lua, type->Power);
     }
-    else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE_UPPER))
+    else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %d", type->Drain);
 
@@ -288,6 +288,7 @@ static int Lua_Get_Building_Rule(lua_State* lua)
         "Building",
         "buildingTypeName",
         &ResolveBuilding,
+        GetRulesInfo().GetBuildingRules(),
         &Read_Building_Rule
     );
 }
@@ -299,6 +300,7 @@ static int Lua_Set_Building_Rule(lua_State* lua)
         "Building",
         "buildingTypeName",
         &ResolveBuilding,
+        GetRulesInfo().GetBuildingRules(),
         &Write_Building_Rule
     );
 }

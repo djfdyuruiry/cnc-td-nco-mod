@@ -1,5 +1,4 @@
-#ifndef UTILS_H
-#define UTILS_H
+#pragma once
 
 #include <windows.h>
 
@@ -54,5 +53,3 @@ char* Build_Mod_Data_File_Path(const char* filePath);
 void Start_Console_Output();
 
 void Stop_Console_Output();
-
-#endif

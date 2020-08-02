@@ -134,12 +134,12 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 {
 	auto iniName = type->IniName;
 
-	type->FriendlyName = Read_String_From_Rules_Ini(iniName, FRIENDLY_NAME_RULE, type->FriendlyName, false);
+	type->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, type->FriendlyName);
 	type->Level = Read_Build_Level(iniName, type->Level);
-	type->Pre = Read_Prerequisite(iniName, Prerequisite_To_Structure_Type(type->Pre));
+	type->Pre = ReadRuleValue<long>(iniName, PREREQUISITE_RULE, type->Pre);
 	type->IsTransporter = Read_Is_Transport(iniName, type->IsTransporter);
 	type->TransportCapacity = type->IsTransporter
-		? Read_Unsigned_Int_From_Rules_Ini(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity, 0, INT_MAX)
+		? ReadRuleValue<unsigned int>(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity)
 		: 0;
 	type->IsBuildable = Read_Is_Buildable(iniName, type->IsBuildable);
 	type->MaxAmmo = Read_Ammo(iniName, type->MaxAmmo);
@@ -147,19 +147,22 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 	type->Cost = Read_Cost(iniName, type->Cost);
 	type->Scenario = Read_Scenario_Level(iniName, type->Scenario);
 	type->Reward = Read_Reward(iniName, type->Reward);
-	type->HouseListCsv = Read_String_From_Rules_Ini(iniName, HOUSES_RULE, type->HouseListCsv, false);
-	type->Ownable = Read_House_List_From_Rules_Ini(iniName, type->Ownable, type->HouseListCsv);
+	type->HouseListCsv = ReadRuleValue<char*>(iniName, HOUSES_RULE, type->HouseListCsv);
+	type->Ownable = ReadRuleValue<int>(iniName, OWNER_RULE, type->Ownable);
 	type->Primary = Read_Primary_Weapon(iniName, type->Primary);
 	type->Secondary = Read_Secondary_Weapon(iniName, type->Secondary);
 	type->MaxSpeed = Read_Speed(iniName, type->MaxSpeed);
-	type->IsScanner = Read_Unsigned_Bool_From_Rules_Ini(iniName, DETECT_CLOAKED_OBJECTS_RULE, type->IsScanner);
-	type->IsRepairable = Read_Unsigned_Bool_From_Rules_Ini(iniName, REPAIRABLE_RULE, type->IsRepairable);
-	type->IsCrew = Read_Unsigned_Bool_From_Rules_Ini(iniName, HAS_CREW_RULE, type->IsCrew);
-	type->IsLeader = Read_Unsigned_Bool_From_Rules_Ini(iniName, LEADER_RULE, type->IsLeader);
-	type->IsTwoShooter = Read_Unsigned_Bool_From_Rules_Ini(iniName, TWO_SHOOTER_RULE, type->IsTwoShooter);
-	type->IsTheater = Read_Unsigned_Bool_From_Rules_Ini(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
-	type->IsTurretEquipped = Read_Unsigned_Bool_From_Rules_Ini(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
-	type->IsNominal = Read_Unsigned_Bool_From_Rules_Ini(iniName, SHOW_NAME_RULE, type->IsNominal);
+	type->IsScanner = ReadRuleValue<bool>(iniName, DETECT_CLOAKED_OBJECTS_RULE, type->IsScanner);
+	type->IsRepairable = ReadRuleValue<bool>(iniName, REPAIRABLE_RULE, type->IsRepairable);
+	type->IsCrew = ReadRuleValue<bool>(iniName, HAS_CREW_RULE, type->IsCrew);
+	type->IsLeader = ReadRuleValue<bool>(iniName, LEADER_RULE, type->IsLeader);
+	type->IsTwoShooter = ReadRuleValue<bool>(iniName, TWO_SHOOTER_RULE, type->IsTwoShooter);
+	type->IsTheater = ReadRuleValue<bool>(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
+	type->IsTurretEquipped = ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
+	type->IsNominal = ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, type->IsNominal);
+	type->IsFlammable = Read_Is_Flammable(iniName, type->IsFlammable);
+
+	type->Calculate_Risk();
 }
 
 /***********************************************************************************************
@@ -260,8 +263,6 @@ TechnoTypeClass::TechnoTypeClass(
 	IsTheater = is_theater;
 	IsTurretEquipped = is_turret_equipped;
 	IsNominal = is_nominal;
-
-	Read_Techno_Rules(this);
 
 	Calculate_Risk();
 }

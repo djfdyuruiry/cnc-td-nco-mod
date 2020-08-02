@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -119,6 +119,8 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <DebugInformationFormat>None</DebugInformationFormat>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,6 +159,8 @@
       <AdditionalOptions>/wd4005 %(AdditionalOptions)</AdditionalOptions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,6 +199,8 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/wd4005 %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -240,6 +246,8 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/wd4005 %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -394,7 +402,9 @@
     <ClInclude Include="HEAP.H" />
     <ClInclude Include="HELP.H" />
     <ClInclude Include="HOUSE.H" />
+    <ClInclude Include="HOUSES_TYPE.H" />
     <ClInclude Include="INFANTRY.H" />
+    <ClInclude Include="InfantryTypeMod.h" />
     <ClInclude Include="INTRO.H" />
     <ClInclude Include="IPX.H" />
     <ClInclude Include="IPX95.H" />
@@ -402,6 +412,7 @@
     <ClInclude Include="IPXCONN.H" />
     <ClInclude Include="IPXGCONN.H" />
     <ClInclude Include="IPXMGR.H" />
+    <ClInclude Include="IRulesIniSection.h" />
     <ClInclude Include="JSHELL.H" />
     <ClInclude Include="LAYER.H" />
     <ClInclude Include="LED.H" />
@@ -437,16 +448,19 @@
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
     <ClInclude Include="NCO.H" />
+    <ClInclude Include="NcoGameMod.h" />
     <ClInclude Include="NOSEQCON.H" />
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />
     <ClInclude Include="OBJECT.H" />
+    <ClInclude Include="Optional.h" />
     <ClInclude Include="OPTIONS.H" />
     <ClInclude Include="OVERLAY.H" />
     <ClInclude Include="PACKET.H" />
     <ClInclude Include="PARSE.H" />
     <ClInclude Include="PHONE.H" />
     <ClInclude Include="POWER.H" />
+    <ClInclude Include="PROFILE.H" />
     <ClInclude Include="QUEUE.H" />
     <ClInclude Include="RADAR.H" />
     <ClInclude Include="RADIO.H" />
@@ -454,8 +468,15 @@
     <ClInclude Include="REAL.H" />
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
+    <ClInclude Include="RulesIni.h" />
+    <ClInclude Include="RulesIniInfo.h" />
+    <ClInclude Include="RulesIniReader.h" />
+    <ClInclude Include="RulesIniRule.h" />
     <ClInclude Include="RULES.H" />
-    <ClInclude Include="RULES_CACHE.H" />
+    <ClInclude Include="RulesIniRuleKey.h" />
+    <ClInclude Include="RulesIniSection.h" />
+    <ClInclude Include="RulesIniSectionBuilder.h" />
+    <ClInclude Include="RulesIniTypes.h" />
     <ClInclude Include="RULES_CACHE_KEY.H" />
     <ClInclude Include="RULES_INI.H" />
     <ClInclude Include="RULES_INI_AI.H" />
@@ -469,6 +490,7 @@
     <ClInclude Include="RULES_INI_INFANTRY.H" />
     <ClInclude Include="RULES_INI_IQ.H" />
     <ClInclude Include="RULES_INI_MODS.H" />
+    <ClInclude Include="RULES_INI_NCO.H" />
     <ClInclude Include="RULES_INI_SUPERWEAPON.H" />
     <ClInclude Include="RULES_INI_UNIT.H" />
     <ClInclude Include="RULES_INI_WARHEAD.H" />
@@ -507,6 +529,7 @@
     <ClInclude Include="TXTLABEL.H" />
     <ClInclude Include="TYPE.H" />
     <ClInclude Include="UNIT.H" />
+    <ClInclude Include="UnitTypeMod.h" />
     <ClInclude Include="UTILS.H" />
     <ClInclude Include="UTRACKER.H" />
     <ClInclude Include="VECTOR.H" />
@@ -629,7 +652,7 @@
     <ClCompile Include="LUA_API_FUNCTIONS_WEAPON_RULES.CPP" />
     <ClCompile Include="LUA_REPL.CPP" />
     <ClCompile Include="NCO.cpp" />
-    <ClCompile Include="RULES_CACHE.CPP" />
+    <ClCompile Include="RulesIniKeys.cpp" />
     <ClCompile Include="RULES_CACHE_KEY.CPP" />
     <ClCompile Include="RULES_INI_MODS.CPP" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />

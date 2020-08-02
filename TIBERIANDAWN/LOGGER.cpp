@@ -1,4 +1,10 @@
-#include "function.h"
+#include <string>
+#include <windows.h>
+
+#include "logger.h"
+#include "rules_ini.h"
+#include "strings.h"
+#include "utils.h"
 
 static auto LOG_LINE_LENGTH = 25600;
 static auto LOG_LEVEL_LENGTH = 5;
@@ -20,6 +26,8 @@ const char* Log_Level_To_String(LogLevel level)
 			return "WARN";
 		case ERR:
 			return "ERROR";
+		case OFF:
+			return "OFF";
 		case INFO:
 		default:
 			return "INFO";
@@ -52,7 +60,7 @@ LogLevel Parse_Log_Level(char* levelString)
 	}
 	else if (!Strings_Are_Equal(levelString, "INFO"))
 	{
-		Log_Error("Setting log level to INFO as an unrecognised log level was passed to Parse_Log_Level: %s", levelString);
+		Show_Error("Setting log level to INFO as an unrecognised log level was provided: %s", levelString);
 	}
 
 	return logLevel;
@@ -81,7 +89,7 @@ static void Load_Default_Log_File_Path()
 
 	if (!valueFound)
 	{
-		puts("Failed to read USERPROFILE env var to find home directory, logging to file will be disabled");
+		Show_Error("Failed to read USERPROFILE env var to find your home directory, logging to file will be disabled");
 		FAILED_TO_OPEN_LOG_FILE = true;
 	}
 
@@ -112,9 +120,10 @@ static void Open_Log_File()
 	{
 		FAILED_TO_OPEN_LOG_FILE = true;
 
-		sprintf(
-			"Failed to open log file: %s\nCheck `log` directory is present and you have permission to access it.\n",
-			Get_Win32_Error_Message()
+		Show_Error(
+			"Failed to open log file: %s\n\nCheck folder is present and you have permission to access it: %s",
+			Get_Win32_Error_Message(),
+			LOG_FILE_PATH
 		);
 	}
 }
@@ -199,19 +208,21 @@ bool Console_Logging_Enabled()
 void Close_Log_File_If_Open()
 {
 	if (
-		!FAILED_TO_OPEN_LOG_FILE 
-		&& LOG_FILE_HANDLE != NULL 
-		&& LOG_FILE_HANDLE != INVALID_HANDLE_VALUE
+		FAILED_TO_OPEN_LOG_FILE
+		|| LOG_FILE_HANDLE == NULL
+		|| LOG_FILE_HANDLE == INVALID_HANDLE_VALUE
 	)
 	{
-		Log_Debug("Closing handle for log file: %s", LOG_FILE_PATH);
-
-		if (!CloseHandle(LOG_FILE_HANDLE))
-		{
-			printf("ERROR: Failed to close handle for log file '%s': %s", LOG_FILE_PATH, Get_Win32_Error_Message());
-		}
-
-		delete LOG_FILE_PATH;
-		LOG_FILE_HANDLE = NULL;
+		return;
 	}
+
+	Log_Debug("Closing handle for log file: %s", LOG_FILE_PATH);
+
+	if (!CloseHandle(LOG_FILE_HANDLE))
+	{
+		Show_Error("Failed to close handle for log file '%s': %s", LOG_FILE_PATH, Get_Win32_Error_Message());
+	}
+
+	delete LOG_FILE_PATH;
+	LOG_FILE_HANDLE = NULL;
 }

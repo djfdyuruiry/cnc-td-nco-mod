@@ -712,9 +712,6 @@
     <ClInclude Include="RULES_INI_DIFFICULTY.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="RULES_CACHE.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="RULES_INI_WEAPON.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
@@ -779,6 +776,54 @@
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="RULES_INI_MODS.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniSection.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniRule.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="HOUSES_TYPE.H">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniTypes.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="IRulesIniSection.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniReader.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIni.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="Optional.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniRuleKey.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="PROFILE.H">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniInfo.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RULES_INI_NCO.H">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesIniSectionBuilder.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="NcoGameMod.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="InfantryTypeMod.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTypeMod.h">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1393,9 +1438,6 @@
     <ClCompile Include="LUA_REPL.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="RULES_CACHE.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
@@ -1445,6 +1487,9 @@
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="RULES_INI_MODS.CPP">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="RulesIniKeys.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>

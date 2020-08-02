@@ -1,6 +1,3 @@
-#ifndef LUA_REPL_H
-#define LUA_REPL_H
+#pragma once
 
 bool Enter_Lua_Repl(bool initialiseLua = true);
-
-#endif

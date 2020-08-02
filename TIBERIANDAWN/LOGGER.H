@@ -1,15 +1,14 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#pragma once
 
-typedef enum LogLevel : unsigned short {
-	LOG_LEVEL_COUNT = 6,
-	TRACE = 5,
-	DEBUG = 4,
-	INFO = 3,
-	WARN = 2,
-	ERR = 1,
-	OFF = 0
-} LogLevel;
+enum LogLevel : unsigned short {
+	OFF,
+	ERR,
+	WARN,
+	INFO,
+	DEBUG,
+	TRACE,
+	LOG_LEVEL_COUNT
+};
 
 const char* Log_Level_To_String(LogLevel level);
 
@@ -38,5 +37,3 @@ void Toggle_Console_Logging();
 bool Console_Logging_Enabled();
 
 void Close_Log_File_If_Open();
-
-#endif

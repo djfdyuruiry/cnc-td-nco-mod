@@ -80,7 +80,7 @@ SuperClass::SuperClass(const char* type, int rechargeTimeInMins, VoxType ready, 
 	VoxImpatient = impatient;
 	VoxSuspend = suspend;
 
-	auto resolvedTimeInMins = Read_Int_From_Rules_Ini(type, SUPERWEAPON_RECHARGE_TIME_RULE, rechargeTimeInMins, INT_MIN, INT_MAX);
+	auto resolvedTimeInMins = ReadRuleValue<unsigned int>(type, SUPERWEAPON_RECHARGE_TIME_RULE);
 
 	RechargeTime = resolvedTimeInMins * TICKS_PER_MINUTE;
 }	

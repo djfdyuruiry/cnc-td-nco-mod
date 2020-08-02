@@ -50,7 +50,7 @@
 */
 #include	"function.h"
 
-// TODO: add infantry mod support to map edit
+// TODO: add infantry/unit mod support to map edit
 
 /*
 ********************************** Defines **********************************

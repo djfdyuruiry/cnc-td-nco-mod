@@ -1,6 +1,7 @@
-#include "function.h"
-
+#include "lua.h"
 #include "lua_api.h"
+#include "lua_events.h"
+#include "rules_ini.h"
 
 static lua_State* LUA = NULL;
 
@@ -201,6 +202,23 @@ void Push_String_Array_Onto_Lua_Stack(const char** stringArray, unsigned int arr
 
         lua_pushstring(LUA, stringArray[i]);
         lua_rawseti(LUA, -2, i + 1);
+    }
+}
+
+void Push_String_Vector_Onto_Lua_Stack(std::vector<const char*>& stringArray)
+{
+    lua_createtable(LUA, 0, stringArray.size());
+
+    auto idx = 1;
+
+    for (auto str : stringArray)
+    {
+        Log_Trace("Pushing string onto Lua table: %s", str);
+
+        lua_pushstring(LUA, str);
+        lua_rawseti(LUA, -2, idx);
+
+        idx++;
     }
 }
 

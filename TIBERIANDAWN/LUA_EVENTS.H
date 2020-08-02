@@ -1,5 +1,4 @@
-#ifndef LUA_EVENTS_H
-#define LUA_EVENTS_H
+#pragma once
 
 #include <windows.h>
 
@@ -16,7 +15,7 @@ static const auto LUA_EVENTS = new const char*[LUA_EVENT_COUNT]
     ON_GAME_TICK_EVENT
 };
 
-boolean Initialise_Events();
+bool Initialise_Events();
 
 // sync events
 void On_Scenario_Load(char* name);
@@ -25,5 +24,3 @@ void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber);
 
 // async events
 void On_Game_Tick();
-
-#endif

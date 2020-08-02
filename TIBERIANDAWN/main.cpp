@@ -127,16 +127,16 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 		return 1;
 	}
 
-	// mock DLL interface event handler
-	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
-
 	Test_Special_Rules();
-
-	Test_Lua_Events();
 
 	Test_Lua_Rules();
 
 	Dump_Rules();
+
+	// mock DLL interface event handler
+	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
+
+	Test_Lua_Events();
 
 	NCO_Shutdown();
 

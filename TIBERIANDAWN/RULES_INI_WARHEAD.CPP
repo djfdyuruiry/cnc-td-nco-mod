@@ -1,4 +1,4 @@
-#include "function.h"
+#include "rules_ini_warhead.h"
 
 static const auto ARMOR_MODIFIER_RULES = new const char*[ARMOR_COUNT] {
 	WARHEAD_NO_ARMOR_MODIFIER_RULE,

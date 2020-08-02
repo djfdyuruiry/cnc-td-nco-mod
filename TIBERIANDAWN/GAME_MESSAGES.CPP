@@ -1,6 +1,5 @@
 #include <map>
 #include <queue>
-#include <vector>
 
 #include "game_messages.h"
 #include "game_utils.h"
@@ -9,11 +8,9 @@
 #include "rules_ini.h"
 #include "utils.h"
 
-using namespace std;
-
-static queue<GameUiMessage> GAME_UI_MESSAGE_QUEUE;
-static queue<GameLoopMessage> GAME_LOOP_MESSAGE_QUEUE;
-static map<char, map<HouseMessageType, queue<HouseMessage>>> HOUSE_MESSAGE_QUEUES;
+static std::queue<GameUiMessage> GAME_UI_MESSAGE_QUEUE;
+static std::queue<GameLoopMessage> GAME_LOOP_MESSAGE_QUEUE;
+static std::map<char, std::map<HouseMessageType, std::queue<HouseMessage>>> HOUSE_MESSAGE_QUEUES;
 
 static auto LAST_TICK_TIME_IN_EPOCH_MILLIS = 0LL;
 
@@ -64,7 +61,7 @@ void Push_Hide_Map_Ui_Message()
 
 // game ui message handlers
 
-static void Process_Game_Ui_Message(map<unsigned int, bool>& messageTypesProcessed)
+static void Process_Game_Ui_Message(std::map<unsigned int, bool>& messageTypesProcessed)
 {
 	auto uiMessage = GAME_UI_MESSAGE_QUEUE.front();
 	auto type = uiMessage.type;
@@ -96,7 +93,7 @@ static void Process_Game_Ui_Message(map<unsigned int, bool>& messageTypesProcess
 
 void Process_Game_Ui_Messages()
 {
-	map<unsigned int, bool> messageTypesProcessed;
+	std::map<unsigned int, bool> messageTypesProcessed;
 
 	while (!GAME_UI_MESSAGE_QUEUE.empty())
 	{
@@ -141,7 +138,7 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 	}
 	else
 	{
-		Log_Error("Encountered Unknown Game Loop message type : %u", type);
+		Log_Debug("Encountered Unknown Game Loop message type : %u", type);
 	}
 }
 
@@ -152,7 +149,7 @@ DWORD WINAPI Process_Game_Loop_Messages(LPVOID lpParam)
 		while (!GAME_LOOP_MESSAGE_QUEUE.empty())
 		{
 			auto loopMessage = GAME_LOOP_MESSAGE_QUEUE.front();
-			
+
 			Process_Game_Loop_Message(loopMessage);
 
 			GAME_LOOP_MESSAGE_QUEUE.pop();
@@ -185,29 +182,29 @@ void Clear_Game_Loop_Messages()
 }
 
 // house message handlers
-static void Ensure_House_Message_Queue_Initialised(char houseType, HouseMessageType messageType)
+static void Ensure_House_Message_Queue_Initialised(HousesType houseType, HouseMessageType messageType)
 {
 	if (HOUSE_MESSAGE_QUEUES.find(houseType) == HOUSE_MESSAGE_QUEUES.end())
 	{
-		HOUSE_MESSAGE_QUEUES[houseType] = map<HouseMessageType, queue<HouseMessage>>();
+		HOUSE_MESSAGE_QUEUES[houseType] = std::map<HouseMessageType, std::queue<HouseMessage>>();
 	}
 
 	auto houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
 
 	if (houseMessageQueues.find(messageType) == houseMessageQueues.end())
 	{
-		houseMessageQueues[messageType] = queue<HouseMessage>();
+		houseMessageQueues[messageType] = std::queue<HouseMessage>();
 	}
 }
 
-void Push_House_Message(char houseType, HouseMessageType messageType, HouseMessage message)
+void Push_House_Message(HousesType houseType, HouseMessageType messageType, HouseMessage message)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
 	HOUSE_MESSAGE_QUEUES[houseType][messageType].push(message);
 }
 
-bool Is_House_Message_Present(char houseType, HouseMessageType messageType)
+bool Is_House_Message_Present(HousesType houseType, HouseMessageType messageType)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
@@ -216,7 +213,7 @@ bool Is_House_Message_Present(char houseType, HouseMessageType messageType)
 	return !houseMessageQueues[messageType].empty();
 }
 
-HouseMessage Pop_House_Message(char houseType, HouseMessageType messageType)
+HouseMessage Pop_House_Message(HousesType houseType, HouseMessageType messageType)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
@@ -230,7 +227,7 @@ HouseMessage Pop_House_Message(char houseType, HouseMessageType messageType)
 	return message;
 }
 
-void Clear_House_Messages(char houseType)
+void Clear_House_Messages(HousesType houseType)
 {
 	if (HOUSE_MESSAGE_QUEUES.find(houseType) == HOUSE_MESSAGE_QUEUES.end())
 	{

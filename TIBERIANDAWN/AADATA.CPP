@@ -326,7 +326,7 @@ AircraftTypeClass::AircraftTypeClass(
 										false,
 										false,
 										is_transporter,
-										Read_Is_Flammable(ininame, false),
+										false,
 										is_crushable,
 										is_stealthy,
 										is_selectable,
@@ -351,12 +351,17 @@ AircraftTypeClass::AircraftTypeClass(
 										houseListCsv,
 										primary,
 										secondary,
-										armor)
+						                armor)
 {
 	IsRotorCustom = is_rotorcustom;
 	Type = airtype;
 	Mission = deforder;
 	
+	GetRules() << RulesIniSectionBuilder::BuildAircraftSection(IniName);
+
+	Read_Object_Rules(this);
+	Read_Techno_Rules(this);
+
 	IsFixedWing = Read_Cant_Hover(IniName, is_fixedwing);
 	IsLandable = Read_Can_Land(IniName, is_landable);
 	IsRotorEquipped = Read_Has_Rotor(IniName, is_rotorequipped);
@@ -624,12 +629,12 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = Read_Double_Game_Rule(AIRCRAFT_REPAIR_FACTOR_RULE, AIRCRAFT_REPAIR_FACTOR_RULE_KEY, 1.02f, 0.01f);
+	auto repairFactor = ReadRuleValue<double>(AIRCRAFT_REPAIR_FACTOR_RULE_KEY);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(
 		Fixed_To_Cardinal(
-			Cost / (MaxStrength / Read_Aircraft_Repair_Step_Rule(2)),
+			Cost / (MaxStrength / Read_Aircraft_Repair_Step_Rule()),
 			repairPercent
 		)
 	);
@@ -653,7 +658,7 @@ int AircraftTypeClass::Repair_Cost(void) const
 int AircraftTypeClass::Repair_Step(void) const
 {
 	return(
-		Read_Aircraft_Repair_Step_Rule(2)
+		Read_Aircraft_Repair_Step_Rule()
 	);
 }
 
