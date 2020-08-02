@@ -698,8 +698,8 @@ extern "C" __declspec(dllexport) bool __cdecl CNC_Set_Multiplayer_Data(int scena
 	Rule.AllowSuperWeapons = game_options.EnableSuperweapons;	// Are superweapons available
 
 	if (MPlayerTiberium) {
-		Special.IsTSpread = ReadRuleValue<bool>(*TIBERIUM_SPREADS_RULE_KEY);
-		Special.IsTFast = !ReadRuleValue<bool>(*SLOW_TIBERIUM_RULE_KEY);
+		Special.IsTSpread = ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
+		Special.IsTFast = !ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
 	} else {
 		Special.IsTGrowth = 0;
 		Special.IsTSpread = 0;
@@ -4436,8 +4436,8 @@ void DLLExportClass::Calculate_Placement_Distances(BuildingTypeClass* placement_
 	}
 
 	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-	auto preventBuildingInShroud = ReadRuleValue<bool>(*PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
-	auto allowBuildingBesideWalls = ReadRuleValue<bool>(*ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
+	auto preventBuildingInShroud = ReadRuleValue<bool>(PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
+	auto allowBuildingBesideWalls = ReadRuleValue<bool>(ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
 
 	memset(placement_distance, 255U, MAP_CELL_TOTAL);
 	for (int y = 0; y < map_cell_height; y++) {
