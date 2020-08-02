@@ -110,4 +110,6 @@ void NCO_Shutdown()
 	}
 
 	Close_Log_File_If_Open();
+
+	Free_Rules_Memory();
 }

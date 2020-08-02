@@ -9,8 +9,16 @@ class IRulesIniSection
 protected:
 	RulesIniRule* ruleInStream;
 
+	IRulesIniSection()
+	{
+	}
+
 public:
 	static const RulesIniType DEFAULT_RULE_TYPE = BOOL_RULE;
+
+	virtual ~IRulesIniSection()
+	{
+	}
 
 	virtual SectionName GetName() = 0;
 

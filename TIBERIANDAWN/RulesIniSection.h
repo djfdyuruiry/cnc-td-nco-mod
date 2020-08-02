@@ -39,12 +39,8 @@ public:
 		return *(new RulesIniSection(name));
 	}
 
-	~RulesIniSection()
+	virtual ~RulesIniSection()
 	{
-		for (auto key : ruleKeys)
-		{
-			delete rules[key];
-		}
 	}
 
 	RulesIniSection& WithDefaultType(RulesIniType type)

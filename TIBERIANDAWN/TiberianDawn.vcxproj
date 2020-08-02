@@ -119,6 +119,8 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <DebugInformationFormat>None</DebugInformationFormat>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,6 +159,8 @@
       <AdditionalOptions>/wd4005 %(AdditionalOptions)</AdditionalOptions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,6 +199,8 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/wd4005 %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -240,6 +246,8 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/wd4005 %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

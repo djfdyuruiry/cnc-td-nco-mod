@@ -185,15 +185,15 @@ public:
 
 	~RulesIniRule()
 	{
-		delete& defaultValue;
-		delete& defaultValueAsPercentage;
-		delete& value;
+		delete &defaultValue;
+		delete &defaultValueAsPercentage;
+		delete &value;
 
-		delete& minValue;
-		delete& maxValue;
-		delete& valueToAllowAlways;
+		delete &minValue;
+		delete &maxValue;
+		delete &valueToAllowAlways;
 
-		delete& validValues;
+		delete &validValues;
 	}
 
 	RulesIniRule& OfType(RulesIniType type)

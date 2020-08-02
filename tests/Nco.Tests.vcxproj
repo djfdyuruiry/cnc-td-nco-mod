@@ -55,6 +55,8 @@
       <AdditionalOptions>/wd4005 %(AdditionalOptions)</AdditionalOptions>
       <SupportJustMyCode>false</SupportJustMyCode>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

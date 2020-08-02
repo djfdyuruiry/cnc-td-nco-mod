@@ -41,13 +41,13 @@ public:
 
 	~RulesIniInfo()
 	{
-		delete& weaponRules;
-		delete& bulletRules;
-		delete& warheadRules;
-		delete& infantryRules;
-		delete& unitRules;
-		delete& aircraftRules;
-		delete& buildingRules;
+		delete &weaponRules;
+		delete &bulletRules;
+		delete &warheadRules;
+		delete &infantryRules;
+		delete &unitRules;
+		delete &aircraftRules;
+		delete &buildingRules;
 	}
 
 	IRulesIniSection& GetNcoRules()

@@ -45,7 +45,7 @@ public:
 	{
 		if (Present())
 		{
-			delete (T*)data;
+			delete data;
 		}
 
 		data = calloc(1, sizeof(T));
