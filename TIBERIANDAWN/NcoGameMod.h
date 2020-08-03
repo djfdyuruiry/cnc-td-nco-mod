@@ -26,6 +26,31 @@ protected:
 
 	virtual T ParseType(SectionName typeString, bool* parseError) = 0;
 
+	U* CloneBaseType(
+		T baseType,
+		SectionName baseTypeString,
+		T cloneType,
+		SectionName cloneTypeString
+	)
+	{
+		Log_Info("Mod %s type base: %s", typeName, baseTypeString);
+
+		auto baseTypeInstance = U::By_Type(baseType);
+
+		auto typeClone = (U*)malloc(sizeof(U));
+
+		memcpy(typeClone, baseTypeInstance, sizeof(U));
+
+		typeClone->IsModType = true;
+
+		strcpy(typeClone->ModBaseIniName, baseTypeString);
+		strcpy(typeClone->IniName, cloneTypeString);
+
+		typeClone->Type = cloneType;
+
+		return typeClone;
+	}
+
 	bool SetupNewType(SectionName typeString, T type, SectionName baseTypeString)
 	{
 		if (String_Is_Empty(typeString))
@@ -45,24 +70,11 @@ protected:
 			return false;
 		}
 
-		Log_Info("Mod %s type base: %s", typeName, baseTypeString);
+		auto newType = CloneBaseType(baseType, baseTypeString, type, typeString);
 
-		auto baseTypeInstance = U::By_Type(baseType);
+		modTypeInstances[newType->Type] = newType;
 
-		auto typeClone = (U*)malloc(sizeof(U));
-
-		memcpy(typeClone, baseTypeInstance, sizeof(U));
-
-		typeClone->IsModType = true;
-
-		strcpy(typeClone->ModBaseIniName, baseTypeString);
-		strcpy(typeClone->IniName, typeString);
-
-		typeClone->Type = type;
-
-		modTypeInstances[typeClone->Type] = typeClone;
-
-		ReadRulesAndAddType(typeClone);
+		ReadRulesAndAddType(newType);
 
 		Log_Info("Mod %s type setup successful", typeName);
 
