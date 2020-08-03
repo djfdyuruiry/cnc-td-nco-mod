@@ -427,7 +427,7 @@
     <ClInclude Include="LUA_API_FUNCTIONS_GAME.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_AIR_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_BUILD_RULES.H" />
-    <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H" />
+    <ClInclude Include="LUA_API_FUNCTIONS_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GENERIC_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_INF_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_UNIT_RULES.H" />
@@ -643,7 +643,7 @@
     <ClCompile Include="LUA_API_FUNCTIONS_AIR_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BUILD_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP" />
-    <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP" />
+    <ClCompile Include="LUA_API_FUNCTIONS_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GENERIC_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_INF_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_UNIT_RULES.CPP" />

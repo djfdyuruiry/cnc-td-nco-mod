@@ -4,7 +4,7 @@
 #include "lua_api_functions_build_rules.h"
 #include "lua_api_functions_bullet_rules.h"
 #include "lua_api_functions_game.h"
-#include "lua_api_functions_game_rules.h"
+#include "lua_api_functions_rules.h"
 #include "lua_api_functions_inf_rules.h"
 #include "lua_api_functions_info.h"
 #include "lua_api_functions_unit_rules.h"
@@ -23,8 +23,8 @@ static bool Load_Api_Functions()
 {
     Log_Debug("Initialising Lua API functions");
 
-    return Load_Nco_Lua_Lib()
-        && Register_Util_Functions()
+    return Register_Util_Functions()
+        && Load_Nco_Lua_Lib() 
         && Register_Info_Functions()
         && Register_Game_Rule_Functions()
         && Register_Weapon_Functions()

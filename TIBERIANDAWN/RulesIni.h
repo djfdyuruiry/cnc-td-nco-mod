@@ -283,6 +283,13 @@ public:
 		return sections.find(key) != sections.end();
 	}
 
+	bool HasSection(SectionName name)
+	{
+		auto sectionKey = Build_Rule_Key(name);
+
+		return sections.find(sectionKey) != sections.end();
+	}
+
 	bool HasSectionForRule(RulesIniRule& rule)
 	{
 		return HasSection(rule.GetSectionKey());

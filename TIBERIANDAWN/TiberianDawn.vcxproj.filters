@@ -721,9 +721,6 @@
     <ClInclude Include="LUA_API_FUNCTIONS_INFO.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_GENERIC_RULES.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
@@ -824,6 +821,9 @@
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="UnitTypeMod.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_API_FUNCTIONS_RULES.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1441,9 +1441,6 @@
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_GENERIC_RULES.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
@@ -1490,6 +1487,9 @@
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="RulesIniKeys.cpp">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_API_FUNCTIONS_RULES.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>
