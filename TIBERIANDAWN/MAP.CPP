@@ -975,13 +975,17 @@ void MapClass::Logic(void)
 		*/
 		if (TiberiumGrowthCount) {
 			for (int i = 0; i < growthFactor; i++) {
-				CELL cell = TiberiumGrowth[Random_Pick(0, TiberiumGrowthCount-1)];
+				int pick = Random_Pick(0, TiberiumGrowthCount - 1);
+				CELL cell = TiberiumGrowth[pick];
 				CellClass * newcell = &(*this)[cell];
+
 				if (newcell->Land_Type() == LAND_TIBERIUM && newcell->OverlayData < 12-1) {
 					newcell->OverlayData++;
 				}
+				
 				TiberiumGrowth[pick] = TiberiumGrowth[TiberiumGrowthCount - 1];
 				TiberiumGrowthCount--;
+				
 				if (TiberiumGrowthCount <= 0) {
 					break;
 				}
@@ -994,7 +998,8 @@ void MapClass::Logic(void)
 		*/
 		if (TiberiumSpreadCount) {
 			for (int i = 0; i < spreadFactor; i++) {
-				CELL cell = TiberiumSpread[Random_Pick(0, TiberiumSpreadCount-1)];
+				int pick = Random_Pick(0, TiberiumSpreadCount - 1);
+				CELL cell = pick;
 
 				/*
 				**	Find a pseudo-random adjacent cell that doesn't contain any tiberium.
