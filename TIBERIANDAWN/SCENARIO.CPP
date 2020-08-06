@@ -801,4 +801,22 @@ void Fixup_Scenario(void)
 	} else {
 		((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA)).Primary = Read_Primary_Weapon("ORCA", WEAPON_DRAGON);
 	}
+
+	/*
+	** Modern Balance
+	*/
+	if (Special.ModernBalance) {
+		/*
+		** GDI Weapons Factory has 30% more health.
+		*/
+		auto& weaponsFactory = ((BuildingTypeClass&)BuildingTypeClass::As_Reference(STRUCT_WEAP));
+		auto weaponsFactoryStrengthAtOnePercent = weaponsFactory.MaxStrength / 100u;
+
+		weaponsFactory.MaxStrength = weaponsFactoryStrengthAtOnePercent * 130;
+
+		/*
+		** Repair Pad is a pre-requisite for the APC.
+		*/
+		((UnitTypeClass&)UnitTypeClass::As_Reference(UNIT_APC)).Pre |= STRUCTF_REPAIR;
+	}
 }
