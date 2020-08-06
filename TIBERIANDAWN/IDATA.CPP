@@ -407,8 +407,8 @@ static InfantryTypeClass const E5(
 	300,							// Cost of infantry (in credits).
 	99,							// Scenario when they first appear.
 	80, 10,						// Risk/Reward of this infantry unit.
-	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP,					// Who can own this infantry unit.
-	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
+	HOUSEF_BAD | HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP,					// Who can own this infantry unit.
+	"BADGUY,MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
 	WEAPON_CHEMSPRAY,WEAPON_NONE,
 	MPH_SLOW // Maximum speed of infantry.
 );

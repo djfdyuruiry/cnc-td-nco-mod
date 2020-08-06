@@ -298,4 +298,5 @@ void SpecialClass::Init(void) {
 	IsEarlyWin = false;
 	HealthBarDisplayMode = HB_SELECTED;
 	ResourceBarDisplayMode = RB_SELECTED;
+	ModernBalance = false;
 }
