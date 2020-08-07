@@ -896,7 +896,7 @@ bool MapClass::Write_Binary(char const * root)
  *=============================================================================================*/
 void MapClass::Logic(void)
 {
-	if (Debug_Force_Crash) { *((int *)0) = 1; }
+	if (Debug_Force_Crash) { *((int*)0) = 1; }
 
 	/*
 	**	Bail early if there is no allowed growth or spread of Tiberium.
@@ -911,21 +911,22 @@ void MapClass::Logic(void)
 	int index;
 	for (index = TiberiumScan; index < MAP_CELL_TOTAL; index++) {
 		CELL cell = index;
-		if (!IsForwardScan) cell = (MAP_CELL_TOTAL-1) - index;
-		CellClass *ptr = &(*this)[cell];
+		if (!IsForwardScan) cell = (MAP_CELL_TOTAL - 1) - index;
+		CellClass* ptr = &(*this)[cell];
 
 		if (Special.IsTGrowth && ptr->Land_Type() == LAND_TIBERIUM && ptr->OverlayData < 11) {
-			if (TiberiumGrowthCount < sizeof(TiberiumGrowth)/sizeof(TiberiumGrowth[0])) {
+			if (TiberiumGrowthCount < sizeof(TiberiumGrowth) / sizeof(TiberiumGrowth[0])) {
 				TiberiumGrowth[TiberiumGrowthCount++] = cell;
-			} else {
-				TiberiumGrowth[Random_Pick(0, TiberiumGrowthCount-1)] = cell;
+			}
+			else {
+				TiberiumGrowth[Random_Pick(0, TiberiumGrowthCount - 1)] = cell;
 			}
 		}
 
 		/*
 		**	Heavy Tiberium growth can spread.
 		*/
-		TerrainClass * terrain = ptr->Cell_Terrain();
+		TerrainClass* terrain = ptr->Cell_Terrain();
 		if (Special.IsTSpread &&
 			(ptr->Land_Type() == LAND_TIBERIUM && ptr->OverlayData > 6) ||
 			(terrain && terrain->Class->IsTiberiumSpawn)) {
@@ -933,10 +934,11 @@ void MapClass::Logic(void)
 			int tries = 1;
 			if (terrain) tries = 3;
 			for (int i = 0; i < tries; i++) {
-				if (TiberiumSpreadCount < sizeof(TiberiumSpread)/sizeof(TiberiumSpread[0])) {
+				if (TiberiumSpreadCount < sizeof(TiberiumSpread) / sizeof(TiberiumSpread[0])) {
 					TiberiumSpread[TiberiumSpreadCount++] = cell;
-				} else {
-					TiberiumSpread[Random_Pick(0, TiberiumSpreadCount-1)] = cell;
+				}
+				else {
+					TiberiumSpread[Random_Pick(0, TiberiumSpreadCount - 1)] = cell;
 				}
 			}
 		}
@@ -946,29 +948,26 @@ void MapClass::Logic(void)
 	TiberiumScan = index;
 
 	if (TiberiumScan >= MAP_CELL_TOTAL) {
-		int baseGrowthAndSpreadFactor = 1;
-		
-		if (Special.IsTFast || GameToPlay != GAME_NORMAL) {
-			baseGrowthAndSpreadFactor = 2;
-		}
+		int tries = 1;
+
+		if (Special.IsTFast || GameToPlay != GAME_NORMAL) tries = 2;
 
 		/*
 		** Use the Tiberium setting as a multiplier on growth rate. ST - 7/1/2020 3:05PM
 		*/
 		if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
 			if (MPlayerTiberium > 1) {
-				baseGrowthAndSpreadFactor += (MPlayerTiberium - 1) << 1;
+				tries += (MPlayerTiberium - 1) << 1;
 			}
 		}
-
-		auto growthFactorMultipler = ReadRuleValue<double>(TIBERIUM_GROWTH_RATE_RULE_KEY);
-		auto spreadFactorMultipler = ReadRuleValue<double>(TIBERIUM_SPREAD_RATE_RULE_KEY);
-
-		auto growthFactor = nearbyint(baseGrowthAndSpreadFactor * growthFactorMultipler);
-		auto spreadFactor = nearbyint(baseGrowthAndSpreadFactor * spreadFactorMultipler);
-
 		TiberiumScan = 0;
 		IsForwardScan = (IsForwardScan == false);
+
+		double growthFactorMultipler = ReadRuleValue<double>(TIBERIUM_GROWTH_RATE_RULE_KEY);
+		double spreadFactorMultipler = ReadRuleValue<double>(TIBERIUM_SPREAD_RATE_RULE_KEY);
+
+		int growthFactor = nearbyint(tries * growthFactorMultipler);
+		int spreadFactor = nearbyint(tries * spreadFactorMultipler);
 
 		/*
 		**	Growth logic.
@@ -977,15 +976,12 @@ void MapClass::Logic(void)
 			for (int i = 0; i < growthFactor; i++) {
 				int pick = Random_Pick(0, TiberiumGrowthCount - 1);
 				CELL cell = TiberiumGrowth[pick];
-				CellClass * newcell = &(*this)[cell];
-
-				if (newcell->Land_Type() == LAND_TIBERIUM && newcell->OverlayData < 12-1) {
+				CellClass* newcell = &(*this)[cell];
+				if (newcell->Land_Type() == LAND_TIBERIUM && newcell->OverlayData < 12 - 1) {
 					newcell->OverlayData++;
 				}
-				
 				TiberiumGrowth[pick] = TiberiumGrowth[TiberiumGrowthCount - 1];
 				TiberiumGrowthCount--;
-				
 				if (TiberiumGrowthCount <= 0) {
 					break;
 				}
@@ -999,7 +995,7 @@ void MapClass::Logic(void)
 		if (TiberiumSpreadCount) {
 			for (int i = 0; i < spreadFactor; i++) {
 				int pick = Random_Pick(0, TiberiumSpreadCount - 1);
-				CELL cell = pick;
+				CELL cell = TiberiumSpread[pick];
 
 				/*
 				**	Find a pseudo-random adjacent cell that doesn't contain any tiberium.
@@ -1007,23 +1003,23 @@ void MapClass::Logic(void)
 				if (Map.In_Radar(cell)) {
 					FacingType offset = Random_Pick(FACING_N, FACING_NW);
 					for (FacingType index = FACING_N; index < FACING_COUNT; index++) {
-						CellClass *newcell = (*this)[cell].Adjacent_Cell(index+offset);
+						CellClass* newcell = (*this)[cell].Adjacent_Cell(index + offset);
 
 						if (newcell && newcell->Cell_Object() == NULL && newcell->Land_Type() == LAND_CLEAR && newcell->Overlay == OVERLAY_NONE) {
 							bool found = false;
 
 							switch (newcell->TType) {
-								case TEMPLATE_BRIDGE1:
-								case TEMPLATE_BRIDGE2:
-								case TEMPLATE_BRIDGE3:
-								case TEMPLATE_BRIDGE4:
-									break;
+							case TEMPLATE_BRIDGE1:
+							case TEMPLATE_BRIDGE2:
+							case TEMPLATE_BRIDGE3:
+							case TEMPLATE_BRIDGE4:
+								break;
 
-								default:
-									found = true;
-									new OverlayClass(Random_Pick(OVERLAY_TIBERIUM1, OVERLAY_TIBERIUM12), newcell->Cell_Number());
-									newcell->OverlayData = 1;
-									break;
+							default:
+								found = true;
+								new OverlayClass(Random_Pick(OVERLAY_TIBERIUM1, OVERLAY_TIBERIUM12), newcell->Cell_Number());
+								newcell->OverlayData = 1;
+								break;
 
 							}
 							if (found) break;
