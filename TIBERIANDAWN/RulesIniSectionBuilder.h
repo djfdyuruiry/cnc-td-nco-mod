@@ -244,45 +244,45 @@ public:
 				s << ATTACK_INTERVAL_RULE << 3u
 				  << BASE_SIZE_ADD_RULE << 3u
 				  << POWER_SURPLUS_RULE << 50u
-				  << ATTACK_DELAY_RULE << 1u
+				  << ATTACK_DELAY_RULE << 5u
 
 				  << s.BuildRule(POWER_EMERGENCY_FRACTION_RULE)
 					  .OfType(FIXED_RULE)
 					  .WithDefault(0x00C0)
-					  .WithDefaultAsPercentage(0.75f)
+					  .WithDefaultAsPercentage(0.75)
 
 				  << s.BuildRule(HELIPAD_RATIO_RULE)
 					  .OfType(FIXED_RULE)
 					  .WithDefault(0x1E)
-					  .WithDefaultAsPercentage(0.12f)
+					  .WithDefaultAsPercentage(0.12)
 
 				  << HELIPAD_LIMIT_RULE << 5u
 
 				  << s.BuildRule(AA_RATIO_RULE)
 					  .OfType(FIXED_RULE)
 					  .WithDefault(0x0024)
-					  .WithDefaultAsPercentage(0.14f)
+					  .WithDefaultAsPercentage(0.14)
 
 				  << AA_LIMIT_RULE << 10u
 
 				  << s.BuildRule(DEFENSE_RATIO_RULE)
 					  .OfType(FIXED_RULE)
 					  .WithDefault(0x0066)
-					  .WithDefaultAsPercentage(0.4f)
+					  .WithDefaultAsPercentage(0.4)
 
 				  << DEFENSE_LIMIT_RULE << 40u
 
 				  << s.BuildRule(WAR_RATIO_RULE)
 					  .OfType(FIXED_RULE)
 					  .WithDefault(0x0019)
-					  .WithDefaultAsPercentage(0.4f)
+					  .WithDefaultAsPercentage(0.1)
 
 				  << WAR_LIMIT_RULE << 2u
 
 				  << s.BuildRule(BARRACKS_RATIO_RULE)
 					  .OfType(FIXED_RULE)
 					  .WithDefault(0x0028)
-					  .WithDefaultAsPercentage(0.16f)
+					  .WithDefaultAsPercentage(0.16)
 
 				  << BARRACKS_LIMIT_RULE << 2u
 				  << REFINERY_LIMIT_RULE << 4u
@@ -290,12 +290,12 @@ public:
 				  << s.BuildRule(REFINERY_RATIO_RULE)
 					  .OfType(FIXED_RULE)
 					  .WithDefault(0x0028)
-					  .WithDefaultAsPercentage(0.16f)
+					  .WithDefaultAsPercentage(0.16)
 
 				  << s.BuildRule(AIRSTRIP_RATIO_RULE)
 					  .OfType(FIXED_RULE)
 					  .WithDefault(0x001E)
-					  .WithDefaultAsPercentage(0.12f)
+					  .WithDefaultAsPercentage(0.12)
 
 				  << AIRSTRIP_LIMIT_RULE << 5u
 				  << INFANTRY_RESERVE_RULE << 3000u
