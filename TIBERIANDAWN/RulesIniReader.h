@@ -117,7 +117,7 @@ private:
 		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
 		Log_Trace("Default value: %f", defaultValue);
 
-		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		auto& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
