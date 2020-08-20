@@ -2,16 +2,16 @@
 
 #include "logger.h"
 #include "lua.h"
-#include "RulesIni.h"
+#include "IRulesIni.h"
+#include "IRulesIniReader.h"
 #include "RulesIniInfo.h"
-#include "RulesIniReader.h"
 #include "RulesIniRuleKey.h"
 
 void Ensure_Rules_Ini_Is_Loaded();
 
-RulesIni& GetRules();
+IRulesIni& GetRules();
 
-RulesIniReader& GetRulesReader();
+IRulesIniReader& GetRulesReader();
 
 RulesIniInfo& GetRulesInfo();
 

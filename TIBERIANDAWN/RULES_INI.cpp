@@ -1,5 +1,7 @@
 #include "rules_ini.h"
 #include "rules_ini_nco.h"
+#include "RulesIni.h"
+#include "RulesIniReader.h"
 #include "RulesIniRuleKey.h"
 #include "RulesIniSectionBuilder.h"
 
@@ -25,8 +27,8 @@ static int GAME_TICK_INTERVAL_IN_MS;
 const char* TRUE_STRING = "TRUE";
 const char* FALSE_STRING = "FALSE";
 
-static RulesIni* RULES;
-static RulesIniReader* RULE_READER;
+static IRulesIni* RULES;
+static IRulesIniReader* RULE_READER;
 static RulesIniInfo* RULE_INFO;
 
 static void Read_Lua_Scripts_From_Rules_Ini()
@@ -72,7 +74,7 @@ static void Read_Log_Settings_From_Rules_Ini()
 	}
 }
 
-static void DefineRulesSections(RulesIni& r) {
+static void DefineRulesSections(IRulesIni& r) {
 	r << RulesIniSection::BuildSection(NCO_RULES_SECTION_NAME)
 			.WithDefaultType(STRING_RULE)
 			.WithRules([](IRulesIniSection& s) {
@@ -185,14 +187,14 @@ void Ensure_Rules_Ini_Is_Loaded() {
 	ReadMods();
 }
 
-RulesIni& GetRules()
+IRulesIni& GetRules()
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
 	return *RULES;
 }
 
-RulesIniReader& GetRulesReader()
+IRulesIniReader& GetRulesReader()
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
