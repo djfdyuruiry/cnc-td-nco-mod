@@ -5,10 +5,11 @@
 #include "profile.h"
 #include "RawFile.h"
 
+#include "IRulesIni.h"
 #include "RulesIniSection.h"
 #include "utils.h"
 
-class RulesIni
+class RulesIni : public IRulesIni
 {
 private:
 	std::vector<char*> rulesIniBuffers;
@@ -28,7 +29,7 @@ private:
 		DoSourceRulesFrom(rulesFilePath);
 	}
 
-	RulesIni& DoSourceRulesFrom(const char* rulesFileName)
+	IRulesIni& DoSourceRulesFrom(const char* rulesFileName)
 	{
 		auto fullRulesFilePath = Allocate_String(MAX_PATH);
 
@@ -114,17 +115,17 @@ private:
 public:
 	static constexpr unsigned int RULES_STRING_LENGTH = MAX_PATH * 15u;
 
-	static RulesIni& SourceRulesFrom(const char* rulesFilePath)
+	static IRulesIni& SourceRulesFrom(const char* rulesFilePath)
 	{
 		return *(new RulesIni(rulesFilePath));
 	}
 
-	RulesIni& AndThenFrom(const char* rulesFilePath)
+	IRulesIni& AndThenFrom(const char* rulesFilePath)
 	{
 		return DoSourceRulesFrom(rulesFilePath);
 	}
 
-	RulesIni& WithSections(void (*rulesSetup)(RulesIni&))
+	IRulesIni& WithSections(void (*rulesSetup)(IRulesIni&))
 	{
 		if (rulesSetup != NULL)
 		{
@@ -303,7 +304,7 @@ public:
 		return rulesAreValid;
 	}
 
-	RulesIni& operator<<(SectionName section)
+	IRulesIni& operator<<(SectionName section)
 	{
 		sectionInStream = &RulesIniSection::BuildSection(section);
 
@@ -312,21 +313,21 @@ public:
 		return *this;
 	}
 
-	RulesIni& operator<<(RulesIniType sectionDefaultType)
+	IRulesIni& operator<<(RulesIniType sectionDefaultType)
 	{
 		sectionInStream->SetDefaultType(sectionDefaultType);
 
 		return *this;
 	}
 
-	RulesIni& operator<<(IRulesIniSection& section)
+	IRulesIni& operator<<(IRulesIniSection& section)
 	{		
 		AddSection(&section);
 
 		return *this;
 	}
 
-	RulesIni& operator<<(RulesIniRule& rule)
+	IRulesIni& operator<<(RulesIniRule& rule)
 	{
 		IRulesIniSection& section = RulesIniSection::BuildSection(rule.GetSection());
 

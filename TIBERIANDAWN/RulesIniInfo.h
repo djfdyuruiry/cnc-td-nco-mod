@@ -1,5 +1,6 @@
 #pragma once
 
+#include "IRulesIni.h"
 #include "IRulesIniSection.h"
 #include "rules_ini_nco.h"
 #include "rules_ini_game.h"
@@ -11,7 +12,7 @@ static auto INFO_SECTION = "INFO";
 class RulesIniInfo
 {
 private:
-	RulesIni& rules;
+	IRulesIni& rules;
 
 	IRulesIniSection& weaponRules;
 	IRulesIniSection& bulletRules;
@@ -21,7 +22,7 @@ private:
 	IRulesIniSection& aircraftRules;
 	IRulesIniSection& buildingRules;
 
-	RulesIniInfo(RulesIni& rulesIni)
+	RulesIniInfo(IRulesIni& rulesIni)
 		: rules(rulesIni),
 		weaponRules(RulesIniSectionBuilder::BuildWeaponSection(INFO_SECTION)),
 		bulletRules(RulesIniSectionBuilder::BuildBulletSection(INFO_SECTION)),
@@ -34,7 +35,7 @@ private:
 	}
 
 public:
-	static RulesIniInfo& BuildRuleInfo(RulesIni& rulesIni)
+	static RulesIniInfo& BuildRuleInfo(IRulesIni& rulesIni)
 	{
 		return *(new RulesIniInfo(rulesIni));
 	}

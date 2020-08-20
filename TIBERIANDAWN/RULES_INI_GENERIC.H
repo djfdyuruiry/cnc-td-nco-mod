@@ -19,9 +19,9 @@
 
 #define STRENGTH_RULE "Strength"
 
-#define OWNER_RULE "Owner"
-
 #define HOUSES_RULE "Houses"
+
+#define OWNER_RULE "Owner"
 
 #define PRIMARY_WEAPON_RULE "PrimaryWeapon"
 

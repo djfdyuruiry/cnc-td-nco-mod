@@ -412,6 +412,8 @@
     <ClInclude Include="IPXCONN.H" />
     <ClInclude Include="IPXGCONN.H" />
     <ClInclude Include="IPXMGR.H" />
+    <ClInclude Include="IRulesIni.h" />
+    <ClInclude Include="IRulesIniReader.h" />
     <ClInclude Include="IRulesIniSection.h" />
     <ClInclude Include="JSHELL.H" />
     <ClInclude Include="LAYER.H" />

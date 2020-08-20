@@ -826,6 +826,12 @@
     <ClInclude Include="UnitTypeMod.h">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="IRulesIniReader.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="IRulesIni.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
