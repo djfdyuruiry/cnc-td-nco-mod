@@ -60,6 +60,15 @@ local rulesFile = nil
 
 local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   rulesFile:write(string.format("## %s\n", typeAreaName))
+  rulesFile:write("\n")
+
+  rulesFile:write(string.format("[%s]\n", typeAreaName))
+  idx=1
+  for _, areaType in ipairs(typeArea.getTypes()) do
+    rulesFile:write(string.format("%s=%s\n",tostring(idx),areaType))
+  end
+
+  rulesFile:write("\n")
 
   for _, areaType in ipairs(typeArea.getTypes()) do
     local friendlyName = typeArea.getRuleValue(areaType, "FriendlyName")
