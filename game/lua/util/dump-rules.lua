@@ -66,6 +66,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   idx=1
   for _, areaType in ipairs(typeArea.getTypes()) do
     rulesFile:write(string.format("%s=%s\n",tostring(idx),areaType))
+	idx=idx+1
   end
 
   rulesFile:write("\n")
