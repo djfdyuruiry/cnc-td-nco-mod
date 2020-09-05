@@ -254,15 +254,32 @@ static AircraftTypeClass const CargoPlane(
 	MISSION_HUNT			// Default mission for aircraft.
 );
 
+AircraftTypeClass const** AircraftTypeClass::Pointers = NULL;
 
-AircraftTypeClass const * const AircraftTypeClass::Pointers[AIRCRAFT_COUNT] = {
-	&TransportHeli,
-	&AttackPlane,
-	&AttackHeli,
-	&CargoPlane,
-	&OrcaHeli,
-};
+AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
+{
+	if (Pointers != NULL) {
+		Log_Trace("Aircraft lookup by type: %d", type);
 
+		return Pointers[type];
+	}
+
+	Log_Debug("Initialising Aircraft types");
+
+	auto aircraftCount = Read_Aircraft_Count();
+
+	Pointers = new AircraftTypeClass const* [aircraftCount] {
+		&TransportHeli,
+			& AttackPlane,
+			& AttackHeli,
+			& CargoPlane,
+			& OrcaHeli,
+	};
+
+	InitialiseModsIfRequired();
+
+	return By_Type(type);
+}
 
 /***********************************************************************************************
  * AircraftTypeClass::AircraftTypeClass -- Constructor for aircraft objects.                   *
@@ -356,16 +373,30 @@ AircraftTypeClass::AircraftTypeClass(
 	IsRotorCustom = is_rotorcustom;
 	Type = airtype;
 	Mission = deforder;
-	
+	IsFixedWing = is_fixedwing;
+	IsLandable = is_landable;
+	IsRotorEquipped = is_rotorequipped;
+	ROT = rot;
+
 	GetRules() << RulesIniSectionBuilder::BuildAircraftSection(IniName);
+	Read_Aircraft_Rules(this);
+}
+void AircraftTypeClass::Read_Aircraft_Rules(AircraftTypeClass* aircraft)
+{
+	auto iniName = aircraft->IniName;
 
-	Read_Object_Rules(this);
-	Read_Techno_Rules(this);
+	Read_Object_Rules(aircraft);
+	Read_Techno_Rules(aircraft);
 
-	IsFixedWing = Read_Cant_Hover(IniName, is_fixedwing);
-	IsLandable = Read_Can_Land(IniName, is_landable);
-	IsRotorEquipped = Read_Has_Rotor(IniName, is_rotorequipped);
-	ROT = Read_Rate_Of_Turn(IniName, rot);
+	aircraft->IsFixedWing = Read_Cant_Hover(iniName, aircraft->IsFixedWing);
+	aircraft->IsLandable = Read_Can_Land(iniName, aircraft->IsLandable);
+	aircraft->IsRotorEquipped = Read_Has_Rotor(iniName, aircraft->IsRotorEquipped);
+	aircraft->ROT = Read_Rate_Of_Turn(iniName, aircraft->ROT);
+}
+
+void AircraftTypeClass::Add_Aircraft_Type(AircraftTypeClass* aircraftInstance)
+{
+	Pointers[aircraftInstance->Type] = aircraftInstance;
 }
 
 

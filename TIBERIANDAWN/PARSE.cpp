@@ -401,7 +401,7 @@ const char* Prerequisite_To_String(long prerequisite)
     );
 }
 
-WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
+WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError, bool ignoreModTypes)
 {
     WeaponType weaponType;
 
@@ -522,7 +522,7 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError)
     return weaponType;
 }
 
-WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError)
+WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(weaponTypeString))
     {
@@ -545,7 +545,7 @@ WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError)
     return weaponType;
 }
 
-const char* Weapon_Type_To_String(WeaponType weaponType)
+const char* Weapon_Type_To_String(WeaponType weaponType, bool ignoreModTypes)
 {
     const char* weaponTypeString;
 
@@ -753,7 +753,7 @@ const char* Armor_Type_To_String(ArmorType armorType)
     return armorTypeString;
 }
 
-BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError)
+BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError, bool ignoreModTypes)
 {
     BulletType bullet;
 
@@ -850,7 +850,7 @@ BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError)
     return bullet;
 }
 
-BulletType Parse_Bullet_Type(const char* bulletTypeString, bool* parseError)
+BulletType Parse_Bullet_Type(const char* bulletTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(bulletTypeString))
     {
@@ -873,7 +873,7 @@ BulletType Parse_Bullet_Type(const char* bulletTypeString, bool* parseError)
     return bulletType;
 }
 
-const char* Bullet_Type_To_String(BulletType bulletType)
+const char* Bullet_Type_To_String(BulletType bulletType, bool ignoreModTypes)
 {
     const char* bulletTypeString;
 
@@ -965,7 +965,7 @@ const char* Bullet_Type_To_String(BulletType bulletType)
     return bulletTypeString;
 }
 
-WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError)
+WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError, bool ignoreModTypes)
 {
     WarheadType warhead;
 
@@ -1030,7 +1030,7 @@ WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError)
     return warhead;
 }
 
-WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError)
+WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(warheadTypeString))
     {
@@ -1053,7 +1053,7 @@ WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError)
     return warheadType;
 }
 
-const char* Warhead_Type_To_String(WarheadType warheadType)
+const char* Warhead_Type_To_String(WarheadType warheadType, bool ignoreModTypes)
 {
     const char* warheadTypeString;
 
@@ -1621,7 +1621,7 @@ const char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
     return unitSpeedTypeString;
 }
 
-AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError)
+AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError, bool ignoreModTypes)
 {
     AircraftType aircraftType = AIRCRAFT_NONE;
 
@@ -1662,7 +1662,7 @@ AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError)
     return aircraftType;
 }
 
-AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseError)
+AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(aircraftTypeString))
     {
@@ -1685,7 +1685,7 @@ AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseErro
     return aircraftType;
 }
 
-const char* Aircraft_Type_To_String(AircraftType aircraftType)
+const char* Aircraft_Type_To_String(AircraftType aircraftType, bool ignoreModTypes)
 {
     const char* aircraftTypeString;
 
@@ -1721,7 +1721,7 @@ const char* Aircraft_Type_To_String(AircraftType aircraftType)
     return aircraftTypeString;
 }
 
-StructType Parse_Structure_Type(char* structTypeString, bool* parseError)
+StructType Parse_Structure_Type(char* structTypeString, bool* parseError, bool ignoreModTypes)
 {
     StructType structType;
 
@@ -2002,7 +2002,7 @@ StructType Parse_Structure_Type(char* structTypeString, bool* parseError)
     return structType;
 }
 
-StructType Parse_Structure_Type(const char* structTypeString, bool* parseError)
+StructType Parse_Structure_Type(const char* structTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(structTypeString))
     {
@@ -2025,7 +2025,7 @@ StructType Parse_Structure_Type(const char* structTypeString, bool* parseError)
     return structType;
 }
 
-const char* Structure_Type_To_String(StructType structType)
+const char* Structure_Type_To_String(StructType structType, bool ignoreModTypes)
 {
     const char* structTypeString;
 

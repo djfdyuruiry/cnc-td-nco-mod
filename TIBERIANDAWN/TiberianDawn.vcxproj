@@ -404,7 +404,10 @@
     <ClInclude Include="HOUSE.H" />
     <ClInclude Include="HOUSES_TYPE.H" />
     <ClInclude Include="INFANTRY.H" />
-    <ClInclude Include="InfantryTypeMod.h" />
+    <ClInclude Include="TypeMod_Aircraft.h" />
+    <ClInclude Include="TypeMod_Building.h" />
+    <ClInclude Include="TypeMod_Bullet.h" />
+    <ClInclude Include="TypeMod_Infantry.h" />
     <ClInclude Include="INTRO.H" />
     <ClInclude Include="IPX.H" />
     <ClInclude Include="IPX95.H" />
@@ -530,8 +533,10 @@
     <ClInclude Include="TURRET.H" />
     <ClInclude Include="TXTLABEL.H" />
     <ClInclude Include="TYPE.H" />
+    <ClInclude Include="TypeMod_Warhead.h" />
+    <ClInclude Include="TypeMod_Weapon.h" />
     <ClInclude Include="UNIT.H" />
-    <ClInclude Include="UnitTypeMod.h" />
+    <ClInclude Include="TypeMod_Unit.h" />
     <ClInclude Include="UTILS.H" />
     <ClInclude Include="UTRACKER.H" />
     <ClInclude Include="VECTOR.H" />

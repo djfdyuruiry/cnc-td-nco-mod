@@ -14,8 +14,13 @@ const RulesIniRuleKey* MULTI_WALL_LENGTH_RULE_KEY;
 const RulesIniRuleKey* FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY;
 
 // mod rules
+const RulesIniRuleKey* AIRCRAFT_COUNT_RULE_KEY;
+const RulesIniRuleKey* BUILDING_COUNT_RULE_KEY;
+const RulesIniRuleKey* BULLET_COUNT_RULE_KEY;
 const RulesIniRuleKey* INFANTRY_COUNT_RULE_KEY;
 const RulesIniRuleKey* UNIT_COUNT_RULE_KEY;
+const RulesIniRuleKey* WARHEAD_COUNT_RULE_KEY;
+const RulesIniRuleKey* WEAPON_COUNT_RULE_KEY;
 
 // game rules
 const RulesIniRuleKey* MAX_BUILD_DISTANCE_RULE_KEY;

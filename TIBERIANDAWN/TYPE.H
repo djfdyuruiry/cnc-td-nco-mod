@@ -92,6 +92,12 @@ class WeaponTypeClass
 		*/
 		AnimType Anim;
 
+		/*
+		**	The INI name of the house is pointed to by this element. This is the
+		**	identification name used in the scenario INI file.
+		*/
+		char const* IniName;
+
 		char* FriendlyName;
 
 		bool IsModType;
@@ -99,6 +105,8 @@ class WeaponTypeClass
 		static WeaponTypeClass const* By_Type(WeaponType type);
 
 		static WeaponTypeClass const& As_Reference(WeaponType type);
+		static void Read_Weapon_Rules(WeaponTypeClass* type);
+		static void Add_Weapon_Type(WeaponTypeClass* type);
 
 		WeaponTypeClass(const char* friendlyName, WeaponType owner, BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
 };
@@ -142,6 +150,11 @@ class WarheadTypeClass
 		**	defender has. This table is what gives weapons their "character".
 		*/
 		unsigned* Modifier;
+		/*
+		**	The INI name of the house is pointed to by this element. This is the
+		**	identification name used in the scenario INI file.
+		*/
+		char const* IniName;
 
 		char* FriendlyName;
 
@@ -160,6 +173,8 @@ class WarheadTypeClass
 			bool isTiberiumDestroyer,
 			unsigned armorModifiers[ARMOR_COUNT]
 		);
+		static void Read_Warhead_Rules(WarheadTypeClass* type);
+		static void Add_Warhead_Type(WarheadTypeClass* type);
 };
 
 
@@ -852,6 +867,9 @@ class BuildingTypeClass : public TechnoTypeClass {
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BUILDINGTYPE;};
 		operator StructType(void) const {return(Type);};
 
+		static void Read_Building_Rules(BuildingTypeClass* type);
+		static void Add_Building_Type(BuildingTypeClass* type);
+
 		static BuildingTypeClass const &  As_Reference(StructType type);
 		static StructType  From_Name(char const *name);
 		static void  Init(TheaterType theater);
@@ -901,8 +919,9 @@ class BuildingTypeClass : public TechnoTypeClass {
 		*/
 		short const *OverlapList;
 
-		static BuildingTypeClass const * const Pointers[STRUCT_COUNT];
-
+		static BuildingTypeClass const** Pointers;
+		static BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type);
+		
 		/*
 		**	The construction animation graphic data pointer is
 		**	pointed to by this element.
@@ -1396,6 +1415,11 @@ class BulletTypeClass : public ObjectTypeClass
 		const char* RulesName;
 
 		char* FriendlyName;
+		/*
+		**	The INI name of the house is pointed to by this element. This is the
+		**	identification name used in the scenario INI file.
+		*/
+		char const* IniName;
 
 		//---------------------------------------------------------------------
 		BulletTypeClass(
@@ -1422,8 +1446,11 @@ class BulletTypeClass : public ObjectTypeClass
 			WarheadType warhead,
 			AnimType explosion);
 
-		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
+		static void Read_Bullet_Rules(BulletTypeClass* type);
+		static void Add_Bullet_Type(BulletTypeClass* type);
 
+		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
+		static BulletTypeClass const* BulletTypeClass::By_Type(BulletType type);
 		static BulletTypeClass const &  As_Reference(BulletType type) {return *Pointers[type];};
 		static void  Init(TheaterType ) {};
 		static void One_Time(void);
@@ -1432,7 +1459,7 @@ class BulletTypeClass : public ObjectTypeClass
 		virtual ObjectClass *  Create_One_Of(HouseClass *) const {return 0;};
 
 	private:
-		static BulletTypeClass const * const Pointers[BULLET_COUNT];
+		static BulletTypeClass const** Pointers;
 };
 
 
@@ -1874,7 +1901,12 @@ class AircraftTypeClass : public TechnoTypeClass
 				MissionType deforder);
 		virtual RTTIType  What_Am_I(void) const;
 
+		static void Read_Aircraft_Rules(AircraftTypeClass* type);
+		static void Add_Aircraft_Type(AircraftTypeClass* type);
+
 		static AircraftType  From_Name(char const *name);
+		static AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type);
+		
 		static AircraftTypeClass const &  As_Reference(AircraftType a) {return *Pointers[a];};
 		static void  Init(TheaterType);
 		static void One_Time(void);
@@ -1898,7 +1930,7 @@ class AircraftTypeClass : public TechnoTypeClass
 		static void const * RRotorData;
 
 	private:
-		static AircraftTypeClass const * const Pointers[AIRCRAFT_COUNT];
+		static AircraftTypeClass const** Pointers;
 };
 
 

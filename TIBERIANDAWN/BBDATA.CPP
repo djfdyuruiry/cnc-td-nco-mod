@@ -519,27 +519,46 @@ static BulletTypeClass const ClassTRexBite(
 **	This is the array of pointers to the static data associated with
 **	each bullet (projectile) type.
 */
-BulletTypeClass const * const BulletTypeClass::Pointers[BULLET_COUNT] = {
-	&ClassSniper,		//	BULLET_SNIPER
-	&ClassBullet,		//	BULLET_BULLET
-	&ClassAPDS,			//	BULLET_APDS
-	&Class120mm,		//	BULLET_HE
-	&ClassMissile,		//	BULLET_SSM
-	&ClassMissile2,	//	BULLET_SSM2
-	&ClassPatriot,		//	BULLET_SAM
-	&ClassDragon,		//	BULLET_TOW
-	&ClassFlame,		// BULLET_FLAME
-	&ClassChem,			// BULLET_CHEMSPRAY
-	&ClassNapalm,		// BULLET_NAPALM
-	&ClassGrenade,		// BULLET_GRENADE
-	&ClassLaser,		// BULLET_LASER
-	&ClassNukeUp,		// BULLET_NUKE_UP
-	&ClassNukeDown,	// BULLET_NUKE_DOWN
-	&ClassHonestJohn,	// BULLET_HONEST_JOHN
-	&ClassSpreadfire,	// BULLET_SPREADFIRE
-	&ClassHeadButt,	// BULLET_HEADBUTT
-	&ClassTRexBite,	// BULLET_TREXBITE
-};
+BulletTypeClass const** BulletTypeClass::Pointers = NULL;
+
+BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
+{
+	if (Pointers != NULL) {
+		Log_Trace("Bullet lookup by type: %d", type);
+
+		return Pointers[type];
+	}
+
+	Log_Debug("Initialising Bullet types");
+
+	auto BulletCount = Read_Bullet_Count();
+
+	Pointers = new BulletTypeClass const* [BulletCount] {
+		&ClassSniper,		//	BULLET_SNIPER
+		&ClassBullet,		//	BULLET_BULLET
+		&ClassAPDS,			//	BULLET_APDS
+		&Class120mm,		//	BULLET_HE
+		&ClassMissile,		//	BULLET_SSM
+		&ClassMissile2,	//	BULLET_SSM2
+		&ClassPatriot,		//	BULLET_SAM
+		&ClassDragon,		//	BULLET_TOW
+		&ClassFlame,		// BULLET_FLAME
+		&ClassChem,			// BULLET_CHEMSPRAY
+		&ClassNapalm,		// BULLET_NAPALM
+		&ClassGrenade,		// BULLET_GRENADE
+		&ClassLaser,		// BULLET_LASER
+		&ClassNukeUp,		// BULLET_NUKE_UP
+		&ClassNukeDown,	// BULLET_NUKE_DOWN
+		&ClassHonestJohn,	// BULLET_HONEST_JOHN
+		&ClassSpreadfire,	// BULLET_SPREADFIRE
+		&ClassHeadButt,	// BULLET_HEADBUTT
+		&ClassTRexBite,	// BULLET_TREXBITE
+	};
+
+	InitialiseModsIfRequired();
+
+	return By_Type(type);
+}
 
 
 /***********************************************************************************************
