@@ -166,6 +166,7 @@ public:
 				.WithDefault(UNIT_COUNT)
 				.WithMin(UNIT_FIRST)
 				.WithMax(CHAR_MAX)
+
 				<< NEW_WARHEADS_RULE << STRING_RULE
 				<< s.BuildRule(NEW_WARHEAD_COUNT_RULE)
 				.WithMax(CHAR_MAX)
