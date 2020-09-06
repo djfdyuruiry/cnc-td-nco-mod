@@ -248,7 +248,7 @@ TechnoTypeClass::TechnoTypeClass(
 
 	FriendlyName = strdup(friendlyName);
 	Level = level;
-	Pre = Structure_Type_To_Prerequisite(pre, NULL);
+	Pre = Structure_Type_To_Prerequisite(pre, NULL, false);
 	IsTransporter = is_transporter;
 	TransportCapacity = IsTransporter ? DEFAULT_TRANSPORT_CAPACITY : 0;
 	IsBuildable = is_buildable;

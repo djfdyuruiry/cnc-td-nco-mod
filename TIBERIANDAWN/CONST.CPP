@@ -68,6 +68,7 @@ COORDINATE const StoppingCoordAbs[5] = {
 **	These are the various weapons and their characteristics.
 */
 WeaponTypeClass* WeaponTypeClass::Weapons = NULL;
+static WeaponTypeClass const** WeaponPointers;
 
 WeaponTypeClass::WeaponTypeClass(
 	const char* friendlyName,
@@ -139,6 +140,24 @@ WeaponTypeClass const& WeaponTypeClass::As_Reference(WeaponType type)
 	return *(By_Type(type));
 }
 
+void WeaponTypeClass::Read_Weapon_Rules(WeaponTypeClass* weapon)
+{
+	auto iniName = weapon->IniName;
+
+	//Read_Object_Rules(weapon);
+	//Read_Techno_Rules(weapon);
+
+	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
+	weapon->ROF = Read_Weapon_Rate_Of_Fire(iniName, weapon->ROF);
+	weapon->Range = Read_Weapon_Range(iniName, weapon->Range);
+}
+
+void WeaponTypeClass::Add_Weapon_Type(WeaponTypeClass* WeaponInstance)
+{
+	WeaponPointers[WeaponInstance->Type] = WeaponInstance;
+}
+
+
 /***************************************************************************
 **	These are the various warheads.
 **
@@ -146,7 +165,7 @@ WeaponTypeClass const& WeaponTypeClass::As_Reference(WeaponType type)
 **           -vs- {none, wood, aluminum, steel, concrete}
 */
 WarheadTypeClass* WarheadTypeClass::Warheads = NULL;
-
+static WarheadTypeClass const** WarheadPointers;
 WarheadTypeClass::WarheadTypeClass(
 	const char* friendlyName,
 	WarheadType type,
@@ -177,6 +196,25 @@ WarheadTypeClass::WarheadTypeClass(
 	}
 
 	IsModType = false;
+}
+void WarheadTypeClass::Read_Warhead_Rules(WarheadTypeClass* warhead)
+{
+	auto iniName = warhead->IniName;
+
+	//Read_Object_Rules(warhead);
+	//Read_Techno_Rules(warhead);
+
+	warhead->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
+	warhead->SpreadFactor = ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
+	// TODO: work out these mappings
+	//warhead->IsWallDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, isWallDestroyer);
+	//warhead->IsWoodDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, isWallDestroyer);
+	//warhead->IsTiberiumDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, isTiberiumDestroyer);
+}
+
+void WarheadTypeClass::Add_Warhead_Type(WarheadTypeClass* WarheadInstance)
+{
+	WarheadPointers[WarheadInstance->Type] = WarheadInstance;
 }
 
 WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)

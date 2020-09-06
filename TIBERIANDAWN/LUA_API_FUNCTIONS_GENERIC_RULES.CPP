@@ -49,7 +49,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
 
         if (!*valueParseError)
         {
-            auto prerequisite = Structure_Type_To_Prerequisite(scructType, valueParseError);
+            auto prerequisite = Structure_Type_To_Prerequisite(scructType, valueParseError, false);
 
             if (!*valueParseError)
             {

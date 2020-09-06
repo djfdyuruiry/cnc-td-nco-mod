@@ -24,7 +24,7 @@ static const auto CIVILIAN_TYPE_MAP = new const char* [INFANTRY_C10 - INFANTRY_C
     "C9"
 };
 
-DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError)
+DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError, bool ignoreModTypes)
 {
     DiffType difficultyType;
 
@@ -77,7 +77,7 @@ const char* Difficulty_Type_To_String(DiffType difficultyType)
     return difficultyTypeString;
 }
 
-HousesType Parse_House_Type(char* houseTypeString, bool* parseError)
+HousesType Parse_House_Type(char* houseTypeString, bool* parseError, bool ignoreModTypes)
 {
     HousesType house;
 
@@ -138,7 +138,7 @@ HousesType Parse_House_Type(char* houseTypeString, bool* parseError)
 	return house;
 }
 
-HousesType Parse_House_Type(const char* houseTypeString, bool* parseError)
+HousesType Parse_House_Type(const char* houseTypeString, bool* parseError, bool ignoreModTypes)
 {
     auto houseTypeStr = strdup(houseTypeString);
 
@@ -149,7 +149,7 @@ HousesType Parse_House_Type(const char* houseTypeString, bool* parseError)
     return houseType;
 }
 
-int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
+int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError, bool ignoreModTypes)
 {
     auto houseNameListSize = 0u;
     auto houseNameList = Parse_Csv_String(houseListCsv, HOUSE_NAME_MAX_LENGTH, &houseNameListSize);
@@ -207,7 +207,7 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError)
     return houseList;
 }
 
-int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError)
+int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(houseListCsv))
     {
@@ -661,7 +661,7 @@ const char* Weapon_Type_To_String(WeaponType weaponType, bool ignoreModTypes)
     return weaponTypeString;
 }
 
-ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError)
+ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError, bool ignoreModTypes)
 {
     ArmorType armor;
 
@@ -698,7 +698,7 @@ ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError)
     return armor;
 }
 
-ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError)
+ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(armorTypeString))
     {
@@ -1505,7 +1505,7 @@ const char* Unit_Type_To_String(UnitType unitType, bool ignoreModTypes)
     return unitTypeString;
 }
 
-SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError)
+SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes)
 {
     SpeedType speedType = SPEED_NONE;
 
@@ -1554,7 +1554,7 @@ SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError)
     return speedType;
 }
 
-SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError)
+SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(unitSpeedTypeString))
     {
@@ -2301,7 +2301,7 @@ const char* Structure_Type_To_String(StructType structType, bool ignoreModTypes)
     return structTypeString;
 }
 
-long Structure_Type_To_Prerequisite(StructType structType, bool* parseError)
+long Structure_Type_To_Prerequisite(StructType structType, bool* parseError, bool ignoreModTypes)
 {
     if (structType == STRUCT_NONE)
     {
@@ -2321,7 +2321,7 @@ long Structure_Type_To_Prerequisite(StructType structType, bool* parseError)
     return 1L << structType;
 }
 
-FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError)
+FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError, bool ignoreModTypes)
 {
     FactoryType factoryType;
 
@@ -2358,7 +2358,7 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError)
     return factoryType;
 }
 
-FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError)
+FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (String_Is_Empty(factoryTypeString))
     {
@@ -2374,7 +2374,7 @@ FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError)
 
     auto factoryTypeStr = strdup(factoryTypeString);
 
-    auto factoryType = Parse_Factory_Type(factoryTypeStr, parseError);
+    auto factoryType = Parse_Factory_Type(factoryTypeStr, parseError, ignoreModTypes);
 
     delete factoryTypeStr;
 

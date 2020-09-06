@@ -51,7 +51,6 @@ class WeaponTypeClass
 {
 	private:
 		static WeaponTypeClass* Weapons;
-
 	public:
 		/*
 		**	This is the unit class of the projectile fired. A subset of the unit types
@@ -96,11 +95,14 @@ class WeaponTypeClass
 		**	The INI name of the house is pointed to by this element. This is the
 		**	identification name used in the scenario INI file.
 		*/
-		char const* IniName;
+		char* IniName;
 
 		char* FriendlyName;
 
 		bool IsModType;
+
+		char ModBaseIniName[32];
+		WeaponType Type;
 
 		static WeaponTypeClass const* By_Type(WeaponType type);
 
@@ -120,7 +122,6 @@ class WarheadTypeClass
 {
 	private:
 		static WarheadTypeClass* Warheads;
-
 	public:
 
 		/*
@@ -154,11 +155,15 @@ class WarheadTypeClass
 		**	The INI name of the house is pointed to by this element. This is the
 		**	identification name used in the scenario INI file.
 		*/
-		char const* IniName;
+		char* IniName;
 
 		char* FriendlyName;
 
 		bool IsModType;
+
+		char ModBaseIniName[32];
+
+		WarheadType Type;
 
 		static WarheadTypeClass const* By_Type(WarheadType type);
 
@@ -195,7 +200,7 @@ class HouseTypeClass {
 		**	The INI name of the house is pointed to by this element. This is the
 		**	identification name used in the scenario INI file.
 		*/
-		char const *IniName;
+		char* IniName;
 
 		/*
 		**	The full name (translated) of the house is identified by this number.
@@ -253,7 +258,7 @@ class HouseTypeClass {
 
 		//------------------------------------------------------------------------
 		HouseTypeClass(HousesType house,
-							char const *ini,
+							char* ini,
 							int fullname,
 							char const *ext,
 							int lemon,
@@ -266,9 +271,13 @@ class HouseTypeClass {
 		static HousesType  From_Name(char const *name);
 		static HouseTypeClass const &  As_Reference(HousesType house);
 		static void One_Time(void);
+		bool IsModType;
 
+		char ModBaseIniName[32];
+		HousesType Type;
+		HouseTypeClass const* HouseTypeClass::By_Type(HousesType type);
 	private:
-		static HouseTypeClass const * const Pointers[HOUSE_COUNT];
+		static HouseTypeClass const* const Pointers[HOUSE_COUNT];
 };
 
 
@@ -902,6 +911,12 @@ class BuildingTypeClass : public TechnoTypeClass {
 		#endif
 
 		OverlayType Overlay_Type() const;
+		bool IsModType;
+
+		char ModBaseIniName[32];
+
+		static BuildingTypeClass const** Pointers;
+		static BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type);
 
 	private:
 
@@ -918,9 +933,6 @@ class BuildingTypeClass : public TechnoTypeClass {
 		**	cells the building has visual overlap but does not occupy.
 		*/
 		short const *OverlapList;
-
-		static BuildingTypeClass const** Pointers;
-		static BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type);
 		
 		/*
 		**	The construction animation graphic data pointer is
@@ -1419,7 +1431,10 @@ class BulletTypeClass : public ObjectTypeClass
 		**	The INI name of the house is pointed to by this element. This is the
 		**	identification name used in the scenario INI file.
 		*/
-		char const* IniName;
+		char* IniName;
+		bool IsModType;
+
+		char ModBaseIniName[32];
 
 		//---------------------------------------------------------------------
 		BulletTypeClass(

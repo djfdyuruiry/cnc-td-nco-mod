@@ -2,7 +2,8 @@
 
 set GAME_FILES_PATH=%~dp0..\game
 
-set outDir=%~1
+set outDir="..\bin\win32\"
+rem %~1
 
 call "%~dp0lib\log.bat" "INFO" "Copying rules, lua scripts and creating log directory..."
 

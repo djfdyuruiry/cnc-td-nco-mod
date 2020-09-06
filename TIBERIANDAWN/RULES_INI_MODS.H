@@ -6,19 +6,21 @@
 
 #define MOD_RULES_SECTION_NAME "Mods"
 
-#define NEW_WEAPONS_RULE "NewWeapons"
+
+#define NEW_AIRCRAFT_RULE "NewAircraft"
+
+#define NEW_BUILDINGS_RULE "NewBuildings"
 
 #define NEW_BULLETS_RULE "NewBullets"
-
-#define NEW_WARHEADS_RULE "NewWarheads"
 
 #define NEW_INFANTRY_RULE "NewInfantry"
 
 #define NEW_UNITS_RULE "NewUnits"
 
-#define NEW_AIRCRAFT_RULE "NewAircraft"
+#define NEW_WARHEADS_RULE "NewWarheads"
 
-#define NEW_BUILDINGS_RULE "NewBuildings"
+#define NEW_WEAPONS_RULE "NewWeapons"
+
 
 #define BASE_TYPE_RULE "BaseType"
 

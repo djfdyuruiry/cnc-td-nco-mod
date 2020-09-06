@@ -607,7 +607,7 @@ BulletTypeClass::BulletTypeClass(
 	RulesName = rulesName;
 
 	GetRules() << RulesIniSectionBuilder::BuildBulletSection(rulesName);
-
+	
 	FriendlyName = ReadRuleValue<char*>(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	IsHigh = ReadRuleValue<bool>(RulesName, BULLET_HIGH_RULE, is_high);
 	IsAntiAircraft = ReadRuleValue<bool>(RulesName, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
@@ -629,6 +629,20 @@ BulletTypeClass::BulletTypeClass(
 	Range = ReadRuleValue<int>(RulesName, BULLET_RANGE_RULE, range);
 }
 
+void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)
+{
+	auto iniName = bullet->IniName;
+
+	Read_Object_Rules(bullet);
+	//Read_Techno_Rules(bullet);
+	// TODO: make mappings
+	//bullet->CanSelfRepair = ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, bullet->CanSelfRepair);
+}
+
+void BulletTypeClass::Add_Bullet_Type(BulletTypeClass* bulletInstance)
+{
+	Pointers[bulletInstance->Type] = bulletInstance;
+}
 
 /***********************************************************************************************
  * BulletTypeClass::One_Time -- Performs the one time processing for bullets.                  *

@@ -3,17 +3,17 @@
 #include "defines.h"
 
 // generic parsers
-DiffType Parse_Difficulty_Type(char * difficultyTypeString, bool* parseError);
+DiffType Parse_Difficulty_Type(char * difficultyTypeString, bool* parseError, bool ignoreModTypes = false);
 
 const char* Difficulty_Type_To_String(DiffType difficultyType);
 
-HousesType Parse_House_Type(char* houseTypeString, bool* parseError);
+HousesType Parse_House_Type(char* houseTypeString, bool* parseError, bool ignoreModTypes = false);
 
-HousesType Parse_House_Type(const char* houseTypeString, bool* parseError);
+HousesType Parse_House_Type(const char* houseTypeString, bool* parseError, bool ignoreModTypes = false);
 
-int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError);
+int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError, bool ignoreModTypes = false);
 
-int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError);
+int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError, bool ignoreModTypes = false);
 
 const char* House_Type_To_String(HousesType houseType);
 
@@ -27,9 +27,9 @@ WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError, boo
 
 const char* Weapon_Type_To_String(WeaponType weaponType, bool ignoreModTypes = false);
 
-ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError);
+ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError, bool ignoreModTypes = false);
 
-ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError);
+ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError, bool ignoreModTypes = false);
 
 const char* Armor_Type_To_String(ArmorType armorType);
 
@@ -59,9 +59,9 @@ UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError, bool igno
 
 const char* Unit_Type_To_String(UnitType unitType, bool ignoreModTypes = false);
 
-SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError);
+SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes = false);
 
-SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError);
+SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes = false);
 
 const char* Unit_Speed_Type_To_String(SpeedType unitSpeedType);
 
@@ -80,10 +80,10 @@ StructType Parse_Structure_Type(const char* structTypeString, bool* parseError, 
 
 const char* Structure_Type_To_String(StructType structType, bool ignoreModTypes = false);
 
-long Structure_Type_To_Prerequisite(StructType structType, bool* parseError);
+long Structure_Type_To_Prerequisite(StructType structType, bool* parseError, bool ignoreModTypes = false);
 
-FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError);
+FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError, bool ignoreModTypes = false);
 
-FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError);
+FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError, bool ignoreModTypes = false);
 
 const char* Factory_Type_To_String(FactoryType factoryType);

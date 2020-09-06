@@ -16,7 +16,7 @@ private:
 	template<class T> T GetParsedStringRule(
 		RulesIniRule& rule,
 		const char* typeName,
-		T(*parser)(char*, bool*),
+		T(*parser)(char*, bool*, bool),
 		T defaultValue
 	)
 	{
@@ -32,7 +32,7 @@ private:
 		Convert_String_To_Upper_Case(stringValue);
 
 		bool parseError = false;
-		auto parsedValue = parser(stringValue, &parseError);
+		auto parsedValue = parser(stringValue, &parseError, parseError);
 
 		if (parseError)
 		{

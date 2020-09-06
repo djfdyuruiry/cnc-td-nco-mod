@@ -126,22 +126,63 @@ public:
 		return RulesIniSection::BuildSection(MOD_RULES_SECTION_NAME)
 			.WithDefaultType(UNSIGNED_INT_RULE)
 			.WithRules([](IRulesIniSection& s) {
-				s << NEW_INFANTRY_RULE << STRING_RULE
-				  << s.BuildRule(NEW_INFANTRY_COUNT_RULE)
-					  .WithMax(CHAR_MAX)
-				  << s.BuildRule(INFANTRY_COUNT_RULE)
-					  .WithDefault(INFANTRY_COUNT)
-					  .WithMin(INFANTRY_FIRST)
-					  .WithMax(CHAR_MAX)
-				  
-				  << NEW_UNITS_RULE << STRING_RULE
-				  << s.BuildRule(NEW_UNIT_COUNT_RULE)
-					  .WithMax(CHAR_MAX)
-				  << s.BuildRule(UNIT_COUNT_RULE)
-					  .WithDefault(UNIT_COUNT)
-					  .WithMin(UNIT_FIRST)
-					  .WithMax(CHAR_MAX);
-			});
+			s << NEW_AIRCRAFT_RULE << STRING_RULE
+				<< s.BuildRule(NEW_AIRCRAFT_COUNT_RULE)
+				.WithMax(CHAR_MAX)
+				<< s.BuildRule(AIRCRAFT_COUNT_RULE)
+				.WithDefault(AIRCRAFT_COUNT)
+				.WithMin(AIRCRAFT_FIRST)
+				.WithMax(CHAR_MAX)
+
+
+				<< NEW_BUILDINGS_RULE << STRING_RULE
+				<< s.BuildRule(NEW_BUILDING_COUNT_RULE)
+				.WithMax(CHAR_MAX)
+				<< s.BuildRule(BUILDING_COUNT_RULE)
+				.WithDefault(STRUCT_COUNT)
+				.WithMin(STRUCT_FIRST)
+				.WithMax(CHAR_MAX)
+
+				<< NEW_BULLETS_RULE << STRING_RULE
+				<< s.BuildRule(NEW_BULLET_COUNT_RULE)
+				.WithMax(CHAR_MAX)
+				<< s.BuildRule(BULLET_COUNT_RULE)
+				.WithDefault(BULLET_COUNT)
+				.WithMin(BULLET_FIRST)
+				.WithMax(CHAR_MAX)
+
+				<< NEW_INFANTRY_RULE << STRING_RULE
+				<< s.BuildRule(NEW_INFANTRY_COUNT_RULE)
+				.WithMax(CHAR_MAX)
+				<< s.BuildRule(INFANTRY_COUNT_RULE)
+				.WithDefault(INFANTRY_COUNT)
+				.WithMin(INFANTRY_FIRST)
+				.WithMax(CHAR_MAX)
+
+				<< NEW_UNITS_RULE << STRING_RULE
+				<< s.BuildRule(NEW_UNIT_COUNT_RULE)
+				.WithMax(CHAR_MAX)
+				<< s.BuildRule(UNIT_COUNT_RULE)
+				.WithDefault(UNIT_COUNT)
+				.WithMin(UNIT_FIRST)
+				.WithMax(CHAR_MAX)
+				<< NEW_WARHEADS_RULE << STRING_RULE
+				<< s.BuildRule(NEW_WARHEAD_COUNT_RULE)
+				.WithMax(CHAR_MAX)
+				<< s.BuildRule(WARHEAD_COUNT_RULE)
+				.WithDefault(WARHEAD_COUNT)
+				.WithMin(WARHEAD_FIRST)
+				.WithMax(CHAR_MAX)
+
+				<< NEW_WEAPONS_RULE << STRING_RULE
+				<< s.BuildRule(NEW_WEAPON_COUNT_RULE)
+				.WithMax(CHAR_MAX)
+				<< s.BuildRule(WEAPON_COUNT_RULE)
+				.WithDefault(WEAPON_COUNT)
+				.WithMin(WEAPON_FIRST)
+				.WithMax(CHAR_MAX);
+
+				});
 	}
 
 	static IRulesIniSection& BuildGameRules()
