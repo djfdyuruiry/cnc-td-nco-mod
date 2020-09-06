@@ -816,3 +816,9 @@ void AircraftTypeClass::Dimensions(int &width, int &height) const
 
 
 RTTIType AircraftTypeClass::What_Am_I(void) const {return RTTI_AIRCRAFTTYPE;};
+char* AircraftTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
+}

@@ -4250,28 +4250,6 @@ void BuildingTypeClass::Dimensions(int &width, int &height) const
 
 
 /***********************************************************************************************
- * BuildingTypeClass::As_Reference -- Fetches reference to the building type specified.        *
- *                                                                                             *
- *    This routine will fetch a reference to the BuildingTypeClass as indicated by the         *
- *    building type number specified.                                                          *
- *                                                                                             *
- * INPUT:   type  -- The building type number to convert into a BuildingTypeClass reference.   *
- *                                                                                             *
- * OUTPUT:  Returns with a reference to the building type class as indicated by the            *
- *          parameter.                                                                         *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   01/23/1995 JLB : Created.                                                                 *
- *=============================================================================================*/
-BuildingTypeClass const & BuildingTypeClass::As_Reference(StructType type)
-{
-	return(* Pointers[type]);
-}
-
-
-/***********************************************************************************************
  * BuildingTypeClass::Occupy_List -- Fetches the occupy list for the building.                 *
  *                                                                                             *
  *    Use this routine to fetch the occupy list pointer for the building. The occupy list is   *
@@ -4667,4 +4645,10 @@ int BuildingTypeClass::Cost_Of(void) const
 #endif
 
 	return(TechnoTypeClass::Cost_Of());
+}
+char* BuildingTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
 }

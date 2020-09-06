@@ -135,11 +135,6 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 	return &Weapons[type];
 }
 
-WeaponTypeClass const& WeaponTypeClass::As_Reference(WeaponType type)
-{
-	return *(By_Type(type));
-}
-
 void WeaponTypeClass::Read_Weapon_Rules(WeaponTypeClass* weapon)
 {
 	auto iniName = weapon->IniName;
@@ -157,7 +152,12 @@ void WeaponTypeClass::Add_Weapon_Type(WeaponTypeClass* WeaponInstance)
 	WeaponPointers[WeaponInstance->Type] = WeaponInstance;
 }
 
-
+char* WeaponTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
+}
 /***************************************************************************
 **	These are the various warheads.
 **
@@ -241,10 +241,11 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 
 	return &Warheads[type];
 }
-
-WarheadTypeClass const& WarheadTypeClass::As_Reference(WarheadType type)
+char* WarheadTypeClass::Resolve_Ini_Name()
 {
-	return *(By_Type(type));
+	return IsModType
+		? ModBaseIniName
+		: IniName;
 }
 
 /***************************************************************************

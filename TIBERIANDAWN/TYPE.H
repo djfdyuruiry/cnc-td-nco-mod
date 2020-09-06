@@ -100,13 +100,14 @@ class WeaponTypeClass
 		char* FriendlyName;
 
 		bool IsModType;
-
+		char* Resolve_Ini_Name();
 		char ModBaseIniName[32];
 		WeaponType Type;
 
 		static WeaponTypeClass const* By_Type(WeaponType type);
 
-		static WeaponTypeClass const& As_Reference(WeaponType type);
+		static WeaponTypeClass const& As_Reference(WeaponType type) { return *By_Type(type); };
+
 		static void Read_Weapon_Rules(WeaponTypeClass* type);
 		static void Add_Weapon_Type(WeaponTypeClass* type);
 
@@ -162,12 +163,13 @@ class WarheadTypeClass
 		bool IsModType;
 
 		char ModBaseIniName[32];
+		char* Resolve_Ini_Name();
 
 		WarheadType Type;
 
 		static WarheadTypeClass const* By_Type(WarheadType type);
 
-		static WarheadTypeClass const& As_Reference(WarheadType type);
+		static WarheadTypeClass const& As_Reference(WarheadType type) { return *By_Type(type); };
 
 		WarheadTypeClass(
 			const char* friendlyName,
@@ -878,8 +880,8 @@ class BuildingTypeClass : public TechnoTypeClass {
 
 		static void Read_Building_Rules(BuildingTypeClass* type);
 		static void Add_Building_Type(BuildingTypeClass* type);
-
-		static BuildingTypeClass const &  As_Reference(StructType type);
+		
+		static BuildingTypeClass const &  As_Reference(StructType type) { return *By_Type(type); };
 		static StructType  From_Name(char const *name);
 		static void  Init(TheaterType theater);
 		static void One_Time(void);
@@ -912,6 +914,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 
 		OverlayType Overlay_Type() const;
 		bool IsModType;
+		char* Resolve_Ini_Name();
 
 		char ModBaseIniName[32];
 
@@ -1433,6 +1436,7 @@ class BulletTypeClass : public ObjectTypeClass
 		*/
 		char* IniName;
 		bool IsModType;
+		char* Resolve_Ini_Name();
 
 		char ModBaseIniName[32];
 
@@ -1466,7 +1470,7 @@ class BulletTypeClass : public ObjectTypeClass
 
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
 		static BulletTypeClass const* BulletTypeClass::By_Type(BulletType type);
-		static BulletTypeClass const &  As_Reference(BulletType type) {return *Pointers[type];};
+		static BulletTypeClass const& As_Reference(BulletType type) { return *By_Type(type); };
 		static void  Init(TheaterType ) {};
 		static void One_Time(void);
 
@@ -1921,8 +1925,7 @@ class AircraftTypeClass : public TechnoTypeClass
 
 		static AircraftType  From_Name(char const *name);
 		static AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type);
-		
-		static AircraftTypeClass const &  As_Reference(AircraftType a) {return *Pointers[a];};
+		static AircraftTypeClass const &  As_Reference(AircraftType type) { return *By_Type(type); };
 		static void  Init(TheaterType);
 		static void One_Time(void);
 		static void Prep_For_Add(void);
@@ -1935,6 +1938,8 @@ class AircraftTypeClass : public TechnoTypeClass
 		virtual short const *  Occupy_List(bool placement=false) const;
 		virtual short const *  Overlap_List(void) const;
 		virtual BuildingClass *  Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const;
+		char* Resolve_Ini_Name();
+
 		virtual int  Max_Pips(void) const;
 
 		#ifdef SCENARIO_EDITOR

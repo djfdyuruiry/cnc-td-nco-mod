@@ -46,13 +46,13 @@ local typeAreas =
 
 local typeAreaOrder =
 {
-  "Weapons",
-  "Bullets",
-  "Warheads",
   "Infantry",
   "Units",
   "Aircraft",
-  "Buildings"
+  "Buildings",
+  "Weapons",
+  "Bullets",
+  "Warheads"
 }
 
 local outputFileName = "RULES-DEFAULT.INI"
@@ -64,6 +64,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 
   rulesFile:write(string.format("[%s]\n", typeAreaName))
   idx=1
+  log("Creating list %s", typeAreaName)
   for _, areaType in ipairs(typeArea.getTypes()) do
     rulesFile:write(string.format("%s=%s\n",tostring(idx),areaType))
 	idx=idx+1
@@ -72,6 +73,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   rulesFile:write("\n")
 
   for _, areaType in ipairs(typeArea.getTypes()) do
+    log("Checking areaType %s", areaType)
     local friendlyName = typeArea.getRuleValue(areaType, "FriendlyName")
     local isModType = typeArea.getRuleValue(areaType, "IsModType")
 
@@ -81,6 +83,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 
     rulesFile:write(string.format("; %s\n", friendlyName))
     rulesFile:write(string.format("[%s]\n", areaType))
+    log("[%s]", areaType)
 
     for _, ruleName in ipairs(typeArea.getRuleNames()) do
       if ruleName == "IsModType" or ruleName == "Owner" or ruleName == "BaseType" then
@@ -89,6 +92,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 
       local ruleValue = typeArea.getRuleValue(areaType, ruleName)
       local postfix = ""
+      log("%s=%s", ruleName, tostring(ruleValue):gsub(".0$", ""))
 
       if ruleName == "FriendlyName" and ruleValue:find("'") then
         postfix = "\n;'"
@@ -122,6 +126,7 @@ local function dumpRules()
   rulesFile = io.open(outputFileName, "a+")
 
   for _, areaName in ipairs(typeAreaOrder) do
+    log("Dumping %s", areaName)
     dumpRulesForTypeArea(rulesFile, areaName, typeAreas[areaName])
   end
 end

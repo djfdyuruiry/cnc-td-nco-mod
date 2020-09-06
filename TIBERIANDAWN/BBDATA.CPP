@@ -606,8 +606,6 @@ BulletTypeClass::BulletTypeClass(
 
 	RulesName = rulesName;
 
-	GetRules() << RulesIniSectionBuilder::BuildBulletSection(rulesName);
-	
 	FriendlyName = ReadRuleValue<char*>(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	IsHigh = ReadRuleValue<bool>(RulesName, BULLET_HIGH_RULE, is_high);
 	IsAntiAircraft = ReadRuleValue<bool>(RulesName, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
@@ -627,16 +625,38 @@ BulletTypeClass::BulletTypeClass(
 	ROT = Read_Rate_Of_Turn(RulesName, rot);
 	Arming = ReadRuleValue<int>(RulesName, BULLET_ARMING_RULE, arming);
 	Range = ReadRuleValue<int>(RulesName, BULLET_RANGE_RULE, range);
+	IsModType = false;
+	GetRules() << RulesIniSectionBuilder::BuildBulletSection(rulesName);
+	Read_Bullet_Rules(this);
+
 }
 
 void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)
 {
 	auto iniName = bullet->IniName;
 
-	Read_Object_Rules(bullet);
-	//Read_Techno_Rules(bullet);
-	// TODO: make mappings
-	//bullet->CanSelfRepair = ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, bullet->CanSelfRepair);
+	//Read_Object_Rules(bullet);
+	
+	bullet->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
+	bullet->IsHigh = ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, bullet->IsHigh);
+	bullet->IsAntiAircraft = ReadRuleValue<bool>(iniName, BULLET_ANTI_AIRCRAFT_RULE, bullet->IsAntiAircraft);
+	bullet->IsTranslucent = ReadRuleValue<bool>(iniName, BULLET_TRANSLUCENT_RULE, bullet->IsTranslucent);
+	bullet->IsArcing = ReadRuleValue<bool>(iniName, BULLET_ARCING_RULE, bullet->IsArcing);
+	bullet->IsHoming = ReadRuleValue<bool>(iniName, BULLET_HOMING_RULE, bullet->IsHoming);
+	bullet->IsDropping = ReadRuleValue<bool>(iniName, BULLET_DROPPING_RULE, bullet->IsDropping);
+	bullet->IsInvisible = ReadRuleValue<bool>(iniName, BULLET_INVISIBLE_RULE, bullet->IsInvisible);
+	bullet->IsProximityArmed = ReadRuleValue<bool>(iniName, BULLET_PROXIMITY_ARMED_RULE, bullet->IsProximityArmed);
+	bullet->IsFlameEquipped = ReadRuleValue<bool>(iniName, BULLET_FLAME_EQUIPPED_RULE, bullet->IsFlameEquipped);
+	bullet->IsFueled = ReadRuleValue<bool>(iniName, BULLET_FUELED_RULE, bullet->IsFueled);
+	bullet->IsFaceless = ReadRuleValue<bool>(iniName, BULLET_FACELESS_RULE, bullet->IsFaceless);
+	bullet->IsInaccurate = ReadRuleValue<bool>(iniName, BULLET_INACCURATE_RULE, bullet->IsInaccurate);
+
+	bullet->Warhead = ReadRuleValue<WarheadType>(iniName, BULLET_WARHEAD_RULE, bullet->Warhead);
+	bullet->MaxSpeed = Read_Speed(iniName, bullet->MaxSpeed);
+	bullet->ROT = Read_Rate_Of_Turn(iniName, bullet->ROT);
+	bullet->Arming = ReadRuleValue<int>(iniName, BULLET_ARMING_RULE, bullet->Arming);
+	bullet->Range = ReadRuleValue<int>(iniName, BULLET_RANGE_RULE, bullet->Range);
+
 }
 
 void BulletTypeClass::Add_Bullet_Type(BulletTypeClass* bulletInstance)
@@ -685,3 +705,9 @@ void BulletTypeClass::One_Time(void)
 	}
 }
 
+char* BulletTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
+}
