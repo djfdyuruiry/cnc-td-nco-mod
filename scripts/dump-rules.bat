@@ -6,7 +6,6 @@ if exist RULES-DEFAULT.INI (
   del RULES-DEFAULT.INI
 )
 
-call "%~dp0lib\log.bat" "INFO" "TiberianDawn.exe --dump-rules"
 TiberianDawn.exe --dump-rules
 
 if errorlevel 1 (

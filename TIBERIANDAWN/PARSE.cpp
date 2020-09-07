@@ -493,7 +493,7 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError, bool igno
     {
         weaponType = WEAPON_OBELISK_LASER;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "SAM"))
+    else if (Strings_Are_Equal(weaponTypeString, "NIKE"))
     {
         weaponType = WEAPON_NIKE;
     }
@@ -639,7 +639,7 @@ const char* Weapon_Type_To_String(WeaponType weaponType, bool ignoreModTypes)
     }
     else if (weaponType == WEAPON_NIKE)
     {
-        weaponTypeString = "SAM";
+        weaponTypeString = "NIKE";
     }
     else if (weaponType == WEAPON_HONEST_JOHN)
     {

@@ -606,6 +606,8 @@ BulletTypeClass::BulletTypeClass(
 
 	RulesName = rulesName;
 
+	GetRules() << RulesIniSectionBuilder::BuildBulletSection(rulesName);
+
 	FriendlyName = ReadRuleValue<char*>(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	IsHigh = ReadRuleValue<bool>(RulesName, BULLET_HIGH_RULE, is_high);
 	IsAntiAircraft = ReadRuleValue<bool>(RulesName, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
@@ -626,14 +628,14 @@ BulletTypeClass::BulletTypeClass(
 	Arming = ReadRuleValue<int>(RulesName, BULLET_ARMING_RULE, arming);
 	Range = ReadRuleValue<int>(RulesName, BULLET_RANGE_RULE, range);
 	IsModType = false;
-	GetRules() << RulesIniSectionBuilder::BuildBulletSection(rulesName);
+
 	Read_Bullet_Rules(this);
 
 }
 
 void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)
 {
-	auto iniName = bullet->IniName;
+	auto iniName = bullet->RulesName;
 
 	//Read_Object_Rules(bullet);
 	
