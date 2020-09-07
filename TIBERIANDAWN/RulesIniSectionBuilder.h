@@ -386,6 +386,7 @@ public:
 					  .WithMax(UCHAR_MAX)
 
 				  << WEAPON_RANGE_RULE
+				  << BASE_TYPE_RULE << STRING_RULE
 				  << IS_MOD_TYPE_RULE << BOOL_RULE;
 			});
 	}
@@ -413,7 +414,8 @@ public:
 				  << BuildRateOfTurnRule(s)
 				  << BULLET_ARMING_RULE << INT_RULE
 				  << BULLET_RANGE_RULE << INT_RULE
-				  << IS_MOD_TYPE_RULE << BOOL_RULE;
+				  << IS_MOD_TYPE_RULE << BOOL_RULE
+				  << BASE_TYPE_RULE << STRING_RULE;
 			});
 	}
 
@@ -432,7 +434,8 @@ public:
 				  << WARHEAD_ALUMINUM_ARMOR_MODIFIER_RULE
 				  << WARHEAD_STEEL_ARMOR_MODIFIER_RULE
 				  << WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE
-				  << IS_MOD_TYPE_RULE << BOOL_RULE;
+				  << IS_MOD_TYPE_RULE << BOOL_RULE
+  				  << BASE_TYPE_RULE << STRING_RULE;
 			});
 	}
 

@@ -141,7 +141,7 @@ void WeaponTypeClass::Read_Weapon_Rules(WeaponTypeClass* weapon)
 
 	//Read_Object_Rules(weapon);
 	//Read_Techno_Rules(weapon);
-
+	weapon->Fires = ReadRuleValue<BulletType>(iniName, WEAPON_FIRES_RULE, weapon->Fires);
 	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
 	weapon->ROF = Read_Weapon_Rate_Of_Fire(iniName, weapon->ROF);
 	weapon->Range = Read_Weapon_Range(iniName, weapon->Range);
@@ -185,7 +185,7 @@ WarheadTypeClass::WarheadTypeClass(
 	FriendlyName = ReadRuleValue<char*>(warheadTypeString, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	SpreadFactor = ReadRuleValue<unsigned int>(warheadTypeString, WARHEAD_SPREAD_FACTOR_RULE, spreadFactor);
 	IsWallDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_WALLS_RULE, isWallDestroyer);
-	IsWoodDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_WOOD_RULE, isWallDestroyer);
+	IsWoodDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_WOOD_RULE, isWoodDestroyer);
 	IsTiberiumDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_TIBERIUM_RULE, isTiberiumDestroyer);
 
 	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
@@ -206,10 +206,9 @@ void WarheadTypeClass::Read_Warhead_Rules(WarheadTypeClass* warhead)
 
 	warhead->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
 	warhead->SpreadFactor = ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
-	// TODO: work out these mappings
-	//warhead->IsWallDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, isWallDestroyer);
-	//warhead->IsWoodDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, isWallDestroyer);
-	//warhead->IsTiberiumDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, isTiberiumDestroyer);
+	warhead->IsWallDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, warhead->IsWallDestroyer);
+	warhead->IsWoodDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, warhead->IsWoodDestroyer);
+	warhead->IsTiberiumDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, warhead->IsTiberiumDestroyer);
 }
 
 void WarheadTypeClass::Add_Warhead_Type(WarheadTypeClass* WarheadInstance)
