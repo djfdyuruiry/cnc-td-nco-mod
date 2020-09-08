@@ -448,8 +448,9 @@ AircraftType AircraftTypeClass::From_Name(char const *name)
 void AircraftTypeClass::One_Time(void)
 {
 	AircraftType index;
+	char aircraftCount = Read_Aircraft_Count();
 
-	for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+	for (index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		AircraftTypeClass	const & uclass = As_Reference(index);
 
@@ -517,7 +518,8 @@ ObjectClass * AircraftTypeClass::Create_One_Of(HouseClass * house) const
  *=============================================================================================*/
 void AircraftTypeClass::Prep_For_Add(void)
 {
-	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+	char aircraftCount = Read_Aircraft_Count();
+	for (AircraftType index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(&As_Reference(index));
 		}
@@ -771,8 +773,9 @@ void AircraftTypeClass::Init(TheaterType theater)
 			char buffer[_MAX_FNAME];
 			char fullname[_MAX_FNAME+_MAX_EXT];
 			void const * cameo_ptr;
+			char aircraftCount = Read_Aircraft_Count();
 
-			for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+			for (index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 				AircraftTypeClass	const & uclass = As_Reference(index);
 
 				((void const *&)uclass.CameoData) = NULL;
