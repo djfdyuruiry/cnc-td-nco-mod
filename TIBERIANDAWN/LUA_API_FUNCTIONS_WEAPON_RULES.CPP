@@ -83,6 +83,19 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
             weapon->IsModType = isModType;
         }
     }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        auto baseType = value;
+
+        *valueParseError = String_Is_Empty(baseType) || strlen(baseType) > 32;
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", weapon->ModBaseIniName, baseType);
+
+            strcpy(weapon->ModBaseIniName, strdup(baseType));
+        }
+    }
     else
     {
         return false;
@@ -130,6 +143,22 @@ static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char
         Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->IsModType);
 
         lua_pushboolean(lua, weapon->IsModType);
+    }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        if (weapon->IsModType)
+        {
+            Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->ModBaseIniName);
+
+            lua_pushstring(lua, weapon->ModBaseIniName);
+        }
+        else
+        {
+            // fallback to ini name for non-mod type instances
+            Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->IniName);
+
+            lua_pushstring(lua, weapon->IniName);
+        }
     }
     else
     {

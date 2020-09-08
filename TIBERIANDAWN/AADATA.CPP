@@ -260,7 +260,6 @@ AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 {
 	if (Pointers != NULL) {
 		Log_Trace("Aircraft lookup by type: %d", type);
-
 		return Pointers[type];
 	}
 
@@ -419,8 +418,10 @@ void AircraftTypeClass::Add_Aircraft_Type(AircraftTypeClass* aircraftInstance)
 AircraftType AircraftTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (AircraftType classid = AIRCRAFT_FIRST; classid < AIRCRAFT_COUNT; classid++) {
-			if (stricmp(Pointers[classid]->IniName, name) == 0) {
+		char aircraftCount = Read_Aircraft_Count();
+
+		for (AircraftType classid = AIRCRAFT_FIRST; classid < aircraftCount; classid++) {
+			if (stricmp(By_Type(classid)->IniName, name) == 0) {
 				return(classid);
 			}
 		}

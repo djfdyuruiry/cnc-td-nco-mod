@@ -21,7 +21,7 @@ private:
 protected:
 	StructType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Structure_Type(typeString, parseError, true);
+		return Parse_Structure_Type(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)

@@ -5,46 +5,38 @@
 #include "RulesIniTypes.h"
 
 #define MOD_RULES_SECTION_NAME "Mods"
-
-
-#define NEW_AIRCRAFT_RULE "NewAircraft"
-
-#define NEW_BUILDINGS_RULE "NewBuildings"
-
-#define NEW_BULLETS_RULE "NewBullets"
-
-#define NEW_INFANTRY_RULE "NewInfantry"
-
-#define NEW_UNITS_RULE "NewUnits"
-
-#define NEW_WARHEADS_RULE "NewWarheads"
-
-#define NEW_WEAPONS_RULE "NewWeapons"
-
+#define COUNT_RULES_SECTION_NAME "Counts"
 
 #define BASE_TYPE_RULE "BaseType"
 
 // virtual rules calculated on load of the rules file
+#define NEW_AIRCRAFT_RULE "NewAircraft"
 #define NEW_AIRCRAFT_COUNT_RULE "NewAircraftCount"
 #define AIRCRAFT_COUNT_RULE "AircraftCount"
 
+#define NEW_BUILDINGS_RULE "NewBuildings"
 #define NEW_BUILDING_COUNT_RULE "NewBuildingCount"
 #define BUILDING_COUNT_RULE "BuildingCount"
 
+#define NEW_BULLETS_RULE "NewBullets"
 #define NEW_BULLET_COUNT_RULE "NewBulletCount"
 #define BULLET_COUNT_RULE "BulletCount"
 
+#define NEW_INFANTRY_RULE "NewInfantry"
 #define NEW_INFANTRY_COUNT_RULE "NewInfantryCount"
 #define INFANTRY_COUNT_RULE "InfantryCount"
 
+#define NEW_UNITS_RULE "NewUnits"
 #define NEW_UNIT_COUNT_RULE "NewUnitCount"
 #define UNIT_COUNT_RULE "UnitCount"
 
+#define NEW_WARHEADS_RULE "NewWarheads"
 #define NEW_WARHEAD_COUNT_RULE "NewWarheadCount"
 #define WARHEAD_COUNT_RULE "WarheadCount"
 
+#define NEW_WEAPONS_RULE "NewWeapons"
 #define NEW_WEAPON_COUNT_RULE "NewWeaponCount"
-#define WEAPON_COUNT_RULE "Count"
+#define WEAPON_COUNT_RULE "WeaponCount"
 
 void ReadMods();
 void InitialiseModsIfRequired();

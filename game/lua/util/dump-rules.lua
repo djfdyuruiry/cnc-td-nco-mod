@@ -1,11 +1,5 @@
 local typeAreas =
 {
-  Weapons = {
-    getTypes = getWeaponTypes,
-    getRuleNames = getWeaponRuleNames,
-    getRuleValue = getWeaponRule,
-    setRuleValue = setWeaponRule
-  },
   Bullets = {
     getTypes = getBulletTypes,
     getRuleNames = getBulletRuleNames,
@@ -17,6 +11,18 @@ local typeAreas =
     getRuleNames = getWarheadRuleNames,
     getRuleValue = getWarheadRule,
     setRuleValue = setWarheadRule
+  },
+  Weapons = {
+    getTypes = getWeaponTypes,
+    getRuleNames = getWeaponRuleNames,
+    getRuleValue = getWeaponRule,
+    setRuleValue = setWeaponRule
+  },
+  Buildings = {
+    getTypes = getBuildingTypes,
+    getRuleNames = getBuildingRuleNames,
+    getRuleValue = getBuildingRule,
+    rules = {}
   },
   Infantry = {
     getTypes = getInfantryTypes,
@@ -35,24 +41,18 @@ local typeAreas =
     getRuleNames = getAircraftRuleNames,
     getRuleValue = getAircraftRule,
     rules = {}
-  },
-  Buildings = {
-    getTypes = getBuildingTypes,
-    getRuleNames = getBuildingRuleNames,
-    getRuleValue = getBuildingRule,
-    rules = {}
   }
 }
 
 local typeAreaOrder =
 {
+  "Bullets",
+  "Warheads",
+  "Weapons",
+  "Buildings",
   "Infantry",
   "Units",
-  "Aircraft",
-  "Buildings",
-  "Weapons",
-  "Bullets",
-  "Warheads"
+  "Aircraft"
 }
 
 local outputFileName = "RULES-DEFAULT.INI"
@@ -66,8 +66,11 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   idx=1
   log("Creating list %s", typeAreaName)
   for _, areaType in ipairs(typeArea.getTypes()) do
-    rulesFile:write(string.format("%s=%s\n",tostring(idx),areaType))
-	idx=idx+1
+    local isModType = typeArea.getRuleValue(areaType, "IsModType")
+    if not isModType then
+      rulesFile:write(string.format("%s=%s\n",tostring(idx),areaType))
+	  idx=idx+1
+	end
   end
 
   rulesFile:write("\n")
@@ -92,7 +95,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 
       local ruleValue = typeArea.getRuleValue(areaType, ruleName)
       local postfix = ""
-      log("%s=%s", ruleName, tostring(ruleValue):gsub(".0$", ""))
+      
 
       if ruleName == "FriendlyName" and ruleValue:find("'") then
         postfix = "\n;'"

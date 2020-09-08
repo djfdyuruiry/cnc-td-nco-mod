@@ -21,7 +21,7 @@ private:
 protected:
 	UnitType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Unit_Type(typeString, parseError, true);
+		return Parse_Unit_Type(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)

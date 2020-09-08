@@ -64,14 +64,14 @@ static int Lua_Get_Unit_Types(lua_State* lua)
 
 static int Lua_Get_Aircraft_Types(lua_State* lua)
 {
-    Read_Object_Names(lua, AIRCRAFT_FIRST, AIRCRAFT_COUNT, &(Aircraft_Type_To_String));
+    Read_Object_Names(lua, AIRCRAFT_FIRST, Read_Aircraft_Count(), &(Aircraft_Type_To_String));
 
     return 1;
 }
 
 static int Lua_Get_Building_Types(lua_State* lua)
 {
-    Read_Object_Names(lua, STRUCT_FIRST, STRUCT_COUNT, &(Structure_Type_To_String));
+    Read_Object_Names(lua, STRUCT_FIRST, Read_Building_Count(), &(Structure_Type_To_String));
 
     return 1;
 }

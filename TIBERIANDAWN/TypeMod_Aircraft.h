@@ -21,7 +21,7 @@ private:
 protected:
 	AircraftType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Aircraft_Type(typeString, parseError, true);
+		return Parse_Aircraft_Type(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)

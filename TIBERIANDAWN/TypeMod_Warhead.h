@@ -21,7 +21,7 @@ private:
 protected:
 	WarheadType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Warhead_Type(typeString, parseError, true);
+		return Parse_Warhead_Type(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)

@@ -25,21 +25,21 @@ void ReadMods()
 {
 	Log_Info("Reading Mods");
 
-	AIRCRAFT_MOD = &AircraftTypeMod::Build();
-	BUILDING_MOD = &BuildingTypeMod::Build();
 	BULLET_MOD = &BulletTypeMod::Build();
-	INFANTRY_MOD = &InfantryTypeMod::Build();
-	UNIT_MOD = &UnitTypeMod::Build();
 	WARHEAD_MOD = &WarheadTypeMod::Build();
 	WEAPON_MOD = &WeaponTypeMod::Build();
+	BUILDING_MOD = &BuildingTypeMod::Build();
+	AIRCRAFT_MOD = &AircraftTypeMod::Build();
+	INFANTRY_MOD = &InfantryTypeMod::Build();
+	UNIT_MOD = &UnitTypeMod::Build();
 
-	AIRCRAFT_MOD->ReadTypes();
-	BUILDING_MOD->ReadTypes();
 	BULLET_MOD->ReadTypes();
-	INFANTRY_MOD->ReadTypes();
-	UNIT_MOD->ReadTypes();
 	WARHEAD_MOD->ReadTypes();
 	WEAPON_MOD->ReadTypes();
+	BUILDING_MOD->ReadTypes();
+	AIRCRAFT_MOD->ReadTypes();
+	INFANTRY_MOD->ReadTypes();
+	UNIT_MOD->ReadTypes();
 }
 
 void InitialiseModsIfRequired()
@@ -49,13 +49,13 @@ void InitialiseModsIfRequired()
 		return;
 	}
 
-	AIRCRAFT_MOD->InitialiseTypes();
-	BUILDING_MOD->InitialiseTypes();
 	BULLET_MOD->InitialiseTypes();
-	INFANTRY_MOD->InitialiseTypes();
-	UNIT_MOD->InitialiseTypes();
 	WARHEAD_MOD->InitialiseTypes();
 	WEAPON_MOD->InitialiseTypes();
+	BUILDING_MOD->InitialiseTypes();
+	AIRCRAFT_MOD->InitialiseTypes();
+	INFANTRY_MOD->InitialiseTypes();
+	UNIT_MOD->InitialiseTypes();
 
 	MODS_INITIALISED = true;
 }

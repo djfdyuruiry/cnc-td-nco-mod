@@ -142,7 +142,7 @@ HousesType Parse_House_Type(const char* houseTypeString, bool* parseError, bool 
 {
     auto houseTypeStr = strdup(houseTypeString);
 
-    auto houseType = Parse_House_Type(houseTypeStr, parseError);
+    auto houseType = Parse_House_Type(houseTypeStr, parseError, ignoreModTypes);
 
     delete houseTypeStr;
 
@@ -170,7 +170,7 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError, bool ignoreM
     for (auto i = 0u; i < houseNameListSize; i++)
     {
         bool houseParseError = false;
-        auto house = Parse_House_Type(houseNameList[i], &houseParseError);
+        auto house = Parse_House_Type(houseNameList[i], &houseParseError, ignoreModTypes);
 
         if (houseParseError)
         {
@@ -223,7 +223,7 @@ int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError, bool i
 
     auto houseTypeCsvStr = strdup(houseListCsv);
 
-    auto owner = Parse_House_Name_List_Csv(houseTypeCsvStr, parseError);
+    auto owner = Parse_House_Name_List_Csv(houseTypeCsvStr, parseError, ignoreModTypes);
 
     delete houseTypeCsvStr;
 
@@ -292,99 +292,99 @@ StructType Prerequisite_To_Structure_Type(long prerequisite)
     
     if (prerequisite == STRUCTF_NONE || prerequisite < 0l)
     {
-        structType = STRUCT_NONE;
+        return STRUCT_NONE;
     }
     else if (prerequisite == STRUCTF_ADVANCED_POWER)
     {
-        structType = STRUCT_ADVANCED_POWER;
+        return STRUCT_ADVANCED_POWER;
     }
     else if (prerequisite == STRUCTF_REPAIR)
     {
-        structType = STRUCT_REPAIR;
+        return STRUCT_REPAIR;
     }
     else if (prerequisite == STRUCTF_EYE)
     {
-        structType = STRUCT_EYE;
+        return STRUCT_EYE;
     }
     else if (prerequisite == STRUCTF_TEMPLE)
     {
-        structType = STRUCT_TEMPLE;
+        return STRUCT_TEMPLE;
     }
     else if (prerequisite == STRUCTF_HAND)
     {
-        structType = STRUCT_HAND;
+        return STRUCT_HAND;
     }
     else if (prerequisite == STRUCTF_BIO_LAB)
     {
-        structType = STRUCT_BIO_LAB;
+        return STRUCT_BIO_LAB;
     }
     else if (prerequisite == STRUCTF_OBELISK)
     {
-        structType = STRUCT_OBELISK;
+        return STRUCT_OBELISK;
     }
     else if (prerequisite == STRUCTF_ATOWER)
     {
-        structType = STRUCT_ATOWER;
+        return STRUCT_ATOWER;
     }
     else if (prerequisite == STRUCTF_WEAP)
     {
-        structType = STRUCT_WEAP;
+        return STRUCT_WEAP;
     }
     else if (prerequisite == STRUCTF_GTOWER)
     {
-        structType = STRUCT_GTOWER;
+        return STRUCT_GTOWER;
     }
     else if (prerequisite == STRUCTF_RADAR)
     {
-        structType = STRUCT_RADAR;
+        return STRUCT_RADAR;
     }
     else if (prerequisite == STRUCTF_TURRET)
     {
-        structType = STRUCT_TURRET;
+        return STRUCT_TURRET;
     }
     else if (prerequisite == STRUCTF_CONST)
     {
-        structType = STRUCT_CONST;
+        return STRUCT_CONST;
     }
     else if (prerequisite == STRUCTF_REFINERY)
     {
-        structType = STRUCT_REFINERY;
+        return STRUCT_REFINERY;
     }
     else if (prerequisite == STRUCTF_STORAGE)
     {
-        structType = STRUCT_STORAGE;
+        return STRUCT_STORAGE;
     }
     else if (prerequisite == STRUCTF_HELIPAD)
     {
-        structType = STRUCT_HELIPAD;
+        return STRUCT_HELIPAD;
     }
     else if (prerequisite == STRUCTF_SAM)
     {
-        structType = STRUCT_SAM;
+        return STRUCT_SAM;
     }
     else if (prerequisite == STRUCTF_AIRSTRIP)
     {
-        structType = STRUCT_AIRSTRIP;
+        return STRUCT_AIRSTRIP;
     }
     else if (prerequisite == STRUCTF_POWER)
     {
-        structType = STRUCT_POWER;
+        return STRUCT_POWER;
     }
     else if (prerequisite == STRUCTF_HOSPITAL)
     {
-        structType = STRUCT_HOSPITAL;
+        return STRUCT_HOSPITAL;
     }
     else if (prerequisite == STRUCTF_BARRACKS)
     {
-        structType = STRUCT_BARRACKS;
+        return STRUCT_BARRACKS;
     }
     else if (prerequisite == STRUCTF_TANKER)
     {
-        structType = STRUCT_TANKER;
+        return STRUCT_TANKER;
     }
     else if (prerequisite == STRUCTF_MISSION)
     {
-        structType = STRUCT_MISSION;
+        return STRUCT_MISSION;
     }
     else
     {
@@ -403,121 +403,131 @@ const char* Prerequisite_To_String(long prerequisite)
 
 WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError, bool ignoreModTypes)
 {
-    WeaponType weaponType;
+    WeaponType weaponType = WEAPON_NONE;
 
     if (Strings_Are_Equal(weaponTypeString, "NONE"))
     {
-        weaponType = WEAPON_NONE;
+        return WEAPON_NONE;
     }
     else if (Strings_Are_Equal(weaponTypeString, "RIFLE"))
     {
-        weaponType = WEAPON_RIFLE;
+        return WEAPON_RIFLE;
     }
     else if (Strings_Are_Equal(weaponTypeString, "CHAIN_GUN"))
     {
-        weaponType = WEAPON_CHAIN_GUN;
+        return WEAPON_CHAIN_GUN;
     }
     else if (Strings_Are_Equal(weaponTypeString, "PISTOL"))
     {
-        weaponType = WEAPON_PISTOL;
+        return WEAPON_PISTOL;
     }
     else if (Strings_Are_Equal(weaponTypeString, "M16"))
     {
-        weaponType = WEAPON_M16;
+        return WEAPON_M16;
     }
     else if (Strings_Are_Equal(weaponTypeString, "DRAGON"))
     {
-        weaponType = WEAPON_DRAGON;
+        return WEAPON_DRAGON;
     }
     else if (Strings_Are_Equal(weaponTypeString, "FLAMETHROWER"))
     {
-        weaponType = WEAPON_FLAMETHROWER;
+        return WEAPON_FLAMETHROWER;
     }
     else if (Strings_Are_Equal(weaponTypeString, "FLAME_TONGUE"))
     {
-        weaponType = WEAPON_FLAME_TONGUE;
+        return WEAPON_FLAME_TONGUE;
     }
     else if (Strings_Are_Equal(weaponTypeString, "CHEMSPRAY"))
     {
-        weaponType = WEAPON_CHEMSPRAY;
+        return WEAPON_CHEMSPRAY;
     }
     else if (Strings_Are_Equal(weaponTypeString, "GRENADE"))
     {
-        weaponType = WEAPON_GRENADE;
+        return WEAPON_GRENADE;
     }
     else if (Strings_Are_Equal(weaponTypeString, "75MM"))
     {
-        weaponType = WEAPON_75MM;
+        return WEAPON_75MM;
     }
     else if (Strings_Are_Equal(weaponTypeString, "105MM"))
     {
-        weaponType = WEAPON_105MM;
+        return WEAPON_105MM;
     }
     else if (Strings_Are_Equal(weaponTypeString, "120MM"))
     {
-        weaponType = WEAPON_120MM;
+        return WEAPON_120MM;
     }
     else if (Strings_Are_Equal(weaponTypeString, "TURRET_GUN"))
     {
-        weaponType = WEAPON_TURRET_GUN;
+        return WEAPON_TURRET_GUN;
     }
     else if (Strings_Are_Equal(weaponTypeString, "MAMMOTH_TUSK"))
     {
-        weaponType = WEAPON_MAMMOTH_TUSK;
+        return WEAPON_MAMMOTH_TUSK;
     }
     else if (Strings_Are_Equal(weaponTypeString, "ROCKET_LAUNCHER"))
     {
-        weaponType = WEAPON_MLRS;
+        return WEAPON_MLRS;
     }
     else if (Strings_Are_Equal(weaponTypeString, "155MM"))
     {
-        weaponType = WEAPON_155MM;
+        return WEAPON_155MM;
     }
     else if (Strings_Are_Equal(weaponTypeString, "M60MG"))
     {
-        weaponType = WEAPON_M60MG;
+        return WEAPON_M60MG;
     }
     else if (Strings_Are_Equal(weaponTypeString, "TOMAHAWK"))
     {
-        weaponType = WEAPON_TOMAHAWK;
+        return WEAPON_TOMAHAWK;
     }
     else if (Strings_Are_Equal(weaponTypeString, "TOWTWO"))
     {
-        weaponType = WEAPON_TOW_TWO;
+        return WEAPON_TOW_TWO;
     }
     else if (Strings_Are_Equal(weaponTypeString, "NAPALM"))
     {
-        weaponType = WEAPON_NAPALM;
+        return WEAPON_NAPALM;
     }
     else if (Strings_Are_Equal(weaponTypeString, "OBELISK_LASER"))
     {
-        weaponType = WEAPON_OBELISK_LASER;
+        return WEAPON_OBELISK_LASER;
     }
     else if (Strings_Are_Equal(weaponTypeString, "NIKE"))
     {
-        weaponType = WEAPON_NIKE;
+        return WEAPON_NIKE;
     }
     else if (Strings_Are_Equal(weaponTypeString, "HONEST_JOHN"))
     {
-        weaponType = WEAPON_HONEST_JOHN;
+        return WEAPON_HONEST_JOHN;
     }
     else if (Strings_Are_Equal(weaponTypeString, "DINO_RAM"))
     {
-        weaponType = WEAPON_STEG;
+        return WEAPON_STEG;
     }
     else if (Strings_Are_Equal(weaponTypeString, "DINO_BITE"))
     {
-        weaponType = WEAPON_TREX;
+        return WEAPON_TREX;
     }
-    else
-    {       
-        if (parseError != NULL)
-        {
-            *parseError = true;
-        }
 
-        Show_Error("Unable to parse weapon type from string: %s", weaponTypeString);
+
+    if (!ignoreModTypes)
+    {
+        bool matchFound = false;
+        auto newWeaponType = GetNewWeaponType(weaponTypeString, &matchFound);
+
+        if (matchFound)
+        {
+            return (WeaponType)newWeaponType;
+        }
     }
+
+    if (parseError != NULL)
+    {
+        *parseError = true;
+    }
+
+    Show_Error("Unable to parse weapon type from string: %s", weaponTypeString);
 
     return weaponType;
 }
@@ -538,7 +548,7 @@ WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError, boo
 
     auto weaponTypeStr = strdup(weaponTypeString);
 
-    auto weaponType = Parse_Weapon_Type(weaponTypeStr, parseError);
+    auto weaponType = Parse_Weapon_Type(weaponTypeStr, parseError, ignoreModTypes);
 
     delete weaponTypeStr;
 
@@ -653,6 +663,10 @@ const char* Weapon_Type_To_String(WeaponType weaponType, bool ignoreModTypes)
     {
         weaponTypeString = "DINO_BITE";
     }
+    else if (!ignoreModTypes && weaponType < Read_Weapon_Count())
+    {
+        weaponTypeString = GetNewWeaponIniName(weaponType);
+    }
     else
     {
         Show_Error("Unable to convert weapon type to string: %d", weaponType);
@@ -714,7 +728,7 @@ ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError, bool i
 
     auto armorTypeStr = strdup(armorTypeString);
 
-    auto armorType = Parse_Armor_Type(armorTypeStr, parseError);
+    auto armorType = Parse_Armor_Type(armorTypeStr, parseError, ignoreModTypes);
 
     delete armorTypeStr;
 
@@ -755,97 +769,104 @@ const char* Armor_Type_To_String(ArmorType armorType)
 
 BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError, bool ignoreModTypes)
 {
-    BulletType bullet;
+    BulletType bullet = BULLET_NONE;
 
     if (Strings_Are_Equal(bulletTypeString, "NONE"))
     {
-        bullet = BULLET_NONE;
+        return BULLET_NONE;
     }
     else if (Strings_Are_Equal(bulletTypeString, "SNIPER"))
     {
-        bullet = BULLET_SNIPER;
+        return BULLET_SNIPER;
     }
     else if (Strings_Are_Equal(bulletTypeString, "BULLET"))
     {
-        bullet = BULLET_BULLET;
+        return BULLET_BULLET;
     }
     else if (Strings_Are_Equal(bulletTypeString, "SPREADFIRE"))
     {
-        bullet = BULLET_SPREADFIRE;
+        return BULLET_SPREADFIRE;
     }
     else if (Strings_Are_Equal(bulletTypeString, "APDS"))
     {
-        bullet = BULLET_APDS;
+        return BULLET_APDS;
     }
     else if (Strings_Are_Equal(bulletTypeString, "ARTILLERY_SHELL"))
     {
-        bullet = BULLET_HE;
+        return BULLET_HE;
     }
     else if (Strings_Are_Equal(bulletTypeString, "S.S.M"))
     {
-        bullet = BULLET_SSM;
+        return BULLET_SSM;
     }
     else if (Strings_Are_Equal(bulletTypeString, "MLRS_ROCKET"))
     {
-        bullet = BULLET_SSM2;
+        return BULLET_SSM2;
     }
     else if (Strings_Are_Equal(bulletTypeString, "SAM_MISSILE"))
     {
-        bullet = BULLET_SAM;
+        return BULLET_SAM;
     }
     else if (Strings_Are_Equal(bulletTypeString, "TOW_MISSILE"))
     {
-        bullet = BULLET_TOW;
+        return BULLET_TOW;
     }
     else if (Strings_Are_Equal(bulletTypeString, "FLAME"))
     {
-        bullet = BULLET_FLAME;
+        return BULLET_FLAME;
     }
     else if (Strings_Are_Equal(bulletTypeString, "CHEMICALS"))
     {
-        bullet = BULLET_CHEMSPRAY;
+        return BULLET_CHEMSPRAY;
     }
     else if (Strings_Are_Equal(bulletTypeString, "NAPALM_BOMB"))
     {
-        bullet = BULLET_NAPALM;
+        return BULLET_NAPALM;
     }
     else if (Strings_Are_Equal(bulletTypeString, "GRENADE_BOMB"))
     {
-        bullet = BULLET_GRENADE;
+        return BULLET_GRENADE;
     }
     else if (Strings_Are_Equal(bulletTypeString, "LASER_BEAM"))
     {
-        bullet = BULLET_LASER;
+        return BULLET_LASER;
     }
     else if (Strings_Are_Equal(bulletTypeString, "NUKE_UP"))
     {
-        bullet = BULLET_NUKE_UP;
+        return BULLET_NUKE_UP;
     }
     else if (Strings_Are_Equal(bulletTypeString, "NUKE_DOWN"))
     {
-        bullet = BULLET_NUKE_DOWN;
+        return BULLET_NUKE_DOWN;
     }
     else if (Strings_Are_Equal(bulletTypeString, "HONEST_JOHN_MISSILE"))
     {
-        bullet = BULLET_HONEST_JOHN;
+        return BULLET_HONEST_JOHN;
     }
     else if (Strings_Are_Equal(bulletTypeString, "GORE"))
     {
-        bullet = BULLET_HEADBUTT;
+        return BULLET_HEADBUTT;
     }
     else if (Strings_Are_Equal(bulletTypeString, "CHEW"))
     {
-        bullet = BULLET_TREXBITE;
+        return BULLET_TREXBITE;
     }
-    else
+    if (!ignoreModTypes)
     {
-        if (parseError != NULL)
-        {
-            *parseError = true;
-        }
+        bool matchFound = false;
+        auto newBulletType = GetNewBulletType(bulletTypeString, &matchFound);
 
-        Show_Error("Unable to parse bullet type from string: %s", bulletTypeString);
+        if (matchFound)
+        {
+            return (BulletType)newBulletType;
+        }
     }
+    if (parseError != NULL)
+    {
+        *parseError = true;
+    }
+
+    Show_Error("Unable to parse bullet type from string: %s", bulletTypeString);
 
     return bullet;
 }
@@ -866,7 +887,7 @@ BulletType Parse_Bullet_Type(const char* bulletTypeString, bool* parseError, boo
 
     auto bulletTypeStr = strdup(bulletTypeString);
 
-    auto bulletType = Parse_Bullet_Type(bulletTypeStr, parseError);
+    auto bulletType = Parse_Bullet_Type(bulletTypeStr, parseError, ignoreModTypes);
 
     delete bulletTypeStr;
 
@@ -957,6 +978,10 @@ const char* Bullet_Type_To_String(BulletType bulletType, bool ignoreModTypes)
     {
         bulletTypeString = "CHEW";
     }
+    else if (!ignoreModTypes && bulletType < Read_Bullet_Count())
+    {
+        bulletTypeString = GetNewBulletIniName(bulletType);
+    }
     else
     {
         Show_Error("Unable to convert bullet type to string: %d", bulletType);
@@ -967,65 +992,73 @@ const char* Bullet_Type_To_String(BulletType bulletType, bool ignoreModTypes)
 
 WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError, bool ignoreModTypes)
 {
-    WarheadType warhead;
+    WarheadType warhead = WARHEAD_NONE;
 
     if (Strings_Are_Equal(warheadTypeString, "SA"))
     {
-        warhead = WARHEAD_SA;
+        return WARHEAD_SA;
     }
     else if (Strings_Are_Equal(warheadTypeString, "HE"))
     {
-        warhead = WARHEAD_HE;
+        return WARHEAD_HE;
     }
     else if (Strings_Are_Equal(warheadTypeString, "AP"))
     {
-        warhead = WARHEAD_AP;
+        return WARHEAD_AP;
     }
     else if (Strings_Are_Equal(warheadTypeString, "FIRE"))
     {
-        warhead = WARHEAD_FIRE;
+        return WARHEAD_FIRE;
     }
     else if (Strings_Are_Equal(warheadTypeString, "LASER"))
     {
-        warhead = WARHEAD_LASER;
+        return WARHEAD_LASER;
     }
     else if (Strings_Are_Equal(warheadTypeString, "PB"))
     {
-        warhead = WARHEAD_PB;
+        return WARHEAD_PB;
     }
     else if (Strings_Are_Equal(warheadTypeString, "FIST"))
     {
-        warhead = WARHEAD_FIST;
+        return WARHEAD_FIST;
     }
     else if (Strings_Are_Equal(warheadTypeString, "FOOT"))
     {
-        warhead = WARHEAD_FOOT;
+        return WARHEAD_FOOT;
     }
     else if (Strings_Are_Equal(warheadTypeString, "HOLLOW_POINT"))
     {
-        warhead = WARHEAD_HOLLOW_POINT;
+        return WARHEAD_HOLLOW_POINT;
     }
     else if (Strings_Are_Equal(warheadTypeString, "SPORE"))
     {
-        warhead = WARHEAD_SPORE;
+        return WARHEAD_SPORE;
     }
     else if (Strings_Are_Equal(warheadTypeString, "HEADBUTT"))
     {
-        warhead = WARHEAD_HEADBUTT;
+        return WARHEAD_HEADBUTT;
     }
     else if (Strings_Are_Equal(warheadTypeString, "FEEDME"))
     {
-        warhead = WARHEAD_FEEDME;
+        return WARHEAD_FEEDME;
     }
-    else
+    if (!ignoreModTypes)
     {
-        if (parseError != NULL)
-        {
-            *parseError = true;
-        }
+        bool matchFound = false;
+        auto newWarheadType = GetNewWarheadType(warheadTypeString, &matchFound);
 
-        Show_Error("Unable to parse warhead type from string: %s", warheadTypeString);
+        if (matchFound)
+        {
+            return (WarheadType)newWarheadType;
+        }
     }
+
+    if (parseError != NULL)
+    {
+        *parseError = true;
+    }
+
+    Show_Error("Unable to parse warhead type from string: %s", warheadTypeString);
 
     return warhead;
 }
@@ -1046,7 +1079,7 @@ WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError, 
 
     auto warheadTypeStr = strdup(warheadTypeString);
 
-    auto warheadType = Parse_Warhead_Type(warheadTypeStr, parseError);
+    auto warheadType = Parse_Warhead_Type(warheadTypeStr, parseError, ignoreModTypes);
 
     delete warheadTypeStr;
 
@@ -1104,6 +1137,10 @@ const char* Warhead_Type_To_String(WarheadType warheadType, bool ignoreModTypes)
     else if (warheadType == WARHEAD_FEEDME)
     {
         warheadTypeString = "FEEDME";
+    }
+    else if (!ignoreModTypes && warheadType < Read_Warhead_Count())
+    {
+        warheadTypeString = GetNewWarheadIniName(warheadType);
     }
     else
     {
@@ -1570,7 +1607,7 @@ SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseErro
 
     auto unitSpeedTypeStr = strdup(unitSpeedTypeString);
 
-    auto unitSpeedType = Parse_Unit_Speed_Type(unitSpeedTypeStr, parseError);
+    auto unitSpeedType = Parse_Unit_Speed_Type(unitSpeedTypeStr, parseError, ignoreModTypes);
 
     delete unitSpeedTypeStr;
 
@@ -1627,37 +1664,44 @@ AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError, boo
 
     if (Strings_Are_Equal(aircraftTypeString, "NONE"))
     {
-        aircraftType = AIRCRAFT_NONE;
+        return AIRCRAFT_NONE;
     }
     else if (Strings_Are_Equal(aircraftTypeString, "A10"))
     {
-        aircraftType = AIRCRAFT_A10;
+        return AIRCRAFT_A10;
     }
     else if (Strings_Are_Equal(aircraftTypeString, "C17"))
     {
-        aircraftType = AIRCRAFT_CARGO;
+        return AIRCRAFT_CARGO;
     }
     else if (Strings_Are_Equal(aircraftTypeString, "HELI"))
     {
-        aircraftType = AIRCRAFT_HELICOPTER;
+        return AIRCRAFT_HELICOPTER;
     }
     else if (Strings_Are_Equal(aircraftTypeString, "ORCA"))
     {
-        aircraftType = AIRCRAFT_ORCA;
+        return AIRCRAFT_ORCA;
     }
     else if (Strings_Are_Equal(aircraftTypeString, "TRAN"))
     {
-        aircraftType = AIRCRAFT_TRANSPORT;
+        return AIRCRAFT_TRANSPORT;
     }
-    else
+    if (!ignoreModTypes)
     {
-        if (parseError != NULL)
-        {
-            *parseError = true;
-        }
+        bool matchFound = false;
+        auto newAircraftType = GetNewAircraftType(aircraftTypeString, &matchFound);
 
-        Show_Error("Unable to parse aircraft type from string: %s", aircraftTypeString);
+        if (matchFound)
+        {
+            return (AircraftType)newAircraftType;
+        }
     }
+    if (parseError != NULL)
+    {
+        *parseError = true;
+    }
+
+    Show_Error("Unable to parse aircraft type from string: %s", aircraftTypeString);
 
     return aircraftType;
 }
@@ -1678,7 +1722,7 @@ AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseErro
 
     auto aircraftTypeStr = strdup(aircraftTypeString);
 
-    auto aircraftType = Parse_Aircraft_Type(aircraftTypeStr, parseError);
+    auto aircraftType = Parse_Aircraft_Type(aircraftTypeStr, parseError, ignoreModTypes);
 
     delete aircraftTypeStr;
 
@@ -1713,6 +1757,10 @@ const char* Aircraft_Type_To_String(AircraftType aircraftType, bool ignoreModTyp
     {
         aircraftTypeString = "ORCA";
     }
+    else if (!ignoreModTypes && aircraftType < Read_Infantry_Count())
+    {
+        aircraftTypeString = GetNewAircraftIniName(aircraftType);
+    }
     else
     {
         Show_Error("Unable to convert aircraft type to string: %d", aircraftType);
@@ -1723,281 +1771,288 @@ const char* Aircraft_Type_To_String(AircraftType aircraftType, bool ignoreModTyp
 
 StructType Parse_Structure_Type(char* structTypeString, bool* parseError, bool ignoreModTypes)
 {
-    StructType structType;
+    StructType structType = STRUCT_NONE;
 
     if (Strings_Are_Equal(structTypeString, "NONE"))
     {
-        structType = STRUCT_NONE;
+        return STRUCT_NONE;
     }
     else if (Strings_Are_Equal(structTypeString, "WEAP"))
     {
-        structType = STRUCT_WEAP;
+        return STRUCT_WEAP;
     }
     else if (Strings_Are_Equal(structTypeString, "GTWR"))
     {
-        structType = STRUCT_GTOWER;
+        return STRUCT_GTOWER;
     }
     else if (Strings_Are_Equal(structTypeString, "ATWR"))
     {
-        structType = STRUCT_ATOWER;
+        return STRUCT_ATOWER;
     }
     else if (Strings_Are_Equal(structTypeString, "OBLI"))
     {
-        structType = STRUCT_OBELISK;
+        return STRUCT_OBELISK;
     }
     else if (Strings_Are_Equal(structTypeString, "HQ"))
     {
-        structType = STRUCT_RADAR;
+        return STRUCT_RADAR;
     }
     else if (Strings_Are_Equal(structTypeString, "GUN"))
     {
-        structType = STRUCT_TURRET;
+        return STRUCT_TURRET;
     }
     else if (Strings_Are_Equal(structTypeString, "FACT"))
     {
-        structType = STRUCT_CONST;
+        return STRUCT_CONST;
     }
     else if (Strings_Are_Equal(structTypeString, "PROC"))
     {
-        structType = STRUCT_REFINERY;
+        return STRUCT_REFINERY;
     }
     else if (Strings_Are_Equal(structTypeString, "SILO"))
     {
-        structType = STRUCT_STORAGE;
+        return STRUCT_STORAGE;
     }
     else if (Strings_Are_Equal(structTypeString, "HPAD"))
     {
-        structType = STRUCT_HELIPAD;
+        return STRUCT_HELIPAD;
     }
     else if (Strings_Are_Equal(structTypeString, "SAM"))
     {
-        structType = STRUCT_SAM;
+        return STRUCT_SAM;
     }
     else if (Strings_Are_Equal(structTypeString, "AFLD"))
     {
-        structType = STRUCT_AIRSTRIP;
+        return STRUCT_AIRSTRIP;
     }
     else if (Strings_Are_Equal(structTypeString, "NUKE"))
     {
-        structType = STRUCT_POWER;
+        return STRUCT_POWER;
     }
     else if (Strings_Are_Equal(structTypeString, "NUK2"))
     {
-        structType = STRUCT_ADVANCED_POWER;
+        return STRUCT_ADVANCED_POWER;
     }
     else if (Strings_Are_Equal(structTypeString, "HOSP"))
     {
-        structType = STRUCT_HOSPITAL;
+        return STRUCT_HOSPITAL;
     }
     else if (Strings_Are_Equal(structTypeString, "PYLE"))
     {
-        structType = STRUCT_BARRACKS;
+        return STRUCT_BARRACKS;
     }
     else if (Strings_Are_Equal(structTypeString, "ARCO"))
     {
-        structType = STRUCT_TANKER;
+        return STRUCT_TANKER;
     }
     else if (Strings_Are_Equal(structTypeString, "FIX"))
     {
-        structType = STRUCT_REPAIR;
+        return STRUCT_REPAIR;
     }
     else if (Strings_Are_Equal(structTypeString, "BIO"))
     {
-        structType = STRUCT_BIO_LAB;
+        return STRUCT_BIO_LAB;
     }
     else if (Strings_Are_Equal(structTypeString, "HAND"))
     {
-        structType = STRUCT_HAND;
+        return STRUCT_HAND;
     }
     else if (Strings_Are_Equal(structTypeString, "TMPL"))
     {
-        structType = STRUCT_TEMPLE;
+        return STRUCT_TEMPLE;
     }
     else if (Strings_Are_Equal(structTypeString, "EYE"))
     {
-        structType = STRUCT_EYE;
+        return STRUCT_EYE;
     }
     else if (Strings_Are_Equal(structTypeString, "MISS"))
     {
-        structType = STRUCT_MISSION;
+        return STRUCT_MISSION;
     }
     else if (Strings_Are_Equal(structTypeString, "V01"))
     {
-        structType = STRUCT_V01;
+        return STRUCT_V01;
     }
     else if (Strings_Are_Equal(structTypeString, "V02"))
     {
-        structType = STRUCT_V02;
+        return STRUCT_V02;
     }
     else if (Strings_Are_Equal(structTypeString, "V03"))
     {
-        structType = STRUCT_V03;
+        return STRUCT_V03;
     }
     else if (Strings_Are_Equal(structTypeString, "V04"))
     {
-        structType = STRUCT_V04;
+        return STRUCT_V04;
     }
     else if (Strings_Are_Equal(structTypeString, "V05"))
     {
-        structType = STRUCT_V05;
+        return STRUCT_V05;
     }
     else if (Strings_Are_Equal(structTypeString, "V06"))
     {
-        structType = STRUCT_V06;
+        return STRUCT_V06;
     }
     else if (Strings_Are_Equal(structTypeString, "V07"))
     {
-        structType = STRUCT_V07;
+        return STRUCT_V07;
     }
     else if (Strings_Are_Equal(structTypeString, "V08"))
     {
-        structType = STRUCT_V08;
+        return STRUCT_V08;
     }
     else if (Strings_Are_Equal(structTypeString, "V09"))
     {
-        structType = STRUCT_V09;
+        return STRUCT_V09;
     }
     else if (Strings_Are_Equal(structTypeString, "V10"))
     {
-        structType = STRUCT_V10;
+        return STRUCT_V10;
     }
     else if (Strings_Are_Equal(structTypeString, "V11"))
     {
-        structType = STRUCT_V11;
+        return STRUCT_V11;
     }
     else if (Strings_Are_Equal(structTypeString, "V12"))
     {
-        structType = STRUCT_V12;
+        return STRUCT_V12;
     }
     else if (Strings_Are_Equal(structTypeString, "V13"))
     {
-        structType = STRUCT_V13;
+        return STRUCT_V13;
     }
     else if (Strings_Are_Equal(structTypeString, "V14"))
     {
-        structType = STRUCT_V14;
+        return STRUCT_V14;
     }
     else if (Strings_Are_Equal(structTypeString, "V15"))
     {
-        structType = STRUCT_V15;
+        return STRUCT_V15;
     }
     else if (Strings_Are_Equal(structTypeString, "V16"))
     {
-        structType = STRUCT_V16;
+        return STRUCT_V16;
     }
     else if (Strings_Are_Equal(structTypeString, "V17"))
     {
-        structType = STRUCT_V17;
+        return STRUCT_V17;
     }
     else if (Strings_Are_Equal(structTypeString, "V18"))
     {
-        structType = STRUCT_V18;
+        return STRUCT_V18;
     }
     else if (Strings_Are_Equal(structTypeString, "V19"))
     {
-        structType = STRUCT_PUMP;
+        return STRUCT_PUMP;
     }
     else if (Strings_Are_Equal(structTypeString, "V20"))
     {
-        structType = STRUCT_V20;
+        return STRUCT_V20;
     }
     else if (Strings_Are_Equal(structTypeString, "V21"))
     {
-        structType = STRUCT_V21;
+        return STRUCT_V21;
     }
     else if (Strings_Are_Equal(structTypeString, "V22"))
     {
-        structType = STRUCT_V22;
+        return STRUCT_V22;
     }
     else if (Strings_Are_Equal(structTypeString, "V23"))
     {
-        structType = STRUCT_V23;
+        return STRUCT_V23;
     }
     else if (Strings_Are_Equal(structTypeString, "V24"))
     {
-        structType = STRUCT_V24;
+        return STRUCT_V24;
     }
     else if (Strings_Are_Equal(structTypeString, "V25"))
     {
-        structType = STRUCT_V25;
+        return STRUCT_V25;
     }
     else if (Strings_Are_Equal(structTypeString, "V26"))
     {
-        structType = STRUCT_V26;
+        return STRUCT_V26;
     }
     else if (Strings_Are_Equal(structTypeString, "V27"))
     {
-        structType = STRUCT_V27;
+        return STRUCT_V27;
     }
     else if (Strings_Are_Equal(structTypeString, "V28"))
     {
-        structType = STRUCT_V28;
+        return STRUCT_V28;
     }
     else if (Strings_Are_Equal(structTypeString, "V29"))
     {
-        structType = STRUCT_V29;
+        return STRUCT_V29;
     }
     else if (Strings_Are_Equal(structTypeString, "V30"))
     {
-        structType = STRUCT_V30;
+        return STRUCT_V30;
     }
     else if (Strings_Are_Equal(structTypeString, "V31"))
     {
-        structType = STRUCT_V31;
+        return STRUCT_V31;
     }
     else if (Strings_Are_Equal(structTypeString, "V32"))
     {
-        structType = STRUCT_V32;
+        return STRUCT_V32;
     }
     else if (Strings_Are_Equal(structTypeString, "V33"))
     {
-        structType = STRUCT_V33;
+        return STRUCT_V33;
     }
     else if (Strings_Are_Equal(structTypeString, "V34"))
     {
-        structType = STRUCT_V34;
+        return STRUCT_V34;
     }
     else if (Strings_Are_Equal(structTypeString, "V35"))
     {
-        structType = STRUCT_V35;
+        return STRUCT_V35;
     }
     else if (Strings_Are_Equal(structTypeString, "V36"))
     {
-        structType = STRUCT_V36;
+        return STRUCT_V36;
     }
     else if (Strings_Are_Equal(structTypeString, "V37"))
     {
-        structType = STRUCT_V37;
+        return STRUCT_V37;
     }
     else if (Strings_Are_Equal(structTypeString, "SBAG"))
     {
-        structType = STRUCT_SANDBAG_WALL;
+        return STRUCT_SANDBAG_WALL;
     }
     else if (Strings_Are_Equal(structTypeString, "CYCL"))
     {
-        structType = STRUCT_CYCLONE_WALL;
+        return STRUCT_CYCLONE_WALL;
     }
     else if (Strings_Are_Equal(structTypeString, "BRIK"))
     {
-        structType = STRUCT_BRICK_WALL;
+        return STRUCT_BRICK_WALL;
     }
     else if (Strings_Are_Equal(structTypeString, "BARB"))
     {
-        structType = STRUCT_BARBWIRE_WALL;
+        return STRUCT_BARBWIRE_WALL;
     }
     else if (Strings_Are_Equal(structTypeString, "WOOD"))
     {
-        structType = STRUCT_WOOD_WALL;
+        return STRUCT_WOOD_WALL;
     }
-    else
+    if (!ignoreModTypes)
     {
-        if (parseError != NULL)
-        {
-            *parseError = true;
-        }
+        bool matchFound = false;
+        auto newStructType = GetNewBuildingType(structTypeString, &matchFound);
 
-        Show_Error("Unable to parse structure from string: %s", structTypeString);
+        if (matchFound)
+        {
+            return (StructType)newStructType;
+        }
     }
+    if (parseError != NULL)
+    {
+        *parseError = true;
+    }
+
+    Show_Error("Unable to parse structure from string: %s", structTypeString);
 
     return structType;
 }
@@ -2018,7 +2073,7 @@ StructType Parse_Structure_Type(const char* structTypeString, bool* parseError, 
 
     auto structTypeStr = strdup(structTypeString);
 
-    auto structType = Parse_Structure_Type(structTypeStr, parseError);
+    auto structType = Parse_Structure_Type(structTypeStr, parseError, ignoreModTypes);
 
     delete structTypeStr;
 
@@ -2292,6 +2347,10 @@ const char* Structure_Type_To_String(StructType structType, bool ignoreModTypes)
     else if (structType == STRUCT_WOOD_WALL)
     {
         structTypeString = "WOOD";
+    }
+    else if (!ignoreModTypes && structType < Read_Building_Count())
+    {
+        structTypeString = GetNewBuildingIniName(structType);
     }
     else
     {

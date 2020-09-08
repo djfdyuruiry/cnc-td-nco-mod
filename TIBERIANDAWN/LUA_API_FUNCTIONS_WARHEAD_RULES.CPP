@@ -158,6 +158,19 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
             warhead->IsModType = isModType;
         }
     }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        auto baseType = value;
+
+        *valueParseError = String_Is_Empty(baseType) || strlen(baseType) > 32;
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", warhead->ModBaseIniName, baseType);
+
+            strcpy(warhead->ModBaseIniName, strdup(baseType));
+        }
+    }
     else
     {
         return false;
@@ -234,6 +247,23 @@ static bool Read_Warhead_Rule(lua_State* lua, WarheadTypeClass* warhead, const c
 
         lua_pushboolean(lua, warhead->IsModType);
     }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        if (warhead->IsModType)
+        {
+            Log_Trace("Read_Warhead_Rule => Rule value: %s", warhead->ModBaseIniName);
+
+            lua_pushstring(lua, warhead->ModBaseIniName);
+        }
+        else
+        {
+            // fallback to ini name for non-mod type instances
+            Log_Trace("Read_Warhead_Rule => Rule value: %s", warhead->IniName);
+
+            lua_pushstring(lua, warhead->IniName);
+        }
+    }
+
     else
     {
         return false;

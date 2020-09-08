@@ -50,7 +50,7 @@ class HouseClass;
 class WeaponTypeClass
 {
 	private:
-		static WeaponTypeClass* Weapons;
+		static WeaponTypeClass const** Pointers;
 	public:
 		/*
 		**	This is the unit class of the projectile fired. A subset of the unit types
@@ -110,6 +110,11 @@ class WeaponTypeClass
 
 		static void Read_Weapon_Rules(WeaponTypeClass* type);
 		static void Add_Weapon_Type(WeaponTypeClass* type);
+		//static void  Init(TheaterType);
+		//static void One_Time(void);
+		//static void Prep_For_Add(void);
+		//static WeaponType  From_Name(char const* name);
+		
 
 		WeaponTypeClass(const char* friendlyName, WeaponType owner, BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
 };
@@ -122,7 +127,7 @@ class WeaponTypeClass
 class WarheadTypeClass
 {
 	private:
-		static WarheadTypeClass* Warheads;
+		static WarheadTypeClass const** Pointers;
 	public:
 
 		/*
@@ -182,6 +187,11 @@ class WarheadTypeClass
 		);
 		static void Read_Warhead_Rules(WarheadTypeClass* type);
 		static void Add_Warhead_Type(WarheadTypeClass* type);
+		//static void  Init(TheaterType);
+		//static void One_Time(void);
+		//static void Prep_For_Add(void);
+		//static WarheadType  From_Name(char const* name);
+		
 };
 
 
@@ -1428,6 +1438,8 @@ class BulletTypeClass : public ObjectTypeClass
 		int Range;
 
 		const char* RulesName;
+
+		const char* ImageName;
 
 		char* FriendlyName;
 		/*

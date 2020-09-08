@@ -21,7 +21,7 @@ private:
 protected:
 	BulletType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Bullet_Type(typeString, parseError, true);
+		return Parse_Bullet_Type(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)
