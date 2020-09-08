@@ -166,7 +166,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", warhead->ModBaseIniName, baseType);
+            Log_Trace("Write_Warhead_Rule => Rule value: %s -> %s", warhead->ModBaseIniName, baseType);
 
             strcpy(warhead->ModBaseIniName, strdup(baseType));
         }

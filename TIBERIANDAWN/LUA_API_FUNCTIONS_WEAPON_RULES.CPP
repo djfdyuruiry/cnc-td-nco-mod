@@ -91,7 +91,7 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
 
         if (!*valueParseError)
         {
-            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", weapon->ModBaseIniName, baseType);
+            Log_Trace("Write_Weapon_Rule => Rule value: %s -> %s", weapon->ModBaseIniName, baseType);
 
             strcpy(weapon->ModBaseIniName, strdup(baseType));
         }
