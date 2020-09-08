@@ -90,7 +90,7 @@ static WeaponTypeClass const DEF_TOW_TWO("Advanced Guard Tower", WEAPON_TOW_TWO,
 static WeaponTypeClass const DEF_NAPALM("Napalm", WEAPON_NAPALM, BULLET_NAPALM, 100, 20, 0x0480, VOC_NONE, ANIM_NONE);
 static WeaponTypeClass const DEF_OBELISK_LASER("Laser", WEAPON_OBELISK_LASER, BULLET_LASER, 200, 90, 0x0780, VOC_LASER, ANIM_NONE);
 static WeaponTypeClass const DEF_NIKE("SAM Site", WEAPON_NIKE, BULLET_SAM, 50, 50, 0x0780, VOC_ROCKET2, ANIM_NONE);
-static WeaponTypeClass const DEF_HONEST_JOHN("S.S.M Launcher", WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1, ANIM_NONE);
+static WeaponTypeClass const DEF_HONEST_JOHN("SSM Launcher", WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1, ANIM_NONE);
 static WeaponTypeClass const DEF_STEG("Dino Ram", WEAPON_STEG, BULLET_HEADBUTT, 100, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
 static WeaponTypeClass const DEF_TREX("Dino Bite", WEAPON_TREX, BULLET_TREXBITE, 155, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
 
@@ -119,8 +119,8 @@ WeaponTypeClass::WeaponTypeClass(
 	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
 	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
 	Range = Read_Weapon_Range(weaponTypeStr, range);
-
 	IsModType = false;
+
 	Read_Weapon_Rules(this);
 }
 
@@ -235,7 +235,6 @@ WarheadTypeClass::WarheadTypeClass(
 
 		Modifier[armorType] = ReadRuleValue<unsigned int>(warheadTypeString, modifierRule, Modifier[armorType]);
 	}
-
 	IsModType = false;
 	Read_Warhead_Rules(this);
 }

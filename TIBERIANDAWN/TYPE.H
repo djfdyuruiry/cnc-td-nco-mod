@@ -1437,7 +1437,7 @@ class BulletTypeClass : public ObjectTypeClass
 		*/
 		int Range;
 
-		const char* RulesName;
+		//const char* RulesName;
 
 		const char* ImageName;
 

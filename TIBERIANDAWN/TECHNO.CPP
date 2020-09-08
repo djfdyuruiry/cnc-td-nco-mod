@@ -283,7 +283,7 @@ void TechnoTypeClass::Calculate_Risk(void) const
 	auto ref = (TechnoTypeClass*)this;
 
 	// TODO: read some `Game` rule to allow modifying the outcome of this calculation
-	ref->Risk = (WeaponTypeClass::As_Reference(Primary).Attack * (WeaponTypeClass::As_Reference(Primary).Range >> 4)) / WeaponTypeClass::As_Reference(Primary).ROF;
+//	ref->Risk = (WeaponTypeClass::As_Reference(Primary).Attack * (WeaponTypeClass::As_Reference(Primary).Range >> 4)) / WeaponTypeClass::As_Reference(Primary).ROF;
 }
 
 /***********************************************************************************************

@@ -10,5 +10,5 @@ static const auto ARMOR_MODIFIER_RULES = new const char*[ARMOR_COUNT] {
 
 const char* Map_Armor_Modifier_To_Warhead_Rule(ArmorType type)
 {
-	return ARMOR_MODIFIER_RULES[type];
+	return WARHEAD_NO_ARMOR_MODIFIER_RULE;// ARMOR_MODIFIER_RULES[type];
 }

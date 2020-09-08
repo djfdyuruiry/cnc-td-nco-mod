@@ -628,7 +628,6 @@ BulletTypeClass::BulletTypeClass(
 	ROT = Read_Rate_Of_Turn(ininame, rot);
 	Arming = ReadRuleValue<int>(ininame, BULLET_ARMING_RULE, arming);
 	Range = ReadRuleValue<int>(ininame, BULLET_RANGE_RULE, range);
-	IsModType = false;
 
 	Read_Bullet_Rules(this);
 

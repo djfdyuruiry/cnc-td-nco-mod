@@ -378,9 +378,9 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
         else
         {
             // fallback to ini name for non-mod type instances
-            Log_Trace("Read_TechnoType_Rule => Rule value: %s", bullet->RulesName);
+            Log_Trace("Read_TechnoType_Rule => Rule value: %s", bullet->IniName);
 
-            lua_pushstring(lua, bullet->RulesName);
+            lua_pushstring(lua, bullet->IniName);
         }
     }
     else

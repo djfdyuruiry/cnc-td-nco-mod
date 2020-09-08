@@ -1,11 +1,5 @@
 local typeAreas =
   {
-    weapons = {
-      getTypes = getWeaponTypes,
-      getRuleNames = getWeaponRuleNames,
-      getRuleValue = getWeaponRule,
-      setRuleValue = setWeaponRule
-    },
     bullets = {
       getTypes = getBulletTypes,
       getRuleNames = getBulletRuleNames,
@@ -17,6 +11,18 @@ local typeAreas =
       getRuleNames = getWarheadRuleNames,
       getRuleValue = getWarheadRule,
       setRuleValue = setWarheadRule
+    },
+    weapons = {
+      getTypes = getWeaponTypes,
+      getRuleNames = getWeaponRuleNames,
+      getRuleValue = getWeaponRule,
+      setRuleValue = setWeaponRule
+    },
+    building = {
+      getTypes = getBuildingTypes,
+      getRuleNames = getBuildingRuleNames,
+      getRuleValue = getBuildingRule,
+      setRuleValue = setBuildingRule
     },
     infantry = {
       getTypes = getInfantryTypes,
@@ -35,12 +41,6 @@ local typeAreas =
       getRuleNames = getAircraftRuleNames,
       getRuleValue = getAircraftRule,
       setRuleValue = setAircraftRule
-    },
-    building = {
-      getTypes = getBuildingTypes,
-      getRuleNames = getBuildingRuleNames,
-      getRuleValue = getBuildingRule,
-      setRuleValue = setBuildingRule
     }
   }
 

@@ -795,7 +795,7 @@ BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError, bool igno
     {
         return BULLET_HE;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "S.S.M"))
+    else if (Strings_Are_Equal(bulletTypeString, "SS_MISSILE"))
     {
         return BULLET_SSM;
     }
@@ -924,7 +924,7 @@ const char* Bullet_Type_To_String(BulletType bulletType, bool ignoreModTypes)
     }
     else if (bulletType == BULLET_SSM)
     {
-        bulletTypeString = "S.S.M";
+        bulletTypeString = "SS_MISSILE";
     }
     else if (bulletType == BULLET_SSM2)
     {
