@@ -34,6 +34,8 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
+#define IS_TIBERIAN_DAWN
+#define IS_CNC
 /**********************************************************************
 **	If defined, then the advanced balancing features will be enabled
 **	for this version.
