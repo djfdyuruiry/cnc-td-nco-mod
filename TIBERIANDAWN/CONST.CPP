@@ -68,36 +68,37 @@ COORDINATE const StoppingCoordAbs[5] = {
 **	These are the various weapons and their characteristics.
 */
 
-static WeaponTypeClass const DEF_RIFLE("Sniper Rifle", WEAPON_RIFLE, BULLET_SNIPER, 125, 40, 0x0580, VOC_SNIPER, ANIM_NONE);
-static WeaponTypeClass const DEF_CHAIN_GUN("Chain Gun", WEAPON_CHAIN_GUN, BULLET_SPREADFIRE, 25, 50, 0x0400, VOC_MINI, ANIM_GUN_N);
-static WeaponTypeClass const DEF_PISTOL("Pistol", WEAPON_PISTOL, BULLET_BULLET, 1, 7, 0x01C0, VOC_RIFLE, ANIM_NONE);
-static WeaponTypeClass const DEF_M16("Assault Rifle", WEAPON_M16, BULLET_BULLET, 15, 20, 0x0200, VOC_MGUN2, ANIM_NONE);
-static WeaponTypeClass const DEF_DRAGON("Bazooka", WEAPON_DRAGON, BULLET_TOW, 30, 60, 0x0400, VOC_BAZOOKA, ANIM_NONE);
-static WeaponTypeClass const DEF_FLAMETHROWER("Flamethrower Blast", WEAPON_FLAMETHROWER, BULLET_FLAME, 35, 50, 0x0200, VOC_FLAMER1, ANIM_FLAME_N);
-static WeaponTypeClass const DEF_FLAME_TONGUE("Flame Tank Blast", WEAPON_FLAME_TONGUE, BULLET_FLAME, 50, 50, 0x0200, VOC_FLAMER1, ANIM_FLAME_N);
-static WeaponTypeClass const DEF_CHEMSPRAY("Chemical Spray", WEAPON_CHEMSPRAY, BULLET_CHEMSPRAY, 80, 70, 0x0200, VOC_FLAMER1, ANIM_CHEM_N);
-static WeaponTypeClass const DEF_GRENADE("Grenade", WEAPON_GRENADE, BULLET_GRENADE, 50, 60, 0x0340, VOC_TOSS, ANIM_NONE);
-static WeaponTypeClass const DEF_75MM("Light Tank", WEAPON_75MM, BULLET_APDS, 25, 60, 0x0400, VOC_TANK2, ANIM_MUZZLE_FLASH);
-static WeaponTypeClass const DEF_105MM("Medium Tank", WEAPON_105MM, BULLET_APDS, 30, 50, 0x04C0, VOC_TANK3, ANIM_MUZZLE_FLASH);
-static WeaponTypeClass const DEF_120MM("Mammoth Tank", WEAPON_120MM, BULLET_APDS, 40, 80, 0x04C0, VOC_TANK4, ANIM_MUZZLE_FLASH);
-static WeaponTypeClass const DEF_TURRET_GUN("Gun Turret", WEAPON_TURRET_GUN, BULLET_APDS, 40, 60, 0x0600, VOC_TANK4, ANIM_MUZZLE_FLASH);
-static WeaponTypeClass const DEF_MAMMOTH_TUSK("Mammoth Tank Anti-Infantry Missile", WEAPON_MAMMOTH_TUSK, BULLET_SSM, 75, 80, 0x0500, VOC_ROCKET1, ANIM_NONE);
-static WeaponTypeClass const DEF_MLRS("Rocket Launcher", WEAPON_MLRS, BULLET_SSM2, 75, 80, 0x0600, VOC_ROCKET1, ANIM_NONE);
-static WeaponTypeClass const DEF_155MM("Artillery", WEAPON_155MM, BULLET_HE, 150, 65, 0x0600, VOC_TANK1, ANIM_MUZZLE_FLASH);
-static WeaponTypeClass const DEF_M60MG("APC Gun", WEAPON_M60MG, BULLET_BULLET, 15, 30, 0x0400, VOC_MGUN11, ANIM_GUN_N);
-static WeaponTypeClass const DEF_TOMAHAWK("Gunboat", WEAPON_TOMAHAWK, BULLET_SSM, 60, 35, 0x0780, VOC_ROCKET2, ANIM_NONE);
-static WeaponTypeClass const DEF_TOW_TWO("Advanced Guard Tower", WEAPON_TOW_TWO, BULLET_SSM, 60, 40, 0x0680, VOC_ROCKET2, ANIM_NONE);
-static WeaponTypeClass const DEF_NAPALM("Napalm", WEAPON_NAPALM, BULLET_NAPALM, 100, 20, 0x0480, VOC_NONE, ANIM_NONE);
-static WeaponTypeClass const DEF_OBELISK_LASER("Laser", WEAPON_OBELISK_LASER, BULLET_LASER, 200, 90, 0x0780, VOC_LASER, ANIM_NONE);
-static WeaponTypeClass const DEF_NIKE("SAM Site", WEAPON_NIKE, BULLET_SAM, 50, 50, 0x0780, VOC_ROCKET2, ANIM_NONE);
-static WeaponTypeClass const DEF_HONEST_JOHN("SSM Launcher", WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1, ANIM_NONE);
-static WeaponTypeClass const DEF_STEG("Dino Ram", WEAPON_STEG, BULLET_HEADBUTT, 100, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
-static WeaponTypeClass const DEF_TREX("Dino Bite", WEAPON_TREX, BULLET_TREXBITE, 155, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
+static WeaponTypeClass const WEP_RIFLE("Sniper Rifle", "RIFLE", WEAPON_RIFLE, BULLET_SNIPER, 125, 40, 0x0580, VOC_SNIPER, ANIM_NONE);
+static WeaponTypeClass const WEP_CHAIN_GUN("Chain Gun", "CHAIN_GUN", WEAPON_CHAIN_GUN, BULLET_SPREADFIRE, 25, 50, 0x0400, VOC_MINI, ANIM_GUN_N);
+static WeaponTypeClass const WEP_PISTOL("Pistol", "PISTOL", WEAPON_PISTOL, BULLET_BULLET, 1, 7, 0x01C0, VOC_RIFLE, ANIM_NONE);
+static WeaponTypeClass const WEP_M16("Assault Rifle", "M16", WEAPON_M16, BULLET_BULLET, 15, 20, 0x0200, VOC_MGUN2, ANIM_NONE);
+static WeaponTypeClass const WEP_DRAGON("Bazooka", "DRAGON", WEAPON_DRAGON, BULLET_TOW, 30, 60, 0x0400, VOC_BAZOOKA, ANIM_NONE);
+static WeaponTypeClass const WEP_FLAMETHROWER("Flamethrower Blast", "FLAMETHROWER", WEAPON_FLAMETHROWER, BULLET_FLAME, 35, 50, 0x0200, VOC_FLAMER1, ANIM_FLAME_N);
+static WeaponTypeClass const WEP_FLAME_TONGUE("Flame Tank Blast", "FLAME_TONGUE", WEAPON_FLAME_TONGUE, BULLET_FLAME, 50, 50, 0x0200, VOC_FLAMER1, ANIM_FLAME_N);
+static WeaponTypeClass const WEP_CHEMSPRAY("Chemical Spray", "CHEMSPRAY", WEAPON_CHEMSPRAY, BULLET_CHEMSPRAY, 80, 70, 0x0200, VOC_FLAMER1, ANIM_CHEM_N);
+static WeaponTypeClass const WEP_GRENADE("Grenade", "GRENADE", WEAPON_GRENADE, BULLET_GRENADE, 50, 60, 0x0340, VOC_TOSS, ANIM_NONE);
+static WeaponTypeClass const WEP_75MM("Light Tank", "75MM", WEAPON_75MM, BULLET_APDS, 25, 60, 0x0400, VOC_TANK2, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_105MM("Medium Tank", "105MM", WEAPON_105MM, BULLET_APDS, 30, 50, 0x04C0, VOC_TANK3, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_120MM("Mammoth Tank", "120MM", WEAPON_120MM, BULLET_APDS, 40, 80, 0x04C0, VOC_TANK4, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_TURRET_GUN("Gun Turret", "TURRET_GUN", WEAPON_TURRET_GUN, BULLET_APDS, 40, 60, 0x0600, VOC_TANK4, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_MAMMOTH_TUSK("Mammoth Tank Anti-Infantry Missile", "MAMMOTH_TUSK", WEAPON_MAMMOTH_TUSK, BULLET_SSM, 75, 80, 0x0500, VOC_ROCKET1, ANIM_NONE);
+static WeaponTypeClass const WEP_MLRS("Rocket Launcher", "ROCKET_LAUNCHER", WEAPON_MLRS, BULLET_SSM2, 75, 80, 0x0600, VOC_ROCKET1, ANIM_NONE);
+static WeaponTypeClass const WEP_155MM("Artillery", "155MM", WEAPON_155MM, BULLET_HE, 150, 65, 0x0600, VOC_TANK1, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_M60MG("APC Gun", "M60MG", WEAPON_M60MG, BULLET_BULLET, 15, 30, 0x0400, VOC_MGUN11, ANIM_GUN_N);
+static WeaponTypeClass const WEP_TOMAHAWK("Gunboat", "TOMAHAWK", WEAPON_TOMAHAWK, BULLET_SSM, 60, 35, 0x0780, VOC_ROCKET2, ANIM_NONE);
+static WeaponTypeClass const WEP_TOW_TWO("Advanced Guard Tower", "TOWTWO", WEAPON_TOW_TWO, BULLET_SSM, 60, 40, 0x0680, VOC_ROCKET2, ANIM_NONE);
+static WeaponTypeClass const WEP_NAPALM("Napalm", "NAPALM", WEAPON_NAPALM, BULLET_NAPALM, 100, 20, 0x0480, VOC_NONE, ANIM_NONE);
+static WeaponTypeClass const WEP_OBELISK_LASER("Laser", "OBELISK_LASER", WEAPON_OBELISK_LASER, BULLET_LASER, 200, 90, 0x0780, VOC_LASER, ANIM_NONE);
+static WeaponTypeClass const WEP_NIKE("SAM Site", "NIKE", WEAPON_NIKE, BULLET_SAM, 50, 50, 0x0780, VOC_ROCKET2, ANIM_NONE);
+static WeaponTypeClass const WEP_HONEST_JOHN("SSM Launcher", "HONEST_JOHN", WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1, ANIM_NONE);
+static WeaponTypeClass const WEP_STEG("Dino Ram", "DINO_RAM", WEAPON_STEG, BULLET_HEADBUTT, 100, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
+static WeaponTypeClass const WEP_TREX("Dino Bite", "DINO_BITE", WEAPON_TREX, BULLET_TREXBITE, 155, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
 
 WeaponTypeClass const** WeaponTypeClass::Pointers = NULL;
 
 WeaponTypeClass::WeaponTypeClass(
 	const char* friendlyName,
+	char const* ininame,
 	WeaponType owner,
 	BulletType fires,
 	unsigned char attack,
@@ -105,13 +106,15 @@ WeaponTypeClass::WeaponTypeClass(
 	int range,
 	VocType sound,
 	AnimType anim
-)
+) : ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0, false)
 {
 	Sound = sound;
 	Anim = anim;
 
 	auto weaponTypeStr = Weapon_Type_To_String(owner);
-	IniName = strdup(Weapon_Type_To_String(owner));
+	//strncpy((char*)IniName, ininame, sizeof(IniName));
+	//((char&)IniName[sizeof(IniName) - 1]) = '\0';
+	IniName = strdup(ininame);
 	GetRules() << RulesIniSectionBuilder::BuildWeaponSection(weaponTypeStr);
 
 	FriendlyName = ReadRuleValue<char*>(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
@@ -133,31 +136,31 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 	}
 	auto weaponCount = Read_Weapon_Count();
 	Pointers = new WeaponTypeClass const* [weaponCount] {
-		&DEF_RIFLE,
-			&DEF_CHAIN_GUN,
-			&DEF_PISTOL,
-			&DEF_M16,
-			&DEF_DRAGON,
-			&DEF_FLAMETHROWER,
-			&DEF_FLAME_TONGUE,
-			&DEF_CHEMSPRAY,
-			&DEF_GRENADE,
-			&DEF_75MM,
-			&DEF_105MM,
-			&DEF_120MM,
-			&DEF_TURRET_GUN,
-			&DEF_MAMMOTH_TUSK,
-			&DEF_MLRS,
-			&DEF_155MM,
-			&DEF_M60MG,
-			&DEF_TOMAHAWK,
-			&DEF_TOW_TWO,
-			&DEF_NAPALM,
-			&DEF_OBELISK_LASER,
-			&DEF_NIKE,
-			&DEF_HONEST_JOHN,
-			&DEF_STEG,
-			&DEF_TREX,
+		&WEP_RIFLE,
+			&WEP_CHAIN_GUN,
+			&WEP_PISTOL,
+			&WEP_M16,
+			&WEP_DRAGON,
+			&WEP_FLAMETHROWER,
+			&WEP_FLAME_TONGUE,
+			&WEP_CHEMSPRAY,
+			&WEP_GRENADE,
+			&WEP_75MM,
+			&WEP_105MM,
+			&WEP_120MM,
+			&WEP_TURRET_GUN,
+			&WEP_MAMMOTH_TUSK,
+			&WEP_MLRS,
+			&WEP_155MM,
+			&WEP_M60MG,
+			&WEP_TOMAHAWK,
+			&WEP_TOW_TWO,
+			&WEP_NAPALM,
+			&WEP_OBELISK_LASER,
+			&WEP_NIKE,
+			&WEP_HONEST_JOHN,
+			&WEP_STEG,
+			&WEP_TREX,
 	};
 	InitialiseModsIfRequired();
 
@@ -181,6 +184,11 @@ void WeaponTypeClass::Add_Weapon_Type(WeaponTypeClass* WeaponInstance)
 	Pointers[WeaponInstance->Type] = WeaponInstance;
 }
 
+void WeaponTypeClass::One_Time(void)
+{
+	return;
+}
+
 char* WeaponTypeClass::Resolve_Ini_Name()
 {
 	return IsModType
@@ -193,34 +201,37 @@ char* WeaponTypeClass::Resolve_Ini_Name()
 ** spread factor, destroys walls, destroys wood, destroys Tiberium, {armor defense table}
 **           -vs- {none, wood, aluminum, steel, concrete}
 */
-static WarheadTypeClass const DEF_SA("Small Arms", WARHEAD_SA, 2, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x80, 0x90, 0x40, 0x40});
-static WarheadTypeClass const DEF_HE("High Explosive", WARHEAD_HE, 6, true, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0xC0, 0x90, 0x40, 0x100});
-static WarheadTypeClass const DEF_AP("Armor Piercing", WARHEAD_AP, 6, true, true, false, new unsigned[ARMOR_COUNT] {0x40, 0xC0, 0xC0, 0x100, 0x80});
-static WarheadTypeClass const DEF_FIRE("Fire", WARHEAD_FIRE, 8, false, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0x100, 0xB0, 0x40, 0x80});
-static WarheadTypeClass const DEF_LASER("Laser", WARHEAD_LASER, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0x100, 0x100, 0x100});
-static WarheadTypeClass const DEF_PB("Ion Cannon Beam", WARHEAD_PB, 7, true, true, true, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0xC0, 0xC0, 0xC0});
-static WarheadTypeClass const DEF_FIST("Punch", WARHEAD_FIST, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10});
-static WarheadTypeClass const DEF_FOOT("Kick", WARHEAD_FOOT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10});
-static WarheadTypeClass const DEF_HOLLOW_POINT("Hollow Point", WARHEAD_HOLLOW_POINT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x08, 0x08, 0x08, 0x08});
-static WarheadTypeClass const DEF_SPORE("Tiberium Spore", WARHEAD_SPORE, 255, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x01, 0x01, 0x01, 0x01});
-static WarheadTypeClass const DEF_HEADBUTT("Stegosaurus Headbutt", WARHEAD_HEADBUTT, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08});
-static WarheadTypeClass const DEF_FEEDME("T-Rex Teeth", WARHEAD_FEEDME, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08});
+static WarheadTypeClass const WH_SA("Small Arms", "SA", WARHEAD_SA, 2, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x80, 0x90, 0x40, 0x40});
+static WarheadTypeClass const WH_HE("High Explosive", "HE", WARHEAD_HE, 6, true, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0xC0, 0x90, 0x40, 0x100});
+static WarheadTypeClass const WH_AP("Armor Piercing", "AP", WARHEAD_AP, 6, true, true, false, new unsigned[ARMOR_COUNT] {0x40, 0xC0, 0xC0, 0x100, 0x80});
+static WarheadTypeClass const WH_FIRE("Fire", "FIRE", WARHEAD_FIRE, 8, false, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0x100, 0xB0, 0x40, 0x80});
+static WarheadTypeClass const WH_LASER("Laser", "LASER", WARHEAD_LASER, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0x100, 0x100, 0x100});
+static WarheadTypeClass const WH_PB("Ion Cannon Beam", "PB", WARHEAD_PB, 7, true, true, true, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0xC0, 0xC0, 0xC0});
+static WarheadTypeClass const WH_FIST("Punch", "FIST", WARHEAD_FIST, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10});
+static WarheadTypeClass const WH_FOOT("Kick", "FOOT", WARHEAD_FOOT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10});
+static WarheadTypeClass const WH_HOLLOW_POINT("Hollow Point", "HOLLOW_POINT", WARHEAD_HOLLOW_POINT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x08, 0x08, 0x08, 0x08});
+static WarheadTypeClass const WH_SPORE("Tiberium Spore", "SPORE", WARHEAD_SPORE, 255, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x01, 0x01, 0x01, 0x01});
+static WarheadTypeClass const WH_HEADBUTT("Stegosaurus Headbutt", "HEADBUTT", WARHEAD_HEADBUTT, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08});
+static WarheadTypeClass const WH_FEEDME("T-Rex Teeth", "FEEDME", WARHEAD_FEEDME, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08});
 WarheadTypeClass const** WarheadTypeClass::Pointers = NULL;
 
 WarheadTypeClass::WarheadTypeClass(
 	const char* friendlyName,
+	char const* ininame,
 	WarheadType type,
 	int spreadFactor,
 	bool isWallDestroyer,
 	bool isWoodDestroyer,
 	bool isTiberiumDestroyer,
 	unsigned armorModifiers[ARMOR_COUNT]
-)
+) : ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0, false)
 {
 	Modifier = armorModifiers;
 
 	auto warheadTypeString = Warhead_Type_To_String(type);
-	IniName = strdup(Warhead_Type_To_String(type));
+	IniName = strdup(ininame);
+	//strncpy((char*)IniName, ininame, sizeof(IniName));
+	//((char&)IniName[sizeof(IniName) - 1]) = '\0';
 	GetRules() << RulesIniSectionBuilder::BuildWarheadSection(warheadTypeString);
 
 	FriendlyName = ReadRuleValue<char*>(warheadTypeString, FRIENDLY_NAME_RULE, strdup(friendlyName));
@@ -267,23 +278,29 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 
 	auto warheadCount = Read_Warhead_Count();
 	Pointers = new WarheadTypeClass const* [warheadCount] {
-		&DEF_SA,
-			& DEF_HE,
-			& DEF_AP,
-			& DEF_FIRE,
-			& DEF_LASER,
-			& DEF_PB,
-			& DEF_FIST,
-			& DEF_FOOT,
-			& DEF_HOLLOW_POINT,
-			& DEF_SPORE,
-			& DEF_HEADBUTT,
-			& DEF_FEEDME,
+		&WH_SA,
+			& WH_HE,
+			& WH_AP,
+			& WH_FIRE,
+			& WH_LASER,
+			& WH_PB,
+			& WH_FIST,
+			& WH_FOOT,
+			& WH_HOLLOW_POINT,
+			& WH_SPORE,
+			& WH_HEADBUTT,
+			& WH_FEEDME,
 	};
 	InitialiseModsIfRequired();
 
 	return By_Type(type);
 }
+
+void WarheadTypeClass::One_Time(void)
+{
+	return;
+}
+
 char* WarheadTypeClass::Resolve_Ini_Name()
 {
 	return IsModType

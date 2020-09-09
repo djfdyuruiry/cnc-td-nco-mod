@@ -1,16 +1,16 @@
 local typeAreas =
   {
-    bullets = {
-      getTypes = getBulletTypes,
-      getRuleNames = getBulletRuleNames,
-      getRuleValue = getBulletRule,
-      setRuleValue = setBulletRule
-    },
     warheads = {
       getTypes = getWarheadTypes,
       getRuleNames = getWarheadRuleNames,
       getRuleValue = getWarheadRule,
       setRuleValue = setWarheadRule
+    },
+    bullets = {
+      getTypes = getBulletTypes,
+      getRuleNames = getBulletRuleNames,
+      getRuleValue = getBulletRule,
+      setRuleValue = setBulletRule
     },
     weapons = {
       getTypes = getWeaponTypes,

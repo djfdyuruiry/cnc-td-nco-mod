@@ -605,6 +605,8 @@ BulletTypeClass::BulletTypeClass(
 	Explosion = explosion;
 
 	IniName = strdup(ininame);
+	//strncpy((char*)IniName, ininame, sizeof(IniName));
+	//((char&)IniName[sizeof(IniName) - 1]) = '\0';
 	ImageName = imagename;
 
 	GetRules() << RulesIniSectionBuilder::BuildBulletSection(ininame);

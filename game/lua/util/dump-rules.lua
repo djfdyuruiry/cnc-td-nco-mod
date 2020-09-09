@@ -1,16 +1,16 @@
 local typeAreas =
 {
-  Bullets = {
-    getTypes = getBulletTypes,
-    getRuleNames = getBulletRuleNames,
-    getRuleValue = getBulletRule,
-    setRuleValue = setBulletRule
-  },
   Warheads = {
     getTypes = getWarheadTypes,
     getRuleNames = getWarheadRuleNames,
     getRuleValue = getWarheadRule,
     setRuleValue = setWarheadRule
+  },
+  Bullets = {
+    getTypes = getBulletTypes,
+    getRuleNames = getBulletRuleNames,
+    getRuleValue = getBulletRule,
+    setRuleValue = setBulletRule
   },
   Weapons = {
     getTypes = getWeaponTypes,
@@ -46,8 +46,8 @@ local typeAreas =
 
 local typeAreaOrder =
 {
-  "Bullets",
   "Warheads",
+  "Bullets",
   "Weapons",
   "Buildings",
   "Infantry",
