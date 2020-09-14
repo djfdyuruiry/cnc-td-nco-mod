@@ -64,19 +64,24 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 
   rulesFile:write(string.format("[%s]\n", typeAreaName))
   idx=1
+
   log("Creating list %s", typeAreaName)
+
   for _, areaType in ipairs(typeArea.getTypes()) do
     local isModType = typeArea.getRuleValue(areaType, "IsModType")
+
     if not isModType then
       rulesFile:write(string.format("%s=%s\n",tostring(idx),areaType))
-	  idx=idx+1
-	end
+
+      idx = idx+1
+    end
   end
 
   rulesFile:write("\n")
 
   for _, areaType in ipairs(typeArea.getTypes()) do
     log("Checking areaType %s", areaType)
+
     local friendlyName = typeArea.getRuleValue(areaType, "FriendlyName")
     local isModType = typeArea.getRuleValue(areaType, "IsModType")
 
@@ -86,6 +91,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 
     rulesFile:write(string.format("; %s\n", friendlyName))
     rulesFile:write(string.format("[%s]\n", areaType))
+
     log("[%s]", areaType)
 
     for _, ruleName in ipairs(typeArea.getRuleNames()) do
@@ -95,19 +101,18 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 
       local ruleValue = typeArea.getRuleValue(areaType, ruleName)
       local postfix = ""
-      
 
       if ruleName == "FriendlyName" and ruleValue:find("'") then
         postfix = "\n;'"
       end
 
       rulesFile:write(
-          string.format(
+        string.format(
           "%s=%s%s\n",
           ruleName,
           tostring(ruleValue):gsub(".0$", ""),
           postfix
-          )
+        )
       )
 
       ::areaRule::

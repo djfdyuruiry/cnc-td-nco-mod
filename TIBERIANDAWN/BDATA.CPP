@@ -3693,18 +3693,18 @@ BuildingTypeClass::BuildingTypeClass(
 	StartFace = sframe;
 	Type = type;
 
-	IsBibbed = Read_Is_Bibbed(IniName, is_bibbed);
-	IsWall = Read_Is_Wall(IniName, is_wall);
-	IsFactory = Read_Is_Factory(IniName, is_factory);
-	IsSimpleDamage = Read_Use_Simple_Damage(IniName, is_simpledamage);
-	IsCaptureable = Read_Is_Captureable(IniName, is_captureable);
-	IsRegulated = Read_Is_Fixed_Speed(IniName, is_regulated);
-	IsUnsellable = Read_Is_Unsellable(IniName, is_unsellable);
-	ToBuild = Read_Factory_Type(IniName, tobuild);
-	Capacity = Read_Storage_Capacity(IniName, capacity);
-	Power = Read_Power_Output(IniName, power);
-	Drain = Read_Power_Input(IniName, drain);
-	IsSturdy = Read_Is_Sturdy(IniName, is_sturdy);
+	IsBibbed = is_bibbed;
+	IsWall = is_wall;
+	IsFactory = is_factory;
+	IsSimpleDamage = is_simpledamage;
+	IsCaptureable = is_captureable;
+	IsRegulated = is_regulated;
+	IsUnsellable = is_unsellable;
+	ToBuild = (RTTIType)tobuild;
+	Capacity = capacity;
+	Power = power;
+	Drain = drain;
+	IsSturdy = is_sturdy;
 
 	Anims[BSTATE_CONSTRUCTION].Start = 0;
 	Anims[BSTATE_CONSTRUCTION].Count = 1;
@@ -3745,7 +3745,7 @@ void BuildingTypeClass::Read_Building_Rules(BuildingTypeClass* building)
 	building->IsCaptureable = Read_Is_Captureable(iniName, building->IsCaptureable);
 	building->IsRegulated = Read_Is_Fixed_Speed(iniName, building->IsRegulated);
 	building->IsUnsellable = Read_Is_Unsellable(iniName, building->IsUnsellable);
-//	building->ToBuild = Read_Factory_Type(iniName);
+	building->ToBuild = Read_Factory_Type(iniName, (FactoryType)building->ToBuild);
 	building->Capacity = Read_Storage_Capacity(iniName, building->Capacity);
 	building->Power = Read_Power_Output(iniName, building->Power);
 	building->Drain = Read_Power_Input(iniName, building->Drain);
