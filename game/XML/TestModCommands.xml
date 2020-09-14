@@ -16,5 +16,19 @@
       </Command>
     </CNCModGameCommands>
 
+    <!-- Aircraft -->
+    <CNCModGameCommands>
+      <Command Name="HVYORCA">
+        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD28</GameCommand>
+      </Command>
+    </CNCModGameCommands>
+
+    <!-- Buildings -->
+    <CNCModGameCommands>
+      <Command Name="BIGTURR">
+        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD65</GameCommand>
+      </Command>
+    </CNCModGameCommands>
+
   </ModGameCommands>
 </CNCModGameCommandManager>
