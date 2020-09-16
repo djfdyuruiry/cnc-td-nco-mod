@@ -96,23 +96,27 @@ void NCO_Shutdown()
 	#ifndef TEST_CONSOLE
 	if (Lua_Console_Is_Enabled())
 	{
-		if (!TerminateThread(LUA_REPL_THREAD, 0))
+		if (LUA_REPL_THREAD != NULL && LUA_REPL_THREAD != INVALID_HANDLE_VALUE && !TerminateThread(LUA_REPL_THREAD, 0))
 		{
 			Log_Error("Error closing Lua console: %s", Get_Win32_Error_Message());
 		}
 
 		Stop_Console_Output();
+
+		Log_Info("Lua Console shut down");
 	}
 	#endif
 
 	if (Lua_Is_Enabled())
 	{
-		if (LUA_EVENT_THREAD != NULL && !TerminateThread(LUA_EVENT_THREAD, 0))
+		if (LUA_EVENT_THREAD != NULL && LUA_EVENT_THREAD != INVALID_HANDLE_VALUE && !TerminateThread(LUA_EVENT_THREAD, 0))
 		{
 			Log_Error("Error stopping Lua event thread: %s", Get_Win32_Error_Message());
 		}
 
 		Shutdown_Lua();
+
+		Log_Info("Lua shut down");
 	}
 
 	Free_Rules_Memory();
