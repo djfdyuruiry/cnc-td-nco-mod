@@ -6,6 +6,11 @@
 #include "strings.h"
 #include "utils.h"
 
+#include <iostream>
+#include <shlobj.h>
+
+#pragma comment(lib, "shell32.lib")
+
 static auto LOG_LINE_LENGTH = 25600;
 static auto LOG_LEVEL_LENGTH = 5;
 
@@ -79,30 +84,22 @@ LogLevel Parse_Log_Level(const char* levelString)
 
 static void Load_Default_Log_File_Path()
 {
-	#ifdef TEST_CONSOLE
+	CHAR my_documents[MAX_PATH];
+	HRESULT result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, my_documents);
 	LOG_FILE_PATH = Allocate_String(MAX_PATH);
-
+#ifdef TEST_CONSOLE
 	sprintf(LOG_FILE_PATH, "log\\nco.log");
-	#else
-	bool valueFound = false;
-	auto userProfileDirectory = Get_Env_Var("USERPROFILE", &valueFound);
-
-	if (!valueFound)
-	{
-		Show_Error("Failed to read USERPROFILE env var to find your home directory, logging to file will be disabled");
-		FAILED_TO_OPEN_LOG_FILE = true;
-	}
-
-	LOG_FILE_PATH = Allocate_String(MAX_PATH);
-
-	sprintf(LOG_FILE_PATH, "%s\\Documents\\CnCRemastered\\nco.log", userProfileDirectory);
-	#endif	
+#else
+	sprintf(LOG_FILE_PATH, "%s\\CnCRemastered\\nco.log", my_documents);
+#endif
 }
 
 static void Open_Log_File()
 {
+	if (LOG_FILE_HANDLE != NULL) {
+		return;
+	}
 	LOG_FILE_PATH = Current_Log_Path();
-
 	if (String_Is_Empty(LOG_FILE_PATH))
 	{
 		Load_Default_Log_File_Path();

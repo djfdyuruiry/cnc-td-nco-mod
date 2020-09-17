@@ -48,7 +48,7 @@ void InitialiseModsIfRequired()
 	{
 		return;
 	}
-
+	Log_Trace("InitialiseModsIfRequired starting");
 	WARHEAD_MOD->InitialiseTypes();
 	BULLET_MOD->InitialiseTypes();
 	WEAPON_MOD->InitialiseTypes();
