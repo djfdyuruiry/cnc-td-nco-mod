@@ -847,6 +847,9 @@
     <ClInclude Include="TypeMod_Weapon.h">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
+    <ClInclude Include="DLLInterfaceVersion.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
