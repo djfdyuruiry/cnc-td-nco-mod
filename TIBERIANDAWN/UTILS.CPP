@@ -12,6 +12,7 @@ static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_S = 10000000LL;
 static const auto MOD_FILE_NAME_LENGTH = 17u;
 
 static char* MOD_DATA_PATH = NULL;
+static bool CONSOLE_OPEN = false;
 
 void Show_Error(const char* messageFormat, ...)
 {
@@ -426,6 +427,12 @@ void Start_Console_Output()
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console allocation");
 #else
+	if (CONSOLE_OPEN)
+	{
+		Log_Warn("Attempt to open Win32 console when it was already open detected, ignoring");
+		return;
+	}
+
 	if (!AttachConsole(ATTACH_PARENT_PROCESS)
 		&& !AllocConsole()
 		&& !AttachConsole(GetCurrentProcessId()))
@@ -438,6 +445,8 @@ void Start_Console_Output()
 	freopen("CON", "w", stdout);
 	freopen("CON", "w", stderr);
 	freopen("CON", "w", stdin);
+
+	CONSOLE_OPEN = true;
 #endif
 }
 
@@ -446,6 +455,12 @@ void Stop_Console_Output()
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console stop");
 #else
+	if (!CONSOLE_OPEN)
+	{
+		Log_Warn("Attempt to close Win32 console when it was not alreday open detected, ignoring");
+		return;
+	}
+
 	if (!FreeConsole())
 	{
 		Log_Error("Error closing Win32 console: %s", Get_Win32_Error_Message());
@@ -454,5 +469,7 @@ void Stop_Console_Output()
 	fclose(stdout);
 	fclose(stderr);
 	fclose(stdin);
+
+	CONSOLE_OPEN = false;
 #endif
 }
