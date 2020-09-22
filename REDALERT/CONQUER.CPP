@@ -5709,14 +5709,12 @@ bool Is_Aftermath_Installed (void)
 #ifdef FIXIT_CSII	//	checked - ajw 9/28/98
 void Enable_Secret_Units(void)
 {
-#if 0
 	SecretUnitsEnabled=true;
 	UnitTypeClass::As_Reference(UNIT_PHASE).Level=10;
 	VesselTypeClass::As_Reference(VESSEL_CARRIER).Level=10;
 	for (int index = 0; index < Buildings.Count(); index++) {
 		Buildings.Ptr(index)->Update_Buildables();
 	}
-#endif
 }
 #endif
 

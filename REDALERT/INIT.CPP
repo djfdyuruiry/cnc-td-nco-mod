@@ -538,7 +538,7 @@ bool Select_Game(bool fade)
 	Show_Mouse();
 
 #ifdef FIXIT_CSII	//	checked - ajw 9/28/98
-	NewUnitsEnabled = SecretUnitsEnabled = 0;	// Assume new units disabled, unless specifically .INI enabled or multiplayer negotiations enable it.
+	NewUnitsEnabled = SecretUnitsEnabled = 1;	// Assume new units disabled, unless specifically .INI enabled or multiplayer negotiations enable it.
 #endif
 
 #ifndef WOLAPI_INTEGRATION
@@ -1495,7 +1495,7 @@ bool Select_Game(bool fade)
 #else
 			if (PlayingAgainstVersion < VERSION_AFTERMATH_CS) {
 #endif
-				NewUnitsEnabled = SecretUnitsEnabled = false;
+				NewUnitsEnabled = SecretUnitsEnabled = true;
 			} else {
 				NewUnitsEnabled = true;
 			}
@@ -1512,7 +1512,7 @@ bool Select_Game(bool fade)
 			if( bAftermathMultiplayer )
 				NewUnitsEnabled = true;
 			else
-				NewUnitsEnabled = SecretUnitsEnabled = false;
+				NewUnitsEnabled = SecretUnitsEnabled = true;
 //			debugprint( "Internet game: NewUnitsEnabled = %i\n", NewUnitsEnabled );
 #endif
 			break;

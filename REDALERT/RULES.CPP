@@ -272,7 +272,7 @@ RulesClass::RulesClass(void) :
 	ResourceBarDisplayMode(RB_SELECTED)
 {
 #ifdef FIXIT_CSII	//	checked - ajw 9/28/98
-	NewUnitsEnabled = SecretUnitsEnabled = 0;
+	NewUnitsEnabled = SecretUnitsEnabled = 1;
 	MTankDistance = 30;
 	QuakeUnitDamage = 0x080;
 	QuakeBuildingDamage = 0x040;

@@ -152,10 +152,10 @@ bool AntsEnabled = false;
 #endif
 
 #ifdef FIXIT_CSII	//	checked - ajw 9/28/98
-bool NewUnitsEnabled = false;
-bool SecretUnitsEnabled = false;
+bool NewUnitsEnabled = true;
+bool SecretUnitsEnabled = true;
 int MTankDistance = 15;
-bool OverrideNewUnitsEnabled = false;	 // ST - 12/13/2019 12:21PM	
+bool OverrideNewUnitsEnabled = true;	 // ST - 12/13/2019 12:21PM	
 #ifdef FIXIT_CARRIER	//	checked - ajw 9/28/98
 int CarrierLaunchDelay = 60;
 #endif
