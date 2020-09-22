@@ -1465,8 +1465,8 @@ class BulletTypeClass : public ObjectTypeClass
 		//---------------------------------------------------------------------
 		BulletTypeClass(
 			BulletType type,
-			const char* rulesName,
-			const char* ininame,
+			char const* ininame,
+			char const* imagename,
 			const char* friendlyName,
 			bool is_high,
 			bool is_homing,
