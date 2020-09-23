@@ -1,3 +1,4 @@
+#include <shlobj.h>
 #include <string>
 #include <windows.h>
 
@@ -5,11 +6,6 @@
 #include "rules_ini.h"
 #include "strings.h"
 #include "utils.h"
-
-#include <iostream>
-#include <shlobj.h>
-
-#pragma comment(lib, "shell32.lib")
 
 static auto LOG_LINE_LENGTH = 25600;
 static auto LOG_LEVEL_LENGTH = 5;
@@ -23,19 +19,19 @@ const char* Log_Level_To_String(LogLevel level)
 {
 	switch (level)
 	{
-		case TRACE:
-			return "TRACE";
-		case DEBUG:
-			return "DEBUG";
-		case WARN:
-			return "WARN";
-		case ERR:
-			return "ERROR";
-		case OFF:
-			return "OFF";
-		case INFO:
-		default:
-			return "INFO";
+	case TRACE:
+		return "TRACE";
+	case DEBUG:
+		return "DEBUG";
+	case WARN:
+		return "WARN";
+	case ERR:
+		return "ERROR";
+	case OFF:
+		return "OFF";
+	case INFO:
+	default:
+		return "INFO";
 	}
 }
 
@@ -84,14 +80,26 @@ LogLevel Parse_Log_Level(const char* levelString)
 
 static void Load_Default_Log_File_Path()
 {
-	CHAR my_documents[MAX_PATH];
-	HRESULT result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, my_documents);
-	LOG_FILE_PATH = Allocate_String(MAX_PATH);
 #ifdef TEST_CONSOLE
+	LOG_FILE_PATH = Allocate_String(MAX_PATH);
+
 	sprintf(LOG_FILE_PATH, "log\\nco.log");
 #else
-	sprintf(LOG_FILE_PATH, "%s\\CnCRemastered\\nco.log", my_documents);
-#endif
+	auto documentsPath = Allocate_String(MAX_PATH);
+	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, documentsPath);
+
+	if (FAILED(result))
+	{
+		Show_Error("Failed to read user documents path, logging to file will be disabled");
+		FAILED_TO_OPEN_LOG_FILE = true;
+
+		return;
+	}
+
+	LOG_FILE_PATH = Allocate_String(MAX_PATH);
+
+	sprintf(LOG_FILE_PATH, "%s\\CnCRemastered\\nco.log", documentsPath);
+#endif	
 }
 
 static void Open_Log_File()
@@ -99,7 +107,9 @@ static void Open_Log_File()
 	if (LOG_FILE_HANDLE != NULL) {
 		return;
 	}
+
 	LOG_FILE_PATH = Current_Log_Path();
+
 	if (String_Is_Empty(LOG_FILE_PATH))
 	{
 		Load_Default_Log_File_Path();
@@ -208,7 +218,7 @@ void Close_Log_File_If_Open()
 		FAILED_TO_OPEN_LOG_FILE
 		|| LOG_FILE_HANDLE == NULL
 		|| LOG_FILE_HANDLE == INVALID_HANDLE_VALUE
-	)
+		)
 	{
 		return;
 	}

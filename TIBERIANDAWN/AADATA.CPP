@@ -269,10 +269,10 @@ AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 
 	Pointers = new AircraftTypeClass const* [aircraftCount] {
 		&TransportHeli,
-			& AttackPlane,
-			& AttackHeli,
-			& CargoPlane,
-			& OrcaHeli,
+		& AttackPlane,
+		& AttackHeli,
+		& CargoPlane,
+		& OrcaHeli,
 	};
 
 	InitialiseModsIfRequired();
