@@ -1,6 +1,6 @@
 #pragma once
 
-#define WEAPON_FIRES_RULE "Fires"
+#define WEAPON_PROJECTILE_RULE "Projectile"
 
 #define WEAPON_DAMAGE_RULE "Damage"
 

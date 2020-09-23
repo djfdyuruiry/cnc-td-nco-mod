@@ -134,6 +134,7 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 {
 	auto iniName = type->IniName;
 
+	type->Image = ReadRuleValue<char*>(iniName, IMAGE_RULE, type->Image);
 	type->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, type->FriendlyName);
 	type->Level = Read_Build_Level(iniName, type->Level);
 	type->Pre = ReadRuleValue<long>(iniName, PREREQUISITE_RULE, type->Pre);
@@ -2179,7 +2180,7 @@ FireErrorType TechnoClass::Can_Fire(TARGET target, int which) const
 	**	sitting on the ground.
 	*/
 	if (object && object->What_Am_I() == RTTI_AIRCRAFT &&
-			!BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weap).Fires).IsAntiAircraft &&
+			!BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weap).Projectile).IsAntiAircraft &&
 			((AircraftClass *)object)->Altitude > 0) {
 
 		return(FIRE_CANT);
@@ -2349,12 +2350,12 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 		return(NULL);
 	}
 	WeaponTypeClass const *weapon = (which == 0) ? WeaponTypeClass::By_Type(tclass.Primary) : WeaponTypeClass::By_Type(tclass.Secondary);
-	BulletTypeClass const &btype = BulletTypeClass::As_Reference(weapon->Fires);
+	BulletTypeClass const &btype = BulletTypeClass::As_Reference(weapon->Projectile);
 
 	/*
 	**	Perform a quick legality check to see if firing can occur.
 	*/
-	if (Debug_Map || weapon->Fires == BULLET_NONE || !Target_Legal(target)) {
+	if (Debug_Map || weapon->Projectile == BULLET_NONE || !Target_Legal(target)) {
 		return(NULL);
 	}
 
@@ -2393,7 +2394,7 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 	**	created.
 	*/
 	int firepower = (weapon->Attack > 0) ? ((int)weapon->Attack * House->FirepowerBias) : 0;
- 	bullet = new BulletClass(weapon->Fires);
+ 	bullet = new BulletClass(weapon->Projectile);
 	if (bullet) {
 		bullet->Assign_Target(target);
 		bullet->Payback = this;
@@ -2502,7 +2503,7 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 #endif
 	}
 
-	if (weapon->Fires == BULLET_LASER) {
+	if (weapon->Projectile == BULLET_LASER) {
 		int x, y, x1, y1;
 		COORDINATE source, dest;
 		source = Fire_Coord(which);
@@ -2662,8 +2663,8 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 				} else {
 					AircraftClass* aircraft = (AircraftClass*)object;
 					if (*aircraft != AIRCRAFT_CARGO) {
-						if (((Techno_Type_Class()->Primary != WEAPON_NONE) && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Primary).Fires).IsAntiAircraft) ||
-							((Techno_Type_Class()->Secondary != WEAPON_NONE) && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Secondary).Fires).IsAntiAircraft) ||
+						if (((Techno_Type_Class()->Primary != WEAPON_NONE) && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Primary).Projectile).IsAntiAircraft) ||
+							((Techno_Type_Class()->Secondary != WEAPON_NONE) && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Secondary).Projectile).IsAntiAircraft) ||
 							(aircraft->Altitude == 0)) {
 							return(ACTION_ATTACK);
 						}
@@ -2743,7 +2744,7 @@ ActionType TechnoClass::What_Action(CELL cell) const
 	// Changed for multiplayer. ST - 3/13/2019 5:52PM
 	if (Is_Owned_By_Player() && Techno_Type_Class()->Primary != WEAPON_NONE && (ctrldown || (optr && optr->IsLegalTarget))) {
 	//if (IsOwnedByPlayer && Techno_Type_Class()->Primary != WEAPON_NONE && (ctrldown || (optr && optr->IsLegalTarget))) {
-		WarheadTypeClass const * whead = WarheadTypeClass::By_Type(BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Primary).Fires).Warhead);
+		WarheadTypeClass const * whead = WarheadTypeClass::By_Type(BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Techno_Type_Class()->Primary).Projectile).Warhead);
 		if (!optr || (optr->IsWall && (whead->IsWallDestroyer || (whead->IsWoodDestroyer && optr->IsWooden)))) {
 			if (Can_Player_Move() || In_Range(::As_Target(cell), 0)) {
 				return(ACTION_ATTACK);
@@ -4731,13 +4732,13 @@ int TechnoClass::Anti_Air(void) const
 		WeaponType weapon_type = Techno_Type_Class()->Primary;
 		WeaponTypeClass const * weapon = WeaponTypeClass::By_Type(weapon_type);
 		//BulletTypeClass const * bullet = weapon->Bullet;
-		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires);
+		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Projectile);
 		//WarheadTypeClass const * warhead = weapon->WarheadPtr;
 		WarheadTypeClass const * warhead = WarheadTypeClass::By_Type(bullet.Warhead);
 
 
 		//if (bullet->IsAntiAircraft) {
-		if (weapon_type != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires).IsAntiAircraft) {
+		if (weapon_type != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Projectile).IsAntiAircraft) {
 			int value = ((weapon->Attack * warhead->Modifier[ARMOR_ALUMINUM]) * weapon->Range) / weapon->ROF;
 
 			//if (Techno_Type_Class()->Is_Two_Shooter()) {
@@ -4774,7 +4775,7 @@ int TechnoClass::Anti_Armor(void) const
 
 		WeaponType weapon_type = Techno_Type_Class()->Primary;
 		//if (!Techno_Type_Class()->PrimaryWeapon->Bullet->IsAntiGround) return(0);
-		if (weapon_type != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires).IsAntiAircraft) {
+		if (weapon_type != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Projectile).IsAntiAircraft) {
 			return 0;
 		}
 
@@ -4782,7 +4783,7 @@ int TechnoClass::Anti_Armor(void) const
 		//BulletTypeClass const * bullet = weapon->Bullet;
 		//WarheadTypeClass const * warhead = weapon->WarheadPtr;
 		WeaponTypeClass const * weapon = WeaponTypeClass::By_Type(weapon_type);
-		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires);
+		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Projectile);
 		WarheadTypeClass const * warhead = WarheadTypeClass::By_Type(bullet.Warhead);
 
 		int mrange = min(weapon->Range, 0x0400);
@@ -4823,7 +4824,7 @@ int TechnoClass::Anti_Infantry(void) const
 	if (Is_Weapon_Equipped()) {
 		//if (!Techno_Type_Class()->PrimaryWeapon->Bullet->IsAntiGround) return(0);
 		WeaponType weapon_type = Techno_Type_Class()->Primary;
-		if (weapon_type != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires).IsAntiAircraft) {
+		if (weapon_type != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Projectile).IsAntiAircraft) {
 			return 0;
 		}
 
@@ -4831,7 +4832,7 @@ int TechnoClass::Anti_Infantry(void) const
 		//BulletTypeClass const * bullet = weapon->Bullet;
 		//WarheadTypeClass const * warhead = weapon->WarheadPtr;
 		WeaponTypeClass const * weapon = WeaponTypeClass::By_Type(weapon_type);
-		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Fires);
+		const BulletTypeClass &bullet = BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(weapon_type).Projectile);
 		WarheadTypeClass const * warhead = WarheadTypeClass::By_Type(bullet.Warhead);
 		int mrange = min(weapon->Range, 0x0400);
 

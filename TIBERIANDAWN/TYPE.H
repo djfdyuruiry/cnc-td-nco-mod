@@ -160,7 +160,10 @@ class ObjectTypeClass : public AbstractTypeClass
 		**	exists in a separate file, the data is filled in after this object is constructed.
 		**	The "mutable" keyword allows easy modification to this otherwise const object.
 		*/
-		void const * ImageData;
+		void const* ImageData;
+
+		// The name of the image to use
+		char* Image;
 
 		/*
 		**	This points to the radar imagery for this object.
@@ -439,7 +442,7 @@ public:
 	**	represent projectiles. It is one of these classes that is specified here.
 	**	If this object does not fire anything, then this value will be UNIT_NONE.
 	*/
-	BulletType Fires;
+	BulletType Projectile;
 
 	/*
 	**	This is the damage (explosive load) to be assigned to the projectile that
@@ -503,7 +506,7 @@ public:
 		const char* friendlyName,
 		char const* ininame,
 		WeaponType owner,
-		BulletType fires,
+		BulletType projectile,
 		unsigned char attack,
 		unsigned char rof,
 		int range,
@@ -1447,7 +1450,7 @@ class BulletTypeClass : public ObjectTypeClass
 		*/
 		int Range;
 
-		const char* ImageName;
+		char* Image;
 
 		char* FriendlyName;
 
@@ -1465,7 +1468,7 @@ class BulletTypeClass : public ObjectTypeClass
 		BulletTypeClass(
 			BulletType type,
 			char const* ininame,
-			char const* imagename,
+			char const* image,
 			const char* friendlyName,
 			bool is_high,
 			bool is_homing,

@@ -100,7 +100,7 @@ WeaponTypeClass::WeaponTypeClass(
 	const char* friendlyName,
 	char const* ininame,
 	WeaponType owner,
-	BulletType fires,
+	BulletType projectile,
 	unsigned char attack,
 	unsigned char rof,
 	int range,
@@ -118,7 +118,7 @@ WeaponTypeClass::WeaponTypeClass(
 	GetRules() << RulesIniSectionBuilder::BuildWeaponSection(weaponTypeStr);
 
 	FriendlyName = ReadRuleValue<char*>(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
-	Fires = ReadRuleValue<BulletType>(weaponTypeStr, WEAPON_FIRES_RULE, fires);
+	Projectile = ReadRuleValue<BulletType>(weaponTypeStr, WEAPON_PROJECTILE_RULE, projectile);
 	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
 	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
 	Range = Read_Weapon_Range(weaponTypeStr, range);
@@ -178,7 +178,7 @@ void WeaponTypeClass::Read_Weapon_Rules(WeaponTypeClass* weapon)
 
 	//Read_Object_Rules(weapon);
 	//Read_Techno_Rules(weapon);
-	weapon->Fires = ReadRuleValue<BulletType>(iniName, WEAPON_FIRES_RULE, weapon->Fires);
+	weapon->Projectile = ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
 	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
 	weapon->ROF = Read_Weapon_Rate_Of_Fire(iniName, weapon->ROF);
 	weapon->Range = Read_Weapon_Range(iniName, weapon->Range);

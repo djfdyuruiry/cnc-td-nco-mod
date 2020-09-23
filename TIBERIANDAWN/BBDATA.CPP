@@ -577,7 +577,7 @@ BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
 BulletTypeClass::BulletTypeClass(
 	BulletType type,
 	char const* ininame,
-	char const *imagename,
+	char const *image,
 	const char* friendlyName,
 	bool is_high,
 	bool is_homing, 
@@ -603,7 +603,7 @@ BulletTypeClass::BulletTypeClass(
 	Explosion = explosion;
 
 	IniName = strdup(ininame);
-	ImageName = strdup(imagename);
+	Image = strdup(image);
 
 	GetRules() << RulesIniSectionBuilder::BuildBulletSection(ininame);
 
@@ -638,6 +638,7 @@ void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)
 	Read_Object_Rules(bullet);
 	
 	bullet->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
+	bullet->Image = ReadRuleValue<char*>(iniName, IMAGE_RULE, bullet->Image);
 	bullet->IsHigh = ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, bullet->IsHigh);
 	bullet->IsAntiAircraft = ReadRuleValue<bool>(iniName, BULLET_ANTI_AIRCRAFT_RULE, bullet->IsAntiAircraft);
 	bullet->IsTranslucent = ReadRuleValue<bool>(iniName, BULLET_TRANSLUCENT_RULE, bullet->IsTranslucent);

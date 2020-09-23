@@ -27,6 +27,11 @@ private:
 		return s << FRIENDLY_NAME_RULE << STRING_RULE;
 	}
 
+	static IRulesIniSection& BuildImageRule(IRulesIniSection& s)
+	{
+		return s << IMAGE_RULE << STRING_RULE;
+	}
+
 	static IRulesIniSection& BuildSpeedRule(IRulesIniSection& s)
 	{
 		return s << s.BuildRule(SPEED_RULE)
@@ -58,6 +63,7 @@ private:
 	static IRulesIniSection& BuildGenericRules(IRulesIniSection& s)
 	{
 		return s << BuildFriendlyNameRule(s)
+				 << BuildImageRule(s)
 			     << s.BuildRule(BUILD_LEVEL_RULE)
 			     	 .OfType(UNSIGNED_INT_RULE)
 			     	 .WithMax(99u)
@@ -376,7 +382,7 @@ public:
 			.WithDefaultType(UNSIGNED_INT_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << BuildFriendlyNameRule(s) 
-				  << WEAPON_FIRES_RULE << BULLET_RULE
+				  << WEAPON_PROJECTILE_RULE << BULLET_RULE
 				  
 				  << s.BuildRule(WEAPON_DAMAGE_RULE)
 					  .WithMax(UCHAR_MAX)
@@ -395,6 +401,7 @@ public:
 			.WithDefaultType(BOOL_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << BuildFriendlyNameRule(s)
+				  << BuildImageRule(s)
 				  << BULLET_HIGH_RULE
 				  << BULLET_ANTI_AIRCRAFT_RULE
 				  << BULLET_TRANSLUCENT_RULE
