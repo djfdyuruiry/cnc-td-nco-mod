@@ -1434,7 +1434,7 @@ InfantryTypeClass const** InfantryTypeClass::Pointers = NULL;
 InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 {
 	if (Pointers != NULL) {
-		Log_Trace("Infantry lookup by type: %d", type);
+		//Log_Trace("Infantry lookup by type: %d", type);
 
 		return Pointers[type];
 	}

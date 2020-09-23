@@ -3494,7 +3494,7 @@ BuildingTypeClass const** BuildingTypeClass::Pointers = NULL;
 BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type)
 {
 	if (Pointers != NULL) {
-		Log_Trace("Building lookup by type: %d", type);
+		//Log_Trace("Building lookup by type: %d", type);
 
 		return Pointers[type];
 	}

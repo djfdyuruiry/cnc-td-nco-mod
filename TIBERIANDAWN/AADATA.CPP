@@ -259,7 +259,7 @@ AircraftTypeClass const** AircraftTypeClass::Pointers = NULL;
 AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 {
 	if (Pointers != NULL) {
-		Log_Trace("Aircraft lookup by type: %d", type);
+		//Log_Trace("Aircraft lookup by type: %d", type);
 		return Pointers[type];
 	}
 

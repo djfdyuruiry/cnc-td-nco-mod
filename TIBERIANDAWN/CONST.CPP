@@ -131,7 +131,7 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 {
 	if (Pointers != NULL)
 	{
-		Log_Trace("Weapon lookup by type: %d", type);
+		//Log_Trace("Weapon lookup by type: %d", type);
 		return Pointers[type];
 	}
 	Log_Trace("WTC ByType Initializing Weapons");
@@ -273,7 +273,7 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 {
 	if (Pointers != NULL)
 	{
-		Log_Trace("Warhead lookup by type: %d", type);
+		//Log_Trace("Warhead lookup by type: %d", type);
 		return Pointers[type];
 	}
 	Log_Trace("WTC By_Type Initialize Watheads");

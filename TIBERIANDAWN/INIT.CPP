@@ -106,6 +106,7 @@ extern bool SpawnedFromWChat;
  *=============================================================================================*/
 bool Init_Game(int , char *[])
 {
+	Log_Debug("Init_Game start");
 	void const *temp_mouse_shapes;
 
 	CCDebugString ("C&C95 - About to load reslib.dll\n");
@@ -648,6 +649,8 @@ bool Init_Game(int , char *[])
 	ObjectTypeClass::One_Time();
 	BuildingTypeClass::One_Time();
 	BulletTypeClass::One_Time();
+	WarheadTypeClass::One_Time();
+	WeaponTypeClass::One_Time();
 	HouseTypeClass::One_Time();
 
 	TemplateTypeClass::One_Time();
