@@ -211,6 +211,12 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             }
         }
     }
+    else if (Strings_Are_Equal(ruleName, IMAGE_RULE))
+    {
+        Log_Trace("Write_Bullet_Rule => Rule value: %s -> %s", bullet->Image, originalValue);
+
+        bullet->Image = strdup(originalValue);
+    }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Write_Bullet_Rule => Rule value: %s -> %s", bullet->FriendlyName,  originalValue);
@@ -354,6 +360,12 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
         Log_Trace("Read_Bullet_Rule => Rule value: %u", bullet->ROT);
 
         lua_pushnumber(lua, bullet->ROT);
+    }
+    else if (Strings_Are_Equal(ruleName, IMAGE_RULE))
+    {
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", bullet->Image);
+
+        lua_pushstring(lua, bullet->Image);
     }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {

@@ -307,7 +307,7 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
 		**	If the turret is rotating and the projectile isn't a homing type, then
 		**	firing must be delayed until the rotation stops.
 		*/
-		if (!IsFiring && IsRotating && !BulletTypeClass::As_Reference(weapon.Fires).IsHoming) {
+		if (!IsFiring && IsRotating && !BulletTypeClass::As_Reference(weapon.Projectile).IsHoming) {
 			return(FIRE_ROTATING);
 		}
 
@@ -326,13 +326,13 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
 		/*
 		**	Special flame tank logic.
 		*/
-		if (weapon.Fires == BULLET_FLAME) {
+		if (weapon.Projectile == BULLET_FLAME) {
 			if (Dir_Facing(dir) == Dir_Facing(PrimaryFacing)) {
 				diff = 0;
 			}
 		}
 
-		if (BulletTypeClass::As_Reference(weapon.Fires).IsHoming) {
+		if (BulletTypeClass::As_Reference(weapon.Projectile).IsHoming) {
 			diff >>= 2;
 		}
 		if (diff < 8) {
