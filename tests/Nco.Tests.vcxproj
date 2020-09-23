@@ -64,7 +64,7 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>winmm.lib;Ws2_32.lib;Shlwapi.lib;..\lib\lua53.lib;..\tiberiandawn\Win32\TestConsole\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;Ws2_32.lib;shell32.lib;..\lib\lua53.lib;..\tiberiandawn\Win32\TestConsole\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <FixedBaseAddress>false</FixedBaseAddress>
