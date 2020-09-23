@@ -452,8 +452,8 @@ void AircraftTypeClass::One_Time(void)
 
 	for (index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		AircraftTypeClass uclass = As_Reference(index);
-		char* iniName = uclass.Resolve_Ini_Name();
+		AircraftTypeClass* uclass = (AircraftTypeClass*)&As_Reference(index);
+		char* iniName = uclass->Resolve_Ini_Name();
 
 		/*
 		**	Fetch the supporting data files for the unit.
@@ -465,13 +465,13 @@ void AircraftTypeClass::One_Time(void)
 			sprintf(buffer, "%sICON", iniName);
 		}
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
-		((void const *&)uclass.CameoData) = MixFileClass::Retrieve(fullname);
+		((void const *&)uclass->CameoData) = MixFileClass::Retrieve(fullname);
 
 		/*
 		**	Generic shape for all houses load method.
 		*/
 		_makepath(fullname, NULL, NULL, iniName, ".SHP");
-		((void const *&)uclass.ImageData) = MixFileClass::Retrieve(fullname);
+		((void const *&)uclass->ImageData) = MixFileClass::Retrieve(fullname);
 	}
 
 	LRotorData = MixFileClass::Retrieve("LROTOR.SHP");

@@ -3816,20 +3816,20 @@ void BuildingTypeClass::One_Time(void)
 	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char	buffer[_MAX_FNAME];
-		auto building = As_Reference(sindex);
-		auto iniName = building.Resolve_Ini_Name();
+		BuildingTypeClass* building = (BuildingTypeClass*)&As_Reference(sindex);
+		auto iniName = building->Resolve_Ini_Name();
 
 		/*
 		**	Fetch the sidebar cameo image for this building.
 		*/
-		if (building.IsBuildable) {
+		if (building->IsBuildable) {
 			if ( Get_Resolution_Factor() ) {
 				sprintf(buffer, "%sICNH", iniName);
 			} else {
 				sprintf(buffer, "%sICON", iniName);
 			}
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			((void const *&)building.CameoData) = MixFileClass::Retrieve(fullname);
+			((void const *&)building->CameoData) = MixFileClass::Retrieve(fullname);
 		}
 
 		/*
@@ -3838,21 +3838,21 @@ void BuildingTypeClass::One_Time(void)
 		sprintf(buffer, "%sMAKE", iniName);
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
 		void const * dataptr = MixFileClass::Retrieve(fullname);
-		((void const *&)building.BuildupData) = dataptr;
+		((void const *&)building->BuildupData) = dataptr;
 		if (dataptr) {
 			int timedelay = 1;
 			int count = Get_Build_Frame_Count(dataptr);
 			if (count) {
 				timedelay = (5 * TICKS_PER_SECOND) / count;
 			}
-			building.Init_Anim(BSTATE_CONSTRUCTION, 0, count, timedelay);
+			building->Init_Anim(BSTATE_CONSTRUCTION, 0, count, timedelay);
 		}
 
 		/*
 		**	Fetch the normal game shape for this building.
 		*/
 		_makepath(fullname, NULL, NULL, iniName, ".SHP");
-		((void const *&)building.ImageData) = MixFileClass::Retrieve(fullname);
+		((void const *&)building->ImageData) = MixFileClass::Retrieve(fullname);
 	}
 
 	// Try to load weap2.shp
