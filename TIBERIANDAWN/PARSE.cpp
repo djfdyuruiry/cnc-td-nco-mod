@@ -2367,7 +2367,9 @@ long Structure_Type_To_Prerequisite(StructType structType, bool* parseError, boo
         return STRUCTF_NONE;
     }
 
-    if (structType < STRUCT_FIRST || structType > STRUCT_COUNT - 1)
+    auto structCount = ignoreModTypes ? STRUCT_COUNT : Read_Building_Count();
+
+    if (structType < STRUCT_FIRST || structType > structCount - 1)
     {
         if (parseError != NULL)
         {

@@ -166,21 +166,21 @@ static int Lua_Get_Building_Rule_Names(lua_State* lua)
 
 static int Lua_Get_Warhead_Types(lua_State* lua)
 {
-    Read_Object_Names(lua, WARHEAD_FIRST, WARHEAD_COUNT, &(Warhead_Type_To_String));
+    Read_Object_Names(lua, WARHEAD_FIRST, Read_Warhead_Count(), &(Warhead_Type_To_String));
 
     return 1;
 }
 
 static int Lua_Get_Bullet_Types(lua_State* lua)
 {
-    Read_Object_Names(lua, BULLET_SNIPER, BULLET_COUNT, &(Bullet_Type_To_String));
+    Read_Object_Names(lua, BULLET_SNIPER, Read_Bullet_Count(), &(Bullet_Type_To_String));
 
     return 1;
 }
 
 static int Lua_Get_Weapon_Types(lua_State* lua)
 {
-    Read_Object_Names(lua, WEAPON_FIRST, WEAPON_COUNT, &(Weapon_Type_To_String));
+    Read_Object_Names(lua, WEAPON_FIRST, Read_Weapon_Count(), &(Weapon_Type_To_String));
 
     return 1;
 }

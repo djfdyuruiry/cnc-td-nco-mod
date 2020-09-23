@@ -214,7 +214,7 @@ void HouseClass::One_Time(void)
 	/*
 	** Required for Red Alert AI. ST - 7/23/2019 3:21PM
 	*/
-	BuildChoice.Set_Heap(STRUCT_COUNT);
+	BuildChoice.Set_Heap(Read_Building_Count());
 #endif
 }
 
@@ -492,16 +492,20 @@ HouseClass::HouseClass(HousesType house) :
 	RadarSpied = 0;
 	PointTotal = 0;
 
+	auto bquantitySize = Read_Building_Count() * sizeof(int);
+	auto aquantitySize = Read_Aircraft_Count() * sizeof(int);
 	auto iquantitySize = Read_Infantry_Count() * sizeof(int);
 	auto uquantitySize = Read_Unit_Count() * sizeof(int);
 
+	BQuantity = (int*)calloc(bquantitySize, sizeof(int));
+	AQuantity = (int*) calloc(aquantitySize, sizeof(int));
 	IQuantity = (int*) calloc(iquantitySize, sizeof(int));
 	UQuantity = (int*) calloc(uquantitySize, sizeof(int));
 
-	memset(BQuantity, '\0', sizeof(BQuantity));
-	memset(UQuantity, '\0', uquantitySize);
+	memset(BQuantity, '\0', bquantitySize);
+	memset(AQuantity, '\0', aquantitySize);
 	memset(IQuantity, '\0', iquantitySize);
-	memset(AQuantity, '\0', sizeof(AQuantity));
+	memset(UQuantity, '\0', uquantitySize);
 
 	Attack = 0;
 
@@ -5030,17 +5034,17 @@ void HouseClass::Init_Unit_Trackers(void)
 	char infantryCount = Read_Infantry_Count();
 	char unitCount = Read_Unit_Count();
 
-	AircraftTotals = new UnitTrackerClass( (int) AIRCRAFT_COUNT);
+	AircraftTotals = new UnitTrackerClass( (int) Read_Aircraft_Count());
 	InfantryTotals = new UnitTrackerClass( (int) infantryCount);
 	UnitTotals = new UnitTrackerClass ( (int) unitCount);
-	BuildingTotals = new UnitTrackerClass ( (int) STRUCT_COUNT);
+	BuildingTotals = new UnitTrackerClass ( (int) Read_Building_Count());
 
-	DestroyedAircraft = new UnitTrackerClass ( (int) AIRCRAFT_COUNT);
+	DestroyedAircraft = new UnitTrackerClass ( (int) Read_Aircraft_Count());
 	DestroyedInfantry = new UnitTrackerClass( (int) infantryCount);
 	DestroyedUnits = new UnitTrackerClass ( (int) unitCount);
-	DestroyedBuildings = new UnitTrackerClass ( (int) STRUCT_COUNT);
+	DestroyedBuildings = new UnitTrackerClass ( (int) Read_Building_Count());
 
-	CapturedBuildings = new UnitTrackerClass ( (int) STRUCT_COUNT);
+	CapturedBuildings = new UnitTrackerClass ( (int) Read_Building_Count());
 	TotalCrates = new UnitTrackerClass ( TOTAL_CRATE_TYPES );	//15 crate types
 }
 

@@ -3813,7 +3813,7 @@ void BuildingTypeClass::One_Time(void)
 		{STRUCT_TEMPLE,	BSTATE_ACTIVE,			0,	5,	1},
 	};
 
-	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
+	for (StructType sindex = STRUCT_FIRST; sindex < Read_Building_Count(); sindex++) {
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char	buffer[_MAX_FNAME];
 		BuildingTypeClass* building = (BuildingTypeClass*)&As_Reference(sindex);
@@ -3894,7 +3894,7 @@ void BuildingTypeClass::One_Time(void)
 StructType BuildingTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (StructType classid = STRUCT_FIRST; classid < STRUCT_COUNT; classid++) {
+		for (StructType classid = STRUCT_FIRST; classid < Read_Building_Count(); classid++) {
 			if (stricmp(As_Reference(classid).IniName, name) == 0) {
 				return(classid);
 			}
@@ -3953,7 +3953,7 @@ void BuildingTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void BuildingTypeClass::Prep_For_Add(void)
 {
-	for (StructType index = STRUCT_FIRST; index < STRUCT_COUNT; index++) {
+	for (StructType index = STRUCT_FIRST; index < Read_Building_Count(); index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(&As_Reference(index));
 		}
@@ -4182,7 +4182,7 @@ void BuildingTypeClass::Init(TheaterType theater)
 	if (theater != LastTheater){
 		char fullname[_MAX_FNAME+_MAX_EXT];
 
-		for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
+		for (StructType sindex = STRUCT_FIRST; sindex < Read_Building_Count(); sindex++) {
 			BuildingTypeClass const *classptr = &As_Reference(sindex);
 
 			if (classptr->IsTheater) {

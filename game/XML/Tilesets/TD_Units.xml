@@ -115492,6 +115492,9 @@
 					</Frames>
 				</Value>
 			</Tile>
+
+			<!-- mods -->
+
             <Tile>
 				<Key>
 					<Name>ERIC</Name>
@@ -115503,9 +115506,6 @@
 					</Frames>
 				</Value>
 			</Tile>
-
-			<!-- mods -->
-
 			<Tile>
 				<Key>
 					<Name>ERIC</Name>

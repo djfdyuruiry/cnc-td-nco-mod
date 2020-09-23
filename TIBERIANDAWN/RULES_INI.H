@@ -90,7 +90,6 @@ void Free_Rules_Memory();
 
 #define Read_Bullet_Count() (char)ReadRuleValue<unsigned int>(BULLET_COUNT_RULE_KEY)
 
-
 #define Read_New_Infantry_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE)
 
 #define Read_Infantry_Count() (char)ReadRuleValue<unsigned int>(INFANTRY_COUNT_RULE_KEY)
