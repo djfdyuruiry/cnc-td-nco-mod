@@ -4,8 +4,6 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiberianDawn", "TiberianDawn\TiberianDawn.vcxproj", "{1380ED08-82A3-49C2-A171-1915574B3382}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RedAlert", "REDALERT\RedAlert.vcxproj", "{DA948ED9-EF67-4813-94B7-995BE956786E}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nco.Tests", "tests\Nco.Tests.vcxproj", "{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}"
 EndProject
 Global
@@ -24,14 +22,6 @@ Global
 		{1380ED08-82A3-49C2-A171-1915574B3382}.TestConsole|x86.Build.0 = TestConsole|Win32
 		{1380ED08-82A3-49C2-A171-1915574B3382}.TestConsoleLuaRepl|x86.ActiveCfg = TestConsoleLuaRepl|Win32
 		{1380ED08-82A3-49C2-A171-1915574B3382}.TestConsoleLuaRepl|x86.Build.0 = TestConsoleLuaRepl|Win32
-		{DA948ED9-EF67-4813-94B7-995BE956786E}.Debug|x86.ActiveCfg = Debug|Win32
-		{DA948ED9-EF67-4813-94B7-995BE956786E}.Debug|x86.Build.0 = Debug|Win32
-		{DA948ED9-EF67-4813-94B7-995BE956786E}.Release|x86.ActiveCfg = Release|Win32
-		{DA948ED9-EF67-4813-94B7-995BE956786E}.Release|x86.Build.0 = Release|Win32
-		{DA948ED9-EF67-4813-94B7-995BE956786E}.TestConsole|x86.ActiveCfg = Debug|Win32
-		{DA948ED9-EF67-4813-94B7-995BE956786E}.TestConsole|x86.Build.0 = Debug|Win32
-		{DA948ED9-EF67-4813-94B7-995BE956786E}.TestConsoleLuaRepl|x86.ActiveCfg = Debug|Win32
-		{DA948ED9-EF67-4813-94B7-995BE956786E}.TestConsoleLuaRepl|x86.Build.0 = Debug|Win32
 		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.Debug|x86.ActiveCfg = Debug|Win32
 		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.Release|x86.ActiveCfg = Debug|Win32
 		{BBAB3D6D-A348-4DCC-8099-DE86C7D604FE}.TestConsole|x86.ActiveCfg = Debug|Win32
