@@ -48,7 +48,11 @@ void InitialiseModsIfRequired()
 	{
 		return;
 	}
+
+	MODS_INITIALISED = true;
+
 	Log_Trace("InitialiseModsIfRequired starting");
+
 	WARHEAD_MOD->InitialiseTypes();
 	BULLET_MOD->InitialiseTypes();
 	WEAPON_MOD->InitialiseTypes();
@@ -56,8 +60,6 @@ void InitialiseModsIfRequired()
 	AIRCRAFT_MOD->InitialiseTypes();
 	INFANTRY_MOD->InitialiseTypes();
 	UNIT_MOD->InitialiseTypes();
-
-	MODS_INITIALISED = true;
 }
 
 SectionName GetNewAircraftIniName(AircraftType type)

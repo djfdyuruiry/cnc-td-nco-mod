@@ -452,16 +452,17 @@ void AircraftTypeClass::One_Time(void)
 
 	for (index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		AircraftTypeClass	const & uclass = As_Reference(index);
+		AircraftTypeClass uclass = As_Reference(index);
+		char* iniName = uclass.Resolve_Ini_Name();
 
 		/*
 		**	Fetch the supporting data files for the unit.
 		*/
 		char buffer[_MAX_FNAME];
 		if ( Get_Resolution_Factor() ) {
-			sprintf(buffer, "%sICNH", uclass.IniName);
+			sprintf(buffer, "%sICNH", iniName);
 		} else {
-			sprintf(buffer, "%sICON", uclass.IniName);
+			sprintf(buffer, "%sICON", iniName);
 		}
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
 		((void const *&)uclass.CameoData) = MixFileClass::Retrieve(fullname);
@@ -469,7 +470,7 @@ void AircraftTypeClass::One_Time(void)
 		/*
 		**	Generic shape for all houses load method.
 		*/
-		_makepath(fullname, NULL, NULL, uclass.IniName, ".SHP");
+		_makepath(fullname, NULL, NULL, iniName, ".SHP");
 		((void const *&)uclass.ImageData) = MixFileClass::Retrieve(fullname);
 	}
 

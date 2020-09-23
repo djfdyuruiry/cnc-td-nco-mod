@@ -112,9 +112,9 @@ WeaponTypeClass::WeaponTypeClass(
 	Anim = anim;
 
 	auto weaponTypeStr = Weapon_Type_To_String(owner);
-	//strncpy((char*)IniName, ininame, sizeof(IniName));
-	//((char&)IniName[sizeof(IniName) - 1]) = '\0';
+
 	IniName = strdup(ininame);
+
 	GetRules() << RulesIniSectionBuilder::BuildWeaponSection(weaponTypeStr);
 
 	FriendlyName = ReadRuleValue<char*>(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
@@ -134,35 +134,39 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 		//Log_Trace("Weapon lookup by type: %d", type);
 		return Pointers[type];
 	}
-	Log_Trace("WTC ByType Initializing Weapons");
+
+	Log_Trace("WeaponTypeClass::ByType Initializing Weapons");
+	
 	auto weaponCount = Read_Weapon_Count();
+
 	Pointers = new WeaponTypeClass const* [weaponCount] {
 		&WEP_RIFLE,
-			&WEP_CHAIN_GUN,
-			&WEP_PISTOL,
-			&WEP_M16,
-			&WEP_DRAGON,
-			&WEP_FLAMETHROWER,
-			&WEP_FLAME_TONGUE,
-			&WEP_CHEMSPRAY,
-			&WEP_GRENADE,
-			&WEP_75MM,
-			&WEP_105MM,
-			&WEP_120MM,
-			&WEP_TURRET_GUN,
-			&WEP_MAMMOTH_TUSK,
-			&WEP_MLRS,
-			&WEP_155MM,
-			&WEP_M60MG,
-			&WEP_TOMAHAWK,
-			&WEP_TOW_TWO,
-			&WEP_NAPALM,
-			&WEP_OBELISK_LASER,
-			&WEP_NIKE,
-			&WEP_HONEST_JOHN,
-			&WEP_STEG,
-			&WEP_TREX,
+		&WEP_CHAIN_GUN,
+		&WEP_PISTOL,
+		&WEP_M16,
+		&WEP_DRAGON,
+		&WEP_FLAMETHROWER,
+		&WEP_FLAME_TONGUE,
+		&WEP_CHEMSPRAY,
+		&WEP_GRENADE,
+		&WEP_75MM,
+		&WEP_105MM,
+		&WEP_120MM,
+		&WEP_TURRET_GUN,
+		&WEP_MAMMOTH_TUSK,
+		&WEP_MLRS,
+		&WEP_155MM,
+		&WEP_M60MG,
+		&WEP_TOMAHAWK,
+		&WEP_TOW_TWO,
+		&WEP_NAPALM,
+		&WEP_OBELISK_LASER,
+		&WEP_NIKE,
+		&WEP_HONEST_JOHN,
+		&WEP_STEG,
+		&WEP_TREX
 	};
+
 	InitialiseModsIfRequired();
 
 	return By_Type(type);

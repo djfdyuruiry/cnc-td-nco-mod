@@ -1447,11 +1447,10 @@ class BulletTypeClass : public ObjectTypeClass
 		*/
 		int Range;
 
-		//const char* RulesName;
-
 		const char* ImageName;
 
 		char* FriendlyName;
+
 		/*
 		**	The INI name of the house is pointed to by this element. This is the
 		**	identification name used in the scenario INI file.

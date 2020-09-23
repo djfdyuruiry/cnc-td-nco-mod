@@ -524,8 +524,6 @@ BulletTypeClass const** BulletTypeClass::Pointers = NULL;
 BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
 {
 	if (Pointers != NULL) {
-		//Log_Trace("Bullet lookup by type: %d", type);
-
 		return Pointers[type];
 	}
 
@@ -539,20 +537,20 @@ BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
 		&ClassAPDS,			//	BULLET_APDS
 		&Class120mm,		//	BULLET_HE
 		&ClassMissile,		//	BULLET_SSM
-		&ClassMissile2,	//	BULLET_SSM2
+		&ClassMissile2,	    //	BULLET_SSM2
 		&ClassPatriot,		//	BULLET_SAM
 		&ClassDragon,		//	BULLET_TOW
-		&ClassFlame,		// BULLET_FLAME
-		&ClassChem,			// BULLET_CHEMSPRAY
-		&ClassNapalm,		// BULLET_NAPALM
-		&ClassGrenade,		// BULLET_GRENADE
-		&ClassLaser,		// BULLET_LASER
-		&ClassNukeUp,		// BULLET_NUKE_UP
-		&ClassNukeDown,	// BULLET_NUKE_DOWN
-		&ClassHonestJohn,	// BULLET_HONEST_JOHN
-		&ClassSpreadfire,	// BULLET_SPREADFIRE
-		&ClassHeadButt,	// BULLET_HEADBUTT
-		&ClassTRexBite,	// BULLET_TREXBITE
+		&ClassFlame,		//  BULLET_FLAME
+		&ClassChem,			//  BULLET_CHEMSPRAY
+		&ClassNapalm,		//  BULLET_NAPALM
+		&ClassGrenade,		//  BULLET_GRENADE
+		&ClassLaser,		//  BULLET_LASER
+		&ClassNukeUp,		//  BULLET_NUKE_UP
+		&ClassNukeDown,	    //  BULLET_NUKE_DOWN
+		&ClassHonestJohn,	//  BULLET_HONEST_JOHN
+		&ClassSpreadfire,	//  BULLET_SPREADFIRE
+		&ClassHeadButt,	    //  BULLET_HEADBUTT
+		&ClassTRexBite,	    //  BULLET_TREXBITE
 	};
 
 	InitialiseModsIfRequired();
@@ -605,8 +603,6 @@ BulletTypeClass::BulletTypeClass(
 	Explosion = explosion;
 
 	IniName = strdup(ininame);
-	//strncpy((char*)IniName, ininame, sizeof(IniName));
-	//((char&)IniName[sizeof(IniName) - 1]) = '\0';
 	ImageName = strdup(imagename);
 
 	GetRules() << RulesIniSectionBuilder::BuildBulletSection(ininame);
@@ -639,7 +635,7 @@ void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)
 {
 	auto iniName = bullet->IniName;
 
-	//Read_Object_Rules(bullet);
+	Read_Object_Rules(bullet);
 	
 	bullet->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
 	bullet->IsHigh = ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, bullet->IsHigh);
@@ -686,30 +682,37 @@ void BulletTypeClass::Add_Bullet_Type(BulletTypeClass* bulletInstance)
  *=============================================================================================*/
 void BulletTypeClass::One_Time(void)
 {
-	Log_Debug("BulletTypeClass::One_Time start");
+	Log_Trace("BulletTypeClass::One_Time start");
+
 	BulletType index;
+	char bulletCount = Read_Bullet_Count();
+	
+	Log_Trace("BulletTypeClass::One_Time bulletCount %d", bulletCount);
 
 	/*
 	**	Load the bullet shapes.
 	*/
-	char bulletCount = Read_Bullet_Count();
-	Log_Debug("BulletTypeClass::One_Time bulletCount %d", bulletCount);
 	for (index = BULLET_FIRST; index < bulletCount; index++) {
 		BulletTypeClass* bullet = (BulletTypeClass*)&As_Reference(index);
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char* iniName = bullet->Resolve_Ini_Name();
-		Log_Debug("BulletTypeClass::One_Time iniName %s", iniName);
+
+		Log_Trace("BulletTypeClass::One_Time iniName %s", iniName);
+
 		if (!bullet->IsInvisible) {
-			Log_Debug("BulletTypeClass::One_Time ImageName %s", bullet->ImageName);
-			_makepath(fullname, NULL, NULL, bullet->ImageName, ".SHP");
+			Log_Trace("BulletTypeClass::One_Time ImageName %s", iniName);
+
+			_makepath(fullname, NULL, NULL, iniName, ".SHP");
 
 			RawFileClass file(fullname);
 
 			if (file.Is_Available()) {
-				Log_Debug("BulletTypeClass::One_Time loading file %s", file);
+				Log_Trace("BulletTypeClass::One_Time loading file %s", file);
+
 				((void const *&)bullet->ImageData) = Load_Alloc_Data(file);
 			} else {
-				Log_Debug("BulletTypeClass::One_Time retrieve from mix %s", fullname);
+				Log_Trace("BulletTypeClass::One_Time retrieve from mix %s", fullname);
+
 				((void const *&)bullet->ImageData) = MixFileClass::Retrieve(fullname);
 			}
 		}
