@@ -1,3 +1,4 @@
+#include <shlobj.h>
 #include <string>
 #include <windows.h>
 
@@ -18,19 +19,19 @@ const char* Log_Level_To_String(LogLevel level)
 {
 	switch (level)
 	{
-		case TRACE:
-			return "TRACE";
-		case DEBUG:
-			return "DEBUG";
-		case WARN:
-			return "WARN";
-		case ERR:
-			return "ERROR";
-		case OFF:
-			return "OFF";
-		case INFO:
-		default:
-			return "INFO";
+	case TRACE:
+		return "TRACE";
+	case DEBUG:
+		return "DEBUG";
+	case WARN:
+		return "WARN";
+	case ERR:
+		return "ERROR";
+	case OFF:
+		return "OFF";
+	case INFO:
+	default:
+		return "INFO";
 	}
 }
 
@@ -79,28 +80,34 @@ LogLevel Parse_Log_Level(const char* levelString)
 
 static void Load_Default_Log_File_Path()
 {
-	#ifdef TEST_CONSOLE
+#ifdef TEST_CONSOLE
 	LOG_FILE_PATH = Allocate_String(MAX_PATH);
 
 	sprintf(LOG_FILE_PATH, "log\\nco.log");
-	#else
-	bool valueFound = false;
-	auto userProfileDirectory = Get_Env_Var("USERPROFILE", &valueFound);
+#else
+	auto documentsPath = Allocate_String(MAX_PATH);
+	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, documentsPath);
 
-	if (!valueFound)
+	if (FAILED(result))
 	{
-		Show_Error("Failed to read USERPROFILE env var to find your home directory, logging to file will be disabled");
+		Show_Error("Failed to read user documents path, logging to file will be disabled");
 		FAILED_TO_OPEN_LOG_FILE = true;
+
+		return;
 	}
 
 	LOG_FILE_PATH = Allocate_String(MAX_PATH);
 
-	sprintf(LOG_FILE_PATH, "%s\\Documents\\CnCRemastered\\nco.log", userProfileDirectory);
-	#endif	
+	sprintf(LOG_FILE_PATH, "%s\\CnCRemastered\\nco.log", documentsPath);
+#endif	
 }
 
 static void Open_Log_File()
 {
+	if (LOG_FILE_HANDLE != NULL) {
+		return;
+	}
+
 	LOG_FILE_PATH = Current_Log_Path();
 
 	if (String_Is_Empty(LOG_FILE_PATH))
@@ -211,7 +218,7 @@ void Close_Log_File_If_Open()
 		FAILED_TO_OPEN_LOG_FILE
 		|| LOG_FILE_HANDLE == NULL
 		|| LOG_FILE_HANDLE == INVALID_HANDLE_VALUE
-	)
+		)
 	{
 		return;
 	}

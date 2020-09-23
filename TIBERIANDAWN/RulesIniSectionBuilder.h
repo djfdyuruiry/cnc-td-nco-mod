@@ -27,6 +27,11 @@ private:
 		return s << FRIENDLY_NAME_RULE << STRING_RULE;
 	}
 
+	static IRulesIniSection& BuildImageRule(IRulesIniSection& s)
+	{
+		return s << IMAGE_RULE << STRING_RULE;
+	}
+
 	static IRulesIniSection& BuildSpeedRule(IRulesIniSection& s)
 	{
 		return s << s.BuildRule(SPEED_RULE)
@@ -58,6 +63,7 @@ private:
 	static IRulesIniSection& BuildGenericRules(IRulesIniSection& s)
 	{
 		return s << BuildFriendlyNameRule(s)
+				 << BuildImageRule(s)
 			     << s.BuildRule(BUILD_LEVEL_RULE)
 			     	 .OfType(UNSIGNED_INT_RULE)
 			     	 .WithMax(99u)
@@ -126,21 +132,61 @@ public:
 		return RulesIniSection::BuildSection(MOD_RULES_SECTION_NAME)
 			.WithDefaultType(UNSIGNED_INT_RULE)
 			.WithRules([](IRulesIniSection& s) {
-				s << NEW_INFANTRY_RULE << STRING_RULE
+				s << NEW_AIRCRAFT_RULE << STRING_RULE
+				  << s.BuildRule(NEW_AIRCRAFT_COUNT_RULE)
+					  .WithMax(CHAR_MAX)
+				  << s.BuildRule(AIRCRAFT_COUNT_RULE)
+					  .WithDefault(AIRCRAFT_COUNT)
+					  .WithMin(AIRCRAFT_FIRST)
+					  .WithMax(CHAR_MAX)
+
+				  << NEW_BUILDINGS_RULE << STRING_RULE
+				  << s.BuildRule(NEW_BUILDING_COUNT_RULE)
+				  	  .WithMax(CHAR_MAX)
+				  << s.BuildRule(BUILDING_COUNT_RULE)
+				  	  .WithDefault(STRUCT_COUNT)
+				  	  .WithMin(STRUCT_FIRST)
+				  	  .WithMax(CHAR_MAX)
+				  
+				  << NEW_BULLETS_RULE << STRING_RULE
+				  << s.BuildRule(NEW_BULLET_COUNT_RULE)
+				  	  .WithMax(CHAR_MAX)
+				  << s.BuildRule(BULLET_COUNT_RULE)
+				  	  .WithDefault(BULLET_COUNT)
+				  	  .WithMin(BULLET_FIRST)
+				  	  .WithMax(CHAR_MAX)
+				  
+				  << NEW_INFANTRY_RULE << STRING_RULE
 				  << s.BuildRule(NEW_INFANTRY_COUNT_RULE)
-					  .WithMax(CHAR_MAX)
+				  	  .WithMax(CHAR_MAX)
 				  << s.BuildRule(INFANTRY_COUNT_RULE)
-					  .WithDefault(INFANTRY_COUNT)
-					  .WithMin(INFANTRY_FIRST)
-					  .WithMax(CHAR_MAX)
+				  	  .WithDefault(INFANTRY_COUNT)
+				  	  .WithMin(INFANTRY_FIRST)
+				  	  .WithMax(CHAR_MAX)
 				  
 				  << NEW_UNITS_RULE << STRING_RULE
 				  << s.BuildRule(NEW_UNIT_COUNT_RULE)
-					  .WithMax(CHAR_MAX)
+				  	  .WithMax(CHAR_MAX)
 				  << s.BuildRule(UNIT_COUNT_RULE)
-					  .WithDefault(UNIT_COUNT)
-					  .WithMin(UNIT_FIRST)
-					  .WithMax(CHAR_MAX);
+				  	  .WithDefault(UNIT_COUNT)
+				  	  .WithMin(UNIT_FIRST)
+				  	  .WithMax(CHAR_MAX)
+				  
+				  << NEW_WARHEADS_RULE << STRING_RULE
+				  << s.BuildRule(NEW_WARHEAD_COUNT_RULE)
+				  	  .WithMax(CHAR_MAX)
+				  << s.BuildRule(WARHEAD_COUNT_RULE)
+				  	  .WithDefault(WARHEAD_COUNT)
+				  	  .WithMin(WARHEAD_FIRST)
+				  	  .WithMax(CHAR_MAX)
+				  
+				  << NEW_WEAPONS_RULE << STRING_RULE
+				  << s.BuildRule(NEW_WEAPON_COUNT_RULE)
+				  	  .WithMax(CHAR_MAX)
+				  << s.BuildRule(WEAPON_COUNT_RULE)
+				  	  .WithDefault(WEAPON_COUNT)
+				  	  .WithMin(WEAPON_FIRST)
+				  	  .WithMax(CHAR_MAX);
 			});
 	}
 
@@ -336,7 +382,7 @@ public:
 			.WithDefaultType(UNSIGNED_INT_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << BuildFriendlyNameRule(s) 
-				  << WEAPON_FIRES_RULE << BULLET_RULE
+				  << WEAPON_PROJECTILE_RULE << BULLET_RULE
 				  
 				  << s.BuildRule(WEAPON_DAMAGE_RULE)
 					  .WithMax(UCHAR_MAX)
@@ -344,6 +390,7 @@ public:
 					  .WithMax(UCHAR_MAX)
 
 				  << WEAPON_RANGE_RULE
+				  << BASE_TYPE_RULE << STRING_RULE
 				  << IS_MOD_TYPE_RULE << BOOL_RULE;
 			});
 	}
@@ -354,6 +401,7 @@ public:
 			.WithDefaultType(BOOL_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << BuildFriendlyNameRule(s)
+				  << BuildImageRule(s)
 				  << BULLET_HIGH_RULE
 				  << BULLET_ANTI_AIRCRAFT_RULE
 				  << BULLET_TRANSLUCENT_RULE
@@ -371,7 +419,8 @@ public:
 				  << BuildRateOfTurnRule(s)
 				  << BULLET_ARMING_RULE << INT_RULE
 				  << BULLET_RANGE_RULE << INT_RULE
-				  << IS_MOD_TYPE_RULE << BOOL_RULE;
+				  << IS_MOD_TYPE_RULE << BOOL_RULE
+				  << BASE_TYPE_RULE << STRING_RULE;
 			});
 	}
 
@@ -390,7 +439,8 @@ public:
 				  << WARHEAD_ALUMINUM_ARMOR_MODIFIER_RULE
 				  << WARHEAD_STEEL_ARMOR_MODIFIER_RULE
 				  << WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE
-				  << IS_MOD_TYPE_RULE << BOOL_RULE;
+				  << IS_MOD_TYPE_RULE << BOOL_RULE
+  				  << BASE_TYPE_RULE << STRING_RULE;
 			});
 	}
 

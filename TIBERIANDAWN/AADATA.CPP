@@ -254,15 +254,31 @@ static AircraftTypeClass const CargoPlane(
 	MISSION_HUNT			// Default mission for aircraft.
 );
 
+AircraftTypeClass const** AircraftTypeClass::Pointers = NULL;
 
-AircraftTypeClass const * const AircraftTypeClass::Pointers[AIRCRAFT_COUNT] = {
-	&TransportHeli,
-	&AttackPlane,
-	&AttackHeli,
-	&CargoPlane,
-	&OrcaHeli,
-};
+AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
+{
+	if (Pointers != NULL) {
+		//Log_Trace("Aircraft lookup by type: %d", type);
+		return Pointers[type];
+	}
 
+	Log_Debug("Initialising Aircraft types");
+
+	auto aircraftCount = Read_Aircraft_Count();
+
+	Pointers = new AircraftTypeClass const* [aircraftCount] {
+		&TransportHeli,
+		& AttackPlane,
+		& AttackHeli,
+		& CargoPlane,
+		& OrcaHeli,
+	};
+
+	InitialiseModsIfRequired();
+
+	return By_Type(type);
+}
 
 /***********************************************************************************************
  * AircraftTypeClass::AircraftTypeClass -- Constructor for aircraft objects.                   *
@@ -356,16 +372,30 @@ AircraftTypeClass::AircraftTypeClass(
 	IsRotorCustom = is_rotorcustom;
 	Type = airtype;
 	Mission = deforder;
-	
+	IsFixedWing = is_fixedwing;
+	IsLandable = is_landable;
+	IsRotorEquipped = is_rotorequipped;
+	ROT = rot;
+
 	GetRules() << RulesIniSectionBuilder::BuildAircraftSection(IniName);
+	Read_Aircraft_Rules(this);
+}
+void AircraftTypeClass::Read_Aircraft_Rules(AircraftTypeClass* aircraft)
+{
+	auto iniName = aircraft->IniName;
 
-	Read_Object_Rules(this);
-	Read_Techno_Rules(this);
+	Read_Object_Rules(aircraft);
+	Read_Techno_Rules(aircraft);
 
-	IsFixedWing = Read_Cant_Hover(IniName, is_fixedwing);
-	IsLandable = Read_Can_Land(IniName, is_landable);
-	IsRotorEquipped = Read_Has_Rotor(IniName, is_rotorequipped);
-	ROT = Read_Rate_Of_Turn(IniName, rot);
+	aircraft->IsFixedWing = Read_Cant_Hover(iniName, aircraft->IsFixedWing);
+	aircraft->IsLandable = Read_Can_Land(iniName, aircraft->IsLandable);
+	aircraft->IsRotorEquipped = Read_Has_Rotor(iniName, aircraft->IsRotorEquipped);
+	aircraft->ROT = Read_Rate_Of_Turn(iniName, aircraft->ROT);
+}
+
+void AircraftTypeClass::Add_Aircraft_Type(AircraftTypeClass* aircraftInstance)
+{
+	Pointers[aircraftInstance->Type] = aircraftInstance;
 }
 
 
@@ -388,8 +418,10 @@ AircraftTypeClass::AircraftTypeClass(
 AircraftType AircraftTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (AircraftType classid = AIRCRAFT_FIRST; classid < AIRCRAFT_COUNT; classid++) {
-			if (stricmp(Pointers[classid]->IniName, name) == 0) {
+		char aircraftCount = Read_Aircraft_Count();
+
+		for (AircraftType classid = AIRCRAFT_FIRST; classid < aircraftCount; classid++) {
+			if (stricmp(By_Type(classid)->IniName, name) == 0) {
 				return(classid);
 			}
 		}
@@ -416,28 +448,30 @@ AircraftType AircraftTypeClass::From_Name(char const *name)
 void AircraftTypeClass::One_Time(void)
 {
 	AircraftType index;
+	char aircraftCount = Read_Aircraft_Count();
 
-	for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+	for (index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		AircraftTypeClass	const & uclass = As_Reference(index);
+		AircraftTypeClass* uclass = (AircraftTypeClass*)&As_Reference(index);
+		char* iniName = uclass->Resolve_Ini_Name();
 
 		/*
 		**	Fetch the supporting data files for the unit.
 		*/
 		char buffer[_MAX_FNAME];
 		if ( Get_Resolution_Factor() ) {
-			sprintf(buffer, "%sICNH", uclass.IniName);
+			sprintf(buffer, "%sICNH", iniName);
 		} else {
-			sprintf(buffer, "%sICON", uclass.IniName);
+			sprintf(buffer, "%sICON", iniName);
 		}
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
-		((void const *&)uclass.CameoData) = MixFileClass::Retrieve(fullname);
+		((void const *&)uclass->CameoData) = MixFileClass::Retrieve(fullname);
 
 		/*
 		**	Generic shape for all houses load method.
 		*/
-		_makepath(fullname, NULL, NULL, uclass.IniName, ".SHP");
-		((void const *&)uclass.ImageData) = MixFileClass::Retrieve(fullname);
+		_makepath(fullname, NULL, NULL, iniName, ".SHP");
+		((void const *&)uclass->ImageData) = MixFileClass::Retrieve(fullname);
 	}
 
 	LRotorData = MixFileClass::Retrieve("LROTOR.SHP");
@@ -485,7 +519,8 @@ ObjectClass * AircraftTypeClass::Create_One_Of(HouseClass * house) const
  *=============================================================================================*/
 void AircraftTypeClass::Prep_For_Add(void)
 {
-	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+	char aircraftCount = Read_Aircraft_Count();
+	for (AircraftType index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(&As_Reference(index));
 		}
@@ -739,8 +774,9 @@ void AircraftTypeClass::Init(TheaterType theater)
 			char buffer[_MAX_FNAME];
 			char fullname[_MAX_FNAME+_MAX_EXT];
 			void const * cameo_ptr;
+			char aircraftCount = Read_Aircraft_Count();
 
-			for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+			for (index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 				AircraftTypeClass	const & uclass = As_Reference(index);
 
 				((void const *&)uclass.CameoData) = NULL;
@@ -785,3 +821,9 @@ void AircraftTypeClass::Dimensions(int &width, int &height) const
 
 
 RTTIType AircraftTypeClass::What_Am_I(void) const {return RTTI_AIRCRAFTTYPE;};
+char* AircraftTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
+}

@@ -3490,77 +3490,95 @@ static BuildingTypeClass const Wood(
 );
 
 
-BuildingTypeClass const * const BuildingTypeClass::Pointers[STRUCT_COUNT] = {
-	&ClassWeapon,			//	STRUCT_WEAP
-	&ClassGTower,			//	STRUCT_GTOWER
-	&ClassATower,			//	STRUCT_ATOWER
-	&ClassObelisk,			//	STRUCT_OBLISK
-	&ClassCommand,			//	STRUCT_RADAR
-	&ClassTurret,			//	STRUCT_TURRET
-	&ClassConst,			//	STRUCT_CONST
-	&ClassRefinery,		//	STRUCT_REFINERY
-	&ClassStorage,			//	STRUCT_STORAGE
-	&ClassHelipad,			//	STRUCT_HELIPAD
-	&ClassSAM,				//	STRUCT_SAM
-	&ClassAirStrip,		//	STRUCT_AIRSTRIP
-	&ClassPower,			//	STRUCT_POWER
-	&ClassAdvancedPower,	//	STRUCT_POWER
-	&ClassHospital,		//	STRUCT_HOSPITAL
-	&ClassBarracks,		//	STRUCT_BARRACKS
-	&ClassTanker,			//	STRUCT_TANKER
-	&ClassRepair,			//	STRUCT_REPAIR
-	&ClassBioLab,			//	STRUCT_BIO_LAB
-	&ClassHand,				//	STRUCT_HAND
-	&ClassTemple,			// STRUCT_TEMPLE
-	&ClassEye,				//	STRUCT_EYE
-	&ClassMission,			//	STRUCT_MISSION
+BuildingTypeClass const** BuildingTypeClass::Pointers = NULL;
+BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type)
+{
+	if (Pointers != NULL) {
+		//Log_Trace("Building lookup by type: %d", type);
 
-	&ClassV01,				//	STRUCT_V1
-	&ClassV02,				//	STRUCT_V2
-	&ClassV03,				//	STRUCT_V3
-	&ClassV04,				//	STRUCT_V4
-	&ClassV05,				//	STRUCT_V5
-	&ClassV06,				//	STRUCT_V6
-	&ClassV07,				//	STRUCT_V7
-	&ClassV08,				//	STRUCT_V8
-	&ClassV09,				//	STRUCT_V9
-	&ClassV10,				//	STRUCT_V10
-	&ClassV11,				//	STRUCT_V11
-	&ClassV12,				//	STRUCT_V12
-	&ClassV13,				//	STRUCT_V13
-	&ClassV14,				//	STRUCT_V14
-	&ClassV15,				//	STRUCT_V15
-	&ClassV16,				//	STRUCT_V16
-	&ClassV17,				//	STRUCT_V17
-	&ClassV18,				//	STRUCT_V18
-	&ClassV19,				//	STRUCT_PUMP
-	&ClassV20,				//	STRUCT_V20
-	&ClassV21,				//	STRUCT_V21
-	&ClassV22,				//	STRUCT_V22
-	&ClassV23,				//	STRUCT_V23
-	&ClassV24,				//	STRUCT_V24
-	&ClassV25,				//	STRUCT_V25
-	&ClassV26,				//	STRUCT_V26
-	&ClassV27,				//	STRUCT_V27
-	&ClassV28,				//	STRUCT_V28
-	&ClassV29,				//	STRUCT_V29
-	&ClassV30,				//	STRUCT_V30
-	&ClassV31,				//	STRUCT_V31
-	&ClassV32,				//	STRUCT_V32
-	&ClassV33,				//	STRUCT_V33
-	&ClassV34,				//	STRUCT_V34
-	&ClassV35,				//	STRUCT_V35
-	&ClassV36,				//	STRUCT_V36
-	&ClassV37,				//	STRUCT_V37
-#ifdef OBSOLETE
-	&ClassRoad,				// STRUCT_ROAD
-#endif
-	&Sandbag,				// STRUCT_SANDBAG_WALL
-	&Cyclone,				//	STRUCT_CYCLONE_WALL
-	&Brick,					// STRUCT_BRICK_WALL
-	&Barbwire,				// STRUCT_BARBWIRE_WALL
-	&Wood,					//	STRUCT_WOOD_WALL
-};
+		return Pointers[type];
+	}
+
+	Log_Debug("Initialising Building types");
+
+	auto BuildingCount = Read_Building_Count();
+
+	Pointers = new BuildingTypeClass const* [BuildingCount] {
+		&ClassWeapon,			//	STRUCT_WEAP
+		&ClassGTower,			//	STRUCT_GTOWER
+		&ClassATower,			//	STRUCT_ATOWER
+		&ClassObelisk,			//	STRUCT_OBLISK
+		&ClassCommand,			//	STRUCT_RADAR
+		&ClassTurret,			//	STRUCT_TURRET
+		&ClassConst,			//	STRUCT_CONST
+		&ClassRefinery,		//	STRUCT_REFINERY
+		&ClassStorage,			//	STRUCT_STORAGE
+		&ClassHelipad,			//	STRUCT_HELIPAD
+		&ClassSAM,				//	STRUCT_SAM
+		&ClassAirStrip,		//	STRUCT_AIRSTRIP
+		&ClassPower,			//	STRUCT_POWER
+		&ClassAdvancedPower,	//	STRUCT_POWER
+		&ClassHospital,		//	STRUCT_HOSPITAL
+		&ClassBarracks,		//	STRUCT_BARRACKS
+		&ClassTanker,			//	STRUCT_TANKER
+		&ClassRepair,			//	STRUCT_REPAIR
+		&ClassBioLab,			//	STRUCT_BIO_LAB
+		&ClassHand,				//	STRUCT_HAND
+		&ClassTemple,			// STRUCT_TEMPLE
+		&ClassEye,				//	STRUCT_EYE
+		&ClassMission,			//	STRUCT_MISSION
+
+		&ClassV01,				//	STRUCT_V1
+		&ClassV02,				//	STRUCT_V2
+		&ClassV03,				//	STRUCT_V3
+		&ClassV04,				//	STRUCT_V4
+		&ClassV05,				//	STRUCT_V5
+		&ClassV06,				//	STRUCT_V6
+		&ClassV07,				//	STRUCT_V7
+		&ClassV08,				//	STRUCT_V8
+		&ClassV09,				//	STRUCT_V9
+		&ClassV10,				//	STRUCT_V10
+		&ClassV11,				//	STRUCT_V11
+		&ClassV12,				//	STRUCT_V12
+		&ClassV13,				//	STRUCT_V13
+		&ClassV14,				//	STRUCT_V14
+		&ClassV15,				//	STRUCT_V15
+		&ClassV16,				//	STRUCT_V16
+		&ClassV17,				//	STRUCT_V17
+		&ClassV18,				//	STRUCT_V18
+		&ClassV19,				//	STRUCT_PUMP
+		&ClassV20,				//	STRUCT_V20
+		&ClassV21,				//	STRUCT_V21
+		&ClassV22,				//	STRUCT_V22
+		&ClassV23,				//	STRUCT_V23
+		&ClassV24,				//	STRUCT_V24
+		&ClassV25,				//	STRUCT_V25
+		&ClassV26,				//	STRUCT_V26
+		&ClassV27,				//	STRUCT_V27
+		&ClassV28,				//	STRUCT_V28
+		&ClassV29,				//	STRUCT_V29
+		&ClassV30,				//	STRUCT_V30
+		&ClassV31,				//	STRUCT_V31
+		&ClassV32,				//	STRUCT_V32
+		&ClassV33,				//	STRUCT_V33
+		&ClassV34,				//	STRUCT_V34
+		&ClassV35,				//	STRUCT_V35
+		&ClassV36,				//	STRUCT_V36
+		&ClassV37,				//	STRUCT_V37
+	#ifdef OBSOLETE
+		&ClassRoad,				// STRUCT_ROAD
+	#endif
+		&Sandbag,				// STRUCT_SANDBAG_WALL
+		&Cyclone,				//	STRUCT_CYCLONE_WALL
+		&Brick,					// STRUCT_BRICK_WALL
+		&Barbwire,				// STRUCT_BARBWIRE_WALL
+		&Wood,					//	STRUCT_WOOD_WALL
+	};
+
+	InitialiseModsIfRequired();
+
+	return By_Type(type);
+}
 
 void const *WarFactoryOverlay;
 
@@ -3675,23 +3693,18 @@ BuildingTypeClass::BuildingTypeClass(
 	StartFace = sframe;
 	Type = type;
 
-	GetRules() << RulesIniSectionBuilder::BuildBuildingSection(IniName);
-
-	Read_Object_Rules(this);
-	Read_Techno_Rules(this);
-
-	IsBibbed = Read_Is_Bibbed(IniName, is_bibbed);
-	IsWall = Read_Is_Wall(IniName, is_wall);
-	IsFactory = Read_Is_Factory(IniName, is_factory);
-	IsSimpleDamage = Read_Use_Simple_Damage(IniName, is_simpledamage);
-	IsCaptureable = Read_Is_Captureable(IniName, is_captureable);
-	IsRegulated = Read_Is_Fixed_Speed(IniName, is_regulated);
-	IsUnsellable = Read_Is_Unsellable(IniName, is_unsellable);
-	ToBuild = Read_Factory_Type(IniName, tobuild);
-	Capacity = Read_Storage_Capacity(IniName, capacity);
-	Power = Read_Power_Output(IniName, power);
-	Drain = Read_Power_Input(IniName, drain);
-	IsSturdy = Read_Is_Sturdy(IniName, is_sturdy);
+	IsBibbed = is_bibbed;
+	IsWall = is_wall;
+	IsFactory = is_factory;
+	IsSimpleDamage = is_simpledamage;
+	IsCaptureable = is_captureable;
+	IsRegulated = is_regulated;
+	IsUnsellable = is_unsellable;
+	ToBuild = (RTTIType)tobuild;
+	Capacity = capacity;
+	Power = power;
+	Drain = drain;
+	IsSturdy = is_sturdy;
 
 	Anims[BSTATE_CONSTRUCTION].Start = 0;
 	Anims[BSTATE_CONSTRUCTION].Count = 1;
@@ -3712,9 +3725,37 @@ BuildingTypeClass::BuildingTypeClass(
 	Anims[BSTATE_AUX2].Start = 0;
 	Anims[BSTATE_AUX2].Count = 1;
 	Anims[BSTATE_AUX2].Rate = 0;
+
+	GetRules() << RulesIniSectionBuilder::BuildBuildingSection(IniName);
+
+	Read_Building_Rules(this);
 }
 
+void BuildingTypeClass::Read_Building_Rules(BuildingTypeClass* building)
+{
+	auto iniName = building->IniName;
 
+	Read_Object_Rules(building);
+	Read_Techno_Rules(building);
+
+	building->IsBibbed = Read_Is_Bibbed(iniName, building->IsBibbed);
+	building->IsWall = Read_Is_Wall(iniName, building->IsWall);
+	building->IsFactory = Read_Is_Factory(iniName, building->IsFactory);
+	building->IsSimpleDamage = Read_Use_Simple_Damage(iniName, building->IsSimpleDamage);
+	building->IsCaptureable = Read_Is_Captureable(iniName, building->IsCaptureable);
+	building->IsRegulated = Read_Is_Fixed_Speed(iniName, building->IsRegulated);
+	building->IsUnsellable = Read_Is_Unsellable(iniName, building->IsUnsellable);
+	building->ToBuild = Read_Factory_Type(iniName, (FactoryType)building->ToBuild);
+	building->Capacity = Read_Storage_Capacity(iniName, building->Capacity);
+	building->Power = Read_Power_Output(iniName, building->Power);
+	building->Drain = Read_Power_Input(iniName, building->Drain);
+	building->IsSturdy = Read_Is_Sturdy(iniName, building->IsSturdy);
+}
+
+void BuildingTypeClass::Add_Building_Type(BuildingTypeClass* buildingInstance)
+{
+	Pointers[buildingInstance->Type] = buildingInstance;
+}
 /***********************************************************************************************
  * BuildingTypeClass::One_Time -- Performs special one time action for buildings.              *
  *                                                                                             *
@@ -3772,45 +3813,46 @@ void BuildingTypeClass::One_Time(void)
 		{STRUCT_TEMPLE,	BSTATE_ACTIVE,			0,	5,	1},
 	};
 
-	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
+	for (StructType sindex = STRUCT_FIRST; sindex < Read_Building_Count(); sindex++) {
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char	buffer[_MAX_FNAME];
-		BuildingTypeClass const & building = As_Reference(sindex);
+		BuildingTypeClass* building = (BuildingTypeClass*)&As_Reference(sindex);
+		auto iniName = building->Resolve_Ini_Name();
 
 		/*
 		**	Fetch the sidebar cameo image for this building.
 		*/
-		if (building.IsBuildable) {
+		if (building->IsBuildable) {
 			if ( Get_Resolution_Factor() ) {
-				sprintf(buffer, "%sICNH", building.IniName);
+				sprintf(buffer, "%sICNH", iniName);
 			} else {
-				sprintf(buffer, "%sICON", building.IniName);
+				sprintf(buffer, "%sICON", iniName);
 			}
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			((void const *&)building.CameoData) = MixFileClass::Retrieve(fullname);
+			((void const *&)building->CameoData) = MixFileClass::Retrieve(fullname);
 		}
 
 		/*
 		**	Fetch the construction animation for this building.
 		*/
-		sprintf(buffer, "%sMAKE", building.IniName);
+		sprintf(buffer, "%sMAKE", iniName);
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
 		void const * dataptr = MixFileClass::Retrieve(fullname);
-		((void const *&)building.BuildupData) = dataptr;
+		((void const *&)building->BuildupData) = dataptr;
 		if (dataptr) {
 			int timedelay = 1;
 			int count = Get_Build_Frame_Count(dataptr);
 			if (count) {
 				timedelay = (5 * TICKS_PER_SECOND) / count;
 			}
-			building.Init_Anim(BSTATE_CONSTRUCTION, 0, count, timedelay);
+			building->Init_Anim(BSTATE_CONSTRUCTION, 0, count, timedelay);
 		}
 
 		/*
 		**	Fetch the normal game shape for this building.
 		*/
-		_makepath(fullname, NULL, NULL, building.IniName, ".SHP");
-		((void const *&)building.ImageData) = MixFileClass::Retrieve(fullname);
+		_makepath(fullname, NULL, NULL, iniName, ".SHP");
+		((void const *&)building->ImageData) = MixFileClass::Retrieve(fullname);
 	}
 
 	// Try to load weap2.shp
@@ -3852,7 +3894,7 @@ void BuildingTypeClass::One_Time(void)
 StructType BuildingTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (StructType classid = STRUCT_FIRST; classid < STRUCT_COUNT; classid++) {
+		for (StructType classid = STRUCT_FIRST; classid < Read_Building_Count(); classid++) {
 			if (stricmp(As_Reference(classid).IniName, name) == 0) {
 				return(classid);
 			}
@@ -3911,7 +3953,7 @@ void BuildingTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void BuildingTypeClass::Prep_For_Add(void)
 {
-	for (StructType index = STRUCT_FIRST; index < STRUCT_COUNT; index++) {
+	for (StructType index = STRUCT_FIRST; index < Read_Building_Count(); index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(&As_Reference(index));
 		}
@@ -4140,7 +4182,7 @@ void BuildingTypeClass::Init(TheaterType theater)
 	if (theater != LastTheater){
 		char fullname[_MAX_FNAME+_MAX_EXT];
 
-		for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
+		for (StructType sindex = STRUCT_FIRST; sindex < Read_Building_Count(); sindex++) {
 			BuildingTypeClass const *classptr = &As_Reference(sindex);
 
 			if (classptr->IsTheater) {
@@ -4205,28 +4247,6 @@ void BuildingTypeClass::Dimensions(int &width, int &height) const
 	width -= (width/5);
 	height = _dimensions[Size].Height * ICON_PIXEL_H;
 	height -= (height/5);
-}
-
-
-/***********************************************************************************************
- * BuildingTypeClass::As_Reference -- Fetches reference to the building type specified.        *
- *                                                                                             *
- *    This routine will fetch a reference to the BuildingTypeClass as indicated by the         *
- *    building type number specified.                                                          *
- *                                                                                             *
- * INPUT:   type  -- The building type number to convert into a BuildingTypeClass reference.   *
- *                                                                                             *
- * OUTPUT:  Returns with a reference to the building type class as indicated by the            *
- *          parameter.                                                                         *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   01/23/1995 JLB : Created.                                                                 *
- *=============================================================================================*/
-BuildingTypeClass const & BuildingTypeClass::As_Reference(StructType type)
-{
-	return(* Pointers[type]);
 }
 
 
@@ -4626,4 +4646,10 @@ int BuildingTypeClass::Cost_Of(void) const
 #endif
 
 	return(TechnoTypeClass::Cost_Of());
+}
+char* BuildingTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
 }

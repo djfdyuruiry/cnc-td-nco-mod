@@ -49,7 +49,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
 
         if (!*valueParseError)
         {
-            auto prerequisite = Structure_Type_To_Prerequisite(scructType, valueParseError);
+            auto prerequisite = Structure_Type_To_Prerequisite(scructType, valueParseError, false);
 
             if (!*valueParseError)
             {
@@ -262,6 +262,12 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
 
             type->IsTransporter = isTransporter;
         }
+    }
+    else if (Strings_Are_Equal(ruleName, IMAGE_RULE))
+    {
+        Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", type->Image, originalValue);
+
+        type->Image = strdup(originalValue);
     }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
@@ -497,6 +503,13 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         lua_pushboolean(lua, type->IsTransporter);
     }
+    else if (Strings_Are_Equal(ruleName, IMAGE_RULE))
+    {
+        Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->Image);
+
+        lua_pushstring(lua, type->Image);
+    }
+
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->FriendlyName);

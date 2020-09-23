@@ -1685,7 +1685,7 @@ MoveType InfantryClass::Can_Enter_Cell(CELL cell, FacingType ) const
 						switch (obj->What_Am_I()) {
 							case RTTI_TERRAIN:
 								if (((TerrainClass *)obj)->Class->IsFlammable &&
-										BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).Warhead == WARHEAD_FIRE) {
+										BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Projectile).Warhead == WARHEAD_FIRE) {
 
 									if (retval < MOVE_DESTROYABLE) retval = MOVE_DESTROYABLE;
 								} else {
@@ -2519,7 +2519,7 @@ TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
 		**	they will consider aircraft a legal target.
 		*/
 		default:
-			if (BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).IsAntiAircraft) {
+			if (BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Projectile).IsAntiAircraft) {
 				threat = threat | THREAT_AIR;
 			}
 			break;

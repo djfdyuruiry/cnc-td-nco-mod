@@ -1573,7 +1573,7 @@ int MapEditClass::Team_Members(HousesType house)
 		}
 	}
 
-	for (a_id = AIRCRAFT_FIRST; a_id < AIRCRAFT_COUNT; a_id++) {
+	for (a_id = AIRCRAFT_FIRST; a_id < Read_Aircraft_Count(); a_id++) {
 		if (Verify_House(house,&AircraftTypeClass::As_Reference(a_id))) {
 			teamclass[i] = &AircraftTypeClass::As_Reference(a_id);
 			i++;

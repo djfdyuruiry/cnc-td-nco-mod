@@ -889,10 +889,10 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 			Sound_Effect(weapon->Sound, Coord);
 
 			AnimClass* anim = NULL;
-			if (weapon->Fires == BULLET_BULLET) {
+			if (weapon->Projectile == BULLET_BULLET) {
 				anim = new AnimClass((AnimType)(ANIM_GUN_N + Dir_Facing(PrimaryFacing.Current())), Fire_Coord(which));
 			} else {
-				switch (weapon->Fires) {
+				switch (weapon->Projectile) {
 				case BULLET_SPREADFIRE:
 					break;
 				case BULLET_LASER:
@@ -2565,7 +2565,7 @@ void BuildingClass::Update_Buildables(void)
 			AircraftType a;
 
 			case RTTI_BUILDINGTYPE:
-				for (i = STRUCT_FIRST; i < STRUCT_COUNT; i++) {
+				for (i = STRUCT_FIRST; i < Read_Building_Count(); i++) {
 					if (PlayerPtr->Can_Build(i, ActLike)) {
 //						if (BuildingTypeClass::As_Reference(i).Who_Can_Build_Me(true, true, ActLike)) {
 							if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
@@ -2607,7 +2607,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_AIRCRAFTTYPE:
-				for (a = AIRCRAFT_FIRST; a < AIRCRAFT_COUNT; a++) {
+				for (a = AIRCRAFT_FIRST; a < Read_Aircraft_Count(); a++) {
 					if (PlayerPtr->Can_Build(a, ActLike)) {
 //						if (AircraftTypeClass::As_Reference(a).Who_Can_Build_Me(true, true, ActLike)) {
 							if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
@@ -2655,7 +2655,7 @@ void BuildingClass::Update_Buildables(void)
 			AircraftType a;
 
 			case RTTI_BUILDINGTYPE:
-				for (i = STRUCT_FIRST; i < STRUCT_COUNT; i++) {
+				for (i = STRUCT_FIRST; i < Read_Building_Count(); i++) {
 					if (PlayerPtr->Can_Build(i, ActLike)) {
 //						if (BuildingTypeClass::As_Reference(i).Who_Can_Build_Me(true, true, ActLike)) {
 							Map.Add(RTTI_BUILDINGTYPE, i);
@@ -2685,7 +2685,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_AIRCRAFTTYPE:
-				for (a = AIRCRAFT_FIRST; a < AIRCRAFT_COUNT; a++) {
+				for (a = AIRCRAFT_FIRST; a < Read_Aircraft_Count(); a++) {
 					if (PlayerPtr->Can_Build(a, ActLike)) {
 //						if (AircraftTypeClass::As_Reference(a).Who_Can_Build_Me(true, true, ActLike)) {
 							Map.Add(RTTI_AIRCRAFTTYPE, a);
@@ -2985,7 +2985,7 @@ TARGET BuildingClass::Greatest_Threat(ThreatType threat) const
 		threat = threat | THREAT_AREA;
 	}
 
-	if (Class->Primary != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Fires).IsAntiAircraft) {
+	if (Class->Primary != WEAPON_NONE && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(Class->Primary).Projectile).IsAntiAircraft) {
 		threat = threat | THREAT_AIR;
 	}
 	return(TechnoClass::Greatest_Threat(threat));

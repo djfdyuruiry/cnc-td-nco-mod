@@ -3168,7 +3168,7 @@ void DLLExportClass::DLL_Draw_Intercept(int shape_number, int x, int y, int widt
 			new_object.IsNominal = ttype->IsNominal;
 			new_object.MaxPips = ttype->Max_Pips();
 			new_object.IsAntiGround = ttype->Primary != WEAPON_NONE;
-			new_object.IsAntiAircraft = (ttype->Primary != WEAPON_NONE) && (WeaponTypeClass::As_Reference(ttype->Primary).Fires != BULLET_NONE) && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(ttype->Primary).Fires).IsAntiAircraft;
+			new_object.IsAntiAircraft = (ttype->Primary != WEAPON_NONE) && (WeaponTypeClass::As_Reference(ttype->Primary).Projectile != BULLET_NONE) && BulletTypeClass::As_Reference(WeaponTypeClass::As_Reference(ttype->Primary).Projectile).IsAntiAircraft;
 
 			HouseClass* old_player_ptr = PlayerPtr;
 			for (int i = 0; i < Houses.Count(); ++i) {
@@ -7117,7 +7117,7 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 
 	HousesType house = PlayerPtr->Class->House;
 		
-	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
+	for (StructType sindex = STRUCT_FIRST; sindex < Read_Building_Count(); sindex++) {
 		BuildingTypeClass const & building_type = BuildingTypeClass::As_Reference(sindex);
 
 		if (building_type.IsBuildable) {
@@ -7187,7 +7187,7 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}
 	}
 
-	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+	for (AircraftType index = AIRCRAFT_FIRST; index < Read_Aircraft_Count(); index++) {
 		AircraftTypeClass	const &aircraft_type = AircraftTypeClass::As_Reference(index);
 
 		/*
@@ -7895,7 +7895,7 @@ void DLLExportClass::Decode_Pointers(void)
 		if (PlacementType[i]) {
 			StructType type = (StructType) reinterpret_cast<unsigned int>(PlacementType[i]);
 			PlacementType[i] = NULL;
-			if (type >= STRUCT_FIRST && type < STRUCT_COUNT) {
+			if (type >= STRUCT_FIRST && type < Read_Building_Count()) {
 				
 				TechnoTypeClass const * tech = Fetch_Techno_Type(RTTI_BUILDINGTYPE, type);
 				if (tech) {

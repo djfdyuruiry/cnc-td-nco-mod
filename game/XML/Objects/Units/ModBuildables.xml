@@ -33,4 +33,38 @@
 			</CategoryTypesStrongAgainst>
 		</CNCEncyclopediaComponent>
 	</ObjectTypeClass>	
+
+	<ObjectTypeClass Name="TD_HVYORCA" Classification="CNCBuildableObject" CanInstantiate="False">
+		<CNCEncyclopediaComponent>		
+			<ObjectNameTextID>TEXT_AIRCRAFT_HVYORCA</ObjectNameTextID>
+			<ObjectDescriptionTextID>TEXT_AIRCRAFT_DESC_HVYORCA</ObjectDescriptionTextID>
+			<BuildIcon>BuildIcon_TD_HVYORCA</BuildIcon>
+			<RequiredTypes>
+				<entry>TD_HPAD</entry>
+			</RequiredTypes>
+			<CategoryTypesWeakAgainst>
+				<entry>Category_Infantry</entry>
+			</CategoryTypesWeakAgainst>
+			<CategoryTypesStrongAgainst>
+				<entry>Category_Buildings</entry>
+			</CategoryTypesStrongAgainst>
+		</CNCEncyclopediaComponent>
+	</ObjectTypeClass>		
+
+	<ObjectTypeClass Name="TD_BIGTURR" Classification="CNCBuildableObject" CanInstantiate="False">
+		<CNCEncyclopediaComponent>		
+			<ObjectNameTextID>TEXT_BUILDING_BIGTURR</ObjectNameTextID>
+			<ObjectDescriptionTextID>TEXT_BUILDING_DESC_BIGTURR</ObjectDescriptionTextID>
+			<BuildIcon>BuildIcon_TD_BIGTURR</BuildIcon>
+			<RequiredTypes>
+				<entry>TD_PYLE</entry>
+			</RequiredTypes>
+			<CategoryTypesWeakAgainst>
+				<entry>Category_Infantry</entry>
+			</CategoryTypesWeakAgainst>
+			<CategoryTypesStrongAgainst>
+				<entry>Category_Tanks</entry>
+			</CategoryTypesStrongAgainst>
+		</CNCEncyclopediaComponent>
+	</ObjectTypeClass>	
 </ObjectTypeList>

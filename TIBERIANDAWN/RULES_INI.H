@@ -78,6 +78,18 @@ void Free_Rules_Memory();
 #define Read_Full_Cost_Multi_Wall_Length_Rule() ReadRuleValue<bool>(FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)
 
 // mod lookups
+#define Read_New_Aircraft_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_AIRCRAFT_COUNT_RULE)
+
+#define Read_Aircraft_Count() (char)ReadRuleValue<unsigned int>(AIRCRAFT_COUNT_RULE_KEY)
+
+#define Read_New_Building_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_BUILDING_COUNT_RULE)
+
+#define Read_Building_Count() (char)ReadRuleValue<unsigned int>(BUILDING_COUNT_RULE_KEY)
+
+#define Read_New_Bullet_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_BULLET_COUNT_RULE)
+
+#define Read_Bullet_Count() (char)ReadRuleValue<unsigned int>(BULLET_COUNT_RULE_KEY)
+
 #define Read_New_Infantry_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE)
 
 #define Read_Infantry_Count() (char)ReadRuleValue<unsigned int>(INFANTRY_COUNT_RULE_KEY)
@@ -85,6 +97,14 @@ void Free_Rules_Memory();
 #define Read_New_Unit_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_UNIT_COUNT_RULE)
 
 #define Read_Unit_Count() (char)ReadRuleValue<unsigned int>(UNIT_COUNT_RULE_KEY)
+
+#define Read_New_Warhead_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_WARHEAD_COUNT_RULE)
+
+#define Read_Warhead_Count() (char)ReadRuleValue<unsigned int>(WARHEAD_COUNT_RULE_KEY)
+
+#define Read_New_Weapon_Count() (char)ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_WEAPON_COUNT_RULE)
+
+#define Read_Weapon_Count() (char)ReadRuleValue<unsigned int>(WEAPON_COUNT_RULE_KEY)
 
 // game lookups
 #define Read_Build_Distance_Game_Rule() ReadRuleValue<unsigned int>(MAX_BUILD_DISTANCE_RULE_KEY)

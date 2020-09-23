@@ -42,221 +42,6 @@ class MapEditClass;
 class HouseClass;
 
 
-/**********************************************************************
-**	This is the constant data associated with a weapon. Some objects
-**	can have multiple weapons and this class is used to isolate and
-**	specify this data in a convenient and selfcontained way.
-*/
-class WeaponTypeClass
-{
-	private:
-		static WeaponTypeClass* Weapons;
-
-	public:
-		/*
-		**	This is the unit class of the projectile fired. A subset of the unit types
-		**	represent projectiles. It is one of these classes that is specified here.
-		**	If this object does not fire anything, then this value will be UNIT_NONE.
-		*/
-		BulletType Fires;
-
-		/*
-		**	This is the damage (explosive load) to be assigned to the projectile that
-		**	this object fires.
-		*/
-		unsigned char Attack;
-
-		/*
-		**	Objects that fire (which can be buildings as well) will fire at a
-		**	frequency controlled by this value. This value serves as a count
-		**	down timer between shots. The smaller the value, the faster the
-		**	rate of fire.
-		*/
-		unsigned char ROF;
-
-		/*
-		**	When this object fires, the range at which it's projectiles travel is
-		**	controlled by this value. The value represents the number of cells the
-		**	projectile will travel. Objects outside of this range will not be fired
-		**	upon (in normal circumstances).
-		*/
-		int Range;
-
-		/*
-		**	This is the typical sound generated when firing.
-		*/
-		VocType Sound;
-
-		/*
-		**	This is the animation to display at the firing coordinate.
-		*/
-		AnimType Anim;
-
-		char* FriendlyName;
-
-		bool IsModType;
-
-		static WeaponTypeClass const* By_Type(WeaponType type);
-
-		static WeaponTypeClass const& As_Reference(WeaponType type);
-
-		WeaponTypeClass(const char* friendlyName, WeaponType owner, BulletType fires, unsigned char attack, unsigned char rof, int range, VocType sound, AnimType anim);
-};
-
-
-/**********************************************************************
-**	Each of the warhead types has specific characteristics. This structure
-**	holds these characteristics.
-*/
-class WarheadTypeClass
-{
-	private:
-		static WarheadTypeClass* Warheads;
-
-	public:
-
-		/*
-		**	This value control how damage from this warhead type will reduce
-		**	over distance. The larger the number, the less the damage is reduced
-		**	the farther the distance from the source of the damage.
-		*/
-		int SpreadFactor;
-
-		/*
-		**	If this warhead type can destroy walls, then this flag will be true.
-		*/
-		bool IsWallDestroyer;
-
-		/*
-		**	If this warhead can destroy wooden walls, then this flag will be true.
-		*/
-		bool IsWoodDestroyer;
-
-		/*
-		**	Does this warhead damage tiberium?
-		*/
-		bool IsTiberiumDestroyer;
-
-		/*
-		**	The warhead damage is reduced depending on the the type of armor the
-		**	defender has. This table is what gives weapons their "character".
-		*/
-		unsigned* Modifier;
-
-		char* FriendlyName;
-
-		bool IsModType;
-
-		static WarheadTypeClass const* By_Type(WarheadType type);
-
-		static WarheadTypeClass const& As_Reference(WarheadType type);
-
-		WarheadTypeClass(
-			const char* friendlyName,
-			WarheadType type,
-			int spreadFactor,
-			bool isWallDestroyer,
-			bool isWoodDestroyer,
-			bool isTiberiumDestroyer,
-			unsigned armorModifiers[ARMOR_COUNT]
-		);
-};
-
-
-/**********************************************************************
-**	Each house has certain unalienable characteristics. This structure
-**	elaborates these.
-*/
-class HouseTypeClass {
-	public:
-
-		/*
-		**	This is the house number (enum). This is a unique identification
-		**	number for the house.
-		*/
-		HousesType House;
-
-		/*
-		**	The INI name of the house is pointed to by this element. This is the
-		**	identification name used in the scenario INI file.
-		*/
-		char const *IniName;
-
-		/*
-		**	The full name (translated) of the house is identified by this number.
-		**	The actual text of the name is located in a text file loaded at run
-		**	time.
-		*/
-		int FullName;
-
-		/*
-		**	This is the filename suffix to use when creating a house specific
-		**	file name. It is three characters long.
-		*/
-		char Suffix[4];
-
-		/*
-		**	This is the "lemon percentage" to use when determining if a particular
-		**	object owned by this house is to be flagged as a "lemon". Objects so
-		**	flagged have a greater break-down chance. The percentage is expressed
-		**	as a fixed point number with 0x000 meaning 0% and 0x100 meaning 100%.
-		*/
-		unsigned Lemon;
-
-		/*
-		**	Each house is assigned a unique identification color to be used on the
-		**	radar map and other color significant areas.
-		*/
-		unsigned char Color;
-
-		unsigned char BrightColor;
-
-		/*
-		**	This points to the default remap table for this house.
-		*/
-		unsigned char const * RemapTable;
-		PlayerColorType RemapColor;
-
-		/*
-		**	This is a unique ASCII character used when constructing filenames. It
-		**	serves a similar purpose as the "Suffix" element, but is only one
-		**	character long.
-		*/
-		char Prefix;
-
-		/*
-		**	This controls the various general adjustments to the house owned
-		**	unit and building ratings. The default value for these ratings is 1.0.
-		*/
-		float FirepowerBias;
-		float GroundspeedBias;
-		float AirspeedBias;
-		float ArmorBias;
-		float ROFBias;
-		float CostBias;
-		float BuildSpeedBias;
-
-		//------------------------------------------------------------------------
-		HouseTypeClass(HousesType house,
-							char const *ini,
-							int fullname,
-							char const *ext,
-							int lemon,
-							int color,
-							int bright_color,
-							PlayerColorType remapcolor,
-							unsigned char const * remap,
-							char prefix);
-
-		static HousesType  From_Name(char const *name);
-		static HouseTypeClass const &  As_Reference(HousesType house);
-		static void One_Time(void);
-
-	private:
-		static HouseTypeClass const * const Pointers[HOUSE_COUNT];
-};
-
-
 /***************************************************************************
 **	This is the abstract type class. It holds information common to all
 **	objects that might exist. This contains the name of
@@ -375,7 +160,10 @@ class ObjectTypeClass : public AbstractTypeClass
 		**	exists in a separate file, the data is filled in after this object is constructed.
 		**	The "mutable" keyword allows easy modification to this otherwise const object.
 		*/
-		void const * ImageData;
+		void const* ImageData;
+
+		// The name of the image to use
+		char* Image;
 
 		/*
 		**	This points to the radar imagery for this object.
@@ -640,6 +428,267 @@ class TechnoTypeClass : public ObjectTypeClass
 };
 
 
+/**********************************************************************
+**	This is the constant data associated with a weapon. Some objects
+**	can have multiple weapons and this class is used to isolate and
+**	specify this data in a convenient and selfcontained way.
+*/
+class WeaponTypeClass : public ObjectTypeClass {
+private:
+	static WeaponTypeClass const** Pointers;
+public:
+	/*
+	**	This is the unit class of the projectile fired. A subset of the unit types
+	**	represent projectiles. It is one of these classes that is specified here.
+	**	If this object does not fire anything, then this value will be UNIT_NONE.
+	*/
+	BulletType Projectile;
+
+	/*
+	**	This is the damage (explosive load) to be assigned to the projectile that
+	**	this object fires.
+	*/
+	unsigned char Attack;
+
+	/*
+	**	Objects that fire (which can be buildings as well) will fire at a
+	**	frequency controlled by this value. This value serves as a count
+	**	down timer between shots. The smaller the value, the faster the
+	**	rate of fire.
+	*/
+	unsigned char ROF;
+
+	/*
+	**	When this object fires, the range at which it's projectiles travel is
+	**	controlled by this value. The value represents the number of cells the
+	**	projectile will travel. Objects outside of this range will not be fired
+	**	upon (in normal circumstances).
+	*/
+	int Range;
+
+	/*
+	**	This is the typical sound generated when firing.
+	*/
+	VocType Sound;
+
+	/*
+	**	This is the animation to display at the firing coordinate.
+	*/
+	AnimType Anim;
+
+	/*
+	**	The INI name of the house is pointed to by this element. This is the
+	**	identification name used in the scenario INI file.
+	*/
+	char* IniName;
+
+	char* FriendlyName;
+
+	bool IsModType;
+	char* Resolve_Ini_Name();
+	char ModBaseIniName[32];
+	WeaponType Type;
+
+	static WeaponTypeClass const* By_Type(WeaponType type);
+
+	static WeaponTypeClass const& As_Reference(WeaponType type) { return *By_Type(type); };
+
+	static void Read_Weapon_Rules(WeaponTypeClass* type);
+	static void Add_Weapon_Type(WeaponTypeClass* type);
+	
+	virtual RTTIType  What_Am_I(void) const { return RTTI_NONE; };
+	static void  Init(TheaterType) {};
+	static void One_Time(void);
+	virtual bool  Create_And_Place(CELL, HousesType = HOUSE_NONE) const { return false; };
+	virtual ObjectClass* Create_One_Of(HouseClass*) const { return 0; };
+
+	WeaponTypeClass(
+		const char* friendlyName,
+		char const* ininame,
+		WeaponType owner,
+		BulletType projectile,
+		unsigned char attack,
+		unsigned char rof,
+		int range,
+		VocType sound,
+		AnimType anim
+	);
+};
+
+
+/**********************************************************************
+**	Each of the warhead types has specific characteristics. This structure
+**	holds these characteristics.
+*/
+class WarheadTypeClass : public ObjectTypeClass {
+private:
+	static WarheadTypeClass const** Pointers;
+public:
+
+	/*
+	**	This value control how damage from this warhead type will reduce
+	**	over distance. The larger the number, the less the damage is reduced
+	**	the farther the distance from the source of the damage.
+	*/
+	int SpreadFactor;
+
+	/*
+	**	If this warhead type can destroy walls, then this flag will be true.
+	*/
+	bool IsWallDestroyer;
+
+	/*
+	**	If this warhead can destroy wooden walls, then this flag will be true.
+	*/
+	bool IsWoodDestroyer;
+
+	/*
+	**	Does this warhead damage tiberium?
+	*/
+	bool IsTiberiumDestroyer;
+
+	/*
+	**	The warhead damage is reduced depending on the the type of armor the
+	**	defender has. This table is what gives weapons their "character".
+	*/
+	unsigned* Modifier;
+	/*
+	**	The INI name of the house is pointed to by this element. This is the
+	**	identification name used in the scenario INI file.
+	*/
+	char* IniName;
+
+	char* FriendlyName;
+
+	bool IsModType;
+
+	char ModBaseIniName[32];
+	char* Resolve_Ini_Name();
+
+	WarheadType Type;
+
+	static WarheadTypeClass const* By_Type(WarheadType type);
+
+	static WarheadTypeClass const& As_Reference(WarheadType type) { return *By_Type(type); };
+
+	WarheadTypeClass(
+		const char* friendlyName,
+		char const* ininame,
+		WarheadType type,
+		int spreadFactor,
+		bool isWallDestroyer,
+		bool isWoodDestroyer,
+		bool isTiberiumDestroyer,
+		unsigned armorModifiers[ARMOR_COUNT]
+	);
+	static void Read_Warhead_Rules(WarheadTypeClass* type);
+	static void Add_Warhead_Type(WarheadTypeClass* type);
+	virtual RTTIType  What_Am_I(void) const { return RTTI_NONE; };
+	static void  Init(TheaterType) {};
+	static void One_Time(void);
+	virtual bool  Create_And_Place(CELL, HousesType = HOUSE_NONE) const { return false; };
+	virtual ObjectClass* Create_One_Of(HouseClass*) const { return 0; };
+
+};
+
+
+/**********************************************************************
+**	Each house has certain unalienable characteristics. This structure
+**	elaborates these.
+*/
+class HouseTypeClass {
+public:
+
+	/*
+	**	This is the house number (enum). This is a unique identification
+	**	number for the house.
+	*/
+	HousesType House;
+
+	/*
+	**	The INI name of the house is pointed to by this element. This is the
+	**	identification name used in the scenario INI file.
+	*/
+	char* IniName;
+
+	/*
+	**	The full name (translated) of the house is identified by this number.
+	**	The actual text of the name is located in a text file loaded at run
+	**	time.
+	*/
+	int FullName;
+
+	/*
+	**	This is the filename suffix to use when creating a house specific
+	**	file name. It is three characters long.
+	*/
+	char Suffix[4];
+
+	/*
+	**	This is the "lemon percentage" to use when determining if a particular
+	**	object owned by this house is to be flagged as a "lemon". Objects so
+	**	flagged have a greater break-down chance. The percentage is expressed
+	**	as a fixed point number with 0x000 meaning 0% and 0x100 meaning 100%.
+	*/
+	unsigned Lemon;
+
+	/*
+	**	Each house is assigned a unique identification color to be used on the
+	**	radar map and other color significant areas.
+	*/
+	unsigned char Color;
+
+	unsigned char BrightColor;
+
+	/*
+	**	This points to the default remap table for this house.
+	*/
+	unsigned char const* RemapTable;
+	PlayerColorType RemapColor;
+
+	/*
+	**	This is a unique ASCII character used when constructing filenames. It
+	**	serves a similar purpose as the "Suffix" element, but is only one
+	**	character long.
+	*/
+	char Prefix;
+
+	/*
+	**	This controls the various general adjustments to the house owned
+	**	unit and building ratings. The default value for these ratings is 1.0.
+	*/
+	float FirepowerBias;
+	float GroundspeedBias;
+	float AirspeedBias;
+	float ArmorBias;
+	float ROFBias;
+	float CostBias;
+	float BuildSpeedBias;
+
+	//------------------------------------------------------------------------
+	HouseTypeClass(HousesType house,
+		char* ini,
+		int fullname,
+		char const* ext,
+		int lemon,
+		int color,
+		int bright_color,
+		PlayerColorType remapcolor,
+		unsigned char const* remap,
+		char prefix);
+
+	static HousesType  From_Name(char const* name);
+	static HouseTypeClass const& As_Reference(HousesType house);
+	static void One_Time(void);
+	bool IsModType;
+
+	char ModBaseIniName[32];
+	HousesType Type;
+	HouseTypeClass const* HouseTypeClass::By_Type(HousesType type);
+private:
+	static HouseTypeClass const* const Pointers[HOUSE_COUNT];
+};
+
 /***************************************************************************
 **	Building types need some special information custom to buildings. This
 **	is a derived class that elaborates these additional data elements.
@@ -852,7 +901,10 @@ class BuildingTypeClass : public TechnoTypeClass {
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BUILDINGTYPE;};
 		operator StructType(void) const {return(Type);};
 
-		static BuildingTypeClass const &  As_Reference(StructType type);
+		static void Read_Building_Rules(BuildingTypeClass* type);
+		static void Add_Building_Type(BuildingTypeClass* type);
+		
+		static BuildingTypeClass const &  As_Reference(StructType type) { return *By_Type(type); };
 		static StructType  From_Name(char const *name);
 		static void  Init(TheaterType theater);
 		static void One_Time(void);
@@ -884,6 +936,13 @@ class BuildingTypeClass : public TechnoTypeClass {
 		#endif
 
 		OverlayType Overlay_Type() const;
+		bool IsModType;
+		char* Resolve_Ini_Name();
+
+		char ModBaseIniName[32];
+
+		static BuildingTypeClass const** Pointers;
+		static BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type);
 
 	private:
 
@@ -900,9 +959,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		**	cells the building has visual overlap but does not occupy.
 		*/
 		short const *OverlapList;
-
-		static BuildingTypeClass const * const Pointers[STRUCT_COUNT];
-
+		
 		/*
 		**	The construction animation graphic data pointer is
 		**	pointed to by this element.
@@ -1393,15 +1450,25 @@ class BulletTypeClass : public ObjectTypeClass
 		*/
 		int Range;
 
-		const char* RulesName;
+		char* Image;
 
 		char* FriendlyName;
+
+		/*
+		**	The INI name of the house is pointed to by this element. This is the
+		**	identification name used in the scenario INI file.
+		*/
+		char* IniName;
+		bool IsModType;
+		char* Resolve_Ini_Name();
+
+		char ModBaseIniName[32];
 
 		//---------------------------------------------------------------------
 		BulletTypeClass(
 			BulletType type,
-			const char* rulesName,
-			const char* ininame,
+			char const* ininame,
+			char const* image,
 			const char* friendlyName,
 			bool is_high,
 			bool is_homing,
@@ -1422,9 +1489,12 @@ class BulletTypeClass : public ObjectTypeClass
 			WarheadType warhead,
 			AnimType explosion);
 
-		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
+		static void Read_Bullet_Rules(BulletTypeClass* type);
+		static void Add_Bullet_Type(BulletTypeClass* type);
 
-		static BulletTypeClass const &  As_Reference(BulletType type) {return *Pointers[type];};
+		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
+		static BulletTypeClass const* BulletTypeClass::By_Type(BulletType type);
+		static BulletTypeClass const& As_Reference(BulletType type) { return *By_Type(type); };
 		static void  Init(TheaterType ) {};
 		static void One_Time(void);
 
@@ -1432,7 +1502,7 @@ class BulletTypeClass : public ObjectTypeClass
 		virtual ObjectClass *  Create_One_Of(HouseClass *) const {return 0;};
 
 	private:
-		static BulletTypeClass const * const Pointers[BULLET_COUNT];
+		static BulletTypeClass const** Pointers;
 };
 
 
@@ -1874,8 +1944,12 @@ class AircraftTypeClass : public TechnoTypeClass
 				MissionType deforder);
 		virtual RTTIType  What_Am_I(void) const;
 
+		static void Read_Aircraft_Rules(AircraftTypeClass* type);
+		static void Add_Aircraft_Type(AircraftTypeClass* type);
+
 		static AircraftType  From_Name(char const *name);
-		static AircraftTypeClass const &  As_Reference(AircraftType a) {return *Pointers[a];};
+		static AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type);
+		static AircraftTypeClass const &  As_Reference(AircraftType type) { return *By_Type(type); };
 		static void  Init(TheaterType);
 		static void One_Time(void);
 		static void Prep_For_Add(void);
@@ -1888,6 +1962,8 @@ class AircraftTypeClass : public TechnoTypeClass
 		virtual short const *  Occupy_List(bool placement=false) const;
 		virtual short const *  Overlap_List(void) const;
 		virtual BuildingClass *  Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const;
+		char* Resolve_Ini_Name();
+
 		virtual int  Max_Pips(void) const;
 
 		#ifdef SCENARIO_EDITOR
@@ -1898,7 +1974,7 @@ class AircraftTypeClass : public TechnoTypeClass
 		static void const * RRotorData;
 
 	private:
-		static AircraftTypeClass const * const Pointers[AIRCRAFT_COUNT];
+		static AircraftTypeClass const** Pointers;
 };
 
 

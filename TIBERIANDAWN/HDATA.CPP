@@ -214,7 +214,7 @@ HouseTypeClass const * const HouseTypeClass::Pointers[HOUSE_COUNT] = {
  *   06/21/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 HouseTypeClass::HouseTypeClass(HousesType house, 
-				char const * ini, 
+				char* ini, 
 				int fullname, 
 				char const * ext, 
 				int lemon, 

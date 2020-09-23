@@ -67,106 +67,182 @@ COORDINATE const StoppingCoordAbs[5] = {
 /***************************************************************************
 **	These are the various weapons and their characteristics.
 */
-WeaponTypeClass* WeaponTypeClass::Weapons = NULL;
+
+static WeaponTypeClass const WEP_RIFLE("Sniper Rifle", "RIFLE", WEAPON_RIFLE, BULLET_SNIPER, 125, 40, 0x0580, VOC_SNIPER, ANIM_NONE);
+static WeaponTypeClass const WEP_CHAIN_GUN("Chain Gun", "CHAIN_GUN", WEAPON_CHAIN_GUN, BULLET_SPREADFIRE, 25, 50, 0x0400, VOC_MINI, ANIM_GUN_N);
+static WeaponTypeClass const WEP_PISTOL("Pistol", "PISTOL", WEAPON_PISTOL, BULLET_BULLET, 1, 7, 0x01C0, VOC_RIFLE, ANIM_NONE);
+static WeaponTypeClass const WEP_M16("Assault Rifle", "M16", WEAPON_M16, BULLET_BULLET, 15, 20, 0x0200, VOC_MGUN2, ANIM_NONE);
+static WeaponTypeClass const WEP_DRAGON("Bazooka", "DRAGON", WEAPON_DRAGON, BULLET_TOW, 30, 60, 0x0400, VOC_BAZOOKA, ANIM_NONE);
+static WeaponTypeClass const WEP_FLAMETHROWER("Flamethrower Blast", "FLAMETHROWER", WEAPON_FLAMETHROWER, BULLET_FLAME, 35, 50, 0x0200, VOC_FLAMER1, ANIM_FLAME_N);
+static WeaponTypeClass const WEP_FLAME_TONGUE("Flame Tank Blast", "FLAME_TONGUE", WEAPON_FLAME_TONGUE, BULLET_FLAME, 50, 50, 0x0200, VOC_FLAMER1, ANIM_FLAME_N);
+static WeaponTypeClass const WEP_CHEMSPRAY("Chemical Spray", "CHEMSPRAY", WEAPON_CHEMSPRAY, BULLET_CHEMSPRAY, 80, 70, 0x0200, VOC_FLAMER1, ANIM_CHEM_N);
+static WeaponTypeClass const WEP_GRENADE("Grenade", "GRENADE", WEAPON_GRENADE, BULLET_GRENADE, 50, 60, 0x0340, VOC_TOSS, ANIM_NONE);
+static WeaponTypeClass const WEP_75MM("Light Tank", "75MM", WEAPON_75MM, BULLET_APDS, 25, 60, 0x0400, VOC_TANK2, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_105MM("Medium Tank", "105MM", WEAPON_105MM, BULLET_APDS, 30, 50, 0x04C0, VOC_TANK3, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_120MM("Mammoth Tank", "120MM", WEAPON_120MM, BULLET_APDS, 40, 80, 0x04C0, VOC_TANK4, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_TURRET_GUN("Gun Turret", "TURRET_GUN", WEAPON_TURRET_GUN, BULLET_APDS, 40, 60, 0x0600, VOC_TANK4, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_MAMMOTH_TUSK("Mammoth Tank Anti-Infantry Missile", "MAMMOTH_TUSK", WEAPON_MAMMOTH_TUSK, BULLET_SSM, 75, 80, 0x0500, VOC_ROCKET1, ANIM_NONE);
+static WeaponTypeClass const WEP_MLRS("Rocket Launcher", "ROCKET_LAUNCHER", WEAPON_MLRS, BULLET_SSM2, 75, 80, 0x0600, VOC_ROCKET1, ANIM_NONE);
+static WeaponTypeClass const WEP_155MM("Artillery", "155MM", WEAPON_155MM, BULLET_HE, 150, 65, 0x0600, VOC_TANK1, ANIM_MUZZLE_FLASH);
+static WeaponTypeClass const WEP_M60MG("APC Gun", "M60MG", WEAPON_M60MG, BULLET_BULLET, 15, 30, 0x0400, VOC_MGUN11, ANIM_GUN_N);
+static WeaponTypeClass const WEP_TOMAHAWK("Gunboat", "TOMAHAWK", WEAPON_TOMAHAWK, BULLET_SSM, 60, 35, 0x0780, VOC_ROCKET2, ANIM_NONE);
+static WeaponTypeClass const WEP_TOW_TWO("Advanced Guard Tower", "TOWTWO", WEAPON_TOW_TWO, BULLET_SSM, 60, 40, 0x0680, VOC_ROCKET2, ANIM_NONE);
+static WeaponTypeClass const WEP_NAPALM("Napalm", "NAPALM", WEAPON_NAPALM, BULLET_NAPALM, 100, 20, 0x0480, VOC_NONE, ANIM_NONE);
+static WeaponTypeClass const WEP_OBELISK_LASER("Laser", "OBELISK_LASER", WEAPON_OBELISK_LASER, BULLET_LASER, 200, 90, 0x0780, VOC_LASER, ANIM_NONE);
+static WeaponTypeClass const WEP_NIKE("SAM Site", "NIKE", WEAPON_NIKE, BULLET_SAM, 50, 50, 0x0780, VOC_ROCKET2, ANIM_NONE);
+static WeaponTypeClass const WEP_HONEST_JOHN("SSM Launcher", "HONEST_JOHN", WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1, ANIM_NONE);
+static WeaponTypeClass const WEP_STEG("Dino Ram", "DINO_RAM", WEAPON_STEG, BULLET_HEADBUTT, 100, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
+static WeaponTypeClass const WEP_TREX("Dino Bite", "DINO_BITE", WEAPON_TREX, BULLET_TREXBITE, 155, 30, 0x0180, VOC_DINOATK1, ANIM_NONE);
+
+WeaponTypeClass const** WeaponTypeClass::Pointers = NULL;
 
 WeaponTypeClass::WeaponTypeClass(
 	const char* friendlyName,
+	char const* ininame,
 	WeaponType owner,
-	BulletType fires,
+	BulletType projectile,
 	unsigned char attack,
 	unsigned char rof,
 	int range,
 	VocType sound,
 	AnimType anim
-)
+) : ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0, false)
 {
 	Sound = sound;
 	Anim = anim;
 
 	auto weaponTypeStr = Weapon_Type_To_String(owner);
-	
+
+	IniName = strdup(ininame);
+
 	GetRules() << RulesIniSectionBuilder::BuildWeaponSection(weaponTypeStr);
 
 	FriendlyName = ReadRuleValue<char*>(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
-	Fires = ReadRuleValue<BulletType>(weaponTypeStr, WEAPON_FIRES_RULE, fires);
+	Projectile = ReadRuleValue<BulletType>(weaponTypeStr, WEAPON_PROJECTILE_RULE, projectile);
 	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
 	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
 	Range = Read_Weapon_Range(weaponTypeStr, range);
-
 	IsModType = false;
+
+	Read_Weapon_Rules(this);
 }
 
 WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 {
-	if (Weapons != NULL)
+	if (Pointers != NULL)
 	{
-		return &Weapons[type];
+		//Log_Trace("Weapon lookup by type: %d", type);
+		return Pointers[type];
 	}
 
-	Weapons = new WeaponTypeClass[WEAPON_COUNT] {
-		WeaponTypeClass("Sniper Rifle", WEAPON_RIFLE, BULLET_SNIPER,      125, 40,  0x0580, VOC_SNIPER,   ANIM_NONE),
-		WeaponTypeClass("Chain Gun", WEAPON_CHAIN_GUN, BULLET_SPREADFIRE,  25,  50,  0x0400, VOC_MINI,     ANIM_GUN_N),
-		WeaponTypeClass("Pistol", WEAPON_PISTOL, BULLET_BULLET,      1,   7,   0x01C0, VOC_RIFLE,    ANIM_NONE),
-		WeaponTypeClass("Assault Rifle", WEAPON_M16, BULLET_BULLET,      15,  20,  0x0200, VOC_MGUN2,    ANIM_NONE),
-		WeaponTypeClass("Bazooka", WEAPON_DRAGON, BULLET_TOW,         30,  60,  0x0400, VOC_BAZOOKA,  ANIM_NONE),
-		WeaponTypeClass("Flamethrower Blast", WEAPON_FLAMETHROWER, BULLET_FLAME,       35,  50,  0x0200, VOC_FLAMER1,  ANIM_FLAME_N),
-		WeaponTypeClass("Flame Tank Blast", WEAPON_FLAME_TONGUE, BULLET_FLAME,       50,  50,  0x0200, VOC_FLAMER1,  ANIM_FLAME_N),
-		WeaponTypeClass("Chemical Spray", WEAPON_CHEMSPRAY, BULLET_CHEMSPRAY,   80,  70,  0x0200, VOC_FLAMER1,  ANIM_CHEM_N),
-		WeaponTypeClass("Grenade", WEAPON_GRENADE, BULLET_GRENADE,     50,  60,  0x0340, VOC_TOSS,     ANIM_NONE),
-		WeaponTypeClass("Light Tank", WEAPON_75MM, BULLET_APDS,        25,  60,  0x0400, VOC_TANK2,    ANIM_MUZZLE_FLASH),
-		WeaponTypeClass("Medium Tank", WEAPON_105MM, BULLET_APDS,        30,  50,  0x04C0, VOC_TANK3,    ANIM_MUZZLE_FLASH),
-		WeaponTypeClass("Mammoth Tank", WEAPON_120MM, BULLET_APDS,        40,  80,  0x04C0, VOC_TANK4,    ANIM_MUZZLE_FLASH),
-		WeaponTypeClass("Gun Turret", WEAPON_TURRET_GUN, BULLET_APDS,        40,  60,  0x0600, VOC_TANK4,    ANIM_MUZZLE_FLASH),
-		WeaponTypeClass("Mammoth Tank Anti-Infantry Missile", WEAPON_MAMMOTH_TUSK, BULLET_SSM,         75,  80,  0x0500, VOC_ROCKET1,  ANIM_NONE),
-		WeaponTypeClass("Rocket Launcher", WEAPON_MLRS, BULLET_SSM2,        75,  80,  0x0600, VOC_ROCKET1,  ANIM_NONE),
-		WeaponTypeClass("Artillery", WEAPON_155MM, BULLET_HE,          150, 65,  0x0600, VOC_TANK1,    ANIM_MUZZLE_FLASH),
-		WeaponTypeClass("APC Gun", WEAPON_M60MG, BULLET_BULLET,      15,  30,  0x0400, VOC_MGUN11,   ANIM_GUN_N),
-		WeaponTypeClass("Gunboat", WEAPON_TOMAHAWK, BULLET_SSM,         60,  35,  0x0780, VOC_ROCKET2,  ANIM_NONE),
-		WeaponTypeClass("Advanced Guard Tower", WEAPON_TOW_TWO, BULLET_SSM,         60,  40,  0x0680, VOC_ROCKET2,  ANIM_NONE),
-		WeaponTypeClass("Napalm", WEAPON_NAPALM, BULLET_NAPALM,      100, 20,  0x0480, VOC_NONE,     ANIM_NONE),
-		WeaponTypeClass("Laser", WEAPON_OBELISK_LASER, BULLET_LASER,       200, 90,  0x0780, VOC_LASER,    ANIM_NONE),
-		WeaponTypeClass("SAM Site", WEAPON_NIKE, BULLET_SAM,         50,  50,  0x0780, VOC_ROCKET2,  ANIM_NONE),
-		WeaponTypeClass("S.S.M Launcher", WEAPON_HONEST_JOHN, BULLET_HONEST_JOHN, 100, 200, 0x0A00, VOC_ROCKET1,  ANIM_NONE),
-		WeaponTypeClass("Dino Ram", WEAPON_STEG, BULLET_HEADBUTT,    100, 30,  0x0180, VOC_DINOATK1, ANIM_NONE),
-		WeaponTypeClass("Dino Bite", WEAPON_TREX, BULLET_TREXBITE,    155, 30,  0x0180, VOC_DINOATK1, ANIM_NONE),
+	Log_Trace("WeaponTypeClass::ByType Initializing Weapons");
+	
+	auto weaponCount = Read_Weapon_Count();
+
+	Pointers = new WeaponTypeClass const* [weaponCount] {
+		&WEP_RIFLE,
+		&WEP_CHAIN_GUN,
+		&WEP_PISTOL,
+		&WEP_M16,
+		&WEP_DRAGON,
+		&WEP_FLAMETHROWER,
+		&WEP_FLAME_TONGUE,
+		&WEP_CHEMSPRAY,
+		&WEP_GRENADE,
+		&WEP_75MM,
+		&WEP_105MM,
+		&WEP_120MM,
+		&WEP_TURRET_GUN,
+		&WEP_MAMMOTH_TUSK,
+		&WEP_MLRS,
+		&WEP_155MM,
+		&WEP_M60MG,
+		&WEP_TOMAHAWK,
+		&WEP_TOW_TWO,
+		&WEP_NAPALM,
+		&WEP_OBELISK_LASER,
+		&WEP_NIKE,
+		&WEP_HONEST_JOHN,
+		&WEP_STEG,
+		&WEP_TREX
 	};
 
-	return &Weapons[type];
+	InitialiseModsIfRequired();
+
+	return By_Type(type);
 }
 
-WeaponTypeClass const& WeaponTypeClass::As_Reference(WeaponType type)
+void WeaponTypeClass::Read_Weapon_Rules(WeaponTypeClass* weapon)
 {
-	return *(By_Type(type));
+	auto iniName = weapon->IniName;
+
+	//Read_Object_Rules(weapon);
+	//Read_Techno_Rules(weapon);
+	weapon->Projectile = ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
+	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
+	weapon->ROF = Read_Weapon_Rate_Of_Fire(iniName, weapon->ROF);
+	weapon->Range = Read_Weapon_Range(iniName, weapon->Range);
 }
 
+void WeaponTypeClass::Add_Weapon_Type(WeaponTypeClass* WeaponInstance)
+{
+	Pointers[WeaponInstance->Type] = WeaponInstance;
+}
+
+void WeaponTypeClass::One_Time(void)
+{
+	return;
+}
+
+char* WeaponTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
+}
 /***************************************************************************
 **	These are the various warheads.
 **
 ** spread factor, destroys walls, destroys wood, destroys Tiberium, {armor defense table}
 **           -vs- {none, wood, aluminum, steel, concrete}
 */
-WarheadTypeClass* WarheadTypeClass::Warheads = NULL;
+static WarheadTypeClass const WH_SA("Small Arms", "SA", WARHEAD_SA, 2, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x80, 0x90, 0x40, 0x40});
+static WarheadTypeClass const WH_HE("High Explosive", "HE", WARHEAD_HE, 6, true, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0xC0, 0x90, 0x40, 0x100});
+static WarheadTypeClass const WH_AP("Armor Piercing", "AP", WARHEAD_AP, 6, true, true, false, new unsigned[ARMOR_COUNT] {0x40, 0xC0, 0xC0, 0x100, 0x80});
+static WarheadTypeClass const WH_FIRE("Fire", "FIRE", WARHEAD_FIRE, 8, false, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0x100, 0xB0, 0x40, 0x80});
+static WarheadTypeClass const WH_LASER("Laser", "LASER", WARHEAD_LASER, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0x100, 0x100, 0x100});
+static WarheadTypeClass const WH_PB("Ion Cannon Beam", "PB", WARHEAD_PB, 7, true, true, true, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0xC0, 0xC0, 0xC0});
+static WarheadTypeClass const WH_FIST("Punch", "FIST", WARHEAD_FIST, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10});
+static WarheadTypeClass const WH_FOOT("Kick", "FOOT", WARHEAD_FOOT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10});
+static WarheadTypeClass const WH_HOLLOW_POINT("Hollow Point", "HOLLOW_POINT", WARHEAD_HOLLOW_POINT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x08, 0x08, 0x08, 0x08});
+static WarheadTypeClass const WH_SPORE("Tiberium Spore", "SPORE", WARHEAD_SPORE, 255, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x01, 0x01, 0x01, 0x01});
+static WarheadTypeClass const WH_HEADBUTT("Stegosaurus Headbutt", "HEADBUTT", WARHEAD_HEADBUTT, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08});
+static WarheadTypeClass const WH_FEEDME("T-Rex Teeth", "FEEDME", WARHEAD_FEEDME, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08});
+WarheadTypeClass const** WarheadTypeClass::Pointers = NULL;
 
 WarheadTypeClass::WarheadTypeClass(
 	const char* friendlyName,
+	char const* ininame,
 	WarheadType type,
 	int spreadFactor,
 	bool isWallDestroyer,
 	bool isWoodDestroyer,
 	bool isTiberiumDestroyer,
 	unsigned armorModifiers[ARMOR_COUNT]
-)
+) : ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0, false)
 {
 	Modifier = armorModifiers;
 
 	auto warheadTypeString = Warhead_Type_To_String(type);
-
+	IniName = strdup(ininame);
+	//strncpy((char*)IniName, ininame, sizeof(IniName));
+	//((char&)IniName[sizeof(IniName) - 1]) = '\0';
 	GetRules() << RulesIniSectionBuilder::BuildWarheadSection(warheadTypeString);
 
 	FriendlyName = ReadRuleValue<char*>(warheadTypeString, FRIENDLY_NAME_RULE, strdup(friendlyName));
 	SpreadFactor = ReadRuleValue<unsigned int>(warheadTypeString, WARHEAD_SPREAD_FACTOR_RULE, spreadFactor);
 	IsWallDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_WALLS_RULE, isWallDestroyer);
-	IsWoodDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_WOOD_RULE, isWallDestroyer);
+	IsWoodDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_WOOD_RULE, isWoodDestroyer);
 	IsTiberiumDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_TIBERIUM_RULE, isTiberiumDestroyer);
 
 	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
@@ -175,38 +251,66 @@ WarheadTypeClass::WarheadTypeClass(
 
 		Modifier[armorType] = ReadRuleValue<unsigned int>(warheadTypeString, modifierRule, Modifier[armorType]);
 	}
-
 	IsModType = false;
+	Read_Warhead_Rules(this);
+}
+void WarheadTypeClass::Read_Warhead_Rules(WarheadTypeClass* warhead)
+{
+	auto iniName = warhead->IniName;
+
+	//Read_Object_Rules(warhead);
+	//Read_Techno_Rules(warhead);
+
+	warhead->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
+	warhead->SpreadFactor = ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
+	warhead->IsWallDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, warhead->IsWallDestroyer);
+	warhead->IsWoodDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, warhead->IsWoodDestroyer);
+	warhead->IsTiberiumDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, warhead->IsTiberiumDestroyer);
+}
+
+void WarheadTypeClass::Add_Warhead_Type(WarheadTypeClass* WarheadInstance)
+{
+	Pointers[WarheadInstance->Type] = WarheadInstance;
 }
 
 WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 {
-	if (Warheads != NULL)
+	if (Pointers != NULL)
 	{
-		return &Warheads[type];
+		//Log_Trace("Warhead lookup by type: %d", type);
+		return Pointers[type];
 	}
-
-	Warheads = new WarheadTypeClass[WARHEAD_COUNT]{
-		WarheadTypeClass("Small Arms", WARHEAD_SA, 2, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x80, 0x90, 0x40, 0x40}),
-		WarheadTypeClass("High Explosive", WARHEAD_HE, 6, true, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0xC0, 0x90, 0x40, 0x100}),
-		WarheadTypeClass("Armor Piercing", WARHEAD_AP, 6, true, true, false, new unsigned[ARMOR_COUNT] {0x40, 0xC0, 0xC0, 0x100, 0x80}),
-		WarheadTypeClass("Fire", WARHEAD_FIRE, 8, false, true, true, new unsigned[ARMOR_COUNT] {0xE0, 0x100, 0xB0, 0x40, 0x80}),
-		WarheadTypeClass("Laser", WARHEAD_LASER, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0x100, 0x100, 0x100}),
-		WarheadTypeClass("Ion Cannon Beam", WARHEAD_PB, 7, true, true, true, new unsigned[ARMOR_COUNT] {0x100, 0x100, 0xC0, 0xC0, 0xC0}),
-		WarheadTypeClass("Punch", WARHEAD_FIST, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10}),
-		WarheadTypeClass("Kick", WARHEAD_FOOT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x20, 0x20, 0x10, 0x10}),
-		WarheadTypeClass("Hollow Point", WARHEAD_HOLLOW_POINT, 4, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x08, 0x08, 0x08, 0x08}),
-		WarheadTypeClass("Tiberium Spore", WARHEAD_SPORE, 255, false, false, false, new unsigned[ARMOR_COUNT] {0x100, 0x01, 0x01, 0x01, 0x01}),
-		WarheadTypeClass("Stegosaurus Headbutt", WARHEAD_HEADBUTT, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08}),
-		WarheadTypeClass("T-Rex Teeth", WARHEAD_FEEDME, 1, true, true, false, new unsigned[ARMOR_COUNT] {0x100, 0xC0, 0x80, 0x20, 0x08})
+	Log_Trace("WTC By_Type Initialize Watheads");
+	auto warheadCount = Read_Warhead_Count();
+	Pointers = new WarheadTypeClass const* [warheadCount] {
+		&WH_SA,
+			& WH_HE,
+			& WH_AP,
+			& WH_FIRE,
+			& WH_LASER,
+			& WH_PB,
+			& WH_FIST,
+			& WH_FOOT,
+			& WH_HOLLOW_POINT,
+			& WH_SPORE,
+			& WH_HEADBUTT,
+			& WH_FEEDME,
 	};
+	InitialiseModsIfRequired();
 
-	return &Warheads[type];
+	return By_Type(type);
 }
 
-WarheadTypeClass const& WarheadTypeClass::As_Reference(WarheadType type)
+void WarheadTypeClass::One_Time(void)
 {
-	return *(By_Type(type));
+	return;
+}
+
+char* WarheadTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
 }
 
 /***************************************************************************

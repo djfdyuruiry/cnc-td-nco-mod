@@ -871,7 +871,7 @@
 #define TXT_C17_STRING "C17"
 #define TXT_HARVESTER_STRING "Harvester"
 #define TXT_ARTY_STRING "Artillery"
-#define TXT_MSAM_STRING "S.S.M. Launcher"
+#define TXT_MSAM_STRING "SSM Launcher"
 #define TXT_E1_STRING "Minigunner"
 #define TXT_E2_STRING "Grenadier"
 #define TXT_E3_STRING "Bazooka"

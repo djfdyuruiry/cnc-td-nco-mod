@@ -1,6 +1,8 @@
 #pragma once
 
 // generic rules - apply to all types
+#define IMAGE_RULE "Image"
+
 #define FRIENDLY_NAME_RULE "FriendlyName"
 
 #define BUILD_LEVEL_RULE "BuildLevel"

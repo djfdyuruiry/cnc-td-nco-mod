@@ -5,14 +5,28 @@
     <!-- Infantry -->
     <CNCModGameCommands>
       <Command Name="ERIC">
-        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD20</GameCommand>
+        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD1</GameCommand>
       </Command>
     </CNCModGameCommands>
 
     <!-- Units -->
     <CNCModGameCommands>
       <Command Name="CHEMTNK">
-        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD27</GameCommand>
+        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD2</GameCommand>
+      </Command>
+    </CNCModGameCommands>
+
+    <!-- Aircraft -->
+    <CNCModGameCommands>
+      <Command Name="HVYORCA">
+        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD3</GameCommand>
+      </Command>
+    </CNCModGameCommands>
+
+    <!-- Buildings -->
+    <CNCModGameCommands>
+      <Command Name="BIGTURR">
+        <GameCommand>GAME_COMMAND_TD_MOD_CUSTOM_BUILD4</GameCommand>
       </Command>
     </CNCModGameCommands>
 

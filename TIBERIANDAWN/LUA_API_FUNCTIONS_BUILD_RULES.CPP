@@ -94,7 +94,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     }
     else if (Strings_Are_Equal(ruleName, FACTORY_TYPE_RULE))
     {
-        auto factoryType = Parse_Factory_Type(value, valueParseError);
+        auto factoryType = Parse_Factory_Type(value, valueParseError, false);
 
         if (!*valueParseError)
         {

@@ -211,6 +211,12 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             }
         }
     }
+    else if (Strings_Are_Equal(ruleName, IMAGE_RULE))
+    {
+        Log_Trace("Write_Bullet_Rule => Rule value: %s -> %s", bullet->Image, originalValue);
+
+        bullet->Image = strdup(originalValue);
+    }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Write_Bullet_Rule => Rule value: %s -> %s", bullet->FriendlyName,  originalValue);
@@ -226,6 +232,19 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
             Log_Trace("Write_Bullet_Rule => %s -> %s", Convert_Boolean_To_String(bullet->IsModType), Convert_Boolean_To_String(isModType));
 
             bullet->IsModType = isModType;
+        }
+    }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        auto baseType = value;
+
+        *valueParseError = String_Is_Empty(baseType) || strlen(baseType) > 32;
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_TechnoType_Rule => Rule value: %s -> %s", bullet->ModBaseIniName, baseType);
+
+            strcpy(bullet->ModBaseIniName, strdup(baseType));
         }
     }
     else
@@ -342,6 +361,12 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
 
         lua_pushnumber(lua, bullet->ROT);
     }
+    else if (Strings_Are_Equal(ruleName, IMAGE_RULE))
+    {
+        Log_Trace("Read_Bullet_Rule => Rule value: %s", bullet->Image);
+
+        lua_pushstring(lua, bullet->Image);
+    }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", bullet->FriendlyName);
@@ -353,6 +378,22 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsModType));
 
         lua_pushboolean(lua, bullet->IsModType);
+    }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        if (bullet->IsModType)
+        {
+            Log_Trace("Read_TechnoType_Rule => Rule value: %s", bullet->ModBaseIniName);
+
+            lua_pushstring(lua, bullet->ModBaseIniName);
+        }
+        else
+        {
+            // fallback to ini name for non-mod type instances
+            Log_Trace("Read_TechnoType_Rule => Rule value: %s", bullet->IniName);
+
+            lua_pushstring(lua, bullet->IniName);
+        }
     }
     else
     {

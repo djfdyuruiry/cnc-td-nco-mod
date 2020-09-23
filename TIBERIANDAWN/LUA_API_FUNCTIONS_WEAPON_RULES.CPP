@@ -4,15 +4,15 @@
 
 static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
 {
-    if (Strings_Are_Equal(ruleName, WEAPON_FIRES_RULE))
+    if (Strings_Are_Equal(ruleName, WEAPON_PROJECTILE_RULE))
     {
         auto bullet = Parse_Bullet_Type(value, valueParseError);
 
         if (!*valueParseError)
         {
-            Log_Trace("Set_Weapon_Rule => Rule value: %s -> %s", Bullet_Type_To_String(weapon->Fires), value);
+            Log_Trace("Set_Weapon_Rule => Rule value: %s -> %s", Bullet_Type_To_String(weapon->Projectile), value);
 
-            weapon->Fires = bullet;
+            weapon->Projectile = bullet;
         }
     }
     else if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE))
@@ -83,6 +83,19 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
             weapon->IsModType = isModType;
         }
     }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        auto baseType = value;
+
+        *valueParseError = String_Is_Empty(baseType) || strlen(baseType) > 32;
+
+        if (!*valueParseError)
+        {
+            Log_Trace("Write_Weapon_Rule => Rule value: %s -> %s", weapon->ModBaseIniName, baseType);
+
+            strcpy(weapon->ModBaseIniName, strdup(baseType));
+        }
+    }
     else
     {
         return false;
@@ -93,9 +106,9 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
 
 static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char* ruleName)
 {
-    if (Strings_Are_Equal(ruleName, WEAPON_FIRES_RULE))
+    if (Strings_Are_Equal(ruleName, WEAPON_PROJECTILE_RULE))
     {
-        auto bullet = Bullet_Type_To_String(weapon->Fires);
+        auto bullet = Bullet_Type_To_String(weapon->Projectile);
 
         Log_Trace("Read_Weapon_Rule => Rule value: %s", bullet);
 
@@ -130,6 +143,22 @@ static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char
         Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->IsModType);
 
         lua_pushboolean(lua, weapon->IsModType);
+    }
+    else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
+    {
+        if (weapon->IsModType)
+        {
+            Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->ModBaseIniName);
+
+            lua_pushstring(lua, weapon->ModBaseIniName);
+        }
+        else
+        {
+            // fallback to ini name for non-mod type instances
+            Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->IniName);
+
+            lua_pushstring(lua, weapon->IniName);
+        }
     }
     else
     {

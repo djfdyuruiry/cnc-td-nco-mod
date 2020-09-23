@@ -43,6 +43,8 @@
 
 #include "game_messages.h"
 
+#include "RULES_INI.h"
+
 //extern "C" {
 //unsigned Cardinal_To_Fixed(unsigned base, unsigned cardinal);
 //}
@@ -791,10 +793,10 @@ class HouseClass {
 		**	Tracks number of each building type owned by this house. Even if the
 		**	building is in construction, it will be reflected in this total.
 		*/
-		int BQuantity[STRUCT_COUNT];
+		int* BQuantity;
 		int* UQuantity;
 		int* IQuantity;
-		int AQuantity[AIRCRAFT_COUNT];
+		int* AQuantity;
 
 		/*
 		**	This timer keeps track of when an all out attack should be performed.

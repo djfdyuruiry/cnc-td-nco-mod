@@ -519,27 +519,44 @@ static BulletTypeClass const ClassTRexBite(
 **	This is the array of pointers to the static data associated with
 **	each bullet (projectile) type.
 */
-BulletTypeClass const * const BulletTypeClass::Pointers[BULLET_COUNT] = {
-	&ClassSniper,		//	BULLET_SNIPER
-	&ClassBullet,		//	BULLET_BULLET
-	&ClassAPDS,			//	BULLET_APDS
-	&Class120mm,		//	BULLET_HE
-	&ClassMissile,		//	BULLET_SSM
-	&ClassMissile2,	//	BULLET_SSM2
-	&ClassPatriot,		//	BULLET_SAM
-	&ClassDragon,		//	BULLET_TOW
-	&ClassFlame,		// BULLET_FLAME
-	&ClassChem,			// BULLET_CHEMSPRAY
-	&ClassNapalm,		// BULLET_NAPALM
-	&ClassGrenade,		// BULLET_GRENADE
-	&ClassLaser,		// BULLET_LASER
-	&ClassNukeUp,		// BULLET_NUKE_UP
-	&ClassNukeDown,	// BULLET_NUKE_DOWN
-	&ClassHonestJohn,	// BULLET_HONEST_JOHN
-	&ClassSpreadfire,	// BULLET_SPREADFIRE
-	&ClassHeadButt,	// BULLET_HEADBUTT
-	&ClassTRexBite,	// BULLET_TREXBITE
-};
+BulletTypeClass const** BulletTypeClass::Pointers = NULL;
+
+BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
+{
+	if (Pointers != NULL) {
+		return Pointers[type];
+	}
+
+	Log_Debug("Initialising Bullet types");
+
+	auto BulletCount = Read_Bullet_Count();
+
+	Pointers = new BulletTypeClass const* [BulletCount] {
+		&ClassSniper,		//	BULLET_SNIPER
+		&ClassBullet,		//	BULLET_BULLET
+		&ClassAPDS,			//	BULLET_APDS
+		&Class120mm,		//	BULLET_HE
+		&ClassMissile,		//	BULLET_SSM
+		&ClassMissile2,	    //	BULLET_SSM2
+		&ClassPatriot,		//	BULLET_SAM
+		&ClassDragon,		//	BULLET_TOW
+		&ClassFlame,		//  BULLET_FLAME
+		&ClassChem,			//  BULLET_CHEMSPRAY
+		&ClassNapalm,		//  BULLET_NAPALM
+		&ClassGrenade,		//  BULLET_GRENADE
+		&ClassLaser,		//  BULLET_LASER
+		&ClassNukeUp,		//  BULLET_NUKE_UP
+		&ClassNukeDown,	    //  BULLET_NUKE_DOWN
+		&ClassHonestJohn,	//  BULLET_HONEST_JOHN
+		&ClassSpreadfire,	//  BULLET_SPREADFIRE
+		&ClassHeadButt,	    //  BULLET_HEADBUTT
+		&ClassTRexBite,	    //  BULLET_TREXBITE
+	};
+
+	InitialiseModsIfRequired();
+
+	return By_Type(type);
+}
 
 
 /***********************************************************************************************
@@ -559,8 +576,8 @@ BulletTypeClass const * const BulletTypeClass::Pointers[BULLET_COUNT] = {
  *=============================================================================================*/
 BulletTypeClass::BulletTypeClass(
 	BulletType type,
-	char const* rulesName,
-	char const *ininame,
+	char const* ininame,
+	char const *image,
 	const char* friendlyName,
 	bool is_high,
 	bool is_homing, 
@@ -585,31 +602,68 @@ BulletTypeClass::BulletTypeClass(
 	Type = type;
 	Explosion = explosion;
 
-	RulesName = rulesName;
+	IniName = strdup(ininame);
+	Image = strdup(image);
 
-	GetRules() << RulesIniSectionBuilder::BuildBulletSection(rulesName);
+	GetRules() << RulesIniSectionBuilder::BuildBulletSection(ininame);
 
-	FriendlyName = ReadRuleValue<char*>(RulesName, FRIENDLY_NAME_RULE, strdup(friendlyName));
-	IsHigh = ReadRuleValue<bool>(RulesName, BULLET_HIGH_RULE, is_high);
-	IsAntiAircraft = ReadRuleValue<bool>(RulesName, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
-	IsTranslucent = ReadRuleValue<bool>(RulesName, BULLET_TRANSLUCENT_RULE, is_translucent);
-	IsArcing = ReadRuleValue<bool>(RulesName, BULLET_ARCING_RULE, is_arcing);
-	IsHoming = ReadRuleValue<bool>(RulesName, BULLET_HOMING_RULE, is_homing);
-	IsDropping = ReadRuleValue<bool>(RulesName, BULLET_DROPPING_RULE, is_dropping);
-	IsInvisible = ReadRuleValue<bool>(RulesName, BULLET_INVISIBLE_RULE, is_invisible);
-	IsProximityArmed = ReadRuleValue<bool>(RulesName, BULLET_PROXIMITY_ARMED_RULE, is_proximity_armed);
-	IsFlameEquipped = ReadRuleValue<bool>(RulesName, BULLET_FLAME_EQUIPPED_RULE, is_flame_equipped);
-	IsFueled = ReadRuleValue<bool>(RulesName, BULLET_FUELED_RULE, is_fueled);
-	IsFaceless = ReadRuleValue<bool>(RulesName, BULLET_FACELESS_RULE, is_faceless);
-	IsInaccurate = ReadRuleValue<bool>(RulesName, BULLET_INACCURATE_RULE, is_inaccurate);
+	FriendlyName = ReadRuleValue<char*>(ininame, FRIENDLY_NAME_RULE, strdup(friendlyName));
+	IsHigh = ReadRuleValue<bool>(ininame, BULLET_HIGH_RULE, is_high);
+	IsAntiAircraft = ReadRuleValue<bool>(ininame, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
+	IsTranslucent = ReadRuleValue<bool>(ininame, BULLET_TRANSLUCENT_RULE, is_translucent);
+	IsArcing = ReadRuleValue<bool>(ininame, BULLET_ARCING_RULE, is_arcing);
+	IsHoming = ReadRuleValue<bool>(ininame, BULLET_HOMING_RULE, is_homing);
+	IsDropping = ReadRuleValue<bool>(ininame, BULLET_DROPPING_RULE, is_dropping);
+	IsInvisible = ReadRuleValue<bool>(ininame, BULLET_INVISIBLE_RULE, is_invisible);
+	IsProximityArmed = ReadRuleValue<bool>(ininame, BULLET_PROXIMITY_ARMED_RULE, is_proximity_armed);
+	IsFlameEquipped = ReadRuleValue<bool>(ininame, BULLET_FLAME_EQUIPPED_RULE, is_flame_equipped);
+	IsFueled = ReadRuleValue<bool>(ininame, BULLET_FUELED_RULE, is_fueled);
+	IsFaceless = ReadRuleValue<bool>(ininame, BULLET_FACELESS_RULE, is_faceless);
+	IsInaccurate = ReadRuleValue<bool>(ininame, BULLET_INACCURATE_RULE, is_inaccurate);
 
-	Warhead = ReadRuleValue<WarheadType>(RulesName, BULLET_WARHEAD_RULE, warhead);
-	MaxSpeed = Read_Speed(RulesName, maxspeed);
-	ROT = Read_Rate_Of_Turn(RulesName, rot);
-	Arming = ReadRuleValue<int>(RulesName, BULLET_ARMING_RULE, arming);
-	Range = ReadRuleValue<int>(RulesName, BULLET_RANGE_RULE, range);
+	Warhead = ReadRuleValue<WarheadType>(ininame, BULLET_WARHEAD_RULE, warhead);
+	MaxSpeed = Read_Speed(ininame, maxspeed);
+	ROT = Read_Rate_Of_Turn(ininame, rot);
+	Arming = ReadRuleValue<int>(ininame, BULLET_ARMING_RULE, arming);
+	Range = ReadRuleValue<int>(ininame, BULLET_RANGE_RULE, range);
+
+	Read_Bullet_Rules(this);
+
 }
 
+void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)
+{
+	auto iniName = bullet->IniName;
+
+	Read_Object_Rules(bullet);
+	
+	bullet->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
+	bullet->Image = ReadRuleValue<char*>(iniName, IMAGE_RULE, bullet->Image);
+	bullet->IsHigh = ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, bullet->IsHigh);
+	bullet->IsAntiAircraft = ReadRuleValue<bool>(iniName, BULLET_ANTI_AIRCRAFT_RULE, bullet->IsAntiAircraft);
+	bullet->IsTranslucent = ReadRuleValue<bool>(iniName, BULLET_TRANSLUCENT_RULE, bullet->IsTranslucent);
+	bullet->IsArcing = ReadRuleValue<bool>(iniName, BULLET_ARCING_RULE, bullet->IsArcing);
+	bullet->IsHoming = ReadRuleValue<bool>(iniName, BULLET_HOMING_RULE, bullet->IsHoming);
+	bullet->IsDropping = ReadRuleValue<bool>(iniName, BULLET_DROPPING_RULE, bullet->IsDropping);
+	bullet->IsInvisible = ReadRuleValue<bool>(iniName, BULLET_INVISIBLE_RULE, bullet->IsInvisible);
+	bullet->IsProximityArmed = ReadRuleValue<bool>(iniName, BULLET_PROXIMITY_ARMED_RULE, bullet->IsProximityArmed);
+	bullet->IsFlameEquipped = ReadRuleValue<bool>(iniName, BULLET_FLAME_EQUIPPED_RULE, bullet->IsFlameEquipped);
+	bullet->IsFueled = ReadRuleValue<bool>(iniName, BULLET_FUELED_RULE, bullet->IsFueled);
+	bullet->IsFaceless = ReadRuleValue<bool>(iniName, BULLET_FACELESS_RULE, bullet->IsFaceless);
+	bullet->IsInaccurate = ReadRuleValue<bool>(iniName, BULLET_INACCURATE_RULE, bullet->IsInaccurate);
+
+	bullet->Warhead = ReadRuleValue<WarheadType>(iniName, BULLET_WARHEAD_RULE, bullet->Warhead);
+	bullet->MaxSpeed = Read_Speed(iniName, bullet->MaxSpeed);
+	bullet->ROT = Read_Rate_Of_Turn(iniName, bullet->ROT);
+	bullet->Arming = ReadRuleValue<int>(iniName, BULLET_ARMING_RULE, bullet->Arming);
+	bullet->Range = ReadRuleValue<int>(iniName, BULLET_RANGE_RULE, bullet->Range);
+
+}
+
+void BulletTypeClass::Add_Bullet_Type(BulletTypeClass* bulletInstance)
+{
+	Pointers[bulletInstance->Type] = bulletInstance;
+}
 
 /***********************************************************************************************
  * BulletTypeClass::One_Time -- Performs the one time processing for bullets.                  *
@@ -629,26 +683,46 @@ BulletTypeClass::BulletTypeClass(
  *=============================================================================================*/
 void BulletTypeClass::One_Time(void)
 {
+	Log_Trace("BulletTypeClass::One_Time start");
+
 	BulletType index;
+	char bulletCount = Read_Bullet_Count();
+	
+	Log_Trace("BulletTypeClass::One_Time bulletCount %d", bulletCount);
 
 	/*
 	**	Load the bullet shapes.
 	*/
-	for (index = BULLET_FIRST; index < BULLET_COUNT; index++) {
-		BulletTypeClass const & bullet = As_Reference(index);
+	for (index = BULLET_FIRST; index < bulletCount; index++) {
+		BulletTypeClass* bullet = (BulletTypeClass*)&As_Reference(index);
 		char	fullname[_MAX_FNAME+_MAX_EXT];
+		char* iniName = bullet->Resolve_Ini_Name();
 
-		if (!bullet.IsInvisible) {
-			_makepath(fullname, NULL, NULL, bullet.IniName, ".SHP");
+		Log_Trace("BulletTypeClass::One_Time iniName %s", iniName);
+
+		if (!bullet->IsInvisible) {
+			Log_Trace("BulletTypeClass::One_Time ImageName %s", iniName);
+
+			_makepath(fullname, NULL, NULL, iniName, ".SHP");
 
 			RawFileClass file(fullname);
 
 			if (file.Is_Available()) {
-				((void const *&)bullet.ImageData) = Load_Alloc_Data(file);
+				Log_Trace("BulletTypeClass::One_Time loading file %s", file);
+
+				((void const *&)bullet->ImageData) = Load_Alloc_Data(file);
 			} else {
-				((void const *&)bullet.ImageData) =	MixFileClass::Retrieve(fullname);
+				Log_Trace("BulletTypeClass::One_Time retrieve from mix %s", fullname);
+
+				((void const *&)bullet->ImageData) = MixFileClass::Retrieve(fullname);
 			}
 		}
 	}
 }
 
+char* BulletTypeClass::Resolve_Ini_Name()
+{
+	return IsModType
+		? ModBaseIniName
+		: IniName;
+}
