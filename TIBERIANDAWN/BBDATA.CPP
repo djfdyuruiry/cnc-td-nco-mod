@@ -605,30 +605,29 @@ BulletTypeClass::BulletTypeClass(
 	IniName = strdup(ininame);
 	Image = strdup(image);
 
-	GetRules() << RulesIniSectionBuilder::BuildBulletSection(ininame);
+	FriendlyName = strdup(friendlyName);
+	IsHigh = is_high;
+	IsAntiAircraft = is_antiaircraft;
+	IsTranslucent = is_translucent;
+	IsArcing = is_arcing;
+	IsHoming = is_homing;
+	IsDropping = is_dropping;
+	IsInvisible = is_invisible;
+	IsProximityArmed = is_proximity_armed;
+	IsFlameEquipped = is_flame_equipped;
+	IsFueled = is_fueled;
+	IsFaceless = is_faceless;
+	IsInaccurate = is_inaccurate;
 
-	FriendlyName = ReadRuleValue<char*>(ininame, FRIENDLY_NAME_RULE, strdup(friendlyName));
-	IsHigh = ReadRuleValue<bool>(ininame, BULLET_HIGH_RULE, is_high);
-	IsAntiAircraft = ReadRuleValue<bool>(ininame, BULLET_ANTI_AIRCRAFT_RULE, is_antiaircraft);
-	IsTranslucent = ReadRuleValue<bool>(ininame, BULLET_TRANSLUCENT_RULE, is_translucent);
-	IsArcing = ReadRuleValue<bool>(ininame, BULLET_ARCING_RULE, is_arcing);
-	IsHoming = ReadRuleValue<bool>(ininame, BULLET_HOMING_RULE, is_homing);
-	IsDropping = ReadRuleValue<bool>(ininame, BULLET_DROPPING_RULE, is_dropping);
-	IsInvisible = ReadRuleValue<bool>(ininame, BULLET_INVISIBLE_RULE, is_invisible);
-	IsProximityArmed = ReadRuleValue<bool>(ininame, BULLET_PROXIMITY_ARMED_RULE, is_proximity_armed);
-	IsFlameEquipped = ReadRuleValue<bool>(ininame, BULLET_FLAME_EQUIPPED_RULE, is_flame_equipped);
-	IsFueled = ReadRuleValue<bool>(ininame, BULLET_FUELED_RULE, is_fueled);
-	IsFaceless = ReadRuleValue<bool>(ininame, BULLET_FACELESS_RULE, is_faceless);
-	IsInaccurate = ReadRuleValue<bool>(ininame, BULLET_INACCURATE_RULE, is_inaccurate);
+	Warhead = warhead;
+	MaxSpeed = maxspeed;
+	ROT = rot;
+	Arming = arming;
+	Range = range;
 
-	Warhead = ReadRuleValue<WarheadType>(ininame, BULLET_WARHEAD_RULE, warhead);
-	MaxSpeed = Read_Speed(ininame, maxspeed);
-	ROT = Read_Rate_Of_Turn(ininame, rot);
-	Arming = ReadRuleValue<int>(ininame, BULLET_ARMING_RULE, arming);
-	Range = ReadRuleValue<int>(ininame, BULLET_RANGE_RULE, range);
+	GetRules() << RulesIniSectionBuilder::BuildBulletSection(IniName);
 
 	Read_Bullet_Rules(this);
-
 }
 
 void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)

@@ -111,18 +111,19 @@ WeaponTypeClass::WeaponTypeClass(
 	Sound = sound;
 	Anim = anim;
 
-	auto weaponTypeStr = Weapon_Type_To_String(owner);
-
 	IniName = strdup(ininame);
+	FriendlyName = strdup(friendlyName);
+	Projectile = projectile;
+	Attack = attack;
+	ROF = rof;
+	Range = range;
+	Type = owner;
+
+	IsModType = false;
+
+	auto weaponTypeStr = Weapon_Type_To_String(Type);
 
 	GetRules() << RulesIniSectionBuilder::BuildWeaponSection(weaponTypeStr);
-
-	FriendlyName = ReadRuleValue<char*>(weaponTypeStr, FRIENDLY_NAME_RULE, strdup(friendlyName));
-	Projectile = ReadRuleValue<BulletType>(weaponTypeStr, WEAPON_PROJECTILE_RULE, projectile);
-	Attack = Read_Weapon_Damage(weaponTypeStr, attack);
-	ROF = Read_Weapon_Rate_Of_Fire(weaponTypeStr, rof);
-	Range = Read_Weapon_Range(weaponTypeStr, range);
-	IsModType = false;
 
 	Read_Weapon_Rules(this);
 }
@@ -131,7 +132,7 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 {
 	if (Pointers != NULL)
 	{
-		//Log_Trace("Weapon lookup by type: %d", type);
+		Log_Trace("Weapon lookup by type: %d", type);
 		return Pointers[type];
 	}
 
@@ -174,10 +175,8 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 
 void WeaponTypeClass::Read_Weapon_Rules(WeaponTypeClass* weapon)
 {
-	auto iniName = weapon->IniName;
+	auto iniName = Weapon_Type_To_String(weapon->Type);
 
-	//Read_Object_Rules(weapon);
-	//Read_Techno_Rules(weapon);
 	weapon->Projectile = ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
 	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
 	weapon->ROF = Read_Weapon_Rate_Of_Fire(iniName, weapon->ROF);
@@ -231,41 +230,40 @@ WarheadTypeClass::WarheadTypeClass(
 	unsigned armorModifiers[ARMOR_COUNT]
 ) : ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0, false)
 {
+	IniName = strdup(ininame);
+
+	FriendlyName = strdup(friendlyName);
+	SpreadFactor = spreadFactor;
+	IsWallDestroyer = isWallDestroyer;
+	IsWoodDestroyer = isWoodDestroyer;
+	IsTiberiumDestroyer = isTiberiumDestroyer;
 	Modifier = armorModifiers;
+	Type = type;
+
+	IsModType = false;
 
 	auto warheadTypeString = Warhead_Type_To_String(type);
-	IniName = strdup(ininame);
-	//strncpy((char*)IniName, ininame, sizeof(IniName));
-	//((char&)IniName[sizeof(IniName) - 1]) = '\0';
+
 	GetRules() << RulesIniSectionBuilder::BuildWarheadSection(warheadTypeString);
-
-	FriendlyName = ReadRuleValue<char*>(warheadTypeString, FRIENDLY_NAME_RULE, strdup(friendlyName));
-	SpreadFactor = ReadRuleValue<unsigned int>(warheadTypeString, WARHEAD_SPREAD_FACTOR_RULE, spreadFactor);
-	IsWallDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_WALLS_RULE, isWallDestroyer);
-	IsWoodDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_WOOD_RULE, isWoodDestroyer);
-	IsTiberiumDestroyer = ReadRuleValue<bool>(warheadTypeString, WARHEAD_DESTORY_TIBERIUM_RULE, isTiberiumDestroyer);
-
-	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
-	{
-		auto modifierRule = Map_Armor_Modifier_To_Warhead_Rule(armorType);
-
-		Modifier[armorType] = ReadRuleValue<unsigned int>(warheadTypeString, modifierRule, Modifier[armorType]);
-	}
-	IsModType = false;
 	Read_Warhead_Rules(this);
 }
+
 void WarheadTypeClass::Read_Warhead_Rules(WarheadTypeClass* warhead)
 {
-	auto iniName = warhead->IniName;
-
-	//Read_Object_Rules(warhead);
-	//Read_Techno_Rules(warhead);
+	auto iniName = Warhead_Type_To_String(warhead->Type);
 
 	warhead->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
 	warhead->SpreadFactor = ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
 	warhead->IsWallDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, warhead->IsWallDestroyer);
 	warhead->IsWoodDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, warhead->IsWoodDestroyer);
 	warhead->IsTiberiumDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, warhead->IsTiberiumDestroyer);
+
+	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
+	{
+		auto modifierRule = Map_Armor_Modifier_To_Warhead_Rule(armorType);
+
+		warhead->Modifier[armorType] = ReadRuleValue<unsigned int>(iniName, modifierRule, warhead->Modifier[armorType]);
+	}
 }
 
 void WarheadTypeClass::Add_Warhead_Type(WarheadTypeClass* WarheadInstance)

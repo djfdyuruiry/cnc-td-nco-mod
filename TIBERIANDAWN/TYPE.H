@@ -487,6 +487,7 @@ public:
 	bool IsModType;
 	char* Resolve_Ini_Name();
 	char ModBaseIniName[32];
+
 	WeaponType Type;
 
 	static WeaponTypeClass const* By_Type(WeaponType type);
