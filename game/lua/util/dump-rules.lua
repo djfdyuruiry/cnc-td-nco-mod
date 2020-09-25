@@ -95,7 +95,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
     log("[%s]", areaType)
 
     for _, ruleName in ipairs(typeArea.getRuleNames()) do
-      if ruleName == "IsModType" or ruleName == "Owner" or ruleName == "BaseType" then
+      if ruleName == "IsModType" or ruleName == "Owner" or ruleName == "BaseType" or ruleName == "Image" then
         goto areaRule
       end
 
