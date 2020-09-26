@@ -46,7 +46,7 @@
 #define AIRCRAFT_REPAIR_STEP_RULE "AircraftRepairStrengthStep"
 
 // misc rules
-#define DEFEND_AGAINST_FRIENDLY_FIRE_RULE "DefendAgainstFriendlyFire"
+#define SMART_DEFENCE_RULE "SmartDefence"
 
 #define TARGET_TREES_RULE "TargetTrees"
 

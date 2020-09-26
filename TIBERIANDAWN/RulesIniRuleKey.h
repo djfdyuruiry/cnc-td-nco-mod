@@ -86,7 +86,7 @@ extern const RulesIniRuleKey* TIBERIUM_GROWTH_RATE_RULE_KEY;
 extern const RulesIniRuleKey* TIBERIUM_SPREAD_RATE_RULE_KEY;
 extern const RulesIniRuleKey* SPEEDY_BUILDS_RULE_KEY;
 extern const RulesIniRuleKey* ATTACKER_ADVANTAGE_RULE_KEY;
-extern const RulesIniRuleKey* DEFEND_AGAINST_FRIENDLY_FIRE_RULE_KEY;
+extern const RulesIniRuleKey* SMART_DEFENCE_RULE_KEY;
 extern const RulesIniRuleKey* TARGET_TREES_RULE_KEY;
 extern const RulesIniRuleKey* MCV_REDEPLOY_RULE_KEY;
 extern const RulesIniRuleKey* VISCEROIDS_RULE_KEY;
