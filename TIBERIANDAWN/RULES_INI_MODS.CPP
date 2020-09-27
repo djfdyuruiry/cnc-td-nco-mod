@@ -3,13 +3,13 @@
 #include "logger.h"
 #include "RulesIniTypes.h"
 
-#include "TypeMod_Aircraft.h"
-#include "TypeMod_Building.h"
-#include "TypeMod_Bullet.h"
-#include "TypeMod_Infantry.h"
-#include "TypeMod_Unit.h"
-#include "TypeMod_Warhead.h"
-#include "TypeMod_Weapon.h"
+#include "AircraftTypeMod.h"
+#include "BuildingTypeMod.h"
+#include "BulletTypeMod.h"
+#include "InfantryTypeMod.h"
+#include "UnitTypeMod.h"
+#include "WarheadTypeMod.h"
+#include "WeaponTypeMod.h"
 
 static AircraftTypeMod* AIRCRAFT_MOD;
 static BuildingTypeMod* BUILDING_MOD;
