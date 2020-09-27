@@ -27,6 +27,9 @@
     <ClInclude Include="LuaStateWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LuaAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

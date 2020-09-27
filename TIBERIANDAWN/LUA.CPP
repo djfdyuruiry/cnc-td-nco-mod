@@ -1,9 +1,12 @@
+#include <LuaStateWrapper.h>
+
 #include "lua.h"
 #include "lua_api.h"
 #include "lua_events.h"
 #include "rules_ini.h"
 
 static lua_State* LUA = NULL;
+static ILuaStateWrapper* LUA_WRAPPER = NULL;
 
 static bool Load_Lua_Scripts()
 {
@@ -77,6 +80,8 @@ bool Initialise_Lua()
     LUA = luaL_newstate();
     luaL_openlibs(LUA);
 
+    LUA_WRAPPER = &(LuaStateWrapper::Build(LUA));
+
     Log_Info("%s Initialised", LUA_VERSION);
 
     return Set_Lua_Package_Path()
@@ -94,29 +99,28 @@ void Register_Lua_Function(const char* name, lua_CFunction function)
 
 bool Execute_Lua_Script(char* luaScript, bool beQuiet)
 {
-    auto executionOK = !luaL_dostring(LUA, luaScript);
-
     if (!beQuiet)
     {
         Log_Trace("Executing Lua snippet: \n%s\n", luaScript);
     }
 
-    if (!executionOK)
+    auto result = LUA_WRAPPER->ExecuteScript(luaScript);
+
+    if (result.IsErrorResult())
     {
-        auto luaError = lua_tostring(LUA, -1);
         auto errorMessageFormat = "Error executing Lua snippet: \n<<\n%s\n>>\n\n%s";
 
         if (!beQuiet)
         {
-            Show_Error(errorMessageFormat, luaScript, luaError);
+            Show_Error(errorMessageFormat, luaScript, result.GetError());
         }
         else
         {
-            Log_Error(errorMessageFormat, luaScript, luaError);
+            Log_Error(errorMessageFormat, luaScript, result.GetError());
         }
     }
 
-    return executionOK;
+    return !result.IsErrorResult();
 }
 
 bool Execute_Lua_Script(const char* luaScript, bool beQuiet)

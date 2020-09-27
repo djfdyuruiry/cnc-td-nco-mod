@@ -2,23 +2,21 @@
 
 template<class T> class LuaResultWithValue : public LuaResult
 {
-protected:
-	LuaResultWithValue(const char* error) : LuaResult(error)
-	{
-	}
+private:
+	T value;
 
-	LuaResultWithValue(T value) : LuaResult()
+	LuaResultWithValue(T value, const char* error = NULL) : LuaResult(error), value(value)
 	{
 	}
 
 public:
-	static template<class U> LuaResultWithValue& Build(T value)
+	static LuaResultWithValue& BuildWithValue(T value)
 	{
-		return *(new LuaResultWithValue<U>(value));
+		return *(new LuaResultWithValue<T>(value));
 	}
 
-	static template<class U> LuaResultWithValue& Build(const char* error)
+	static LuaResultWithValue& BuildWithError(T defaultValue, const char* error)
 	{
-		return *(new LuaResultWithValue<U>(error));
+		return *(new LuaResultWithValue<T>(defaultValue, error));
 	}
 };
