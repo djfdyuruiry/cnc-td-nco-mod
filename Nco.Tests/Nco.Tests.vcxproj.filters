@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Integration">
       <UniqueIdentifier>{08bc35fb-7efe-444a-ac8f-0e709d5001d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Unit\Nco.Lua">
+      <UniqueIdentifier>{2a07b4e6-8948-457d-a9b4-20ca90fc09eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Integration\Nco.Lua">
+      <UniqueIdentifier>{2ea410bf-9216-4d43-9a29-46786a5b8295}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StringUtilsTests.cpp">
@@ -30,5 +36,15 @@
     <ClCompile Include="UtilsIntegrationTests.cpp">
       <Filter>Source Files\Integration</Filter>
     </ClCompile>
+    <ClCompile Include="LuaStateWrapperTests.cpp">
+      <Filter>Source Files\Unit\Nco.Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaStateWrapperIntegrationTests.cpp">
+      <Filter>Source Files\Integration\Nco.Lua</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="error-script.lua" />
+    <None Include="ok-script.lua" />
   </ItemGroup>
 </Project>

@@ -7,25 +7,29 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-static const auto TEST_FILENAME = "test_file.txt";
-static HANDLE fileHandle;
+static auto TEST_FILENAME = "test_file.txt";
 
 namespace Integration
 {
 	TEST_CLASS(UtilsIntegrationTests)
 	{
+		HANDLE fileHandle;
+
 		public:
-			UtilsIntegrationTests()
+			TEST_METHOD_INITIALIZE(Setup)
+			{
+				if (PathFileExists(TEST_FILENAME))
+				{
+					DeleteFile(TEST_FILENAME);
+				}
+			}
+
+			TEST_METHOD_CLEANUP(TearDown)
 			{
 				if (fileHandle != NULL && fileHandle != INVALID_HANDLE_VALUE)
 				{
 					CloseHandle(fileHandle);
 					fileHandle = NULL;
-				}
-
-				if (PathFileExists(TEST_FILENAME))
-				{
-					DeleteFile(TEST_FILENAME);
 				}
 			}
 

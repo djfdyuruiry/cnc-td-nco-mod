@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ILuaStateWrapper.h" />
-    <ClInclude Include="LuaAction.h" />
     <ClInclude Include="LuaResult.h" />
     <ClInclude Include="LuaResultWithValue.h" />
     <ClInclude Include="LuaStateWrapper.h" />

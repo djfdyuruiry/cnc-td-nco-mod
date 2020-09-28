@@ -11,10 +11,10 @@ private:
 	{
 	}
 
-	LuaResult& BuildResult(bool executionResult)
+	LuaResult& BuildResult(bool errorOccurredDuringExecution)
 	{
 		return LuaResult::Build(
-			executionResult ? NULL : GetLastError()
+			errorOccurredDuringExecution ? GetLastError() : NULL
 		);
 	}
 
@@ -54,7 +54,7 @@ public:
 	{
 		if (!lua_isnumber(lua, stackIndex))
 		{
-			return LuaResultWithValue<double>::BuildWithError(0.0f, "Value is not a double");
+			return LuaResultWithValue<double>::BuildWithError(0.0, "Value is not a double");
 		}
 
 		return LuaResultWithValue<double>::BuildWithValue(
@@ -78,7 +78,7 @@ public:
 	{
 		if (!lua_isstring(lua, stackIndex))
 		{
-			return LuaResultWithValue<const char*>::BuildWithError("", "Value is not a string");
+			return LuaResultWithValue<const char*>::BuildWithError(NULL, "Value is not a string");
 		}
 
 		return LuaResultWithValue<const char*>::BuildWithValue(

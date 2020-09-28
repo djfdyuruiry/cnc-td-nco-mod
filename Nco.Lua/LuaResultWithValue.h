@@ -19,4 +19,9 @@ public:
 	{
 		return *(new LuaResultWithValue<T>(defaultValue, error));
 	}
+
+	T GetValue()
+	{
+		return value;
+	}
 };
