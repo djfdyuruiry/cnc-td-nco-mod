@@ -6,6 +6,7 @@ class LuaVariableInfo
 {
 private:
 	const char* name;
+	const char* description;
 	LuaType* type;
 
 	LuaVariableInfo() : type((LuaType*)&LuaType::Nil)
@@ -24,6 +25,13 @@ public:
 		return *this;
 	}
 
+	LuaVariableInfo& WithDescription(const char* description)
+	{
+		this->description = description;
+
+		return *this;
+	}
+
 	LuaVariableInfo& WithType(const LuaType& type)
 	{
 		this->type = (LuaType*)&type;
@@ -34,6 +42,11 @@ public:
 	const char* GetName()
 	{
 		return name;
+	}
+
+	const char* GetDescription()
+	{
+		return description;
 	}
 
 	const LuaType& GetType()

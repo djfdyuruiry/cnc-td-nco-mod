@@ -16,4 +16,5 @@ public:
 	static const LuaType& Function;
 	static const LuaType& Table;
 	static const LuaType& Nil;
+	static const LuaType& Any;
 };

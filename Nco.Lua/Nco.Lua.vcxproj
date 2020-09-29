@@ -30,6 +30,7 @@
     <ClInclude Include="LuaStateWrapper.h" />
     <ClInclude Include="LuaType.h" />
     <ClInclude Include="LuaVariableInfo.h" />
+    <ClInclude Include="TypeApi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaType.cpp" />

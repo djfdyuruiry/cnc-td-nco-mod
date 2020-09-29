@@ -6,3 +6,4 @@ const LuaType& LuaType::String = *(new LuaType("string"));
 const LuaType& LuaType::Function = *(new LuaType("function"));
 const LuaType& LuaType::Table = *(new LuaType("table"));
 const LuaType& LuaType::Nil = *(new LuaType("nil"));
+const LuaType& LuaType::Any = *(new LuaType("any"));

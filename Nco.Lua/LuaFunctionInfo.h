@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include <lua.hpp>
+
 #include "LuaVariableInfo.h"
 
 typedef void (*LuaVariableInfoInitialiser)(LuaVariableInfo&);
@@ -11,6 +13,7 @@ class LuaFunctionInfo
 private:
 	const char* name;
 	const char* description;
+	lua_CFunction luaFunction;
 	std::vector<LuaVariableInfo*>& parameters;
 	std::vector<LuaVariableInfo*>& returnValues;
 
@@ -67,5 +70,30 @@ public:
 		);
 
 		return *this;
+	}
+
+	const char* GetName()
+	{
+		return name;
+	}
+
+	const char* GetDescription()
+	{
+		return description;
+	}
+
+	lua_CFunction GetLuaFunction()
+	{
+		return luaFunction;
+	}
+
+	const std::vector<LuaVariableInfo*>& GetParameters()
+	{
+		return parameters;
+	}
+
+	const std::vector<LuaVariableInfo*>& GetReturnValues()
+	{
+		return returnValues;
 	}
 };

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "ILuaRuntime.h"
+#include "ILuaStateWrapper.h"
 #include "LuaApi.h"
 
 class LuaRuntime : public ILuaRuntime
@@ -21,18 +22,28 @@ public:
 		return *(new LuaRuntime(lua));
 	}
 
+	ILuaRuntime& RegisterApi(ILuaApi& api)
+	{
+		for (auto function : api.GetFunctions())
+		{
+			lua.WriteFunction(function->GetName(), function->GetLuaFunction());
+		}
+
+		apis.push_back(&api);
+
+		return *this;
+	}
+
 	ILuaRuntime& RegisterApi(const char* name, LuaApiInitialiser initialiser)
 	{
-		auto& api = LuaApi::Build(lua).WithName(name);
+		auto& api = LuaApi::Build().WithName(name);
 
 		if (initialiser != NULL)
 		{
 			initialiser(api);
 		}
 
-		apis.push_back(&api);
-
-		return *this;
+		return RegisterApi(api);
 	}
 
 	const std::vector<ILuaApi*>& GetApis()

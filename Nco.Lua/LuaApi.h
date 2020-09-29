@@ -5,26 +5,23 @@
 #include <lua.hpp>
 
 #include "ILuaApi.h"
-#include "ILuaStateWrapper.h"
 #include "LuaFunctionInfo.h"
 
 class LuaApi : public ILuaApi
 {
 private:
-	ILuaStateWrapper& lua;
-
 	const char* name;
 	const char* description;
 	std::vector<LuaFunctionInfo*>& functions;
 
-	LuaApi(ILuaStateWrapper& lua) : lua(lua), functions(*(new std::vector<LuaFunctionInfo*>))
+	LuaApi() : functions(*(new std::vector<LuaFunctionInfo*>))
 	{
 	}
 
 public:
-	static ILuaApi& Build(ILuaStateWrapper& lua)
+	static ILuaApi& Build()
 	{
-		return *(new LuaApi(lua));
+		return *(new LuaApi());
 	}
 
 	ILuaApi& WithName(const char* name)
@@ -51,8 +48,6 @@ public:
 		}
 
 		functions.push_back(&functionInfo);
-
-		lua.WriteFunction(name, function);
 
 		return *this;
 	}
