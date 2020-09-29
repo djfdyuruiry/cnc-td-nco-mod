@@ -110,4 +110,10 @@ public:
 	{
 		lua_pushstring(lua, value);
 	}
+
+	void WriteFunction(const char* name, lua_CFunction function)
+	{
+		lua_pushcfunction(lua, function);
+		lua_setglobal(lua, name);
+	}
 };

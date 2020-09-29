@@ -19,12 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ILuaApi.h" />
+    <ClInclude Include="ILuaRuntime.h" />
     <ClInclude Include="ILuaStateWrapper.h" />
+    <ClInclude Include="LuaApi.h" />
+    <ClInclude Include="LuaFunctionInfo.h" />
     <ClInclude Include="LuaResult.h" />
     <ClInclude Include="LuaResultWithValue.h" />
+    <ClInclude Include="LuaRuntime.h" />
     <ClInclude Include="LuaStateWrapper.h" />
+    <ClInclude Include="LuaType.h" />
+    <ClInclude Include="LuaVariableInfo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LuaType.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

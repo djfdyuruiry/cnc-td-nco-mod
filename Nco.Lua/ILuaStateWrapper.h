@@ -28,4 +28,6 @@ public:
 	virtual void WriteBool(bool value) = 0;
 
 	virtual void WriteString(const char* value) = 0;
+
+	virtual void WriteFunction(const char* name, lua_CFunction function) = 0;
 };
