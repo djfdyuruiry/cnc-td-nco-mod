@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "ILuaStateWrapper.h"
 
 class LuaStateWrapper : public ILuaStateWrapper
@@ -18,24 +20,21 @@ private:
 		);
 	}
 
+protected:
+	void SetIndex(int tableIndex, int index)
+	{
+		lua_rawseti(lua, tableIndex, index);
+	}
+
+	void SetIndex(int tableIndex, const char* index)
+	{
+		lua_setfield(lua, tableIndex, index);
+	}
+
 public:
 	static ILuaStateWrapper& Build(lua_State* lua)
 	{
 		return *(new LuaStateWrapper(lua));
-	}
-
-	LuaResult& ExecuteScript(const char* script)
-	{
-		return BuildResult(
-			luaL_dostring(lua, script)
-		);
-	}
-
-	LuaResult& ExecuteFile(const char* filePath)
-	{
-		return BuildResult(
-			luaL_dofile(lua, filePath)
-		);
 	}
 
 	LuaResultWithValue<int>& ReadInteger(int stackIndex)
@@ -134,5 +133,29 @@ public:
 	{
 		lua_pushcfunction(lua, function);
 		lua_setglobal(lua, name);
+	}
+
+	void WriteNil()
+	{
+		lua_pushnil(lua);
+	}
+
+	void WriteTable(unsigned int size)
+	{
+		lua_createtable(lua, 0, size);
+	}
+
+	LuaResult& ExecuteScript(const char* script)
+	{
+		return BuildResult(
+			luaL_dostring(lua, script)
+		);
+	}
+
+	LuaResult& ExecuteFile(const char* filePath)
+	{
+		return BuildResult(
+			luaL_dofile(lua, filePath)
+		);
 	}
 };

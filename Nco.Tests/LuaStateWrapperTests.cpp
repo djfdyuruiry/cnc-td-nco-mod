@@ -1,3 +1,5 @@
+#include <vector>
+
 #include <CppUnitTest.h>
 #include <lua.hpp>
 
@@ -224,6 +226,13 @@ namespace Unit
 					const char* val = lua_tostring(luaState, 1);
 
 					Assert::AreEqual("Over and out", val);
+				}
+
+				TEST_METHOD(When_WriteTable_IsCalled_WithVector_Then_ArrayTableIsPushedOntoTheStack)
+				{
+					auto& table = *new std::vector<int>{ 3, 54, 6, 234, 156 };
+
+					luaWrapper->WriteTable(table);
 				}
 			};
 		}

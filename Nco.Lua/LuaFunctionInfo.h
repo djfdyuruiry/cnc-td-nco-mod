@@ -103,4 +103,14 @@ public:
 	{
 		return returnValues;
 	}
+
+	int Call(lua_State* lua)
+	{
+		if (luaFunction == NULL)
+		{
+			return 0;
+		}
+
+		return luaFunction(lua);
+	}
 };

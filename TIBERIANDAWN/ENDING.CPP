@@ -162,9 +162,9 @@ void Nod_Ending(void)
 	Play_Sample(loopie6m,255,128);
 
 	bool mouseshown = false;
-	bool done = false;
+	int done = false;
 	int selection = 1;
-	bool printedtext = false;
+	int printedtext = false;
 	while (!done) {
 		if (!printedtext && !Is_Sample_Playing(kanefinl)) {
 			printedtext++;
