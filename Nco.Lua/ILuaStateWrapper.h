@@ -19,6 +19,14 @@ public:
 
 	virtual LuaResultWithValue<const char*> ReadString(int stackIndex) = 0;
 
+	virtual LuaResultWithValue<int>& ReadInteger() = 0;
+
+	virtual LuaResultWithValue<double>& ReadDouble() = 0;
+
+	virtual LuaResultWithValue<bool>& ReadBool() = 0;
+
+	virtual LuaResultWithValue<const char*> ReadString() = 0;
+
 	virtual const char* GetLastError() = 0;
 
 	virtual void WriteInteger(int value) = 0;

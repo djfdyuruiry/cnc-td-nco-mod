@@ -85,6 +85,25 @@ public:
 			luaL_checkstring(lua, stackIndex)
 		);
 	}
+	LuaResultWithValue<int>& ReadInteger()
+	{
+		return ReadInteger(lua_gettop(lua));
+	}
+
+	LuaResultWithValue<double>& ReadDouble()
+	{
+		return ReadDouble(lua_gettop(lua));
+	}
+
+	LuaResultWithValue<bool>& ReadBool()
+	{
+		return ReadBool(lua_gettop(lua));
+	}
+
+	LuaResultWithValue<const char*> ReadString()
+	{
+		return ReadString(lua_gettop(lua));
+	}
 
 	const char* GetLastError()
 	{

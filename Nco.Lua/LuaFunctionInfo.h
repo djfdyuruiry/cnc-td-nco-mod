@@ -47,6 +47,13 @@ public:
 		return *this;
 	}
 
+	LuaFunctionInfo& WithImplementation(lua_CFunction impl)
+	{
+		this->luaFunction = impl;
+
+		return *this;
+	}
+
 	LuaFunctionInfo& WithDescription(const char* description)
 	{
 		this->description = description;

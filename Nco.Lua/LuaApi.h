@@ -40,7 +40,9 @@ public:
 
 	ILuaApi& WithFunction(const char* name, lua_CFunction function, FunctionInitialiser functionInitialiser)
 	{
-		auto& functionInfo = LuaFunctionInfo::Build().WithName(name);
+		auto& functionInfo = LuaFunctionInfo::Build()
+			.WithName(name)
+			.WithImplementation(function);
 
 		if (functionInitialiser != NULL)
 		{
