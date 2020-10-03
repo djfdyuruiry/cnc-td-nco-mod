@@ -25,22 +25,28 @@
     <Filter Include="Source Files\Integration\Nco.Lua">
       <UniqueIdentifier>{2ea410bf-9216-4d43-9a29-46786a5b8295}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Unit\Nco.Common">
+      <UniqueIdentifier>{1e9839aa-9aea-490b-89ce-9c844e179a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Integration\Nco.Common">
+      <UniqueIdentifier>{1e00470f-9204-4ba7-aac1-2675544999a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StringUtilsTests.cpp">
-      <Filter>Source Files\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="UtilsTests.cpp">
-      <Filter>Source Files\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="UtilsIntegrationTests.cpp">
-      <Filter>Source Files\Integration</Filter>
-    </ClCompile>
     <ClCompile Include="LuaStateWrapperTests.cpp">
       <Filter>Source Files\Unit\Nco.Lua</Filter>
     </ClCompile>
     <ClCompile Include="LuaStateWrapperIntegrationTests.cpp">
       <Filter>Source Files\Integration\Nco.Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilsTests.cpp">
+      <Filter>Source Files\Unit\Nco.Common</Filter>
+    </ClCompile>
+    <ClCompile Include="StringUtilsTests.cpp">
+      <Filter>Source Files\Unit\Nco.Common</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilsIntegrationTests.cpp">
+      <Filter>Source Files\Integration\Nco.Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
