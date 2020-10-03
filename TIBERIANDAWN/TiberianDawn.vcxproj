@@ -107,7 +107,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua;../Nco.Common</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -148,7 +148,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua;../Nco.Common</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -189,7 +189,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua;../Nco.Common</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -236,7 +236,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua;../Nco.Common</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -425,7 +425,6 @@
     <ClInclude Include="LINK.H" />
     <ClInclude Include="LIST.H" />
     <ClInclude Include="LOADDLG.H" />
-    <ClInclude Include="LOGGER.H" />
     <ClInclude Include="LOGIC.H" />
     <ClInclude Include="LUA.H" />
     <ClInclude Include="LUA_API.H" />
@@ -515,7 +514,6 @@
     <ClInclude Include="SOUNDDLG.H" />
     <ClInclude Include="SPECIAL.H" />
     <ClInclude Include="STAGE.H" />
-    <ClInclude Include="STRINGS.H" />
     <ClInclude Include="SUPER.H" />
     <ClInclude Include="TAB.H" />
     <ClInclude Include="TARCOM.H" />
@@ -538,7 +536,6 @@
     <ClInclude Include="WeaponTypeMod.h" />
     <ClInclude Include="UNIT.H" />
     <ClInclude Include="UnitTypeMod.h" />
-    <ClInclude Include="UTILS.H" />
     <ClInclude Include="UTRACKER.H" />
     <ClInclude Include="VECTOR.H" />
     <ClInclude Include="VISUDLG.H" />
@@ -664,7 +661,6 @@
     <ClCompile Include="RULES_CACHE_KEY.CPP" />
     <ClCompile Include="RULES_INI_MODS.CPP" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />
-    <ClCompile Include="UTILS.CPP" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />
     <ClCompile Include="FACING.CPP" />
@@ -706,7 +702,6 @@
     <ClCompile Include="LINK.CPP" />
     <ClCompile Include="LIST.CPP" />
     <ClCompile Include="LOADDLG.CPP" />
-    <ClCompile Include="LOGGER.cpp" />
     <ClCompile Include="LOGIC.CPP" />
     <ClCompile Include="LUA.cpp" />
     <ClCompile Include="LUA_EVENTS.CPP" />
@@ -764,7 +759,6 @@
     <ClCompile Include="SPECIAL.CPP" />
     <ClCompile Include="STARTUP.CPP" />
     <ClCompile Include="STATS.CPP" />
-    <ClCompile Include="STRINGS.cpp" />
     <ClCompile Include="SUPER.CPP" />
     <ClCompile Include="TAB.CPP" />
     <ClCompile Include="TARCOM.CPP" />
@@ -828,6 +822,9 @@
     <Text Include="..\bin\Win32\log\nco.log" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nco.Common\Nco.Common.vcxproj">
+      <Project>{e1980a05-016e-4fe5-bc44-70c129aea12a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Nco.Lua\Nco.Lua.vcxproj">
       <Project>{2c5f291e-c782-4cc5-bdec-d4b72830dd6c}</Project>
     </ProjectReference>

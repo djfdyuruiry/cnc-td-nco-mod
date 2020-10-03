@@ -2,8 +2,8 @@
 
 #include <shlwapi.h>
 
-#include "strings.h"
-#include "utils.h"
+#include <strings.h>
+#include <utils.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

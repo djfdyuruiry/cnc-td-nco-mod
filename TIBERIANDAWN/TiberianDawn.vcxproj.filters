@@ -670,22 +670,13 @@
     <ClInclude Include="LUA_EVENTS.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="LOGGER.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="PARSE.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="RULES_INI.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
-    <ClInclude Include="UTILS.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_API.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="STRINGS.H">
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="NCO.H">
@@ -1438,9 +1429,6 @@
     <ClCompile Include="LUA_EVENTS.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="LOGGER.cpp">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
@@ -1448,12 +1436,6 @@
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="RULES_INI.cpp">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="STRINGS.cpp">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="UTILS.CPP">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API.CPP">

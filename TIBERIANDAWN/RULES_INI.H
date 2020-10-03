@@ -1,6 +1,6 @@
 #pragma once
 
-#include "logger.h"
+#include <logger.h>
 #include "lua.h"
 #include "IRulesIni.h"
 #include "IRulesIniReader.h"
@@ -45,12 +45,6 @@ template<class T> T ReadRuleValue(const RulesIniRuleKey* key)
 void MarkRulesIniAsInvalid();
 
 bool Rules_Ini_Failed_Validation();
-
-LogLevel Current_Log_Level();
-
-void Set_Current_Log_Level(LogLevel level);
-
-char* Current_Log_Path();
 
 bool Lua_Is_Enabled();
 

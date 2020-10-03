@@ -7,7 +7,7 @@
 
 #include "IRulesIni.h"
 #include "RulesIniSection.h"
-#include "utils.h"
+#include <utils.h>
 
 class RulesIni : public IRulesIni
 {

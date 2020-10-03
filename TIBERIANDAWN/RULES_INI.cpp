@@ -15,8 +15,6 @@ static const auto TICK_INTERVAL_IN_MILLIS = ONE_SEC_IN_MILLIS / TICKS_PER_SECOND
 
 static char* RULES_INI_BUFFER = NULL;
 static char* DEFAULT_RULES_INI_BUFFER = NULL;
-static auto LOG_LEVEL = OFF;
-static char* LOG_PATH = NULL;
 
 static bool RULES_VALID = true;
 static bool LUA_IS_ENABLED = false;
@@ -62,16 +60,10 @@ static void Read_Log_Settings_From_Rules_Ini()
 
 	Convert_String_To_Upper_Case(logLevelBuffer);
 
-	LOG_LEVEL = Parse_Log_Level(logLevelBuffer);
-
-	Log_Info("Resolved Log Level: %s", Log_Level_To_String(LOG_LEVEL));
-
-	LOG_PATH = RULE_READER->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile");
-
-	if (!String_Is_Empty(LOG_PATH))
-	{
-		Log_Info("Resolved Log Path: %s", LOG_PATH);
-	}
+	Set_Current_Log_Level(Parse_Log_Level(logLevelBuffer));
+	Set_Current_Log_Path(
+		RULE_READER->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile")
+	);
 }
 
 static void DefineRulesSections(IRulesIni& r) {
@@ -220,21 +212,6 @@ bool Rules_Ini_Failed_Validation()
 	Ensure_Rules_Ini_Is_Loaded();
 
 	return !RULES->IsValid();
-}
-
-LogLevel Current_Log_Level()
-{
-	return LOG_LEVEL;
-}
-
-void Set_Current_Log_Level(LogLevel level)
-{
-	LOG_LEVEL = level;
-}
-
-char* Current_Log_Path()
-{
-	return LOG_PATH;
 }
 
 bool Lua_Is_Enabled()

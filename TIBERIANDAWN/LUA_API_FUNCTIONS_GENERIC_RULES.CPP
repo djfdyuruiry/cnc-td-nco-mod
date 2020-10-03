@@ -1,11 +1,11 @@
 #include "function.h"
 
-#include "logger.h"
+#include <logger.h>
 #include "lua.h"
 #include "parse.h"
 #include "rules_ini_generic.h"
-#include "strings.h"
-#include "utils.h"
+#include <strings.h>
+#include <utils.h>
 
 bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const char* uppercaseValue, const char* originalValue, bool* valueParseError)
 {

@@ -6,7 +6,7 @@
 #include "lua.h"
 #include "rules_cache_key.h"
 #include "RulesIniInfo.h"
-#include "strings.h"
+#include <strings.h>
 
 bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const char* uppercaseValue, const char* originalValue, bool* valueParseError);
 

@@ -3,10 +3,10 @@
 
 #include "game_messages.h"
 #include "game_utils.h"
-#include "logger.h"
+#include <logger.h>
 #include "lua_events.h"
 #include "rules_ini.h"
-#include "utils.h"
+#include <utils.h>
 
 static std::queue<GameUiMessage> GAME_UI_MESSAGE_QUEUE;
 static std::queue<GameLoopMessage> GAME_LOOP_MESSAGE_QUEUE;

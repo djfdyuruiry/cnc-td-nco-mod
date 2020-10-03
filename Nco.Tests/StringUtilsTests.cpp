@@ -1,6 +1,6 @@
 #include "CppUnitTest.h"
 
-#include "strings.h"
+#include <strings.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

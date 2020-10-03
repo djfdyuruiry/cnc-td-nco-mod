@@ -1,6 +1,6 @@
 #include "CppUnitTest.h"
 
-#include "utils.h"
+#include <utils.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

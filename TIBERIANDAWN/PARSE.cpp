@@ -1,7 +1,7 @@
 #include "rules_ini.h"
 #include "RulesIniInfo.h"
-#include "strings.h"
-#include "utils.h"
+#include <strings.h>
+#include <utils.h>
 
 static const auto HOUSE_NAME_MAX_LENGTH = 8;
 static const auto INFANTRY_TYPE_MAP = new const char* [INFANTRY_RAMBO] {

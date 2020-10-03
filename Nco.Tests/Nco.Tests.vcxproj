@@ -44,7 +44,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\tiberiandawn\win32lib;..\tiberiandawn;..\Nco.Lua;..\lib\include;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\tiberiandawn\win32lib;..\Nco.Common;..\Nco.Lua;..\tiberiandawn;..\lib\include;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>__DDE_H;_CRT_SECURE_NO_WARNINGS;TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE</PreprocessorDefinitions>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -64,7 +64,7 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>winmm.lib;Ws2_32.lib;shell32.lib;Shlwapi.lib;..\lib\lua53.lib;..\tiberiandawn\Win32\TestConsole\*.obj;..\Nco.Lua\TestConsole\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;Ws2_32.lib;shell32.lib;Shlwapi.lib;..\lib\lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -86,6 +86,9 @@
     <ClCompile Include="UtilsTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nco.Common\Nco.Common.vcxproj">
+      <Project>{e1980a05-016e-4fe5-bc44-70c129aea12a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Nco.Lua\Nco.Lua.vcxproj">
       <Project>{2c5f291e-c782-4cc5-bdec-d4b72830dd6c}</Project>
     </ProjectReference>

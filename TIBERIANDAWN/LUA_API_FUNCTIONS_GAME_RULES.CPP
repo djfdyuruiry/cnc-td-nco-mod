@@ -1,8 +1,8 @@
 #include "lua.h"
 #include "rules_ini.h"
 #include "rules_ini_game.h"
-#include "strings.h"
-#include "utils.h"
+#include <strings.h>
+#include <utils.h>
 
 static int Lua_Get_Game_Rule(lua_State* lua)
 {

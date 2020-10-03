@@ -3,12 +3,14 @@
 #include <windows.h>
 
 #include "logger.h"
-#include "rules_ini.h"
 #include "strings.h"
 #include "utils.h"
 
 static auto LOG_LINE_LENGTH = 25600;
 static auto LOG_LEVEL_LENGTH = 5;
+
+static char* CURRENT_LOG_FILE_PATH = NULL;
+static LogLevel CURRENT_LOG_LEVEL = OFF;
 
 static char* LOG_FILE_PATH = NULL;
 static HANDLE LOG_FILE_HANDLE = NULL;
@@ -78,6 +80,26 @@ LogLevel Parse_Log_Level(const char* levelString)
 	return level;
 }
 
+void Set_Current_Log_Path(const char* path)
+{
+	CURRENT_LOG_FILE_PATH = strdup(path);
+}
+
+const char* Current_Log_Path()
+{
+	return CURRENT_LOG_FILE_PATH;
+}
+
+void Set_Current_Log_Level(LogLevel level)
+{
+	CURRENT_LOG_LEVEL = level;
+}
+
+LogLevel Current_Log_Level()
+{
+	return CURRENT_LOG_LEVEL;
+}
+
 static void Load_Default_Log_File_Path()
 {
 #ifdef TEST_CONSOLE
@@ -108,7 +130,7 @@ static void Open_Log_File()
 		return;
 	}
 
-	LOG_FILE_PATH = Current_Log_Path();
+	LOG_FILE_PATH = strdup(Current_Log_Path());
 
 	if (String_Is_Empty(LOG_FILE_PATH))
 	{

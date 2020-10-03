@@ -1,7 +1,7 @@
 #include <string>
 
 #include "rules_cache_key.h"
-#include "strings.h"
+#include <strings.h>
 
 static const CacheKey HASH_SEED = 5381ul;
 

@@ -1,8 +1,8 @@
 #include "game_messages.h"
 #include "lua_events.h"
 #include "rules_ini.h"
-#include "strings.h"
-#include "utils.h"
+#include <strings.h>
+#include <utils.h>
 
 using namespace std;
 

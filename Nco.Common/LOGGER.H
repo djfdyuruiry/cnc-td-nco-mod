@@ -20,6 +20,14 @@ int Get_Log_Line_Length();
 
 int Get_Log_Level_Length();
 
+void Set_Current_Log_Path(const char* path);
+
+const char* Current_Log_Path();
+
+void Set_Current_Log_Level(LogLevel level);
+
+LogLevel Current_Log_Level();
+
 void Log(LogLevel logLevel, const char* messageFormat, ...);
 
 #define Log_Error(messageFormat, ...) Log(ERR, messageFormat, __VA_ARGS__)

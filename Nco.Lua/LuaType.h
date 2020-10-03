@@ -1,6 +1,6 @@
 #pragma once
 
-class LuaType
+class LuaType final
 {
 private:
 	LuaType(const char* value) : value(value)
