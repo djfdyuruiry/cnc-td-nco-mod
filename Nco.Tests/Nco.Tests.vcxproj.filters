@@ -48,6 +48,9 @@
     <ClCompile Include="UtilsIntegrationTests.cpp">
       <Filter>Source Files\Integration\Nco.Common</Filter>
     </ClCompile>
+    <ClCompile Include="LuaRuntimeIntegrationTests.cpp">
+      <Filter>Source Files\Integration\Nco.Lua</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="error-script.lua" />

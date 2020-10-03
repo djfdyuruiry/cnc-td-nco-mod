@@ -239,3 +239,59 @@ char** Parse_Csv_String(char* csvString, unsigned int entrySize, unsigned int* c
 
 	return csvEntries;
 }
+
+char* FormatString(const char* format, int maxLength, va_list formatArgs)
+{
+	auto stringBuffer = Allocate_String(maxLength);
+
+	vsnprintf(stringBuffer, maxLength, format, formatArgs);
+
+	return stringBuffer;
+}
+
+char* FormatString(const char* format, va_list formatArgs)
+{
+	return FormatString(format, 1024, formatArgs);
+}
+
+char* FormatString(const char* format, int maxLength, ...)
+{
+	va_list formatArgs;
+	va_start(formatArgs, maxLength);
+
+	auto stringBuffer = FormatString(format, maxLength, formatArgs);
+
+	va_end(formatArgs);
+
+	return stringBuffer;
+}
+
+char* FormatString(const char* format, ...)
+{
+	va_list formatArgs;
+	va_start(formatArgs, format);
+
+	auto stringBuffer = FormatString(format, formatArgs);
+
+	va_end(formatArgs);
+
+	return stringBuffer;
+}
+
+char* ToTitleCase(const char* subject)
+{
+	if (subject == NULL)
+	{
+		return NULL;
+	}
+	else if (String_Is_Empty(subject))
+	{
+		return strdup(subject);
+	}
+
+	auto titleCaseSubject = strdup(subject);
+
+	titleCaseSubject[0] = toupper(subject[0]);
+
+	return titleCaseSubject;
+}

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Strings.h>
+
 #include "ILuaApi.h"
 #include "LuaStateWrapper.h"
 
@@ -7,7 +9,6 @@ template<class T> class TypeApi : public ILuaApi
 {
 private:
 	const char* typeName;
-
 
 	int ReadRule(lua_State* lua)
 	{
@@ -30,8 +31,10 @@ private:
 protected:
 	TypeApi(const char* typeName) : typeName(typeName)
 	{
-		WithFunction("get$typeNameRule", &ReadRule, [](LuaFunctionInfo & i) -> {
-			i.WithDescription("")
+		auto titleCaseName = ToTitleCase(typeName);
+
+		WithFunction(FormatString("get%sNameRule", titleCaseName), &ReadRule, [](LuaFunctionInfo & i) -> {
+			i.WithDescription(FormatString("Set a rule for a given %s", titleCaseName))
 			  .WithParameter("ruleName", [](LuaVariableInfo& vi) -> {
 				vi.WithDescription("The name as it appears in RULES.INI")
 				  .WithType(LuaType::String)
@@ -42,8 +45,8 @@ protected:
 			  });
 		});
 
-		WithFunction("set$typeNameRule", &WriteRule, [](LuaFunctionInfo & i) -> {
-			i.WithDescription("")
+		WithFunction(FormatString("set%sNameRule", titleCaseName), &WriteRule, [](LuaFunctionInfo & i) -> {
+			i.WithDescription(FormatString("Get a rule for a given %s", titleCaseName))
 			  .WithParameter("ruleName", [](LuaVariableInfo& vi) -> {
 				vi.WithDescription("The name as it appears in RULES.INI")
 				  .WithType(LuaType::String)

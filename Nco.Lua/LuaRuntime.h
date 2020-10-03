@@ -50,4 +50,14 @@ public:
 	{
 		return apis;
 	};
+
+	LuaResult& ExecuteScript(const char* script)
+	{
+		return lua.ExecuteScript(script);
+	}
+
+	LuaResult& ExecuteFile(const char* filePath)
+	{
+		return lua.ExecuteFile(filePath);
+	}
 };

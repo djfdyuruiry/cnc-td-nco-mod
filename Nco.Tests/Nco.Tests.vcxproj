@@ -79,6 +79,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LuaRuntimeIntegrationTests.cpp" />
     <ClCompile Include="LuaStateWrapperIntegrationTests.cpp" />
     <ClCompile Include="LuaStateWrapperTests.cpp" />
     <ClCompile Include="StringUtilsTests.cpp" />

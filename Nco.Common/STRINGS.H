@@ -27,3 +27,13 @@ void Convert_String_To_Upper_Case(char* subject);
 char* Convert_String_To_Upper_Case(const char* subject);
 
 char** Parse_Csv_String(char* csvString, unsigned int entrySize, unsigned int* csvEntryCount);
+
+char* FormatString(const char* format, int maxLength, va_list formatArgs);
+
+char* FormatString(const char* format, va_list formatArgs);
+
+char* FormatString(const char* format, int maxLength, ...);
+
+char* FormatString(const char* format, ...);
+
+char* ToTitleCase(const char* subject);

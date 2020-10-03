@@ -212,6 +212,20 @@ namespace Unit
 					Assert::AreEqual("entry_2", result[2]);
 					Assert::AreEqual("entry_3", result[3]);
 				}
+
+				TEST_METHOD(When_FormatString_IsCalled_WithNonEmptyString_AndFormatArgs_ThenFormattedStringIsReturned)
+				{
+					auto result = FormatString("This should have %s and %d in it", "this", 294);
+
+					Assert::AreEqual("This should have this and 294 in it", result);
+				}
+
+				TEST_METHOD(When_ToTitleCase_IsCalled_WithNonEmptyString_ThenTitleCaseStringIsReturned)
+				{
+					auto result = ToTitleCase("tardis");
+
+					Assert::AreEqual("Tardis", result);
+				}
 			};
 		}
 	}
