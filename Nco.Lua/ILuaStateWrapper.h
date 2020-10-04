@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <map>
 #include <type_traits>
 #include <vector>
@@ -12,6 +13,35 @@
 class ILuaStateWrapper
 {
 private:
+	template<class T> LuaResultWithValue<T>& PullValue(int stackIndex)
+	{
+		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
+		{
+			return ReadString(stackIndex);
+		}
+		else if constexpr (std::is_same_v<T, int> || std::is_same_v<T, long>)
+		{
+			return ReadInteger(stackIndex);
+		}
+		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
+		{
+			return ReadDouble(stackIndex);
+		}
+		else if constexpr (std::is_same_v<T, bool>)
+		{
+			return ReadBool(stackIndex);
+		}
+		else
+		{
+			return LuaResultWithValue<void*>::BuildWithValue(NULL);
+		}
+	}
+
+	template<class T> LuaResultWithValue<T>& PullValue()
+	{
+		return PullValue(GetStackTop());
+	}
+
 	template<class T> void PushValue(T value)
 	{
 		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
@@ -37,19 +67,111 @@ private:
 	}
 
 protected:
+	virtual int GetStackTop() = 0;
+
+	virtual bool IsTable(int stackIndex) = 0;
+	virtual int GetTableSize(int stackIndex) = 0;
+
+	virtual const char* ToString(int stackIndex) = 0;
+	virtual const char* ToString() = 0;
+
 	virtual void SetIndex(int tableIndex, int index) = 0;
 	virtual void SetIndex(int tableIndex, const char* index) = 0;
+
+	virtual void IterateOverTable(int stackIndex, std::function<void (void)> iterateAction) = 0;
 
 public:
 	virtual LuaResultWithValue<int>& ReadInteger(int stackIndex) = 0;
 	virtual LuaResultWithValue<double>& ReadDouble(int stackIndex) = 0;
 	virtual LuaResultWithValue<bool>& ReadBool(int stackIndex) = 0;
-	virtual LuaResultWithValue<const char*> ReadString(int stackIndex) = 0;
+	virtual LuaResultWithValue<const char*>& ReadString(int stackIndex) = 0;
 
 	virtual LuaResultWithValue<int>& ReadInteger() = 0;
 	virtual LuaResultWithValue<double>& ReadDouble() = 0;
 	virtual LuaResultWithValue<bool>& ReadBool() = 0;
-	virtual LuaResultWithValue<const char*> ReadString() = 0;
+	virtual LuaResultWithValue<const char*>& ReadString() = 0;
+
+	template<class T> std::vector<T>& ReadArray(int stackIndex)
+	{
+		if (!IsTable(stackIndex))
+		{
+			return *new std::vector<T>();
+		}
+
+		auto& array = *new std::vector<T>(GetTableSize(stackIndex));
+		auto hasError = false;
+
+		IterateOverTable(stackIndex, [&]() {
+			if (hasError)
+			{
+				return;
+			}
+
+			auto& idxResult = ReadInteger(-1);
+			auto& valueResult = PullValue<T>(-2);
+
+			if (!idxResult.IsErrorResult() && !valueResult.IsErrorResult())
+			{
+				auto vectorIdx = idxResult.GetValue() - 1;
+
+				array[vectorIdx] = valueResult.GetValue();
+			}
+			else
+			{
+				hasError = true;
+			}
+
+			delete &idxResult;
+			delete &valueResult;
+		});
+
+		return array;
+	}
+
+	template<class T> std::vector<T>& ReadArray()
+	{
+		return ReadArray<T>(GetStackTop());
+	}
+
+	template<class T> std::map<const char*, T>& ReadObject(int stackIndex)
+	{
+		auto& object = *new std::map<const char*, T>();
+		auto hasError = false;
+
+		if (!IsTable(stackIndex))
+		{
+			return object;
+		}
+
+		IterateOverTable([]() {
+			if (hasError)
+			{
+				return;
+			}
+
+			auto& keyResult = ToString(-1);
+			auto& valueResult = PullValue(-2);
+
+			if (!keyResult.IsErrorResult() && !valueResult.IsErrorResult())
+			{
+				object[keyResult.GetValue()] = valueResult.GetValue();
+			}
+			else
+			{
+				hasError = true;
+			}
+
+			delete* keyResult;
+			delete* valueResult;
+		});
+
+		return object;
+	}
+
+	template<class T> std::map<const char*, T>& ReadObject()
+	{
+		return ReadObject<T>(GetStackTop());
+	}
 
 	virtual const char* GetLastError() = 0;
 
@@ -61,7 +183,7 @@ public:
 	virtual void WriteNil() = 0;
 	virtual void WriteTable(unsigned int expectedSize = 0) = 0;
 
-	template<class T> void WriteTable(const std::vector<T>& values)
+	template<class T> void WriteArray(const std::vector<T>& values)
 	{
 		WriteTable(values.size());
 
@@ -77,7 +199,7 @@ public:
 		}
 	}
 
-	template<class T> void WriteTable(const std::map<char*, T>& values)
+	template<class T> void WriteObject(const std::map<char*, T>& values)
 	{
 		lua_createtable(lua, 0, values.size());
 

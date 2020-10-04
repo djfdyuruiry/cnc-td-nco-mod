@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <vector>
 
 #include "ILuaStateWrapper.h"
@@ -21,6 +22,31 @@ private:
 	}
 
 protected:
+	int GetStackTop()
+	{
+		return lua_gettop(lua);
+	}
+
+	bool IsTable(int stackIndex)
+	{
+		return lua_istable(lua, stackIndex) == 1;
+	}
+
+	int GetTableSize(int stackIndex)
+	{
+		return lua_rawlen(lua, stackIndex);
+	}
+
+	const char* ToString(int stackIndex)
+	{
+		return lua_tostring(lua, stackIndex);
+	}
+
+	const char* ToString()
+	{
+		return lua_tostring(lua, GetStackTop());
+	}
+
 	void SetIndex(int tableIndex, int index)
 	{
 		lua_rawseti(lua, tableIndex, index);
@@ -29,6 +55,26 @@ protected:
 	void SetIndex(int tableIndex, const char* index)
 	{
 		lua_setfield(lua, tableIndex, index);
+	}
+
+	void IterateOverTable(int stackIndex, std::function<void (void)> iterateAction)
+	{
+		lua_pushvalue(lua, stackIndex);
+		lua_pushnil(lua);
+
+		while (lua_next(lua, -2))
+		{			
+			lua_pushvalue(lua, -2);
+			
+			if (iterateAction != NULL)
+			{
+				iterateAction();
+			}
+
+			lua_pop(lua, 2);
+		}
+
+		lua_pop(lua, 1);
 	}
 
 public:
@@ -73,7 +119,7 @@ public:
 		);
 	}
 
-	LuaResultWithValue<const char*> ReadString(int stackIndex)
+	LuaResultWithValue<const char*>& ReadString(int stackIndex)
 	{
 		if (!lua_isstring(lua, stackIndex))
 		{
@@ -99,7 +145,7 @@ public:
 		return ReadBool(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<const char*> ReadString()
+	LuaResultWithValue<const char*>& ReadString()
 	{
 		return ReadString(lua_gettop(lua));
 	}

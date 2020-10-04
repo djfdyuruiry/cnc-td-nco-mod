@@ -31,6 +31,9 @@ namespace Unit
 				TEST_METHOD_CLEANUP(TearDown)
 				{
 					lua_close(luaState);
+
+					luaState = NULL;
+
 					delete luaWrapper;
 				}
 
@@ -183,6 +186,23 @@ namespace Unit
 					Assert::AreEqual(true, result.IsErrorResult());
 				}
 
+				TEST_METHOD(When_ReadArray_IsCalled_Then_ArrayIsReadFromLua)
+				{
+					lua_createtable(luaState, 0, 2);
+
+					lua_pushnumber(luaState, 3.42);
+					lua_rawseti(luaState, -2, 1);
+					lua_pushnumber(luaState, 45.9);
+					lua_rawseti(luaState, -2, 2);
+
+					auto& arrayOut = luaWrapper->ReadArray<double>();
+
+					Assert::AreEqual((size_t)2, arrayOut.size());
+
+					Assert::AreEqual(3.42, arrayOut[0]);
+					Assert::AreEqual(45.9, arrayOut[1]);
+				}
+
 				TEST_METHOD(When_GetLastError_IsCalled_Then_ErrorMessageIsReturned)
 				{
 					luaL_dostring(luaState, "££a$$ = £R£RRTabv:00");
@@ -228,11 +248,29 @@ namespace Unit
 					Assert::AreEqual("Over and out", val);
 				}
 
-				TEST_METHOD(When_WriteTable_IsCalled_WithVector_Then_ArrayTableIsPushedOntoTheStack)
+				TEST_METHOD(When_WriteArray_IsCalled_WithVector_Then_ArrayTableIsPushedOntoTheStack)
 				{
-					auto& table = *new std::vector<int>{ 3, 54, 6, 234, 156 };
+					auto& table = *new std::vector<int>{ 3, 234, 156 };
 
-					luaWrapper->WriteTable(table);
+					luaWrapper->WriteArray(table);
+
+					Assert::AreEqual(true, lua_istable(luaState, lua_gettop(luaState)));
+					Assert::AreEqual(3, (int)lua_rawlen(luaState, lua_gettop(luaState)));
+
+					lua_pushvalue(luaState, lua_gettop(luaState));
+					lua_pushnil(luaState);
+
+					while (lua_next(luaState, -2))
+					{
+						lua_pushvalue(luaState, -2);
+
+						auto idx = lua_tointeger(luaState, -1);
+						auto value = lua_tointeger(luaState, -2);
+
+						Assert::AreEqual(table[idx - 1], (int)value);
+
+						lua_pop(luaState, 2);
+					}
 				}
 			};
 		}

@@ -1,7 +1,8 @@
 #pragma once
 
-#include <lua.hpp>
 #include <stdlib.h>
+
+#include <lua.hpp>
 
 class LuaResult
 {
