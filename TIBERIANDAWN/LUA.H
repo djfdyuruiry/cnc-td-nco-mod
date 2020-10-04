@@ -2,7 +2,8 @@
 
 #include <vector>
 
-#include "lua.hpp"
+#include <lua.hpp>
+#include <ILuaRuntime.h>
 
 typedef struct LuaScripts {
 	char** ScriptFiles;
@@ -41,3 +42,5 @@ void Push_String_Vector_Onto_Lua_Stack(std::vector<const char*>& stringArray);
 void Clear_Lua_Stack();
 
 void Shutdown_Lua();
+
+ILuaRuntime& LuaRuntime();

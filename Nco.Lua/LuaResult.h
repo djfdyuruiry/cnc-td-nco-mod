@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include <lua.hpp>
+#include <strings.h>
 
 class LuaResult
 {
@@ -35,7 +36,7 @@ public:
 
 	bool IsErrorResult()
 	{
-		return error != NULL;
+		return !String_Is_Empty(error);
 	}
 
 	const char* GetError()

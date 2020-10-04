@@ -27,6 +27,7 @@
     <ClInclude Include="LuaResult.h" />
     <ClInclude Include="LuaResultWithValue.h" />
     <ClInclude Include="LuaRuntime.h" />
+    <ClInclude Include="LuaStateFactory.h" />
     <ClInclude Include="LuaStateWrapper.h" />
     <ClInclude Include="LuaType.h" />
     <ClInclude Include="LuaVariableInfo.h" />

@@ -12,75 +12,26 @@
 
 class ILuaStateWrapper
 {
-private:
-	template<class T> LuaResultWithValue<T>& PullValue(int stackIndex)
-	{
-		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
-		{
-			return ReadString(stackIndex);
-		}
-		else if constexpr (std::is_same_v<T, int> || std::is_same_v<T, long>)
-		{
-			return ReadInteger(stackIndex);
-		}
-		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
-		{
-			return ReadDouble(stackIndex);
-		}
-		else if constexpr (std::is_same_v<T, bool>)
-		{
-			return ReadBool(stackIndex);
-		}
-		else
-		{
-			return LuaResultWithValue<void*>::BuildWithValue(NULL);
-		}
-	}
-
-	template<class T> LuaResultWithValue<T>& PullValue()
-	{
-		return PullValue(GetStackTop());
-	}
-
-	template<class T> void PushValue(T value)
-	{
-		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
-		{
-			WriteString(value);
-		}
-		else if constexpr (std::is_same_v<T, int> || std::is_same_v<T, long>)
-		{
-			WriteInteger(value);
-		}
-		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
-		{
-			WriteDouble(value);
-		}
-		else if constexpr (std::is_same_v<T, bool>)
-		{
-			WriteBool(value);
-		}
-		else
-		{
-			WriteNil();
-		}
-	}
-
 protected:
-	virtual int GetStackTop() = 0;
-
-	virtual bool IsTable(int stackIndex) = 0;
-	virtual int GetTableSize(int stackIndex) = 0;
-
-	virtual const char* ToString(int stackIndex) = 0;
-	virtual const char* ToString() = 0;
-
 	virtual void SetIndex(int tableIndex, int index) = 0;
 	virtual void SetIndex(int tableIndex, const char* index) = 0;
 
-	virtual void IterateOverTable(int stackIndex, std::function<void (void)> iterateAction) = 0;
-
 public:
+	virtual int GetStackTop() = 0;
+	virtual const char* GetLastError() = 0;
+
+	virtual const char* ToString(int stackIndex) = 0;
+    virtual const char* ToString() = 0;
+
+	virtual bool IsTable(int stackIndex) = 0;
+	virtual bool IsBool(int stackIndex) = 0;
+
+	virtual bool IsTable() = 0;
+	virtual bool IsBool() = 0;
+
+	virtual int GetTableSize(int stackIndex) = 0;
+	virtual void IterateOverTable(int stackIndex, std::function<void(void)> iterateAction) = 0;
+
 	virtual LuaResultWithValue<int>& ReadInteger(int stackIndex) = 0;
 	virtual LuaResultWithValue<double>& ReadDouble(int stackIndex) = 0;
 	virtual LuaResultWithValue<bool>& ReadBool(int stackIndex) = 0;
@@ -173,7 +124,34 @@ public:
 		return ReadObject<T>(GetStackTop());
 	}
 
-	virtual const char* GetLastError() = 0;
+	template<class T> LuaResultWithValue<T>& PullValue(int stackIndex)
+	{
+		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
+		{
+			return ReadString(stackIndex);
+		}
+		else if constexpr (std::is_same_v<T, int> || std::is_same_v<T, long>)
+		{
+			return ReadInteger(stackIndex);
+		}
+		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
+		{
+			return ReadDouble(stackIndex);
+		}
+		else if constexpr (std::is_same_v<T, bool>)
+		{
+			return ReadBool(stackIndex);
+		}
+		else
+		{
+			return LuaResultWithValue<void*>::BuildWithValue(NULL);
+		}
+	}
+
+	template<class T> LuaResultWithValue<T>& PullValue()
+	{
+		return PullValue(GetStackTop());
+	}
 
 	virtual void WriteInteger(int value) = 0;
 	virtual void WriteDouble(double value) = 0;
@@ -208,6 +186,30 @@ public:
 			PushValue<T>(v);
 
 			SetIndex(-2, k);
+		}
+	}
+
+	template<class T> void PushValue(T value)
+	{
+		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
+		{
+			WriteString(value);
+		}
+		else if constexpr (std::is_same_v<T, int> || std::is_same_v<T, long>)
+		{
+			WriteInteger(value);
+		}
+		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
+		{
+			WriteDouble(value);
+		}
+		else if constexpr (std::is_same_v<T, bool>)
+		{
+			WriteBool(value);
+		}
+		else
+		{
+			WriteNil();
 		}
 	}
 

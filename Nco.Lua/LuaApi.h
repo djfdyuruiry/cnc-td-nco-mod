@@ -24,6 +24,18 @@ public:
 		return *(new LuaApi());
 	}
 
+	~LuaApi()
+	{
+		delete name;
+		delete description;
+
+		for (auto function : functions) {
+			delete function;
+		}
+
+		delete &functions;
+	}
+
 	ILuaApi& WithName(const char* name)
 	{
 		this->name = name;

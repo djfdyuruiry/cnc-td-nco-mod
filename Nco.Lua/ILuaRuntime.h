@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "ILuaApi.h"
+#include "ILuaStateWrapper.h"
 #include "LuaResult.h"
 
 typedef void (*LuaApiInitialiser)(ILuaApi&);
@@ -17,4 +18,6 @@ public:
 
 	virtual LuaResult& ExecuteScript(const char* script) = 0;
 	virtual LuaResult& ExecuteFile(const char* filePath) = 0;
+
+	virtual ILuaStateWrapper& GetState() = 0;
 };

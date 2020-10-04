@@ -1,4 +1,6 @@
+#include <LuaStateFactory.h>
 #include <LuaStateWrapper.h>
+#include <LuaRuntime.h>
 
 #include "lua.h"
 #include "lua_api.h"
@@ -7,6 +9,7 @@
 
 static lua_State* LUA = NULL;
 static ILuaStateWrapper* LUA_WRAPPER = NULL;
+static ILuaRuntime* LUA_RUNTIME = NULL;
 
 static bool Load_Lua_Scripts()
 {
@@ -48,25 +51,6 @@ static bool Load_Lua_Components()
     return true;
 }
 
-static bool Set_Lua_Package_Path()
-{
-    auto modPath = Get_Mod_Data_Path();
-    auto setPackagePathScript = Allocate_String(MAX_PATH + 64);
-
-    sprintf(setPackagePathScript, "package.path = [[%s\\lib\\?.lua;]] .. package.path", modPath);
-
-    auto setPackagePathResult = Execute_Lua_Script(setPackagePathScript);
-
-    if (setPackagePathResult)
-    {
-        Log_Debug("Lua package path updated");
-    }
-
-    delete setPackagePathScript;
-
-    return setPackagePathResult;
-}
-
 bool Initialise_Lua()
 {
     if (LUA != NULL)
@@ -77,15 +61,13 @@ bool Initialise_Lua()
 
     Log_Info("Attempting to initialise %s", LUA_VERSION);
 
-    LUA = luaL_newstate();
-    luaL_openlibs(LUA);
-
+    LUA = LuaStateFactory::Build(Get_Mod_Data_Path());
     LUA_WRAPPER = &(LuaStateWrapper::Build(LUA));
+    LUA_RUNTIME = &(LuaRuntime::Build(*LUA_WRAPPER));
 
     Log_Info("%s Initialised", LUA_VERSION);
 
-    return Set_Lua_Package_Path()
-        && Load_Lua_Components()
+    return Load_Lua_Components()
         && Load_Lua_Scripts();
 }
 
@@ -93,8 +75,7 @@ void Register_Lua_Function(const char* name, lua_CFunction function)
 {
     Log_Debug("Registering Lua C function: %s", name);
 
-    lua_pushcfunction(LUA, function);
-    lua_setglobal(LUA, name);
+    LUA_WRAPPER->WriteFunction(name, function);
 }
 
 bool Execute_Lua_Script(char* luaScript, bool beQuiet)
@@ -104,9 +85,10 @@ bool Execute_Lua_Script(char* luaScript, bool beQuiet)
         Log_Trace("Executing Lua snippet: \n%s\n", luaScript);
     }
 
-    auto result = LUA_WRAPPER->ExecuteScript(luaScript);
+    auto& result = LUA_WRAPPER->ExecuteScript(luaScript);
+    auto executionOK = !result.IsErrorResult();
 
-    if (result.IsErrorResult())
+    if (!executionOK)
     {
         auto errorMessageFormat = "Error executing Lua snippet: \n<<\n%s\n>>\n\n%s";
 
@@ -120,7 +102,9 @@ bool Execute_Lua_Script(char* luaScript, bool beQuiet)
         }
     }
 
-    return !result.IsErrorResult();
+    delete& result;
+
+    return executionOK;
 }
 
 bool Execute_Lua_Script(const char* luaScript, bool beQuiet)
@@ -154,7 +138,8 @@ bool Execute_Lua_File(char* scriptFile)
 {
     Log_Info("Attempting to load Lua script: %s", scriptFile);
 
-    auto executionOK = !luaL_dofile(LUA, scriptFile);
+    auto& result = LUA_RUNTIME->ExecuteFile(scriptFile);
+    auto executionOK = !result.IsErrorResult();
 
     if (executionOK)
     {
@@ -162,9 +147,10 @@ bool Execute_Lua_File(char* scriptFile)
     }
     else
     {
-        auto luaError = lua_tostring(LUA, -1);
-        Show_Error("Error loading Lua script: %s\n\n%s", scriptFile, luaError);
+        Show_Error("Error loading Lua script: %s\n\n%s", scriptFile, result.GetError());
     }
+
+    delete &result;
 
     return executionOK;
 }
@@ -233,10 +219,15 @@ void Clear_Lua_Stack()
 
 void Shutdown_Lua()
 {
-    if (LUA != NULL)
+    if (LUA_RUNTIME != NULL)
     {
         Log_Info("Shutting down %s instance", LUA_VERSION);
 
-        lua_close(LUA);
+        delete LUA_RUNTIME;
     }
+}
+
+ILuaRuntime& LuaRuntime()
+{
+    return *LUA_RUNTIME;
 }

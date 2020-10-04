@@ -25,6 +25,17 @@ public:
 		return *(new LuaRuntime(lua));
 	}
 
+	~LuaRuntime()
+	{
+		for (auto api : apis) {
+			delete api;
+		}
+
+		delete &apis;
+
+		delete &lua;
+	}
+
 	ILuaRuntime& RegisterApi(ILuaApi& api)
 	{
 		for (auto function : api.GetFunctions())
@@ -69,5 +80,10 @@ public:
 	LuaResult& ExecuteFile(const char* filePath)
 	{
 		return lua.ExecuteFile(filePath);
+	}
+
+	ILuaStateWrapper& GetState()
+	{
+		return lua;
 	}
 };
