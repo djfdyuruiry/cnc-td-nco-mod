@@ -7,17 +7,30 @@
 class LuaResult
 {
 private:
-	const char* error;
+	char* error;
 
 protected:
-	LuaResult(const char* error = NULL) : error(error)
+	LuaResult(char* error = NULL) : error(error)
 	{
 	}
 
 public:
-	static LuaResult& Build(const char* error = NULL)
+	static LuaResult& Build(char* error = NULL)
 	{
 		return *(new LuaResult(error));
+	}
+
+	static LuaResult& Build(const char* error = NULL)
+	{
+		return Build(strdup(error));
+	}
+
+	~LuaResult()
+	{
+		if (error != NULL)
+		{
+			delete error;
+		}
 	}
 
 	bool IsErrorResult()

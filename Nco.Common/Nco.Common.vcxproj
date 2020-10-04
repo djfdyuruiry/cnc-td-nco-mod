@@ -19,13 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="lib.cpp" />
     <ClCompile Include="LOGGER.cpp" />
     <ClCompile Include="STRINGS.cpp" />
     <ClCompile Include="UTILS.CPP" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileUtils.h" />
     <ClInclude Include="LOGGER.H" />
     <ClInclude Include="STRINGS.H" />
+    <ClInclude Include="TypeUtils.h" />
     <ClInclude Include="UTILS.H" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

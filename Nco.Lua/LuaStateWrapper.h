@@ -87,7 +87,7 @@ public:
 	{
 		if (!lua_isinteger(lua, stackIndex))
 		{
-			return LuaResultWithValue<int>::BuildWithError(0, "Value is not an integer");
+			return LuaResultWithValue<int>::BuildWithError("Value is not an integer");
 		}
 
 		return LuaResultWithValue<int>::BuildWithValue(
@@ -99,7 +99,7 @@ public:
 	{
 		if (!lua_isnumber(lua, stackIndex))
 		{
-			return LuaResultWithValue<double>::BuildWithError(0.0, "Value is not a double");
+			return LuaResultWithValue<double>::BuildWithError("Value is not a double");
 		}
 
 		return LuaResultWithValue<double>::BuildWithValue(
@@ -111,7 +111,7 @@ public:
 	{
 		if (!lua_isboolean(lua, stackIndex))
 		{
-			return LuaResultWithValue<bool>::BuildWithError(false, "Value is not a boolean");
+			return LuaResultWithValue<bool>::BuildWithError("Value is not a boolean");
 		}
 
 		return LuaResultWithValue<bool>::BuildWithValue(
@@ -123,13 +123,14 @@ public:
 	{
 		if (!lua_isstring(lua, stackIndex))
 		{
-			return LuaResultWithValue<const char*>::BuildWithError(NULL, "Value is not a string");
+			return LuaResultWithValue<const char*>::BuildWithError("Value is not a string");
 		}
 
 		return LuaResultWithValue<const char*>::BuildWithValue(
 			luaL_checkstring(lua, stackIndex)
 		);
 	}
+
 	LuaResultWithValue<int>& ReadInteger()
 	{
 		return ReadInteger(lua_gettop(lua));

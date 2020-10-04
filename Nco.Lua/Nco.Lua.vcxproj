@@ -34,7 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaType.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="lib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nco.Common\Nco.Common.vcxproj">

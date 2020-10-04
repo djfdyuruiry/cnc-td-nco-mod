@@ -2,6 +2,9 @@
 
 #include <vector>
 
+#include <FileUtils.h>
+#include <strings.h>
+
 #include "ILuaRuntime.h"
 #include "ILuaStateWrapper.h"
 #include "LuaApi.h"
@@ -53,6 +56,13 @@ public:
 
 	LuaResult& ExecuteScript(const char* script)
 	{
+		if (!FileUtils::IsFile(script))
+		{
+			return LuaResult::Build(
+				FormatString("Lua script file was not found: '%s'", script)
+			);
+		}
+
 		return lua.ExecuteScript(script);
 	}
 

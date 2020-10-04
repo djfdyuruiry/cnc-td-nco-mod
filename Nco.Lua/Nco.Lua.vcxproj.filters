@@ -53,10 +53,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="LuaType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LuaType.cpp">
+    <ClCompile Include="lib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
