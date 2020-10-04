@@ -14,19 +14,15 @@ static ILuaRuntime* LUA_RUNTIME = NULL;
 static bool Load_Lua_Scripts()
 {
     auto executionOk = true;
-    auto scripts = Rules_Get_Lua_Scripts();
+    auto& scripts = Rules_Get_Lua_Scripts();
 
-    for (auto i = 0u; i < scripts.ScriptFileCount; i++)
-    {
-        auto scriptFile = scripts.ScriptFiles[i];
+    for (auto scriptFile : scripts) {
         auto scriptFilePath = Build_Mod_Data_File_Path(scriptFile);
 
         if (!Execute_Lua_File(scriptFilePath))
         {
             executionOk = false;
         }
-
-        delete scriptFilePath;
     }
 
     return executionOk;
@@ -67,18 +63,10 @@ bool Initialise_Lua()
 
     Log_Info("%s Initialised", LUA_VERSION);
 
-    return Load_Lua_Components()
-        && Load_Lua_Scripts();
+    return Load_Lua_Components() && Load_Lua_Scripts();
 }
 
-void Register_Lua_Function(const char* name, lua_CFunction function)
-{
-    Log_Debug("Registering Lua C function: %s", name);
-
-    LUA_WRAPPER->WriteFunction(name, function);
-}
-
-bool Execute_Lua_Script(char* luaScript, bool beQuiet)
+bool Execute_Lua_Script(const char* luaScript, bool beQuiet)
 {
     if (!beQuiet)
     {
@@ -107,34 +95,12 @@ bool Execute_Lua_Script(char* luaScript, bool beQuiet)
     return executionOK;
 }
 
-bool Execute_Lua_Script(const char* luaScript, bool beQuiet)
-{
-    auto luaScriptStr = strdup(luaScript);
-
-    auto result = Execute_Lua_Script(luaScriptStr, beQuiet);
-
-    delete luaScriptStr;
-
-    return result;
-}
-
 bool Execute_Lua_Script(char* luaScript)
 {
     return Execute_Lua_Script(luaScript, false);
 }
 
-bool Execute_Lua_Script(const char* luaScript)
-{
-    auto luaScriptStr = strdup(luaScript);
-
-    auto result = Execute_Lua_Script(luaScriptStr, false);
-
-    delete luaScriptStr;
-
-    return result;
-}
-
-bool Execute_Lua_File(char* scriptFile)
+bool Execute_Lua_File(const char* scriptFile)
 {
     Log_Info("Attempting to load Lua script: %s", scriptFile);
 
@@ -155,79 +121,24 @@ bool Execute_Lua_File(char* scriptFile)
     return executionOK;
 }
 
-
-bool Execute_Lua_File(const char* scriptFile)
-{
-    auto scriptFileStr = strdup(scriptFile);
-
-    auto result = Execute_Lua_File(scriptFileStr);
-
-    delete scriptFileStr;
-
-    return result;
-}
-
-const char * Get_Lua_Value_As_String(int index)
-{
-    if (lua_isboolean(LUA, index))
-    {
-        return Convert_Boolean_To_String(lua_toboolean(LUA, index));
-    }
-
-    return lua_tostring(LUA, index);
-}
-
-const char* Get_Lua_Value_Type(int index)
-{
-    return lua_typename(LUA, lua_type(LUA, index));
-}
-
-void Push_String_Array_Onto_Lua_Stack(const char** stringArray, unsigned int arrayLength)
-{
-    lua_createtable(LUA, 0, arrayLength);
-
-    for (auto i = 0u; i < arrayLength; i++)
-    {
-        Log_Trace("Pushing string onto Lua table: %s", stringArray[i]);
-
-        lua_pushstring(LUA, stringArray[i]);
-        lua_rawseti(LUA, -2, i + 1);
-    }
-}
-
-void Push_String_Vector_Onto_Lua_Stack(std::vector<const char*>& stringArray)
-{
-    lua_createtable(LUA, 0, stringArray.size());
-
-    auto idx = 1;
-
-    for (auto str : stringArray)
-    {
-        Log_Trace("Pushing string onto Lua table: %s", str);
-
-        lua_pushstring(LUA, str);
-        lua_rawseti(LUA, -2, idx);
-
-        idx++;
-    }
-}
-
-void Clear_Lua_Stack()
-{
-    lua_settop(LUA, 0);
-}
-
 void Shutdown_Lua()
 {
-    if (LUA_RUNTIME != NULL)
+    if (LUA_RUNTIME == NULL)
     {
-        Log_Info("Shutting down %s instance", LUA_VERSION);
-
-        delete LUA_RUNTIME;
+        return;
     }
+
+    Log_Info("Shutting down %s instance", LUA_VERSION);
+
+    delete LUA_RUNTIME;
 }
 
 ILuaRuntime& LuaRuntime()
 {
+    if (LUA_RUNTIME == NULL)
+    {
+        Initialise_Lua();
+    }
+
     return *LUA_RUNTIME;
 }

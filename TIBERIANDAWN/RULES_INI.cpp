@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "rules_ini.h"
 #include "rules_ini_nco.h"
 #include "RulesIni.h"
@@ -19,7 +21,7 @@ static char* DEFAULT_RULES_INI_BUFFER = NULL;
 static bool RULES_VALID = true;
 static bool LUA_IS_ENABLED = false;
 static bool LUA_CONSOLE_IS_ENABLED = false;
-static LuaScripts RULES_LUA_SCRIPTS;
+static std::vector<const char*>* RULES_LUA_SCRIPTS = NULL;
 static int GAME_TICK_INTERVAL_IN_MS;
 
 const char* TRUE_STRING = "TRUE";
@@ -33,10 +35,7 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 {
 	Log_Info("Reading Lua scripts from rules ini");
 
-	RULES_LUA_SCRIPTS = {
-		NULL,
-		0
-	};
+	RULES_LUA_SCRIPTS = new std::vector<const char*>();
 
 	auto onScenarioLoadCsv = RULE_READER->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE);
 
@@ -45,11 +44,17 @@ static void Read_Lua_Scripts_From_Rules_Ini()
 		return;
 	}
 
-	RULES_LUA_SCRIPTS.ScriptFiles = Parse_Csv_String(
+	auto scriptFileCount = 0u;
+	auto scriptFiles = Parse_Csv_String(
 		onScenarioLoadCsv,
 		MAX_PATH,
-		&RULES_LUA_SCRIPTS.ScriptFileCount
+		&scriptFileCount
 	);
+
+	for (auto i = 0u; i < scriptFileCount; i++)
+	{
+		RULES_LUA_SCRIPTS->push_back(scriptFiles[i]);
+	}
 }
 
 static void Read_Log_Settings_From_Rules_Ini()
@@ -228,11 +233,11 @@ bool Lua_Console_Is_Enabled()
 	return LUA_CONSOLE_IS_ENABLED;
 }
 
-LuaScripts Rules_Get_Lua_Scripts()
+std::vector<const char*>& Rules_Get_Lua_Scripts()
 {
 	Ensure_Rules_Ini_Is_Loaded();
 
-	return RULES_LUA_SCRIPTS;
+	return *RULES_LUA_SCRIPTS;
 }
 
 int Rules_Get_Game_Tick_Interval_In_Ms()

@@ -1,193 +1,175 @@
 #include "function.h"
 
-static void Push_Rules_Section_Table_Onto_Lua_Stack(lua_State* lua, IRulesIniSection& section)
-{
-    std::vector<CacheKey>& sectionKeys = section.GetRuleKeys();
-
-    lua_createtable(lua, 0, sectionKeys.size());
-
-    auto idx = 1;
-
-    for (auto key : sectionKeys)
-    {
-        RulesIniRule& rule = section[key];
-
-        lua_createtable(lua, 0, sectionKeys.size());
-        
-        lua_pushstring(lua, rule.GetName());
-        
-        lua_rawseti(lua, -2, idx);
-
-        idx++;
-    }
-}
-
 static void Read_Object_Names(
-    lua_State* lua,
     char first,
     char count,
     void* toStringFunctionPtr
 )
 {
     auto toStringFunction = (char* (*)(char, bool))toStringFunctionPtr;
-
-    lua_createtable(lua, 0, count);
+    auto &vector = std::vector<const char*>();
 
     for (char i = first; i < count; i++)
     {
         auto name = toStringFunction(i, false);
 
-        Log_Trace("Pushing object name onto Lua table: %s", name);
-
-        lua_pushstring(lua, name);
-        lua_rawseti(lua, -2, i + 1);
+        vector.push_back(name);
     }
+
+    LuaRuntime().GetState().WriteArray(vector);
 }
 
-static int Lua_Get_Infantry_Types(lua_State* lua)
+static int Lua_Get_Infantry_Types(lua_State* _)
 {
     InitialiseModsIfRequired();
 
-    Read_Object_Names(lua, INFANTRY_FIRST, Read_Infantry_Count(), &(Infantry_Type_To_String));
+    Read_Object_Names(INFANTRY_FIRST, Read_Infantry_Count(), &(Infantry_Type_To_String));
 
     return 1;
 }
 
-static int Lua_Get_Unit_Types(lua_State* lua)
+static int Lua_Get_Unit_Types(lua_State* _)
 {
     InitialiseModsIfRequired();
 
-    Read_Object_Names(lua, UNIT_FIRST, Read_Unit_Count(), &(Unit_Type_To_String));
+    Read_Object_Names(UNIT_FIRST, Read_Unit_Count(), &(Unit_Type_To_String));
 
     return 1;
 }
 
-static int Lua_Get_Aircraft_Types(lua_State* lua)
+static int Lua_Get_Aircraft_Types(lua_State* _)
 {
-    Read_Object_Names(lua, AIRCRAFT_FIRST, Read_Aircraft_Count(), &(Aircraft_Type_To_String));
+    Read_Object_Names(AIRCRAFT_FIRST, Read_Aircraft_Count(), &(Aircraft_Type_To_String));
 
     return 1;
 }
 
-static int Lua_Get_Building_Types(lua_State* lua)
+static int Lua_Get_Building_Types(lua_State* _)
 {
-    Read_Object_Names(lua, STRUCT_FIRST, Read_Building_Count(), &(Structure_Type_To_String));
+    Read_Object_Names(STRUCT_FIRST, Read_Building_Count(), &(Structure_Type_To_String));
 
     return 1;
 }
 
-static int Lua_Get_Warhead_Rule_Names(lua_State* lua)
+static int Lua_Get_Warhead_Rule_Names(lua_State* _)
 {
     std::vector<const char*>& warheadRules = GetRulesInfo()
         .GetWarheadRules()
         .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(warheadRules);
+    LuaRuntime().GetState().WriteArray(warheadRules);
 
     return 1;
 }
 
-static int Lua_Get_Bullet_Rule_Names(lua_State* lua)
+static int Lua_Get_Bullet_Rule_Names(lua_State* _)
 {
     std::vector<const char*>& bulletRules = GetRulesInfo()
         .GetBulletRules()
         .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(bulletRules);
+    LuaRuntime().GetState().WriteArray(bulletRules);
 
     return 1;
 }
 
-static int Lua_Get_Weapon_Rule_Names(lua_State* lua)
+static int Lua_Get_Weapon_Rule_Names(lua_State* _)
 {
     std::vector<const char*>& weaponRules = GetRulesInfo()
         .GetWeaponRules()
         .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(weaponRules);
+    LuaRuntime().GetState().WriteArray(weaponRules);
 
     return 1;
 }
 
-static int Lua_Get_Game_Rule_Names(lua_State* lua)
+static int Lua_Get_Game_Rule_Names(lua_State* _)
 {
     std::vector<const char*>& gameRules = GetRulesInfo()
         .GetGameRules()
         .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(gameRules);
+    LuaRuntime().GetState().WriteArray(gameRules);
 
     return 1;
 }
 
-static int Lua_Get_Infantry_Rule_Names(lua_State* lua)
+static int Lua_Get_Infantry_Rule_Names(lua_State* _)
 {
     std::vector<const char*>& infantryRules = GetRulesInfo()
         .GetInfantryRules()
         .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(infantryRules);
+    LuaRuntime().GetState().WriteArray(infantryRules);
 
     return 1;
 }
 
-static int Lua_Get_Unit_Rule_Names(lua_State* lua)
+static int Lua_Get_Unit_Rule_Names(lua_State* _)
 {
     std::vector<const char*>& unitRules = GetRulesInfo()
         .GetUnitRules()
         .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(unitRules);
+    LuaRuntime().GetState().WriteArray(unitRules);
 
     return 1;
 }
 
-static int Lua_Get_Aircraft_Rule_Names(lua_State* lua)
+static int Lua_Get_Aircraft_Rule_Names(lua_State* _)
 {
     std::vector<const char*>& aircraftRules = GetRulesInfo()
         .GetAircraftRules()
         .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(aircraftRules);
+    LuaRuntime().GetState().WriteArray(aircraftRules);
 
     return 1;
 }
 
-static int Lua_Get_Building_Rule_Names(lua_State* lua)
+static int Lua_Get_Building_Rule_Names(lua_State* _)
 {
     std::vector<const char*>& buildingRules = GetRulesInfo()
         .GetBuildingRules()
         .GetRuleNames();
 
-    Push_String_Vector_Onto_Lua_Stack(buildingRules);
+    LuaRuntime().GetState().WriteArray(buildingRules);
 
     return 1;
 }
 
-static int Lua_Get_Warhead_Types(lua_State* lua)
+static int Lua_Get_Warhead_Types(lua_State* _)
 {
-    Read_Object_Names(lua, WARHEAD_FIRST, Read_Warhead_Count(), &(Warhead_Type_To_String));
+    Read_Object_Names(WARHEAD_FIRST, Read_Warhead_Count(), &(Warhead_Type_To_String));
 
     return 1;
 }
 
-static int Lua_Get_Bullet_Types(lua_State* lua)
+static int Lua_Get_Bullet_Types(lua_State* _)
 {
-    Read_Object_Names(lua, BULLET_SNIPER, Read_Bullet_Count(), &(Bullet_Type_To_String));
+    Read_Object_Names(BULLET_SNIPER, Read_Bullet_Count(), &(Bullet_Type_To_String));
 
     return 1;
 }
 
-static int Lua_Get_Weapon_Types(lua_State* lua)
+static int Lua_Get_Weapon_Types(lua_State* _)
 {
-    Read_Object_Names(lua, WEAPON_FIRST, Read_Weapon_Count(), &(Weapon_Type_To_String));
+    Read_Object_Names(WEAPON_FIRST, Read_Weapon_Count(), &(Weapon_Type_To_String));
 
     return 1;
 }
 
-static int Lua_Get_Event_Names(lua_State* lua)
+static int Lua_Get_Event_Names(lua_State* _)
 {
-    Push_String_Array_Onto_Lua_Stack(LUA_EVENTS, LUA_EVENT_COUNT);
+    auto& events = std::vector<const char*>();
+
+    for (auto i = 0; i < LUA_EVENT_COUNT; i++)
+    {
+        events.push_back(LUA_EVENTS[i]);
+    }
+
+    LuaRuntime().GetState().WriteArray(events);
 
     return 1;
 }

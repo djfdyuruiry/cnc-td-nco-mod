@@ -1,6 +1,8 @@
 #pragma once
+#include <vector>
 
 #include <logger.h>
+
 #include "lua.h"
 #include "IRulesIni.h"
 #include "IRulesIniReader.h"
@@ -50,7 +52,7 @@ bool Lua_Is_Enabled();
 
 bool Lua_Console_Is_Enabled();
 
-LuaScripts Rules_Get_Lua_Scripts();
+std::vector<const char*>& Rules_Get_Lua_Scripts();
 
 int Rules_Get_Game_Tick_Interval_In_Ms();
 

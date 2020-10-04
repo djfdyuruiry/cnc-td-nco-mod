@@ -3,7 +3,8 @@
 #include <malloc.h>
 #include <vector>
 
-#include "lua.h"
+#include <ILuaStateWrapper.h>
+
 #include "Optional.h"
 #include "RulesIniTypes.h"
 #include "RULES_CACHE_KEY.h"
@@ -87,7 +88,7 @@ private:
 		}
 	}
 
-	void PushRuleValueOntoLuaState(lua_State* lua, Optional& ruleValue)
+	void PushRuleValueOntoLuaState(ILuaStateWrapper& luaState, Optional& ruleValue)
 	{
 		if (
 			type == INT_RULE
@@ -99,31 +100,31 @@ private:
 			|| type == BULLET_RULE
 		)
 		{
-			lua_pushinteger(lua, ruleValue.Get<int>());
+			luaState.PushValue(ruleValue.Get<int>());
 		}
 		else if (type == BOOL_RULE)
 		{
-			lua_pushboolean(lua, ruleValue.Get<bool>());
+			luaState.PushValue(ruleValue.Get<bool>());
 		}
 		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
 		{
-			lua_pushinteger(lua, ruleValue.Get<unsigned int>());
+			luaState.PushValue(ruleValue.Get<unsigned int>());
 		}
 		else if (type == DOUBLE_RULE || type == FIXED_RULE)
 		{
-			lua_pushnumber(lua, ruleValue.Get<double>());
+			luaState.PushValue(ruleValue.Get<double>());
 		}
 		else if (type == PREREQ_RULE)
 		{
-			lua_pushinteger(lua, ruleValue.Get<long>());
+			luaState.PushValue(ruleValue.Get<long>());
 		}
 		else if (type == STRING_RULE)
 		{
-			lua_pushstring(lua, ruleValue.Get<char*>());
+			luaState.PushValue(ruleValue.Get<char*>());
 		}
 		else
 		{
-			lua_pushnil(lua);
+			luaState.WriteNil();
 		}
 	}
 
@@ -374,27 +375,27 @@ public:
 		return stringKey;
 	}
 
-	void PushDefaultValueOntoLuaState(lua_State* lua)
+	void PushDefaultValueOntoLuaState(ILuaStateWrapper& luaState)
 	{
-		PushRuleValueOntoLuaState(lua, defaultValue);
+		PushRuleValueOntoLuaState(luaState, defaultValue);
 	}
 
-	void PushValueOntoLuaState(lua_State* lua)
+	void PushValueOntoLuaState(ILuaStateWrapper& luaState)
 	{
-		PushRuleValueOntoLuaState(lua, value);
+		PushRuleValueOntoLuaState(luaState, value);
 	}
 
-	bool SetValueFromLuaState(lua_State* lua, int index)
+	bool SetValueFromLuaState(ILuaStateWrapper& luaState, int index)
 	{
-		if (lua_isnil(lua, index))
+		if (luaState.IsNil(index))
 		{
-			luaL_error(lua, "Value for rule %s must not be nil", GetStringKey());
+			luaState.RaiseError("Value for rule %s must not be nil", GetStringKey());
 			return false;
 		}
 
-		if (type != BOOL_RULE && !lua_isnumber(lua, index))
+		if (type != BOOL_RULE && !luaState.IsInt(index))
 		{
-			luaL_error(lua, "Value for rule %s must be an integer", GetStringKey());
+			luaState.RaiseError("Value for rule %s must be an integer", GetStringKey());
 			return false;
 		}
 
@@ -410,41 +411,63 @@ public:
 			|| type == BULLET_RULE
 			)
 		{
-			SetValue<int>((int)lua_tointeger(lua, index));
+			auto &result = luaState.ReadInteger(index);
+
+			SetValue<int>(result.GetValue());
+
+			delete &result;
 		}
 		else if (type == BOOL_RULE)
 		{
-			if (!lua_isboolean(lua, index))
+			if (!luaState.IsBool(index))
 			{
-				luaL_error(lua, "Value for rule %s must be a boolean", GetStringKey());
+				luaState.RaiseError("Value for rule %s must be a boolean", GetStringKey());
 				return false;
 			}
 
-			SetValue<bool>((bool)lua_toboolean(lua, index));
+			auto &result = luaState.ReadBool(index);
+
+			SetValue<bool>(result.GetValue());
+
+			delete& result;
 		}
 		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
 		{
-			auto value = lua_tointeger(lua, index);
+			auto &result = luaState.ReadInteger(index);
+			auto value = result.GetValue();
 
 			if (value < 0)
 			{
-				luaL_error(lua, "Value for rule %s must be an integer with a value of at least zero", GetStringKey());
+				luaState.RaiseError("Value for rule %s must be an integer with a value of at least zero", GetStringKey());
+
+				delete &result;
+
 				return false;
 			}
 
 			SetValue<unsigned int>((unsigned int)value);
+
+			delete &result;
 		}
 		else if (type == DOUBLE_RULE || type == FIXED_RULE)
 		{
-			SetValue<double>((double)lua_tonumber(lua, index));
+			auto &result = luaState.ReadDouble(index);
+
+			SetValue<double>(result.GetValue());
+
+			delete &result;
 		}
 		else if (type == PREREQ_RULE)
 		{
-			SetValue<long>((long)lua_tointeger(lua, index));
+			auto &result = luaState.ReadInteger(index);
+
+			SetValue<long>((long)result.GetValue());
+
+			delete &result;
 		}
 		else
 		{
-			luaL_error(lua, "Unable to convert value for rule %s to a lua type", GetStringKey());
+			luaState.RaiseError("Unable to convert value for rule %s to a lua type", GetStringKey());
 
 			setOk = false;
 		}

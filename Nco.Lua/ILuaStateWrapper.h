@@ -5,8 +5,6 @@
 #include <type_traits>
 #include <vector>
 
-#include <lua.hpp>
-
 #include "LuaResult.h"
 #include "LuaResultWithValue.h"
 
@@ -21,13 +19,22 @@ public:
 	virtual const char* GetLastError() = 0;
 
 	virtual const char* ToString(int stackIndex) = 0;
-    virtual const char* ToString() = 0;
+	virtual const char* ToString() = 0;
+
+	virtual const char* GetType(int stackIndex) = 0;
+	virtual const char* GetType() = 0;
 
 	virtual bool IsTable(int stackIndex) = 0;
 	virtual bool IsBool(int stackIndex) = 0;
+	virtual bool IsNumber(int stackIndex) = 0;
+	virtual bool IsInt(int stackIndex) = 0;
+	virtual bool IsNil(int stackIndex) = 0;
 
 	virtual bool IsTable() = 0;
 	virtual bool IsBool() = 0;
+	virtual bool IsNumber() = 0;
+	virtual bool IsInt() = 0;
+	virtual bool IsNil() = 0;
 
 	virtual int GetTableSize(int stackIndex) = 0;
 	virtual void IterateOverTable(int stackIndex, std::function<void(void)> iterateAction) = 0;
@@ -130,11 +137,16 @@ public:
 		{
 			return ReadString(stackIndex);
 		}
-		else if constexpr (std::is_same_v<T, int> || std::is_same_v<T, long>)
+		else if constexpr (std::is_same_v<T, char> || std::is_same_v<T, unsigned char>
+			|| std::is_same_v<T, short> || std::is_same_v<T, unsigned short>
+			|| std::is_same_v<T, int> || std::is_same_v<T, unsigned int>
+			|| std::is_same_v<T, long> || std::is_same_v<T, unsigned long>
+			|| std::is_same_v<T, unsigned long long> || std::is_same_v<T, long long>)
 		{
 			return ReadInteger(stackIndex);
 		}
-		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
+		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, unsigned double>
+			|| std::is_same_v<T, float> || std::is_same_v<T, unsigned float>)
 		{
 			return ReadDouble(stackIndex);
 		}
@@ -212,6 +224,10 @@ public:
 			WriteNil();
 		}
 	}
+
+	virtual void ClearStack() = 0;
+
+	virtual void RaiseError(const char* messageFormat, ...) = 0;
 
 	virtual LuaResult& ExecuteScript(const char* script) = 0;
 	virtual LuaResult& ExecuteFile(const char* filePath) = 0;

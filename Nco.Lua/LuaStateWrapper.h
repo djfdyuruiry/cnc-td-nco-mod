@@ -51,6 +51,31 @@ public:
 		return lua_gettop(lua);
 	}
 
+	const char* GetLastError()
+	{
+		return lua_tostring(lua, -1);
+	}
+
+	const char* ToString(int stackIndex)
+	{
+		return lua_tostring(lua, stackIndex);
+	}
+
+	const char* ToString()
+	{
+		return lua_tostring(lua, GetStackTop());
+	}
+
+	const char* GetType(int stackIndex)
+	{
+		return luaL_typename(lua, stackIndex);
+	}
+
+	const char* GetType()
+	{
+		return luaL_typename(lua, GetStackTop());
+	}
+
 	bool IsTable(int stackIndex)
 	{
 		return lua_istable(lua, stackIndex) == 1;
@@ -66,9 +91,39 @@ public:
 		return lua_isboolean(lua, stackIndex) == 1;
 	}
 
+	bool IsNumber(int stackIndex)
+	{
+		return lua_isnumber(lua, stackIndex);
+	}
+
+	bool IsInt(int stackIndex)
+	{
+		return lua_isinteger(lua, stackIndex);
+	}
+
+	bool IsNil(int stackIndex)
+	{
+		return lua_isnil(lua, stackIndex);
+	}
+
 	bool IsBool()
 	{
 		return IsBool(GetStackTop());
+	}
+
+	bool IsNumber()
+	{
+		return lua_isnumber(lua, GetStackTop());
+	}
+
+	bool IsInt()
+	{
+		return IsInt(GetStackTop());
+	}
+
+	bool IsNil()
+	{
+		return IsNil(GetStackTop());
 	}
 
 	int GetTableSize(int stackIndex)
@@ -164,21 +219,6 @@ public:
 		return ReadString(lua_gettop(lua));
 	}
 
-	const char* ToString(int stackIndex)
-	{
-		return lua_tostring(lua, stackIndex);
-	}
-
-	const char* ToString()
-	{
-		return lua_tostring(lua, GetStackTop());
-	}
-
-	const char* GetLastError()
-	{
-		return lua_tostring(lua, -1);
-	}
-
 	void WriteInteger(int value)
 	{
 		lua_pushinteger(lua, value);
@@ -213,6 +253,25 @@ public:
 	void WriteTable(unsigned int size)
 	{
 		lua_createtable(lua, 0, size);
+	}
+
+	void ClearStack()
+	{
+		lua_settop(lua, 0);
+	}
+
+	void RaiseError(const char* messageFormat, ...)
+	{
+		va_list formatArgs;
+		va_start(formatArgs, messageFormat);
+
+		auto message = FormatString(messageFormat, formatArgs);
+
+		luaL_error(lua, message);
+
+		va_end(formatArgs);
+
+		delete message;
 	}
 
 	LuaResult& ExecuteScript(const char* script)

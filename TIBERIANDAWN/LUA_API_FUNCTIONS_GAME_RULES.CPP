@@ -4,26 +4,30 @@
 #include <strings.h>
 #include <utils.h>
 
-static int Lua_Get_Game_Rule(lua_State* lua)
+static int Lua_Get_Game_Rule(lua_State* _)
 {
     Log_Trace("Lua_Get_Game_Rule called from Lua");
 
-    auto argCount = lua_gettop(lua);
+    auto &luaState = LuaRuntime().GetState();
+    auto argCount = luaState.GetStackTop();
 
     if (argCount < 1)
     {
-        luaL_error(lua, "getGameRule requires at least one argument");
+        luaState.RaiseError("getGameRule requires at least one argument");
         return 0;
     }
 
-    auto ruleName = Get_Lua_Value_As_String(1);
+    auto &ruleNameResult = luaState.ReadString(1);
 
-    auto& gameRules = GetRulesInfo().GetGameRules();
-    auto ruleKey = gameRules.BuildKey(ruleName);
+    auto &gameRules = GetRulesInfo().GetGameRules();
+    auto ruleKey = gameRules.BuildKey(ruleNameResult.GetValue());
 
     if (!gameRules.HasRule(ruleKey))
     {
-        luaL_error(lua, "Rule '%s' passed to getGameRule was not recognised", ruleName);
+        luaState.RaiseError("Rule '%s' passed to getGameRule was not recognised", ruleNameResult.GetValue());
+
+        delete &ruleNameResult;
+
         return 0;
     }
 
@@ -42,7 +46,7 @@ static int Lua_Get_Game_Rule(lua_State* lua)
             delete valueStr;
         }
 
-        rule.PushValueOntoLuaState(lua);
+        rule.PushValueOntoLuaState(luaState);
     }
     else if (rule.HasDefaultValue())
     {
@@ -57,14 +61,16 @@ static int Lua_Get_Game_Rule(lua_State* lua)
             delete valueStr;
         }
 
-        rule.PushDefaultValueOntoLuaState(lua);
+        rule.PushDefaultValueOntoLuaState(luaState);
     }
     else
     {
         Log_Trace("Lua_Get_Game_Rule: No value for rule %s, returning nil", rule.GetStringKey());
 
-        lua_pushnil(lua);
+        luaState.WriteNil();
     }
+
+    delete &ruleNameResult;
 
     return 1;
 }
@@ -72,29 +78,33 @@ static int Lua_Get_Game_Rule(lua_State* lua)
 static int Lua_Set_Game_Rule(lua_State* lua)
 {
     Log_Trace("Lua_Set_Game_Rule called from Lua");
-
+    
+    auto &luaState = LuaRuntime().GetState();
     auto argCount = lua_gettop(lua);
 
     if (argCount < 2)
     {
-        luaL_error(lua, "setGameRule requires at least two arguments");
+        luaState.RaiseError("setGameRule requires at least two arguments");
         return 0;
     }
 
-    auto ruleName = Get_Lua_Value_As_String(1);
+    auto &ruleNameResult = luaState.ReadString(1);
 
-    auto& gameRules = GetRulesInfo().GetGameRules();
-    auto ruleKey = gameRules.BuildKey(ruleName);
+    auto &gameRules = GetRulesInfo().GetGameRules();
+    auto ruleKey = gameRules.BuildKey(ruleNameResult.GetValue());
 
     if (!gameRules.HasRule(ruleKey))
     {
-        luaL_error(lua, "Rule '%s' passed to set%sGameRule was not recognised", ruleName);
+        luaState.RaiseError("Rule '%s' passed to set%sGameRule was not recognised", ruleNameResult.GetValue());
+
+        delete &ruleNameResult;
+
         return 0;
     }
 
     auto& rule = gameRules[ruleKey];
 
-    auto setOk = rule.SetValueFromLuaState(lua, 2);
+    auto setOk = rule.SetValueFromLuaState(luaState, 2);
 
     if (setOk && Current_Log_Level() == TRACE)
     {
@@ -106,6 +116,8 @@ static int Lua_Set_Game_Rule(lua_State* lua)
 
         delete valueStr;
     }
+
+    delete &ruleNameResult;
 
     return 0;
 }

@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include <Logger.h>
 #include <FileUtils.h>
 #include <strings.h>
 
@@ -50,6 +51,8 @@ public:
 
 	ILuaRuntime& RegisterApi(const char* name, LuaApiInitialiser initialiser)
 	{
+		Log_Debug("Registering Lua API: %s", name);
+
 		auto& api = LuaApi::Build().WithName(name);
 
 		if (initialiser != NULL)

@@ -1,10 +1,12 @@
 #include "function.h"
+#include "lua.h"
 
 static void Print_Lua_Result(HANDLE stdOut)
 {
 	auto output = Allocate_String(2048);
-	auto valueType = Get_Lua_Value_Type(-1);
-	auto value = Get_Lua_Value_As_String(-1);
+	auto &luaState = LuaRuntime().GetState();
+	auto valueType = luaState.GetType(-1);
+	auto value = luaState.ToString(-1);
 
 	// output return value of string or typename if the
 	// value was not a string/number
@@ -41,7 +43,7 @@ static char* Read_Lua_String(HANDLE stdOut, HANDLE stdIn)
 	// reset all C and Lua variables
 	auto input = Allocate_String(2048);
 
-	Clear_Lua_Stack();
+	LuaRuntime().GetState().ClearStack();
 
 	// read input
 	if (!WriteConsole(stdOut, "> ", 2, NULL, NULL)
