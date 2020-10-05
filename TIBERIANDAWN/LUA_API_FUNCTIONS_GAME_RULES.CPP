@@ -31,7 +31,7 @@ static int Lua_Get_Game_Rule(lua_State* _)
         return 0;
     }
 
-    auto& rule = gameRules[ruleKey];
+    auto &rule = gameRules[ruleKey];
 
     if (rule.HasValue())
     {
@@ -124,10 +124,23 @@ static int Lua_Set_Game_Rule(lua_State* lua)
 
 bool Register_Game_Rule_Functions()
 {
-    Log_Debug("Registering Game Rules Lua API functions");
+    LuaRuntime().RegisterApi("game rules", [](ILuaApi& a) {
+        a.WithDescription("Game rule info and control functions")
 
-    Register_Lua_Function("getGameRule", Lua_Get_Game_Rule);
-    Register_Lua_Function("setGameRule", Lua_Set_Game_Rule);
+         .WithFunction("getGameRule", Lua_Get_Game_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("setGameRule", Lua_Set_Game_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+    });
 
     return true;
 }

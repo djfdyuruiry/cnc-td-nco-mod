@@ -255,79 +255,81 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
     return true;
 }
 
-static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char* ruleName)
+static bool Read_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     if (Strings_Are_Equal(ruleName, BULLET_HIGH_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsHigh));
 
-        lua_pushboolean(lua, bullet->IsHigh);
+        luaState.WriteBool(bullet->IsHigh);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_ANTI_AIRCRAFT_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsAntiAircraft));
 
-        lua_pushboolean(lua, bullet->IsAntiAircraft);
+        luaState.WriteBool(bullet->IsAntiAircraft);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_TRANSLUCENT_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsTranslucent));
 
-        lua_pushboolean(lua, bullet->IsTranslucent);
+        luaState.WriteBool(bullet->IsTranslucent);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_ARCING_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsArcing));
 
-        lua_pushboolean(lua, bullet->IsArcing);
+        luaState.WriteBool(bullet->IsArcing);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_HOMING_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsHoming));
 
-        lua_pushboolean(lua, bullet->IsHoming);
+        luaState.WriteBool(bullet->IsHoming);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_DROPPING_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsDropping));
 
-        lua_pushboolean(lua, bullet->IsDropping);
+        luaState.WriteBool(bullet->IsDropping);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_INVISIBLE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsInvisible));
 
-        lua_pushboolean(lua, bullet->IsInvisible);
+        luaState.WriteBool(bullet->IsInvisible);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_PROXIMITY_ARMED_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsProximityArmed));
 
-        lua_pushboolean(lua, bullet->IsProximityArmed);
+        luaState.WriteBool(bullet->IsProximityArmed);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_FLAME_EQUIPPED_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFlameEquipped));
 
-        lua_pushboolean(lua, bullet->IsFlameEquipped);
+        luaState.WriteBool(bullet->IsFlameEquipped);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_FUELED_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFueled));
 
-        lua_pushboolean(lua, bullet->IsFueled);
+        luaState.WriteBool(bullet->IsFueled);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_FACELESS_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsFaceless));
 
-        lua_pushboolean(lua, bullet->IsFaceless);
+        luaState.WriteBool(bullet->IsFaceless);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_INACCURATE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsInaccurate));
 
-        lua_pushboolean(lua, bullet->IsInaccurate);
+        luaState.WriteBool(bullet->IsInaccurate);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_WARHEAD_RULE))
     {
@@ -335,49 +337,49 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
 
         Log_Trace("Read_Bullet_Rule => Rule value: %s", value);
 
-        lua_pushstring(lua, value);
+        luaState.WriteString(value);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_ARMING_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %d", bullet->Arming);
 
-        lua_pushnumber(lua, bullet->Arming);
+        luaState.WriteInteger(bullet->Arming);
     }
     else if (Strings_Are_Equal(ruleName, BULLET_RANGE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %d", bullet->Range);
 
-        lua_pushnumber(lua, bullet->Range);
+        luaState.WriteInteger(bullet->Range);
     }
     else if (Strings_Are_Equal(ruleName, SPEED_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %u", bullet->MaxSpeed);
 
-        lua_pushnumber(lua, bullet->MaxSpeed);
+        luaState.WriteInteger(bullet->MaxSpeed);
     }
     else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %u", bullet->ROT);
 
-        lua_pushnumber(lua, bullet->ROT);
+        luaState.WriteInteger(bullet->ROT);
     }
     else if (Strings_Are_Equal(ruleName, IMAGE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", bullet->Image);
 
-        lua_pushstring(lua, bullet->Image);
+        luaState.WriteString(bullet->Image);
     }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", bullet->FriendlyName);
 
-        lua_pushstring(lua, bullet->FriendlyName);
+        luaState.WriteString(bullet->FriendlyName);
     }
     else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         Log_Trace("Read_Bullet_Rule => Rule value: %s", Convert_Boolean_To_String(bullet->IsModType));
 
-        lua_pushboolean(lua, bullet->IsModType);
+        luaState.WriteBool(bullet->IsModType);
     }
     else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
     {
@@ -385,14 +387,14 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
         {
             Log_Trace("Read_TechnoType_Rule => Rule value: %s", bullet->ModBaseIniName);
 
-            lua_pushstring(lua, bullet->ModBaseIniName);
+            luaState.WriteString(bullet->ModBaseIniName);
         }
         else
         {
             // fallback to ini name for non-mod type instances
             Log_Trace("Read_TechnoType_Rule => Rule value: %s", bullet->IniName);
 
-            lua_pushstring(lua, bullet->IniName);
+            luaState.WriteString(bullet->IniName);
         }
     }
     else
@@ -403,8 +405,9 @@ static bool Read_Bullet_Rule(lua_State* lua, BulletTypeClass* bullet, const char
     return true;
 }
 
-static BulletType ParseBulletType(lua_State* lua, const char* bulletTypeName, bool* parseError)
+static BulletType ParseBulletType(const char* bulletTypeName, bool* parseError)
 {
+    auto &luaState = LuaRuntime().GetState();
     auto upperBulletTypeName = Convert_String_To_Upper_Case(bulletTypeName);
 
     auto bulletType = Parse_Bullet_Type(
@@ -416,7 +419,7 @@ static BulletType ParseBulletType(lua_State* lua, const char* bulletTypeName, bo
 
     if (*parseError)
     {
-        luaL_error(lua, "bullet type passed was not recognised: %s", bulletTypeName);
+        luaState.RaiseError("bullet type passed was not recognised: %s", bulletTypeName);
 
         return BULLET_NONE;
     }
@@ -424,10 +427,10 @@ static BulletType ParseBulletType(lua_State* lua, const char* bulletTypeName, bo
     return bulletType;
 }
 
-static BulletTypeClass* ResolveBullet(lua_State* lua, const char* bulletTypeName)
+static BulletTypeClass* ResolveBullet(const char* bulletTypeName)
 {
     bool parseError = false;
-    auto bulletType = ParseBulletType(lua, bulletTypeName, &parseError);
+    auto bulletType = ParseBulletType(bulletTypeName, &parseError);
 
     if (parseError)
     {
@@ -442,7 +445,6 @@ static BulletTypeClass* ResolveBullet(lua_State* lua, const char* bulletTypeName
 static int Lua_Set_Bullet_Rule(lua_State* lua)
 {
     return Lua_Set_Rule(
-        lua,
         "Bullet",
         "bulletTypeName",
         &ResolveBullet,
@@ -455,7 +457,6 @@ static int Lua_Set_Bullet_Rule(lua_State* lua)
 static int Lua_Get_Bullet_Rule(lua_State* lua)
 {
     return Lua_Get_Rule(
-        lua,
         "Bullets",
         "bulletTypeName",
         &ResolveBullet,
@@ -467,10 +468,23 @@ static int Lua_Get_Bullet_Rule(lua_State* lua)
 
 bool Register_Bullet_Functions()
 {
-	Log_Debug("Initialising Lua API bullet functions");
+    LuaRuntime().RegisterApi("bullet rules", [](ILuaApi& a) {
+        a.WithDescription("Bullet rule info and control functions")
 
-    Register_Lua_Function("getBulletRule", Lua_Get_Bullet_Rule);
-    Register_Lua_Function("setBulletRule", Lua_Set_Bullet_Rule);
+         .WithFunction("getBulletRule", Lua_Get_Bullet_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
 
-	return true;
+         .WithFunction("setBulletRule", Lua_Set_Bullet_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+    });
+
+    return true;
 }

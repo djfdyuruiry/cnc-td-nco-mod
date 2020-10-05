@@ -162,55 +162,57 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
     return true;
 }
 
-static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const char* ruleName)
+static bool Read_Building_Rule(BuildingTypeClass* type, const char* ruleName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     if (Strings_Are_Equal(ruleName, BIBBED_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsBibbed));
 
-        lua_pushboolean(lua, type->IsBibbed);
+        luaState.WriteBool(type->IsBibbed);
     }
     else if (Strings_Are_Equal(ruleName, WALL_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsWall));
 
-        lua_pushboolean(lua, type->IsWall);
+        luaState.WriteBool(type->IsWall);
     }
     else if (Strings_Are_Equal(ruleName, FACTORY_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFactory));
 
-        lua_pushboolean(lua, type->IsFactory);
+        luaState.WriteBool(type->IsFactory);
     }
     else if (Strings_Are_Equal(ruleName, SIMPLE_DAMAGE_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsSimpleDamage));
 
-        lua_pushboolean(lua, type->IsSimpleDamage);
+        luaState.WriteBool(type->IsSimpleDamage);
     }
     else if (Strings_Are_Equal(ruleName, STURDY_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsSturdy));
 
-        lua_pushboolean(lua, type->IsSturdy);
+        luaState.WriteBool(type->IsSturdy);
     }
     else if (Strings_Are_Equal(ruleName, CAPTUREABLE_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCaptureable));
 
-        lua_pushboolean(lua, type->IsCaptureable);
+        luaState.WriteBool(type->IsCaptureable);
     }
     else if (Strings_Are_Equal(ruleName, FIXED_SPEED_ANIMATION_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRegulated));
 
-        lua_pushboolean(lua, type->IsRegulated);
+        luaState.WriteBool(type->IsRegulated);
     }
     else if (Strings_Are_Equal(ruleName, UNSELLABLE_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsUnsellable));
 
-        lua_pushboolean(lua, type->IsUnsellable);
+        luaState.WriteBool(type->IsUnsellable);
     }
     else if (Strings_Are_Equal(ruleName, FACTORY_TYPE_RULE))
     {
@@ -218,25 +220,25 @@ static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const ch
 
         Log_Trace("Read_Building_Rule => Rule value: %s", factoryType);
 
-        lua_pushstring(lua, factoryType);
+        luaState.WriteString(factoryType);
     }
     else if (Strings_Are_Equal(ruleName, STORAGE_CAPACITY_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %u", type->Capacity);
 
-        lua_pushnumber(lua, type->Capacity);
+        luaState.WriteInteger(type->Capacity);
     }
     else if (Strings_Are_Equal(ruleName, POWER_OUTPUT_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %d", type->Power);
 
-        lua_pushnumber(lua, type->Power);
+        luaState.WriteInteger(type->Power);
     }
     else if (Strings_Are_Equal(ruleName, POWER_INPUT_RULE))
     {
         Log_Trace("Read_Building_Rule => Rule value: %d", type->Drain);
 
-        lua_pushnumber(lua, type->Drain);
+        luaState.WriteInteger(type->Drain);
     }
     else
     {
@@ -246,8 +248,9 @@ static bool Read_Building_Rule(lua_State* lua, BuildingTypeClass* type, const ch
     return true;
 }
 
-static StructType ParseBuildingType(lua_State* lua, const char* buildingTypeName, bool* parseError)
+static StructType ParseBuildingType(const char* buildingTypeName, bool* parseError)
 {
+    auto &luaState = LuaRuntime().GetState();
     auto upperTypeName = Convert_String_To_Upper_Case(buildingTypeName);
 
     auto buildingType = Parse_Structure_Type(
@@ -259,17 +262,18 @@ static StructType ParseBuildingType(lua_State* lua, const char* buildingTypeName
 
     if (*parseError)
     {
-        luaL_error(lua, "building type passed was not recognised: %s", buildingTypeName);
+        luaState.RaiseError("building type passed was not recognised: %s", buildingTypeName);
+
         return STRUCT_NONE;
     }
 
     return buildingType;
 }
 
-static BuildingTypeClass* ResolveBuilding(lua_State* lua, const char* buildingTypeName)
+static BuildingTypeClass* ResolveBuilding(const char* buildingTypeName)
 {
     bool parseError = false;
-    auto buildingType = ParseBuildingType(lua, buildingTypeName, &parseError);
+    auto buildingType = ParseBuildingType(buildingTypeName, &parseError);
 
     if (parseError)
     {
@@ -284,7 +288,6 @@ static BuildingTypeClass* ResolveBuilding(lua_State* lua, const char* buildingTy
 static int Lua_Get_Building_Rule(lua_State* lua)
 {
     return Lua_Get_Rule(
-        lua,
         "Building",
         "buildingTypeName",
         &ResolveBuilding,
@@ -296,7 +299,6 @@ static int Lua_Get_Building_Rule(lua_State* lua)
 static int Lua_Set_Building_Rule(lua_State* lua)
 {
     return Lua_Set_Rule(
-        lua,
         "Building",
         "buildingTypeName",
         &ResolveBuilding,
@@ -307,10 +309,23 @@ static int Lua_Set_Building_Rule(lua_State* lua)
 
 bool Register_Building_Rule_Functions()
 {
-    Log_Debug("Registering Building Rules Lua API functions");
+    LuaRuntime().RegisterApi("building rules", [](ILuaApi& a) {
+        a.WithDescription("Building rule info and control functions")
 
-    Register_Lua_Function("getBuildingRule", Lua_Get_Building_Rule);
-    Register_Lua_Function("setBuildingRule", Lua_Set_Building_Rule);
+         .WithFunction("getBuildingRule", Lua_Get_Building_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("setBuildingRule", Lua_Set_Building_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+    });
 
     return true;
 }

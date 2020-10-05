@@ -185,73 +185,75 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
     return true;
 }
 
-static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* ruleName)
+static bool Read_Unit_Rule(UnitTypeClass* type, const char* ruleName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrateGoodie));
 
-        lua_pushboolean(lua, type->IsCrateGoodie);
+        luaState.WriteBool(type->IsCrateGoodie);
     }
     else if (Strings_Are_Equal(ruleName, LIMITED_FACINGS_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsPieceOfEight));
 
-        lua_pushboolean(lua, type->IsPieceOfEight);
+        luaState.WriteBool(type->IsPieceOfEight);
     }
     else if (Strings_Are_Equal(ruleName, CAN_CRUSH_INFANTRY_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrusher));
 
-        lua_pushboolean(lua, type->IsCrusher);
+        luaState.WriteBool(type->IsCrusher);
     }
     else if (Strings_Are_Equal(ruleName, CAN_HARVEST_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsToHarvest));
 
-        lua_pushboolean(lua, type->IsToHarvest);
+        luaState.WriteBool(type->IsToHarvest);
     }
     else if (Strings_Are_Equal(ruleName, RADAR_EQUIPPED_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRadarEquipped));
 
-        lua_pushboolean(lua, type->IsRadarEquipped);
+        luaState.WriteBool(type->IsRadarEquipped);
     }
     else if (Strings_Are_Equal(ruleName, HAS_FIRE_ANIMATION_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFireAnim));
 
-        lua_pushboolean(lua, type->IsFireAnim);
+        luaState.WriteBool(type->IsFireAnim);
     }
     else if (Strings_Are_Equal(ruleName, LOCK_TURRET_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsLockTurret));
 
-        lua_pushboolean(lua, type->IsLockTurret);
+        luaState.WriteBool(type->IsLockTurret);
     }
     else if (Strings_Are_Equal(ruleName, HAS_TRACKS_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTracked));
 
-        lua_pushboolean(lua, type->IsTracked);
+        luaState.WriteBool(type->IsTracked);
     }
     else if (Strings_Are_Equal(ruleName, HUGE_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsGigundo));
 
-        lua_pushboolean(lua, type->IsGigundo);
+        luaState.WriteBool(type->IsGigundo);
     }
     else if (Strings_Are_Equal(ruleName, CAN_CLOAK_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCloakable));
 
-        lua_pushboolean(lua, type->IsCloakable);
+        luaState.WriteBool(type->IsCloakable);
     }
     else if (Strings_Are_Equal(ruleName, CONSTANT_ANIMATION_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsAnimating));
 
-        lua_pushboolean(lua, type->IsAnimating);
+        luaState.WriteBool(type->IsAnimating);
     }
     else if (Strings_Are_Equal(ruleName, UNIT_SPEED_RULE))
     {
@@ -259,25 +261,25 @@ static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* rule
 
         Log_Trace("Read_Unit_Rule => Rule value: %s", unitSpeed);
 
-        lua_pushstring(lua, unitSpeed);
+        luaState.WriteString(unitSpeed);
     }
     else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %u", type->ROT);
 
-        lua_pushnumber(lua, type->ROT);
+        luaState.WriteInteger(type->ROT);
     }
     else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %u", type->TransportCapacity);
 
-        lua_pushnumber(lua, type->ROT);
+        luaState.WriteInteger(type->ROT);
     }
     else if (Strings_Are_Equal(ruleName, SELF_REPAIR_RULE))
     {
         Log_Trace("Read_Unit_Rule => Rule value: %s", Convert_Boolean_To_String(type->CanSelfRepair));
 
-        lua_pushboolean(lua, type->CanSelfRepair);
+        luaState.WriteBool(type->CanSelfRepair);
     }
     else
     {
@@ -287,8 +289,9 @@ static bool Read_Unit_Rule(lua_State* lua, UnitTypeClass* type, const char* rule
     return true;
 }
 
-static UnitType ParseUnitType(lua_State* lua, const char* unitTypeName, bool* parseError)
+static UnitType ParseUnitType(const char* unitTypeName, bool* parseError)
 {
+    auto &luaState = LuaRuntime().GetState();
     auto upperTypeName = Convert_String_To_Upper_Case(unitTypeName);
 
     auto unitType = Parse_Unit_Type(
@@ -300,17 +303,17 @@ static UnitType ParseUnitType(lua_State* lua, const char* unitTypeName, bool* pa
 
     if (*parseError)
     {
-        luaL_error(lua, "unit type passed was not recognised: %s", unitTypeName);
+        luaState.RaiseError("unit type passed was not recognised: %s", unitTypeName);
         return UNIT_NONE;
     }
 
     return unitType;
 }
 
-static UnitTypeClass* ResolveUnit(lua_State* lua, const char* unitTypeName)
+static UnitTypeClass* ResolveUnit(const char* unitTypeName)
 {
     bool parseError = false;
-    auto unitType = ParseUnitType(lua, unitTypeName, &parseError);
+    auto unitType = ParseUnitType(unitTypeName, &parseError);
 
     if (parseError)
     {
@@ -325,7 +328,6 @@ static UnitTypeClass* ResolveUnit(lua_State* lua, const char* unitTypeName)
 static int Lua_Get_Unit_Rule(lua_State* lua)
 {
     return Lua_Get_Rule(
-        lua,
         "Unit",
         "unitTypeName",
         &ResolveUnit,
@@ -337,7 +339,6 @@ static int Lua_Get_Unit_Rule(lua_State* lua)
 static int Lua_Set_Unit_Rule(lua_State* lua)
 {
     return Lua_Set_Rule(
-        lua,
         "Unit",
         "unitTypeName",
         &ResolveUnit,
@@ -348,10 +349,23 @@ static int Lua_Set_Unit_Rule(lua_State* lua)
 
 bool Register_Unit_Rule_Functions()
 {
-    Log_Debug("Registering Unit Rules Lua API functions");
+    LuaRuntime().RegisterApi("unit rules", [](ILuaApi& a) {
+        a.WithDescription("Unit info and control functions")
 
-    Register_Lua_Function("getUnitRule", Lua_Get_Unit_Rule);
-    Register_Lua_Function("setUnitRule", Lua_Set_Unit_Rule);
+         .WithFunction("getUnitRule", Lua_Get_Unit_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("setUnitRule", Lua_Set_Unit_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+    });
 
     return true;
 }

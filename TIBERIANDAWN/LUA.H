@@ -11,7 +11,11 @@ bool Execute_Lua_Script(const char* luaScript, bool beQuiet);
 
 bool Execute_Lua_Script(const char* luaScript);
 
+bool Execute_Lua_Script(char* luaScript);
+
 bool Execute_Lua_File(const char* scriptFile);
+
+bool Execute_Lua_File(char* scriptFile);
 
 void Shutdown_Lua();
 

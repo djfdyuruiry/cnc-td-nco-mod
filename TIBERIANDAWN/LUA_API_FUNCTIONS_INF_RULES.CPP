@@ -100,55 +100,57 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
     return true;
 }
 
-static bool Read_Infantry_Rule(lua_State* lua, InfantryTypeClass* type, const char* ruleName)
+static bool Read_Infantry_Rule(InfantryTypeClass* type, const char* ruleName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     if (Strings_Are_Equal(ruleName, FEMALE_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFemale));
 
-        lua_pushboolean(lua, type->IsFemale);
+        luaState.WriteBool(type->IsFemale);
     }
     else if (Strings_Are_Equal(ruleName, CRAWLING_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrawling));
 
-        lua_pushboolean(lua, type->IsCrawling);
+        luaState.WriteBool(type->IsCrawling);
     }
     else if (Strings_Are_Equal(ruleName, CAN_CAPTURE_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCapture));
 
-        lua_pushboolean(lua, type->IsCapture);
+        luaState.WriteBool(type->IsCapture);
     }
     else if (Strings_Are_Equal(ruleName, FRAIDY_CAT_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFraidyCat));
 
-        lua_pushboolean(lua, type->IsFraidyCat);
+        luaState.WriteBool(type->IsFraidyCat);
     }
     else if (Strings_Are_Equal(ruleName, CIVILIAN_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCivilian));
 
-        lua_pushboolean(lua, type->IsCivilian);
+        luaState.WriteBool(type->IsCivilian);
     }
     else if (Strings_Are_Equal(ruleName, AVOIDS_TIBERIUM_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsAvoidingTiberium));
 
-        lua_pushboolean(lua, type->IsAvoidingTiberium);
+        luaState.WriteBool(type->IsAvoidingTiberium);
     }
     else if (Strings_Are_Equal(ruleName, IMMUNE_TO_TIBERIUM_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsImmuneToTiberium));
 
-        lua_pushboolean(lua, type->IsImmuneToTiberium);
+        luaState.WriteBool(type->IsImmuneToTiberium);
     }
     else if (Strings_Are_Equal(ruleName, HAS_C4_CHARGES_RULE))
     {
         Log_Trace("Read_Infantry_Rule => Rule value: %s", Convert_Boolean_To_String(type->HasC4Charges));
 
-        lua_pushboolean(lua, type->HasC4Charges);
+        luaState.WriteBool(type->HasC4Charges);
     }
     else
     {
@@ -158,8 +160,9 @@ static bool Read_Infantry_Rule(lua_State* lua, InfantryTypeClass* type, const ch
     return true;
 }
 
-static InfantryType ParseInfantryType(lua_State* lua, const char* infantryTypeName, bool* parseError)
+static InfantryType ParseInfantryType(const char* infantryTypeName, bool* parseError)
 {
+    auto &luaState = LuaRuntime().GetState();
     auto upperTypeName = Convert_String_To_Upper_Case(infantryTypeName);
 
     auto infantryType = Parse_Infantry_Type(
@@ -171,17 +174,17 @@ static InfantryType ParseInfantryType(lua_State* lua, const char* infantryTypeNa
 
     if (*parseError)
     {
-        luaL_error(lua, "infantry type passed was not recognised: %s", infantryTypeName);
+        luaState.RaiseError("infantry type passed was not recognised: %s", infantryTypeName);
         return INFANTRY_NONE;
     }
 
     return infantryType;
 }
 
-static InfantryTypeClass* ResolveInfantry(lua_State* lua, const char* infantryTypeName)
+static InfantryTypeClass* ResolveInfantry(const char* infantryTypeName)
 {
     bool parseError = false;
-    auto infantryType = ParseInfantryType(lua, infantryTypeName, &parseError);
+    auto infantryType = ParseInfantryType(infantryTypeName, &parseError);
 
     if (parseError)
     {
@@ -196,7 +199,6 @@ static InfantryTypeClass* ResolveInfantry(lua_State* lua, const char* infantryTy
 int Lua_Get_Infantry_Rule(lua_State* lua)
 {
     return Lua_Get_Rule(
-        lua,
         "Infantry",
         "infantryTypeName",
         &ResolveInfantry,
@@ -208,7 +210,6 @@ int Lua_Get_Infantry_Rule(lua_State* lua)
 int Lua_Set_Infantry_Rule(lua_State* lua)
 {
     return Lua_Set_Rule(
-        lua,
         "Infantry",
         "infantryTypeName",
         &ResolveInfantry,
@@ -219,10 +220,22 @@ int Lua_Set_Infantry_Rule(lua_State* lua)
 
 bool Register_Infantry_Rule_Functions()
 {
-    Log_Debug("Registering Infantry Rules Lua API functions");
+    LuaRuntime().RegisterApi("infantry rules", [](ILuaApi& a) {
+        a.WithDescription("Infantry rule info and control functions")
 
-    Register_Lua_Function("getInfantryRule", Lua_Get_Infantry_Rule);
-    Register_Lua_Function("setInfantryRule", Lua_Set_Infantry_Rule);
+         .WithFunction("getInfantryRule", Lua_Get_Infantry_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+         .WithFunction("setInfantryRule", Lua_Set_Infantry_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+    });
 
     return true;
 }

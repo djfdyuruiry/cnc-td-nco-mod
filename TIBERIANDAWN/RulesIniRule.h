@@ -393,7 +393,7 @@ public:
 			return false;
 		}
 
-		if (type != BOOL_RULE && !luaState.IsInt(index))
+		if (type != BOOL_RULE && !luaState.IsNumber(index))
 		{
 			luaState.RaiseError("Value for rule %s must be an integer", GetStringKey());
 			return false;
@@ -409,7 +409,7 @@ public:
 			|| type == FACTORY_RULE_TYPE
 			|| type == WARHEAD_RULE
 			|| type == BULLET_RULE
-			)
+		)
 		{
 			auto &result = luaState.ReadInteger(index);
 

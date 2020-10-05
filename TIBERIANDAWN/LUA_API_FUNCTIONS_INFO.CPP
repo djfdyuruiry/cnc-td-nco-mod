@@ -176,26 +176,121 @@ static int Lua_Get_Event_Names(lua_State* _)
 
 bool Register_Info_Functions()
 {
-    Log_Debug("Registering Info Lua API functions");
+    LuaRuntime().RegisterApi("info", [](ILuaApi& a) {
+        a.WithDescription("Get info about rules and types")
 
-    Register_Lua_Function("getEventNames", Lua_Get_Event_Names);
+         .WithFunction("getEventNames", Lua_Get_Event_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
 
-    Register_Lua_Function("getWeaponTypes", Lua_Get_Weapon_Types);
-    Register_Lua_Function("getBulletTypes", Lua_Get_Bullet_Types);
-    Register_Lua_Function("getWarheadTypes", Lua_Get_Warhead_Types);
-    Register_Lua_Function("getInfantryTypes", Lua_Get_Infantry_Types);
-    Register_Lua_Function("getUnitTypes", Lua_Get_Unit_Types);
-    Register_Lua_Function("getAircraftTypes", Lua_Get_Aircraft_Types);
-    Register_Lua_Function("getBuildingTypes", Lua_Get_Building_Types);
+         .WithFunction("getWeaponTypes", Lua_Get_Weapon_Types, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
 
-    Register_Lua_Function("getGameRuleNames", Lua_Get_Game_Rule_Names);
-    Register_Lua_Function("getWeaponRuleNames", Lua_Get_Weapon_Rule_Names);
-    Register_Lua_Function("getBulletRuleNames", Lua_Get_Bullet_Rule_Names);
-    Register_Lua_Function("getWarheadRuleNames", Lua_Get_Warhead_Rule_Names);
-    Register_Lua_Function("getInfantryRuleNames", Lua_Get_Infantry_Rule_Names);
-    Register_Lua_Function("getUnitRuleNames", Lua_Get_Unit_Rule_Names);
-    Register_Lua_Function("getAircraftRuleNames", Lua_Get_Aircraft_Rule_Names);
-    Register_Lua_Function("getBuildingRuleNames", Lua_Get_Building_Rule_Names);
+         .WithFunction("getBulletTypes", Lua_Get_Bullet_Types, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getWarheadTypes", Lua_Get_Warhead_Types, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getInfantryTypes", Lua_Get_Infantry_Types, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getUnitTypes", Lua_Get_Unit_Types, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getAircraftTypes", Lua_Get_Aircraft_Types, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getBuildingTypes", Lua_Get_Building_Types, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getGameRuleNames", Lua_Get_Game_Rule_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getWeaponRuleNames", Lua_Get_Weapon_Rule_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getBulletRuleNames", Lua_Get_Bullet_Rule_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getWarheadRuleNames", Lua_Get_Warhead_Rule_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getInfantryRuleNames", Lua_Get_Infantry_Rule_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getUnitRuleNames", Lua_Get_Unit_Rule_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getAircraftRuleNames", Lua_Get_Aircraft_Rule_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
+
+         .WithFunction("getBuildingRuleNames", Lua_Get_Building_Rule_Names, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+    });
 
     return true;
 }

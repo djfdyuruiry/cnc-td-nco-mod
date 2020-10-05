@@ -100,6 +100,11 @@ bool Execute_Lua_Script(char* luaScript)
     return Execute_Lua_Script(luaScript, false);
 }
 
+bool Execute_Lua_Script(const char* luaScript)
+{
+    return Execute_Lua_Script(luaScript, false);
+}
+
 bool Execute_Lua_File(const char* scriptFile)
 {
     Log_Info("Attempting to load Lua script: %s", scriptFile);
@@ -119,6 +124,11 @@ bool Execute_Lua_File(const char* scriptFile)
     delete &result;
 
     return executionOK;
+}
+
+bool Execute_Lua_File(char* scriptFile)
+{
+    return Execute_Lua_File((const char*)scriptFile);
 }
 
 void Shutdown_Lua()

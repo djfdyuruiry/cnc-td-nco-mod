@@ -3,6 +3,8 @@
 #include <functional>
 #include <vector>
 
+#include <Utils.h>
+
 #include "ILuaStateWrapper.h"
 
 class LuaStateWrapper : public ILuaStateWrapper
@@ -53,17 +55,24 @@ public:
 
 	const char* GetLastError()
 	{
-		return lua_tostring(lua, -1);
+		return ToString(-1);
 	}
 
 	const char* ToString(int stackIndex)
 	{
+		if (IsBool(stackIndex))
+		{
+			return Convert_Boolean_To_String(
+				lua_toboolean(lua, stackIndex)
+			);
+		}
+
 		return lua_tostring(lua, stackIndex);
 	}
 
 	const char* ToString()
 	{
-		return lua_tostring(lua, GetStackTop());
+		return ToString(GetStackTop());
 	}
 
 	const char* GetType(int stackIndex)

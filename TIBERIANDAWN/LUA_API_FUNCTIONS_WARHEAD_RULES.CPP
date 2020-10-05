@@ -179,73 +179,75 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
     return true;
 }
 
-static bool Read_Warhead_Rule(lua_State* lua, WarheadTypeClass* warhead, const char* ruleName)
+static bool Read_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     if (Strings_Are_Equal(ruleName, WARHEAD_SPREAD_FACTOR_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %d", warhead->SpreadFactor);
 
-        lua_pushnumber(lua, warhead->SpreadFactor);
+        luaState.WriteInteger(warhead->SpreadFactor);
     }
     else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WALLS_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsWallDestroyer));
 
-        lua_pushboolean(lua, warhead->IsWallDestroyer);
+        luaState.WriteBool(warhead->IsWallDestroyer);
     }
     else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_WOOD_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsWoodDestroyer));
 
-        lua_pushboolean(lua, warhead->IsWoodDestroyer);
+        luaState.WriteBool(warhead->IsWoodDestroyer);
     }
     else if (Strings_Are_Equal(ruleName, WARHEAD_DESTORY_TIBERIUM_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsTiberiumDestroyer));
 
-        lua_pushboolean(lua, warhead->IsTiberiumDestroyer);
+        luaState.WriteBool(warhead->IsTiberiumDestroyer);
     }
     else if (Strings_Are_Equal(ruleName, WARHEAD_NO_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_NONE]);
 
-        lua_pushnumber(lua, warhead->Modifier[ARMOR_NONE]);
+        luaState.WriteInteger(warhead->Modifier[ARMOR_NONE]);
     }
     else if (Strings_Are_Equal(ruleName, WARHEAD_WOOD_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_WOOD]);
 
-        lua_pushnumber(lua, warhead->Modifier[ARMOR_WOOD]);
+        luaState.WriteInteger(warhead->Modifier[ARMOR_WOOD]);
     }
     else if (Strings_Are_Equal(ruleName, WARHEAD_ALUMINUM_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_ALUMINUM]);
 
-        lua_pushnumber(lua, warhead->Modifier[ARMOR_ALUMINUM]);
+        luaState.WriteInteger(warhead->Modifier[ARMOR_ALUMINUM]);
     }
     else if (Strings_Are_Equal(ruleName, WARHEAD_STEEL_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_STEEL]);
 
-        lua_pushnumber(lua, warhead->Modifier[ARMOR_STEEL]);
+        luaState.WriteInteger(warhead->Modifier[ARMOR_STEEL]);
     }
     else if (Strings_Are_Equal(ruleName, WARHEAD_CONCRETE_ARMOR_MODIFIER_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %u", warhead->Modifier[ARMOR_CONCRETE]);
 
-        lua_pushnumber(lua, warhead->Modifier[ARMOR_CONCRETE]);
+        luaState.WriteInteger(warhead->Modifier[ARMOR_CONCRETE]);
     }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", warhead->FriendlyName);
 
-        lua_pushstring(lua, warhead->FriendlyName);
+        luaState.WriteString(warhead->FriendlyName);
     }
     else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         Log_Trace("Read_Warhead_Rule => Rule value: %s", Convert_Boolean_To_String(warhead->IsModType));
 
-        lua_pushboolean(lua, warhead->IsModType);
+        luaState.WriteBool(warhead->IsModType);
     }
     else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
     {
@@ -253,14 +255,14 @@ static bool Read_Warhead_Rule(lua_State* lua, WarheadTypeClass* warhead, const c
         {
             Log_Trace("Read_Warhead_Rule => Rule value: %s", warhead->ModBaseIniName);
 
-            lua_pushstring(lua, warhead->ModBaseIniName);
+            luaState.WriteString(warhead->ModBaseIniName);
         }
         else
         {
             // fallback to ini name for non-mod type instances
             Log_Trace("Read_Warhead_Rule => Rule value: %s", warhead->IniName);
 
-            lua_pushstring(lua, warhead->IniName);
+            luaState.WriteString(warhead->IniName);
         }
     }
 
@@ -272,8 +274,9 @@ static bool Read_Warhead_Rule(lua_State* lua, WarheadTypeClass* warhead, const c
     return true;
 }
 
-static WarheadType ParseWarheadType(lua_State* lua, const char* warheadTypeName, bool* parseError)
+static WarheadType ParseWarheadType(const char* warheadTypeName, bool* parseError)
 {
+    auto &luaState = LuaRuntime().GetState();
     auto upperWarheadTypeName = Convert_String_To_Upper_Case(warheadTypeName);
 
     auto warheadType = Parse_Warhead_Type(
@@ -285,7 +288,7 @@ static WarheadType ParseWarheadType(lua_State* lua, const char* warheadTypeName,
 
     if (*parseError)
     {
-        luaL_error(lua, "warhead type passed was not recognised: %s", warheadTypeName);
+        luaState.RaiseError("warhead type passed was not recognised: %s", warheadTypeName);
 
         return WARHEAD_NONE;
     }
@@ -293,10 +296,10 @@ static WarheadType ParseWarheadType(lua_State* lua, const char* warheadTypeName,
     return warheadType;
 }
 
-static WarheadTypeClass* ResolveWarhead(lua_State* lua, const char* warheadTypeName)
+static WarheadTypeClass* ResolveWarhead(const char* warheadTypeName)
 {
     bool parseError = false;
-    auto warheadType = ParseWarheadType(lua, warheadTypeName, &parseError);
+    auto warheadType = ParseWarheadType(warheadTypeName, &parseError);
 
     if (parseError)
     {
@@ -311,7 +314,6 @@ static WarheadTypeClass* ResolveWarhead(lua_State* lua, const char* warheadTypeN
 static int Lua_Set_Warhead_Rule(lua_State* lua)
 {
     return Lua_Set_Rule(
-        lua,
         "Warhead",
         "warheadTypeName",
         &ResolveWarhead,
@@ -324,7 +326,6 @@ static int Lua_Set_Warhead_Rule(lua_State* lua)
 static int Lua_Get_Warhead_Rule(lua_State* lua)
 {
     return Lua_Get_Rule(
-        lua,
         "Warhead",
         "warheadTypeName",
         &ResolveWarhead,
@@ -336,10 +337,23 @@ static int Lua_Get_Warhead_Rule(lua_State* lua)
 
 bool Register_Warhead_Functions()
 {
-	Log_Debug("Initialising Lua API warhead functions");
+    LuaRuntime().RegisterApi("warhead rules", [](ILuaApi& a) {
+        a.WithDescription("Warhead info and control functions")
 
-    Register_Lua_Function("getWarheadRule", Lua_Get_Warhead_Rule);
-    Register_Lua_Function("setWarheadRule", Lua_Set_Warhead_Rule);
+         .WithFunction("getWarheadRule", Lua_Get_Warhead_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
 
-	return true;
+         .WithFunction("setWarheadRule", Lua_Set_Warhead_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+    });
+
+    return true;
 }

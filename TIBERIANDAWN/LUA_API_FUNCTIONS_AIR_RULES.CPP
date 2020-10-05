@@ -78,37 +78,39 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
     return true;
 }
 
-static bool Read_Aircraft_Rule(lua_State* lua, AircraftTypeClass* type, const char* ruleName)
+static bool Read_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFixedWing));
 
-        lua_pushboolean(lua, type->IsFixedWing);
+        luaState.WriteBool(type->IsFixedWing);
     }
     else if (Strings_Are_Equal(ruleName, CAN_LAND_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsLandable));
 
-        lua_pushboolean(lua, type->IsLandable);
+        luaState.WriteBool(type->IsLandable);
     }
     else if (Strings_Are_Equal(ruleName, HAS_ROTOR_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRotorEquipped));
 
-        lua_pushboolean(lua, type->IsRotorEquipped);
+        luaState.WriteBool(type->IsRotorEquipped);
     }
     else if (Strings_Are_Equal(ruleName, RATE_OF_TURN_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %u", type->ROT);
 
-        lua_pushnumber(lua, type->ROT);
+        luaState.WriteInteger(type->ROT);
     }
     else if (Strings_Are_Equal(ruleName, TRANSPORT_CAPACITY_RULE))
     {
         Log_Trace("Read_Aircraft_Rule => Rule value: %u", type->TransportCapacity);
 
-        lua_pushnumber(lua, type->TransportCapacity);
+        luaState.WriteInteger(type->TransportCapacity);
     }
     else
     {
@@ -118,8 +120,10 @@ static bool Read_Aircraft_Rule(lua_State* lua, AircraftTypeClass* type, const ch
     return true;
 }
 
-static AircraftType ParseAircraftType(lua_State* lua, const char* aircraftTypeName, bool* parseError)
+static AircraftType ParseAircraftType(const char* aircraftTypeName, bool* parseError)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     auto upperTypeName = Convert_String_To_Upper_Case(aircraftTypeName);
 
     auto aircraftType = Parse_Aircraft_Type(
@@ -131,17 +135,20 @@ static AircraftType ParseAircraftType(lua_State* lua, const char* aircraftTypeNa
 
     if (*parseError)
     {
-        luaL_error(lua, "aircraft type passed was not recognised: %s", aircraftTypeName);
+        luaState.RaiseError("aircraft type passed was not recognised: %s", aircraftTypeName);
+
         return AIRCRAFT_NONE;
     }
 
     return aircraftType;
 }
 
-static AircraftTypeClass* ResolveAircraft(lua_State* lua, const char* aircraftTypeName)
+static AircraftTypeClass* ResolveAircraft(const char* aircraftTypeName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     bool parseError = false;
-    auto aircraftType = ParseAircraftType(lua, aircraftTypeName, &parseError);
+    auto aircraftType = ParseAircraftType(aircraftTypeName, &parseError);
 
     if (parseError)
     {
@@ -156,7 +163,6 @@ static AircraftTypeClass* ResolveAircraft(lua_State* lua, const char* aircraftTy
 static int Lua_Get_Aircraft_Rule(lua_State* lua)
 {
     return Lua_Get_Rule(
-        lua,
         "Aircraft",
         "aircraftTypeName",
         &ResolveAircraft,
@@ -168,7 +174,6 @@ static int Lua_Get_Aircraft_Rule(lua_State* lua)
 static int Lua_Set_Aircraft_Rule(lua_State* lua)
 {
     return Lua_Set_Rule(
-        lua,
         "Aircraft",
         "aircraftTypeName",
         &ResolveAircraft,
@@ -179,10 +184,22 @@ static int Lua_Set_Aircraft_Rule(lua_State* lua)
 
 bool Register_Aircraft_Rule_Functions()
 {
-    Log_Debug("Registering Aircraft Rules Lua API functions");
+    LuaRuntime().RegisterApi("aircraft rules", [](ILuaApi& a) {
+        a.WithDescription("Aircraft rule info and control functions")
 
-    Register_Lua_Function("getAircraftRule", Lua_Get_Aircraft_Rule);
-    Register_Lua_Function("setAircraftRule", Lua_Set_Aircraft_Rule);
+         .WithFunction("getAircraftRule", Lua_Get_Aircraft_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
 
+         .WithFunction("setAircraftRule", Lua_Set_Aircraft_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+     });
     return true;
 }

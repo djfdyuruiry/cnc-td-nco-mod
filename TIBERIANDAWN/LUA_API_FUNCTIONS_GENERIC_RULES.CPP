@@ -384,19 +384,21 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
     return true;
 }
 
-bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* ruleName)
+bool Read_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     if (Strings_Are_Equal(ruleName, BUILD_LEVEL_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %u", type->Level);
 
-        lua_pushnumber(lua, type->Level);
+        luaState.WriteInteger(type->Level);
     }
     else if (Strings_Are_Equal(ruleName, SCENARIO_LEVEL_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %u", type->Scenario);
 
-        lua_pushnumber(lua, type->Scenario);
+        luaState.WriteInteger(type->Scenario);
     }
     else if (Strings_Are_Equal(ruleName, PREREQUISITE_RULE))
     {
@@ -405,43 +407,43 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", structTypeStr);
 
-        lua_pushstring(lua, structTypeStr);
+        luaState.WriteString(structTypeStr);
     }
     else if (Strings_Are_Equal(ruleName, COST_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %d", type->Cost);
 
-        lua_pushnumber(lua, type->Cost);
+        luaState.WriteInteger(type->Cost);
     }
     else if (Strings_Are_Equal(ruleName, BUILDABLE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsBuildable));
 
-        lua_pushboolean(lua, type->IsBuildable);
+        luaState.WriteBool(type->IsBuildable);
     }
     else if (Strings_Are_Equal(ruleName, FLAMMABLE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsFlammable));
 
-        lua_pushboolean(lua, type->IsFlammable);
+        luaState.WriteBool(type->IsFlammable);
     }
     else if (Strings_Are_Equal(ruleName, SPEED_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %u", type->MaxSpeed);
 
-        lua_pushnumber(lua, type->MaxSpeed);
+        luaState.WriteInteger(type->MaxSpeed);
     }
     else if (Strings_Are_Equal(ruleName, STRENGTH_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %u", type->MaxStrength);
 
-        lua_pushnumber(lua, type->MaxStrength);
+        luaState.WriteInteger(type->MaxStrength);
     }
     else if (Strings_Are_Equal(ruleName, OWNER_RULE) || Strings_Are_Equal(ruleName, HOUSES_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->HouseListCsv);
 
-        lua_pushstring(lua, type->HouseListCsv);
+        luaState.WriteString(type->HouseListCsv);
     }
     else if (Strings_Are_Equal(ruleName, PRIMARY_WEAPON_RULE))
     {
@@ -449,7 +451,7 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", weaponStr);
 
-        lua_pushstring(lua, weaponStr);
+        luaState.WriteString(weaponStr);
     }
     else if (Strings_Are_Equal(ruleName, SECONDARY_WEAPON_RULE))
     {
@@ -457,7 +459,7 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", weaponStr);
 
-        lua_pushstring(lua, weaponStr);
+        luaState.WriteString(weaponStr);
     }
     else if (Strings_Are_Equal(ruleName, ARMOR_RULE))
     {
@@ -465,104 +467,103 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
 
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", armorStr);
 
-        lua_pushstring(lua, armorStr);
+        luaState.WriteString(armorStr);
     }
     else if (Strings_Are_Equal(ruleName, AMMO_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %d", type->MaxAmmo);
 
-        lua_pushnumber(lua, type->MaxAmmo);
+        luaState.WriteInteger(type->MaxAmmo);
     }
     else if (Strings_Are_Equal(ruleName, SIGHT_RANGE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %d", type->SightRange);
 
-        lua_pushnumber(lua, type->SightRange);
+        luaState.WriteInteger(type->SightRange);
     }
     else if (Strings_Are_Equal(ruleName, REWARD_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %d", type->Reward);
 
-        lua_pushnumber(lua, type->Reward);
+        luaState.WriteInteger(type->Reward);
     }
     else if (Strings_Are_Equal(ruleName, DETECT_CLOAKED_OBJECTS_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsScanner));
 
-        lua_pushboolean(lua, type->IsScanner);
+        luaState.WriteBool(type->IsScanner);
     }
     else if (Strings_Are_Equal(ruleName, CRUSHABLE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrushable));
 
-        lua_pushboolean(lua, type->IsCrushable);
+        luaState.WriteBool(type->IsCrushable);
     }
     else if (Strings_Are_Equal(ruleName, TRANSPORTER_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTransporter));
 
-        lua_pushboolean(lua, type->IsTransporter);
+        luaState.WriteBool(type->IsTransporter);
     }
     else if (Strings_Are_Equal(ruleName, IMAGE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->Image);
 
-        lua_pushstring(lua, type->Image);
+        luaState.WriteString(type->Image);
     }
-
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->FriendlyName);
 
-        lua_pushstring(lua, type->FriendlyName);
+        luaState.WriteString(type->FriendlyName);
     }
     else if (Strings_Are_Equal(ruleName, REPAIRABLE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsRepairable));
 
-        lua_pushboolean(lua, type->IsRepairable);
+        luaState.WriteBool(type->IsRepairable);
     }
     else if (Strings_Are_Equal(ruleName, HAS_CREW_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsCrew));
 
-        lua_pushboolean(lua, type->IsCrew);
+        luaState.WriteBool(type->IsCrew);
     }
     else if (Strings_Are_Equal(ruleName, LEADER_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsLeader));
 
-        lua_pushboolean(lua, type->IsLeader);
+        luaState.WriteBool(type->IsLeader);
     }
     else if (Strings_Are_Equal(ruleName, TWO_SHOOTER_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTwoShooter));
 
-        lua_pushboolean(lua, type->IsTwoShooter);
+        luaState.WriteBool(type->IsTwoShooter);
     }
     else if (Strings_Are_Equal(ruleName, HAS_THEATER_GFX_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTheater));
 
-        lua_pushboolean(lua, type->IsTheater);
+        luaState.WriteBool(type->IsTheater);
     }
     else if (Strings_Are_Equal(ruleName, TURRET_EQUIPPED_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsTurretEquipped));
 
-        lua_pushboolean(lua, type->IsTurretEquipped);
+        luaState.WriteBool(type->IsTurretEquipped);
     }
     else if (Strings_Are_Equal(ruleName, SHOW_NAME_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsNominal));
 
-        lua_pushboolean(lua, type->IsNominal);
+        luaState.WriteBool(type->IsNominal);
     }
     else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         Log_Trace("Read_TechnoType_Rule => Rule value: %s", Convert_Boolean_To_String(type->IsModType));
 
-        lua_pushboolean(lua, type->IsModType);
+        luaState.WriteBool(type->IsModType);
     }
     else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
     {
@@ -570,14 +571,14 @@ bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* rul
         {
             Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->ModBaseIniName);
 
-            lua_pushstring(lua, type->ModBaseIniName);
+            luaState.WriteString(type->ModBaseIniName);
         }
         else
         {
             // fallback to ini name for non-mod type instances
             Log_Trace("Read_TechnoType_Rule => Rule value: %s", type->IniName);
 
-            lua_pushstring(lua, type->IniName);
+            luaState.WriteString(type->IniName);
         }
     }
     else

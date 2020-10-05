@@ -104,45 +104,47 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
     return true;
 }
 
-static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char* ruleName)
+static bool Read_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName)
 {
+    auto &luaState = LuaRuntime().GetState();
+
     if (Strings_Are_Equal(ruleName, WEAPON_PROJECTILE_RULE))
     {
         auto bullet = Bullet_Type_To_String(weapon->Projectile);
 
         Log_Trace("Read_Weapon_Rule => Rule value: %s", bullet);
 
-        lua_pushstring(lua, bullet);
+        luaState.WriteString(bullet);
     }
     else if (Strings_Are_Equal(ruleName, WEAPON_DAMAGE_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %u", weapon->Attack);
 
-        lua_pushnumber(lua, weapon->Attack);
+        luaState.WriteInteger(weapon->Attack);
     }
     else if (Strings_Are_Equal(ruleName, WEAPON_RATE_OF_FIRE_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %u", weapon->ROF);
 
-        lua_pushnumber(lua, weapon->ROF);
+        luaState.WriteInteger(weapon->ROF);
     }
     else if (Strings_Are_Equal(ruleName, WEAPON_RANGE_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %u", weapon->Range);
 
-        lua_pushnumber(lua, weapon->Range);
+        luaState.WriteInteger(weapon->Range);
     }
     else if (Strings_Are_Equal(ruleName, FRIENDLY_NAME_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->FriendlyName);
 
-        lua_pushstring(lua, weapon->FriendlyName);
+        luaState.WriteString(weapon->FriendlyName);
     }
     else if (Strings_Are_Equal(ruleName, IS_MOD_TYPE_RULE))
     {
         Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->IsModType);
 
-        lua_pushboolean(lua, weapon->IsModType);
+        luaState.WriteBool(weapon->IsModType);
     }
     else if (Strings_Are_Equal(ruleName, BASE_TYPE_RULE))
     {
@@ -150,14 +152,14 @@ static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char
         {
             Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->ModBaseIniName);
 
-            lua_pushstring(lua, weapon->ModBaseIniName);
+            luaState.WriteString(weapon->ModBaseIniName);
         }
         else
         {
             // fallback to ini name for non-mod type instances
             Log_Trace("Read_Weapon_Rule => Rule value: %s", weapon->IniName);
 
-            lua_pushstring(lua, weapon->IniName);
+            luaState.WriteString(weapon->IniName);
         }
     }
     else
@@ -168,8 +170,9 @@ static bool Read_Weapon_Rule(lua_State* lua, WeaponTypeClass* weapon, const char
     return true;
 }
 
-static WeaponType ParseWeaponType(lua_State* lua, const char* weaponTypeName, bool* parseError)
+static WeaponType ParseWeaponType(const char* weaponTypeName, bool* parseError)
 {
+    auto &luaState = LuaRuntime().GetState();
     auto upperTypeName = Convert_String_To_Upper_Case(weaponTypeName);
 
     auto weaponType = Parse_Weapon_Type(
@@ -181,17 +184,17 @@ static WeaponType ParseWeaponType(lua_State* lua, const char* weaponTypeName, bo
 
     if (*parseError)
     {
-        luaL_error(lua, "weapon type passed was not recognised: %s", weaponTypeName);
+        luaState.RaiseError("weapon type passed was not recognised: %s", weaponTypeName);
         return WEAPON_NONE;
     }
 
     return weaponType;
 }
 
-static WeaponTypeClass* ResolveWeapon(lua_State* lua, const char* weaponTypeName)
+static WeaponTypeClass* ResolveWeapon(const char* weaponTypeName)
 {
     bool parseError = false;
-    auto weaponType = ParseWeaponType(lua, weaponTypeName, &parseError);
+    auto weaponType = ParseWeaponType(weaponTypeName, &parseError);
 
     if (parseError)
     {
@@ -206,7 +209,6 @@ static WeaponTypeClass* ResolveWeapon(lua_State* lua, const char* weaponTypeName
 static int Lua_Set_Weapon_Rule(lua_State* lua)
 {
     return Lua_Set_Rule(
-        lua,
         "Weapon",
         "weaponTypeName",
         &ResolveWeapon,
@@ -219,7 +221,6 @@ static int Lua_Set_Weapon_Rule(lua_State* lua)
 static int Lua_Get_Weapon_Rule(lua_State* lua)
 {
     return Lua_Get_Rule(
-        lua,
         "Weapon",
         "weaponTypeName",
         &ResolveWeapon,
@@ -231,10 +232,23 @@ static int Lua_Get_Weapon_Rule(lua_State* lua)
 
 bool Register_Weapon_Functions()
 {
-	Log_Debug("Initialising Lua API weapon functions");
+    LuaRuntime().RegisterApi("weapon rules", [](ILuaApi& a) {
+        a.WithDescription("Weapon info and control functions")
 
-    Register_Lua_Function("getWeaponRule", Lua_Get_Weapon_Rule);
-    Register_Lua_Function("setWeaponRule", Lua_Set_Weapon_Rule);
+         .WithFunction("getWeaponRule", Lua_Get_Weapon_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         })
 
-	return true;
+         .WithFunction("setWeaponRule", Lua_Set_Weapon_Rule, [](LuaFunctionInfo& f) {
+             f.WithDescription("Write a info line to the log file")
+              .WithParameter("str", [](LuaVariableInfo& p) {
+                 p.WithType(LuaType::String);
+              });
+         });
+    });
+
+    return true;
 }

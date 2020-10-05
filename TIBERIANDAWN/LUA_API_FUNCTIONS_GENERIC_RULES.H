@@ -10,77 +10,95 @@
 
 bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const char* uppercaseValue, const char* originalValue, bool* valueParseError);
 
-bool Read_TechnoType_Rule(lua_State* lua, TechnoTypeClass* type, const char* ruleName);
+bool Read_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName);
 
 /**
  * Full defintions required here, see: https://stackoverflow.com/questions/456713/why-do-i-get-unresolved-external-symbol-errors-when-using-templates
  */
 template<typename T> int Lua_Get_Rule(
-    lua_State* lua,
     const char* typeName,
     const char* paramName,
-    T* (*typeParser)(lua_State*, const char*),
+    T* (*typeParser)(const char*),
     IRulesIniSection& rulesInfo,
-    bool(*readTypeRule)(lua_State*, T*, const char*),
+    bool(*readTypeRule)(T*, const char*),
     bool searchTechnoType = true
 )
 {
+    auto &luaState = LuaRuntime().GetState();
+
     Log_Trace("Lua_Get_%s_Rule called from Lua", typeName);
 
-    int argCount = lua_gettop(lua);
+    int argCount = luaState.GetStackTop();
 
     if (argCount < 2)
     {
-        luaL_error(lua, "get%sRule requires exactly two arguments", typeName);
-    }
+        luaState.RaiseError("get%sRule requires exactly two arguments", typeName);
 
-    auto typeInstanceName = Get_Lua_Value_As_String(1);
-
-    if (String_Is_Empty(typeInstanceName))
-    {
-        luaL_error(lua, "get%sRule argument `%s` was nil or blank", typeName, paramName);
         return 0;
     }
 
-    auto typeInstance = typeParser(lua, typeInstanceName);
+    auto &typeInstanceNameResult = luaState.ReadString(1);
+
+    if (typeInstanceNameResult.IsErrorResult() || String_Is_Empty(typeInstanceNameResult.GetValue()))
+    {
+        luaState.RaiseError("get%sRule argument `%s` was nil or blank", typeName, paramName);
+
+        delete &typeInstanceNameResult;
+
+        return 0;
+    }
+
+    auto typeInstance = typeParser(typeInstanceNameResult.GetValue());
 
     if (typeInstance == NULL)
     {
+        delete &typeInstanceNameResult;
+
         return 0;
     }
 
-    auto ruleNameParameter = Get_Lua_Value_As_String(2);
+    auto &ruleNameParameterResult = luaState.ReadString(2);
 
-    if (ruleNameParameter == NULL)
+    if (ruleNameParameterResult.IsErrorResult() || String_Is_Empty(ruleNameParameterResult.GetValue()))
     {
-        luaL_error(lua, "get%sRule argument `ruleName` was nil", typeName);
+        luaState.RaiseError("get%sRule argument `ruleName` was nil", typeName);
+        
+        delete &typeInstanceNameResult;
+        delete &ruleNameParameterResult;
+
         return 0;
     }
 
-    auto ruleKey = rulesInfo.BuildKey(ruleNameParameter);
+    auto ruleKey = rulesInfo.BuildKey(ruleNameParameterResult.GetValue());
     auto ruleIsValid = rulesInfo.HasRule(ruleKey);
 
     if (!ruleIsValid)
     {
-        luaL_error(lua, "rule name type passed get%sRule was not recognised for this type: %s", typeName, ruleNameParameter);
+        luaState.RaiseError("rule name type passed get%sRule was not recognised for this type: %s", typeName, ruleNameParameterResult.GetValue());
+        
+        delete &typeInstanceNameResult;
+        delete &ruleNameParameterResult;
 
         return 0;
     }
 
-    Log_Debug("Lua_Get_%s_Rule => attempting to read value of rule '%s'", typeName, ruleNameParameter);
+    Log_Debug("Lua_Get_%s_Rule => attempting to read value of rule '%s'", typeName, ruleNameParameterResult.GetValue());
 
     auto ruleName = rulesInfo[ruleKey].GetName();
     auto ruleMatched = false;
 
     if (searchTechnoType)
     {
-        Log_Trace("Lua_Get_%s_Rule => looking for rule '%s' in Techno Type", typeName, ruleNameParameter);
+        Log_Trace("Lua_Get_%s_Rule => looking for rule '%s' in Techno Type", typeName, ruleNameParameterResult.GetValue());
 
-        ruleMatched = Read_TechnoType_Rule(lua, (TechnoTypeClass*)typeInstance, ruleName);
+        ruleMatched = Read_TechnoType_Rule((TechnoTypeClass*)typeInstance, ruleName);
 
         if (ruleMatched)
         {
             Log_Debug("Lua_Get_%s_Rule => Rule matched in Techno Type", typeName);
+        
+            delete &typeInstanceNameResult;
+            delete &ruleNameParameterResult;
 
             return 1;
         }
@@ -88,86 +106,106 @@ template<typename T> int Lua_Get_Rule(
 
     Log_Trace("Lua_Get_%s_Rule => looking for rule in %s Type", typeName, typeName);
 
-    ruleMatched = readTypeRule(lua, typeInstance, ruleName);
+    ruleMatched = readTypeRule(typeInstance, ruleName);
 
     if (ruleMatched)
     {
         Log_Debug("Lua_Get_%s_Rule => Rule matched in %s Type", typeName, typeName);
+        
+        delete &typeInstanceNameResult;
+        delete &ruleNameParameterResult;
 
         return 1;
     }
 
-    luaL_error(lua, "rule name type passed get%sRule was not matched: %s", typeName, ruleNameParameter);
+    luaState.RaiseError("rule name type passed get%sRule was not matched: %s", typeName, ruleNameParameterResult.GetValue());
+
+    delete &typeInstanceNameResult;
+    delete &ruleNameParameterResult;
 
     return 0;
 }
 
 template<typename T> int Lua_Set_Rule(
-    lua_State* lua,
     const char* typeName,
     const char* paramName,
-    T* (*typeParser)(lua_State*, const char*),
+    T* (*typeParser)(const char*),
     IRulesIniSection& rulesInfo,
     bool(*writeTypeRule)(T*, const char*, const char*, const char*, bool*),
     bool searchTechnoType = true
 )
 {
+    auto &luaState = LuaRuntime().GetState();
+
     Log_Trace("Lua_Set_%s_Rule called from Lua", typeName);
 
-    int argCount = lua_gettop(lua);
+    int argCount = luaState.GetStackTop();
 
     if (argCount < 3)
     {
-        luaL_error(lua, "set%sRule requires exactly three arguments", typeName);
+        luaState.RaiseError("set%sRule requires exactly three arguments", typeName);
+
         return 0;
     }
 
-    auto typeInstanceName = Get_Lua_Value_As_String(1);
+    auto &typeInstanceNameResult = luaState.ReadString(1);
 
-    if (String_Is_Empty(typeInstanceName))
+    if (String_Is_Empty(typeInstanceNameResult.GetValue()))
     {
-        luaL_error(lua, "set%sRule argument `%s` was nil or blank", typeName, paramName);
+        luaState.RaiseError("set%sRule argument `%s` was nil or blank", typeName, paramName);
+
+        delete &typeInstanceNameResult;
+
         return 0;
     }
 
-    auto typeInstance = typeParser(lua, typeInstanceName);
+    auto typeInstance = typeParser(typeInstanceNameResult.GetValue());
 
     if (typeInstance == NULL)
     {
         return 0;
     }
 
-    auto ruleNameParameter = Get_Lua_Value_As_String(2);
-    auto ruleValue = Get_Lua_Value_As_String(3);
+    auto &ruleNameParameterResult = luaState.ReadString(2);
+    auto ruleValue = luaState.ToString(3);
 
-    if (String_Is_Empty(ruleNameParameter))
+    if (ruleNameParameterResult.IsErrorResult() || String_Is_Empty(ruleNameParameterResult.GetValue()))
     {
-        luaL_error(lua, "set%sRule argument `ruleName` was nil or blank", typeName);
+        luaState.RaiseError("set%sRule argument `ruleName` was nil or blank", typeName);
+        
+        delete &typeInstanceNameResult;
+        delete &ruleNameParameterResult;
 
         return 0;
     }
     else if (String_Is_Empty(ruleValue))
     {
-        luaL_error(lua, "set%sRule argument `ruleValue` was nil or blank", typeName);
+        luaState.RaiseError("set%sRule argument `ruleValue` was nil or blank", typeName);
+        
+        delete &typeInstanceNameResult;
+        delete &ruleNameParameterResult;
 
         return 0;
     }
 
     auto uppercaseRuleValue = Convert_String_To_Upper_Case(ruleValue);
 
-    Log_Debug("Lua_Set_%s_Rule => attempting to set rule '%s' to value: %s", typeName, ruleNameParameter, ruleValue);
+    Log_Debug("Lua_Set_%s_Rule => attempting to set rule '%s' to value: %s", typeName, ruleNameParameterResult.GetValue(), ruleValue);
 
-    auto ruleKey = rulesInfo.BuildKey(ruleNameParameter);
+    auto ruleKey = rulesInfo.BuildKey(ruleNameParameterResult.GetValue());
     auto ruleIsValid = rulesInfo.HasRule(ruleKey);
 
     if (!ruleIsValid)
     {
-        luaL_error(lua, "rule name type passed get%sRule was not recognised for this type: %s", typeName, ruleNameParameter);
+        luaState.RaiseError("rule name type passed get%sRule was not recognised for this type: %s", typeName, ruleNameParameterResult.GetValue());
+        
+        delete &typeInstanceNameResult;
+        delete &ruleNameParameterResult;
 
         return 0;
     }
 
-    Log_Debug("Lua_Get_%s_Rule => attempting to read value of rule '%s'", typeName, ruleNameParameter);
+    Log_Debug("Lua_Get_%s_Rule => attempting to read value of rule '%s'", typeName, ruleNameParameterResult.GetValue());
 
     auto ruleName = rulesInfo[ruleKey].GetName();
 
@@ -191,6 +229,9 @@ template<typename T> int Lua_Set_Rule(
             Log_Debug("Lua_Set_%s_Rule => Rule matched in Techno Type", typeName);
 
             delete uppercaseRuleValue;
+        
+            delete &typeInstanceNameResult;
+            delete &ruleNameParameterResult;
 
             return 0;
         }
@@ -213,22 +254,31 @@ template<typename T> int Lua_Set_Rule(
             Log_Debug("Lua_Set_%s_Rule => Rule matched in %s Type", typeName, typeName);
 
             delete uppercaseRuleValue;
+        
+            delete &typeInstanceNameResult;
+            delete &ruleNameParameterResult;
 
             return 0;
         }
     }
     else
     {
-        luaL_error(lua, "value for rule `%s` passed to set%sRule was not valid: %s", typeName, ruleNameParameter, ruleValue);
+        luaState.RaiseError("value for rule `%s` passed to set%sRule was not valid: %s", typeName, ruleNameParameterResult.GetValue(), ruleValue);
 
         delete uppercaseRuleValue;
+        
+        delete &typeInstanceNameResult;
+        delete &ruleNameParameterResult;
 
         return 0;
     }
 
-    luaL_error(lua, "rule name passed to set%sRule was not matched: %s", typeName, ruleNameParameter);
+    luaState.RaiseError("rule name passed to set%sRule was not matched: %s", typeName, ruleNameParameterResult.GetValue());
 
     delete uppercaseRuleValue;
+        
+    delete &typeInstanceNameResult;
+    delete &ruleNameParameterResult;
 
     return 0;
 }
