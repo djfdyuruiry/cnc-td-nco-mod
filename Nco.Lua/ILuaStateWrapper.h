@@ -147,10 +147,7 @@ public:
 		{
 			return ReadInteger(stackIndex);
 		}
-		else if constexpr (
-			std::is_same_v<T, double> || std::is_same_v<T, unsigned double>
-			|| std::is_same_v<T, float> || std::is_same_v<T, unsigned float>
-		)
+		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
 		{
 			return ReadDouble(stackIndex);
 		}
