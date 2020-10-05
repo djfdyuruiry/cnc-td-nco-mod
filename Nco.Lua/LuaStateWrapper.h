@@ -100,14 +100,14 @@ public:
 		return lua_isboolean(lua, stackIndex) == 1;
 	}
 
-	bool IsNumber(int stackIndex)
-	{
-		return lua_isnumber(lua, stackIndex);
-	}
-
 	bool IsInt(int stackIndex)
 	{
 		return lua_isinteger(lua, stackIndex);
+	}
+
+	bool IsNumber(int stackIndex)
+	{
+		return lua_isnumber(lua, stackIndex);
 	}
 
 	bool IsNil(int stackIndex)
@@ -120,14 +120,14 @@ public:
 		return IsBool(GetStackTop());
 	}
 
-	bool IsNumber()
-	{
-		return lua_isnumber(lua, GetStackTop());
-	}
-
 	bool IsInt()
 	{
 		return IsInt(GetStackTop());
+	}
+
+	bool IsNumber()
+	{
+		return lua_isnumber(lua, GetStackTop());
 	}
 
 	bool IsNil()
@@ -168,6 +168,18 @@ public:
 		}
 
 		return LuaResultWithValue<int>::BuildWithValue(
+			luaL_checkinteger(lua, stackIndex)
+		);
+	}
+
+	LuaResultWithValue<long long>& ReadBigInteger(int stackIndex)
+	{
+		if (!lua_isinteger(lua, stackIndex))
+		{
+			return LuaResultWithValue<long long>::BuildWithError("Value is not an integer");
+		}
+
+		return LuaResultWithValue<long long>::BuildWithValue(
 			luaL_checkinteger(lua, stackIndex)
 		);
 	}
@@ -213,6 +225,11 @@ public:
 		return ReadInteger(lua_gettop(lua));
 	}
 
+	LuaResultWithValue<long long>& ReadBigInteger()
+	{
+		return ReadBigInteger(lua_gettop(lua));
+	}
+
 	LuaResultWithValue<double>& ReadDouble()
 	{
 		return ReadDouble(lua_gettop(lua));
@@ -233,7 +250,12 @@ public:
 		lua_pushinteger(lua, value);
 	}
 
-	void WriteDouble(double value)
+	void WriteBigInteger(long long value)
+	{
+		lua_pushinteger(lua, value);
+	}
+
+	void WriteNumber(double value)
 	{
 		lua_pushnumber(lua, value);
 	}

@@ -205,11 +205,11 @@ namespace Unit
 
 				TEST_METHOD(When_GetLastError_IsCalled_Then_ErrorMessageIsReturned)
 				{
-					luaL_dostring(luaState, "££a$$ = £R£RRTabv:00");
+					luaL_dostring(luaState, "ï¿½ï¿½a$$ = ï¿½Rï¿½RRTabv:00");
 
 					auto message = luaWrapper->GetLastError();
 
-					Assert::AreEqual("[string \"££a$$ = £R£RRTabv:00\"]:1: unexpected symbol near '<\\163>'", message);
+					Assert::AreEqual("[string \"ï¿½ï¿½a$$ = ï¿½Rï¿½RRTabv:00\"]:1: unexpected symbol near '<\\163>'", message);
 				}
 
 				TEST_METHOD(When_WriteInt_IsCalled_Then_IntValueIsPushedOntoTheStack)
@@ -221,9 +221,9 @@ namespace Unit
 					Assert::AreEqual(1, val);
 				}
 
-				TEST_METHOD(When_WriteDouble_IsCalled_Then_DoubleValueIsPushedOntoTheStack)
+				TEST_METHOD(When_WriteNumber_IsCalled_Then_DoubleValueIsPushedOntoTheStack)
 				{
-					luaWrapper->WriteDouble(45.29);
+					luaWrapper->WriteNumber(45.29);
 
 					double val = lua_tonumber(luaState, 1);
 

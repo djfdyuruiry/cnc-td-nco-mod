@@ -50,9 +50,9 @@ static int Lua_Get_Mod_Data_Path(lua_State* _)
 
 static int Lua_Get_Now_In_Epoch_Millis(lua_State* _)
 {
-    auto& luaState = LuaRuntime().GetState();
+    auto &luaState = LuaRuntime().GetState();
 
-    luaState.WriteInteger(Get_Now_In_Epoch_Millis());
+    luaState.WriteBigInteger(Get_Now_In_Epoch_Millis());
 
     return 1;
 }

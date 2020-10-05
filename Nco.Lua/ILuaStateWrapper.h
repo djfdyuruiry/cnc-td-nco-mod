@@ -26,25 +26,27 @@ public:
 
 	virtual bool IsTable(int stackIndex) = 0;
 	virtual bool IsBool(int stackIndex) = 0;
-	virtual bool IsNumber(int stackIndex) = 0;
 	virtual bool IsInt(int stackIndex) = 0;
+	virtual bool IsNumber(int stackIndex) = 0;
 	virtual bool IsNil(int stackIndex) = 0;
 
 	virtual bool IsTable() = 0;
 	virtual bool IsBool() = 0;
-	virtual bool IsNumber() = 0;
 	virtual bool IsInt() = 0;
+	virtual bool IsNumber() = 0;
 	virtual bool IsNil() = 0;
 
 	virtual int GetTableSize(int stackIndex) = 0;
 	virtual void IterateOverTable(int stackIndex, std::function<void(void)> iterateAction) = 0;
 
 	virtual LuaResultWithValue<int>& ReadInteger(int stackIndex) = 0;
+	virtual LuaResultWithValue<long long>& ReadBigInteger(int stackIndex) = 0;
 	virtual LuaResultWithValue<double>& ReadDouble(int stackIndex) = 0;
 	virtual LuaResultWithValue<bool>& ReadBool(int stackIndex) = 0;
 	virtual LuaResultWithValue<const char*>& ReadString(int stackIndex) = 0;
 
 	virtual LuaResultWithValue<int>& ReadInteger() = 0;
+	virtual LuaResultWithValue<long long>& ReadBigInteger() = 0;
 	virtual LuaResultWithValue<double>& ReadDouble() = 0;
 	virtual LuaResultWithValue<bool>& ReadBool() = 0;
 	virtual LuaResultWithValue<const char*>& ReadString() = 0;
@@ -141,11 +143,16 @@ public:
 			std::is_same_v<T, char> || std::is_same_v<T, unsigned char>
 			|| std::is_same_v<T, short> || std::is_same_v<T, unsigned short>
 			|| std::is_same_v<T, int> || std::is_same_v<T, unsigned int>
-			|| std::is_same_v<T, long> || std::is_same_v<T, unsigned long>
-			|| std::is_same_v<T, unsigned long long> || std::is_same_v<T, long long>
 		)
 		{
 			return ReadInteger(stackIndex);
+		}
+		else if constexpr (
+			std::is_same_v<T, long> || std::is_same_v<T, unsigned long>
+			|| std::is_same_v<T, long long> || std::is_same_v<T, unsigned long long>
+		)
+		{
+			return ReadBigInteger(stackIndex);
 		}
 		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
 		{
@@ -167,7 +174,8 @@ public:
 	}
 
 	virtual void WriteInteger(int value) = 0;
-	virtual void WriteDouble(double value) = 0;
+	virtual void WriteBigInteger(long long value) = 0;
+	virtual void WriteNumber(double value) = 0;
 	virtual void WriteBool(bool value) = 0;
 	virtual void WriteString(const char* value) = 0;
 	virtual void WriteFunction(const char* name, lua_CFunction function) = 0;
@@ -212,15 +220,20 @@ public:
 			std::is_same_v<T, char> || std::is_same_v<T, unsigned char>
 			|| std::is_same_v<T, short> || std::is_same_v<T, unsigned short>
 			|| std::is_same_v<T, int> || std::is_same_v<T, unsigned int>
-			|| std::is_same_v<T, long> || std::is_same_v<T, unsigned long>
-			|| std::is_same_v<T, long long> || std::is_same_v<T, unsigned long long>
 		)
 		{
 			WriteInteger(value);
 		}
+		else if constexpr (
+			std::is_same_v<T, long> || std::is_same_v<T, unsigned long>
+			|| std::is_same_v<T, long long> || std::is_same_v<T, unsigned long long>
+			)
+		{
+			WriteBigInteger(value);
+		}
 		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
 		{
-			WriteDouble(value);
+			WriteNumber(value);
 		}
 		else if constexpr (std::is_same_v<T, bool>)
 		{

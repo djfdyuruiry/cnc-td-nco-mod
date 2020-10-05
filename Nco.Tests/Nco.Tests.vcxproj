@@ -74,7 +74,8 @@
       <ProfileGuidedDatabase />
     </Link>
     <PostBuildEvent>
-      <Command>..\scripts\post-build.bat "$(OutputPath)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

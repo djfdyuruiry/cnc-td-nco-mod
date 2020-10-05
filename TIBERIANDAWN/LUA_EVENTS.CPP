@@ -83,7 +83,5 @@ void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber)
 // async messages
 void On_Game_Tick()
 {
-    auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
-
     Fire_Lua_Event(ON_GAME_TICK_EVENT);
 }
