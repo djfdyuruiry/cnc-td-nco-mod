@@ -10,7 +10,7 @@
 
 static int Lua_Build_Mod_Data_File_Path(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     int argCount = luaState.GetStackTop();
 
@@ -20,7 +20,7 @@ static int Lua_Build_Mod_Data_File_Path(lua_State* _)
         return 0;
     }
 
-    auto &filePathResult = luaState.ReadString(1);
+    auto& filePathResult = luaState.ReadString(1);
 
     if (filePathResult.IsErrorResult() || String_Is_Empty(filePathResult.GetValue()))
     {
@@ -50,7 +50,7 @@ static int Lua_Get_Mod_Data_Path(lua_State* _)
 
 static int Lua_Get_Now_In_Epoch_Millis(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     luaState.WriteBigInteger(Get_Now_In_Epoch_Millis());
 
@@ -66,7 +66,7 @@ static int Lua_Toggle_Console_Logging(lua_State* _)
 
 static int Lua_Set_Log_Level(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     int argCount = luaState.GetStackTop();
 
@@ -76,7 +76,7 @@ static int Lua_Set_Log_Level(lua_State* _)
         return 0;
     }
 
-    auto &logLevelStrResult = luaState.ReadString(1);
+    auto& logLevelStrResult = luaState.ReadString(1);
 
     if (logLevelStrResult.IsErrorResult() || String_Is_Empty(logLevelStrResult.GetValue()))
     {
@@ -103,7 +103,7 @@ static int Lua_Set_Log_Level(lua_State* _)
 
 static int Lua_Get_Log_Level(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto logLevel = Log_Level_To_String(Current_Log_Level());
 
     luaState.WriteString(logLevel);
@@ -113,7 +113,7 @@ static int Lua_Get_Log_Level(lua_State* _)
 
 static int Lua_Show_Error(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     int argCount = luaState.GetStackTop();
 
@@ -123,7 +123,7 @@ static int Lua_Show_Error(lua_State* _)
         return 0;
     }
 
-    auto &messageResult = luaState.ReadString(1);
+    auto& messageResult = luaState.ReadString(1);
 
     if (messageResult.IsErrorResult() || String_Is_Empty(messageResult.GetValue()))
     {
@@ -143,12 +143,12 @@ static int Lua_Show_Error(lua_State* _)
 
 static int Lua_Print(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto argCount = luaState.GetStackTop();
 
     if (argCount > 0)
     {
-        auto &printMessageResult = luaState.ReadString(1);
+        auto& printMessageResult = luaState.ReadString(1);
 
         puts(printMessageResult.GetValue());
 
@@ -160,12 +160,12 @@ static int Lua_Print(lua_State* _)
 
 static int Lua_Log(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto argCount = luaState.GetStackTop();
 
     if (argCount > 0)
     {
-        auto &logMessageResult = luaState.ReadString(1);
+        auto& logMessageResult = luaState.ReadString(1);
 
         Log_Info("Lua => %s", logMessageResult.GetValue());
 

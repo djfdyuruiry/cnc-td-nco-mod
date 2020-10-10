@@ -7,7 +7,7 @@ static void Read_Object_Names(
 )
 {
     auto toStringFunction = (char* (*)(char, bool))toStringFunctionPtr;
-    auto &vector = std::vector<const char*>();
+    auto& vector = std::vector<const char*>();
 
     for (char i = first; i < count; i++)
     {

@@ -24,7 +24,7 @@ template<typename T> int Lua_Get_Rule(
     bool searchTechnoType = true
 )
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     Log_Trace("Lua_Get_%s_Rule called from Lua", typeName);
 
@@ -37,7 +37,7 @@ template<typename T> int Lua_Get_Rule(
         return 0;
     }
 
-    auto &typeInstanceNameResult = luaState.ReadString(1);
+    auto& typeInstanceNameResult = luaState.ReadString(1);
 
     if (typeInstanceNameResult.IsErrorResult() || String_Is_Empty(typeInstanceNameResult.GetValue()))
     {
@@ -57,7 +57,7 @@ template<typename T> int Lua_Get_Rule(
         return 0;
     }
 
-    auto &ruleNameParameterResult = luaState.ReadString(2);
+    auto& ruleNameParameterResult = luaState.ReadString(2);
 
     if (ruleNameParameterResult.IsErrorResult() || String_Is_Empty(ruleNameParameterResult.GetValue()))
     {
@@ -135,7 +135,7 @@ template<typename T> int Lua_Set_Rule(
     bool searchTechnoType = true
 )
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     Log_Trace("Lua_Set_%s_Rule called from Lua", typeName);
 
@@ -148,7 +148,7 @@ template<typename T> int Lua_Set_Rule(
         return 0;
     }
 
-    auto &typeInstanceNameResult = luaState.ReadString(1);
+    auto& typeInstanceNameResult = luaState.ReadString(1);
 
     if (String_Is_Empty(typeInstanceNameResult.GetValue()))
     {
@@ -166,7 +166,7 @@ template<typename T> int Lua_Set_Rule(
         return 0;
     }
 
-    auto &ruleNameParameterResult = luaState.ReadString(2);
+    auto& ruleNameParameterResult = luaState.ReadString(2);
     auto ruleValue = luaState.ToString(3);
 
     if (ruleNameParameterResult.IsErrorResult() || String_Is_Empty(ruleNameParameterResult.GetValue()))

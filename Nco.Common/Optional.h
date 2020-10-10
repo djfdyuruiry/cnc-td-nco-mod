@@ -1,11 +1,13 @@
 #pragma once
 
+#include <stdlib.h>
+
 class Optional
 {
 private:
 	void* data;
 
-	Optional() 
+	Optional()
 	{
 		data = NULL;
 	}

@@ -164,7 +164,7 @@ static bool Write_Building_Rule(BuildingTypeClass* type, const char* ruleName, c
 
 static bool Read_Building_Rule(BuildingTypeClass* type, const char* ruleName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     if (Strings_Are_Equal(ruleName, BIBBED_RULE))
     {
@@ -250,7 +250,7 @@ static bool Read_Building_Rule(BuildingTypeClass* type, const char* ruleName)
 
 static StructType ParseBuildingType(const char* buildingTypeName, bool* parseError)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto upperTypeName = Convert_String_To_Upper_Case(buildingTypeName);
 
     auto buildingType = Parse_Structure_Type(
@@ -313,9 +313,18 @@ bool Register_Building_Rule_Functions()
         a.WithDescription("Building rule info and control functions")
 
          .WithFunction("getBuildingRule", Lua_Get_Building_Rule, [](LuaFunctionInfo& f) {
-             f.WithDescription("Write a info line to the log file")
-              .WithParameter("str", [](LuaVariableInfo& p) {
-                 p.WithType(LuaType::String);
+             f.WithDescription("Get the current value of a rule for a given Building type")
+              .WithParameter("typeName", [](LuaVariableInfo& p) {
+                 p.WithDescription("The building type, e.g. 'NUKE', 'PYLE' etc.")
+                  .WithType(LuaType::String);
+              })
+              .WithParameter("ruleName", [](LuaVariableInfo& p) {
+                 p.WithDescription("The rule value to return")
+                  .WithType(LuaType::String);
+              })
+              .WithReturnValue("ruleValue", [](LuaVariableInfo& p) {
+                 p.WithDescription("The rule value, if present, otherwise nil")
+                  .WithType(LuaType::Any);
               });
          })
 

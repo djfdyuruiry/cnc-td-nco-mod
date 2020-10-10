@@ -106,7 +106,7 @@ static bool Write_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName, con
 
 static bool Read_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     if (Strings_Are_Equal(ruleName, WEAPON_PROJECTILE_RULE))
     {
@@ -172,7 +172,7 @@ static bool Read_Weapon_Rule(WeaponTypeClass* weapon, const char* ruleName)
 
 static WeaponType ParseWeaponType(const char* weaponTypeName, bool* parseError)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto upperTypeName = Convert_String_To_Upper_Case(weaponTypeName);
 
     auto weaponType = Parse_Weapon_Type(

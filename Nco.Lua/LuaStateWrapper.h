@@ -11,8 +11,9 @@ class LuaStateWrapper : public ILuaStateWrapper
 {
 private:
 	lua_State* lua;
+	bool stateOwner;
 
-	LuaStateWrapper(lua_State* lua) : lua(lua)
+	LuaStateWrapper(lua_State* lua, bool stateOwner) : lua(lua), stateOwner(stateOwner)
 	{
 	}
 
@@ -35,14 +36,14 @@ protected:
 	}
 
 public:
-	static ILuaStateWrapper& Build(lua_State* lua)
+	static ILuaStateWrapper& Build(lua_State* lua, bool stateOwner = true)
 	{
-		return *(new LuaStateWrapper(lua));
+		return *(new LuaStateWrapper(lua, stateOwner));
 	}
 
 	~LuaStateWrapper()
 	{
-		if (lua != NULL)
+		if (stateOwner && lua != NULL)
 		{
 			lua_close(lua);
 		}

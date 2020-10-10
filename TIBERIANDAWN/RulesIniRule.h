@@ -411,7 +411,7 @@ public:
 			|| type == BULLET_RULE
 		)
 		{
-			auto &result = luaState.ReadInteger(index);
+			auto& result = luaState.ReadInteger(index);
 
 			SetValue<int>(result.GetValue());
 
@@ -425,7 +425,7 @@ public:
 				return false;
 			}
 
-			auto &result = luaState.ReadBool(index);
+			auto& result = luaState.ReadBool(index);
 
 			SetValue<bool>(result.GetValue());
 
@@ -433,7 +433,7 @@ public:
 		}
 		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
 		{
-			auto &result = luaState.ReadInteger(index);
+			auto& result = luaState.ReadInteger(index);
 			auto value = result.GetValue();
 
 			if (value < 0)
@@ -451,7 +451,7 @@ public:
 		}
 		else if (type == DOUBLE_RULE || type == FIXED_RULE)
 		{
-			auto &result = luaState.ReadDouble(index);
+			auto& result = luaState.ReadDouble(index);
 
 			SetValue<double>(result.GetValue());
 
@@ -459,7 +459,7 @@ public:
 		}
 		else if (type == PREREQ_RULE)
 		{
-			auto &result = luaState.ReadInteger(index);
+			auto& result = luaState.ReadInteger(index);
 
 			SetValue<long>((long)result.GetValue());
 

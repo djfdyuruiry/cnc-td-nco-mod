@@ -102,7 +102,7 @@ static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, c
 
 static bool Read_Infantry_Rule(InfantryTypeClass* type, const char* ruleName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     if (Strings_Are_Equal(ruleName, FEMALE_RULE))
     {
@@ -162,7 +162,7 @@ static bool Read_Infantry_Rule(InfantryTypeClass* type, const char* ruleName)
 
 static InfantryType ParseInfantryType(const char* infantryTypeName, bool* parseError)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto upperTypeName = Convert_String_To_Upper_Case(infantryTypeName);
 
     auto infantryType = Parse_Infantry_Type(

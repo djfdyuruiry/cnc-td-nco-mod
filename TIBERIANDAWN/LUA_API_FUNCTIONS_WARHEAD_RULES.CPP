@@ -181,7 +181,7 @@ static bool Write_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName, 
 
 static bool Read_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     if (Strings_Are_Equal(ruleName, WARHEAD_SPREAD_FACTOR_RULE))
     {
@@ -276,7 +276,7 @@ static bool Read_Warhead_Rule(WarheadTypeClass* warhead, const char* ruleName)
 
 static WarheadType ParseWarheadType(const char* warheadTypeName, bool* parseError)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto upperWarheadTypeName = Convert_String_To_Upper_Case(warheadTypeName);
 
     auto warheadType = Parse_Warhead_Type(

@@ -462,7 +462,6 @@
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />
     <ClInclude Include="OBJECT.H" />
-    <ClInclude Include="Optional.h" />
     <ClInclude Include="OPTIONS.H" />
     <ClInclude Include="OVERLAY.H" />
     <ClInclude Include="PACKET.H" />
@@ -526,6 +525,7 @@
     <ClInclude Include="TEAM.H" />
     <ClInclude Include="TEAMTYPE.H" />
     <ClInclude Include="TECHNO.H" />
+    <ClInclude Include="TechnoTypeApi.h" />
     <ClInclude Include="TEMPLATE.H" />
     <ClInclude Include="TERRAIN.H" />
     <ClInclude Include="TEXTBLIT.H" />

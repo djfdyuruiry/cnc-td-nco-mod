@@ -80,7 +80,7 @@ static bool Write_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName, c
 
 static bool Read_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     if (Strings_Are_Equal(ruleName, CANT_HOVER_RULE))
     {
@@ -122,7 +122,7 @@ static bool Read_Aircraft_Rule(AircraftTypeClass* type, const char* ruleName)
 
 static AircraftType ParseAircraftType(const char* aircraftTypeName, bool* parseError)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     auto upperTypeName = Convert_String_To_Upper_Case(aircraftTypeName);
 
@@ -145,7 +145,7 @@ static AircraftType ParseAircraftType(const char* aircraftTypeName, bool* parseE
 
 static AircraftTypeClass* ResolveAircraft(const char* aircraftTypeName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     bool parseError = false;
     auto aircraftType = ParseAircraftType(aircraftTypeName, &parseError);
@@ -188,16 +188,34 @@ bool Register_Aircraft_Rule_Functions()
         a.WithDescription("Aircraft rule info and control functions")
 
          .WithFunction("getAircraftRule", Lua_Get_Aircraft_Rule, [](LuaFunctionInfo& f) {
-             f.WithDescription("Write a info line to the log file")
-              .WithParameter("str", [](LuaVariableInfo& p) {
-                 p.WithType(LuaType::String);
+             f.WithDescription("Get the current value of a rule for a given Aircraft type")
+              .WithParameter("typeName", [](LuaVariableInfo& p) {
+                 p.WithDescription("The aircraft type, e.g. 'ORCA', 'A10' etc.")
+                  .WithType(LuaType::String);
+              })
+              .WithParameter("ruleName", [](LuaVariableInfo& p) {
+                 p.WithDescription("The rule value to return")
+                  .WithType(LuaType::String);
+              })
+              .WithReturnValue("ruleValue", [](LuaVariableInfo& p) {
+                 p.WithDescription("The rule value, if present, otherwise nil")
+                  .WithType(LuaType::Any);
               });
          })
 
          .WithFunction("setAircraftRule", Lua_Set_Aircraft_Rule, [](LuaFunctionInfo& f) {
-             f.WithDescription("Write a info line to the log file")
-              .WithParameter("str", [](LuaVariableInfo& p) {
-                 p.WithType(LuaType::String);
+             f.WithDescription("Set the current value of a rule for a given Aircraft type")
+              .WithParameter("typeName", [](LuaVariableInfo& p) {
+                 p.WithDescription("The aircraft type, e.g. 'ORCA', 'A10' etc.")
+                  .WithType(LuaType::String);
+              })
+              .WithParameter("ruleName", [](LuaVariableInfo& p) {
+                 p.WithDescription("The rule to update")
+                  .WithType(LuaType::String);
+              })
+              .WithParameter("ruleValue", [](LuaVariableInfo& p) {
+                 p.WithDescription("The rule value to set")
+                  .WithType(LuaType::Any);
               });
          });
      });

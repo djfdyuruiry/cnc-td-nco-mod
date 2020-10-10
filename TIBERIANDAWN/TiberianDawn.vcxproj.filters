@@ -811,9 +811,6 @@
     <ClInclude Include="PARSE.H">
       <Filter>Source Files\NCO\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Optional.h">
-      <Filter>Source Files\NCO\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_EVENTS.H">
       <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClInclude>
@@ -857,6 +854,9 @@
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_WARHEAD_RULES.H">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="TechnoTypeApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
   </ItemGroup>

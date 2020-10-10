@@ -4,7 +4,7 @@
 static void Print_Lua_Result(HANDLE stdOut)
 {
 	auto output = Allocate_String(2048);
-	auto &luaState = LuaRuntime().GetState();
+	auto& luaState = LuaRuntime().GetState();
 	auto valueType = luaState.GetType(-1);
 	auto value = luaState.ToString(-1);
 

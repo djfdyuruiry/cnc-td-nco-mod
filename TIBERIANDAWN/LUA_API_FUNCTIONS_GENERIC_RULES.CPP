@@ -386,7 +386,7 @@ bool Write_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName, const ch
 
 bool Read_TechnoType_Rule(TechnoTypeClass* type, const char* ruleName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     if (Strings_Are_Equal(ruleName, BUILD_LEVEL_RULE))
     {

@@ -257,7 +257,7 @@ static bool Write_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName, con
 
 static bool Read_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     if (Strings_Are_Equal(ruleName, BULLET_HIGH_RULE))
     {
@@ -407,7 +407,7 @@ static bool Read_Bullet_Rule(BulletTypeClass* bullet, const char* ruleName)
 
 static BulletType ParseBulletType(const char* bulletTypeName, bool* parseError)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto upperBulletTypeName = Convert_String_To_Upper_Case(bulletTypeName);
 
     auto bulletType = Parse_Bullet_Type(

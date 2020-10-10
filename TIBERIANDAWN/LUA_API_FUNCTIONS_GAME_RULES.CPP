@@ -8,7 +8,7 @@ static int Lua_Get_Game_Rule(lua_State* _)
 {
     Log_Trace("Lua_Get_Game_Rule called from Lua");
 
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto argCount = luaState.GetStackTop();
 
     if (argCount < 1)
@@ -17,9 +17,9 @@ static int Lua_Get_Game_Rule(lua_State* _)
         return 0;
     }
 
-    auto &ruleNameResult = luaState.ReadString(1);
+    auto& ruleNameResult = luaState.ReadString(1);
 
-    auto &gameRules = GetRulesInfo().GetGameRules();
+    auto& gameRules = GetRulesInfo().GetGameRules();
     auto ruleKey = gameRules.BuildKey(ruleNameResult.GetValue());
 
     if (!gameRules.HasRule(ruleKey))
@@ -31,7 +31,7 @@ static int Lua_Get_Game_Rule(lua_State* _)
         return 0;
     }
 
-    auto &rule = gameRules[ruleKey];
+    auto& rule = gameRules[ruleKey];
 
     if (rule.HasValue())
     {
@@ -79,7 +79,7 @@ static int Lua_Set_Game_Rule(lua_State* lua)
 {
     Log_Trace("Lua_Set_Game_Rule called from Lua");
     
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto argCount = lua_gettop(lua);
 
     if (argCount < 2)
@@ -88,9 +88,9 @@ static int Lua_Set_Game_Rule(lua_State* lua)
         return 0;
     }
 
-    auto &ruleNameResult = luaState.ReadString(1);
+    auto& ruleNameResult = luaState.ReadString(1);
 
-    auto &gameRules = GetRulesInfo().GetGameRules();
+    auto& gameRules = GetRulesInfo().GetGameRules();
     auto ruleKey = gameRules.BuildKey(ruleNameResult.GetValue());
 
     if (!gameRules.HasRule(ruleKey))

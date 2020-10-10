@@ -187,7 +187,7 @@ static bool Write_Unit_Rule(UnitTypeClass* type, const char* ruleName, const cha
 
 static bool Read_Unit_Rule(UnitTypeClass* type, const char* ruleName)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
 
     if (Strings_Are_Equal(ruleName, CAN_BE_FOUND_IN_CRATE_RULE))
     {
@@ -291,7 +291,7 @@ static bool Read_Unit_Rule(UnitTypeClass* type, const char* ruleName)
 
 static UnitType ParseUnitType(const char* unitTypeName, bool* parseError)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     auto upperTypeName = Convert_String_To_Upper_Case(unitTypeName);
 
     auto unitType = Parse_Unit_Type(

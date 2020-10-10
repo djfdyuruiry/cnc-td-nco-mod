@@ -10,8 +10,8 @@
 
 static HousesType Lua_Parse_House_Type(int index, const char* callingFunctionName, bool* parseError)
 {
-    auto &luaState = LuaRuntime().GetState();
-    auto &houseTypeStringResult = luaState.ReadString(index);
+    auto& luaState = LuaRuntime().GetState();
+    auto& houseTypeStringResult = luaState.ReadString(index);
     auto upperHouseTypeString = Convert_String_To_Upper_Case(houseTypeStringResult.GetValue());
     auto houseType = Parse_House_Type(upperHouseTypeString, parseError);
 
@@ -37,7 +37,7 @@ static HousesType Lua_Parse_House_Type(int index, const char* callingFunctionNam
 
 static int Lua_Clear_House_Messages(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     Log_Trace("Lua_Clear_House_Messages called from Lua");
 
     auto argCount = luaState.GetStackTop();
@@ -104,8 +104,8 @@ static HouseClass* Get_House_By_Type(HousesType houseType, bool* housePresent)
 
 static SuperweaponType Lua_Parse_Superweapon_Type(int index, const char* callingFunctionName, bool* invalidValue)
 {
-    auto &luaState = LuaRuntime().GetState();
-    auto &superWeaponNameResult = luaState.ReadString(index);
+    auto& luaState = LuaRuntime().GetState();
+    auto& superWeaponNameResult = luaState.ReadString(index);
 
     if (superWeaponNameResult.IsErrorResult() || String_Is_Empty(superWeaponNameResult.GetValue()))
     {
@@ -156,7 +156,7 @@ static int Lua_Send_House_Super_Weapon_Message(
     const char* callingLuaFunctionName,
     SuperweaponMessageType messageType
 ) {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     Log_Trace("%s called from Lua", callingFunctionName);
 
     auto argCount = luaState.GetStackTop();
@@ -232,7 +232,7 @@ static int Lua_Enable_House_Super_Weapon(lua_State* _) {
 
 static int Lua_Modifiy_House_Credits(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     Log_Trace("Lua_Modify_House_Credits called from Lua");
 
     int argCount = luaState.GetStackTop();
@@ -281,7 +281,7 @@ static int Lua_Modifiy_House_Credits(lua_State* _)
 
 static int Lua_Get_Active_Houses(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     Log_Trace("Lua_Get_Active_Houses called from Lua");
 
     auto activeHousesCount = Houses.Count();
@@ -303,7 +303,7 @@ static int Lua_Get_Active_Houses(lua_State* _)
 
 static int Lua_Get_Player_Base_House(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     Log_Trace("Lua_Get_Player_House called from Lua");
 
     auto playerBaseHouse = House_Type_To_String(PlayerPtr->ActLike);
@@ -315,7 +315,7 @@ static int Lua_Get_Player_Base_House(lua_State* _)
 
 static int Lua_Get_Player_House(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     Log_Trace("Lua_Get_Player_House called from Lua");
 
     auto playerHouse = House_Type_To_String(PlayerPtr->Class->House);
@@ -363,7 +363,7 @@ static int Lua_Refresh_Sidebar(lua_State* _)
 
 static int Lua_Show_Game_Message(lua_State* _)
 {
-    auto &luaState = LuaRuntime().GetState();
+    auto& luaState = LuaRuntime().GetState();
     Log_Trace("Lua_Show_Game_Message called from Lua");
 
     int argCount = luaState.GetStackTop();
@@ -380,8 +380,8 @@ static int Lua_Show_Game_Message(lua_State* _)
         return 0;
     }
 
-    auto &messageResult = luaState.ReadString(1);
-    auto &durationInSecondsResult = luaState.ReadDouble(2);
+    auto& messageResult = luaState.ReadString(1);
+    auto& durationInSecondsResult = luaState.ReadDouble(2);
 
     if (messageResult.IsErrorResult() || messageResult.GetValue() == NULL)
     {
