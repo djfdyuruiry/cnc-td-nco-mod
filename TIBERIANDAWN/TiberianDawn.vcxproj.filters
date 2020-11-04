@@ -859,6 +859,9 @@
     <ClInclude Include="TechnoTypeApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
+    <ClInclude Include="LuaTypeWrapper.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">

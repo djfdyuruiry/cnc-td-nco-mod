@@ -24,12 +24,14 @@ public:
 	virtual const char* GetType(int stackIndex) = 0;
 	virtual const char* GetType() = 0;
 
+	virtual bool IsString(int stackIndex) = 0;
 	virtual bool IsTable(int stackIndex) = 0;
 	virtual bool IsBool(int stackIndex) = 0;
 	virtual bool IsInt(int stackIndex) = 0;
 	virtual bool IsNumber(int stackIndex) = 0;
 	virtual bool IsNil(int stackIndex) = 0;
 
+	virtual bool IsString() = 0;
 	virtual bool IsTable() = 0;
 	virtual bool IsBool() = 0;
 	virtual bool IsInt() = 0;

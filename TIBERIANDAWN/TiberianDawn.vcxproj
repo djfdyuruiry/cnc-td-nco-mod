@@ -408,6 +408,7 @@
     <ClInclude Include="HELP.H" />
     <ClInclude Include="HOUSE.H" />
     <ClInclude Include="HOUSES_TYPE.H" />
+    <ClInclude Include="LuaTypeWrapper.h" />
     <ClInclude Include="INFANTRY.H" />
     <ClInclude Include="AircraftTypeMod.h" />
     <ClInclude Include="BuildingTypeMod.h" />

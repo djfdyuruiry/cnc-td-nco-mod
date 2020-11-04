@@ -86,6 +86,11 @@ public:
 		return luaL_typename(lua, GetStackTop());
 	}
 
+	bool IsString(int stackIndex)
+	{
+		return lua_isstring(lua, stackIndex) == 1;
+	}
+
 	bool IsTable(int stackIndex)
 	{
 		return lua_istable(lua, stackIndex) == 1;
@@ -114,6 +119,11 @@ public:
 	bool IsNil(int stackIndex)
 	{
 		return lua_isnil(lua, stackIndex);
+	}
+
+	bool IsString()
+	{
+		return IsString(GetStackTop());
 	}
 
 	bool IsBool()

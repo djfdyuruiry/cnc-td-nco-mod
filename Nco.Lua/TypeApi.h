@@ -136,7 +136,7 @@ private:
 
         Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, ruleNameParameterResult.GetValue());
 
-		auto& ruleValueResult = luaState.ReadString(3);
+		auto& ruleValueResult = luaState.ToString(3);
 
 		if (ruleValueResult.IsErrorResult() || String_Is_Empty(ruleValueResult.GetValue()))
 		{
@@ -149,7 +149,7 @@ private:
 			return 0;
 		}
 
-        auto ruleMatched = WriteRule(params.typeInstance, params.ruleName, ruleValueResult.GetValue());
+        auto ruleMatched = WriteRule(params.typeInstance, params.ruleName, 3);
 
         if (ruleMatched)
         {
@@ -208,8 +208,8 @@ protected:
 
 	virtual T& ParseType(const char* typeName) = 0;
 
-	virtual bool ReadRule(T& typeInstance, const char* ruleName) = 0;
+	virtual bool ReadRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName) = 0;
 
-	virtual bool WriteRule(T& typeInstance, const char* ruleName, const char* ruleValue) = 0;
+	virtual bool WriteRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName, int ruleValueStackIndex) = 0;
 
 };

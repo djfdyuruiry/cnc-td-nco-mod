@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\ValueValidators">
+      <UniqueIdentifier>{23cf041b-299f-479b-bcdf-db25bcc683f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ILuaStateWrapper.h">
@@ -53,6 +56,24 @@
     </ClInclude>
     <ClInclude Include="LuaStateFactory.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeApiParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaValueUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ILuaValueValidator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaValueAdapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimitiveTypeValidator.h">
+      <Filter>Header Files\ValueValidators</Filter>
+    </ClInclude>
+    <ClInclude Include="NumericRangeValidator.h">
+      <Filter>Header Files\ValueValidators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

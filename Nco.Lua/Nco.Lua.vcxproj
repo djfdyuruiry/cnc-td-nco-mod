@@ -20,8 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ILuaApi.h" />
+    <ClInclude Include="LuaValueAdapter.h" />
     <ClInclude Include="ILuaRuntime.h" />
     <ClInclude Include="ILuaStateWrapper.h" />
+    <ClInclude Include="ILuaValueValidator.h" />
     <ClInclude Include="LuaApi.h" />
     <ClInclude Include="LuaFunctionInfo.h" />
     <ClInclude Include="LuaResult.h" />
@@ -30,7 +32,10 @@
     <ClInclude Include="LuaStateFactory.h" />
     <ClInclude Include="LuaStateWrapper.h" />
     <ClInclude Include="LuaType.h" />
+    <ClInclude Include="LuaValueUtils.h" />
     <ClInclude Include="LuaVariableInfo.h" />
+    <ClInclude Include="NumericRangeValidator.h" />
+    <ClInclude Include="PrimitiveTypeValidator.h" />
     <ClInclude Include="TypeApi.h" />
     <ClInclude Include="TypeApiParameters.h" />
   </ItemGroup>
