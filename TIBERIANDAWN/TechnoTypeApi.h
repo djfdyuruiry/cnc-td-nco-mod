@@ -8,75 +8,84 @@
 
 #include "IRulesIniSection.h"
 #include "LuaTypeWrapper.h"
-#include "RULES_CACHE_KEY.H"
-#include "Type.h"
+#include "parse.h"
+#include "rules_cache_key.h"
+#include "rules_ini_generic.h"
+#include "StructTypeValidator.h"
+#include "type.h"
+
+#define EXTRACTOR(f) [](T& i, ILuaStateWrapper& l, LuaValueAdapter& va) { va.Write(l, f); }
+#define INJECTOR(t, f) [](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) { f = va.Read<t>(l, si); } 
+#define SIMPLE_EXTRACTOR(f) EXTRACTOR(i.f)
+#define SIMPLE_INJECTOR(t, f) INJECTOR(t, i.f) 
 
 template<class T> class TechnoTypeApi : public TypeApi<T>
 {
 protected:
 	IRulesIniSection& rulesInfo;
-	std::map<CacheKey, CacheKey>& ruleToFieldMap;
 	LuaTypeWrapper<T>& technoTypeWrapper;
 
 	TechnoTypeApi(const char* typeName, IRulesIniSection& rulesInfo) :
 		TypeApi(typeName),
 		rulesInfo(rulesInfo),
-		ruleToFieldMap(*(new std::map<CacheKey, CacheKey>())),
 		technoTypeWrapper(LuaTypeWrapper<T>::Build())
 	{
 		technoTypeWrapper.WithFieldWrapper(
-			"Level",
-			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va) {
-				va.Write(l, i.Level);
-			},
-			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				i.Level = va.Read<unsigned char>(l, si);
-			},
-			NumbericRangeValidator<unsigned char>::Build(0, 99)
-		);
+				BUILD_LEVEL_RULE,
+				SIMPLE_EXTRACTOR(Level),
+				SIMPLE_INJECTOR(unsigned char, Level),
+				NumbericRangeValidator<unsigned char>::Build(0, 99)
+			).WithFieldWrapper(
+				SCENARIO_LEVEL_RULE,
+				SIMPLE_EXTRACTOR(Scenario),
+				SIMPLE_INJECTOR(unsigned char, Scenario),
+				NumbericRangeValidator<unsigned char>::Build(0, 99)
+			).WithFieldWrapper(
+				PREREQUISITE_RULE,
+				EXTRACTOR(Prerequisite_To_String(i.Pre)),
+				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
+					i.Pre = Structure_Type_To_Prerequisite(
+						Parse_Structure_Type(va.Read<const char*>(l, si), NULL),
+						NULL
+					);
+				},
+				StructTypeValidator::Build()
+			).WithFieldWrapper(
+				COST_RULE,
+				SIMPLE_EXTRACTOR(Cost),
+				SIMPLE_INJECTOR(int, Cost),
+				PrimitiveTypeValidator<int>::Build()
+			);
 
-		ruleToFieldMap[Build_Rule_Key("BuildLevel")] = Build_Rule_Key("Level");
+			// TODO: migrate complete set of rules over
 	}
 
-	bool validateRule(const char* ruleName)
+	bool ValidateRule(const char* ruleName)
 	{
 		auto ruleKey = rulesInfo.BuildKey(ruleName);
 
 		return rulesInfo.HasRule(ruleKey);
 	}
 
-	CacheKey ResolveFieldKey(const char* ruleName)
-	{
-		auto ruleKey = Build_Rule_Key(ruleName);
-		auto fieldKey = ruleKey;
-
-		if (ruleToFieldMap.find(ruleKey) != ruleToFieldMap.end())
-		{
-			fieldKey = ruleToFieldMap[ruleKey];
-		}
-
-		return fieldKey;
-	}
-
 	bool ReadRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName)
 	{
-		if (!validateRule(ruleName))
+		if (!ValidateRule(ruleName))
 		{
 			return false;
 		}
 
-		technoTypeWrapper.ReadFieldValue(ResolveFieldKey(ruleName), lua);
+		technoTypeWrapper.ReadFieldValue(typeInstance, Build_Rule_Key(ruleName), lua);
 
 		return true;
 	}
 
 	bool WriteRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName, int ruleValueStackIndex)
 	{
-		if (!validateRule(ruleName))
+		if (!ValidateRule(ruleName))
 		{
 			return false;
 		}
 
-		return technoTypeWrapper.WriteFieldValue(typeInstance, ResolveFieldKey(ruleName), lua, ruleValueStackIndex);
+		return technoTypeWrapper.WriteFieldValue(typeInstance, Build_Rule_Key(ruleName), lua, ruleValueStackIndex);
 	}
 };

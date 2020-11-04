@@ -408,6 +408,7 @@
     <ClInclude Include="HELP.H" />
     <ClInclude Include="HOUSE.H" />
     <ClInclude Include="HOUSES_TYPE.H" />
+    <ClInclude Include="InfantryApi.h" />
     <ClInclude Include="LuaTypeWrapper.h" />
     <ClInclude Include="INFANTRY.H" />
     <ClInclude Include="AircraftTypeMod.h" />
@@ -518,6 +519,7 @@
     <ClInclude Include="SOUNDDLG.H" />
     <ClInclude Include="SPECIAL.H" />
     <ClInclude Include="STAGE.H" />
+    <ClInclude Include="StructTypeValidator.h" />
     <ClInclude Include="SUPER.H" />
     <ClInclude Include="TAB.H" />
     <ClInclude Include="TARCOM.H" />

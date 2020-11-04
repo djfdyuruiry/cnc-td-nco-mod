@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <Logger.h>
 #include <Optional.h>
 #include <Strings.h>
@@ -37,16 +38,15 @@ private:
 
 			return TypeApiParameters::BuildInvalid();
 		}
-
-		auto& typeInstance = ParseType(typeInstanceNameResult.GetValue());
-
-		if (typeInstance == NULL)
+		
+		if (!ValidateTypeName(typeInstanceNameResult.GetValue()))
 		{
 			delete &typeInstanceNameResult;
 
 			return TypeApiParameters::BuildInvalid();
 		}
 
+		auto& typeInstance = ParseType(typeInstanceNameResult.GetValue());
 		auto& ruleNameParameterResult = luaState.ReadString(2);
 
 		if (ruleNameParameterResult.IsErrorResult() || String_Is_Empty(ruleNameParameterResult.GetValue()))
@@ -59,7 +59,7 @@ private:
 			return TypeApiParameters::BuildInvalid();
 		}
 
-		if (!validateRule(ruleNameParameterResult.GetValue()))
+		if (!ValidateRule(ruleNameParameterResult.GetValue()))
 		{
 			luaState.RaiseError(
 				"rule name type passed %s%sRule was not recognised for this type: %s",
@@ -177,34 +177,37 @@ protected:
 		WithName(FormatString("%s rules", titleCaseTypeName));
 		WithDescription(FormatString("%s rule info and control functions", titleCaseTypeName));
 
-		WithFunction(FormatString("get%sNameRule", titleCaseTypeName), &ReadRule, [](LuaFunctionInfo & i) -> {
+		// TODO: use binding lib like CppLua or similar (or write a simple userdata lua metadata table wrapper to invoke methods on objects)
+		WithFunction(FormatString("get%sNameRule", titleCaseTypeName), &ReadRule, [&](LuaFunctionInfo & i) {
 			i.WithDescription(FormatString("Set a rule for a given %s", titleCaseTypeName))
-			 .WithParameter("ruleName", [](LuaVariableInfo& vi) -> {
-			     vi.WithDescription("The name as it appears in RULES.INI")
-				   .WithType(LuaType::String)
+			 .WithParameter("ruleName", [](LuaVariableInfo& vi) {
+				vi.WithDescription("The name as it appears in RULES.INI")
+					.WithType(LuaType::String);
 			 })
-			 .WithReturnValue("ruleValue", [](LuaVariableInfo& vi) -> {
-			     vi.WithDescription("The current value for the specified rule")
-				   .WithType(LuaType::Any)
+			 .WithReturnValue("ruleValue", [](LuaVariableInfo& vi) {
+				 vi.WithDescription("The current value for the specified rule")
+					 .WithType(LuaType::Any);
 			 });
 		});
 
-		WithFunction(FormatString("set%sNameRule", titleCaseTypeName), &WriteRule, [](LuaFunctionInfo & i) -> {
+		WithFunction(FormatString("set%sNameRule", titleCaseTypeName), &WriteRule, [&](LuaFunctionInfo& i) {
 			i.WithDescription(FormatString("Get a rule for a given %s", titleCaseTypeName))
-			  .WithParameter("ruleName", [](LuaVariableInfo& vi) -> {
-			      vi.WithDescription("The name as it appears in RULES.INI")
-				    .WithType(LuaType::String)
+			  .WithParameter("ruleName", [](LuaVariableInfo& vi) {
+				vi.WithDescription("The name as it appears in RULES.INI")
+					.WithType(LuaType::String);
 			  })
-			  .WithParameter("ruleValue", [](LuaVariableInfo& vi) -> {
-			      vi.WithDescription("A valid value for the specified rule")
-				    .WithType(LuaType::Any)
+			  .WithParameter("ruleValue", [](LuaVariableInfo& vi) {
+				  vi.WithDescription("A valid value for the specified rule")
+					  .WithType(LuaType::Any);
 			  });
 		});
 
 		delete titleCaseTypeName;
 	}
 
-	virtual bool validateRule(const char* ruleName) = 0;
+	virtual bool ValidateRule(const char* ruleName) = 0;
+
+	virtual bool ValidateTypeName(const char* typeName) = 0;
 
 	virtual T& ParseType(const char* typeName) = 0;
 

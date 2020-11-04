@@ -14,6 +14,7 @@ private:
 	const char* description;
 	std::vector<LuaFunctionInfo*>& functions;
 
+protected:
 	LuaApi() : functions(*(new std::vector<LuaFunctionInfo*>))
 	{
 	}

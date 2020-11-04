@@ -1,5 +1,6 @@
 #include "function.h"
 
+#include "InfantryApi.h"
 #include "lua_api_functions_generic_rules.h"
 
 static bool Write_Infantry_Rule(InfantryTypeClass* type, const char* ruleName, const char* value, const char* originalValue, bool* valueParseError)
@@ -236,6 +237,12 @@ bool Register_Infantry_Rule_Functions()
               });
          });
     });
+
+    LuaRuntime().RegisterApi(
+        InfantryApi::Build(
+            GetRulesInfo().GetInfantryRules()
+        )
+    );
 
     return true;
 }

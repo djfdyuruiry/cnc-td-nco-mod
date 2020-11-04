@@ -40,7 +40,7 @@ public:
 
 		extractors[fieldKey] = extractor;
 		injectors[fieldKey] = injector;
-		validators[fieldKey] = validator;
+		validators[fieldKey] = &validator;
 
 		return *this;
 	}
@@ -50,11 +50,11 @@ public:
 		return LuaValueAdapter::Build(*validators[fieldKey]);
 	}
 
-	void ReadFieldValue(CacheKey fieldKey, ILuaStateWrapper& lua)
+	void ReadFieldValue(T& typeInstance, CacheKey fieldKey, ILuaStateWrapper& lua)
 	{
 		auto& adapter = BuildValueAdapater(fieldKey);
 
-		extractors[fieldKey](lua, adapter);
+		extractors[fieldKey](typeInstance, lua, adapter);
 
 		delete &adapter;
 	}
