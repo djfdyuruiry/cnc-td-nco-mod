@@ -17,6 +17,7 @@ protected:
 
 public:
 	virtual int GetStackTop() = 0;
+	virtual int GetUpvalueStackIndex(int upvalueIndex) = 0;
 	virtual const char* GetLastError() = 0;
 
 	virtual const char* ToString(int stackIndex) = 0;
@@ -47,12 +48,14 @@ public:
 	virtual LuaResultWithValue<double>& ReadDouble(int stackIndex) = 0;
 	virtual LuaResultWithValue<bool>& ReadBool(int stackIndex) = 0;
 	virtual LuaResultWithValue<const char*>& ReadString(int stackIndex) = 0;
+	virtual LuaResultWithValue<void*>& ReadUserData(int stackIndex) = 0;
 
 	virtual LuaResultWithValue<int>& ReadInteger() = 0;
 	virtual LuaResultWithValue<long long>& ReadBigInteger() = 0;
 	virtual LuaResultWithValue<double>& ReadDouble() = 0;
 	virtual LuaResultWithValue<bool>& ReadBool() = 0;
 	virtual LuaResultWithValue<const char*>& ReadString() = 0;
+	virtual LuaResultWithValue<void*>& ReadUserData() = 0;
 
 	template<class T> std::vector<T>& ReadArray(int stackIndex)
 	{

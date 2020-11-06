@@ -59,6 +59,11 @@ public:
 		return lua_gettop(lua);
 	}
 
+	int GetUpvalueStackIndex(int upvalueIndex)
+	{
+		return lua_upvalueindex(upvalueIndex);
+	}
+
 	const char* GetLastError()
 	{
 		return ToString(-1);
@@ -236,6 +241,18 @@ public:
 		);
 	}
 
+	LuaResultWithValue<void*>& ReadUserData(int stackIndex)
+	{
+		if (!lua_isuserdata(lua, stackIndex))
+		{
+			return LuaResultWithValue<void*>::BuildWithError("Value is not userdata");
+		}
+
+		return LuaResultWithValue<void*>::BuildWithValue(
+			lua_touserdata(lua, stackIndex)
+		);
+	}
+
 	LuaResultWithValue<int>& ReadInteger()
 	{
 		return ReadInteger(lua_gettop(lua));
@@ -259,6 +276,11 @@ public:
 	LuaResultWithValue<const char*>& ReadString()
 	{
 		return ReadString(lua_gettop(lua));
+	}
+
+	LuaResultWithValue<void*>& ReadUserData()
+	{
+		return ReadUserData(GetStackTop());
 	}
 
 	void WriteInteger(int value)

@@ -2,21 +2,19 @@
 
 #include <lua.hpp>
 
+#include "LuaObjectUtils.h"
 #include "RuleValueApi.h"
 
 int ReadRuleValueApiProxy(lua_State* lua)
 {
-	auto instancePtrUserData = lua_touserdata(lua, lua_upvalueindex(1));
-	auto instancePtr = (RuleValueApi*)instancePtrUserData;
-
-	return instancePtr->ReadRuleLua(lua);
+	return LuaObjectUtils::BootstrapProxyCall<RuleValueApi>(lua, [](ILuaStateWrapper& l, RuleValueApi& a) {
+		return a.ReadRuleLua(l);
+	});
 }
 
 int WriteRuleValueApiProxy(lua_State* lua)
 {
-	auto instancePtrUserData = lua_touserdata(lua, lua_upvalueindex(1));
-	auto instancePtr = (RuleValueApi*)instancePtrUserData;
-
-	return instancePtr->WriteRuleLua(lua);
+	return LuaObjectUtils::BootstrapProxyCall<RuleValueApi>(lua, [](ILuaStateWrapper& l, RuleValueApi& a) {
+		return a.WriteRuleLua(l);
+	});
 }
-

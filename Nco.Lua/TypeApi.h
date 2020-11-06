@@ -143,15 +143,13 @@ public:
 		delete titleCaseTypeName;
 	}
 
-	int ReadRuleLua(lua_State* lua)
+	int ReadRuleLua(ILuaStateWrapper& luaState)
 	{
-		auto& luaState = LuaStateWrapper::Build(lua, false);
 		auto& params = GetParameters("get", luaState);
 
 		if (!params.IsValid())
 		{
-			delete& luaState;
-			delete& params;
+			delete &params;
 
 			return 0;
 		}
@@ -164,29 +162,25 @@ public:
 		{
 			Log_Debug("get%sRule => Rule matched in %s Type", titleCaseTypeName, typeName);
 
-			delete& luaState;
-			delete& params;
+			delete &params;
 
 			return 1;
 		}
 
 		luaState.RaiseError("rule name type passed get%sRule was not matched: %s", titleCaseTypeName, params.ruleName);
 
-		delete& luaState;
-		delete& params;
+		delete &params;
 
 		return 0;
 	}
 
-	int WriteRuleLua(lua_State* lua)
+	int WriteRuleLua(ILuaStateWrapper& luaState)
 	{
-		auto& luaState = LuaStateWrapper::Build(lua, false);
 		auto& params = GetParameters("set", luaState);
 
 		if (!params.IsValid())
 		{
-			delete& luaState;
-			delete& params;
+			delete &params;
 
 			return 0;
 		}
@@ -197,8 +191,7 @@ public:
 		{
 			luaState.RaiseError("set%sRule argument `ruleValue` was nil or blank", typeName);
 
-			delete& luaState;
-			delete& params;
+			delete &params;
 
 			return 0;
 		}
@@ -209,16 +202,14 @@ public:
 		{
 			Log_Debug("set%sRule => Rule matched in %s Type", titleCaseTypeName, typeName);
 
-			delete& luaState;
-			delete& params;
+			delete &params;
 
 			return 1;
 		}
 
 		luaState.RaiseError("rule name type passed set%sRule was not matched: %s", titleCaseTypeName, params.ruleName);
 
-		delete& luaState;
-		delete& params;
+		delete &params;
 
 		return 0;
 	}
