@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ILuaApi.h" />
-    <ClInclude Include="LambdaProxy.h" />
     <ClInclude Include="LuaMethod.h" />
     <ClInclude Include="LuaValueAdapter.h" />
     <ClInclude Include="ILuaRuntime.h" />
@@ -38,13 +37,14 @@
     <ClInclude Include="LuaVariableInfo.h" />
     <ClInclude Include="NumericRangeValidator.h" />
     <ClInclude Include="PrimitiveTypeValidator.h" />
+    <ClInclude Include="RuleValueApi.h" />
     <ClInclude Include="TypeApi.h" />
     <ClInclude Include="TypeApiParameters.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LambdaProxy.cpp" />
     <ClCompile Include="LuaType.cpp" />
     <ClCompile Include="lib.cpp" />
+    <ClCompile Include="RuleValueApi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nco.Common\Nco.Common.vcxproj">

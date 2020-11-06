@@ -6,7 +6,6 @@
 #include <Utils.h>
 
 #include "ILuaStateWrapper.h"
-#include "LambdaProxy.h"
 
 class LuaStateWrapper : public ILuaStateWrapper
 {

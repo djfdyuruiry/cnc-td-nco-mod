@@ -649,7 +649,6 @@
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="GAME_MESSAGES.CPP" />
     <ClCompile Include="GAME_UTILS.cpp" />
-    <ClCompile Include="InfantryApi.cpp" />
     <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP" />

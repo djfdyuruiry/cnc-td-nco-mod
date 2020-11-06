@@ -6,17 +6,14 @@
 #include <Optional.h>
 #include <Strings.h>
 
-#include "LuaApi.h"
+#include "RuleValueApi.h"
 #include "LuaMethod.h"
 #include "LuaStateWrapper.h"
 #include "TypeApiParameters.h"
 
-template<class T> class TypeApi : public LuaApi
+template<class T> class TypeApi : public RuleValueApi
 {
-protected:
-	const char* typeName;
-	const char* titleCaseTypeName;
-
+private:
 	TypeApiParameters<T>& GetParameters(const char* operation, ILuaStateWrapper& luaState)
 	{
 		Log_Trace("%s%sRule called from Lua", operation, titleCaseTypeName);
@@ -36,14 +33,14 @@ protected:
 		{
 			luaState.RaiseError("%s%sRule argument `typeName` was nil or blank", operation, titleCaseTypeName);
 
-			delete &typeInstanceNameResult;
+			delete& typeInstanceNameResult;
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
-		
+
 		if (!ValidateTypeName(typeInstanceNameResult.GetValue()))
 		{
-			delete &typeInstanceNameResult;
+			delete& typeInstanceNameResult;
 
 			luaState.RaiseError("%s%sRule argument `typeName` was not recognised as a valid type", operation, titleCaseTypeName);
 
@@ -57,8 +54,8 @@ protected:
 		{
 			luaState.RaiseError("%s%sRule argument `ruleName` was nil", operation, titleCaseTypeName);
 
-			delete &typeInstanceNameResult;
-			delete &ruleNameParameterResult;
+			delete& typeInstanceNameResult;
+			delete& ruleNameParameterResult;
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
@@ -72,8 +69,8 @@ protected:
 				ruleNameParameterResult.GetValue()
 			);
 
-			delete &typeInstanceNameResult;
-			delete &ruleNameParameterResult;
+			delete& typeInstanceNameResult;
+			delete& ruleNameParameterResult;
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
@@ -84,11 +81,15 @@ protected:
 			&typeInstance
 		);
 
-		delete &typeInstanceNameResult;
-		delete &ruleNameParameterResult;
+		delete& typeInstanceNameResult;
+		delete& ruleNameParameterResult;
 
 		return params;
 	}
+
+protected:
+	const char* typeName;
+	const char* titleCaseTypeName;
 
 	TypeApi(const char* typeName) : typeName(typeName), titleCaseTypeName(ToTitleCase(typeName))
 	{
@@ -101,7 +102,7 @@ protected:
 
 		auto name = titleCaseTypeName;
 
-		WithMethod(FormatString("get%sRule", titleCaseTypeName), this, GetReadRuleProxy(), [](LuaFunctionInfo& i) {
+		WithMethod(FormatString("get%sRule", titleCaseTypeName), this, ReadRuleValueApiProxy, [](LuaFunctionInfo& i) {
 			i.WithDescription(FormatString("Set a rule for a given "))
 				.WithParameter("ruleName", [](LuaVariableInfo& vi) {
 				vi.WithDescription("The name as it appears in RULES.INI")
@@ -113,7 +114,7 @@ protected:
 					});
 		});
 
-		WithMethod(FormatString("set%sRule", titleCaseTypeName), this, GetWriteRuleProxy(), [](LuaFunctionInfo& i) {
+		WithMethod(FormatString("set%sRule", titleCaseTypeName), this, WriteRuleValueApiProxy, [](LuaFunctionInfo& i) {
 			i.WithDescription(FormatString("Get a rule for a given"))
 				.WithParameter("ruleName", [](LuaVariableInfo& vi) {
 				vi.WithDescription("The name as it appears in RULES.INI")
@@ -125,10 +126,6 @@ protected:
 					});
 		});
 	}
-
-	virtual lua_CFunction GetReadRuleProxy() = 0;
-
-	virtual lua_CFunction GetWriteRuleProxy() = 0;
 
 	virtual bool ValidateRule(const char* ruleName) = 0;
 

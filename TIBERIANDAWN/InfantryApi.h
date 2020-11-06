@@ -11,10 +11,6 @@
 #include "TechnoTypeApi.h"
 #include "type.h"
 
-int InfantryReadRuleProxy(lua_State* lua);
-
-int InfantryWriteRuleProxy(lua_State* lua);
-
 class InfantryApi : public TechnoTypeApi<InfantryTypeClass>
 {
 private:
@@ -24,16 +20,6 @@ private:
 	}
 
 protected:
-	lua_CFunction GetReadRuleProxy()
-	{
-		return InfantryReadRuleProxy;
-	}
-
-	lua_CFunction GetWriteRuleProxy()
-	{
-		return InfantryWriteRuleProxy;
-	}
-
 	bool ValidateTypeName(const char* name)
 	{
 		bool parseError = false;

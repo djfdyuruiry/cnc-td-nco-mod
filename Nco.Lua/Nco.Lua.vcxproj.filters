@@ -75,10 +75,10 @@
     <ClInclude Include="NumericRangeValidator.h">
       <Filter>Header Files\ValueValidators</Filter>
     </ClInclude>
-    <ClInclude Include="LambdaProxy.h">
+    <ClInclude Include="LuaMethod.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaMethod.h">
+    <ClInclude Include="RuleValueApi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,7 +89,7 @@
     <ClCompile Include="lib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LambdaProxy.cpp">
+    <ClCompile Include="RuleValueApi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
