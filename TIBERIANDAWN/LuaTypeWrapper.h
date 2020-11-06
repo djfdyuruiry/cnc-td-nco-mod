@@ -63,6 +63,7 @@ public:
 	{
 		if (!validators[fieldKey]->IsValid(lua, stackIndex))
 		{
+			// TODO: change to return lua result with value and store validation error in it
 			return false;
 		}
 

@@ -20,15 +20,15 @@ public:
 	bool IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
 		auto& result = lua.ReadString(stackIndex);
-		bool isValid = false;
+		bool parseError = false;
 
 		if (!result.IsErrorResult())
 		{
-			Parse_Structure_Type(result.GetValue(), &isValid);
+			Parse_Structure_Type(result.GetValue(), &parseError);
 		}
 	
 		delete &result;
 
-		return isValid;
+		return !parseError;
 	}
 };
