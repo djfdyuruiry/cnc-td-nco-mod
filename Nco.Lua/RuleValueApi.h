@@ -2,14 +2,25 @@
 
 #include "ILuaStateWrapper.h"
 #include "LuaApi.h"
-
-int ReadRuleValueApiProxy(lua_State* lua);
-
-int WriteRuleValueApiProxy(lua_State* lua);
+#include "LuaObjectUtils.h"
 
 class RuleValueApi : public LuaApi
 {
 protected:
+	static int ReadRuleValueApiProxy(lua_State* lua)
+	{
+		return LuaObjectUtils::BootstrapProxyCall<RuleValueApi>(lua, [](ILuaStateWrapper& l, RuleValueApi& a) {
+			return a.ReadRuleLua(l);
+		});
+	}
+
+	static int WriteRuleValueApiProxy(lua_State* lua)
+	{
+		return LuaObjectUtils::BootstrapProxyCall<RuleValueApi>(lua, [](ILuaStateWrapper& l, RuleValueApi& a) {
+			return a.WriteRuleLua(l);
+		});
+	}
+
 	RuleValueApi()
 	{
 	}

@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <map>
+#include <vector>
 
 #include <ILuaStateWrapper.h>
 #include <ILuaValueValidator.h>
@@ -34,7 +35,7 @@ public:
 		delete &extractors;
 		delete &injectors;
 
-		for (auto validator : validators) {
+		for (auto [_, validator] : validators) {
 			delete validator;
 		}
 
@@ -53,6 +54,21 @@ public:
 		extractors[fieldKey] = extractor;
 		injectors[fieldKey] = injector;
 		validators[fieldKey] = &validator;
+
+		return *this;
+	}
+
+	LuaTypeWrapper& WithFieldsWrapper(
+		std::vector<const char*> fieldNames,
+		std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&)> extractor,
+		std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&, int stackIndex)> injector,
+		ILuaValueValidator& validator
+	)
+	{
+		for (auto fieldName : fieldNames)
+		{
+			WithFieldWrapper(fieldName, extractor, injector, validator);
+		}
 
 		return *this;
 	}

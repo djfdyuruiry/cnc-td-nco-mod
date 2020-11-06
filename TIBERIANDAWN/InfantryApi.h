@@ -4,8 +4,6 @@
 
 #include <lua.hpp>
 
-#include <LuaMethod.h>
-
 #include "IRulesIniSection.h"
 #include "parse.h"
 #include "TechnoTypeApi.h"
@@ -16,7 +14,6 @@ class InfantryApi : public TechnoTypeApi<InfantryTypeClass>
 private:
 	InfantryApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Infantry", rulesInfo)
 	{
-		Init();
 	}
 
 protected:

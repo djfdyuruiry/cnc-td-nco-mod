@@ -1,8 +1,10 @@
 #pragma once
 
+#include <lua.hpp>
+
 #include "PrimitiveTypeValidator.h"
 
-template<class T> class NumbericRangeValidator : public PrimitiveTypeValidator<T>
+template<class T = LUA_INTEGER> class NumbericRangeValidator : public PrimitiveTypeValidator<T>
 {
 private:
 	T minInclusive;

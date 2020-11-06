@@ -5,7 +5,6 @@
 #include <type_traits>
 #include <vector>
 
-#include "LuaMethod.h"
 #include "LuaResult.h"
 #include "LuaResultWithValue.h"
 

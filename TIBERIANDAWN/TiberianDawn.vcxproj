@@ -468,6 +468,7 @@
     <ClInclude Include="OVERLAY.H" />
     <ClInclude Include="PACKET.H" />
     <ClInclude Include="PARSE.H" />
+    <ClInclude Include="ParseCheckValidator.h" />
     <ClInclude Include="PHONE.H" />
     <ClInclude Include="POWER.H" />
     <ClInclude Include="PROFILE.H" />
@@ -519,7 +520,6 @@
     <ClInclude Include="SOUNDDLG.H" />
     <ClInclude Include="SPECIAL.H" />
     <ClInclude Include="STAGE.H" />
-    <ClInclude Include="StructTypeValidator.h" />
     <ClInclude Include="SUPER.H" />
     <ClInclude Include="TAB.H" />
     <ClInclude Include="TARCOM.H" />

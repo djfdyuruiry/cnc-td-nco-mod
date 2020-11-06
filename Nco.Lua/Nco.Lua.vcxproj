@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ILuaApi.h" />
+    <ClInclude Include="LambdaValidator.h" />
     <ClInclude Include="LuaObjectUtils.h" />
     <ClInclude Include="LuaValueAdapter.h" />
     <ClInclude Include="ILuaRuntime.h" />
@@ -44,7 +45,6 @@
   <ItemGroup>
     <ClCompile Include="LuaType.cpp" />
     <ClCompile Include="lib.cpp" />
-    <ClCompile Include="RuleValueApi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nco.Common\Nco.Common.vcxproj">

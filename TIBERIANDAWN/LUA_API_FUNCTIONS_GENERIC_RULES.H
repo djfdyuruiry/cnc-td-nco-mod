@@ -106,6 +106,7 @@ template<typename T> int Lua_Get_Rule(
 
     Log_Trace("Lua_Get_%s_Rule => looking for rule in %s Type", typeName, typeName);
 
+    // TODO: the return type should represent two outcomes - matched and success
     ruleMatched = readTypeRule(typeInstance, ruleName);
 
     if (ruleMatched)

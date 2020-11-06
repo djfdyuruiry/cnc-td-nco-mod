@@ -865,11 +865,11 @@
     <ClInclude Include="LuaTypeWrapper.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="StructTypeValidator.h">
-      <Filter>Source Files\NCO\Lua\Api\ValueValidators</Filter>
-    </ClInclude>
     <ClInclude Include="InfantryApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="ParseCheckValidator.h">
+      <Filter>Source Files\NCO\Lua\Api\ValueValidators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

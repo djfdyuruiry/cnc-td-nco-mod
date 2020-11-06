@@ -7,7 +7,6 @@
 #include <Strings.h>
 
 #include "RuleValueApi.h"
-#include "LuaMethod.h"
 #include "LuaStateWrapper.h"
 #include "TypeApiParameters.h"
 
@@ -93,10 +92,6 @@ protected:
 
 	TypeApi(const char* typeName) : typeName(typeName), titleCaseTypeName(ToTitleCase(typeName))
 	{
-	}
-
-	void Init()
-	{
 		WithName(FormatString("%s rules", titleCaseTypeName));
 		WithDescription(FormatString("%s rule info and control functions", titleCaseTypeName));
 
@@ -156,6 +151,7 @@ public:
 
 		Log_Debug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
 
+		// TODO: the return type should represent two outcomes - matched and success
 		auto ruleMatched = ReadRule(luaState, *params.typeInstance, params.ruleName);
 
 		if (ruleMatched)
@@ -196,6 +192,7 @@ public:
 			return 0;
 		}
 
+		// TODO: the return type should represent two outcomes - matched and success
 		auto ruleMatched = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
 
 		if (ruleMatched)

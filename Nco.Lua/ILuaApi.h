@@ -5,7 +5,6 @@
 #include <lua.hpp>
 
 #include "LuaFunctionInfo.h"
-#include "LuaMethod.h"
 
 typedef void (*FunctionInitialiser)(LuaFunctionInfo&);
 

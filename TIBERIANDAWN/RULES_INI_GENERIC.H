@@ -37,9 +37,9 @@
 
 #define REWARD_RULE "Reward"
 
-#define CRUSHABLE_RULE "Crushable"
-
 #define DETECT_CLOAKED_OBJECTS_RULE "DetectCloakedObjects"
+
+#define CRUSHABLE_RULE "Crushable"
 
 #define LEADER_RULE "Leader"
 
@@ -51,18 +51,17 @@
 
 #define IS_MOD_TYPE_RULE "IsModType"
 
-// shared unit/aircraft rules
-#define RATE_OF_TURN_RULE "RateOfTurn"
+#define HAS_CREW_RULE "HasCrew"
+
+#define TURRET_EQUIPPED_RULE "TurretEquipped"
+
+#define REPAIRABLE_RULE "Repairable"
 
 #define TRANSPORTER_RULE "CanTransportInfantry"
+
+// shared unit/aircraft rules
+#define RATE_OF_TURN_RULE "RateOfTurn"
 
 #define TRANSPORT_CAPACITY_RULE "TransportCapacity"
 
 #define DEFAULT_TRANSPORT_CAPACITY 5u
-
-// non-infantry shared rules
-#define REPAIRABLE_RULE "Repairable"
-
-#define HAS_CREW_RULE "HasCrew"
-
-#define TURRET_EQUIPPED_RULE "TurretEquipped"

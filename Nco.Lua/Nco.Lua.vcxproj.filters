@@ -81,15 +81,15 @@
     <ClInclude Include="LuaObjectUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LambdaValidator.h">
+      <Filter>Header Files\ValueValidators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RuleValueApi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
