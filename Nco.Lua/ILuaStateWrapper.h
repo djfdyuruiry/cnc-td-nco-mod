@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <vector>
 
+#include "LuaLambda.h"
 #include "LuaResult.h"
 #include "LuaResultWithValue.h"
 
@@ -139,7 +140,7 @@ public:
 	{
 		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
 		{
-			return ReadString(stackIndex);
+			return ReadString(stackIndex).ConvertType<T>();
 		}
 		else if constexpr (
 			std::is_same_v<T, char> || std::is_same_v<T, unsigned char>
@@ -147,18 +148,18 @@ public:
 			|| std::is_same_v<T, int> || std::is_same_v<T, unsigned int>
 		)
 		{
-			return ReadInteger(stackIndex);
+			return ReadInteger(stackIndex).ConvertType<T>();
 		}
 		else if constexpr (
 			std::is_same_v<T, long> || std::is_same_v<T, unsigned long>
 			|| std::is_same_v<T, long long> || std::is_same_v<T, unsigned long long>
 		)
 		{
-			return ReadBigInteger(stackIndex);
+			return ReadBigInteger(stackIndex).ConvertType<T>();
 		}
 		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
 		{
-			return ReadDouble(stackIndex);
+			return ReadDouble(stackIndex).ConvertType<T>();
 		}
 		else if constexpr (std::is_same_v<T, bool>)
 		{
@@ -166,7 +167,7 @@ public:
 		}
 		else
 		{
-			return LuaResultWithValue<void*>::BuildWithValue(NULL);
+			return LuaResultWithValue<T>::BuildWithError("No read method defined for value type");
 		}
 	}
 
@@ -181,6 +182,7 @@ public:
 	virtual void WriteBool(bool value) = 0;
 	virtual void WriteString(const char* value) = 0;
 	virtual void WriteFunction(const char* name, lua_CFunction function) = 0;
+	virtual void WriteFunction(const char* name, const LuaLambda& lambda) = 0;
 	virtual void WriteNil() = 0;
 	virtual void WriteTable(unsigned int expectedSize = 0) = 0;
 

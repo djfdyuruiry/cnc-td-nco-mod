@@ -221,22 +221,22 @@ int Lua_Set_Infantry_Rule(lua_State* lua)
 
 bool Register_Infantry_Rule_Functions()
 {
-    LuaRuntime().RegisterApi("infantry rules", [](ILuaApi& a) {
-        a.WithDescription("Infantry rule info and control functions")
+    //LuaRuntime().RegisterApi("infantry rules", [](ILuaApi& a) {
+    //    a.WithDescription("Infantry rule info and control functions")
 
-         .WithFunction("getInfantryRule", Lua_Get_Infantry_Rule, [](LuaFunctionInfo& f) {
-             f.WithDescription("Write a info line to the log file")
-              .WithParameter("str", [](LuaVariableInfo& p) {
-                 p.WithType(LuaType::String);
-              });
-         })
-         .WithFunction("setInfantryRule", Lua_Set_Infantry_Rule, [](LuaFunctionInfo& f) {
-             f.WithDescription("Write a info line to the log file")
-              .WithParameter("str", [](LuaVariableInfo& p) {
-                 p.WithType(LuaType::String);
-              });
-         });
-    });
+    //     .WithFunction("getInfantryRule", &Lua_Get_Infantry_Rule, [](LuaFunctionInfo& f) {
+    //         f.WithDescription("Write a info line to the log file")
+    //          .WithParameter("str", [](LuaVariableInfo& p) {
+    //             p.WithType(LuaType::String);
+    //          });
+    //     })
+    //     .WithFunction("setInfantryRule", &Lua_Set_Infantry_Rule, [](LuaFunctionInfo& f) {
+    //         f.WithDescription("Write a info line to the log file")
+    //          .WithParameter("str", [](LuaVariableInfo& p) {
+    //             p.WithType(LuaType::String);
+    //          });
+    //     });
+    //});
 
     LuaRuntime().RegisterApi(
         InfantryApi::Build(

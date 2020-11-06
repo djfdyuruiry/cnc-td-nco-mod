@@ -20,16 +20,16 @@ public:
 
 	template<class T> T Read(ILuaStateWrapper& lua, int stackIndex)
 	{
-		return lua.PullValue(stackIndex);
+		return lua.PullValue<T>(stackIndex).GetValue();
 	}
 
 	template<class T> T Read(ILuaStateWrapper& lua)
 	{
-		return lua.PullValue(lua.GetStackTop());
+		return lua.PullValue<T>(lua.GetStackTop()).GetValue();
 	}
 
 	template<class T> void Write(ILuaStateWrapper& lua, T value)
 	{
-		return lua.PushValue(value);
+		lua.PushValue<T>(value);
 	}
 };

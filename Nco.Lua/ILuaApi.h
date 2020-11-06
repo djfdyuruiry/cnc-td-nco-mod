@@ -5,6 +5,7 @@
 #include <lua.hpp>
 
 #include "LuaFunctionInfo.h"
+#include "LuaLambda.h"
 
 typedef void (*FunctionInitialiser)(LuaFunctionInfo&);
 
@@ -14,6 +15,7 @@ public:
 	virtual ILuaApi& WithName(const char* name) = 0;
 	virtual ILuaApi& WithDescription(const char* description) = 0;
 	virtual ILuaApi& WithFunction(const char* name, lua_CFunction function, FunctionInitialiser functionInitialiser) = 0;
+	virtual ILuaApi& WithLambdaFunction(const char* name, const LuaLambda& lambda, FunctionInitialiser functionInitialiser) = 0;
 
 	virtual const char* GetName() = 0;
 	virtual const char* GetDescription() = 0;

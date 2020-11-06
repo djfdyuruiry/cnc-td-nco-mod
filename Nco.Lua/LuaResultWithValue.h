@@ -1,3 +1,5 @@
+#pragma once
+
 #include <TypeUtils.h>
 
 #include "LuaResult.h"
@@ -30,5 +32,15 @@ public:
 	T GetValue()
 	{
 		return value;
+	}
+
+	template<class U> LuaResultWithValue<U>& ConvertType()
+	{
+		if (IsErrorResult())
+		{
+			return LuaResultWithValue<U>::BuildWithError(GetError());
+		}
+
+		return LuaResultWithValue<U>::BuildWithValue(GetValue());
 	}
 };

@@ -67,6 +67,22 @@ public:
 		return *this;
 	}
 
+	ILuaApi& WithLambdaFunction(const char* name, const LuaLambda& lambda, FunctionInitialiser functionInitialiser)
+	{
+		auto& functionInfo = LuaFunctionInfo::Build()
+			.WithName(name)
+			.WithImplementation(lambda);
+
+		if (functionInitialiser != NULL)
+		{
+			functionInitialiser(functionInfo);
+		}
+
+		functions.push_back(&functionInfo);
+
+		return *this;
+	}
+
 	const char* GetName()
 	{
 		return name;

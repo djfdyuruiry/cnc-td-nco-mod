@@ -4,6 +4,7 @@
 
 #include <lua.hpp>
 
+#include "LuaLambda.h"
 #include "LuaVariableInfo.h"
 
 typedef void (*LuaVariableInfoInitialiser)(LuaVariableInfo&);
@@ -13,7 +14,10 @@ class LuaFunctionInfo
 private:
 	const char* name;
 	const char* description;
+
 	lua_CFunction luaFunction;
+	const LuaLambda* luaLambda;
+
 	std::vector<LuaVariableInfo*>& parameters;
 	std::vector<LuaVariableInfo*>& returnValues;
 
@@ -72,6 +76,13 @@ public:
 		return *this;
 	}
 
+	LuaFunctionInfo& WithImplementation(const LuaLambda& impl)
+	{
+		this->luaLambda = &impl;
+
+		return *this;
+	}
+
 	LuaFunctionInfo& WithDescription(const char* description)
 	{
 		this->description = description;
@@ -107,9 +118,21 @@ public:
 		return description;
 	}
 
-	lua_CFunction GetLuaFunction()
+	bool IsLambda()
+	{
+		return luaFunction == NULL;
+	}
+
+	lua_CFunction GetFunction()
 	{
 		return luaFunction;
+	}
+
+	const LuaLambda& GetLambda()
+	{
+	
+		// figure out why this member variable turns to `empty` when not empty when set
+		return *luaLambda;
 	}
 
 	const std::vector<LuaVariableInfo*>& GetParameters()

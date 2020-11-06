@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ILuaApi.h" />
+    <ClInclude Include="LambdaProxy.h" />
+    <ClInclude Include="LuaLambda.h" />
     <ClInclude Include="LuaValueAdapter.h" />
     <ClInclude Include="ILuaRuntime.h" />
     <ClInclude Include="ILuaStateWrapper.h" />
@@ -40,6 +42,7 @@
     <ClInclude Include="TypeApiParameters.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LambdaProxy.cpp" />
     <ClCompile Include="LuaType.cpp" />
     <ClCompile Include="lib.cpp" />
   </ItemGroup>

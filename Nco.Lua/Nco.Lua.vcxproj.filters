@@ -75,12 +75,21 @@
     <ClInclude Include="NumericRangeValidator.h">
       <Filter>Header Files\ValueValidators</Filter>
     </ClInclude>
+    <ClInclude Include="LambdaProxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaLambda.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LambdaProxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

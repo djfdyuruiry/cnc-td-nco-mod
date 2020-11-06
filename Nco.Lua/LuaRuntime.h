@@ -41,7 +41,14 @@ public:
 	{
 		for (auto function : api.GetFunctions())
 		{
-			lua.WriteFunction(function->GetName(), function->GetLuaFunction());
+			if (!function->IsLambda())
+			{
+				lua.WriteFunction(function->GetName(), function->GetFunction());
+			}
+			else
+			{
+				lua.WriteFunction(function->GetName(), function->GetLambda());
+			}
 		}
 
 		apis.push_back(&api);

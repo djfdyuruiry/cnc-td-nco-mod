@@ -20,7 +20,7 @@ public:
 
 	bool IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
-		if (!NumbericRangeValidator::IsValid(lua, stackIndex))
+		if (!PrimitiveTypeValidator::IsValid(lua, stackIndex))
 		{
 			return false;
 		}

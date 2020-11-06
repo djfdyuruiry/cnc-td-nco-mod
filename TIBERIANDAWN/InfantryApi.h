@@ -1,5 +1,11 @@
 #pragma once
 
+#include <functional>
+
+#include <lua.hpp>
+
+#include <LuaLambda.h>
+
 #include "IRulesIniSection.h"
 #include "parse.h"
 #include "TechnoTypeApi.h"
@@ -8,11 +14,28 @@
 class InfantryApi : public TechnoTypeApi<InfantryTypeClass>
 {
 private:
-	InfantryApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Infantry", rulesInfo)
+	const LuaLambda& ReadRuleLambda;
+	const LuaLambda& WriteRuleLambda;
+
+	InfantryApi(IRulesIniSection& rulesInfo) :
+		TechnoTypeApi("Infantry", rulesInfo),
+		ReadRuleLambda(std::bind(&InfantryApi::ReadRuleLua, this, std::placeholders::_1)),
+		WriteRuleLambda(std::bind(&InfantryApi::WriteRuleLua, this, std::placeholders::_1))
 	{
+		Init();
 	}
 
 protected:
+	const LuaLambda& GetReadRuleLambda()
+	{
+		return ReadRuleLambda;
+	}
+
+	const LuaLambda& GetWriteRuleLambda()
+	{
+		return WriteRuleLambda;
+	}
+
 	bool ValidateTypeName(const char* name)
 	{
 		bool parseError = false;

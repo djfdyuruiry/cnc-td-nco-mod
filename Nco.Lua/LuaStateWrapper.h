@@ -6,6 +6,7 @@
 #include <Utils.h>
 
 #include "ILuaStateWrapper.h"
+#include "LambdaProxy.h"
 
 class LuaStateWrapper : public ILuaStateWrapper
 {
@@ -284,6 +285,16 @@ public:
 	void WriteFunction(const char* name, lua_CFunction function)
 	{
 		lua_pushcfunction(lua, function);
+		lua_setglobal(lua, name);
+	}
+
+	void WriteFunction(const char* name, const LuaLambda& lambda)
+	{
+		auto lambdaPtr = (void*) &lambda;
+
+		lua_pushlightuserdata(lua, lambdaPtr);
+		lua_pushcclosure(lua, LambdaProxy, 1);
+
 		lua_setglobal(lua, name);
 	}
 
