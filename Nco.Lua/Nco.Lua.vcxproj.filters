@@ -78,7 +78,7 @@
     <ClInclude Include="LambdaProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaLambda.h">
+    <ClInclude Include="LuaMethod.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

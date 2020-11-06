@@ -25,7 +25,7 @@ public:
 			return false;
 		}
 
-		auto valueResult = lua.PullValue<T>(stackIndex);
+		auto& valueResult = lua.PullValue<T>(stackIndex);
 
 		if (valueResult.IsErrorResult())
 		{

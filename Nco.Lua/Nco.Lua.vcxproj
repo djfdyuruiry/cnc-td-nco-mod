@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="ILuaApi.h" />
     <ClInclude Include="LambdaProxy.h" />
-    <ClInclude Include="LuaLambda.h" />
+    <ClInclude Include="LuaMethod.h" />
     <ClInclude Include="LuaValueAdapter.h" />
     <ClInclude Include="ILuaRuntime.h" />
     <ClInclude Include="ILuaStateWrapper.h" />

@@ -4,36 +4,34 @@
 
 #include <lua.hpp>
 
-#include <LuaLambda.h>
+#include <LuaMethod.h>
 
 #include "IRulesIniSection.h"
 #include "parse.h"
 #include "TechnoTypeApi.h"
 #include "type.h"
 
+int InfantryReadRuleProxy(lua_State* lua);
+
+int InfantryWriteRuleProxy(lua_State* lua);
+
 class InfantryApi : public TechnoTypeApi<InfantryTypeClass>
 {
 private:
-	const LuaLambda& ReadRuleLambda;
-	const LuaLambda& WriteRuleLambda;
-
-	InfantryApi(IRulesIniSection& rulesInfo) :
-		TechnoTypeApi("Infantry", rulesInfo),
-		ReadRuleLambda(std::bind(&InfantryApi::ReadRuleLua, this, std::placeholders::_1)),
-		WriteRuleLambda(std::bind(&InfantryApi::WriteRuleLua, this, std::placeholders::_1))
+	InfantryApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Infantry", rulesInfo)
 	{
 		Init();
 	}
 
 protected:
-	const LuaLambda& GetReadRuleLambda()
+	lua_CFunction GetReadRuleProxy()
 	{
-		return ReadRuleLambda;
+		return InfantryReadRuleProxy;
 	}
 
-	const LuaLambda& GetWriteRuleLambda()
+	lua_CFunction GetWriteRuleProxy()
 	{
-		return WriteRuleLambda;
+		return InfantryWriteRuleProxy;
 	}
 
 	bool ValidateTypeName(const char* name)
@@ -42,7 +40,7 @@ protected:
 		
 		Parse_Infantry_Type(name, &parseError);
 
-		return parseError;
+		return !parseError;
 	}
 
 	InfantryTypeClass& ParseType(const char* name)

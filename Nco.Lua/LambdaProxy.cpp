@@ -2,10 +2,15 @@
 
 #include <lua.hpp>
 
+#include "LuaMethod.h"
+
 int LambdaProxy(lua_State* lua)
 {
-	auto lambdaUserData = lua_touserdata(lua, lua_upvalueindex(1));
-	auto lambda = (const std::function<int(lua_State*)>*) lambdaUserData;
+	auto lambdaFactoryUserData = lua_touserdata(lua, lua_upvalueindex(1));
+	auto instancePtrUserData = lua_touserdata(lua, lua_upvalueindex(2));
+	
+	auto lambdaFactory = (std::function<LuaMethod(void*)>*) lambdaFactoryUserData;
+	auto lambda = lambdaFactory->operator()(instancePtrUserData);
 
-	return (*lambda)(lua);
+	return lambda(lua);
 }

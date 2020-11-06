@@ -25,6 +25,11 @@ private:
 		);
 	}
 
+	bool IsType(int typeCode, int stackIndex)
+	{
+		return lua_type(lua, stackIndex) == typeCode;
+	}
+
 protected:
 	void SetIndex(int tableIndex, int index)
 	{
@@ -89,12 +94,12 @@ public:
 
 	bool IsString(int stackIndex)
 	{
-		return lua_isstring(lua, stackIndex) == 1;
+		return IsType(LUA_TSTRING, stackIndex);
 	}
 
 	bool IsTable(int stackIndex)
 	{
-		return lua_istable(lua, stackIndex) == 1;
+		return IsType(LUA_TTABLE, stackIndex);
 	}
 
 	bool IsTable()
@@ -104,17 +109,17 @@ public:
 
 	bool IsBool(int stackIndex)
 	{
-		return lua_isboolean(lua, stackIndex) == 1;
+		return IsType(LUA_TBOOLEAN, stackIndex);
 	}
 
 	bool IsInt(int stackIndex)
 	{
-		return lua_isinteger(lua, stackIndex);
+		return IsNumber(stackIndex) && lua_isinteger(lua, stackIndex);
 	}
 
 	bool IsNumber(int stackIndex)
 	{
-		return lua_isnumber(lua, stackIndex);
+		return IsType(LUA_TNUMBER, stackIndex);
 	}
 
 	bool IsNil(int stackIndex)
@@ -139,7 +144,7 @@ public:
 
 	bool IsNumber()
 	{
-		return lua_isnumber(lua, GetStackTop());
+		return IsNumber(GetStackTop());
 	}
 
 	bool IsNil()
@@ -288,12 +293,11 @@ public:
 		lua_setglobal(lua, name);
 	}
 
-	void WriteFunction(const char* name, const LuaLambda& lambda)
+	void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy)
 	{
-		auto lambdaPtr = (void*) &lambda;
+		lua_pushlightuserdata(lua, objectPtr);
 
-		lua_pushlightuserdata(lua, lambdaPtr);
-		lua_pushcclosure(lua, LambdaProxy, 1);
+		lua_pushcclosure(lua, methodProxy, 1);
 
 		lua_setglobal(lua, name);
 	}

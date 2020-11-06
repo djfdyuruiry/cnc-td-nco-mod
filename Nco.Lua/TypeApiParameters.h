@@ -18,6 +18,7 @@ public:
 	{
 		auto& params = *(new TypeApiParameters());
 
+		params.invalidParameters = false;
 		params.typeInstanceName = typeInstanceName;
 		params.ruleName = ruleName;
 		params.typeInstance = typeInstance;

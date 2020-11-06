@@ -4,4 +4,4 @@
 
 #include <lua.hpp>
 
-typedef std::function<int(lua_State*)> LuaLambda;
+typedef std::function<int(lua_State*)> LuaMethod;

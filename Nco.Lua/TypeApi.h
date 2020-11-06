@@ -7,7 +7,7 @@
 #include <Strings.h>
 
 #include "LuaApi.h"
-#include "LuaLambda.h"
+#include "LuaMethod.h"
 #include "LuaStateWrapper.h"
 #include "TypeApiParameters.h"
 
@@ -19,7 +19,7 @@ protected:
 
 	TypeApiParameters<T>& GetParameters(const char* operation, ILuaStateWrapper& luaState)
 	{
-		Log_Trace("%s%sRule called from Lua", operation, titleCaseTypeName, operation);
+		Log_Trace("%s%sRule called from Lua", operation, titleCaseTypeName);
 
 		int argCount = luaState.GetStackTop();
 
@@ -44,6 +44,8 @@ protected:
 		if (!ValidateTypeName(typeInstanceNameResult.GetValue()))
 		{
 			delete &typeInstanceNameResult;
+
+			luaState.RaiseError("%s%sRule argument `typeName` was not recognised as a valid type", operation, titleCaseTypeName);
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
@@ -88,91 +90,6 @@ protected:
 		return params;
 	}
 
-	int ReadRuleLua(lua_State* lua)
-	{
-		auto& luaState = LuaStateWrapper::Build(lua, false);
-		auto& params = GetParameters("get", luaState);
-
-		if (!params.IsValid())
-		{
-			delete &luaState;
-			delete &params;
-
-			return 0;
-		}
-
-        Log_Debug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
-
-        auto ruleMatched = ReadRule(luaState, *params.typeInstance, params.ruleName);
-
-        if (ruleMatched)
-        {
-            Log_Debug("get%sRule => Rule matched in %s Type", titleCaseTypeName, typeName);
-			
-			delete &luaState;
-			delete &params;
-
-            return 1;
-        }
-
-        luaState.RaiseError("rule name type passed get%sRule was not matched: %s", titleCaseTypeName, params.ruleName);
-
-		delete &luaState;
-		delete &params;
-
-		return 0;
-	}
-
-	int WriteRuleLua(lua_State* lua)
-	{
-		auto& luaState = LuaStateWrapper::Build(lua, false);
-		auto& params = GetParameters("set", luaState);
-
-		if (!params.IsValid())
-		{
-			delete &luaState;
-			delete &params;
-
-			return 0;
-		}
-
-        Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
-
-		auto& ruleValueResult = luaState.ReadString(3);
-
-		if (ruleValueResult.IsErrorResult() || String_Is_Empty(ruleValueResult.GetValue()))
-		{
-			luaState.RaiseError("set%sRule argument `ruleValue` was nil or blank", typeName);
-			
-			delete &luaState;
-			delete &params;
-			delete &ruleValueResult;
-
-			return 0;
-		}
-
-        auto ruleMatched = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
-
-        if (ruleMatched)
-        {
-            Log_Debug("set%sRule => Rule matched in %s Type", titleCaseTypeName, typeName);
-			
-			delete &luaState;
-			delete &params;
-			delete &ruleValueResult;
-
-            return 1;
-        }
-
-        luaState.RaiseError("rule name type passed set%sRule was not matched: %s", titleCaseTypeName, params.ruleName);
-
-		delete &luaState;
-		delete &params;
-		delete &ruleValueResult;
-
-		return 0;
-	}
-
 	TypeApi(const char* typeName) : typeName(typeName), titleCaseTypeName(ToTitleCase(typeName))
 	{
 	}
@@ -184,7 +101,7 @@ protected:
 
 		auto name = titleCaseTypeName;
 
-		WithLambdaFunction(FormatString("get%sRule", titleCaseTypeName), GetReadRuleLambda(), [](LuaFunctionInfo& i) {
+		WithMethod(FormatString("get%sRule", titleCaseTypeName), this, GetReadRuleProxy(), [](LuaFunctionInfo& i) {
 			i.WithDescription(FormatString("Set a rule for a given "))
 				.WithParameter("ruleName", [](LuaVariableInfo& vi) {
 				vi.WithDescription("The name as it appears in RULES.INI")
@@ -196,7 +113,7 @@ protected:
 					});
 		});
 
-		WithLambdaFunction(FormatString("set%sRule", titleCaseTypeName), GetWriteRuleLambda(), [](LuaFunctionInfo& i) {
+		WithMethod(FormatString("set%sRule", titleCaseTypeName), this, GetWriteRuleProxy(), [](LuaFunctionInfo& i) {
 			i.WithDescription(FormatString("Get a rule for a given"))
 				.WithParameter("ruleName", [](LuaVariableInfo& vi) {
 				vi.WithDescription("The name as it appears in RULES.INI")
@@ -209,9 +126,9 @@ protected:
 		});
 	}
 
-	virtual const LuaLambda& GetReadRuleLambda() = 0;
+	virtual lua_CFunction GetReadRuleProxy() = 0;
 
-	virtual const LuaLambda& GetWriteRuleLambda() = 0;
+	virtual lua_CFunction GetWriteRuleProxy() = 0;
 
 	virtual bool ValidateRule(const char* ruleName) = 0;
 
@@ -229,4 +146,83 @@ public:
 		delete titleCaseTypeName;
 	}
 
+	int ReadRuleLua(lua_State* lua)
+	{
+		auto& luaState = LuaStateWrapper::Build(lua, false);
+		auto& params = GetParameters("get", luaState);
+
+		if (!params.IsValid())
+		{
+			delete& luaState;
+			delete& params;
+
+			return 0;
+		}
+
+		Log_Debug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
+
+		auto ruleMatched = ReadRule(luaState, *params.typeInstance, params.ruleName);
+
+		if (ruleMatched)
+		{
+			Log_Debug("get%sRule => Rule matched in %s Type", titleCaseTypeName, typeName);
+
+			delete& luaState;
+			delete& params;
+
+			return 1;
+		}
+
+		luaState.RaiseError("rule name type passed get%sRule was not matched: %s", titleCaseTypeName, params.ruleName);
+
+		delete& luaState;
+		delete& params;
+
+		return 0;
+	}
+
+	int WriteRuleLua(lua_State* lua)
+	{
+		auto& luaState = LuaStateWrapper::Build(lua, false);
+		auto& params = GetParameters("set", luaState);
+
+		if (!params.IsValid())
+		{
+			delete& luaState;
+			delete& params;
+
+			return 0;
+		}
+
+		Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
+
+		if (luaState.IsNil() || (luaState.IsString() && String_Is_Empty(luaState.ToString(3))))
+		{
+			luaState.RaiseError("set%sRule argument `ruleValue` was nil or blank", typeName);
+
+			delete& luaState;
+			delete& params;
+
+			return 0;
+		}
+
+		auto ruleMatched = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
+
+		if (ruleMatched)
+		{
+			Log_Debug("set%sRule => Rule matched in %s Type", titleCaseTypeName, typeName);
+
+			delete& luaState;
+			delete& params;
+
+			return 1;
+		}
+
+		luaState.RaiseError("rule name type passed set%sRule was not matched: %s", titleCaseTypeName, params.ruleName);
+
+		delete& luaState;
+		delete& params;
+
+		return 0;
+	}
 };

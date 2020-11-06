@@ -4,7 +4,6 @@
 
 #include <lua.hpp>
 
-#include "LuaLambda.h"
 #include "LuaVariableInfo.h"
 
 typedef void (*LuaVariableInfoInitialiser)(LuaVariableInfo&);
@@ -16,13 +15,16 @@ private:
 	const char* description;
 
 	lua_CFunction luaFunction;
-	const LuaLambda* luaLambda;
+
+	void* implementationObject;
+	lua_CFunction methodProxy;
 
 	std::vector<LuaVariableInfo*>& parameters;
 	std::vector<LuaVariableInfo*>& returnValues;
 
 	LuaFunctionInfo() : parameters(*(new std::vector<LuaVariableInfo*>())),
-		returnValues(*(new std::vector<LuaVariableInfo*>()))
+		returnValues(*(new std::vector<LuaVariableInfo*>())),
+		implementationObject(NULL)
 	{
 	}
 
@@ -76,9 +78,10 @@ public:
 		return *this;
 	}
 
-	LuaFunctionInfo& WithImplementation(const LuaLambda& impl)
+	LuaFunctionInfo& WithImplementation(void* object, lua_CFunction objectMethodProxy)
 	{
-		this->luaLambda = &impl;
+		implementationObject = object;
+		methodProxy = objectMethodProxy;
 
 		return *this;
 	}
@@ -118,9 +121,9 @@ public:
 		return description;
 	}
 
-	bool IsLambda()
+	bool IsObjectMethod()
 	{
-		return luaFunction == NULL;
+		return implementationObject != NULL;
 	}
 
 	lua_CFunction GetFunction()
@@ -128,11 +131,14 @@ public:
 		return luaFunction;
 	}
 
-	const LuaLambda& GetLambda()
+	void* GetImplementationObject()
 	{
-	
-		// figure out why this member variable turns to `empty` when not empty when set
-		return *luaLambda;
+		return implementationObject;
+	}
+
+	lua_CFunction GetMethodProxy()
+	{
+		return methodProxy;
 	}
 
 	const std::vector<LuaVariableInfo*>& GetParameters()

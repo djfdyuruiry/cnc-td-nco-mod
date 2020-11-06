@@ -1528,6 +1528,9 @@
     <ClCompile Include="LUA_API_FUNCTIONS_WEAPON_RULES.CPP">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
+    <ClCompile Include="InfantryApi.cpp">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="win32lib\FACINGFF.ASM">

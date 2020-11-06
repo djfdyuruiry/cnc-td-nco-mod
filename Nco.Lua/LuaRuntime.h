@@ -41,13 +41,13 @@ public:
 	{
 		for (auto function : api.GetFunctions())
 		{
-			if (!function->IsLambda())
+			if (!function->IsObjectMethod())
 			{
 				lua.WriteFunction(function->GetName(), function->GetFunction());
 			}
 			else
 			{
-				lua.WriteFunction(function->GetName(), function->GetLambda());
+				lua.WriteMethod(function->GetName(), function->GetImplementationObject(), function->GetMethodProxy());
 			}
 		}
 
