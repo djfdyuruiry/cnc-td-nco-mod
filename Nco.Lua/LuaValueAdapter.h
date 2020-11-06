@@ -5,7 +5,7 @@
 
 class LuaValueAdapter
 {
-protected:
+private:
 	ILuaValueValidator& validator;
 
 	LuaValueAdapter(ILuaValueValidator& validator) : validator(validator)

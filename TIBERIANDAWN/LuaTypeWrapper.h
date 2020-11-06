@@ -29,6 +29,18 @@ public:
 		return *(new LuaTypeWrapper<T>());
 	}
 
+	~LuaTypeWrapper()
+	{
+		delete &extractors;
+		delete &injectors;
+
+		for (auto validator : validators) {
+			delete validator;
+		}
+
+		delete& validators;
+	}
+
 	LuaTypeWrapper& WithFieldWrapper(
 		const char* fieldName,
 		std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&)> extractor,

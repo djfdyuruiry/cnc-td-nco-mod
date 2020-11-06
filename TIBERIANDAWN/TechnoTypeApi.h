@@ -88,4 +88,11 @@ protected:
 
 		return technoTypeWrapper.WriteFieldValue(typeInstance, Build_Rule_Key(ruleName), lua, ruleValueStackIndex);
 	}
+
+public:
+	~TechnoTypeApi()
+	{
+		delete &technoTypeWrapper;
+	}
+
 };
