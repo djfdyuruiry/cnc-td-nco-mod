@@ -96,6 +96,12 @@ function main()
 
           rulesRead = rulesRead + 1
 
+          if ruleValue == nil then
+            log (">>>WARNING: Rule %s returned nil, skipping set rule validation test", ruleName)
+
+            goto areaRule
+          end
+
           typeArea.setRuleValue(areaType, ruleName, ruleValue)
 
           rulesWritten = rulesWritten + 1

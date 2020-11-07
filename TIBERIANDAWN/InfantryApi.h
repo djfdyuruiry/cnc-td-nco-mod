@@ -6,6 +6,7 @@
 
 #include "IRulesIniSection.h"
 #include "parse.h"
+#include "rules_ini_infantry.h"
 #include "TechnoTypeApi.h"
 #include "type.h"
 
@@ -14,10 +15,10 @@
 #define SIMPLE_EXTRACTOR_INF(f) SIMPLE_EXTRACTOR(InfantryTypeClass, f)
 #define SIMPLE_INJECTOR_INF(t, f) SIMPLE_INJECTOR(InfantryTypeClass, t, f)
 
-class InfantryApi : public TechnoTypeApi<InfantryTypeClass>
+class InfantryApi : public TechnoTypeApi<InfantryTypeClass, InfantryType>
 {
 private:
-	InfantryApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Infantry", rulesInfo)
+	InfantryApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Infantry", rulesInfo, Parse_Infantry_Type)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			FEMALE_RULE,
@@ -59,23 +60,6 @@ private:
 			EXTRACTOR_INF((bool)i.HasC4Charges),
 			SIMPLE_INJECTOR_INF(bool, HasC4Charges),
 			PrimitiveTypeValidator<bool>::Build()
-		);
-	}
-
-protected:
-	bool ValidateTypeName(const char* name)
-	{
-		bool parseError = false;
-		
-		Parse_Infantry_Type(name, &parseError);
-
-		return !parseError;
-	}
-
-	InfantryTypeClass& ParseType(const char* name)
-	{
-		return (InfantryTypeClass&) InfantryTypeClass::As_Reference(
-			Parse_Infantry_Type(name, NULL)
 		);
 	}
 

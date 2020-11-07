@@ -28,15 +28,17 @@
 #define SIMPLE_EXTRACTOR_T(f) SIMPLE_EXTRACTOR(T, f)
 #define SIMPLE_INJECTOR_T(t, f) SIMPLE_INJECTOR(T, t, f)
 
-template<class T> class TechnoTypeApi : public TypeApi<T>
+template<class T, class U> class TechnoTypeApi : public TypeApi<T>
 {
 protected:
 	IRulesIniSection& rulesInfo;
 	LuaTypeWrapper<T>& technoTypeWrapper;
+	U(*typeParser)(const char*, bool*, bool);
 
-	TechnoTypeApi(const char* typeName, IRulesIniSection& rulesInfo) :
+	TechnoTypeApi(const char* typeName, IRulesIniSection& rulesInfo, U(*typeParser)(const char*, bool*, bool)) :
 		TypeApi(typeName),
 		rulesInfo(rulesInfo),
+		typeParser(typeParser),
 		technoTypeWrapper(LuaTypeWrapper<T>::Build())
 	{
 		technoTypeWrapper.WithFieldWrapper(
@@ -117,7 +119,7 @@ protected:
 				ParseCheckValidator<WeaponType>::Build(Parse_Weapon_Type)
 			).WithFieldWrapper(
 				SECONDARY_WEAPON_RULE,
-				EXTRACTOR_T(Weapon_Type_To_String(i.Primary)),
+				EXTRACTOR_T(Weapon_Type_To_String(i.Secondary)),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 					auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
 
@@ -234,6 +236,22 @@ protected:
 				},
 				PrimitiveTypeValidator<const char*>::Build()
 			);
+	}
+
+	bool ValidateTypeName(const char* name)
+	{
+		bool parseError = false;
+
+		typeParser(name, &parseError, false);
+
+		return !parseError;
+	}
+
+	T& ParseType(const char* name)
+	{
+		return (T&)T::As_Reference(
+			typeParser(name, NULL, false)
+		);
 	}
 
 	bool ValidateRule(const char* ruleName)

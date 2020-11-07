@@ -844,13 +844,7 @@
     <ClInclude Include="LUA_API_FUNCTIONS_GENERIC_RULES.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_INF_RULES.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_INFO.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_UNIT_RULES.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H">
@@ -870,6 +864,9 @@
     </ClInclude>
     <ClInclude Include="ParseCheckValidator.h">
       <Filter>Source Files\NCO\Lua\Api\ValueValidators</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1510,13 +1507,7 @@
     <ClCompile Include="LUA_API_FUNCTIONS_GENERIC_RULES.CPP">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_INF_RULES.CPP">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_UNIT_RULES.CPP">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP">

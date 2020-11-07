@@ -1,18 +1,28 @@
+#include "function.h"
+
 #include <logger.h>
+
+#include "InfantryApi.h"
+#include "IRulesIniSection.h"
 #include "lua.h"
 #include "lua_api_functions_air_rules.h"
 #include "lua_api_functions_build_rules.h"
 #include "lua_api_functions_bullet_rules.h"
 #include "lua_api_functions_game.h"
 #include "lua_api_functions_game_rules.h"
-#include "lua_api_functions_inf_rules.h"
 #include "lua_api_functions_info.h"
-#include "lua_api_functions_unit_rules.h"
 #include "lua_api_functions_util.h"
 #include "lua_api_functions_warhead_rules.h"
 #include "lua_api_functions_weapon_rules.h"
+#include "rules_ini.h"
+#include "UnitApi.h"
 
 static bool API_INITIALISED = false;
+
+template<class T> static void RegisterApi(IRulesIniSection& ruleInfo)
+{
+    LuaRuntime().RegisterApi(T::Build(ruleInfo));
+}
 
 static bool Load_Nco_Lua_Lib()
 {
@@ -23,18 +33,21 @@ static bool Load_Api_Functions()
 {
     Log_Debug("Initialising Lua API functions");
 
-    return Load_Nco_Lua_Lib()
+    auto legacyLoadersResult = Load_Nco_Lua_Lib()
         && Register_Util_Functions()
         && Register_Info_Functions()
         && Register_Game_Rule_Functions()
         && Register_Weapon_Functions()
         && Register_Bullet_Functions()
         && Register_Warhead_Functions()
-        && Register_Infantry_Rule_Functions()
-        && Register_Unit_Rule_Functions()
         && Register_Aircraft_Rule_Functions()
         && Register_Building_Rule_Functions()
         && Register_Game_Functions();
+
+    RegisterApi<InfantryApi>(GetRulesInfo().GetInfantryRules());
+    RegisterApi<UnitApi>(GetRulesInfo().GetUnitRules());
+
+    return legacyLoadersResult;
 }
 
 bool Initialise_Lua_Api()

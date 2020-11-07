@@ -440,8 +440,6 @@
     <ClInclude Include="LUA_API_FUNCTIONS_BUILD_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GENERIC_RULES.H" />
-    <ClInclude Include="LUA_API_FUNCTIONS_INF_RULES.H" />
-    <ClInclude Include="LUA_API_FUNCTIONS_UNIT_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_WARHEAD_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_WEAPON_RULES.H" />
@@ -539,6 +537,7 @@
     <ClInclude Include="TURRET.H" />
     <ClInclude Include="TXTLABEL.H" />
     <ClInclude Include="TYPE.H" />
+    <ClInclude Include="UnitApi.h" />
     <ClInclude Include="WarheadTypeMod.h" />
     <ClInclude Include="WeaponTypeMod.h" />
     <ClInclude Include="UNIT.H" />
@@ -657,8 +656,6 @@
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GENERIC_RULES.CPP" />
-    <ClCompile Include="LUA_API_FUNCTIONS_INF_RULES.CPP" />
-    <ClCompile Include="LUA_API_FUNCTIONS_UNIT_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_WARHEAD_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_WEAPON_RULES.CPP" />
