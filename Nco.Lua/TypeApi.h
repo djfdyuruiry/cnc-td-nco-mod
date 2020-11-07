@@ -183,15 +183,6 @@ public:
 
 		Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
 
-		if (luaState.IsNil() || (luaState.IsString() && String_Is_Empty(luaState.ToString(3))))
-		{
-			luaState.RaiseError("set%sRule argument `ruleValue` was nil or blank", typeName);
-
-			delete &params;
-
-			return 0;
-		}
-
 		// TODO: the return type should represent two outcomes - matched and success
 		auto ruleMatched = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
 

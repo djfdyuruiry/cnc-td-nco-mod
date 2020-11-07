@@ -26,7 +26,11 @@ public:
 
 		if (!result.IsErrorResult())
 		{
-			parser(result.GetValue(), &parseError, false);
+			auto valueUpper = Convert_String_To_Upper_Case(result.GetValue());
+
+			parser(valueUpper, &parseError, false);
+
+			delete valueUpper;
 		}
 
 		delete& result;

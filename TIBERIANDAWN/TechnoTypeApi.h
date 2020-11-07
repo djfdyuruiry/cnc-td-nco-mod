@@ -18,10 +18,15 @@
 #include "rules_ini_generic.h"
 #include "type.h"
 
-#define EXTRACTOR(f) [](T& i, ILuaStateWrapper& l, LuaValueAdapter& va) { va.Write(l, f); }
-#define INJECTOR(t, f) [](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) { f = va.Read<t>(l, si); } 
-#define SIMPLE_EXTRACTOR(f) EXTRACTOR(i.f)
-#define SIMPLE_INJECTOR(t, f) INJECTOR(t, i.f) 
+#define EXTRACTOR(it, f) [](it& i, ILuaStateWrapper& l, LuaValueAdapter& va) { va.Write(l, f); }
+#define INJECTOR(it, t, f) [](it& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) { f = va.Read<t>(l, si); } 
+#define SIMPLE_EXTRACTOR(it, f) EXTRACTOR(it, i.f)
+#define SIMPLE_INJECTOR(it, t, f) INJECTOR(it, t, i.f) 
+
+#define EXTRACTOR_T(f) EXTRACTOR(T, f)
+#define INJECTOR_T(t, f) INJECTOR(T, t, f)
+#define SIMPLE_EXTRACTOR_T(f) SIMPLE_EXTRACTOR(T, f)
+#define SIMPLE_INJECTOR_T(t, f) SIMPLE_INJECTOR(T, t, f)
 
 template<class T> class TechnoTypeApi : public TypeApi<T>
 {
@@ -36,157 +41,175 @@ protected:
 	{
 		technoTypeWrapper.WithFieldWrapper(
 				BUILD_LEVEL_RULE,
-				SIMPLE_EXTRACTOR(Level),
-				SIMPLE_INJECTOR(unsigned char, Level),
+				SIMPLE_EXTRACTOR_T(Level),
+				SIMPLE_INJECTOR_T(unsigned char, Level),
 				NumbericRangeValidator<unsigned char>::Build(0, 99)
 			).WithFieldWrapper(
 				SCENARIO_LEVEL_RULE,
-				SIMPLE_EXTRACTOR(Scenario),
-				SIMPLE_INJECTOR(unsigned char, Scenario),
+				SIMPLE_EXTRACTOR_T(Scenario),
+				SIMPLE_INJECTOR_T(unsigned char, Scenario),
 				NumbericRangeValidator<unsigned char>::Build(0, 99)
 			).WithFieldWrapper(
 				PREREQUISITE_RULE,
-				EXTRACTOR(Prerequisite_To_String(i.Pre)),
+				EXTRACTOR_T(Prerequisite_To_String(i.Pre)),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
+					auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+
 					i.Pre = Structure_Type_To_Prerequisite(
-						Parse_Structure_Type(va.Read<const char*>(l, si), NULL),
+						Parse_Structure_Type(valueUpper, NULL),
 						NULL
 					);
+
+					delete valueUpper;
 				},
 				ParseCheckValidator<StructType>::Build(Parse_Structure_Type)
 			).WithFieldWrapper(
 				COST_RULE,
-				SIMPLE_EXTRACTOR(Cost),
-				SIMPLE_INJECTOR(int, Cost),
+				SIMPLE_EXTRACTOR_T(Cost),
+				SIMPLE_INJECTOR_T(int, Cost),
 				PrimitiveTypeValidator<int>::Build()
 			).WithFieldWrapper(
 				BUILDABLE_RULE,
-				SIMPLE_EXTRACTOR(IsBuildable),
-				SIMPLE_INJECTOR(bool, IsBuildable),
+				EXTRACTOR_T((bool)i.IsBuildable),
+				SIMPLE_INJECTOR_T(bool, IsBuildable),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				FLAMMABLE_RULE,
-				SIMPLE_EXTRACTOR(IsFlammable),
-				SIMPLE_INJECTOR(bool, IsFlammable),
+				EXTRACTOR_T((bool)i.IsFlammable),
+				SIMPLE_INJECTOR_T(bool, IsFlammable),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				SPEED_RULE,
-				SIMPLE_EXTRACTOR(MaxSpeed),
+				EXTRACTOR_T((unsigned char)i.MaxSpeed),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-					i.MaxSpeed = (MPHType) va.Read<unsigned int>(l, si);
+					i.MaxSpeed = (MPHType) va.Read<unsigned char>(l, si);
 				},
 				NumbericRangeValidator<>::Build(0, UCHAR_MAX)
 			).WithFieldWrapper(
 				STRENGTH_RULE,
-				SIMPLE_EXTRACTOR(MaxStrength),
-				SIMPLE_INJECTOR(unsigned short, MaxStrength),
+				SIMPLE_EXTRACTOR_T(MaxStrength),
+				SIMPLE_INJECTOR_T(unsigned short, MaxStrength),
 				NumbericRangeValidator<>::Build(0, USHRT_MAX)
 			).WithFieldsWrapper(
 				std::vector<const char*> { OWNER_RULE, HOUSES_RULE },
-				SIMPLE_EXTRACTOR(HouseListCsv),
+				SIMPLE_EXTRACTOR_T(HouseListCsv),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-					auto owner = va.Read<const char*>(l, si);
+					auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
 
-					i.Ownable = Parse_House_Name_List_Csv(owner, NULL);
-					i.HouseListCsv = strdup(owner);
+					i.Ownable = Parse_House_Name_List_Csv(valueUpper, NULL);
+					i.HouseListCsv = strdup(valueUpper);
+
+					delete valueUpper;
 				},
 				ParseCheckValidator<int>::Build(Parse_House_Name_List_Csv)
 			).WithFieldWrapper(
 				PRIMARY_WEAPON_RULE,
-				EXTRACTOR(Weapon_Type_To_String(i.Primary)),
+				EXTRACTOR_T(Weapon_Type_To_String(i.Primary)),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-					i.Primary = Parse_Weapon_Type(va.Read<const char*>(l, si), NULL);
+					auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
 
-					i.Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
+					i.Primary = Parse_Weapon_Type(valueUpper, NULL);
+
+					delete valueUpper;
+
+					i.Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon+
 				},
 				ParseCheckValidator<WeaponType>::Build(Parse_Weapon_Type)
 			).WithFieldWrapper(
 				SECONDARY_WEAPON_RULE,
-				EXTRACTOR(Weapon_Type_To_String(i.Primary)),
+				EXTRACTOR_T(Weapon_Type_To_String(i.Primary)),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-					i.Secondary = Parse_Weapon_Type(va.Read<const char*>(l, si), NULL);
+					auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+
+					i.Secondary = Parse_Weapon_Type(valueUpper, NULL);
+
+					delete valueUpper;
 				},
 				ParseCheckValidator<WeaponType>::Build(Parse_Weapon_Type)
 			).WithFieldWrapper(
 				ARMOR_RULE,
-				EXTRACTOR(Armor_Type_To_String(i.Armor)),
+				EXTRACTOR_T(Armor_Type_To_String(i.Armor)),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-					i.Armor = Parse_Armor_Type(va.Read<const char*>(l, si), NULL);
+					auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+
+					i.Armor = Parse_Armor_Type(valueUpper, NULL);
+
+					delete valueUpper;
 				},
 				ParseCheckValidator<ArmorType>::Build(Parse_Armor_Type)
 			).WithFieldWrapper(
 				AMMO_RULE,
-				SIMPLE_EXTRACTOR(MaxAmmo),
-				SIMPLE_INJECTOR(int, MaxAmmo),
+				SIMPLE_EXTRACTOR_T(MaxAmmo),
+				SIMPLE_INJECTOR_T(int, MaxAmmo),
 				NumbericRangeValidator<>::Build(-1, INT_MAX)
 			).WithFieldWrapper(
 				SIGHT_RANGE_RULE,
-				SIMPLE_EXTRACTOR(SightRange),
-				SIMPLE_INJECTOR(int, SightRange),
+				SIMPLE_EXTRACTOR_T(SightRange),
+				SIMPLE_INJECTOR_T(int, SightRange),
 				NumbericRangeValidator<>::Build(-1, INT_MAX)
 			).WithFieldWrapper(
 				REWARD_RULE,
-				SIMPLE_EXTRACTOR(Reward),
-				SIMPLE_INJECTOR(int, Reward),
+				SIMPLE_EXTRACTOR_T(Reward),
+				SIMPLE_INJECTOR_T(int, Reward),
 				NumbericRangeValidator<>::Build(-1, INT_MAX)
 			).WithFieldWrapper(
 				DETECT_CLOAKED_OBJECTS_RULE,
-				SIMPLE_EXTRACTOR(IsScanner),
-				SIMPLE_INJECTOR(bool, IsScanner),
+				EXTRACTOR_T((bool)i.IsScanner),
+				SIMPLE_INJECTOR_T(bool, IsScanner),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				CRUSHABLE_RULE,
-				SIMPLE_EXTRACTOR(IsCrushable),
-				SIMPLE_INJECTOR(bool, IsCrushable),
+				EXTRACTOR_T((bool)i.IsCrushable),
+				SIMPLE_INJECTOR_T(bool, IsCrushable),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				LEADER_RULE,
-				SIMPLE_EXTRACTOR(IsLeader),
-				SIMPLE_INJECTOR(bool, IsLeader),
+				EXTRACTOR_T((bool)i.IsLeader),
+				SIMPLE_INJECTOR_T(bool, IsLeader),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				TWO_SHOOTER_RULE,
-				SIMPLE_EXTRACTOR(IsTwoShooter),
-				SIMPLE_INJECTOR(bool, IsTwoShooter),
+				EXTRACTOR_T((bool)i.IsTwoShooter),
+				SIMPLE_INJECTOR_T(bool, IsTwoShooter),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				HAS_THEATER_GFX_RULE,
-				SIMPLE_EXTRACTOR(IsTheater),
-				SIMPLE_INJECTOR(bool, IsTheater),
+				EXTRACTOR_T((bool)i.IsTheater),
+				SIMPLE_INJECTOR_T(bool, IsTheater),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				SHOW_NAME_RULE,
-				SIMPLE_EXTRACTOR(IsNominal),
-				SIMPLE_INJECTOR(bool, IsNominal),
+				EXTRACTOR_T((bool)i.IsNominal),
+				SIMPLE_INJECTOR_T(bool, IsNominal),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				IS_MOD_TYPE_RULE,
-				SIMPLE_EXTRACTOR(IsModType),
-				SIMPLE_INJECTOR(bool, IsModType),
+				EXTRACTOR_T((bool)i.IsModType),
+				SIMPLE_INJECTOR_T(bool, IsModType),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				HAS_CREW_RULE,
-				SIMPLE_EXTRACTOR(IsCrew),
-				SIMPLE_INJECTOR(bool, IsCrew),
+				EXTRACTOR_T((bool)i.IsCrew),
+				SIMPLE_INJECTOR_T(bool, IsCrew),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				TURRET_EQUIPPED_RULE,
-				SIMPLE_EXTRACTOR(IsTurretEquipped),
-				SIMPLE_INJECTOR(bool, IsTurretEquipped),
+				EXTRACTOR_T((bool)i.IsTurretEquipped),
+				SIMPLE_INJECTOR_T(bool, IsTurretEquipped),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				REPAIRABLE_RULE,
-				SIMPLE_EXTRACTOR(IsRepairable),
-				SIMPLE_INJECTOR(bool, IsRepairable),
+				EXTRACTOR_T((bool)i.IsRepairable),
+				SIMPLE_INJECTOR_T(bool, IsRepairable),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				TRANSPORTER_RULE,
-				SIMPLE_EXTRACTOR(IsTransporter),
-				SIMPLE_INJECTOR(bool, IsTransporter),
+				EXTRACTOR_T((bool)i.IsTransporter),
+				SIMPLE_INJECTOR_T(bool, IsTransporter),
 				PrimitiveTypeValidator<bool>::Build()
 			).WithFieldWrapper(
 				BASE_TYPE_RULE,
-				SIMPLE_EXTRACTOR(ModBaseIniName),
+				SIMPLE_EXTRACTOR_T(ModBaseIniName),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 					strcpy(
 						i.ModBaseIniName,
@@ -194,18 +217,18 @@ protected:
 					);
 				},
 				LambdaValidator<const char*>::Build([] (const char* v) {
-					return !String_Is_Empty(v) && strlen(v) < 33;
+					return String_Is_Empty(v) || strlen(v) < 33;
 				})
 			).WithFieldWrapper(
 				IMAGE_RULE,
-				SIMPLE_EXTRACTOR(Image),
+				SIMPLE_EXTRACTOR_T(Image),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 					i.Image = strdup(va.Read<const char*>(l, si));
 				},
 				PrimitiveTypeValidator<const char*>::Build()
 			).WithFieldWrapper(
 				FRIENDLY_NAME_RULE,
-				SIMPLE_EXTRACTOR(FriendlyName),
+				SIMPLE_EXTRACTOR_T(FriendlyName),
 				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 					i.FriendlyName = strdup(va.Read<const char*>(l, si));
 				},

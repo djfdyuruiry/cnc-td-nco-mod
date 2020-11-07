@@ -92,10 +92,6 @@ function main()
         log(">>>Testing type %s get/set rules", areaType)
 
         for _, ruleName in ipairs(typeArea.getRuleNames()) do
-          if ruleName == "Image" then
-            goto areaRule
-          end
-
           local ruleValue = typeArea.getRuleValue(areaType, ruleName)
 
           rulesRead = rulesRead + 1
@@ -112,7 +108,7 @@ function main()
             validationFailed = true
             validationErrors = validationErrors + 1
           end
-          
+ 
           ::areaRule::
         end
 
