@@ -65,7 +65,7 @@ jobs:
         run: |
           $gitCommit = $env:GITHUB_SHA.substring(0, 7)
 
-          Write-Host "::set-env name=GIT_COMMIT::${gitCommit}"
+          echo "GIT_COMMIT=${gitCommit}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - uses: actions/upload-artifact@v2
         with:
