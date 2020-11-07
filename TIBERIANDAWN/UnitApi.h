@@ -110,8 +110,6 @@ private:
 		);
 	}
 
-protected:
-
 public:
 	static LuaApi& Build(IRulesIniSection& rulesInfo)
 	{
