@@ -351,6 +351,7 @@
   <ItemGroup>
     <ClInclude Include="ABSTRACT.H" />
     <ClInclude Include="AIRCRAFT.H" />
+    <ClInclude Include="AircraftApi.h" />
     <ClInclude Include="ANIM.H" />
     <ClInclude Include="AUDIO.H" />
     <ClInclude Include="BASE.H" />
@@ -436,7 +437,6 @@
     <ClInclude Include="LUA_API.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_BULLET_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GAME.H" />
-    <ClInclude Include="LUA_API_FUNCTIONS_AIR_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_BUILD_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GENERIC_RULES.H" />
@@ -651,7 +651,6 @@
     <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP" />
-    <ClCompile Include="LUA_API_FUNCTIONS_AIR_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BUILD_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP" />

@@ -2,10 +2,10 @@
 
 #include <logger.h>
 
+#include "AircraftApi.h"
 #include "InfantryApi.h"
 #include "IRulesIniSection.h"
 #include "lua.h"
-#include "lua_api_functions_air_rules.h"
 #include "lua_api_functions_build_rules.h"
 #include "lua_api_functions_bullet_rules.h"
 #include "lua_api_functions_game.h"
@@ -40,12 +40,12 @@ static bool Load_Api_Functions()
         && Register_Weapon_Functions()
         && Register_Bullet_Functions()
         && Register_Warhead_Functions()
-        && Register_Aircraft_Rule_Functions()
         && Register_Building_Rule_Functions()
         && Register_Game_Functions();
 
     RegisterApi<InfantryApi>(GetRulesInfo().GetInfantryRules());
     RegisterApi<UnitApi>(GetRulesInfo().GetUnitRules());
+    RegisterApi<AircraftApi>(GetRulesInfo().GetAircraftRules());
 
     return legacyLoadersResult;
 }
