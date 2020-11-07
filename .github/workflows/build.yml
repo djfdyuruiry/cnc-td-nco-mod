@@ -42,8 +42,8 @@ jobs:
             throw "Failed to find VSTest"
           }
 
-          Write-Host "::add-path::${msBuildPath}"
-          Write-Host "::add-path::${vstestPath}"
+          echo "${msBuildPath}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "${vstestPath}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Build Tiberian Dawn Test App
         run: scripts\build-test.bat
