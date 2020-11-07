@@ -209,7 +209,7 @@ namespace Unit
 
 					auto message = luaWrapper->GetLastError();
 
-					Assert::AreEqual("[string \"��a$$ = �R�RRTabv:00\"]:1: unexpected symbol near '<\\163>'", message);
+					Assert::AreEqual("[string \"��a$$ = �R�RRTabv:00\"]:1: unexpected symbol near '<\\239>'", message);
 				}
 
 				TEST_METHOD(When_WriteInt_IsCalled_Then_IntValueIsPushedOntoTheStack)

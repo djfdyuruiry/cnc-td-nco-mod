@@ -187,9 +187,6 @@ namespace Unit
 					auto entryCount = 0u;
 					auto result = Parse_Csv_String(strdup("entry_0"), 7, &entryCount);
 
-					auto ewq = strcmp(strdup("entry_0"), result[0]);
-					printf("Help me god %d", ewq);
-
 					Assert::AreEqual("entry_0", result[0]);
 				}
 
