@@ -356,6 +356,7 @@
     <ClInclude Include="AUDIO.H" />
     <ClInclude Include="BASE.H" />
     <ClInclude Include="BUILDING.H" />
+    <ClInclude Include="BuildingApi.h" />
     <ClInclude Include="BULLET.H" />
     <ClInclude Include="CARGO.H" />
     <ClInclude Include="CCDDE.H" />
@@ -437,7 +438,6 @@
     <ClInclude Include="LUA_API.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_BULLET_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GAME.H" />
-    <ClInclude Include="LUA_API_FUNCTIONS_BUILD_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_GENERIC_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H" />
@@ -651,7 +651,6 @@
     <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP" />
-    <ClCompile Include="LUA_API_FUNCTIONS_BUILD_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GENERIC_RULES.CPP" />

@@ -46,6 +46,11 @@ private:
 			SIMPLE_EXTRACTOR_AIR(TransportCapacity),
 			SIMPLE_INJECTOR_AIR(unsigned int, TransportCapacity),
 			NumbericRangeValidator<>::Build(0, UINT_MAX)
+		).WithFieldWrapper(
+			TRANSPORT_CAPACITY_RULE,
+			SIMPLE_EXTRACTOR_AIR(TransportCapacity),
+			SIMPLE_INJECTOR_AIR(unsigned int, TransportCapacity),
+			NumbericRangeValidator<>::Build(0, UINT_MAX)
 		);
 	}
 

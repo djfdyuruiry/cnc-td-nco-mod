@@ -826,9 +826,6 @@
     <ClInclude Include="LUA_API.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_BUILD_RULES.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_BULLET_RULES.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
@@ -866,6 +863,9 @@
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="AircraftApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1487,9 +1487,6 @@
       <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API.CPP">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_BUILD_RULES.CPP">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP">
