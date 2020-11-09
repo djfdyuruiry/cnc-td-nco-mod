@@ -49,7 +49,7 @@ private:
 
     int ReadRule(ILuaStateWrapper& luaState)
     {
-        Log_Trace("get%sRule called from Lua");
+        Log_Trace("get%sRule called from Lua", titleCaseSectionName);
 
         auto argCount = luaState.GetStackTop();
 

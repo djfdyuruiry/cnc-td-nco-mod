@@ -1,5 +1,9 @@
 #pragma once
 
+#include <map>
+
+#include <HashUtils.h>
+
 class LuaType final
 {
 private:
@@ -17,4 +21,20 @@ public:
 	static const LuaType& Table;
 	static const LuaType& Nil;
 	static const LuaType& Any;
+
+	static const std::map<StringHash, const LuaType&>& NameToType;
+
+	static const LuaType& Parse(const char* typeName)
+	{
+		auto key = HashUtils::HashString(typeName);
+		auto& index = NameToType.find(key);
+
+		if (index == NameToType.end())
+		{
+			return NULL;
+		}
+
+		return index->second;
+	}
+
 };
