@@ -69,7 +69,7 @@ protected:
 
 		auto boolValue = Strings_Are_Equal(ruleValue, TRUE_STRING);
 
-		delete& ruleValueOptional;
+		delete &ruleValueOptional;
 
 		return boolValue;
 	}
@@ -187,7 +187,7 @@ protected:
 			);
 
 			delete ruleValueStr;
-			delete& ruleValueOptional;
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -219,7 +219,7 @@ protected:
 		Log_Debug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
-		delete& ruleValueOptional;
+		delete &ruleValueOptional;
 
 		return ruleValue;
 	}

@@ -104,7 +104,7 @@ private:
 
 		if (!params.IsValid())
 		{
-			delete& params;
+			delete &params;
 
 			return 0;
 		}
@@ -117,16 +117,16 @@ private:
 		{
 			Log_Debug("get%sRule => Read rule success", titleCaseTypeName);
 
-			delete& params;
-			delete& readResult;
+			delete &params;
+			delete &readResult;
 
 			return 1;
 		}
 
 		luaState.RaiseError("Read rule error for type '%s': %s", titleCaseTypeName, readResult.GetError());
 
-		delete& params;
-		delete& readResult;
+		delete &params;
+		delete &readResult;
 
 		return 0;
 	}
@@ -137,7 +137,7 @@ private:
 
 		if (!params.IsValid())
 		{
-			delete& params;
+			delete &params;
 
 			return 0;
 		}
@@ -150,16 +150,16 @@ private:
 		{
 			Log_Debug("set%sRule => Write rule success", titleCaseTypeName);
 
-			delete& params;
-			delete& writeResult;
+			delete &params;
+			delete &writeResult;
 
 			return 1;
 		}
 
 		luaState.RaiseError("Write rule error for type '%s': %s", titleCaseTypeName, writeResult.GetError());
 
-		delete& params;
-		delete& writeResult;
+		delete &params;
+		delete &writeResult;
 
 		return 0;
 	}

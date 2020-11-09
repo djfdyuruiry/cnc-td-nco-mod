@@ -41,7 +41,7 @@ public:
 			delete validator;
 		}
 
-		delete& validators;
+		delete &validators;
 	}
 
 	LuaTypeWrapper& WithFieldWrapper(

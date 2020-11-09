@@ -429,7 +429,7 @@ public:
 
 			SetValue<bool>(result.GetValue());
 
-			delete& result;
+			delete &result;
 		}
 		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
 		{

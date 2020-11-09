@@ -33,7 +33,7 @@ public:
 			delete valueUpper;
 		}
 
-		delete& result;
+		delete &result;
 
 		return !parseError;
 	}

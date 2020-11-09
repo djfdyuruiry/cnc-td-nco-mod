@@ -90,7 +90,7 @@ bool Execute_Lua_Script(const char* luaScript, bool beQuiet)
         }
     }
 
-    delete& result;
+    delete &result;
 
     return executionOK;
 }

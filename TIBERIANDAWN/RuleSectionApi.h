@@ -66,7 +66,7 @@ private:
         {
             luaState.RaiseError("Rule '%s' passed to get%sRule was not recognised", titleCaseSectionName, ruleNameResult.GetValue());
 
-            delete& ruleNameResult;
+            delete &ruleNameResult;
 
             return 0;
         }
@@ -110,7 +110,7 @@ private:
             luaState.WriteNil();
         }
 
-        delete& ruleNameResult;
+        delete &ruleNameResult;
 
         return 1;
     }
@@ -134,7 +134,7 @@ private:
         {
             luaState.RaiseError("Rule '%s' passed to set%sRule was not recognised", ruleNameResult.GetValue(), titleCaseSectionName);
 
-            delete& ruleNameResult;
+            delete &ruleNameResult;
 
             return 0;
         }
@@ -154,7 +154,7 @@ private:
             delete valueStr;
         }
 
-        delete& ruleNameResult;
+        delete &ruleNameResult;
 
         return 0;
     }

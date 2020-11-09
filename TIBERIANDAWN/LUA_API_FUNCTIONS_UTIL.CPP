@@ -129,7 +129,7 @@ static int Lua_Show_Error(lua_State* _)
     {
         luaState.RaiseError("showError parameter `message` was nil or blank");
 
-        delete& messageResult;
+        delete &messageResult;
 
         return 0;
     }
