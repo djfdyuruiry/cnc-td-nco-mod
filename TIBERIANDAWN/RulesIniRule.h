@@ -33,8 +33,8 @@ private:
 	Optional& valueToAllowAlways;
 	std::vector<const char*>& validValues;
 
-	RulesIniRule(SectionName sectionName, RuleName ruleName)
-		: section(sectionName),
+	RulesIniRule(SectionName titleCaseSectionName, RuleName ruleName)
+		: section(titleCaseSectionName),
 		  name(ruleName),
 		  type(NO_RULE_TYPE),
 		  defaultValue(Optional::BuildOptional()),

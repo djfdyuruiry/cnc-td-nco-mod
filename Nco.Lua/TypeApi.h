@@ -15,6 +15,16 @@
 template<class T> class TypeApi : public LuaApi
 {
 private:
+	static int ReadRuleValueApiProxy(lua_State* lua)
+	{
+		return LUA_METHOD_PROXY(TypeApi, ReadRuleLua);
+	}
+
+	static int WriteRuleValueApiProxy(lua_State* lua)
+	{
+		return LUA_METHOD_PROXY(TypeApi, WriteRuleLua);
+	}
+
 	TypeApiParameters<T>& GetParameters(const char* operation, ILuaStateWrapper& luaState)
 	{
 		Log_Trace("%s%sRule called from Lua", operation, titleCaseTypeName);
@@ -34,14 +44,14 @@ private:
 		{
 			luaState.RaiseError("%s%sRule argument `typeName` was nil or blank", operation, titleCaseTypeName);
 
-			delete& typeInstanceNameResult;
+			delete &typeInstanceNameResult;
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
 
 		if (!ValidateTypeName(typeInstanceNameResult.GetValue()))
 		{
-			delete& typeInstanceNameResult;
+			delete &typeInstanceNameResult;
 
 			luaState.RaiseError("%s%sRule argument `typeName` was not recognised as a valid type", operation, titleCaseTypeName);
 
@@ -55,8 +65,8 @@ private:
 		{
 			luaState.RaiseError("%s%sRule argument `ruleName` was nil", operation, titleCaseTypeName);
 
-			delete& typeInstanceNameResult;
-			delete& ruleNameParameterResult;
+			delete &typeInstanceNameResult;
+			delete &ruleNameParameterResult;
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
@@ -64,14 +74,14 @@ private:
 		if (!ValidateRule(ruleNameParameterResult.GetValue()))
 		{
 			luaState.RaiseError(
-				"rule name type passed %s%sRule was not recognised for this type: %s",
+				"rule name type passed to %s%sRule was not recognised for this type: %s",
 				operation,
 				titleCaseTypeName,
-				ruleNameParameterResult.GetValue()
+				titleCaseTypeName
 			);
 
-			delete& typeInstanceNameResult;
-			delete& ruleNameParameterResult;
+			delete &typeInstanceNameResult;
+			delete &ruleNameParameterResult;
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
@@ -82,10 +92,76 @@ private:
 			&typeInstance
 		);
 
-		delete& typeInstanceNameResult;
-		delete& ruleNameParameterResult;
+		delete &typeInstanceNameResult;
+		delete &ruleNameParameterResult;
 
 		return params;
+	}
+
+	int ReadRuleLua(ILuaStateWrapper& luaState)
+	{
+		auto& params = GetParameters("get", luaState);
+
+		if (!params.IsValid())
+		{
+			delete& params;
+
+			return 0;
+		}
+
+		Log_Debug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
+
+		auto& readResult = ReadRule(luaState, *params.typeInstance, params.ruleName);
+
+		if (!readResult.IsErrorResult())
+		{
+			Log_Debug("get%sRule => Read rule success", titleCaseTypeName);
+
+			delete& params;
+			delete& readResult;
+
+			return 1;
+		}
+
+		luaState.RaiseError("Read rule error for type '%s': %s", titleCaseTypeName, readResult.GetError());
+
+		delete& params;
+		delete& readResult;
+
+		return 0;
+	}
+
+	int WriteRuleLua(ILuaStateWrapper& luaState)
+	{
+		auto& params = GetParameters("set", luaState);
+
+		if (!params.IsValid())
+		{
+			delete& params;
+
+			return 0;
+		}
+
+		Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
+
+		auto& writeResult = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
+
+		if (!writeResult.IsErrorResult())
+		{
+			Log_Debug("set%sRule => Write rule success", titleCaseTypeName);
+
+			delete& params;
+			delete& writeResult;
+
+			return 1;
+		}
+
+		luaState.RaiseError("Write rule error for type '%s': %s", titleCaseTypeName, writeResult.GetError());
+
+		delete& params;
+		delete& writeResult;
+
+		return 0;
 	}
 
 protected:
@@ -99,29 +175,28 @@ protected:
 
 		auto name = titleCaseTypeName;
 
-		WithMethod(FormatString("get%sRule", titleCaseTypeName), this, ReadRuleValueApiProxy, [](LuaFunctionInfo& i) {
-			i.WithDescription(FormatString("Set a rule for a given "))
-				.WithParameter("ruleName", [](LuaVariableInfo& vi) {
+		WithMethod(FormatString("get%sRule", titleCaseTypeName), this, ReadRuleValueApiProxy)
+			.WithDescription(FormatString("Set a rule for a given %s", titleCaseTypeName))
+			.WithParameter("ruleName", [](LuaVariableInfo& vi) {
 				vi.WithDescription("The name as it appears in RULES.INI")
-					.WithType(LuaType::String);
-					})
-				.WithReturnValue("ruleValue", [](LuaVariableInfo& vi) {
-						vi.WithDescription("The current value for the specified rule")
-							.WithType(LuaType::Any);
-					});
-		});
+				  .WithType(LuaType::String);
+			})
+			.WithReturnValue("ruleValue", [](LuaVariableInfo& vi) {
+				vi.WithDescription("The current value for the specified rule")
+				  .WithType(LuaType::Any);
+			});
+		
 
-		WithMethod(FormatString("set%sRule", titleCaseTypeName), this, WriteRuleValueApiProxy, [](LuaFunctionInfo& i) {
-			i.WithDescription(FormatString("Get a rule for a given"))
-				.WithParameter("ruleName", [](LuaVariableInfo& vi) {
+		WithMethod(FormatString("set%sRule", titleCaseTypeName), this, WriteRuleValueApiProxy)
+			.WithDescription(FormatString("Get a rule for a given", titleCaseTypeName))
+			.WithParameter("ruleName", [](LuaVariableInfo& vi) {
 				vi.WithDescription("The name as it appears in RULES.INI")
-					.WithType(LuaType::String);
-					})
-				.WithParameter("ruleValue", [](LuaVariableInfo& vi) {
-						vi.WithDescription("A valid value for the specified rule")
-							.WithType(LuaType::Any);
-					});
-		});
+				  .WithType(LuaType::String);
+			})
+			.WithParameter("ruleValue", [](LuaVariableInfo& vi) {
+				vi.WithDescription("A valid value for the specified rule")
+			      .WithType(LuaType::Any);
+			});
 	}
 
 	virtual bool ValidateRule(const char* ruleName) = 0;
@@ -135,84 +210,9 @@ protected:
 	virtual LuaResult& WriteRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName, int ruleValueStackIndex) = 0;
 
 public:
-	static int ReadRuleValueApiProxy(lua_State* lua)
-	{
-		return LUA_METHOD_PROXY(TypeApi, ReadRuleLua);
-	}
-
-	static int WriteRuleValueApiProxy(lua_State* lua)
-	{
-		return LUA_METHOD_PROXY(TypeApi, WriteRuleLua);
-	}
-
 	~TypeApi()
 	{
 		delete titleCaseTypeName;
 	}
 
-	int ReadRuleLua(ILuaStateWrapper& luaState)
-	{
-		auto& params = GetParameters("get", luaState);
-
-		if (!params.IsValid())
-		{
-			delete &params;
-
-			return 0;
-		}
-
-		Log_Debug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
-
-		auto& readResult = ReadRule(luaState, *params.typeInstance, params.ruleName);
-
-		if (!readResult.IsErrorResult())
-		{
-			Log_Debug("get%sRule => Read rule success", titleCaseTypeName);
-
-			delete &params;
-			delete &readResult;
-
-			return 1;
-		}
-
-		luaState.RaiseError("Read rule error for type '%s': %s", titleCaseTypeName, readResult.GetError());
-
-		delete &params;
-		delete &readResult;
-
-		return 0;
-	}
-
-	int WriteRuleLua(ILuaStateWrapper& luaState)
-	{
-		auto& params = GetParameters("set", luaState);
-
-		if (!params.IsValid())
-		{
-			delete &params;
-
-			return 0;
-		}
-
-		Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
-
-		auto& writeResult = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
-
-		if (!writeResult.IsErrorResult())
-		{
-			Log_Debug("set%sRule => Write rule success", titleCaseTypeName);
-
-			delete &params;
-			delete &writeResult;
-
-			return 1;
-		}
-
-		luaState.RaiseError("Write rule error for type '%s': %s", titleCaseTypeName, writeResult.GetError());
-
-		delete &params;
-		delete &writeResult;
-
-		return 0;
-	}
 };

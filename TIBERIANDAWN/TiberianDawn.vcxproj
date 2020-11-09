@@ -437,7 +437,6 @@
     <ClInclude Include="LUA.H" />
     <ClInclude Include="LUA_API.H" />
     <ClInclude Include="GameApi.h" />
-    <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H" />
     <ClInclude Include="LUA_EVENTS.H" />
     <ClInclude Include="LUA_REPL.H" />
@@ -473,6 +472,7 @@
     <ClInclude Include="REAL.H" />
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
+    <ClInclude Include="RuleSectionApi.h" />
     <ClInclude Include="RulesIni.h" />
     <ClInclude Include="RulesIniInfo.h" />
     <ClInclude Include="RulesIniReader.h" />
@@ -649,7 +649,6 @@
     <ClCompile Include="GAME_UTILS.cpp" />
     <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP" />
-    <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP" />
     <ClCompile Include="LUA_REPL.CPP" />
     <ClCompile Include="NCO.cpp" />

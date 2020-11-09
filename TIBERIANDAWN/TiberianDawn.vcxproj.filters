@@ -823,9 +823,6 @@
     <ClInclude Include="LUA_API.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_INFO.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
@@ -863,6 +860,9 @@
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="RulesSectionTypeWrapperApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="RuleSectionApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1484,9 +1484,6 @@
       <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API.CPP">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP">

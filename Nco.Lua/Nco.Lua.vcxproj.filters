@@ -75,9 +75,6 @@
     <ClInclude Include="TypeApi.h">
       <Filter>Header Files\Api</Filter>
     </ClInclude>
-    <ClInclude Include="TypeApiParameters.h">
-      <Filter>Header Files\Api</Filter>
-    </ClInclude>
     <ClInclude Include="TypeWrapperApi.h">
       <Filter>Header Files\Api</Filter>
     </ClInclude>
@@ -88,6 +85,9 @@
       <Filter>Header Files\Api</Filter>
     </ClInclude>
     <ClInclude Include="LuaVariableInfo.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeApiParameters.h">
       <Filter>Header Files\Api</Filter>
     </ClInclude>
   </ItemGroup>

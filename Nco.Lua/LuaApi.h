@@ -83,6 +83,20 @@ public:
 		return *this;
 	}
 
+	LuaFunctionInfo& WithFunction(const char* name, lua_CFunction function)
+	{
+		WithFunction(name, function, NULL);
+
+		return *functions.back();
+	}
+
+	LuaFunctionInfo& WithMethod(const char* name, void* object, lua_CFunction methodProxy)
+	{
+		WithMethod(name, object, methodProxy, NULL);
+
+		return *functions.back();
+	}
+
 	const char* GetName()
 	{
 		return name;

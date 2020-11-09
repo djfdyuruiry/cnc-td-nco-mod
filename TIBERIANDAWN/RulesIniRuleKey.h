@@ -6,12 +6,12 @@
 class RulesIniRuleKey
 {
 private:
-	RulesIniRuleKey(SectionName sectionName, RuleName ruleName)
+	RulesIniRuleKey(SectionName titleCaseSectionName, RuleName ruleName)
 	{
-		Section = sectionName;
+		Section = titleCaseSectionName;
 		Rule = ruleName;
-		SectionKey = Build_Rule_Key(sectionName);
-		RuleKey = Build_Rule_Key(sectionName, ruleName);
+		SectionKey = Build_Rule_Key(titleCaseSectionName);
+		RuleKey = Build_Rule_Key(titleCaseSectionName, ruleName);
 	}
 
 public:
@@ -20,9 +20,9 @@ public:
 	CacheKey SectionKey;
 	CacheKey RuleKey;
 
-	static RulesIniRuleKey& BuildRuleKey(SectionName sectionName, RuleName ruleName)
+	static RulesIniRuleKey& BuildRuleKey(SectionName titleCaseSectionName, RuleName ruleName)
 	{
-		return *(new RulesIniRuleKey(sectionName, ruleName));
+		return *(new RulesIniRuleKey(titleCaseSectionName, ruleName));
 	}
 };
 

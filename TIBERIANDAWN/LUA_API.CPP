@@ -9,10 +9,10 @@
 #include "InfantryApi.h"
 #include "IRulesIniSection.h"
 #include "lua.h"
-#include "lua_api_functions_game_rules.h"
 #include "lua_api_functions_info.h"
 #include "lua_api_functions_util.h"
 #include "rules_ini.h"
+#include "RuleSectionApi.h"
 #include "UnitApi.h"
 #include "WarheadApi.h"
 #include "WeaponApi.h"
@@ -40,17 +40,20 @@ static bool Load_Api_Functions()
 
     auto legacyLoadersResult = Load_Nco_Lua_Lib()
         && Register_Util_Functions()
-        && Register_Info_Functions()
-        && Register_Game_Rule_Functions();
+        && Register_Info_Functions();
 
-    RegisterApi<InfantryApi>(GetRulesInfo().GetInfantryRules());
-    RegisterApi<UnitApi>(GetRulesInfo().GetUnitRules());
-    RegisterApi<AircraftApi>(GetRulesInfo().GetAircraftRules());
-    RegisterApi<BuildingApi>(GetRulesInfo().GetBuildingRules());
+    auto& rulesInfo = GetRulesInfo();
 
-    RegisterApi<WeaponApi>(GetRulesInfo().GetWeaponRules());
-    RegisterApi<BulletApi>(GetRulesInfo().GetBulletRules());
-    RegisterApi<WarheadApi>(GetRulesInfo().GetWarheadRules());
+    RegisterApi<RuleSectionApi>(rulesInfo.GetGameRules());
+
+    RegisterApi<InfantryApi>(rulesInfo.GetInfantryRules());
+    RegisterApi<UnitApi>(rulesInfo.GetUnitRules());
+    RegisterApi<AircraftApi>(rulesInfo.GetAircraftRules());
+    RegisterApi<BuildingApi>(rulesInfo.GetBuildingRules());
+
+    RegisterApi<WeaponApi>(rulesInfo.GetWeaponRules());
+    RegisterApi<BulletApi>(rulesInfo.GetBulletRules());
+    RegisterApi<WarheadApi>(rulesInfo.GetWarheadRules());
 
     RegisterApi<GameApi>();
 
