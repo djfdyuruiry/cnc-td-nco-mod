@@ -9,18 +9,18 @@
 #include "parse.h"
 #include "ParseCheckValidator.h"
 #include "rules_ini_generic.h"
+#include "RulesSectionTypeWrapperApi.h"
 #include "type.h"
-#include "TypeWrapperApi.h"
 
 #define EXTRACTOR_T(f) EXTRACTOR(T, f)
 #define INJECTOR_T(t, f) INJECTOR(T, t, f)
 #define SIMPLE_EXTRACTOR_T(f) SIMPLE_EXTRACTOR(T, f)
 #define SIMPLE_INJECTOR_T(t, f) SIMPLE_INJECTOR(T, t, f)
 
-template<class T, class U> class TechnoTypeApi : public TypeWrapperApi<T, U>
+template<class T, class U> class TechnoTypeApi : public RulesSectionTypeWrapperApi<T, U>
 {
 protected:
-	TechnoTypeApi(const char* typeName, IRulesIniSection& rulesInfo, U(*typeParser)(const char*, bool*, bool)) : TypeWrapperApi(typeName, rulesInfo, typeParser)
+	TechnoTypeApi(const char* typeName, IRulesIniSection& rulesInfo, U(*typeParser)(const char*, bool*, bool)) : RulesSectionTypeWrapperApi(typeName, rulesInfo, typeParser)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BUILD_LEVEL_RULE,

@@ -10,18 +10,18 @@
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_weapon.h"
+#include "RulesSectionTypeWrapperApi.h"
 #include "type.h"
-#include "TypeWrapperApi.h"
 
 #define EXTRACTOR_WEAP(f) EXTRACTOR(WeaponTypeClass, f)
 #define INJECTOR_WEAP(t, f) INJECTOR(WeaponTypeClass, t, f)
 #define SIMPLE_EXTRACTOR_WEAP(f) SIMPLE_EXTRACTOR(WeaponTypeClass, f)
 #define SIMPLE_INJECTOR_WEAP(t, f) SIMPLE_INJECTOR(WeaponTypeClass, t, f)
 
-class WeaponApi : public TypeWrapperApi<WeaponTypeClass, WeaponType>
+class WeaponApi : public RulesSectionTypeWrapperApi<WeaponTypeClass, WeaponType>
 {
 protected:
-	WeaponApi(IRulesIniSection& rulesInfo) : TypeWrapperApi("Weapon", rulesInfo, Parse_Weapon_Type)
+	WeaponApi(IRulesIniSection& rulesInfo) : RulesSectionTypeWrapperApi("Weapon", rulesInfo, Parse_Weapon_Type)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WEAPON_PROJECTILE_RULE,

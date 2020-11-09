@@ -823,9 +823,6 @@
     <ClInclude Include="LUA_API.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_GAME.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
@@ -833,12 +830,6 @@
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="TechnoTypeApi.h">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaTypeWrapper.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="InfantryApi.h">
@@ -856,9 +847,6 @@
     <ClInclude Include="BuildingApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="TypeWrapperApi.h">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="WeaponApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
@@ -866,6 +854,15 @@
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="WarheadApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="GameApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="TechnoTypeApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesSectionTypeWrapperApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1487,9 +1484,6 @@
       <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API.CPP">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP">

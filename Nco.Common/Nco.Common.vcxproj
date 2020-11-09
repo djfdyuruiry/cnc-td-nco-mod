@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileUtils.h" />
+    <ClInclude Include="HashUtils.h" />
     <ClInclude Include="LOGGER.H" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="STRINGS.H" />

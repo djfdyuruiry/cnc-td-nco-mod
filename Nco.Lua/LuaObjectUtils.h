@@ -6,6 +6,10 @@
 
 #include "LuaStateWrapper.h"
 
+#define LUA_METHOD_PROXY(t, m) LuaObjectUtils::BootstrapProxyCall<t>(lua, [](ILuaStateWrapper& l, t& a) { \
+	return a.m(l); \
+})
+
 class LuaObjectUtils final
 {
 private:
@@ -52,4 +56,5 @@ public:
 
 		return result;
 	}
+
 };

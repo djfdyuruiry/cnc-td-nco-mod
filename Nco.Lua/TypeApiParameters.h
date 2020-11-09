@@ -39,4 +39,5 @@ public:
 	{
 		return !invalidParameters;
 	}
+
 };

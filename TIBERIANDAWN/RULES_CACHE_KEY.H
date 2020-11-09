@@ -1,8 +1,10 @@
 #pragma once
 
-const unsigned int MAX_KEY_LENGTH = 1024;
+#include <HashUtils.h>
 
-typedef unsigned long CacheKey;
+const unsigned int MAX_KEY_LENGTH = 1024ul;
+
+typedef StringHash CacheKey;
 
 CacheKey Build_Rule_Key(const char* section, const char* ruleName);
 

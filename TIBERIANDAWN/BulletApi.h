@@ -10,18 +10,18 @@
 #include "rules_ini_bullet.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
+#include "RulesSectionTypeWrapperApi.h"
 #include "type.h"
-#include "TypeWrapperApi.h"
 
 #define EXTRACTOR_BLT(f) EXTRACTOR(BulletTypeClass, f)
 #define INJECTOR_BLT(t, f) INJECTOR(BulletTypeClass, t, f)
 #define SIMPLE_EXTRACTOR_BLT(f) SIMPLE_EXTRACTOR(BulletTypeClass, f)
 #define SIMPLE_INJECTOR_BLT(t, f) SIMPLE_INJECTOR(BulletTypeClass, t, f)
 
-class BulletApi : public TypeWrapperApi<BulletTypeClass, BulletType>
+class BulletApi : public RulesSectionTypeWrapperApi<BulletTypeClass, BulletType>
 {
 protected:
-	BulletApi(IRulesIniSection& rulesInfo) : TypeWrapperApi("Bullet", rulesInfo, Parse_Bullet_Type)
+	BulletApi(IRulesIniSection& rulesInfo) : RulesSectionTypeWrapperApi("Bullet", rulesInfo, Parse_Bullet_Type)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BULLET_HIGH_RULE,

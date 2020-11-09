@@ -22,6 +22,7 @@
     <ClInclude Include="ILuaApi.h" />
     <ClInclude Include="LambdaValidator.h" />
     <ClInclude Include="LuaObjectUtils.h" />
+    <ClInclude Include="LuaTypeWrapper.h" />
     <ClInclude Include="LuaValueAdapter.h" />
     <ClInclude Include="ILuaRuntime.h" />
     <ClInclude Include="ILuaStateWrapper.h" />
@@ -38,9 +39,9 @@
     <ClInclude Include="LuaVariableInfo.h" />
     <ClInclude Include="NumericRangeValidator.h" />
     <ClInclude Include="PrimitiveTypeValidator.h" />
-    <ClInclude Include="RuleValueApi.h" />
     <ClInclude Include="TypeApi.h" />
     <ClInclude Include="TypeApiParameters.h" />
+    <ClInclude Include="TypeWrapperApi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaType.cpp" />

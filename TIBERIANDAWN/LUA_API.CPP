@@ -5,10 +5,10 @@
 #include "AircraftApi.h"
 #include "BuildingApi.h"
 #include "BulletApi.h"
+#include "GameApi.h"
 #include "InfantryApi.h"
 #include "IRulesIniSection.h"
 #include "lua.h"
-#include "lua_api_functions_game.h"
 #include "lua_api_functions_game_rules.h"
 #include "lua_api_functions_info.h"
 #include "lua_api_functions_util.h"
@@ -18,6 +18,11 @@
 #include "WeaponApi.h"
 
 static bool API_INITIALISED = false;
+
+template<class T> static void RegisterApi()
+{
+    LuaRuntime().RegisterApi(T::Build());
+}
 
 template<class T> static void RegisterApi(IRulesIniSection& ruleInfo)
 {
@@ -36,8 +41,7 @@ static bool Load_Api_Functions()
     auto legacyLoadersResult = Load_Nco_Lua_Lib()
         && Register_Util_Functions()
         && Register_Info_Functions()
-        && Register_Game_Rule_Functions()
-        && Register_Game_Functions();
+        && Register_Game_Rule_Functions();
 
     RegisterApi<InfantryApi>(GetRulesInfo().GetInfantryRules());
     RegisterApi<UnitApi>(GetRulesInfo().GetUnitRules());
@@ -47,6 +51,8 @@ static bool Load_Api_Functions()
     RegisterApi<WeaponApi>(GetRulesInfo().GetWeaponRules());
     RegisterApi<BulletApi>(GetRulesInfo().GetBulletRules());
     RegisterApi<WarheadApi>(GetRulesInfo().GetWarheadRules());
+
+    RegisterApi<GameApi>();
 
     return legacyLoadersResult;
 }

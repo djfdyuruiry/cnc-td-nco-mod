@@ -412,7 +412,6 @@
     <ClInclude Include="HOUSE.H" />
     <ClInclude Include="HOUSES_TYPE.H" />
     <ClInclude Include="InfantryApi.h" />
-    <ClInclude Include="LuaTypeWrapper.h" />
     <ClInclude Include="INFANTRY.H" />
     <ClInclude Include="AircraftTypeMod.h" />
     <ClInclude Include="BuildingTypeMod.h" />
@@ -437,7 +436,7 @@
     <ClInclude Include="LOGIC.H" />
     <ClInclude Include="LUA.H" />
     <ClInclude Include="LUA_API.H" />
-    <ClInclude Include="LUA_API_FUNCTIONS_GAME.H" />
+    <ClInclude Include="GameApi.h" />
     <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H" />
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H" />
     <ClInclude Include="LUA_EVENTS.H" />
@@ -483,6 +482,7 @@
     <ClInclude Include="RulesIniSection.h" />
     <ClInclude Include="RulesIniSectionBuilder.h" />
     <ClInclude Include="RulesIniTypes.h" />
+    <ClInclude Include="RulesSectionTypeWrapperApi.h" />
     <ClInclude Include="RULES_CACHE_KEY.H" />
     <ClInclude Include="RULES_INI.H" />
     <ClInclude Include="RULES_INI_AI.H" />
@@ -534,7 +534,6 @@
     <ClInclude Include="TURRET.H" />
     <ClInclude Include="TXTLABEL.H" />
     <ClInclude Include="TYPE.H" />
-    <ClInclude Include="TypeWrapperApi.h" />
     <ClInclude Include="UnitApi.h" />
     <ClInclude Include="WarheadApi.h" />
     <ClInclude Include="WarheadTypeMod.h" />
@@ -649,7 +648,6 @@
     <ClCompile Include="GAME_MESSAGES.CPP" />
     <ClCompile Include="GAME_UTILS.cpp" />
     <ClCompile Include="LUA_API.CPP" />
-    <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP" />

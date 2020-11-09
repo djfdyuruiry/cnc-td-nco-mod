@@ -12,18 +12,18 @@
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_warhead.h"
+#include "RulesSectionTypeWrapperApi.h"
 #include "type.h"
-#include "TypeWrapperApi.h"
 
 #define EXTRACTOR_WAR(f) EXTRACTOR(WarheadTypeClass, f)
 #define INJECTOR_WAR(t, f) INJECTOR(WarheadTypeClass, t, f)
 #define SIMPLE_EXTRACTOR_WAR(f) SIMPLE_EXTRACTOR(WarheadTypeClass, f)
 #define SIMPLE_INJECTOR_WAR(t, f) SIMPLE_INJECTOR(WarheadTypeClass, t, f)
 
-class WarheadApi : public TypeWrapperApi<WarheadTypeClass, WarheadType>
+class WarheadApi : public RulesSectionTypeWrapperApi<WarheadTypeClass, WarheadType>
 {
 protected:
-	WarheadApi(IRulesIniSection& rulesInfo) : TypeWrapperApi("Warhead", rulesInfo, Parse_Warhead_Type)
+	WarheadApi(IRulesIniSection& rulesInfo) : RulesSectionTypeWrapperApi("Warhead", rulesInfo, Parse_Warhead_Type)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WARHEAD_SPREAD_FACTOR_RULE,

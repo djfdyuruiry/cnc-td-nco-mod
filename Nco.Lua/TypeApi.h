@@ -6,11 +6,13 @@
 #include <Optional.h>
 #include <Strings.h>
 
-#include "RuleValueApi.h"
+#include "LuaApi.h"
+#include "LuaObjectUtils.h"
+#include "LuaResult.h"
 #include "LuaStateWrapper.h"
 #include "TypeApiParameters.h"
 
-template<class T> class TypeApi : public RuleValueApi
+template<class T> class TypeApi : public LuaApi
 {
 private:
 	TypeApiParameters<T>& GetParameters(const char* operation, ILuaStateWrapper& luaState)
@@ -128,11 +130,21 @@ protected:
 
 	virtual T& ParseType(const char* typeName) = 0;
 
-	virtual bool ReadRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName) = 0;
+	virtual LuaResult& ReadRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName) = 0;
 
-	virtual bool WriteRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName, int ruleValueStackIndex) = 0;
+	virtual LuaResult& WriteRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName, int ruleValueStackIndex) = 0;
 
 public:
+	static int ReadRuleValueApiProxy(lua_State* lua)
+	{
+		return LUA_METHOD_PROXY(TypeApi, ReadRuleLua);
+	}
+
+	static int WriteRuleValueApiProxy(lua_State* lua)
+	{
+		return LUA_METHOD_PROXY(TypeApi, WriteRuleLua);
+	}
+
 	~TypeApi()
 	{
 		delete titleCaseTypeName;
@@ -151,21 +163,22 @@ public:
 
 		Log_Debug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
 
-		// TODO: the return type should represent two outcomes - matched and success
-		auto ruleMatched = ReadRule(luaState, *params.typeInstance, params.ruleName);
+		auto& readResult = ReadRule(luaState, *params.typeInstance, params.ruleName);
 
-		if (ruleMatched)
+		if (!readResult.IsErrorResult())
 		{
-			Log_Debug("get%sRule => Rule matched in %s Type", titleCaseTypeName, typeName);
+			Log_Debug("get%sRule => Read rule success", titleCaseTypeName);
 
 			delete &params;
+			delete &readResult;
 
 			return 1;
 		}
 
-		luaState.RaiseError("rule name type passed get%sRule was not matched: %s", titleCaseTypeName, params.ruleName);
+		luaState.RaiseError("Read rule error for type '%s': %s", titleCaseTypeName, readResult.GetError());
 
 		delete &params;
+		delete &readResult;
 
 		return 0;
 	}
@@ -183,21 +196,22 @@ public:
 
 		Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
 
-		// TODO: the return type should represent two outcomes - matched and success
-		auto ruleMatched = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
+		auto& writeResult = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
 
-		if (ruleMatched)
+		if (!writeResult.IsErrorResult())
 		{
-			Log_Debug("set%sRule => Rule matched in %s Type", titleCaseTypeName, typeName);
+			Log_Debug("set%sRule => Write rule success", titleCaseTypeName);
 
 			delete &params;
+			delete &writeResult;
 
 			return 1;
 		}
 
-		luaState.RaiseError("rule name type passed set%sRule was not matched: %s", titleCaseTypeName, params.ruleName);
+		luaState.RaiseError("Write rule error for type '%s': %s", titleCaseTypeName, writeResult.GetError());
 
 		delete &params;
+		delete &writeResult;
 
 		return 0;
 	}

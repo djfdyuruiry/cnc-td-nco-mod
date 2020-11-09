@@ -16,12 +16,17 @@ protected:
 	}
 
 public:
-	static LuaResult& Build(char* error = NULL)
+	static LuaResult& Build()
+	{
+		return *(new LuaResult());
+	}
+
+	static LuaResult& Build(char* error)
 	{
 		return *(new LuaResult(error));
 	}
 
-	static LuaResult& Build(const char* error = NULL)
+	static LuaResult& Build(const char* error)
 	{
 		return Build(strdup(error));
 	}

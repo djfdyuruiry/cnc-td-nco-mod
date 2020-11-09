@@ -19,4 +19,5 @@ public:
 	virtual const char* GetName() = 0;
 	virtual const char* GetDescription() = 0;
 	virtual const std::vector<LuaFunctionInfo*> GetFunctions() = 0;
+
 };

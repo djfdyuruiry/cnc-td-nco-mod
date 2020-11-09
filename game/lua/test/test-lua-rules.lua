@@ -97,7 +97,7 @@ function main()
           rulesRead = rulesRead + 1
 
           if ruleValue == nil then
-            log (">>>WARNING: Rule %s returned nil, skipping set rule validation test", ruleName)
+            log (">>>WARNING: Rule '%s' returned nil, skipping set rule validation test", ruleName)
 
             goto areaRule
           end
@@ -114,7 +114,7 @@ function main()
             validationFailed = true
             validationErrors = validationErrors + 1
           end
- 
+
           ::areaRule::
         end
 
