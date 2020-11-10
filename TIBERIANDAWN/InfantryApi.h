@@ -18,7 +18,8 @@
 class InfantryApi : public TechnoTypeApi<InfantryTypeClass, InfantryType>
 {
 private:
-	InfantryApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Infantry", rulesInfo, Parse_Infantry_Type)
+	InfantryApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
+		TechnoTypeApi("Infantry", rulesInfo, INFANTRY_FIRST, getCount, Parse_Infantry_Type, Infantry_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			FEMALE_RULE,
@@ -64,9 +65,9 @@ private:
 	}
 
 public:
-	static LuaApi& Build(IRulesIniSection& rulesInfo)
+	static LuaApi& Build(IRulesIniSection& rulesInfo, std::function<int(void)> getCount)
 	{
-		return *(new InfantryApi(rulesInfo));
+		return *(new InfantryApi(rulesInfo, getCount));
 	}
 
 };

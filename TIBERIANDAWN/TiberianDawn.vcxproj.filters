@@ -44,9 +44,6 @@
     <Filter Include="Source Files\NCO\Lua\Api">
       <UniqueIdentifier>{f045b8ed-7c93-40d9-aafb-a6fd63823ed1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\NCO\Lua\Api\ValueValidators">
-      <UniqueIdentifier>{b8a3e465-8ff9-41a7-8c7b-6737665869d0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="COORDA.ASM">
@@ -823,17 +820,11 @@
     <ClInclude Include="LUA_API.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_INFO.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="InfantryApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="ParseCheckValidator.h">
-      <Filter>Source Files\NCO\Lua\Api\ValueValidators</Filter>
     </ClInclude>
     <ClInclude Include="UnitApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
@@ -863,6 +854,9 @@
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="RuleSectionApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoApi.H">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1484,9 +1478,6 @@
       <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API.CPP">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP">

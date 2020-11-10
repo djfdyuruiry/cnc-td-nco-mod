@@ -43,4 +43,5 @@ public:
 
 		return LuaResultWithValue<U>::BuildWithValue(GetValue());
 	}
+
 };

@@ -12,6 +12,7 @@ private:
 	LuaVariableInfo() : type((LuaType*)&LuaType::Nil)
 	{
 	}
+
 public:
 	static LuaVariableInfo& Build()
 	{
@@ -53,4 +54,5 @@ public:
 	{
 		return *type;
 	}
+
 };

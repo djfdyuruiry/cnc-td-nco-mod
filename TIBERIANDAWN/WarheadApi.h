@@ -5,10 +5,10 @@
 #include <LambdaValidator.h>
 #include <LuaValueAdapter.h>
 #include <NumericRangeValidator.h>
+#include <ParseCheckValidator.h>
 
 #include "IRulesIniSection.h"
 #include "parse.h"
-#include "ParseCheckValidator.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_warhead.h"
@@ -23,7 +23,8 @@
 class WarheadApi : public RulesSectionTypeWrapperApi<WarheadTypeClass, WarheadType>
 {
 protected:
-	WarheadApi(IRulesIniSection& rulesInfo) : RulesSectionTypeWrapperApi("Warhead", rulesInfo, Parse_Warhead_Type)
+	WarheadApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
+		RulesSectionTypeWrapperApi("Warhead", rulesInfo, WARHEAD_FIRST, getCount, Parse_Warhead_Type, Warhead_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WARHEAD_SPREAD_FACTOR_RULE,
@@ -105,9 +106,9 @@ protected:
 	}
 
 public:
-	static LuaApi& Build(IRulesIniSection& rulesInfo)
+	static LuaApi& Build(IRulesIniSection& rulesInfo, std::function<int(void)> getCount)
 	{
-		return *(new WarheadApi(rulesInfo));
+		return *(new WarheadApi(rulesInfo, getCount));
 	}
 
 };

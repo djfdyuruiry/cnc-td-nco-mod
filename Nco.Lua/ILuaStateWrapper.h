@@ -257,4 +257,5 @@ public:
 
 	virtual LuaResult& ExecuteScript(const char* script) = 0;
 	virtual LuaResult& ExecuteFile(const char* filePath) = 0;
+
 };

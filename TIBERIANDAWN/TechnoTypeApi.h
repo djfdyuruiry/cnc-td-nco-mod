@@ -3,11 +3,11 @@
 #include <LambdaValidator.h>
 #include <LuaValueAdapter.h>
 #include <NumericRangeValidator.h>
+#include <ParseCheckValidator.h>
 #include <strings.h>
 
 #include "IRulesIniSection.h"
 #include "parse.h"
-#include "ParseCheckValidator.h"
 #include "rules_ini_generic.h"
 #include "RulesSectionTypeWrapperApi.h"
 #include "type.h"
@@ -20,7 +20,14 @@
 template<class T, class U> class TechnoTypeApi : public RulesSectionTypeWrapperApi<T, U>
 {
 protected:
-	TechnoTypeApi(const char* typeName, IRulesIniSection& rulesInfo, U(*typeParser)(const char*, bool*, bool)) : RulesSectionTypeWrapperApi(typeName, rulesInfo, typeParser)
+	TechnoTypeApi(
+		const char* typeName,
+		IRulesIniSection& rulesInfo,
+		U first,
+		std::function<int(void)> getCount,
+		U(*typeParser)(const char*, bool*, bool),
+		const char*(*typeToString)(U, bool)
+	) : RulesSectionTypeWrapperApi(typeName, rulesInfo, first, getCount, typeParser, typeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BUILD_LEVEL_RULE,

@@ -18,7 +18,8 @@
 class BuildingApi : public TechnoTypeApi<BuildingTypeClass, StructType>
 {
 private:
-	BuildingApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Building", rulesInfo, Parse_Structure_Type)
+	BuildingApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
+		TechnoTypeApi("Building", rulesInfo, STRUCT_FIRST, getCount, Parse_Structure_Type, Structure_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BIBBED_RULE,
@@ -95,9 +96,9 @@ private:
 	}
 
 public:
-	static LuaApi& Build(IRulesIniSection& rulesInfo)
+	static LuaApi& Build(IRulesIniSection& rulesInfo, std::function<int(void)> getCount)
 	{
-		return *(new BuildingApi(rulesInfo));
+		return *(new BuildingApi(rulesInfo, getCount));
 	}
 
 };

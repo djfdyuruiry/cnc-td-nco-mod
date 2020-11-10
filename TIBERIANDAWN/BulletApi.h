@@ -4,9 +4,10 @@
 #include <LuaValueAdapter.h>
 #include <NumericRangeValidator.h>
 
+#include <ParseCheckValidator.h>
+
 #include "IRulesIniSection.h"
 #include "parse.h"
-#include "ParseCheckValidator.h"
 #include "rules_ini_bullet.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
@@ -21,7 +22,8 @@
 class BulletApi : public RulesSectionTypeWrapperApi<BulletTypeClass, BulletType>
 {
 protected:
-	BulletApi(IRulesIniSection& rulesInfo) : RulesSectionTypeWrapperApi("Bullet", rulesInfo, Parse_Bullet_Type)
+	BulletApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
+		RulesSectionTypeWrapperApi("Bullet", rulesInfo, BULLET_FIRST, getCount, Parse_Bullet_Type, Bullet_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BULLET_HIGH_RULE,
@@ -148,9 +150,9 @@ protected:
 	}
 
 public:
-	static LuaApi& Build(IRulesIniSection& rulesInfo)
+	static LuaApi& Build(IRulesIniSection& rulesInfo, std::function<int(void)> getCount)
 	{
-		return *(new BulletApi(rulesInfo));
+		return *(new BulletApi(rulesInfo, getCount));
 	}
 
 };

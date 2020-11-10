@@ -90,6 +90,9 @@
     <ClInclude Include="TypeApiParameters.h">
       <Filter>Header Files\Api</Filter>
     </ClInclude>
+    <ClInclude Include="ParseCheckValidator.h">
+      <Filter>Header Files\Api\ValueValidators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaType.cpp">

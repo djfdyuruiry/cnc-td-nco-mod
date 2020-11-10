@@ -66,6 +66,7 @@ namespace Integration
 
 					Assert::AreEqual("cannot open K:\\wat.lua: No such file or directory", result.GetError());
 				}
+
 			};
 		}
 	}

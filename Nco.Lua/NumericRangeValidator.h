@@ -42,4 +42,5 @@ public:
 
 		return value >= minInclusive && value <= maxInclusive;
 	}
+
 };

@@ -89,6 +89,7 @@ namespace Integration
 					Assert::AreEqual(false, sumResult.IsErrorResult());
 					Assert::AreEqual(4447.5129999999999, sumResult.GetValue());
 				}
+
 			};
 		}
 	}

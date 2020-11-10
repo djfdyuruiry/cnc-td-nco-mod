@@ -32,4 +32,5 @@ public:
 	{
 		lua.PushValue<T>(value);
 	}
+
 };

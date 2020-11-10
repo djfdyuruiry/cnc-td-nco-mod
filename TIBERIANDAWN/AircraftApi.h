@@ -4,9 +4,10 @@
 
 #include <lua.hpp>
 
+#include <ParseCheckValidator.h>
+
 #include "IRulesIniSection.h"
 #include "parse.h"
-#include "ParseCheckValidator.h"
 #include "rules_ini_aircraft.h"
 #include "TechnoTypeApi.h"
 #include "type.h"
@@ -19,7 +20,8 @@
 class AircraftApi : public TechnoTypeApi<AircraftTypeClass, AircraftType>
 {
 private:
-	AircraftApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Aircraft", rulesInfo, Parse_Aircraft_Type)
+	AircraftApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
+		TechnoTypeApi("Aircraft", rulesInfo, AIRCRAFT_FIRST, getCount, Parse_Aircraft_Type, Aircraft_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			CANT_HOVER_RULE,
@@ -55,9 +57,9 @@ private:
 	}
 
 public:
-	static LuaApi& Build(IRulesIniSection& rulesInfo)
+	static LuaApi& Build(IRulesIniSection& rulesInfo, std::function<int(void)> getCount)
 	{
-		return *(new AircraftApi(rulesInfo));
+		return *(new AircraftApi(rulesInfo, getCount));
 	}
 
 };

@@ -3,10 +3,10 @@
 #include <LambdaValidator.h>
 #include <LuaValueAdapter.h>
 #include <NumericRangeValidator.h>
+#include <ParseCheckValidator.h>
 
 #include "IRulesIniSection.h"
 #include "parse.h"
-#include "ParseCheckValidator.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_weapon.h"
@@ -21,7 +21,8 @@
 class WeaponApi : public RulesSectionTypeWrapperApi<WeaponTypeClass, WeaponType>
 {
 protected:
-	WeaponApi(IRulesIniSection& rulesInfo) : RulesSectionTypeWrapperApi("Weapon", rulesInfo, Parse_Weapon_Type)
+	WeaponApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
+		RulesSectionTypeWrapperApi("Weapon", rulesInfo, WEAPON_FIRST, getCount, Parse_Weapon_Type, Weapon_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WEAPON_PROJECTILE_RULE,
@@ -74,9 +75,9 @@ protected:
 	}
 
 public:
-	static LuaApi& Build(IRulesIniSection& rulesInfo)
+	static LuaApi& Build(IRulesIniSection& rulesInfo, std::function<int(void)> getCount)
 	{
-		return *(new WeaponApi(rulesInfo));
+		return *(new WeaponApi(rulesInfo, getCount));
 	}
 
 };

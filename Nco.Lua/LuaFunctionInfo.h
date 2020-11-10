@@ -160,4 +160,5 @@ public:
 
 		return luaFunction(lua);
 	}
+
 };

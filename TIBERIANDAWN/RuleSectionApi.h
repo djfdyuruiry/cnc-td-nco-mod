@@ -23,6 +23,11 @@ private:
         return LUA_METHOD_PROXY(RuleSectionApi, WriteRule);
     }
 
+    static int GetRuleNamesLua(lua_State* lua)
+    {
+        return LUA_METHOD_PROXY(RuleSectionApi, GetRuleNames);
+    }
+
 	RuleSectionApi(IRulesIniSection& section) : section(section), titleCaseSectionName(ToTitleCase(section.GetName()))
 	{
 		WithName(FormatString("%s rules", titleCaseSectionName));
@@ -45,6 +50,9 @@ private:
                 p.WithDescription("A valid value for the specified rule")
                  .WithType(LuaType::Any);
             });
+
+        WithMethod(FormatString("get%sRuleNames", titleCaseSectionName), this, GetRuleNamesLua)
+            .WithDescription(FormatString("Get a list of %s rules", titleCaseSectionName));
 	}
 
     int ReadRule(ILuaStateWrapper& luaState)
@@ -157,6 +165,13 @@ private:
         delete &ruleNameResult;
 
         return 0;
+    }
+
+    int GetRuleNames(ILuaStateWrapper& lua)
+    {
+        lua.WriteArray(section.GetRuleNames());
+
+        return 1;
     }
 
 public:

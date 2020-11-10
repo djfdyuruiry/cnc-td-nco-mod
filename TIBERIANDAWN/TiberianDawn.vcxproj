@@ -440,7 +440,7 @@
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H" />
     <ClInclude Include="LUA_EVENTS.H" />
     <ClInclude Include="LUA_REPL.H" />
-    <ClInclude Include="LUA_API_FUNCTIONS_INFO.H" />
+    <ClInclude Include="InfoApi.H" />
     <ClInclude Include="MAP.H" />
     <ClInclude Include="MAPEDIT.H" />
     <ClInclude Include="MEMCHECK.H" />
@@ -461,7 +461,6 @@
     <ClInclude Include="OVERLAY.H" />
     <ClInclude Include="PACKET.H" />
     <ClInclude Include="PARSE.H" />
-    <ClInclude Include="ParseCheckValidator.h" />
     <ClInclude Include="PHONE.H" />
     <ClInclude Include="POWER.H" />
     <ClInclude Include="PROFILE.H" />
@@ -648,7 +647,6 @@
     <ClCompile Include="GAME_MESSAGES.CPP" />
     <ClCompile Include="GAME_UTILS.cpp" />
     <ClCompile Include="LUA_API.CPP" />
-    <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP" />
     <ClCompile Include="LUA_REPL.CPP" />
     <ClCompile Include="NCO.cpp" />

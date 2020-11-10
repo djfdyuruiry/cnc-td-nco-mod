@@ -22,4 +22,5 @@ public:
 
 		return LuaResultWithValue<T>::Build(value);
 	}
+
 };

@@ -4,9 +4,10 @@
 
 #include <lua.hpp>
 
+#include <ParseCheckValidator.h>
+
 #include "IRulesIniSection.h"
 #include "parse.h"
-#include "ParseCheckValidator.h"
 #include "rules_ini_unit.h"
 #include "TechnoTypeApi.h"
 #include "type.h"
@@ -19,7 +20,8 @@
 class UnitApi : public TechnoTypeApi<UnitTypeClass, UnitType>
 {
 private:
-	UnitApi(IRulesIniSection& rulesInfo) : TechnoTypeApi("Unit", rulesInfo, Parse_Unit_Type)
+	UnitApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
+		TechnoTypeApi("Unit", rulesInfo, UNIT_FIRST, getCount, Parse_Unit_Type, Unit_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			CAN_BE_FOUND_IN_CRATE_RULE,
@@ -111,9 +113,9 @@ private:
 	}
 
 public:
-	static LuaApi& Build(IRulesIniSection& rulesInfo)
+	static LuaApi& Build(IRulesIniSection& rulesInfo, std::function<int(void)> getCount)
 	{
-		return *(new UnitApi(rulesInfo));
+		return *(new UnitApi(rulesInfo, getCount));
 	}
 
 };

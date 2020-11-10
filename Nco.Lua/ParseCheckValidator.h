@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ILuaValueValidator.h>
+#include "ILuaValueValidator.h"
 
 #define PARSER T(*parser)(const char*, bool*, bool)
 
@@ -33,10 +33,9 @@ public:
 			delete valueUpper;
 		}
 
-		delete &result;
+		delete& result;
 
 		return !parseError;
 	}
 
 };
-
