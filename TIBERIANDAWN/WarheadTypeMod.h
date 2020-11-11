@@ -1,14 +1,18 @@
 #pragma once
 
+#include <NcoGameMod.h>
+
 #include "function.h"
 
-#include "NcoGameMod.h"
+#include "tiberian_dawn_rule_keys.h"
+#include "TiberianDawnRuleSectionBuilder.h"
 
 class WarheadTypeMod : public NcoGameMod<WarheadType, WarheadTypeClass>
 {
 private:
-	WarheadTypeMod() 
+	WarheadTypeMod(IRulesRuntime& runtime)
 		: NcoGameMod(
+			runtime,
 			"Warhead",
 			NEW_WARHEADS_RULE,
 			NEW_WARHEAD_COUNT_RULE,
@@ -26,7 +30,7 @@ protected:
 
 	void AddRulesSection(SectionName typeString)
 	{
-		GetRules() << RulesIniSectionBuilder::BuildWarheadSection(typeString);
+		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(typeString);
 	}
 
 	void ReadRulesAndAddType(WarheadTypeClass* type)
@@ -37,9 +41,9 @@ protected:
 	}
 
 public:
-	static WarheadTypeMod& Build()
+	static WarheadTypeMod& Build(IRulesRuntime& runtime)
 	{
-		return *(new WarheadTypeMod());
+		return *(new WarheadTypeMod(runtime));
 	}
 
 };

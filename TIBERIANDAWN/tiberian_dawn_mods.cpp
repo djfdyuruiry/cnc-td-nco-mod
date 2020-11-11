@@ -1,7 +1,8 @@
 #include "defines.h"
 
+#include <IRulesRuntime.h>
 #include <logger.h>
-#include "RulesIniTypes.h"
+#include <RulesIniTypes.h>
 
 #include "AircraftTypeMod.h"
 #include "BuildingTypeMod.h"
@@ -21,17 +22,17 @@ static WeaponTypeMod* WEAPON_MOD;
 
 static auto MODS_INITIALISED = false;
 
-void ReadMods()
+void ReadMods(IRulesRuntime& runtime)
 {
 	Log_Info("Reading Mods");
 
-	WARHEAD_MOD = &WarheadTypeMod::Build();
-	BULLET_MOD = &BulletTypeMod::Build();
-	WEAPON_MOD = &WeaponTypeMod::Build();
-	BUILDING_MOD = &BuildingTypeMod::Build();
-	AIRCRAFT_MOD = &AircraftTypeMod::Build();
-	INFANTRY_MOD = &InfantryTypeMod::Build();
-	UNIT_MOD = &UnitTypeMod::Build();
+	WARHEAD_MOD = &WarheadTypeMod::Build(runtime);
+	BULLET_MOD = &BulletTypeMod::Build(runtime);
+	WEAPON_MOD = &WeaponTypeMod::Build(runtime);
+	BUILDING_MOD = &BuildingTypeMod::Build(runtime);
+	AIRCRAFT_MOD = &AircraftTypeMod::Build(runtime);
+	INFANTRY_MOD = &InfantryTypeMod::Build(runtime);
+	UNIT_MOD = &UnitTypeMod::Build(runtime);
 
 	WARHEAD_MOD->ReadTypes();
 	BULLET_MOD->ReadTypes();

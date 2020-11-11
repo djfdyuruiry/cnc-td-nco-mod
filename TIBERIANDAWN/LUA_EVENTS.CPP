@@ -1,8 +1,10 @@
-#include "game_messages.h"
-#include "lua_events.h"
-#include "rules_ini.h"
+#include <logger.h>
 #include <strings.h>
 #include <utils.h>
+
+#include "game_messages.h"
+#include "lua_events.h"
+#include "TiberianDawnNcoRuntime.h"
 
 using namespace std;
 
@@ -12,7 +14,7 @@ static bool EVENTS_INITIALISED = false;
 
 static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil", ...)
 {
-    if (!Lua_Is_Enabled())
+    if (!TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().LuaIsEnabled())
     {
         Log_Trace("Lua is disabled, skipping firing event: %s", name);
         return;
@@ -35,15 +37,18 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
 
     delete argumentsBuffer;
 
-    if (!Execute_Lua_Script(scriptBuffer))
+    auto& executeResult = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().ExecuteScript(scriptBuffer);
+
+    if (executeResult.IsErrorResult())
     {
-        Show_Error("Error firing Lua event: %s", name);
+        Show_Error("Error firing Lua event: %s\n%s", name, executeResult.GetError());
     }
     else
     {
         Log_Trace("Lua event fired ok: %s", name);
     }
 
+    delete &executeResult;
     delete scriptBuffer;
 }
 
@@ -57,7 +62,18 @@ bool Initialise_Events()
 
     Log_Trace("Initialising Lua events");
 
-    return Execute_Lua_Script("Game.Events.initHandlers()");
+
+    auto& executeResult = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().ExecuteScript("Game.Events.initHandlers()");
+    auto error = executeResult.IsErrorResult();
+    
+    if (error)
+    {
+        Show_Error("Error initialising event handlers: %s", executeResult.GetError());
+    }
+
+    delete &executeResult;
+
+    return !error;
 };
 
 // sync messages

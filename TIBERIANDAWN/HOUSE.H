@@ -43,7 +43,7 @@
 
 #include "game_messages.h"
 
-#include "RULES_INI.h"
+#include "tiberian_dawn_rules.h"
 
 //extern "C" {
 //unsigned Cardinal_To_Fixed(unsigned base, unsigned cardinal);

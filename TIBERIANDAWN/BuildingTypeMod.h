@@ -1,14 +1,18 @@
 #pragma once
 
+#include <NcoGameMod.h>
+
 #include "function.h"
 
-#include "NcoGameMod.h"
+#include "tiberian_dawn_rule_keys.h"
+#include "TiberianDawnRuleSectionBuilder.h"
 
 class BuildingTypeMod : public NcoGameMod<StructType, BuildingTypeClass>
 {
 private:
-	BuildingTypeMod() 
+	BuildingTypeMod(IRulesRuntime& runtime)
 		: NcoGameMod(
+			runtime,
 			"Building",
 			NEW_BUILDINGS_RULE,
 			NEW_BUILDING_COUNT_RULE,
@@ -26,7 +30,7 @@ protected:
 
 	void AddRulesSection(SectionName typeString)
 	{
-		GetRules() << RulesIniSectionBuilder::BuildBuildingSection(typeString);
+		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(typeString);
 	}
 
 	void ReadRulesAndAddType(BuildingTypeClass* type)
@@ -37,9 +41,9 @@ protected:
 	}
 
 public:
-	static BuildingTypeMod& Build()
+	static BuildingTypeMod& Build(IRulesRuntime& runtime)
 	{
-		return *(new BuildingTypeMod());
+		return *(new BuildingTypeMod(runtime));
 	}
 
 };

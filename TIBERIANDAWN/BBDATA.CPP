@@ -636,26 +636,26 @@ void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)
 
 	Read_Object_Rules(bullet);
 	
-	bullet->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
-	bullet->Image = ReadRuleValue<char*>(iniName, IMAGE_RULE, bullet->Image);
-	bullet->IsHigh = ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, bullet->IsHigh);
-	bullet->IsAntiAircraft = ReadRuleValue<bool>(iniName, BULLET_ANTI_AIRCRAFT_RULE, bullet->IsAntiAircraft);
-	bullet->IsTranslucent = ReadRuleValue<bool>(iniName, BULLET_TRANSLUCENT_RULE, bullet->IsTranslucent);
-	bullet->IsArcing = ReadRuleValue<bool>(iniName, BULLET_ARCING_RULE, bullet->IsArcing);
-	bullet->IsHoming = ReadRuleValue<bool>(iniName, BULLET_HOMING_RULE, bullet->IsHoming);
-	bullet->IsDropping = ReadRuleValue<bool>(iniName, BULLET_DROPPING_RULE, bullet->IsDropping);
-	bullet->IsInvisible = ReadRuleValue<bool>(iniName, BULLET_INVISIBLE_RULE, bullet->IsInvisible);
-	bullet->IsProximityArmed = ReadRuleValue<bool>(iniName, BULLET_PROXIMITY_ARMED_RULE, bullet->IsProximityArmed);
-	bullet->IsFlameEquipped = ReadRuleValue<bool>(iniName, BULLET_FLAME_EQUIPPED_RULE, bullet->IsFlameEquipped);
-	bullet->IsFueled = ReadRuleValue<bool>(iniName, BULLET_FUELED_RULE, bullet->IsFueled);
-	bullet->IsFaceless = ReadRuleValue<bool>(iniName, BULLET_FACELESS_RULE, bullet->IsFaceless);
-	bullet->IsInaccurate = ReadRuleValue<bool>(iniName, BULLET_INACCURATE_RULE, bullet->IsInaccurate);
+	bullet->FriendlyName = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
+	bullet->Image = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<char*>(iniName, IMAGE_RULE, bullet->Image);
+	bullet->IsHigh = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, bullet->IsHigh);
+	bullet->IsAntiAircraft = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_ANTI_AIRCRAFT_RULE, bullet->IsAntiAircraft);
+	bullet->IsTranslucent = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_TRANSLUCENT_RULE, bullet->IsTranslucent);
+	bullet->IsArcing = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_ARCING_RULE, bullet->IsArcing);
+	bullet->IsHoming = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_HOMING_RULE, bullet->IsHoming);
+	bullet->IsDropping = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_DROPPING_RULE, bullet->IsDropping);
+	bullet->IsInvisible = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_INVISIBLE_RULE, bullet->IsInvisible);
+	bullet->IsProximityArmed = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_PROXIMITY_ARMED_RULE, bullet->IsProximityArmed);
+	bullet->IsFlameEquipped = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_FLAME_EQUIPPED_RULE, bullet->IsFlameEquipped);
+	bullet->IsFueled = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_FUELED_RULE, bullet->IsFueled);
+	bullet->IsFaceless = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_FACELESS_RULE, bullet->IsFaceless);
+	bullet->IsInaccurate = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_INACCURATE_RULE, bullet->IsInaccurate);
 
-	bullet->Warhead = ReadRuleValue<WarheadType>(iniName, BULLET_WARHEAD_RULE, bullet->Warhead);
+	bullet->Warhead = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<WarheadType>(iniName, BULLET_WARHEAD_RULE, bullet->Warhead);
 	bullet->MaxSpeed = Read_Speed(iniName, bullet->MaxSpeed);
 	bullet->ROT = Read_Rate_Of_Turn(iniName, bullet->ROT);
-	bullet->Arming = ReadRuleValue<int>(iniName, BULLET_ARMING_RULE, bullet->Arming);
-	bullet->Range = ReadRuleValue<int>(iniName, BULLET_RANGE_RULE, bullet->Range);
+	bullet->Arming = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<int>(iniName, BULLET_ARMING_RULE, bullet->Arming);
+	bullet->Range = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<int>(iniName, BULLET_RANGE_RULE, bullet->Range);
 
 }
 

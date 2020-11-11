@@ -1,7 +1,5 @@
 #pragma once
 
-#include <windows.h>
-
 static const auto ON_SCENARIO_START_EVENT = "ScenarioStart";
 static const auto ON_SAVE_LOAD_EVENT = "SaveLoad";
 static const auto ON_GAME_TICK_EVENT = "GameTick";

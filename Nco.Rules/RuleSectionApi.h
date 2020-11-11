@@ -11,7 +11,7 @@ class RuleSectionApi : public LuaApi
 {
 private:
     SectionName titleCaseSectionName;
-	IRulesIniSection& section;
+    IRulesIniSection& section;
 
     static int ReadRuleLua(lua_State* lua)
     {
@@ -28,32 +28,32 @@ private:
         return LUA_METHOD_PROXY(RuleSectionApi, GetRuleNames);
     }
 
-	RuleSectionApi(IRulesIniSection& section) : section(section), titleCaseSectionName(ToTitleCase(section.GetName()))
-	{
-		WithName(FormatString("%s rules", titleCaseSectionName));
-		WithDescription(FormatString("Get and set %s rules", titleCaseSectionName));
+    RuleSectionApi(IRulesIniSection& section) : section(section), titleCaseSectionName(ToTitleCase(section.GetName()))
+    {
+        WithName(FormatString("%s rules", titleCaseSectionName));
+        WithDescription(FormatString("Get and set %s rules", titleCaseSectionName));
 
         WithMethod(FormatString("get%sRule", titleCaseSectionName), this, ReadRuleLua)
             .WithDescription(FormatString("Get the current value of a %s rule", titleCaseSectionName))
             .WithParameter("ruleName", [](LuaVariableInfo& p) {
-                p.WithDescription("The name as it appears in RULES.INI")
-                 .WithType(LuaType::String);
-            });
+            p.WithDescription("The name as it appears in RULES.INI")
+                .WithType(LuaType::String);
+                });
 
         WithMethod(FormatString("set%sRule", titleCaseSectionName), this, WriteRuleLua)
             .WithDescription(FormatString("Set the current value of a %s rule", titleCaseSectionName))
             .WithParameter("ruleName", [](LuaVariableInfo& p) {
-                p.WithDescription("The name as it appears in RULES.INI")
-                 .WithType(LuaType::String);
-            })
+            p.WithDescription("The name as it appears in RULES.INI")
+                .WithType(LuaType::String);
+                })
             .WithParameter("ruleValue", [](LuaVariableInfo& p) {
-                p.WithDescription("A valid value for the specified rule")
-                 .WithType(LuaType::Any);
-            });
+                    p.WithDescription("A valid value for the specified rule")
+                        .WithType(LuaType::Any);
+                });
 
-        WithMethod(FormatString("get%sRuleNames", titleCaseSectionName), this, GetRuleNamesLua)
-            .WithDescription(FormatString("Get a list of %s rules", titleCaseSectionName));
-	}
+                WithMethod(FormatString("get%sRuleNames", titleCaseSectionName), this, GetRuleNamesLua)
+                    .WithDescription(FormatString("Get a list of %s rules", titleCaseSectionName));
+    }
 
     int ReadRule(ILuaStateWrapper& luaState)
     {
@@ -74,7 +74,7 @@ private:
         {
             luaState.RaiseError("Rule '%s' passed to get%sRule was not recognised", titleCaseSectionName, ruleNameResult.GetValue());
 
-            delete &ruleNameResult;
+            delete& ruleNameResult;
 
             return 0;
         }
@@ -118,7 +118,7 @@ private:
             luaState.WriteNil();
         }
 
-        delete &ruleNameResult;
+        delete& ruleNameResult;
 
         return 1;
     }
@@ -142,7 +142,7 @@ private:
         {
             luaState.RaiseError("Rule '%s' passed to set%sRule was not recognised", ruleNameResult.GetValue(), titleCaseSectionName);
 
-            delete &ruleNameResult;
+            delete& ruleNameResult;
 
             return 0;
         }
@@ -162,7 +162,7 @@ private:
             delete valueStr;
         }
 
-        delete &ruleNameResult;
+        delete& ruleNameResult;
 
         return 0;
     }
@@ -175,10 +175,10 @@ private:
     }
 
 public:
-	static ILuaApi& Build(IRulesIniSection& section)
-	{
-		return *(new RuleSectionApi(section));
-	}
+    static ILuaApi& Build(IRulesIniSection& section)
+    {
+        return *(new RuleSectionApi(section));
+    }
 
     ~RuleSectionApi()
     {

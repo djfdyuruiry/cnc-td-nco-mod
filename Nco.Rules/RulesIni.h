@@ -2,21 +2,19 @@
 
 #include <map>
 
-#include "profile.h"
-#include "RawFile.h"
-
 #include "IRulesIni.h"
 #include "RulesIniSection.h"
 #include <utils.h>
 
+// TODO: port reader functions over
 class RulesIni : public IRulesIni
 {
 private:
 	std::vector<char*> rulesIniBuffers;
 
-	std::map<CacheKey, IRulesIniSection*> sections;
+	std::map<StringHash, IRulesIniSection*> sections;
 	std::vector<const char*> sectionNames;
-	std::vector<CacheKey> sectionKeys;
+	std::vector<StringHash> sectionKeys;
 	
 	bool rulesAreValid;
 
@@ -279,7 +277,7 @@ public:
 		return ruleValue;
 	}
 
-	bool HasSection(CacheKey key)
+	bool HasSection(StringHash key)
 	{
 		return sections.find(key) != sections.end();
 	}
@@ -338,14 +336,14 @@ public:
 		return *this;
 	}
 
-	IRulesIniSection& operator[](CacheKey sectionKey)
+	IRulesIniSection& operator[](StringHash sectionKey)
 	{
 		return *sections[sectionKey];
 	}
 
 	IRulesIniSection& operator[](SectionName name)
 	{
-		auto sectionKey = Build_Rule_Key(name);
+		auto sectionKey = RuleHashUtils::BuildRuleKey(name);
 
 		return (*this)[sectionKey];
 	}

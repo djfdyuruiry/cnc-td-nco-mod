@@ -1,13 +1,10 @@
 #pragma once
 
+#include <IRulesRuntime.h>
+#include <rules_ini_mods.h>
+#include <RulesIniTypes.h>
+
 #include "defines.h"
-
-#include "RulesIniTypes.h"
-
-#define MOD_RULES_SECTION_NAME "Mods"
-#define COUNT_RULES_SECTION_NAME "Counts"
-
-#define BASE_TYPE_RULE "BaseType"
 
 // virtual rules calculated on load of the rules file
 #define NEW_AIRCRAFT_RULE "NewAircraft"
@@ -38,7 +35,7 @@
 #define NEW_WEAPON_COUNT_RULE "NewWeaponCount"
 #define WEAPON_COUNT_RULE "WeaponCount"
 
-void ReadMods();
+void ReadMods(IRulesRuntime& runtime);
 void InitialiseModsIfRequired();
 
 SectionName GetNewAircraftIniName(AircraftType AircraftType);

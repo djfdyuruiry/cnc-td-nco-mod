@@ -1,14 +1,18 @@
 #pragma once
 
+#include <NcoGameMod.h>
+
 #include "function.h"
 
-#include "NcoGameMod.h"
+#include "tiberian_dawn_rule_keys.h"
+#include "TiberianDawnRuleSectionBuilder.h"
 
 class InfantryTypeMod : public NcoGameMod<InfantryType, InfantryTypeClass>
 {
 private:
-	InfantryTypeMod() 
+	InfantryTypeMod(IRulesRuntime& runtime) 
 		: NcoGameMod(
+			runtime,
 			"Infantry",
 			NEW_INFANTRY_RULE,
 			NEW_INFANTRY_COUNT_RULE,
@@ -26,7 +30,7 @@ protected:
 
 	void AddRulesSection(SectionName typeString)
 	{
-		GetRules() << RulesIniSectionBuilder::BuildInfantrySection(typeString);
+		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(typeString);
 	}
 
 	void ReadRulesAndAddType(InfantryTypeClass* type)
@@ -37,9 +41,9 @@ protected:
 	}
 
 public:
-	static InfantryTypeMod& Build()
+	static InfantryTypeMod& Build(IRulesRuntime& runtime)
 	{
-		return *(new InfantryTypeMod());
+		return *(new InfantryTypeMod(runtime));
 	}
 
 };

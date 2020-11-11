@@ -1,6 +1,6 @@
 #pragma once
 
-#include "parse.h"
+#include "IRulesIni.h"
 #include "RulesIniRule.h"
 #include "RulesIniRuleKey.h"
 #include "RulesIniTypes.h"
@@ -18,14 +18,7 @@ protected:
 	virtual unsigned int ReadUnsignedIntRule(RulesIniRule& rule) = 0;
 	virtual double ReadDoubleRule(RulesIniRule& rule, bool* valueFound = NULL) = 0;
 	virtual unsigned int ReadFixedRule(RulesIniRule& rule) = 0;
-	virtual long ReadPrerequisiteRule(RulesIniRule& rule) = 0;
-	virtual int ReadHouseListRule(RulesIniRule& rule) = 0;
-	virtual WeaponType ReadWeaponRule(RulesIniRule& rule) = 0;
-	virtual ArmorType ReadArmorRule(RulesIniRule& rule) = 0;
-	virtual SpeedType ReadUnitSpeedRule(RulesIniRule& rule) = 0;
-	virtual FactoryType ReadFactoryRule(RulesIniRule& rule) = 0;
-	virtual WarheadType ReadWarheadRule(RulesIniRule & rule) = 0;
-	virtual BulletType ReadBulletRule(RulesIniRule& rule) = 0;
+	virtual bool SetDefaultRuleValue(RulesIniRule& rule) = 0;
 
 public:
 	virtual ~IRulesIniReader()
@@ -82,55 +75,7 @@ public:
 				ReadFixedRule(rule)
 			);
 		}
-		else if (ruleType == HOUSE_LIST_RULE)
-		{
-			rule.SetValue(
-				ReadHouseListRule(rule)
-			);
-		}
-		else if (ruleType == WEAPON_RULE)
-		{
-			rule.SetValue(
-				ReadWeaponRule(rule)
-			);
-		}
-		else if (ruleType == ARMOR_TYPE_RULE)
-		{
-			rule.SetValue(
-				ReadArmorRule(rule)
-			);
-		}
-		else if (ruleType == UNIT_SPEED_TYPE_RULE)
-		{
-			rule.SetValue(
-				ReadUnitSpeedRule(rule)
-			);
-		}
-		else if (ruleType == FACTORY_RULE_TYPE)
-		{
-			rule.SetValue(
-				ReadFactoryRule(rule)
-			);
-		}
-		else if (ruleType == WARHEAD_RULE)
-		{
-			rule.SetValue(
-				ReadWarheadRule(rule)
-			);
-		}
-		else if (ruleType == BULLET_RULE)
-		{
-			rule.SetValue(
-				ReadBulletRule(rule)
-			);
-		}
-		else if (ruleType == PREREQ_RULE)
-		{
-			rule.SetValue(
-				ReadPrerequisiteRule(rule)
-			);
-		}
-		else
+		else if (!SetDefaultRuleValue(rule))
 		{
 			rule.SetValue(
 				rule.GetDefaultValue<T>()
@@ -153,7 +98,7 @@ public:
 
 		auto ruleValue = ReadRuleValue<T>(key);
 
-		delete &key;
+		delete& key;
 
 		return ruleValue;
 	}
@@ -164,7 +109,7 @@ public:
 
 		RulesIniRule& rule = GetRule(key);
 
-		delete &key;
+		delete& key;
 
 		if (!rule.HasValue())
 		{

@@ -6,10 +6,27 @@
 
 #include "lua_repl.h"
 
+static bool Execute_Lua_File(const char* filePath)
+{
+	auto& executeResult = TiberianDawnNcoRuntime::GetInstance()
+		.GetLuaRuntime()
+		.ExecuteFile(filePath);
+	auto isError = executeResult.IsErrorResult();
+
+	if (isError)
+	{
+		Log_Error("%s script error: %s", filePath, executeResult.GetError());
+	}
+
+	delete &executeResult;
+
+	return !isError;
+}
+
 static void Test_Lua_Rules() {
 	Log_Info("Testing Lua rules");
 
-	if (!Execute_Lua_File("test-lua-rules.lua"))
+	if (!("test-lua-rules.lua"))
 	{
 		Log_Error("Lua rules test script failed");
 	}
@@ -94,7 +111,7 @@ static void Parse_Command_Line(const char* commandLine)
 	}
 	else if (String_Starts_With(commandLine, "--dump-rules"))
 	{
-		if (!Initialise_Lua() || !Execute_Lua_File("dump-rules.lua"))
+		if (!TiberianDawnNcoRuntime::GetInstance().LuaInitWasSuccessful() || !Execute_Lua_File("dump-rules.lua"))
 		{
 			puts("ERROR: Failed to dump rules file");
 			exit(1);

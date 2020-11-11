@@ -1,15 +1,17 @@
 #pragma once
 
-#include "IRulesIni.h"
-#include "IRulesIniSection.h"
-#include "rules_ini_nco.h"
+#include <IRulesIni.h>
+#include <IRulesIniSection.h>
+#include <rules_ini_enhancements.h>
+#include <rules_ini_iq.h>
+#include <rules_ini_nco.h>
+
 #include "rules_ini_game.h"
-#include "RulesIni.h"
-#include "RulesIniSectionBuilder.h"
+#include "TiberianDawnRuleSectionBuilder.h"
 
-static auto INFO_SECTION = "INFO";
+static auto INFO_SECTION = "__INFO__";
 
-class RulesIniInfo
+class TiberianDawnRulesInfo
 {
 private:
 	IRulesIni& rules;
@@ -22,25 +24,25 @@ private:
 	IRulesIniSection& aircraftRules;
 	IRulesIniSection& buildingRules;
 
-	RulesIniInfo(IRulesIni& rulesIni)
+	TiberianDawnRulesInfo(IRulesIni& rulesIni)
 		: rules(rulesIni),
-		weaponRules(RulesIniSectionBuilder::BuildWeaponSection(INFO_SECTION)),
-		bulletRules(RulesIniSectionBuilder::BuildBulletSection(INFO_SECTION)),
-		warheadRules(RulesIniSectionBuilder::BuildWarheadSection(INFO_SECTION)),
-		infantryRules(RulesIniSectionBuilder::BuildInfantrySection(INFO_SECTION)),
-		unitRules(RulesIniSectionBuilder::BuildUnitSection(INFO_SECTION)),
-		aircraftRules(RulesIniSectionBuilder::BuildAircraftSection(INFO_SECTION)),
-		buildingRules(RulesIniSectionBuilder::BuildBuildingSection(INFO_SECTION))
+		weaponRules(TiberianDawnRuleSectionBuilder::BuildWeaponSection(INFO_SECTION)),
+		bulletRules(TiberianDawnRuleSectionBuilder::BuildBulletSection(INFO_SECTION)),
+		warheadRules(TiberianDawnRuleSectionBuilder::BuildWarheadSection(INFO_SECTION)),
+		infantryRules(TiberianDawnRuleSectionBuilder::BuildInfantrySection(INFO_SECTION)),
+		unitRules(TiberianDawnRuleSectionBuilder::BuildUnitSection(INFO_SECTION)),
+		aircraftRules(TiberianDawnRuleSectionBuilder::BuildAircraftSection(INFO_SECTION)),
+		buildingRules(TiberianDawnRuleSectionBuilder::BuildBuildingSection(INFO_SECTION))
 	{
 	}
 
 public:
-	static RulesIniInfo& BuildRuleInfo(IRulesIni& rulesIni)
+	static TiberianDawnRulesInfo& BuildRuleInfo(IRulesIni& rulesIni)
 	{
-		return *(new RulesIniInfo(rulesIni));
+		return *(new TiberianDawnRulesInfo(rulesIni));
 	}
 
-	~RulesIniInfo()
+	~TiberianDawnRulesInfo()
 	{
 		delete &weaponRules;
 		delete &bulletRules;

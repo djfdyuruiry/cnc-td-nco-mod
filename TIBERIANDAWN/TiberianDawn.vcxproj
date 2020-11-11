@@ -107,7 +107,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua;../Nco.Common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;5033;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -151,7 +151,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua;../Nco.Common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;5033;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -195,7 +195,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua;../Nco.Common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;5033;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -241,7 +241,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Lua;../Nco.Common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;5033;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -424,9 +424,6 @@
     <ClInclude Include="IPXCONN.H" />
     <ClInclude Include="IPXGCONN.H" />
     <ClInclude Include="IPXMGR.H" />
-    <ClInclude Include="IRulesIni.h" />
-    <ClInclude Include="IRulesIniReader.h" />
-    <ClInclude Include="IRulesIniSection.h" />
     <ClInclude Include="JSHELL.H" />
     <ClInclude Include="LAYER.H" />
     <ClInclude Include="LED.H" />
@@ -434,8 +431,6 @@
     <ClInclude Include="LIST.H" />
     <ClInclude Include="LOADDLG.H" />
     <ClInclude Include="LOGIC.H" />
-    <ClInclude Include="LUA.H" />
-    <ClInclude Include="LUA_API.H" />
     <ClInclude Include="GameApi.h" />
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H" />
     <ClInclude Include="LUA_EVENTS.H" />
@@ -452,7 +447,6 @@
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
     <ClInclude Include="NCO.H" />
-    <ClInclude Include="NcoGameMod.h" />
     <ClInclude Include="NOSEQCON.H" />
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />
@@ -471,31 +465,21 @@
     <ClInclude Include="REAL.H" />
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
-    <ClInclude Include="RuleSectionApi.h" />
-    <ClInclude Include="RulesIni.h" />
-    <ClInclude Include="RulesIniInfo.h" />
-    <ClInclude Include="RulesIniReader.h" />
-    <ClInclude Include="RulesIniRule.h" />
+    <ClInclude Include="TiberianDawnNcoRuntime.h" />
+    <ClInclude Include="TiberianDawnRulesInfo.h" />
     <ClInclude Include="RULES.H" />
-    <ClInclude Include="RulesIniRuleKey.h" />
-    <ClInclude Include="RulesIniSection.h" />
-    <ClInclude Include="RulesIniSectionBuilder.h" />
-    <ClInclude Include="RulesIniTypes.h" />
+    <ClInclude Include="tiberian_dawn_rule_keys.h" />
+    <ClInclude Include="TiberianDawnRuleSectionBuilder.h" />
     <ClInclude Include="RulesSectionTypeWrapperApi.h" />
-    <ClInclude Include="RULES_CACHE_KEY.H" />
-    <ClInclude Include="RULES_INI.H" />
-    <ClInclude Include="RULES_INI_AI.H" />
     <ClInclude Include="RULES_INI_AIRCRAFT.H" />
     <ClInclude Include="RULES_INI_BUILDING.H" />
     <ClInclude Include="RULES_INI_BULLET.H" />
-    <ClInclude Include="RULES_INI_DIFFICULTY.H" />
-    <ClInclude Include="RULES_INI_ENHANCEMENTS.H" />
     <ClInclude Include="RULES_INI_GAME.H" />
     <ClInclude Include="RULES_INI_GENERIC.H" />
     <ClInclude Include="RULES_INI_INFANTRY.H" />
-    <ClInclude Include="RULES_INI_IQ.H" />
-    <ClInclude Include="RULES_INI_MODS.H" />
-    <ClInclude Include="RULES_INI_NCO.H" />
+    <ClInclude Include="TiberianDawnRuleType.h" />
+    <ClInclude Include="TiberianDawnRulesReader.h" />
+    <ClInclude Include="tiberian_dawn_mods.h" />
     <ClInclude Include="RULES_INI_SUPERWEAPON.H" />
     <ClInclude Include="RULES_INI_UNIT.H" />
     <ClInclude Include="RULES_INI_WARHEAD.H" />
@@ -528,6 +512,7 @@
     <ClInclude Include="TEXTBLIT.H" />
     <ClInclude Include="TEXTBTN.H" />
     <ClInclude Include="THEME.H" />
+    <ClInclude Include="tiberian_dawn_rules.h" />
     <ClInclude Include="TOGGLE.H" />
     <ClInclude Include="TRIGGER.H" />
     <ClInclude Include="TURRET.H" />
@@ -646,13 +631,11 @@
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="GAME_MESSAGES.CPP" />
     <ClCompile Include="GAME_UTILS.cpp" />
-    <ClCompile Include="LUA_API.CPP" />
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP" />
     <ClCompile Include="LUA_REPL.CPP" />
     <ClCompile Include="NCO.cpp" />
-    <ClCompile Include="RulesIniKeys.cpp" />
-    <ClCompile Include="RULES_CACHE_KEY.CPP" />
-    <ClCompile Include="RULES_INI_MODS.CPP" />
+    <ClCompile Include="tiberian_dawn_rule_keys.cpp" />
+    <ClCompile Include="tiberian_dawn_mods.cpp" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />
@@ -696,7 +679,6 @@
     <ClCompile Include="LIST.CPP" />
     <ClCompile Include="LOADDLG.CPP" />
     <ClCompile Include="LOGIC.CPP" />
-    <ClCompile Include="LUA.cpp" />
     <ClCompile Include="LUA_EVENTS.CPP" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MAP.CPP" />
@@ -735,7 +717,6 @@
     <ClCompile Include="RAWFILE.CPP" />
     <ClCompile Include="REINF.CPP" />
     <ClCompile Include="RULES.CPP" />
-    <ClCompile Include="RULES_INI.cpp" />
     <ClCompile Include="SAVELOAD.CPP" />
     <ClCompile Include="SCENARIO.CPP" />
     <ClCompile Include="SCORE.CPP" />
@@ -820,6 +801,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Nco.Lua\Nco.Lua.vcxproj">
       <Project>{2c5f291e-c782-4cc5-bdec-d4b72830dd6c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Nco.Rules\Nco.Rules.vcxproj">
+      <Project>{00AC5B8D-1A4E-4540-8EBF-F1021FEB9162}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

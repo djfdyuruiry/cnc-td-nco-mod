@@ -3,7 +3,7 @@
 #include <map>
 #include <vector>
 
-#include "rules_ini.h"
+#include "IRulesRuntime.h"
 #include "rules_ini_mods.h"
 #include "RulesIniRule.h"
 #include "RulesIniRuleKey.h"
@@ -11,6 +11,7 @@
 template<class T, class U> class NcoGameMod
 {
 protected:
+	IRulesRuntime& runtime;
 	const char* typeName;
 	RuleName modTypesRule;
 	RuleName modTypeCountRule;
@@ -21,7 +22,26 @@ protected:
 	bool initialised;
 	std::map<T, U*> modTypeInstances;
 	std::vector<char*>& modTypes;
-	
+
+	NcoGameMod(
+		IRulesRuntime& runtime,
+		const char* modTypeName,
+		RuleName modTypesRuleName,
+		RuleName modTypeCountRuleName,
+		const RulesIniRuleKey& typeCountRuleKey,
+		T totalTypeCount
+	)
+		: runtime(runtime),
+		typeName(modTypeName),
+		modTypesRule(modTypesRuleName),
+		modTypeCountRule(modTypeCountRuleName),
+		typeCountRule(typeCountRuleKey),
+		originalTypeCount(totalTypeCount),
+		initialised(false),
+		modTypes(*(new std::vector<char*>))
+	{
+	}
+
 	virtual void ReadRulesAndAddType(U* newType) = 0;
 
 	virtual T ParseType(SectionName typeString, bool* parseError) = 0;
@@ -71,23 +91,6 @@ protected:
 
 	virtual void AddRulesSection(SectionName typeString) = 0;
 
-	NcoGameMod(
-		const char* modTypeName,
-		RuleName modTypesRuleName,
-		RuleName modTypeCountRuleName,
-		const RulesIniRuleKey& typeCountRuleKey,
-		T totalTypeCount
-	)
-		: typeName(modTypeName),
-		modTypesRule(modTypesRuleName),
-		modTypeCountRule(modTypeCountRuleName),
-		typeCountRule(typeCountRuleKey),
-		originalTypeCount(totalTypeCount),
-		initialised(false),
-		modTypes(*(new std::vector<char*>))
-	{
-	}
-
 public:
 	void ReadTypes()
 	{
@@ -99,7 +102,7 @@ public:
 
 		Log_Info("Reading %s Mod Types", typeName);
 
-		auto newTypesCsv = ReadRuleValue<char*>(MOD_RULES_SECTION_NAME, modTypesRule);
+		auto newTypesCsv = runtime.ReadRuleValue()<char*>(MOD_RULES_SECTION_NAME, modTypesRule);
 
 		if (String_Is_Empty(newTypesCsv)) {
 			Log_Debug("No %s mod types found", typeName);
@@ -123,11 +126,11 @@ public:
 
 		auto totalModTypeCount = originalTypeCount + newTypesCount;
 
-		GetRulesReader()
+		runtime.GetRulesReader()
 			.GetRule(MOD_RULES_SECTION_NAME, modTypeCountRule)
 			.SetValue(newTypesCount);
 
-		GetRulesReader()
+		runtime.GetRulesReader()
 			.GetRule(typeCountRule)
 			.SetValue(totalModTypeCount);
 
@@ -154,20 +157,20 @@ public:
 
 			AddRulesSection(typeString);
 
-			auto baseTypeString = ReadRuleValue<char*>(typeString, BASE_TYPE_RULE);
+			auto baseTypeString = runtime.ReadRuleValue()<char*>(typeString, BASE_TYPE_RULE);
 
 			if (String_Is_Empty(baseTypeString))
 			{
 				Show_Error("Mod %s type has no %s rule provided: %s", typeName, typeString, BASE_TYPE_RULE);
 
-				MarkRulesIniAsInvalid();
+				runtime.GetRules().MarkAsInvalid();
 
 				continue;
 			}
 
 			if (!SetupNewType(typeString, type, baseTypeString))
 			{
-				MarkRulesIniAsInvalid();
+				runtime.GetRules().MarkAsInvalid();
 			}
 
 			type = (T)((char)type + 1);
@@ -205,4 +208,5 @@ public:
 
 		return (T)-1;
 	}
+
 };

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "parse.h"
+#include <logger.h>
+
 #include "IRulesIni.h"
 #include "IRulesIniReader.h"
-#include "Logger.h"
 #include "RulesIniRuleKey.h"
 
 class RulesIniReader : public IRulesIniReader
 {
-private:
+protected:
 	RulesIniReader(IRulesIni& rulesIniToRead) : IRulesIniReader(rulesIniToRead)
 	{
 	}
@@ -46,7 +46,6 @@ private:
 		return parsedValue;
 	}
 
-protected:
 	// TODO: move all these private converters into seperate classes with a interface and mapping from type to converter
 	bool ReadBoolRule(RulesIniRule& rule)
 	{
@@ -58,7 +57,7 @@ protected:
 		{
 			Log_Trace("No rules ini value found, default will be used");
 
-			delete &ruleValueOptional;
+			delete& ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -69,7 +68,7 @@ protected:
 
 		auto boolValue = Strings_Are_Equal(ruleValue, TRUE_STRING);
 
-		delete &ruleValueOptional;
+		delete& ruleValueOptional;
 
 		return boolValue;
 	}
@@ -87,7 +86,7 @@ protected:
 		{
 			Log_Trace("No rules ini value found, default will be used");
 
-			delete &ruleValueOptional;
+			delete& ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -107,7 +106,7 @@ protected:
 			);
 
 			delete ruleValueStr;
-			delete &ruleValueOptional;
+			delete& ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -139,7 +138,7 @@ protected:
 		Log_Debug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
-		delete &ruleValueOptional;
+		delete& ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -162,7 +161,7 @@ protected:
 				*valueFound = false;
 			}
 
-			delete &ruleValueOptional;
+			delete& ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -187,7 +186,7 @@ protected:
 			);
 
 			delete ruleValueStr;
-			delete &ruleValueOptional;
+			delete& ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -219,7 +218,7 @@ protected:
 		Log_Debug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
-		delete &ruleValueOptional;
+		delete& ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -262,118 +261,15 @@ protected:
 		return nearbyint(ruleValueAsPercentage * onePercent);
 	}
 
-	long ReadPrerequisiteRule(RulesIniRule& rule)
+	bool SetDefaultRuleValue(RulesIniRule& rule)
 	{
-		Optional& structValueStrOptional = rulesIni.ReadOptionalStringRule(rule);
-		
-		if (!structValueStrOptional.Present())
-		{
-			delete &structValueStrOptional;
-
-			return rule.GetDefaultValueOr(STRUCTF_NONE);
-		}
-		
-		auto structValueStr = structValueStrOptional.Get<char*>();
-
-		Convert_String_To_Upper_Case(structValueStr);
-
-		bool parseError = false;
-		auto structValue = Parse_Structure_Type(structValueStr, &parseError);
-
-		delete &structValueStrOptional;
-
-		if (parseError)
-		{
-			// unable to parse entry as a structure type
-			rulesIni.MarkAsInvalid();
-
-			Show_Error("Failed to parse prerequisite for [%s]: %s", rule.GetStringKey(), structValueStr);
-
-			return STRUCTF_NONE;
-		}
-
-		if (structValue == STRUCT_NONE)
-		{
-			return STRUCTF_NONE;
-		}
-
-		return 1L << structValue;
-	}
-
-	int ReadHouseListRule(RulesIniRule& rule)
-	{
-		return GetParsedStringRule(
-			rule,
-			"houses",
-			&Parse_House_Name_List_Csv,
-			(int)HOUSEF_NONE
-		);
-	}
-
-	WeaponType ReadWeaponRule(RulesIniRule& rule)
-	{
-		return GetParsedStringRule(
-			rule,
-			"weapon",
-			&Parse_Weapon_Type,
-			WEAPON_NONE
-		);
-	}
-
-	ArmorType ReadArmorRule(RulesIniRule& rule)
-	{
-		return GetParsedStringRule(
-			rule,
-			"armor",
-			&Parse_Armor_Type,
-			ARMOR_NONE
-		);
-	}
-
-	SpeedType ReadUnitSpeedRule(RulesIniRule& rule)
-	{
-		return GetParsedStringRule(
-			rule,
-			"unit speed",
-			&Parse_Unit_Speed_Type,
-			SPEED_NONE
-		);
-	}
-
-	FactoryType ReadFactoryRule(RulesIniRule& rule)
-	{
-		return GetParsedStringRule(
-			rule,
-			"factory type",
-			&Parse_Factory_Type,
-			FACTORY_TYPE_NONE
-		);
-	}
-
-	WarheadType ReadWarheadRule(RulesIniRule& rule)
-	{
-		return GetParsedStringRule(
-			rule,
-			"warhead",
-			&Parse_Warhead_Type,
-			WARHEAD_NONE
-		);
-	}
-
-	BulletType ReadBulletRule(RulesIniRule& rule)
-	{
-		return GetParsedStringRule(
-			rule,
-			"bullet",
-			&Parse_Bullet_Type,
-			BULLET_NONE
-		);
+		return false;
 	}
 
 public:
-	static IRulesIniReader& ReaderFor(IRulesIni& rulesIni)
+	static IRulesIniReader& Build(IRulesIni& rules)
 	{
-		return *(new RulesIniReader(rulesIni));
+		return *(new RulesIniReader(rules));
 	}
 
 	RulesIniRule& GetRule(const RulesIniRuleKey& key)
@@ -399,8 +295,9 @@ public:
 
 		RulesIniRule& rule = GetRule(key);
 
-		delete &key;
+		delete& key;
 
 		return rule;
 	}
+
 };

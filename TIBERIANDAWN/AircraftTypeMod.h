@@ -1,14 +1,20 @@
 #pragma once
 
-#include "function.h"
+#include <NcoGameMod.h>
+#include <IRulesRuntime.h>
 
-#include "NcoGameMod.h"
+#include "tiberian_dawn_mods.h"
+#include "tiberian_dawn_rule_keys.h"
+#include "TiberianDawnRulesReader.h"
+#include "TiberianDawnRuleSectionBuilder.h"
+#include "type.h"
 
 class AircraftTypeMod : public NcoGameMod<AircraftType, AircraftTypeClass>
 {
 private:
-	AircraftTypeMod() 
+	AircraftTypeMod(IRulesRuntime& runtime)
 		: NcoGameMod(
+			runtime,
 			"Aircraft",
 			NEW_AIRCRAFT_RULE,
 			NEW_AIRCRAFT_COUNT_RULE,
@@ -26,7 +32,7 @@ protected:
 
 	void AddRulesSection(SectionName typeString)
 	{
-		GetRules() << RulesIniSectionBuilder::BuildAircraftSection(typeString);
+		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(typeString);
 	}
 
 	void ReadRulesAndAddType(AircraftTypeClass* type)
@@ -37,9 +43,9 @@ protected:
 	}
 
 public:
-	static AircraftTypeMod& Build()
+	static AircraftTypeMod& Build(IRulesRuntime& runtime)
 	{
-		return *(new AircraftTypeMod());
+		return *(new AircraftTypeMod(runtime));
 	}
 
 };

@@ -640,7 +640,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		type->What_Am_I() == RTTI_INFANTRYTYPE &&
 		((InfantryTypeClass const *)type)->Type == INFANTRY_E3 &&
 		level < 7) {
-		if (ReadRuleValue<bool>(HIDE_E3_FROM_GDI_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_E3_FROM_GDI_RULE_KEY))
 		{
 			return(false);
 		}
@@ -654,7 +654,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
 		level < 9) {
-		if (ReadRuleValue<bool>(HIDE_MSAM_FROM_GDI_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_MSAM_FROM_GDI_RULE_KEY))
 		{
 			return(false);
 		}
@@ -666,7 +666,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (house == HOUSE_BAD &&
 		type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_APC) {
-		if (ReadRuleValue<bool>(HIDE_APC_FROM_NOD_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_APC_FROM_NOD_RULE_KEY))
 		{
 			return(false);
 		}
@@ -680,11 +680,11 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		(((BuildingTypeClass const *)type)->Type == STRUCT_TEMPLE || ((BuildingTypeClass const *)type)->Type == STRUCT_OBELISK) &&
 		Class->House == HOUSE_GOOD) {
 
-		if (((BuildingTypeClass const*)type)->Type == STRUCT_TEMPLE && ReadRuleValue<bool>(HIDE_TMPL_FROM_GDI_RULE_KEY))
+		if (((BuildingTypeClass const*)type)->Type == STRUCT_TEMPLE && TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_TMPL_FROM_GDI_RULE_KEY))
 		{
 			return(false);
 		}
-		else if (((BuildingTypeClass const*)type)->Type == STRUCT_OBELISK && ReadRuleValue<bool>(HIDE_OBLI_FROM_GDI_RULE_KEY))
+		else if (((BuildingTypeClass const*)type)->Type == STRUCT_OBELISK && TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_OBLI_FROM_GDI_RULE_KEY))
 		{
 			return(false);
 		}
@@ -696,7 +696,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (type->What_Am_I() == RTTI_UNITTYPE &&
 		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
 		Class->House == HOUSE_BAD) {
-		if (ReadRuleValue<bool>(HIDE_MSAM_FROM_NOD_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_MSAM_FROM_NOD_RULE_KEY))
 		{
 			return(false);
 		}
@@ -709,7 +709,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		(((BuildingTypeClass const *)type)->Type == STRUCT_EYE) &&
 		Class->House == HOUSE_BAD) {
-		if (ReadRuleValue<bool>(HIDE_ADV_COMM_FROM_NOD_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_ADV_COMM_FROM_NOD_RULE_KEY))
 		{
 			return(false);
 		}
@@ -722,7 +722,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		level >= 12 &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_ADVANCED_POWER) {
-		if (ReadRuleValue<bool>(ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(ALLOW_NOD_TO_BUILD_NUK2_EARLY_RULE_KEY))
 		{
 			level = type->Scenario;
 		}
@@ -734,7 +734,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	if (house == HOUSE_BAD &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_HELIPAD) {
-		if (ReadRuleValue<bool>(HIDE_HELIPAD_FROM_NOD_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_HELIPAD_FROM_NOD_RULE_KEY))
 		{
 			return(false);
 		}
@@ -747,7 +747,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		level < 8 &&
 		type->What_Am_I() == RTTI_BUILDINGTYPE &&
 		((BuildingTypeClass const *)type)->Type == STRUCT_SANDBAG_WALL) {
-		if (ReadRuleValue<bool>(HIDE_SBAG_FROM_GDI_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(HIDE_SBAG_FROM_GDI_RULE_KEY))
 		{
 			return(false);
 		}
@@ -758,14 +758,14 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	**	scenario two will still feel like scenario #1.
 	*/
 	if (house == HOUSE_GOOD && level == 2) {
-		if (ReadRuleValue<bool>(SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE_KEY))
+		if (TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE_KEY))
 		{
 			level = 1;
 		}
 	}
 
 	// ST - 8/23/2019 4:53PM
-	if (DebugUnlockBuildables || ReadRuleValue<bool>(ALLOW_BUILDING_ALL_FOR_HOUSE_RULE_KEY)) {
+	if (DebugUnlockBuildables || TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(ALLOW_BUILDING_ALL_FOR_HOUSE_RULE_KEY)) {
 		level = 98;
 		pre = 0;
 	}
@@ -1359,7 +1359,7 @@ void HouseClass::AI(void)
 		enableIonCannon = enableIonCannon && (
 				GameToPlay != GAME_NORMAL
 				|| ActLike == HOUSE_GOOD
-				|| !ReadRuleValue<bool>(ONLY_GDI_CAN_USE_ION_CANNON_RULE_KEY)
+				|| !TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(ONLY_GDI_CAN_USE_ION_CANNON_RULE_KEY)
 			);
 
 		auto enableIonCannonMessageRecieved = ionCannonMessageRecieved
@@ -1465,7 +1465,7 @@ void HouseClass::AI(void)
 		if (enableNukeStrike || enableNukeStrikeMessageRecieved) {
 			if (!enableNukeStrikeMessageRecieved) {
 				NukeStrike.Enable(
-					GameToPlay != GAME_NORMAL || ReadRuleValue<bool>(ONE_TIME_NUKE_RULE_KEY),
+					GameToPlay != GAME_NORMAL || TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(ONE_TIME_NUKE_RULE_KEY),
 					this == PlayerPtr
 				);
 			} else {
@@ -4851,7 +4851,7 @@ bool HouseClass::Has_Nuke_Device(void)
 	Validate();
 	if (GameToPlay != GAME_NORMAL || !IsHuman) return(true);
 
-	if (!ReadRuleValue<bool>(ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE_KEY))
+	if (!TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(ONLY_ALLOW_NUKE_IF_PARTS_COLLECTED_RULE_KEY))
 	{
 		return true;
 	}

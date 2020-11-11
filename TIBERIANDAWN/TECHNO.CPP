@@ -134,13 +134,13 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 {
 	auto iniName = type->IniName;
 
-	type->Image = ReadRuleValue<char*>(iniName, IMAGE_RULE, type->Image);
-	type->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, type->FriendlyName);
+	type->Image = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<char*>(iniName, IMAGE_RULE, type->Image);
+	type->FriendlyName = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, type->FriendlyName);
 	type->Level = Read_Build_Level(iniName, type->Level);
-	type->Pre = ReadRuleValue<long>(iniName, PREREQUISITE_RULE, type->Pre);
+	type->Pre = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<long>(iniName, PREREQUISITE_RULE, type->Pre);
 	type->IsTransporter = Read_Is_Transport(iniName, type->IsTransporter);
 	type->TransportCapacity = type->IsTransporter
-		? ReadRuleValue<unsigned int>(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity)
+		? TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<unsigned int>(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity)
 		: 0;
 	type->IsBuildable = Read_Is_Buildable(iniName, type->IsBuildable);
 	type->MaxAmmo = Read_Ammo(iniName, type->MaxAmmo);
@@ -148,26 +148,26 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 	type->Cost = Read_Cost(iniName, type->Cost);
 	type->Scenario = Read_Scenario_Level(iniName, type->Scenario);
 	type->Reward = Read_Reward(iniName, type->Reward);
-	type->HouseListCsv = ReadRuleValue<char*>(iniName, HOUSES_RULE, type->HouseListCsv);
+	type->HouseListCsv = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<char*>(iniName, HOUSES_RULE, type->HouseListCsv);
 
 	bool parseError = false;
 	auto parsedOwnable = Parse_House_Name_List_Csv(type->HouseListCsv, &parseError);
 
 	auto ownable = parseError ? type->Ownable : parsedOwnable;
 
-	type->Ownable = ReadRuleValue<int>(iniName, OWNER_RULE, ownable);
+	type->Ownable = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<int>(iniName, OWNER_RULE, ownable);
 
 	type->Primary = Read_Primary_Weapon(iniName, type->Primary);
 	type->Secondary = Read_Secondary_Weapon(iniName, type->Secondary);
 	type->MaxSpeed = Read_Speed(iniName, type->MaxSpeed);
-	type->IsScanner = ReadRuleValue<bool>(iniName, DETECT_CLOAKED_OBJECTS_RULE, type->IsScanner);
-	type->IsRepairable = ReadRuleValue<bool>(iniName, REPAIRABLE_RULE, type->IsRepairable);
-	type->IsCrew = ReadRuleValue<bool>(iniName, HAS_CREW_RULE, type->IsCrew);
-	type->IsLeader = ReadRuleValue<bool>(iniName, LEADER_RULE, type->IsLeader);
-	type->IsTwoShooter = ReadRuleValue<bool>(iniName, TWO_SHOOTER_RULE, type->IsTwoShooter);
-	type->IsTheater = ReadRuleValue<bool>(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
-	type->IsTurretEquipped = ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
-	type->IsNominal = ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, type->IsNominal);
+	type->IsScanner = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, DETECT_CLOAKED_OBJECTS_RULE, type->IsScanner);
+	type->IsRepairable = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, REPAIRABLE_RULE, type->IsRepairable);
+	type->IsCrew = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, HAS_CREW_RULE, type->IsCrew);
+	type->IsLeader = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, LEADER_RULE, type->IsLeader);
+	type->IsTwoShooter = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, TWO_SHOOTER_RULE, type->IsTwoShooter);
+	type->IsTheater = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
+	type->IsTurretEquipped = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
+	type->IsNominal = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, type->IsNominal);
 	type->IsFlammable = Read_Is_Flammable(iniName, type->IsFlammable);
 
 	type->Calculate_Risk();

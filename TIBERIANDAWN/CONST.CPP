@@ -177,7 +177,7 @@ void WeaponTypeClass::Read_Weapon_Rules(WeaponTypeClass* weapon)
 {
 	auto iniName = Weapon_Type_To_String(weapon->Type);
 
-	weapon->Projectile = ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
+	weapon->Projectile = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
 	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
 	weapon->ROF = Read_Weapon_Rate_Of_Fire(iniName, weapon->ROF);
 	weapon->Range = Read_Weapon_Range(iniName, weapon->Range);
@@ -252,17 +252,17 @@ void WarheadTypeClass::Read_Warhead_Rules(WarheadTypeClass* warhead)
 {
 	auto iniName = Warhead_Type_To_String(warhead->Type);
 
-	warhead->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
-	warhead->SpreadFactor = ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
-	warhead->IsWallDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, warhead->IsWallDestroyer);
-	warhead->IsWoodDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, warhead->IsWoodDestroyer);
-	warhead->IsTiberiumDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, warhead->IsTiberiumDestroyer);
+	warhead->FriendlyName = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
+	warhead->SpreadFactor = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
+	warhead->IsWallDestroyer = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, warhead->IsWallDestroyer);
+	warhead->IsWoodDestroyer = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, warhead->IsWoodDestroyer);
+	warhead->IsTiberiumDestroyer = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, warhead->IsTiberiumDestroyer);
 
 	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
 	{
 		auto modifierRule = Map_Armor_Modifier_To_Warhead_Rule(armorType);
 
-		warhead->Modifier[armorType] = ReadRuleValue<unsigned int>(iniName, modifierRule, warhead->Modifier[armorType]);
+		warhead->Modifier[armorType] = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<unsigned int>(iniName, modifierRule, warhead->Modifier[armorType]);
 	}
 }
 

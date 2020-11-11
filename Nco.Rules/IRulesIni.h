@@ -1,8 +1,9 @@
 #pragma once
 
+#include <HashUtils.h>
+
 #include "IRulesIniSection.h"
 #include "RulesIniRule.h"
-#include "RULES_CACHE_KEY.h"
 
 class IRulesIni
 {
@@ -28,7 +29,7 @@ public:
 
 	virtual int ReadIntRule(RulesIniRule& rule) = 0;
 
-	virtual bool HasSection(CacheKey key) = 0;
+	virtual bool HasSection(StringHash key) = 0;
 
 	virtual bool HasSectionForRule(RulesIniRule& rule) = 0;
 
@@ -46,7 +47,7 @@ public:
 
 	virtual IRulesIni& operator<<(RulesIniRule& rule) = 0;
 
-	virtual IRulesIniSection& operator[](CacheKey sectionKey) = 0;
+	virtual IRulesIniSection& operator[](StringHash sectionKey) = 0;
 
 	virtual IRulesIniSection& operator[](SectionName name) = 0;
 };

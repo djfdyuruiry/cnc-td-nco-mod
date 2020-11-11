@@ -4,8 +4,8 @@
 #include "lua_events.h"
 #include "nco.h"
 #include "parse.h"
-#include "rules_ini.h"
 #include "RulesIniSectionBuilder.h"
+#include "TiberianDawnNcoRuntime.h"
 #include <strings.h>
 
 bool NCO_Startup();

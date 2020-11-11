@@ -3,23 +3,25 @@
 #include <malloc.h>
 #include <vector>
 
+#include <HashUtils.h>
 #include <ILuaStateWrapper.h>
-
-#include "Optional.h"
-#include "RulesIniTypes.h"
-#include "RULES_CACHE_KEY.h"
 #include <strings.h>
 #include <utils.h>
 
+#include "Optional.h"
+#include "RuleHashUtils.h"
+#include "RulesIniTypes.h"
+
+// TODO: provide way of extending the reading mechanism for game specific types
 class RulesIniRule
 {
 private:
 	SectionName section;
 	RuleName name;
 
-	CacheKey sectionKey;
+	StringHash sectionKey;
 	RuleName uppercaseName;
-	CacheKey key;
+	StringHash key;
 	RulesIniType type;
 
 	const char* stringKey;
@@ -45,9 +47,9 @@ private:
 		  valueToAllowAlways(Optional::BuildOptional()),
 		  validValues(*(new std::vector<const char*>()))
 	{
-		sectionKey = Build_Rule_Key(section);
+		sectionKey = RuleHashUtils::BuildRuleKey(section);
 		uppercaseName = Convert_String_To_Upper_Case(name);
-		key = Build_Rule_Key(section, name);
+		key = RuleHashUtils::BuildRuleKey(section, name);
 
 		auto keyStr = Allocate_String(RULES_INI_ID_SIZE * 2 + 4);
 
@@ -265,7 +267,7 @@ public:
 		return section;
 	}
 
-	CacheKey GetSectionKey()
+	StringHash GetSectionKey()
 	{
 		return sectionKey;
 	}
@@ -280,7 +282,7 @@ public:
 		return name;
 	}
 
-	const CacheKey GetKey()
+	const StringHash GetKey()
 	{
 		return key;
 	}

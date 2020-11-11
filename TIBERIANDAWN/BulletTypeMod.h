@@ -1,14 +1,18 @@
 #pragma once
 
+#include <NcoGameMod.h>
+
 #include "function.h"
 
-#include "NcoGameMod.h"
+#include "tiberian_dawn_rule_keys.h"
+#include "TiberianDawnRuleSectionBuilder.h"
 
 class BulletTypeMod : public NcoGameMod<BulletType, BulletTypeClass>
 {
 private:
-	BulletTypeMod() 
+	BulletTypeMod(IRulesRuntime& runtime) 
 		: NcoGameMod(
+			runtime,
 			"Bullet",
 			NEW_BULLETS_RULE,
 			NEW_BULLET_COUNT_RULE,
@@ -26,7 +30,7 @@ protected:
 
 	void AddRulesSection(SectionName typeString)
 	{
-		GetRules() << RulesIniSectionBuilder::BuildBulletSection(typeString);
+		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(typeString);
 	}
 
 	void ReadRulesAndAddType(BulletTypeClass* type)
@@ -37,9 +41,9 @@ protected:
 	}
 
 public:
-	static BulletTypeMod& Build()
+	static BulletTypeMod& Build(IRulesRuntime& runtime)
 	{
-		return *(new BulletTypeMod());
+		return *(new BulletTypeMod(runtime));
 	}
 
 };

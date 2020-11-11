@@ -1485,8 +1485,8 @@ void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
 	infantry->IsFraidyCat = Read_Is_Fraidy_Cat(iniName, infantry->IsFraidyCat);
 	infantry->IsCivilian = Read_Is_Civilian(iniName, infantry->IsCivilian);
 	infantry->IsAvoidingTiberium = Read_Avoids_Tiberium(iniName, infantry->IsAvoidingTiberium);
-	infantry->IsImmuneToTiberium = ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
-	infantry->HasC4Charges = ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
+	infantry->IsImmuneToTiberium = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
+	infantry->HasC4Charges = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
 }
 
 void InfantryTypeClass::Add_Infantry_Type(InfantryTypeClass* infantryInstance)

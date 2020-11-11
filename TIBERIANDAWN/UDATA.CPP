@@ -1753,7 +1753,7 @@ void UnitTypeClass::Read_Unit_Rules(UnitTypeClass* unit)
 	unit->IsAnimating = Read_Has_Constant_Animation(iniName, unit->IsAnimating);
 	unit->Speed = Read_Unit_Speed(iniName, unit->Speed);
 	unit->ROT = Read_Rate_Of_Turn(iniName, unit->ROT);
-	unit->CanSelfRepair = ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, unit->CanSelfRepair);
+	unit->CanSelfRepair = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, unit->CanSelfRepair);
 }
 
 void UnitTypeClass::Add_Unit_Type(UnitTypeClass* unitInstance)
@@ -1808,7 +1808,7 @@ void UnitTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = ReadRuleValue<double>(UNIT_REPAIR_FACTOR_RULE_KEY);
+	auto repairFactor = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<double>(UNIT_REPAIR_FACTOR_RULE_KEY);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(

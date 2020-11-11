@@ -3,24 +3,26 @@
 #include <map>
 #include <vector>
 
-#include "rules_cache_key.h"
+#include <HashUtils.h>
+
 #include "IRulesIniSection.h"
+#include "RuleHashUtils.h"
 
 class RulesIniSection : public IRulesIniSection
 {
 private:
 	SectionName name;
-	CacheKey key;
+	StringHash key;
 	RulesIniType defaultType;
 
-	std::map<CacheKey, RulesIniRule*> rules;
+	std::map<StringHash, RulesIniRule*> rules;
 	std::vector<RuleName> ruleNames;
-	std::vector<CacheKey> ruleKeys;
+	std::vector<StringHash> ruleKeys;
 
 	RulesIniSection(SectionName name)
 	{
 		this->name = name;
-		this->key = Build_Rule_Key(this->name);
+		this->key = RuleHashUtils::BuildRuleKey(this->name);
 		this->defaultType = DEFAULT_RULE_TYPE;
 	}
 
@@ -65,14 +67,14 @@ public:
 		return name;
 	}
 
-	CacheKey GetKey()
+	StringHash GetKey()
 	{
 		return key;
 	}
 
-	CacheKey BuildKey(RuleName rule)
+	StringHash BuildKey(RuleName rule)
 	{
-		return Build_Rule_Key(name, rule);
+		return RuleHashUtils::BuildRuleKey(name, rule);
 	}
 
 	void SetDefaultType(RulesIniType type)
@@ -80,7 +82,7 @@ public:
 		defaultType = type;
 	}
 
-	bool HasRule(CacheKey key)
+	bool HasRule(StringHash key)
 	{
 		return rules.find(key) != rules.end();
 	}
@@ -95,7 +97,7 @@ public:
 		return HasRule(BuildKey(rule));
 	}
 
-	const RulesIniRule& GetRule(CacheKey key)
+	const RulesIniRule& GetRule(StringHash key)
 	{
 		return *rules[key];
 	}
@@ -110,7 +112,7 @@ public:
 		return ruleNames;
 	}
 
-	std::vector<CacheKey>& GetRuleKeys()
+	std::vector<StringHash>& GetRuleKeys()
 	{
 		return ruleKeys;
 	}
@@ -139,6 +141,13 @@ public:
 		return *this;
 	}
 
+	IRulesIniSection& operator<<(char type)
+	{
+		ruleInStream->SetType((RulesIniType)type);
+
+		return *this;
+	}
+
 	IRulesIniSection& operator<<(IRulesIniSection& section)
 	{
 		return section;
@@ -149,7 +158,7 @@ public:
 		return *rules[BuildKey(ruleName)];
 	}
 
-	RulesIniRule& operator[](CacheKey ruleKey)
+	RulesIniRule& operator[](StringHash ruleKey)
 	{
 		return *rules[ruleKey];
 	}

@@ -664,7 +664,7 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = ReadRuleValue<double>(AIRCRAFT_REPAIR_FACTOR_RULE_KEY);
+	auto repairFactor = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<double>(AIRCRAFT_REPAIR_FACTOR_RULE_KEY);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(

@@ -1,7 +1,7 @@
 #include "function.h"
 
-#include "lua.h"
 #include "lua_repl.h"
+#include "TiberianDawnNcoRuntime.h"
 
 static HANDLE LUA_REPL_THREAD;
 static HANDLE LUA_EVENT_THREAD;
@@ -15,19 +15,21 @@ static DWORD WINAPI Start_Lua_Repl(LPVOID lpParam)
 
 bool NCO_Startup()
 {
-	Ensure_Rules_Ini_Is_Loaded();
+	auto& runtime = TiberianDawnNcoRuntime::GetInstance();
+
+	runtime.GetRulesRuntime().EnsureRulesIniIsLoaded();
 
 	Log_Info("New Construction Options mod starting up");
 
-	if (Rules_Ini_Failed_Validation())
+	if (!runtime.RulesInitWasSuccessful())
 	{
 		Show_Error("Aborting game launch because rules INI failed validation.\n\nPlease check your rules are valid.");
 		return false;
 	}
 
-	if (Lua_Is_Enabled())
+	if (runtime.GetRulesRuntime().LuaIsEnabled())
 	{
-		if (!Initialise_Lua())
+		if (!runtime.LuaInitWasSuccessful())
 		{
 			Show_Error("Aborting game launch as their were errors initialising Lua");
 			return false;
@@ -41,7 +43,7 @@ bool NCO_Startup()
 	Log_Info("New Construction Options mod has started successfully");
 
 	#ifndef TEST_CONSOLE
-	if (Lua_Console_Is_Enabled()) {
+	if (runtime.GetRulesRuntime().LuaConsoleIsEnabled()) {
 		Log_Info("Attempting to display Lua console");
 
 		Start_Console_Output();
@@ -64,7 +66,7 @@ bool NCO_Startup()
 	}
 	#endif
 
-	if (Lua_Is_Enabled())
+	if (runtime.GetRulesRuntime().LuaIsEnabled())
 	{
 		Log_Info("Attempting to start Lua Event thread");
 
@@ -93,8 +95,10 @@ void NCO_Shutdown()
 {
 	Log_Info("New Construction Options mod shutting down");
 
+	auto& runtime = TiberianDawnNcoRuntime::GetInstance();
+
 	#ifndef TEST_CONSOLE
-	if (Lua_Console_Is_Enabled())
+	if (runtime.GetRulesRuntime().LuaConsoleIsEnabled()) {
 	{
 		if (LUA_REPL_THREAD != NULL && LUA_REPL_THREAD != INVALID_HANDLE_VALUE && !TerminateThread(LUA_REPL_THREAD, 0))
 		{
@@ -107,19 +111,15 @@ void NCO_Shutdown()
 	}
 	#endif
 
-	if (Lua_Is_Enabled())
+	if (runtime.GetRulesRuntime().LuaIsEnabled())
 	{
 		if (LUA_EVENT_THREAD != NULL && LUA_EVENT_THREAD != INVALID_HANDLE_VALUE && !TerminateThread(LUA_EVENT_THREAD, 0))
 		{
 			Log_Error("Error stopping Lua event thread: %s", Get_Win32_Error_Message());
 		}
-
-		Shutdown_Lua();
-
-		Log_Info("Lua shut down");
 	}
 
-	Free_Rules_Memory();
+	TiberianDawnNcoRuntime::Shutdown();
 
 	// this must be the last call - otherwise the file might be reopened by a log call
 	Close_Log_File_If_Open();

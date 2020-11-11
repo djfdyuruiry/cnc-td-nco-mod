@@ -1,5 +1,11 @@
 #include "function.h"
-#include "lua.h"
+
+#include "TiberianDawnNcoRuntime.h"
+
+static ILuaRuntime& LuaRuntime()
+{
+	return TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime();
+}
 
 static void Print_Lua_Result(HANDLE stdOut)
 {
@@ -59,7 +65,7 @@ static char* Read_Lua_String(HANDLE stdOut, HANDLE stdIn)
 
 bool Enter_Lua_Repl(bool initialiseLua = true)
 {
-	if (initialiseLua && !Initialise_Lua())
+	if (initialiseLua && !TiberianDawnNcoRuntime::GetInstance().StartupWasSuccessful())
 	{
 		puts("ERROR: Failed to initialise Lua state");
 		return false;
@@ -102,12 +108,18 @@ bool Enter_Lua_Repl(bool initialiseLua = true)
 		{
 			continue;
 		}
-
+		
+		auto& executeResult = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().ExecuteScript(input);
+		
 		// evaluate lua string
-		if (!Execute_Lua_Script(input, true))
+		if (executeResult.IsErrorResult())
 		{
+			delete &executeResult;
+
 			continue;
 		}
+		
+		delete &executeResult;
 
 		Print_Lua_Result(stdOut);
 	}
