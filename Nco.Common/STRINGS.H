@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdlib.h>
+
 char* Allocate_String(unsigned int length);
 
 bool Strings_Are_Equal(char* subject, char* expected);

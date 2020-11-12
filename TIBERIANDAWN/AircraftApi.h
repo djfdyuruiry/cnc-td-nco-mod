@@ -2,8 +2,6 @@
 
 #include <functional>
 
-#include <lua.hpp>
-
 #include <ParseCheckValidator.h>
 
 #include "IRulesIniSection.h"

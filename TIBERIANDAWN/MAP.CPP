@@ -963,8 +963,8 @@ void MapClass::Logic(void)
 		TiberiumScan = 0;
 		IsForwardScan = (IsForwardScan == false);
 
-		double growthFactorMultipler = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<double>(TIBERIUM_GROWTH_RATE_RULE_KEY);
-		double spreadFactorMultipler = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<double>(TIBERIUM_SPREAD_RATE_RULE_KEY);
+		double growthFactorMultipler = NcoRulesRuntime().ReadRuleValue<double>(TIBERIUM_GROWTH_RATE_RULE_KEY);
+		double spreadFactorMultipler = NcoRulesRuntime().ReadRuleValue<double>(TIBERIUM_SPREAD_RATE_RULE_KEY);
 
 		int growthFactor = nearbyint(tries * growthFactorMultipler);
 		int spreadFactor = nearbyint(tries * spreadFactorMultipler);

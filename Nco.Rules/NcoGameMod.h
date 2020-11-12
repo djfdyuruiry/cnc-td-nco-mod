@@ -102,7 +102,7 @@ public:
 
 		Log_Info("Reading %s Mod Types", typeName);
 
-		auto newTypesCsv = runtime.ReadRuleValue()<char*>(MOD_RULES_SECTION_NAME, modTypesRule);
+		auto newTypesCsv = runtime.ReadRuleValue<char*>(MOD_RULES_SECTION_NAME, modTypesRule);
 
 		if (String_Is_Empty(newTypesCsv)) {
 			Log_Debug("No %s mod types found", typeName);
@@ -126,11 +126,11 @@ public:
 
 		auto totalModTypeCount = originalTypeCount + newTypesCount;
 
-		runtime.GetRulesReader()
+		runtime.GetBaseRulesReader()
 			.GetRule(MOD_RULES_SECTION_NAME, modTypeCountRule)
 			.SetValue(newTypesCount);
 
-		runtime.GetRulesReader()
+		runtime.GetBaseRulesReader()
 			.GetRule(typeCountRule)
 			.SetValue(totalModTypeCount);
 
@@ -157,7 +157,7 @@ public:
 
 			AddRulesSection(typeString);
 
-			auto baseTypeString = runtime.ReadRuleValue()<char*>(typeString, BASE_TYPE_RULE);
+			auto baseTypeString = runtime.ReadRuleValue<char*>(typeString, BASE_TYPE_RULE);
 
 			if (String_Is_Empty(baseTypeString))
 			{

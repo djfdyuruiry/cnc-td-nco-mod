@@ -77,18 +77,18 @@ public:
 
 	LuaResult& ExecuteScript(const char* script)
 	{
-		if (!FileUtils::IsFile(script))
-		{
-			return LuaResult::Build(
-				FormatString("Lua script file was not found: '%s'", script)
-			);
-		}
-
 		return lua.ExecuteScript(script);
 	}
 
 	LuaResult& ExecuteFile(const char* filePath)
 	{
+		if (!FileUtils::IsFile(filePath))
+		{
+			return LuaResult::Build(
+				FormatString("Lua script file was not found: '%s'", filePath)
+			);
+		}
+
 		return lua.ExecuteFile(filePath);
 	}
 

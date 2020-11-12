@@ -2,17 +2,17 @@
 
 #include <string>
 
+#include <IRulesIniSection.h>
 #include <LambdaValidator.h>
 #include <LuaValueAdapter.h>
 #include <NumericRangeValidator.h>
 #include <ParseCheckValidator.h>
+#include <RulesSectionTypeWrapperApi.h>
 
-#include "IRulesIniSection.h"
 #include "parse.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_warhead.h"
-#include "RulesSectionTypeWrapperApi.h"
 #include "type.h"
 
 #define EXTRACTOR_WAR(f) EXTRACTOR(WarheadTypeClass, f)

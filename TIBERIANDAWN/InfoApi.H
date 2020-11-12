@@ -1,7 +1,10 @@
 #pragma once
 
+#include <ILuaRuntime.h>
 #include <LuaApi.h>
 #include <LuaObjectUtils.h>
+
+#include "lua_events.h"
 
 class InfoApi : public LuaApi
 {
@@ -11,7 +14,9 @@ private:
         return LUA_METHOD_PROXY(InfoApi, GetEventNames);
     }
 
-    InfoApi()
+    ILuaRuntime& runtime;
+
+    InfoApi(ILuaRuntime& runtime) : runtime(runtime)
     {
         WithName("Info");
         WithDescription("General info functions");
@@ -24,10 +29,11 @@ private:
     int GetEventNames(ILuaStateWrapper& lua)
     {
         auto& events = std::vector<const char*>();
+        auto eventNames = Get_Event_Names();
 
-        for (auto i = 0; i < LUA_EVENT_COUNT; i++)
+        for (auto i = 0; i < Get_Event_Count(); i++)
         {
-            events.push_back(LUA_EVENTS[i]);
+            events.push_back(eventNames[i]);
         }
 
         lua.WriteArray(events);
@@ -36,9 +42,9 @@ private:
     }
 
 public:
-    static ILuaApi& Build()
+    static ILuaApi& Build(ILuaRuntime& runtime)
     {
-        return *(new InfoApi());
+        return *(new InfoApi(runtime));
     }
 
 };

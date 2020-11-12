@@ -41,9 +41,9 @@ protected:
 	}
 
 public:
-	static UnitTypeMod& Build()
+	static UnitTypeMod& Build(IRulesRuntime& runtime)
 	{
-		return *(new UnitTypeMod());
+		return *(new UnitTypeMod(runtime));
 	}
 
 };

@@ -29,9 +29,13 @@ private:
 	unsigned int tickIntervalInMillis;
 	LogLevel currentLogLevel;
 	const char* logFilePath;
-	std::vector<const char*>* luaScripts;
+	std::vector<const char*>& luaScripts;
 
-	RulesRuntime(unsigned int gameTicksPerSecond) : tickIntervalInMillis(ONE_SEC_IN_MILLIS / gameTicksPerSecond)
+	RulesRuntime(unsigned int gameTicksPerSecond) :
+		tickIntervalInMillis(ONE_SEC_IN_MILLIS / gameTicksPerSecond),
+		rules(NULL),
+		rulesReader(NULL),
+		luaScripts(*(new std::vector<const char*>()))
 	{
 	}
 
@@ -43,8 +47,6 @@ private:
 		luaConsoleIsEnabled = luaIsEnabled
 			&& rulesReader->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
 		tickIntervalInMillis = rulesReader->ReadRuleValue<int>(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE);
-
-		luaScripts = new std::vector<const char*>();
 
 		auto onScenarioLoadCsv = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE);
 
@@ -62,7 +64,7 @@ private:
 
 		for (auto i = 0u; i < scriptFileCount; i++)
 		{
-			luaScripts->push_back(scriptFiles[i]);
+			luaScripts.push_back(scriptFiles[i]);
 		}
 	}
 
@@ -173,10 +175,7 @@ public:
 			delete rulesReader;
 		}
 
-		if (luaScripts != NULL)
-		{
-			delete luaScripts;
-		}
+		delete &luaScripts;
 	}
 
 	void EnsureRulesIniIsLoaded()
@@ -203,7 +202,7 @@ public:
 		return *rules;
 	}
 
-	RulesIniReader& GetBaseRulesReader()
+	IRulesIniReader& GetBaseRulesReader()
 	{
 		return *rulesReader;
 	}
@@ -232,7 +231,7 @@ public:
 
 	const std::vector<const char*>& GetLuaScripts()
 	{
-		return *luaScripts;
+		return luaScripts;
 	}
 
 	LogLevel GetCurrentLogLevel()

@@ -696,8 +696,8 @@ extern "C" __declspec(dllexport) bool __cdecl CNC_Set_Multiplayer_Data(int scena
 	Rule.AllowSuperWeapons = game_options.EnableSuperweapons;	// Are superweapons available
 
 	if (MPlayerTiberium) {
-		Special.IsTSpread = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
-		Special.IsTFast = !TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
+		Special.IsTSpread = NcoRulesRuntime().ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
+		Special.IsTFast = !NcoRulesRuntime().ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
 	} else {
 		Special.IsTGrowth = 0;
 		Special.IsTSpread = 0;
@@ -2031,7 +2031,7 @@ void DLLExportClass::Config(const CNCRulesDataStruct& rules)
 		Rule.Diff[d].BuildSpeedBias = Read_Double_Difficulty_Rule(difficultyName, BUILD_SPEED_DIFFICULTY_RULE);
 		Rule.Diff[d].RepairDelay = Read_Double_Difficulty_Rule(difficultyName, REPAIR_DELAY_DIFFICULTY_RULE);
 		Rule.Diff[d].BuildDelay = Read_Double_Difficulty_Rule(difficultyName, BUILD_DELAY_DIFFICULTY_RULE);
-		Rule.Diff[d].IsBuildSlowdown = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(difficultyName, BUILD_SLOWDOWN_DIFFICULTY_RULE);
+		Rule.Diff[d].IsBuildSlowdown = NcoRulesRuntime().ReadRuleValue<bool>(difficultyName, BUILD_SLOWDOWN_DIFFICULTY_RULE);
 
 		// below two rules are never used for C&C (RA only)
 		Rule.Diff[d].IsWallDestroyer = rules.Difficulties[d].IsWallDestroyer ? 1 : 0;
@@ -4501,8 +4501,8 @@ void DLLExportClass::Calculate_Placement_Distances(BuildingTypeClass* placement_
 	}
 
 	auto maxPlacementDistance = Read_Build_Distance_Game_Rule();
-	auto preventBuildingInShroud = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
-	auto allowBuildingBesideWalls = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
+	auto preventBuildingInShroud = NcoRulesRuntime().ReadRuleValue<bool>(PREVENT_BUILDING_IN_SHROUD_RULE_KEY);
+	auto allowBuildingBesideWalls = NcoRulesRuntime().ReadRuleValue<bool>(ALLOW_BUILDING_BESIDE_WALLS_RULE_KEY);
 
 	memset(placement_distance, 255U, MAP_CELL_TOTAL);
 	for (int y = 0; y < map_cell_height; y++) {

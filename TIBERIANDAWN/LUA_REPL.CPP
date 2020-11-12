@@ -1,16 +1,22 @@
-#include "function.h"
+#include <strings.h>
 
 #include "TiberianDawnNcoRuntime.h"
 
-static ILuaRuntime& LuaRuntime()
+static void Print_Lua_Output(HANDLE stdOut, const char* output)
 {
-	return TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime();
+	auto length = strlen(output);
+	if (!WriteConsole(stdOut, output, length, NULL, NULL))
+	{
+		Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
+
+		exit(1);
+	}
 }
 
 static void Print_Lua_Result(HANDLE stdOut)
 {
-	auto output = Allocate_String(2048);
-	auto& luaState = LuaRuntime().GetState();
+	char* output;
+	auto& luaState = NcoLuaRuntime().GetState();
 	auto valueType = luaState.GetType(-1);
 	auto value = luaState.ToString(-1);
 
@@ -20,26 +26,24 @@ static void Print_Lua_Result(HANDLE stdOut)
 	{
 		if (Strings_Are_Equal(valueType, "boolean"))
 		{
-			sprintf(output, "%s\r\n", Strings_Are_Equal(value, "TRUE") ? "true" : "false");
+			output = FormatString("%s\r\n", Strings_Are_Equal(value, "TRUE") ? "true" : "false");
 		}
 		else
 		{
-			sprintf(output, "%s\r\n", value);
+			output = FormatString("%s\r\n", value);
 		}
 	}
 	else
 	{
-		sprintf(output, "<%s>\r\n", valueType);
+		output = FormatString("<%s>\r\n", valueType);
 	}
 
-	if (!WriteConsole(stdOut, output, strlen(output), NULL, NULL))
+	if (output != NULL)
 	{
-		Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
+		Print_Lua_Output(stdOut, output);
 
-		exit(1);
+		delete output;
 	}
-
-	delete output;
 }
 
 static char* Read_Lua_String(HANDLE stdOut, HANDLE stdIn)
@@ -49,7 +53,7 @@ static char* Read_Lua_String(HANDLE stdOut, HANDLE stdIn)
 	// reset all C and Lua variables
 	auto input = Allocate_String(2048);
 
-	LuaRuntime().GetState().ClearStack();
+	NcoLuaRuntime().GetState().ClearStack();
 
 	// read input
 	if (!WriteConsole(stdOut, "> ", 2, NULL, NULL)
@@ -65,7 +69,7 @@ static char* Read_Lua_String(HANDLE stdOut, HANDLE stdIn)
 
 bool Enter_Lua_Repl(bool initialiseLua = true)
 {
-	if (initialiseLua && !TiberianDawnNcoRuntime::GetInstance().StartupWasSuccessful())
+	if (initialiseLua && !TiberianDawnNcoRuntime::GetInstance().LuaInitWasSuccessful())
 	{
 		puts("ERROR: Failed to initialise Lua state");
 		return false;
@@ -109,11 +113,17 @@ bool Enter_Lua_Repl(bool initialiseLua = true)
 			continue;
 		}
 		
-		auto& executeResult = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().ExecuteScript(input);
+		auto& executeResult = NcoLuaRuntime().ExecuteScript(input);
 		
 		// evaluate lua string
 		if (executeResult.IsErrorResult())
 		{
+			// TODO: remove or cope with newline in GetError result string (currently missing from output)
+			auto errorOutput = FormatString("%s\r\n", executeResult.GetError());
+
+			Print_Lua_Output(stdOut, errorOutput);
+
+			delete errorOutput;
 			delete &executeResult;
 
 			continue;

@@ -266,21 +266,21 @@ void Special_Dialog(void)
 }
 
 void SpecialClass::Init(void) {
-	IsSpeedBuild = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(SPEEDY_BUILDS_RULE_KEY);
-	IsDefenderAdvantage = !TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(ATTACKER_ADVANTAGE_RULE_KEY);
-	IsSmartDefense = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(SMART_DEFENCE_RULE_KEY);
-	IsTreeTarget = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(TARGET_TREES_RULE_KEY);
-	IsMCVDeploy = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(MCV_REDEPLOY_RULE_KEY);
-	IsVisceroids = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(VISCEROIDS_RULE_KEY);
-	IsInert = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(UNITS_INDESTRUCTIBLE_RULE_KEY);
-	IsThreePoint = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(THREE_POINT_TURNS_RULE_KEY);
-	IsTGrowth = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(TIBERIUM_GROWS_RULE_KEY);
-	IsTSpread = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
-	IsTFast = !TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
-	IsRoad = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(SHOW_BIBS_RULE_KEY);
-	IsScatter = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(AUTO_SCATTER_RULE_KEY);
-	IsNamed = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(NAME_CIVILIAN_BUILDINGS_RULE_KEY);
-	IsSeparate = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(CAN_BUY_HELIPAD_ONLY_RULE_KEY);
+	IsSpeedBuild = NcoRulesRuntime().ReadRuleValue<bool>(SPEEDY_BUILDS_RULE_KEY);
+	IsDefenderAdvantage = !NcoRulesRuntime().ReadRuleValue<bool>(ATTACKER_ADVANTAGE_RULE_KEY);
+	IsSmartDefense = NcoRulesRuntime().ReadRuleValue<bool>(SMART_DEFENCE_RULE_KEY);
+	IsTreeTarget = NcoRulesRuntime().ReadRuleValue<bool>(TARGET_TREES_RULE_KEY);
+	IsMCVDeploy = NcoRulesRuntime().ReadRuleValue<bool>(MCV_REDEPLOY_RULE_KEY);
+	IsVisceroids = NcoRulesRuntime().ReadRuleValue<bool>(VISCEROIDS_RULE_KEY);
+	IsInert = NcoRulesRuntime().ReadRuleValue<bool>(UNITS_INDESTRUCTIBLE_RULE_KEY);
+	IsThreePoint = NcoRulesRuntime().ReadRuleValue<bool>(THREE_POINT_TURNS_RULE_KEY);
+	IsTGrowth = NcoRulesRuntime().ReadRuleValue<bool>(TIBERIUM_GROWS_RULE_KEY);
+	IsTSpread = NcoRulesRuntime().ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
+	IsTFast = !NcoRulesRuntime().ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
+	IsRoad = NcoRulesRuntime().ReadRuleValue<bool>(SHOW_BIBS_RULE_KEY);
+	IsScatter = NcoRulesRuntime().ReadRuleValue<bool>(AUTO_SCATTER_RULE_KEY);
+	IsNamed = NcoRulesRuntime().ReadRuleValue<bool>(NAME_CIVILIAN_BUILDINGS_RULE_KEY);
+	IsSeparate = NcoRulesRuntime().ReadRuleValue<bool>(CAN_BUY_HELIPAD_ONLY_RULE_KEY);
 
 	IsVisibleTarget = false;
 	IsShowPath = false;

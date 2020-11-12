@@ -435,7 +435,7 @@
     <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H" />
     <ClInclude Include="LUA_EVENTS.H" />
     <ClInclude Include="LUA_REPL.H" />
-    <ClInclude Include="InfoApi.H" />
+    <ClInclude Include="InfoApi.h" />
     <ClInclude Include="MAP.H" />
     <ClInclude Include="MAPEDIT.H" />
     <ClInclude Include="MEMCHECK.H" />
@@ -470,14 +470,13 @@
     <ClInclude Include="RULES.H" />
     <ClInclude Include="tiberian_dawn_rule_keys.h" />
     <ClInclude Include="TiberianDawnRuleSectionBuilder.h" />
-    <ClInclude Include="RulesSectionTypeWrapperApi.h" />
     <ClInclude Include="RULES_INI_AIRCRAFT.H" />
     <ClInclude Include="RULES_INI_BUILDING.H" />
     <ClInclude Include="RULES_INI_BULLET.H" />
     <ClInclude Include="RULES_INI_GAME.H" />
     <ClInclude Include="RULES_INI_GENERIC.H" />
     <ClInclude Include="RULES_INI_INFANTRY.H" />
-    <ClInclude Include="TiberianDawnRuleType.h" />
+    <ClInclude Include="tiberian_dawn_rule_types.h" />
     <ClInclude Include="TiberianDawnRulesReader.h" />
     <ClInclude Include="tiberian_dawn_mods.h" />
     <ClInclude Include="RULES_INI_SUPERWEAPON.H" />
@@ -634,6 +633,8 @@
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP" />
     <ClCompile Include="LUA_REPL.CPP" />
     <ClCompile Include="NCO.cpp" />
+    <ClCompile Include="TiberianDawnNcoRuntime.cpp" />
+    <ClCompile Include="tiberian_dawn_rule_types.cpp" />
     <ClCompile Include="tiberian_dawn_rule_keys.cpp" />
     <ClCompile Include="tiberian_dawn_mods.cpp" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />

@@ -1,11 +1,11 @@
 #include <map>
 #include <queue>
 
+#include <logger.h>
 #include <utils.h>
 
 #include "game_messages.h"
 #include "game_utils.h"
-#include <logger.h>
 #include "lua_events.h"
 #include "TiberianDawnNcoRuntime.h"
 
@@ -127,7 +127,7 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 		auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
 		auto msSinceLastTick = nowInEpochMillis - LAST_TICK_TIME_IN_EPOCH_MILLIS;
 
-		if (msSinceLastTick < TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().GetGameTickIntervalInMs())
+		if (msSinceLastTick < NcoRulesRuntime().GetGameTickIntervalInMs())
 		{
 			// fire game tick at most every GAME_TICK_INTERVAL_IN_MS millis
 			return;

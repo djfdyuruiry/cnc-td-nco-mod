@@ -2,11 +2,9 @@
 
 #include <functional>
 
-#include <lua.hpp>
-
 #include <ParseCheckValidator.h>
+#include <IRulesIniSection.h>
 
-#include "IRulesIniSection.h"
 #include "parse.h"
 #include "rules_ini_unit.h"
 #include "TechnoTypeApi.h"

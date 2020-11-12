@@ -12,9 +12,13 @@ static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
 
 static bool EVENTS_INITIALISED = false;
 
+static const auto LUA_EVENT_COUNT = 3u;
+
+static const char** LUA_EVENTS = NULL;
+
 static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil", ...)
 {
-    if (!TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().LuaIsEnabled())
+    if (!NcoRulesRuntime().LuaIsEnabled())
     {
         Log_Trace("Lua is disabled, skipping firing event: %s", name);
         return;
@@ -37,7 +41,7 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
 
     delete argumentsBuffer;
 
-    auto& executeResult = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().ExecuteScript(scriptBuffer);
+    auto& executeResult = NcoLuaRuntime().ExecuteScript(scriptBuffer);
 
     if (executeResult.IsErrorResult())
     {
@@ -48,7 +52,7 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
         Log_Trace("Lua event fired ok: %s", name);
     }
 
-    delete &executeResult;
+    delete& executeResult;
     delete scriptBuffer;
 }
 
@@ -62,19 +66,40 @@ bool Initialise_Events()
 
     Log_Trace("Initialising Lua events");
 
-
-    auto& executeResult = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().ExecuteScript("Game.Events.initHandlers()");
+    auto& executeResult = NcoLuaRuntime().ExecuteScript("Game.Events.initHandlers()");
     auto error = executeResult.IsErrorResult();
-    
+
     if (error)
     {
         Show_Error("Error initialising event handlers: %s", executeResult.GetError());
     }
 
-    delete &executeResult;
+    delete& executeResult;
+
+    EVENTS_INITIALISED = true;
 
     return !error;
 };
+
+int Get_Event_Count()
+{
+    return LUA_EVENT_COUNT;
+}
+
+const char** Get_Event_Names()
+{
+    if (LUA_EVENTS == NULL)
+    {
+        LUA_EVENTS = new const char* [LUA_EVENT_COUNT]
+        {
+            ON_SCENARIO_START_EVENT,
+                ON_SAVE_LOAD_EVENT,
+                ON_GAME_TICK_EVENT
+        };
+    }
+
+    return LUA_EVENTS;
+}
 
 // sync messages
 void On_Scenario_Load(char* name)

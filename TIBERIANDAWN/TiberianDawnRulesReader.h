@@ -4,7 +4,7 @@
 
 #include "defines.h"
 #include "parse.h"
-#include "TiberianDawnRuleType.h"
+#include "tiberian_dawn_rule_types.h"
 
 class TiberianDawnRulesReader : public RulesIniReader
 {
@@ -123,7 +123,7 @@ private:
 
 	bool SetDefaultRuleValue(RulesIniRule& rule)
 	{
-		auto ruleType = (TiberianDawnRuleType) rule.GetType();
+		auto ruleType = rule.GetType();
 
 		if (ruleType == HOUSE_LIST_RULE)
 		{

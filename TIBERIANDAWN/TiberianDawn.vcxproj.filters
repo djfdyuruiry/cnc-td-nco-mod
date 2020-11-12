@@ -757,12 +757,6 @@
     <ClInclude Include="TechnoTypeApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="RulesSectionTypeWrapperApi.h">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="InfoApi.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="tiberian_dawn_rules.h">
       <Filter>Source Files\NCO\Rules</Filter>
     </ClInclude>
@@ -805,9 +799,6 @@
     <ClInclude Include="TiberianDawnRulesReader.h">
       <Filter>Source Files\NCO\Rules</Filter>
     </ClInclude>
-    <ClInclude Include="TiberianDawnRuleType.h">
-      <Filter>Source Files\NCO\Rules</Filter>
-    </ClInclude>
     <ClInclude Include="tiberian_dawn_rule_keys.h">
       <Filter>Source Files\NCO\Rules</Filter>
     </ClInclude>
@@ -815,6 +806,12 @@
       <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="TiberianDawnRulesInfo.h">
+      <Filter>Source Files\NCO\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="tiberian_dawn_rule_types.h">
       <Filter>Source Files\NCO\Rules</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1427,6 +1424,12 @@
       <Filter>Source Files\NCO\Rules\RuleNames</Filter>
     </ClCompile>
     <ClCompile Include="tiberian_dawn_rule_keys.cpp">
+      <Filter>Source Files\NCO\Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="TiberianDawnNcoRuntime.cpp">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="tiberian_dawn_rule_types.cpp">
       <Filter>Source Files\NCO\Rules</Filter>
     </ClCompile>
   </ItemGroup>

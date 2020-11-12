@@ -8,9 +8,9 @@
 #include <LuaStateWrapper.h>
 #include <Utils.h>
 
+#include "EnhancementKeys.h"
 #include "IRulesRuntime.h"
 #include "RulesRuntime.h"
-#include "RulesIniRuleKey.h"
 
 class NcoRuntime
 {
@@ -30,7 +30,7 @@ protected:
 			)
 		)
 	{
-		InitaliseRuleKeys();
+		EnhancementKeys::InitIfNeeded();
 	}
 
 	bool LoadLuaScripts()

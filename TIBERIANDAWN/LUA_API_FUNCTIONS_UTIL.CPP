@@ -11,7 +11,7 @@
 
 static int Lua_Build_Mod_Data_File_Path(lua_State* _)
 {
-    auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+    auto& luaState = NcoLuaRuntime().GetState();
 
     int argCount = luaState.GetStackTop();
 
@@ -43,7 +43,7 @@ static int Lua_Build_Mod_Data_File_Path(lua_State* _)
 
 static int Lua_Get_Mod_Data_Path(lua_State* _)
 {
-    auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+    auto& luaState = NcoLuaRuntime().GetState();
     luaState.WriteString(Get_Mod_Data_Path());
 
     return 1;
@@ -51,7 +51,7 @@ static int Lua_Get_Mod_Data_Path(lua_State* _)
 
 static int Lua_Get_Now_In_Epoch_Millis(lua_State* _)
 {
-    auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+    auto& luaState = NcoLuaRuntime().GetState();
 
     luaState.WriteBigInteger(Get_Now_In_Epoch_Millis());
 
@@ -67,7 +67,7 @@ static int Lua_Toggle_Console_Logging(lua_State* _)
 
 static int Lua_Set_Log_Level(lua_State* _)
 {
-    auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+    auto& luaState = NcoLuaRuntime().GetState();
 
     int argCount = luaState.GetStackTop();
 
@@ -104,7 +104,7 @@ static int Lua_Set_Log_Level(lua_State* _)
 
 static int Lua_Get_Log_Level(lua_State* _)
 {
-    auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+    auto& luaState = NcoLuaRuntime().GetState();
     auto logLevel = Log_Level_To_String(Current_Log_Level());
 
     luaState.WriteString(logLevel);
@@ -114,7 +114,7 @@ static int Lua_Get_Log_Level(lua_State* _)
 
 static int Lua_Show_Error(lua_State* _)
 {
-    auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+    auto& luaState = NcoLuaRuntime().GetState();
 
     int argCount = luaState.GetStackTop();
 
@@ -144,7 +144,7 @@ static int Lua_Show_Error(lua_State* _)
 
 static int Lua_Print(lua_State* _)
 {
-    auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+    auto& luaState = NcoLuaRuntime().GetState();
     auto argCount = luaState.GetStackTop();
 
     if (argCount > 0)
@@ -161,7 +161,7 @@ static int Lua_Print(lua_State* _)
 
 static int Lua_Log(lua_State* _)
 {
-    auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+    auto& luaState = NcoLuaRuntime().GetState();
     auto argCount = luaState.GetStackTop();
 
     if (argCount > 0)
@@ -178,7 +178,7 @@ static int Lua_Log(lua_State* _)
 
 bool Register_Util_Functions()
 {
-    TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().RegisterApi("utils", [](ILuaApi& a) {
+    NcoLuaRuntime().RegisterApi("utils", [](ILuaApi& a) {
         a.WithDescription("Utility functions")
 
          .WithFunction("logString", Lua_Log, [](LuaFunctionInfo& f) {

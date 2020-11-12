@@ -5,6 +5,7 @@
 
 #include <HashUtils.h>
 #include <ILuaStateWrapper.h>
+#include <logger.h>
 #include <strings.h>
 #include <utils.h>
 
@@ -12,10 +13,13 @@
 #include "RuleHashUtils.h"
 #include "RulesIniTypes.h"
 
-// TODO: provide way of extending the reading mechanism for game specific types
 class RulesIniRule
 {
 private:
+	static std::vector<RulesIniType>* INT_TYPES;
+	static std::vector<RulesIniType>* UINT_TYPES;
+	static std::vector<RulesIniType>* LONG_TYPES;
+
 	SectionName section;
 	RuleName name;
 
@@ -35,6 +39,33 @@ private:
 	Optional& valueToAllowAlways;
 	std::vector<const char*>& validValues;
 
+	static void InitIfNeeded()
+	{
+		if (INT_TYPES != NULL && UINT_TYPES != NULL && LONG_TYPES != NULL)
+		{
+			return;
+		}
+
+		INT_TYPES = new std::vector<RulesIniType>();
+		UINT_TYPES = new std::vector<RulesIniType>();
+		LONG_TYPES = new std::vector<RulesIniType>();
+	}
+
+	static bool IsExtendedType(std::vector<RulesIniType>* extendedTypes, RulesIniType type)
+	{
+		InitIfNeeded();
+
+		for (auto intType : *extendedTypes)
+		{
+			if (type == intType)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	RulesIniRule(SectionName titleCaseSectionName, RuleName ruleName)
 		: section(titleCaseSectionName),
 		  name(ruleName),
@@ -47,6 +78,8 @@ private:
 		  valueToAllowAlways(Optional::BuildOptional()),
 		  validValues(*(new std::vector<const char*>()))
 	{
+		InitIfNeeded();
+
 		sectionKey = RuleHashUtils::BuildRuleKey(section);
 		uppercaseName = Convert_String_To_Upper_Case(name);
 		key = RuleHashUtils::BuildRuleKey(section, name);
@@ -60,15 +93,7 @@ private:
 
 	void SetDefaultForRuleType()
 	{
-		if (
-			type == INT_RULE
-			  || type == HOUSE_LIST_RULE
-			  || type == WEAPON_RULE
-			  || type == UNIT_SPEED_TYPE_RULE
-			  || type == FACTORY_RULE_TYPE
-			  || type == WARHEAD_RULE
-			  || type == BULLET_RULE
-		)
+		if (type == INT_RULE || IsExtendedType(INT_TYPES, type))
 		{
 			SetDefaultValue<int>(0);
 		}
@@ -76,7 +101,7 @@ private:
 		{
 			SetDefaultValue<bool>(false);
 		}
-		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
+		else if (type == UNSIGNED_INT_RULE || IsExtendedType(UINT_TYPES, type))
 		{
 			SetDefaultValue<unsigned int>(0u);
 		}
@@ -84,7 +109,7 @@ private:
 		{
 			SetDefaultValue<double>(0.0);
 		}
-		else if (type == PREREQ_RULE)
+		else if (IsExtendedType(LONG_TYPES, type))
 		{
 			SetDefaultValue<long>(0L);
 		}
@@ -92,15 +117,7 @@ private:
 
 	void PushRuleValueOntoLuaState(ILuaStateWrapper& luaState, Optional& ruleValue)
 	{
-		if (
-			type == INT_RULE
-			|| type == HOUSE_LIST_RULE
-			|| type == WEAPON_RULE
-			|| type == UNIT_SPEED_TYPE_RULE
-			|| type == FACTORY_RULE_TYPE
-			|| type == WARHEAD_RULE
-			|| type == BULLET_RULE
-		)
+		if (type == INT_RULE || IsExtendedType(INT_TYPES, type))
 		{
 			luaState.PushValue(ruleValue.Get<int>());
 		}
@@ -108,7 +125,7 @@ private:
 		{
 			luaState.PushValue(ruleValue.Get<bool>());
 		}
-		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
+		else if (type == UNSIGNED_INT_RULE || IsExtendedType(UINT_TYPES, type))
 		{
 			luaState.PushValue(ruleValue.Get<unsigned int>());
 		}
@@ -116,7 +133,7 @@ private:
 		{
 			luaState.PushValue(ruleValue.Get<double>());
 		}
-		else if (type == PREREQ_RULE)
+		else if (type == DOUBLE_RULE || type == FIXED_RULE)
 		{
 			luaState.PushValue(ruleValue.Get<long>());
 		}
@@ -132,15 +149,7 @@ private:
 
 	void WriteRuleValueToString(char* string, Optional& ruleValue)
 	{
-		if (
-			type == INT_RULE
-			|| type == HOUSE_LIST_RULE
-			|| type == WEAPON_RULE
-			|| type == UNIT_SPEED_TYPE_RULE
-			|| type == FACTORY_RULE_TYPE
-			|| type == WARHEAD_RULE
-			|| type == BULLET_RULE
-			)
+		if (type == INT_RULE || IsExtendedType(INT_TYPES, type))
 		{
 			sprintf(string, "%d", ruleValue.Get<int>());
 		}
@@ -148,7 +157,7 @@ private:
 		{
 			sprintf(string, "%s", Convert_Boolean_To_String(ruleValue.Get<bool>()));
 		}
-		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
+		else if (type == UNSIGNED_INT_RULE || IsExtendedType(UINT_TYPES, type))
 		{
 			sprintf(string, "%u", ruleValue.Get<int>());
 		}
@@ -156,7 +165,7 @@ private:
 		{
 			sprintf(string, "%f", ruleValue.Get<double>());
 		}
-		else if (type == PREREQ_RULE)
+		else if (IsExtendedType(LONG_TYPES, type))
 		{
 			sprintf(string, "%ld", ruleValue.Get<long>());
 		}
@@ -180,11 +189,31 @@ public:
 
 	static RulesIniRule& BuildBoolRule(SectionName section, RuleName ruleName)
 	{
-		std::vector<const char*> validBoolStrings { TRUE_STRING, FALSE_STRING };
+		std::vector<const char*> validBoolStrings { "TRUE", "FALSE" };
 
 		return BuildRule(section, ruleName)
 			.OfType(BOOL_RULE)
 			.OnlyAccept(validBoolStrings);
+	}
+
+	template<class T> static void RegisterExtendedType(RulesIniType ruleType)
+	{
+		InitIfNeeded();
+
+		if constexpr (std::is_same_v<T, int>)
+		{
+			INT_TYPES->push_back(ruleType);
+		}
+		else if constexpr (std::is_same_v<T, unsigned int>)
+		{
+			UINT_TYPES->push_back(ruleType);
+		}
+		else if constexpr (std::is_same_v<T, long>)
+		{
+			LONG_TYPES->push_back(ruleType);
+		}
+
+		Log_Error("Attempted to register extended rule value type, but C++ type used was unsupported. Rule type number: %d", ruleType);
 	}
 
 	~RulesIniRule()
@@ -403,15 +432,7 @@ public:
 
 		auto setOk = true;
 
-		if (
-			type == INT_RULE
-			|| type == HOUSE_LIST_RULE
-			|| type == WEAPON_RULE
-			|| type == UNIT_SPEED_TYPE_RULE
-			|| type == FACTORY_RULE_TYPE
-			|| type == WARHEAD_RULE
-			|| type == BULLET_RULE
-		)
+		if (type == INT_RULE || IsExtendedType(INT_TYPES, type))
 		{
 			auto& result = luaState.ReadInteger(index);
 
@@ -433,7 +454,7 @@ public:
 
 			delete &result;
 		}
-		else if (type == UNSIGNED_INT_RULE || type == ARMOR_TYPE_RULE)
+		else if (type == UNSIGNED_INT_RULE || IsExtendedType(UINT_TYPES, type))
 		{
 			auto& result = luaState.ReadInteger(index);
 			auto value = result.GetValue();
@@ -459,7 +480,7 @@ public:
 
 			delete &result;
 		}
-		else if (type == PREREQ_RULE)
+		else if (IsExtendedType(LONG_TYPES, type))
 		{
 			auto& result = luaState.ReadInteger(index);
 

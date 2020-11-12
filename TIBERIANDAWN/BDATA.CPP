@@ -3726,7 +3726,7 @@ BuildingTypeClass::BuildingTypeClass(
 	Anims[BSTATE_AUX2].Count = 1;
 	Anims[BSTATE_AUX2].Rate = 0;
 
-	GetRules() << RulesIniSectionBuilder::BuildBuildingSection(IniName);
+NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(IniName);
 
 	Read_Building_Rules(this);
 }
@@ -4591,7 +4591,7 @@ int BuildingTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Full_Name(void) const
 {
-	if (::Scenario == 3 && Type == STRUCT_MISSION && TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<bool>(RENAME_TECH_CENTER_TO_PRISON_RULE_KEY))
+	if (::Scenario == 3 && Type == STRUCT_MISSION && NcoRulesRuntime().ReadRuleValue<bool>(RENAME_TECH_CENTER_TO_PRISON_RULE_KEY))
 	{
 		Log_Debug("Renaming %s to TXT_PRISON", Structure_Type_To_String(STRUCT_MISSION));
 		return(TXT_PRISON);

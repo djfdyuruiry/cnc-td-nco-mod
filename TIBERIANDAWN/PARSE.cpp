@@ -1,7 +1,8 @@
 #include <strings.h>
 #include <utils.h>
 
-#include "TiberianDawnRulesIniInfo.h"
+#include "tiberian_dawn_rules.h"
+#include "TiberianDawnRulesInfo.h"
 
 static const auto HOUSE_NAME_MAX_LENGTH = 8;
 static const auto INFANTRY_TYPE_MAP = new const char* [INFANTRY_RAMBO] {

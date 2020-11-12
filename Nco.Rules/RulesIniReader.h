@@ -66,7 +66,7 @@ protected:
 
 		Convert_String_To_Upper_Case(ruleValue);
 
-		auto boolValue = Strings_Are_Equal(ruleValue, TRUE_STRING);
+		auto boolValue = Strings_Are_Equal(ruleValue, "TRUE");
 
 		delete& ruleValueOptional;
 
@@ -261,7 +261,7 @@ protected:
 		return nearbyint(ruleValueAsPercentage * onePercent);
 	}
 
-	bool SetDefaultRuleValue(RulesIniRule& rule)
+	virtual bool SetDefaultRuleValue(RulesIniRule& rule)
 	{
 		return false;
 	}

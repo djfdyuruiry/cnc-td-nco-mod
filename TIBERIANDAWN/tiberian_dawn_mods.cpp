@@ -1,8 +1,8 @@
-#include "defines.h"
-
 #include <IRulesRuntime.h>
 #include <logger.h>
 #include <RulesIniTypes.h>
+
+#include "function.h"
 
 #include "AircraftTypeMod.h"
 #include "BuildingTypeMod.h"

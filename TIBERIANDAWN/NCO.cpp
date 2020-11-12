@@ -15,21 +15,19 @@ static DWORD WINAPI Start_Lua_Repl(LPVOID lpParam)
 
 bool NCO_Startup()
 {
-	auto& runtime = TiberianDawnNcoRuntime::GetInstance();
-
-	runtime.GetRulesRuntime().EnsureRulesIniIsLoaded();
+	NcoRulesRuntime().EnsureRulesIniIsLoaded();
 
 	Log_Info("New Construction Options mod starting up");
 
-	if (!runtime.RulesInitWasSuccessful())
+	if (!TdNcoRuntime().RulesInitWasSuccessful())
 	{
 		Show_Error("Aborting game launch because rules INI failed validation.\n\nPlease check your rules are valid.");
 		return false;
 	}
 
-	if (runtime.GetRulesRuntime().LuaIsEnabled())
+	if (NcoRulesRuntime().LuaIsEnabled())
 	{
-		if (!runtime.LuaInitWasSuccessful())
+		if (!TdNcoRuntime().LuaInitWasSuccessful())
 		{
 			Show_Error("Aborting game launch as their were errors initialising Lua");
 			return false;
@@ -43,7 +41,7 @@ bool NCO_Startup()
 	Log_Info("New Construction Options mod has started successfully");
 
 	#ifndef TEST_CONSOLE
-	if (runtime.GetRulesRuntime().LuaConsoleIsEnabled()) {
+	if (runtime.Get.LuaConsoleIsEnabled()) {
 		Log_Info("Attempting to display Lua console");
 
 		Start_Console_Output();
@@ -66,7 +64,7 @@ bool NCO_Startup()
 	}
 	#endif
 
-	if (runtime.GetRulesRuntime().LuaIsEnabled())
+	if (NcoRulesRuntime().LuaIsEnabled())
 	{
 		Log_Info("Attempting to start Lua Event thread");
 
@@ -95,10 +93,10 @@ void NCO_Shutdown()
 {
 	Log_Info("New Construction Options mod shutting down");
 
-	auto& runtime = TiberianDawnNcoRuntime::GetInstance();
+	auto& runtime = TdNcoRuntime();
 
 	#ifndef TEST_CONSOLE
-	if (runtime.GetRulesRuntime().LuaConsoleIsEnabled()) {
+	if (runtime.Get.LuaConsoleIsEnabled()) {
 	{
 		if (LUA_REPL_THREAD != NULL && LUA_REPL_THREAD != INVALID_HANDLE_VALUE && !TerminateThread(LUA_REPL_THREAD, 0))
 		{
@@ -111,7 +109,7 @@ void NCO_Shutdown()
 	}
 	#endif
 
-	if (runtime.GetRulesRuntime().LuaIsEnabled())
+	if (NcoRulesRuntime().LuaIsEnabled())
 	{
 		if (LUA_EVENT_THREAD != NULL && LUA_EVENT_THREAD != INVALID_HANDLE_VALUE && !TerminateThread(LUA_EVENT_THREAD, 0))
 		{

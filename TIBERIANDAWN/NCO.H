@@ -1,12 +1,13 @@
 #pragma once
 
 #include <logger.h>
-#include "lua_events.h"
-#include "nco.h"
-#include "parse.h"
-#include "RulesIniSectionBuilder.h"
-#include "TiberianDawnNcoRuntime.h"
+#include <RulesIniRuleKey.h>
 #include <strings.h>
+
+#include "lua_events.h"
+#include "tiberian_dawn_rule_keys.h"
+#include "tiberian_dawn_rules.h"
+#include "TiberianDawnNcoRuntime.h"
 
 bool NCO_Startup();
 

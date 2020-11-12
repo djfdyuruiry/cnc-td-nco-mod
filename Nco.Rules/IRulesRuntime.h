@@ -19,7 +19,7 @@ public:
 
 	virtual IRulesIni& GetRules() = 0;
 
-	virtual RulesIniReader& GetBaseRulesReader() = 0;
+	virtual IRulesIniReader& GetBaseRulesReader() = 0;
 
 	template<class T> T ReadRuleValue(SectionName section, RuleName rule, T defaultValue)
 	{

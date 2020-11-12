@@ -7,11 +7,9 @@
 #include <LuaApi.h>
 #include <LuaFunctionInfo.h>
 #include <LuaVariableInfo.h>
-
-#include "function.h"
+#include <strings.h>
 
 #include "game_utils.h"
-#include "lua.h"
 #include "parse.h"
 #include "rules_ini_superweapon.h"
 #include "TiberianDawnNcoRuntime.h"
@@ -21,7 +19,7 @@ class GameApi : public LuaApi
 private:
     static HousesType Lua_Parse_House_Type(int index, const char* callingFunctionName, bool* parseError)
     {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         auto& houseTypeStringResult = luaState.ReadString(index);
         auto upperHouseTypeString = Convert_String_To_Upper_Case(houseTypeStringResult.GetValue());
         auto houseType = Parse_House_Type(upperHouseTypeString, parseError);
@@ -48,7 +46,7 @@ private:
 
     static int Lua_Clear_House_Messages(lua_State* _)
     {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         Log_Trace("Lua_Clear_House_Messages called from Lua");
 
         auto argCount = luaState.GetStackTop();
@@ -115,7 +113,7 @@ private:
 
     static SuperweaponType Lua_Parse_Superweapon_Type(int index, const char* callingFunctionName, bool* invalidValue)
     {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         auto& superWeaponNameResult = luaState.ReadString(index);
 
         if (superWeaponNameResult.IsErrorResult() || String_Is_Empty(superWeaponNameResult.GetValue()))
@@ -167,7 +165,7 @@ private:
         const char* callingLuaFunctionName,
         SuperweaponMessageType messageType
     ) {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         Log_Trace("%s called from Lua", callingFunctionName);
 
         auto argCount = luaState.GetStackTop();
@@ -243,7 +241,7 @@ private:
 
     static int Lua_Modifiy_House_Credits(lua_State* _)
     {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         Log_Trace("Lua_Modify_House_Credits called from Lua");
 
         int argCount = luaState.GetStackTop();
@@ -292,7 +290,7 @@ private:
 
     static int Lua_Get_Active_Houses(lua_State* _)
     {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         Log_Trace("Lua_Get_Active_Houses called from Lua");
 
         auto activeHousesCount = Houses.Count();
@@ -314,7 +312,7 @@ private:
 
     static int Lua_Get_Player_Base_House(lua_State* _)
     {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         Log_Trace("Lua_Get_Player_House called from Lua");
 
         auto playerBaseHouse = House_Type_To_String(PlayerPtr->ActLike);
@@ -326,7 +324,7 @@ private:
 
     static int Lua_Get_Player_House(lua_State* _)
     {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         Log_Trace("Lua_Get_Player_House called from Lua");
 
         auto playerHouse = House_Type_To_String(PlayerPtr->Class->House);
@@ -374,7 +372,7 @@ private:
 
     static int Lua_Show_Game_Message(lua_State* _)
     {
-        auto& luaState = TiberianDawnNcoRuntime::GetInstance().GetLuaRuntime().GetState();
+        auto& luaState = NcoLuaRuntime().GetState();
         Log_Trace("Lua_Show_Game_Message called from Lua");
 
         int argCount = luaState.GetStackTop();

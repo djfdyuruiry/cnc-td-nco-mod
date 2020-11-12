@@ -1,19 +1,14 @@
 #pragma once
 
-static const auto ON_SCENARIO_START_EVENT = "ScenarioStart";
-static const auto ON_SAVE_LOAD_EVENT = "SaveLoad";
-static const auto ON_GAME_TICK_EVENT = "GameTick";
-
-static const auto LUA_EVENT_COUNT = 3u;
-
-static const auto LUA_EVENTS = new const char*[LUA_EVENT_COUNT]
-{
-    ON_SCENARIO_START_EVENT,
-    ON_SAVE_LOAD_EVENT,
-    ON_GAME_TICK_EVENT
-};
+const auto ON_SCENARIO_START_EVENT = "ScenarioStart";
+const auto ON_SAVE_LOAD_EVENT = "SaveLoad";
+const auto ON_GAME_TICK_EVENT = "GameTick";
 
 bool Initialise_Events();
+
+int Get_Event_Count();
+
+const char** Get_Event_Names();
 
 // sync events
 void On_Scenario_Load(char* name);

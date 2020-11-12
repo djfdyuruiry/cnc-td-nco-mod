@@ -14,7 +14,7 @@
 #include "rules_ini_warhead.h"
 #include "rules_ini_weapon.h"
 #include "tiberian_dawn_mods.h"
-#include "TiberianDawnRuleType.h"
+#include "tiberian_dawn_rule_types.h"
 
 #define DEFAULT_TRANSPORT_CAPACITY 5u
 

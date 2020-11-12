@@ -4,13 +4,12 @@
 #include <LuaValueAdapter.h>
 #include <NumericRangeValidator.h>
 #include <ParseCheckValidator.h>
+#include <RulesSectionTypeWrapperApi.h>
 
-#include "IRulesIniSection.h"
 #include "parse.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_weapon.h"
-#include "RulesSectionTypeWrapperApi.h"
 #include "type.h"
 
 #define EXTRACTOR_WEAP(f) EXTRACTOR(WeaponTypeClass, f)

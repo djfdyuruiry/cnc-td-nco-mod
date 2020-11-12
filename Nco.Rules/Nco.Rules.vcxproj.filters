@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Mods">
       <UniqueIdentifier>{640f12c6-5e2c-4cc7-8804-db2307017074}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Lua">
+      <UniqueIdentifier>{b0a247fc-cf83-493d-bdfd-ac64ce8d62fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRulesIni.h">
@@ -85,11 +88,20 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RuleSectionApi.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesSectionTypeWrapperApi.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="EnhancementKeys.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RulesIniTypes.cpp">
+    <ClCompile Include="RulesIniRule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnhancementKeys.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

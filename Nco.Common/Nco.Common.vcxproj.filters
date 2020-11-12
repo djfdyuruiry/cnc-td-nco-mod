@@ -50,5 +50,8 @@
     <ClInclude Include="HashUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IniReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

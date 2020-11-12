@@ -8,9 +8,7 @@
 
 static bool Execute_Lua_File(const char* filePath)
 {
-	auto& executeResult = TiberianDawnNcoRuntime::GetInstance()
-		.GetLuaRuntime()
-		.ExecuteFile(filePath);
+	auto& executeResult = NcoLuaRuntime().ExecuteFile(filePath);
 	auto isError = executeResult.IsErrorResult();
 
 	if (isError)
@@ -111,7 +109,7 @@ static void Parse_Command_Line(const char* commandLine)
 	}
 	else if (String_Starts_With(commandLine, "--dump-rules"))
 	{
-		if (!TiberianDawnNcoRuntime::GetInstance().LuaInitWasSuccessful() || !Execute_Lua_File("dump-rules.lua"))
+		if (!TdNcoRuntime().LuaInitWasSuccessful() || !Execute_Lua_File("dump-rules.lua"))
 		{
 			puts("ERROR: Failed to dump rules file");
 			exit(1);

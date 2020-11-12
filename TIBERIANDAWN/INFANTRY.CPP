@@ -775,7 +775,7 @@ void InfantryClass::Per_Cell_Process(bool center)
 	**	If over Tiberium, then this infantry unit will take damage.
 	*/
 	if (IsActive && !IsInLimbo && center && cellptr->Land_Type() == LAND_TIBERIUM && !Class->IsImmuneToTiberium) {   // *this != INFANTRY_E5) { - allowing the infantry to control wether it's immune to tiberium
-		auto tiberiumDamage = TiberianDawnNcoRuntime::GetInstance().GetRulesRuntime().ReadRuleValue<int>(TIBERIUM_INFANTRY_DAMAGE_RULE_KEY);
+		auto tiberiumDamage = NcoRulesRuntime().ReadRuleValue<int>(TIBERIUM_INFANTRY_DAMAGE_RULE_KEY);
 
 		Take_Damage(tiberiumDamage, 0, WARHEAD_FIRE);
 	}

@@ -2,8 +2,6 @@
 
 #include <functional>
 
-#include <lua.hpp>
-
 #include "IRulesIniSection.h"
 #include "parse.h"
 #include "rules_ini_building.h"

@@ -2,25 +2,31 @@
 
 #include <map>
 
-#include "IRulesIni.h"
-#include "RulesIniSection.h"
+#include <FileUtils.h>
+#include <IniReader.h>
 #include <utils.h>
 
-// TODO: port reader functions over
+#include "IRulesIni.h"
+#include "RulesIniSection.h"
+
 class RulesIni : public IRulesIni
 {
 private:
-	std::vector<char*> rulesIniBuffers;
+	std::vector<IniReader*>& rulesIniReaders;
 
-	std::map<StringHash, IRulesIniSection*> sections;
-	std::vector<const char*> sectionNames;
-	std::vector<StringHash> sectionKeys;
+	std::map<StringHash, IRulesIniSection*>& sections;
+	std::vector<const char*>& sectionNames;
+	std::vector<StringHash>& sectionKeys;
 	
 	bool rulesAreValid;
 
 	IRulesIniSection* sectionInStream;
 
-	RulesIni(const char* rulesFilePath)
+	RulesIni(const char* rulesFilePath) : 
+		rulesIniReaders(*(new std::vector<IniReader*>())),
+		sections(*(new std::map<StringHash, IRulesIniSection*>())),
+		sectionNames(*(new std::vector<const char*>())),
+		sectionKeys(*(new std::vector<StringHash>()))
 	{
 		rulesAreValid = true;
 
@@ -33,23 +39,25 @@ private:
 
 		sprintf(fullRulesFilePath, "%s\\%s", Get_Mod_Data_Path(), rulesFileName);
 
-		auto rulesFile = RawFileClass(fullRulesFilePath);
-
-		if (!rulesFile.Is_Available())
+		if (!FileUtils::IsFile(rulesFileName))
 		{
 			delete fullRulesFilePath;
 
 			return *this;
 		}
 
-		auto rulesIniBuffer = Allocate_String(rulesFile.Size());
-
-		rulesFile.Read(rulesIniBuffer, rulesFile.Size());
-		rulesFile.Close();
-
-		rulesIniBuffers.push_back(rulesIniBuffer);
+		auto rulesIniBuffer = FileUtils::ReadFileText(fullRulesFilePath);
 
 		delete fullRulesFilePath;
+
+		if (rulesIniBuffer == NULL)
+		{
+			return *this;
+		}
+
+		rulesIniReaders.push_back(
+			&IniReader::Build(rulesIniBuffer)
+		);
 
 		return *this;
 	}
@@ -118,6 +126,26 @@ public:
 		return *(new RulesIni(rulesFilePath));
 	}
 
+	~RulesIni()
+	{
+		for (auto reader : rulesIniReaders)
+		{
+			delete reader;
+		}
+
+		delete &rulesIniReaders;
+
+		for (auto [_, section] : sections)
+		{
+			delete section;
+		}
+
+		delete &sections;
+		
+		delete &sectionNames;
+		delete &sectionKeys;
+	}
+
 	IRulesIni& AndThenFrom(const char* rulesFilePath)
 	{
 		return DoSourceRulesFrom(rulesFilePath);
@@ -141,14 +169,13 @@ public:
 		Optional& valueBufferOptional = Optional::BuildOptional();
 		auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
 
-		for (auto buffer: rulesIniBuffers)
+		for (auto reader: rulesIniReaders)
 		{
-			WWGetPrivateProfileString(
+			reader->ReadString(
 				rule.GetSection(),
 				rule.GetName(),
 				valueBuffer,
 				RULES_STRING_LENGTH,
-				buffer,
 				&valueFound
 			);
 
@@ -211,12 +238,11 @@ public:
 		bool valueFound = false;
 		Optional& valueOptional = Optional::BuildOptional();
 
-		for (auto buffer : rulesIniBuffers)
+		for (auto reader : rulesIniReaders)
 		{
-			auto value = WWGetPrivateProfileInt(
+			auto value = reader->ReadInt(
 				rule.GetSection(),
 				rule.GetName(),
-				buffer,
 				&valueFound
 			);
 

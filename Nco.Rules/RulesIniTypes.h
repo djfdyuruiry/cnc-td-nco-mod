@@ -1,11 +1,10 @@
 #pragma once
 
-extern const char* TRUE_STRING;
-extern const char* FALSE_STRING;
-
 typedef const char* SectionName;
 typedef const char* RuleName;
 typedef void* RuleValue;
+
+#define RULE_TYPE_EXTENSION(idx) (RulesIniType)((char) idx + 1 + FIXED_RULE)
 
 enum RulesIniType : char
 {
