@@ -39,7 +39,7 @@ private:
 
 		sprintf(fullRulesFilePath, "%s\\%s", Get_Mod_Data_Path(), rulesFileName);
 
-		if (!FileUtils::IsFile(rulesFileName))
+		if (!FileUtils::IsFile(fullRulesFilePath))
 		{
 			delete fullRulesFilePath;
 

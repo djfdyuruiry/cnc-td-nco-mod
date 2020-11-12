@@ -20,16 +20,22 @@ private:
     TiberianDawnRulesInfo& rulesInfo;
 
     TiberianDawnNcoRuntime() :
-        NcoRuntime(RulesRuntime<TiberianDawnRulesReader>::Build(TICKS_PER_SECOND)),
+        NcoRuntime(
+            RulesRuntime<TiberianDawnRulesReader>::Build(
+                TICKS_PER_SECOND,
+                [](IRulesIni& r)
+                {
+                    r << TiberianDawnRuleSectionBuilder::BuildModRules()
+                      << TiberianDawnRuleSectionBuilder::BuildGameRules()
+
+                      << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(AIRSTRIKE_SECTION_NAME, 8u)
+                      << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(ION_CANNON_SECTION_NAME, 10u)
+                      << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(NUCLEAR_STRIKE_SECTION_NAME, 14u);
+                }
+            )
+        ),
         rulesInfo(TiberianDawnRulesInfo::BuildRuleInfo(rulesRuntime.GetRules()))
     {
-        rulesRuntime.GetRules() << TiberianDawnRuleSectionBuilder::BuildModRules()
-
-			<< TiberianDawnRuleSectionBuilder::BuildGameRules()
-
-			<< TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(AIRSTRIKE_SECTION_NAME, 8u)
-			<< TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(ION_CANNON_SECTION_NAME, 10u)
-			<< TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(NUCLEAR_STRIKE_SECTION_NAME, 14u);
     }
 
     bool InitialiseLuaApi();

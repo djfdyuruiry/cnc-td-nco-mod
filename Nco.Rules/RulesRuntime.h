@@ -24,6 +24,8 @@ private:
 	IRulesIni* rules;
 	IRulesIniReader* rulesReader;
 
+	std::function<void(IRulesIni&)> extensionSectionsSetup;
+
 	bool luaIsEnabled;
 	bool luaConsoleIsEnabled;
 	unsigned int tickIntervalInMillis;
@@ -31,10 +33,11 @@ private:
 	const char* logFilePath;
 	std::vector<const char*>& luaScripts;
 
-	RulesRuntime(unsigned int gameTicksPerSecond) :
-		tickIntervalInMillis(ONE_SEC_IN_MILLIS / gameTicksPerSecond),
+	RulesRuntime(unsigned int gameTicksPerSecond, std::function<void(IRulesIni&)> extensionSectionsSetup) :
 		rules(NULL),
 		rulesReader(NULL),
+		extensionSectionsSetup(extensionSectionsSetup),
+		tickIntervalInMillis(ONE_SEC_IN_MILLIS / gameTicksPerSecond),
 		luaScripts(*(new std::vector<const char*>()))
 	{
 	}
@@ -44,8 +47,7 @@ private:
 		Log_Info("Reading Lua settings from rules ini");
 
 		luaIsEnabled = rulesReader->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE);
-		luaConsoleIsEnabled = luaIsEnabled
-			&& rulesReader->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
+		luaConsoleIsEnabled = luaIsEnabled && rulesReader->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
 		tickIntervalInMillis = rulesReader->ReadRuleValue<int>(NCO_RULES_SECTION_NAME, GAME_TICK_INTERVAL_IN_MS_RULE);
 
 		auto onScenarioLoadCsv = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE);
@@ -155,12 +157,16 @@ private:
 
 			   << RulesIniSectionBuilder::BuildAiRules()
 			   << RulesIniSectionBuilder::BuildIqRules();
+
+		IRulesIni& rulesRef = *rules;
+
+		extensionSectionsSetup(rulesRef);
 	}
 
 public:
-	static RulesRuntime& Build(unsigned int gameTicksPerSecond)
+	static RulesRuntime& Build(unsigned int gameTicksPerSecond, std::function<void(IRulesIni&)> extensionSectionsSetup)
 	{
-		return *(new RulesRuntime(gameTicksPerSecond));
+		return *(new RulesRuntime(gameTicksPerSecond, extensionSectionsSetup));
 	}
 
 	~RulesRuntime()

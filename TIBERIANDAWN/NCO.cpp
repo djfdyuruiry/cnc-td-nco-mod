@@ -41,7 +41,7 @@ bool NCO_Startup()
 	Log_Info("New Construction Options mod has started successfully");
 
 	#ifndef TEST_CONSOLE
-	if (runtime.Get.LuaConsoleIsEnabled()) {
+	if (NcoRulesRuntime().LuaConsoleIsEnabled()) {
 		Log_Info("Attempting to display Lua console");
 
 		Start_Console_Output();
@@ -96,7 +96,7 @@ void NCO_Shutdown()
 	auto& runtime = TdNcoRuntime();
 
 	#ifndef TEST_CONSOLE
-	if (runtime.Get.LuaConsoleIsEnabled()) {
+	if (NcoRulesRuntime().LuaConsoleIsEnabled())
 	{
 		if (LUA_REPL_THREAD != NULL && LUA_REPL_THREAD != INVALID_HANDLE_VALUE && !TerminateThread(LUA_REPL_THREAD, 0))
 		{
