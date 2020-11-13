@@ -104,12 +104,14 @@ static void Parse_Command_Line(const char* commandLine)
 
 		exit(1);
 		#else
-		Enter_Lua_Repl() ? exit(0) : exit (1);
+		Enter_Lua_Repl();
+
+		exit(0);
 		#endif
 	}
 	else if (String_Starts_With(commandLine, "--dump-rules"))
 	{
-		if (!TdNcoRuntime().LuaInitWasSuccessful() || !Execute_Lua_File("dump-rules.lua"))
+		if (!Execute_Lua_File("dump-rules.lua"))
 		{
 			puts("ERROR: Failed to dump rules file");
 			exit(1);
@@ -130,8 +132,6 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 	puts("  NCO Mod: Test Console  ");
 	puts("=========================");
 
-	Parse_Command_Line(commandLine);
-
 	if (!NCO_Startup())
 	{
 		NCO_Shutdown();
@@ -141,6 +141,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 		return 1;
 	}
+
+	Parse_Command_Line(commandLine);
 
 	Test_Special_Rules();
 

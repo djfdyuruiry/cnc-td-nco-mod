@@ -68,14 +68,8 @@ static char* Read_Lua_String(HANDLE stdOut, HANDLE stdIn)
 	return input;
 }
 
-bool Enter_Lua_Repl(bool initialiseLua = true)
+void Enter_Lua_Repl()
 {
-	if (initialiseLua && !TiberianDawnNcoRuntime::GetInstance().LuaInitWasSuccessful())
-	{
-		puts("ERROR: Failed to initialise Lua state");
-		return false;
-	}
-
 	auto stdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	auto stdIn = GetStdHandle(STD_INPUT_HANDLE);
 
@@ -136,6 +130,4 @@ bool Enter_Lua_Repl(bool initialiseLua = true)
 	}
 
 	Toggle_Console_Logging();
-
-	return true;
 }

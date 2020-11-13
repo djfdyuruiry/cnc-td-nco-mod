@@ -18,8 +18,9 @@ class NcoRuntime
 private:
 	void InitialiseMods()
 	{
+		RegisterMods();
+
 		modRuntime.ReadTypes();
-		modRuntime.InitaliseTypes();
 	}
 
 	bool LoadLuaScripts()
@@ -78,6 +79,7 @@ private:
 protected:
 	bool rulesInitSuccessful;
 	bool luaInitSuccessful;
+	bool modsInitialised;
 	IRulesRuntime& rulesRuntime;
 	ILuaRuntime& luaRuntime;
 	GameModsRuntime& modRuntime;
@@ -143,4 +145,16 @@ public:
 		return modRuntime;
 	}
 
+	void InitialiseModTypesIfRequired()
+	{
+		if (!modsInitialised)
+		{
+			return;
+		}
+
+		modsInitialised = true;
+
+
+		modRuntime.InitaliseTypes();
+	}
 };

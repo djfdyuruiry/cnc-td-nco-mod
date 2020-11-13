@@ -22,7 +22,7 @@ protected:
 	T originalTypeCount;
 
 	bool initialised;
-	std::map<T, U*> modTypeInstances;
+	std::map<T, U*>& modTypeInstances;
 	std::vector<char*>& modTypes;
 
 	NcoGameMod(
@@ -41,6 +41,7 @@ protected:
 		typeCountRule(typeCountRuleKey),
 		originalTypeCount(totalTypeCount),
 		initialised(false),
+		modTypeInstances(*(new std::map<T, U*>())),
 		modTypes(*(new std::vector<char*>))
 	{
 	}

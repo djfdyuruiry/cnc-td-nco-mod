@@ -8,7 +8,7 @@ static HANDLE LUA_EVENT_THREAD;
 
 static DWORD WINAPI Start_Lua_Repl(LPVOID lpParam)
 {
-	Enter_Lua_Repl(false);
+	Enter_Lua_Repl();
 
 	return 0;
 }
@@ -18,6 +18,9 @@ bool NCO_Startup()
 	NcoRulesRuntime().EnsureRulesIniIsLoaded();
 
 	Log_Info("New Construction Options mod starting up");
+
+	// this needs to run before RulesInitWasSuccessful so bad mods fail the below check
+	NcoModsRuntime().InitaliseTypes();
 
 	if (!TdNcoRuntime().RulesInitWasSuccessful())
 	{
@@ -64,27 +67,29 @@ bool NCO_Startup()
 	}
 	#endif
 
-	if (NcoRulesRuntime().LuaIsEnabled())
+	if (!NcoRulesRuntime().LuaIsEnabled())
 	{
-		Log_Info("Attempting to start Lua Event thread");
-
-		LUA_EVENT_THREAD = CreateThread(
-			NULL,
-			0,
-			&Process_Game_Loop_Messages,
-			NULL,
-			NULL,
-			NULL
-		);
-
-		if (LUA_EVENT_THREAD == NULL || LUA_EVENT_THREAD == INVALID_HANDLE_VALUE)
-		{
-			Show_Error("Failed to start Lua event thread: %s", Get_Win32_Error_Message());
-			return false;
-		}
-
-		Log_Info("Lua Event thread started");
+		return true;
 	}
+
+	Log_Info("Attempting to start Lua Event thread");
+
+	LUA_EVENT_THREAD = CreateThread(
+		NULL,
+		0,
+		&Process_Game_Loop_Messages,
+		NULL,
+		NULL,
+		NULL
+	);
+
+	if (LUA_EVENT_THREAD == NULL || LUA_EVENT_THREAD == INVALID_HANDLE_VALUE)
+	{
+		Show_Error("Failed to start Lua event thread: %s", Get_Win32_Error_Message());
+		return false;
+	}
+
+	Log_Info("Lua Event thread started");
 
 	return true;
 }
