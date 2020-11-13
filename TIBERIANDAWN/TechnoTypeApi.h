@@ -21,7 +21,7 @@ template<class T, class U> class TechnoTypeApi : public RulesSectionTypeWrapperA
 {
 protected:
 	TechnoTypeApi(
-		const char* typeName,
+		char* typeName,
 		IRulesIniSection& rulesInfo,
 		U first,
 		std::function<int(void)> getCount,
@@ -52,7 +52,7 @@ protected:
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<StructType>::Build(Parse_Structure_Type)
+			ParseCheckValidator<StructType>::Build("Building", Parse_Structure_Type)
 		).WithFieldWrapper(
 			COST_RULE,
 			SIMPLE_EXTRACTOR_T(Cost),
@@ -91,7 +91,7 @@ protected:
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<int>::Build(Parse_House_Name_List_Csv)
+			ParseCheckValidator<int>::Build("House List", Parse_House_Name_List_Csv)
 		).WithFieldWrapper(
 			PRIMARY_WEAPON_RULE,
 			EXTRACTOR_T(Weapon_Type_To_String(i.Primary)),
@@ -104,7 +104,7 @@ protected:
 
 				i.Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
 			},
-			ParseCheckValidator<WeaponType>::Build(Parse_Weapon_Type)
+			ParseCheckValidator<WeaponType>::Build("Weapon", Parse_Weapon_Type)
 		).WithFieldWrapper(
 			SECONDARY_WEAPON_RULE,
 			EXTRACTOR_T(Weapon_Type_To_String(i.Secondary)),
@@ -115,7 +115,7 @@ protected:
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<WeaponType>::Build(Parse_Weapon_Type)
+			ParseCheckValidator<WeaponType>::Build("Weapon", Parse_Weapon_Type)
 		).WithFieldWrapper(
 			ARMOR_RULE,
 			EXTRACTOR_T(Armor_Type_To_String(i.Armor)),
@@ -126,7 +126,7 @@ protected:
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<ArmorType>::Build(Parse_Armor_Type)
+			ParseCheckValidator<ArmorType>::Build("Armor", Parse_Armor_Type)
 		).WithFieldWrapper(
 			AMMO_RULE,
 			SIMPLE_EXTRACTOR_T(MaxAmmo),
@@ -203,7 +203,7 @@ protected:
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				strcpy(i.ModBaseIniName, strdup(va.Read<const char*>(l, si)));
 			},
-			LambdaValidator<const char*>::Build([] (const char* v) {
+			LambdaValidator<const char*>::Build("String must be at most 32 characters long", [] (const char* v) {
 				return String_Is_Empty(v) || strlen(v) < 33;
 			})
 		).WithFieldWrapper(

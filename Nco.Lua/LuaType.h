@@ -2,6 +2,7 @@
 
 #include <map>
 
+#include <logger.h>
 #include <HashUtils.h>
 
 class LuaType final
@@ -31,6 +32,8 @@ public:
 
 		if (index == NameToType.end())
 		{
+			Log_Error("Failed to parse lua type: %s", typeName);
+
 			return NULL;
 		}
 

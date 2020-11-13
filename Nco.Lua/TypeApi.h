@@ -168,7 +168,7 @@ protected:
 	const char* typeName;
 	const char* titleCaseTypeName;
 
-	TypeApi(const char* typeName) : typeName(typeName), titleCaseTypeName(ToTitleCase(typeName))
+	TypeApi(char* typeName) : typeName(typeName), titleCaseTypeName(ToTitleCase(typeName))
 	{
 		WithName(FormatString("%s rules", titleCaseTypeName));
 		WithDescription(FormatString("%s rule info and control functions", titleCaseTypeName));
@@ -212,7 +212,15 @@ protected:
 public:
 	~TypeApi()
 	{
-		delete titleCaseTypeName;
+		if (typeName != NULL)
+		{
+			delete typeName;
+		}
+
+		if (titleCaseTypeName != NULL)
+		{
+			delete titleCaseTypeName;
+		}
 	}
 
 };

@@ -168,8 +168,6 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 		&WEP_TREX
 	};
 
-	InitialiseModsIfRequired();
-
 	return By_Type(type);
 }
 
@@ -294,7 +292,6 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 			& WH_HEADBUTT,
 			& WH_FEEDME,
 	};
-	InitialiseModsIfRequired();
 
 	return By_Type(type);
 }

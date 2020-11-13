@@ -96,6 +96,12 @@
     <ClInclude Include="EnhancementKeys.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameModsRuntime.h">
+      <Filter>Header Files\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameMod.h">
+      <Filter>Header Files\Mods</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RulesIniRule.cpp">

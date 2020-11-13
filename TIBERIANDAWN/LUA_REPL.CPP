@@ -5,6 +5,7 @@
 static void Print_Lua_Output(HANDLE stdOut, const char* output)
 {
 	auto length = strlen(output);
+
 	if (!WriteConsole(stdOut, output, length, NULL, NULL))
 	{
 		Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());

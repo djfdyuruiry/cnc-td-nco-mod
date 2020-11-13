@@ -1727,8 +1727,6 @@ UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 		&UnitSteg,		
 	};
 
-	InitialiseModsIfRequired();
-
 	return By_Type(type);
 }
 

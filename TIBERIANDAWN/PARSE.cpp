@@ -1,6 +1,8 @@
 #include <strings.h>
 #include <utils.h>
 
+#include "function.h"
+
 #include "tiberian_dawn_rules.h"
 #include "TiberianDawnRulesInfo.h"
 

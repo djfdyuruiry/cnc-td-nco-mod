@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ILuaValueValidator.h"
+#include "LuaResult.h"
 
 template<class T> class PrimitiveTypeValidator : public ILuaValueValidator
 {
@@ -15,11 +16,15 @@ public:
 		return *(new PrimitiveTypeValidator());
 	}
 
-	bool IsValid(ILuaStateWrapper& lua, int stackIndex)
+	LuaResult& IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
+		auto isValid = false;
+		const char* error;
+
 		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
 		{
-			return lua.IsString(stackIndex);
+			isValid = lua.IsString(stackIndex);
+			error = "Value must be a string";
 		}
 		else if constexpr (
 			std::is_same_v<T, char> || std::is_same_v<T, unsigned char>
@@ -29,20 +34,30 @@ public:
 			|| std::is_same_v<T, long long> || std::is_same_v<T, unsigned long long>
 		)
 		{
-			return lua.IsInt(stackIndex);
+			isValid = lua.IsInt(stackIndex);
+			error = "Value must be an integer number";
 		}
 		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
 		{
-			return lua.IsNumber(stackIndex);
+			isValid = lua.IsNumber(stackIndex);
+			error = "Value must be an number";
 		}
 		else if constexpr (std::is_same_v<T, bool>)
 		{
-			return lua.IsBool(stackIndex);
+			isValid = lua.IsBool(stackIndex);
+			error = "Value must be a bool";
 		}
 		else
 		{
-			return false;
+			error = "C++ type not matched for lua type validation";
 		}
+
+		if (isValid)
+		{
+			return LuaResult::Build();
+		}
+
+		return LuaResult::Build(error);
 	}
 
 };

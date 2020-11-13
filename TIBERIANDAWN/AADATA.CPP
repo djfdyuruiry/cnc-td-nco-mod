@@ -275,8 +275,6 @@ AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 		& OrcaHeli,
 	};
 
-	InitialiseModsIfRequired();
-
 	return By_Type(type);
 }
 

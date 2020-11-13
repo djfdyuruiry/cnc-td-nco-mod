@@ -9,28 +9,17 @@
 #include <Utils.h>
 
 #include "EnhancementKeys.h"
+#include "GameModsRuntime.h"
 #include "IRulesRuntime.h"
 #include "RulesRuntime.h"
 
 class NcoRuntime
 {
-protected:
-	bool rulesInitSuccessful;
-	bool luaInitSuccessful;
-	IRulesRuntime& rulesRuntime;
-	ILuaRuntime& luaRuntime;
-
-	NcoRuntime(IRulesRuntime& rulesRuntime) :
-		rulesRuntime(rulesRuntime),
-		luaRuntime(
-			LuaRuntime::Build(
-				LuaStateWrapper::Build(
-					LuaStateFactory::Build(Get_Mod_Data_Path())
-				)
-			)
-		)
+private:
+	void InitialiseMods()
 	{
-		EnhancementKeys::InitIfNeeded();
+		modRuntime.ReadTypes();
+		modRuntime.InitaliseTypes();
 	}
 
 	bool LoadLuaScripts()
@@ -46,7 +35,7 @@ protected:
 			{
 				Log_Error("Error loading rules lua script '%s': %s", scriptFilePath, executeResult.GetError());
 
-				delete &executeResult;
+				delete& executeResult;
 
 				executionOk = false;
 			}
@@ -54,9 +43,6 @@ protected:
 
 		return executionOk;
 	}
-
-	virtual bool InitialiseLuaApi() = 0;
-	virtual bool InitialiseLuaEvents() = 0;
 
 	bool LoadLuaComponents()
 	{
@@ -89,12 +75,40 @@ protected:
 		return true;
 	}
 
-	void Initialise()
+protected:
+	bool rulesInitSuccessful;
+	bool luaInitSuccessful;
+	IRulesRuntime& rulesRuntime;
+	ILuaRuntime& luaRuntime;
+	GameModsRuntime& modRuntime;
+
+	NcoRuntime(IRulesRuntime& rulesRuntime) :
+		rulesRuntime(rulesRuntime),
+		luaRuntime(
+			LuaRuntime::Build(
+				LuaStateWrapper::Build(
+					LuaStateFactory::Build(Get_Mod_Data_Path())
+				)
+			)
+		),
+		modRuntime(GameModsRuntime::Build(rulesRuntime))
 	{
+	}
+
+	virtual bool InitialiseLuaApi() = 0;
+	virtual bool InitialiseLuaEvents() = 0;
+	virtual void RegisterMods() = 0;
+
+	virtual void Initialise()
+	{
+		EnhancementKeys::InitIfNeeded();
+
 		rulesRuntime.EnsureRulesIniIsLoaded();
 
 		rulesInitSuccessful = rulesRuntime.GetRules().IsValid();
 		luaInitSuccessful = LoadLuaComponents();
+
+		InitialiseMods();
 	}
 
 public:
@@ -122,6 +136,11 @@ public:
 	ILuaRuntime& GetLuaRuntime()
 	{
 		return luaRuntime;
+	}
+
+	GameModsRuntime& GetModRuntime()
+	{
+		return modRuntime;
 	}
 
 };

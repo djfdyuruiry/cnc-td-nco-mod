@@ -6,21 +6,30 @@
 #include "function.h"
 
 #include "AircraftApi.h"
+#include "AircraftTypeMod.h"
 #include "BuildingApi.h"
+#include "BuildingTypeMod.h"
 #include "BulletApi.h"
+#include "BulletTypeMod.h"
 #include "GameApi.h"
 #include "InfantryApi.h"
+#include "InfantryTypeMod.h"
 #include "InfoApi.h"
 #include "lua_events.h"
 #include "lua_api_functions_util.h"
 #include "TiberianDawnNcoRuntime.h"
 #include "UnitApi.h"
+#include "UnitTypeMod.h"
 #include "WarheadApi.h"
+#include "WarheadTypeMod.h"
 #include "WeaponApi.h"
+#include "WeaponTypeMod.h"
 
 #define ReadTypeCount(key) TiberianDawnNcoRuntime::GetInstance() \
         .GetRulesRuntime() \
         .ReadRuleValue<unsigned int>(key);
+
+#define ReadTypeCountLambda(key) []() { return ReadTypeCount(*key); }
 
 template<class T> static void RegisterApi(ILuaRuntime& luaRuntime)
 {
@@ -56,8 +65,7 @@ bool TiberianDawnNcoRuntime::InitialiseLuaApi()
 {
     Log_Debug("Initialising Lua API functions");
 
-    auto legacyLoadersResult = LoadNcoLuaLib(luaRuntime)
-        && Register_Util_Functions();
+    auto legacyLoadersResult = LoadNcoLuaLib(luaRuntime) && Register_Util_Functions();
 
     RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetNcoRules());
     RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetEnhancementRules());
@@ -66,37 +74,37 @@ bool TiberianDawnNcoRuntime::InitialiseLuaApi()
     RegisterApi<InfantryApi>(
         luaRuntime,
         rulesInfo.GetInfantryRules(),
-        []() { return ReadTypeCount(*INFANTRY_COUNT_RULE_KEY); }
+        ReadTypeCountLambda(INFANTRY_COUNT_RULE_KEY)
     );
     RegisterApi<UnitApi>(
         luaRuntime,
         rulesInfo.GetUnitRules(),
-        []() { return ReadTypeCount(*UNIT_COUNT_RULE_KEY); }
+        ReadTypeCountLambda(UNIT_COUNT_RULE_KEY)
     );
     RegisterApi<AircraftApi>(
         luaRuntime,
         rulesInfo.GetAircraftRules(),
-        []() { return ReadTypeCount(*AIRCRAFT_COUNT_RULE_KEY); }
+        ReadTypeCountLambda(AIRCRAFT_COUNT_RULE_KEY)
     );
     RegisterApi<BuildingApi>(
         luaRuntime,
         rulesInfo.GetBuildingRules(),
-        []() { return ReadTypeCount(*BUILDING_COUNT_RULE_KEY); }
+        ReadTypeCountLambda(BUILDING_COUNT_RULE_KEY)
     );
     RegisterApi<WeaponApi>(
         luaRuntime,
         rulesInfo.GetWeaponRules(),
-        []() { return ReadTypeCount(*WEAPON_COUNT_RULE_KEY); }
+        ReadTypeCountLambda(WEAPON_COUNT_RULE_KEY)
     );
     RegisterApi<BulletApi>(
         luaRuntime,
         rulesInfo.GetBulletRules(),
-        []() { return ReadTypeCount(*BULLET_COUNT_RULE_KEY); }
+        ReadTypeCountLambda(BULLET_COUNT_RULE_KEY)
     );
     RegisterApi<WarheadApi>(
         luaRuntime,
         rulesInfo.GetWarheadRules(),
-        []() { return ReadTypeCount(*WARHEAD_COUNT_RULE_KEY); }
+        ReadTypeCountLambda(WARHEAD_COUNT_RULE_KEY)
     );
 
     RegisterApi<GameApi>(luaRuntime);
@@ -111,23 +119,35 @@ bool TiberianDawnNcoRuntime::InitialiseLuaEvents()
     return Initialise_Events();
 }
 
+void TiberianDawnNcoRuntime::RegisterMods()
+{
+    modRuntime.RegisterMod<WarheadTypeMod>()
+        .RegisterMod<BulletTypeMod>()
+        .RegisterMod<WeaponTypeMod>()
+        .RegisterMod<BuildingTypeMod>()
+        .RegisterMod<AircraftTypeMod>()
+        .RegisterMod<InfantryTypeMod>()
+        .RegisterMod<UnitTypeMod>();
+}
+
+void TiberianDawnNcoRuntime::Initialise()
+{
+    InitaliseTiberianDawnRuleKeys();
+    RegisterTiberianDawnRuleTypes();
+
+    NcoRuntime::Initialise();
+}
+
 TiberianDawnNcoRuntime* TiberianDawnNcoRuntime::INSTANCE = NULL;
 
 TiberianDawnNcoRuntime& TiberianDawnNcoRuntime::GetInstance()
 {
-    if (INSTANCE != NULL)
+    if (INSTANCE == NULL)
     {
-        return *INSTANCE;
+        INSTANCE = new TiberianDawnNcoRuntime();
+
+        INSTANCE->Initialise();
     }
-
-    InitaliseTiberianDawnRuleKeys();
-    RegisterTiberianDawnRuleTypes();
-
-    INSTANCE = new TiberianDawnNcoRuntime();
-
-    INSTANCE->Initialise();
-
-    ReadMods(INSTANCE->GetRulesRuntime());
 
     return *INSTANCE;
 }

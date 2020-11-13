@@ -23,7 +23,7 @@ class BulletApi : public RulesSectionTypeWrapperApi<BulletTypeClass, BulletType>
 {
 protected:
 	BulletApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi("Bullet", rulesInfo, BULLET_FIRST, getCount, Parse_Bullet_Type, Bullet_Type_To_String)
+		RulesSectionTypeWrapperApi(strdup("Bullet"), rulesInfo, BULLET_FIRST, getCount, Parse_Bullet_Type, Bullet_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BULLET_HIGH_RULE,
@@ -95,7 +95,7 @@ protected:
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<WarheadType>::Build(Parse_Warhead_Type)
+			ParseCheckValidator<WarheadType>::Build("Warhead", Parse_Warhead_Type)
 		).WithFieldWrapper(
 			BULLET_ARMING_RULE,
 			SIMPLE_EXTRACTOR_BLT(Arming),
@@ -143,7 +143,7 @@ protected:
 			[](BulletTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				strcpy(i.ModBaseIniName, strdup(va.Read<const char*>(l, si)));
 			},
-			LambdaValidator<const char*>::Build([] (const char* v) {
+			LambdaValidator<const char*>::Build("String must be at most 32 characters long", [] (const char* v) {
 				return String_Is_Empty(v) || strlen(v) < 33;
 			})
 		);

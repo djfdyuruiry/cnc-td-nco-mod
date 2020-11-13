@@ -1,41 +1,63 @@
 #pragma once
 
-#include "ILuaValueValidator.h"
+#include <TypePatterns.h>
+#include <strings.h>
 
-#define PARSER T(*parser)(const char*, bool*, bool)
+#include "ILuaValueValidator.h"
+#include "LuaResult.h"
 
 template<class T> class ParseCheckValidator : public ILuaValueValidator
 {
 protected:
-	PARSER;
+	char* titleCaseTypeName;
+	PARSER(T, parser);
 
-	ParseCheckValidator(PARSER) : parser(parser)
+	ParseCheckValidator(const char* typeName, PARSER(T, parser)) : titleCaseTypeName(ToTitleCase(typeName)), parser(parser)
 	{
 	}
 
 public:
-	static ParseCheckValidator& Build(PARSER)
+	static ParseCheckValidator& Build(const char* typeName, PARSER(T, parser))
 	{
-		return *(new ParseCheckValidator(parser));
+		return *(new ParseCheckValidator(typeName, parser));
 	}
 
-	bool IsValid(ILuaStateWrapper& lua, int stackIndex)
+	~ParseCheckValidator()
+	{
+		if (titleCaseTypeName != NULL)
+		{
+			delete titleCaseTypeName;
+		}
+	}
+
+	LuaResult& IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
 		auto& result = lua.ReadString(stackIndex);
-		bool parseError = false;
 
-		if (!result.IsErrorResult())
+		if (result.IsErrorResult())
 		{
-			auto valueUpper = Convert_String_To_Upper_Case(result.GetValue());
-
-			parser(valueUpper, &parseError, false);
-
-			delete valueUpper;
+			return result;
 		}
 
-		delete& result;
+		bool parseError = false;
+		auto valueUpper = Convert_String_To_Upper_Case(result.GetValue());
 
-		return !parseError;
+		delete &result;
+
+		parser(valueUpper, &parseError, false);
+
+		if (parseError)
+		{
+			auto error = FormatString("Unable to parse string as %s type instance: %s", titleCaseTypeName, valueUpper);
+
+			delete valueUpper;
+
+			return LuaResult::Build(error);
+		}
+
+		delete valueUpper;
+
+		return LuaResult::Build();
 	}
 
 };

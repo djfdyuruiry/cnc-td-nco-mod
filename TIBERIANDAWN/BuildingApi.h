@@ -17,7 +17,7 @@ class BuildingApi : public TechnoTypeApi<BuildingTypeClass, StructType>
 {
 private:
 	BuildingApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi("Building", rulesInfo, STRUCT_FIRST, getCount, Parse_Structure_Type, Structure_Type_To_String)
+		TechnoTypeApi(strdup("Building"), rulesInfo, STRUCT_FIRST, getCount, Parse_Structure_Type, Structure_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BIBBED_RULE,
@@ -74,7 +74,7 @@ private:
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<FactoryType>::Build(Parse_Factory_Type)
+			ParseCheckValidator<FactoryType>::Build("Factory", Parse_Factory_Type)
 		).WithFieldWrapper(
 			STORAGE_CAPACITY_RULE,
 			SIMPLE_EXTRACTOR_BLD(Capacity),

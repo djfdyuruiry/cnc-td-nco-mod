@@ -13,9 +13,15 @@ public:
 		ILuaValueValidator& validator
 	)
 	{
-		if (!validator.IsValid(lua, stackIndex))
+		auto& validateResult = validator.IsValid(lua, stackIndex);
+
+		if (validateResult.IsErrorResult())
 		{
-			return LuaResultWithValue<T>::BuildWithError("Lua value provided was invalid");
+			auto& readResult = LuaResultWithValue<T>::BuildWithError(FormatString("Lua value provided was invalid: %s", result.GetError());
+
+			delete &validateResult;
+
+			return readResult;
 		}
 
 		auto value = lua.PullValue<T>(stackIndex);

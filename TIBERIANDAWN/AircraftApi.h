@@ -19,7 +19,7 @@ class AircraftApi : public TechnoTypeApi<AircraftTypeClass, AircraftType>
 {
 private:
 	AircraftApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi("Aircraft", rulesInfo, AIRCRAFT_FIRST, getCount, Parse_Aircraft_Type, Aircraft_Type_To_String)
+		TechnoTypeApi(strdup("Aircraft"), rulesInfo, AIRCRAFT_FIRST, getCount, Parse_Aircraft_Type, Aircraft_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			CANT_HOVER_RULE,

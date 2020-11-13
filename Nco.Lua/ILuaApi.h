@@ -11,6 +11,8 @@ typedef void (*FunctionInitialiser)(LuaFunctionInfo&);
 class ILuaApi
 {
 public:
+	virtual ILuaApi& WithName(char* name) = 0;
+	virtual ILuaApi& WithDescription(char* description) = 0;
 	virtual ILuaApi& WithName(const char* name) = 0;
 	virtual ILuaApi& WithDescription(const char* description) = 0;
 	virtual ILuaApi& WithFunction(const char* name, lua_CFunction function, FunctionInitialiser functionInitialiser) = 0;

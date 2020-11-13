@@ -3,38 +3,56 @@
 #include <functional>
 
 #include "ILuaValueValidator.h"
+#include "LuaResult.h"
 
 template<class T> class LambdaValidator : public ILuaValueValidator
 {
 protected:
+	const char* failureMessage;
 	std::function<bool(T)> validator;
 
-	LambdaValidator(std::function<bool(T)> validator) : validator(validator)
+	LambdaValidator(char* failureMessage, std::function<bool(T)> validator) : failureMessage(failureMessage), validator(validator)
 	{
 	}
 
 public:
-	static ILuaValueValidator& Build(std::function<bool(T)> validator)
+	static ILuaValueValidator& Build(char* failureMessage, std::function<bool(T)> validator)
 	{
-		return *(new LambdaValidator(validator));
+		return *(new LambdaValidator(failureMessage, validator));
 	}
 
-	bool IsValid(ILuaStateWrapper& lua, int stackIndex)
+	static ILuaValueValidator& Build(const char* failureMessage, std::function<bool(T)> validator)
+	{
+		return Build(strdup(failureMessage), validator);
+	}
+
+	~LambdaValidator()
+	{
+		if (failureMessage != NULL)
+		{
+			delete failureMessage;
+		}
+	}
+
+	LuaResult& IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
 		auto& result = lua.PullValue<T>(stackIndex);
 
 		if (result.IsErrorResult())
 		{
-			delete &result;
-
-			return false;
+			return result;
 		}
 
 		auto isValid = validator(result.GetValue());
 
 		delete &result;
 
-		return isValid;
+		if (isValid)
+		{
+			return LuaResult::Build();
+		}
+
+		return LuaResult::Build(failureMessage);
 	}
 
 };

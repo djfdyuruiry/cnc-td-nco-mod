@@ -28,6 +28,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnhancementKeys.h" />
+    <ClInclude Include="GameModsRuntime.h" />
+    <ClInclude Include="IGameMod.h" />
     <ClInclude Include="IRulesIni.h" />
     <ClInclude Include="IRulesIniReader.h" />
     <ClInclude Include="IRulesIniSection.h" />

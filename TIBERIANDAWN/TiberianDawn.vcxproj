@@ -446,7 +446,7 @@
     <ClInclude Include="MOUSE.H" />
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
-    <ClInclude Include="NCO.H" />
+    <ClInclude Include="nco.h" />
     <ClInclude Include="NOSEQCON.H" />
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />
@@ -454,7 +454,7 @@
     <ClInclude Include="OPTIONS.H" />
     <ClInclude Include="OVERLAY.H" />
     <ClInclude Include="PACKET.H" />
-    <ClInclude Include="PARSE.H" />
+    <ClInclude Include="parse.h" />
     <ClInclude Include="PHONE.H" />
     <ClInclude Include="POWER.H" />
     <ClInclude Include="PROFILE.H" />
@@ -632,11 +632,10 @@
     <ClCompile Include="GAME_UTILS.cpp" />
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP" />
     <ClCompile Include="LUA_REPL.CPP" />
-    <ClCompile Include="NCO.cpp" />
+    <ClCompile Include="nco.cpp" />
     <ClCompile Include="TiberianDawnNcoRuntime.cpp" />
     <ClCompile Include="tiberian_dawn_rule_types.cpp" />
     <ClCompile Include="tiberian_dawn_rule_keys.cpp" />
-    <ClCompile Include="tiberian_dawn_mods.cpp" />
     <ClCompile Include="RULES_INI_WARHEAD.CPP" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />
@@ -708,7 +707,7 @@
     <ClCompile Include="OPTIONS.CPP" />
     <ClCompile Include="OVERLAY.CPP" />
     <ClCompile Include="PACKET.CPP" />
-    <ClCompile Include="PARSE.cpp" />
+    <ClCompile Include="parse.cpp" />
     <ClCompile Include="POWER.CPP" />
     <ClCompile Include="PROFILE.CPP" />
     <ClCompile Include="QUEUE.CPP" />

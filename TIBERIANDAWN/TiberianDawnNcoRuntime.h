@@ -11,6 +11,7 @@
 #define TdNcoRuntime() TiberianDawnNcoRuntime::GetInstance()
 #define NcoRulesRuntime() TdNcoRuntime().GetRulesRuntime()
 #define NcoLuaRuntime() TdNcoRuntime().GetLuaRuntime()
+#define NcoModsRuntime() TdNcoRuntime().GetModRuntime()
 
 class TiberianDawnNcoRuntime final : public NcoRuntime
 {
@@ -41,6 +42,10 @@ private:
     bool InitialiseLuaApi();
 
     bool InitialiseLuaEvents();
+
+    void RegisterMods();
+
+    void Initialise();
 
 public:
     static TiberianDawnNcoRuntime& GetInstance();

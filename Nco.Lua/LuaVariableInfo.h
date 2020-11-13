@@ -5,8 +5,8 @@
 class LuaVariableInfo
 {
 private:
-	const char* name;
-	const char* description;
+	char* name;
+	char* description;
 	LuaType* type;
 
 	LuaVariableInfo() : type((LuaType*)&LuaType::Nil)
@@ -19,18 +19,41 @@ public:
 		return *(new LuaVariableInfo());
 	}
 
-	LuaVariableInfo& WithName(const char* name)
+	~LuaVariableInfo()
+	{
+		if (name != NULL)
+		{
+			delete name;
+		}
+
+		if (description != NULL)
+		{
+			delete description;
+		}
+	}
+
+	LuaVariableInfo& WithName(char* name)
 	{
 		this->name = name;
 
 		return *this;
 	}
 
-	LuaVariableInfo& WithDescription(const char* description)
+	LuaVariableInfo& WithName(const char* name)
+	{
+		return WithName(strdup(name));
+	}
+
+	LuaVariableInfo& WithDescription(char* description)
 	{
 		this->description = description;
 
 		return *this;
+	}
+
+	LuaVariableInfo& WithDescription(const char* description)
+	{
+		return WithDescription(strdup(description));
 	}
 
 	LuaVariableInfo& WithType(const LuaType& type)

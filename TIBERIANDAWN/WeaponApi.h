@@ -21,7 +21,7 @@ class WeaponApi : public RulesSectionTypeWrapperApi<WeaponTypeClass, WeaponType>
 {
 protected:
 	WeaponApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi("Weapon", rulesInfo, WEAPON_FIRST, getCount, Parse_Weapon_Type, Weapon_Type_To_String)
+		RulesSectionTypeWrapperApi(strdup("Weapon"), rulesInfo, WEAPON_FIRST, getCount, Parse_Weapon_Type, Weapon_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WEAPON_PROJECTILE_RULE,
@@ -33,7 +33,7 @@ protected:
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<BulletType>::Build(Parse_Bullet_Type)
+			ParseCheckValidator<BulletType>::Build("Bullet", Parse_Bullet_Type)
 		).WithFieldWrapper(
 			WEAPON_DAMAGE_RULE,
 			SIMPLE_EXTRACTOR_WEAP(Attack),
@@ -67,7 +67,7 @@ protected:
 			[](WeaponTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				strcpy(i.ModBaseIniName, strdup(va.Read<const char*>(l, si)));
 			},
-			LambdaValidator<const char*>::Build([] (const char* v) {
+			LambdaValidator<const char*>::Build("String must be at most 32 characters long", [] (const char* v) {
 				return String_Is_Empty(v) || strlen(v) < 33;
 			})
 		);

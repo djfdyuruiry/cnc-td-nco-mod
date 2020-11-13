@@ -553,8 +553,6 @@ BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
 		&ClassTRexBite,	    //  BULLET_TREXBITE
 	};
 
-	InitialiseModsIfRequired();
-
 	return By_Type(type);
 }
 

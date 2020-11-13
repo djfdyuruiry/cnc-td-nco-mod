@@ -12,16 +12,19 @@
 #include "LuaResult.h"
 #include "LuaValueAdapter.h"
 
+#define LuaFieldExtractor std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&)>
+#define LuaFieldInjector std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&, int stackIndex)>
+
 template<class T> class LuaTypeWrapper
 {
 private:
-	std::map<StringHash, std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&)>>& extractors;
-	std::map<StringHash, std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&, int stackIndex)>>& injectors;
+	std::map<StringHash, LuaFieldExtractor>& extractors;
+	std::map<StringHash, LuaFieldInjector>& injectors;
 	std::map<StringHash, ILuaValueValidator*>& validators;
 
 	LuaTypeWrapper() :
-		extractors(*(new std::map<StringHash, std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&)>>())),
-		injectors(*(new std::map<StringHash, std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&, int stackIndex)>>)),
+		extractors(*(new std::map<StringHash, LuaFieldExtractor>())),
+		injectors(*(new std::map<StringHash, LuaFieldInjector>)),
 		validators(*(new std::map<StringHash, ILuaValueValidator*>))
 	{
 	}
@@ -46,8 +49,8 @@ public:
 
 	LuaTypeWrapper& WithFieldWrapper(
 		const char* fieldName,
-		std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&)> extractor,
-		std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&, int stackIndex)> injector,
+		LuaFieldExtractor extractor,
+		LuaFieldInjector injector,
 		ILuaValueValidator& validator
 	)
 	{
@@ -62,8 +65,8 @@ public:
 
 	LuaTypeWrapper& WithFieldsWrapper(
 		std::vector<const char*> fieldNames,
-		std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&)> extractor,
-		std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&, int stackIndex)> injector,
+		LuaFieldExtractor extractor,
+		LuaFieldInjector injector,
 		ILuaValueValidator& validator
 	)
 	{
@@ -109,9 +112,15 @@ public:
 
 		if (validators.find(fieldKey) != validators.end())
 		{
-			if (!validators[fieldKey]->IsValid(lua, stackIndex))
+			auto& validationResult = validators[fieldKey]->IsValid(lua, stackIndex);
+
+			if (validationResult.IsErrorResult())
 			{
-				return LuaResult::Build(FormatString("Invalid value provided for field: %s", fieldName));
+				auto& writeResult = LuaResult::Build(FormatString("Invalid value provided for field '%s': %s", fieldName, validationResult.GetError()));
+
+				delete &validationResult;
+
+				return writeResult;
 			}
 		}
 		else

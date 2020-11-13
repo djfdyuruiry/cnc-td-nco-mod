@@ -3,16 +3,18 @@
 #include <map>
 #include <vector>
 
+#include "IGameMod.h"
 #include "IRulesRuntime.h"
 #include "rules_ini_mods.h"
 #include "RulesIniRule.h"
 #include "RulesIniRuleKey.h"
 
-template<class T, class U> class NcoGameMod
+template<class T, class U> class NcoGameMod : public IGameMod
 {
 protected:
 	IRulesRuntime& runtime;
 	const char* typeName;
+	StringHash typeKey;
 	RuleName modTypesRule;
 	RuleName modTypeCountRule;
 	const RulesIniRuleKey& typeCountRule;
@@ -33,6 +35,7 @@ protected:
 	)
 		: runtime(runtime),
 		typeName(modTypeName),
+		typeKey(HashUtils::HashString(modTypeName)),
 		modTypesRule(modTypesRuleName),
 		modTypeCountRule(modTypeCountRuleName),
 		typeCountRule(typeCountRuleKey),
@@ -177,6 +180,16 @@ public:
 		}
 
 		Log_Info("%s Mod Types Initialised", typeName);
+	}
+
+	StringHash GetTypeKey()
+	{
+		return typeKey;
+	}
+
+	const char* GetTypeName()
+	{
+		return typeName;
 	}
 
 	SectionName GetTypeIniName(T type)

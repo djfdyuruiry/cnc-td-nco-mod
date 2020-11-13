@@ -11,8 +11,8 @@ typedef void (*LuaVariableInfoInitialiser)(LuaVariableInfo&);
 class LuaFunctionInfo
 {
 private:
-	const char* name;
-	const char* description;
+	char* name;
+	char* description;
 
 	lua_CFunction luaFunction;
 
@@ -28,7 +28,7 @@ private:
 	{
 	}
 
-	LuaVariableInfo& BuildVarInfo(const char* name, LuaVariableInfoInitialiser initialiser)
+	LuaVariableInfo& BuildVarInfo(char* name, LuaVariableInfoInitialiser initialiser)
 	{
 		auto& varInfo = LuaVariableInfo::Build().WithName(name);
 
@@ -64,11 +64,16 @@ public:
 		delete &returnValues;
 	}
 
-	LuaFunctionInfo& WithName(const char* name)
+	LuaFunctionInfo& WithName(char* name)
 	{
 		this->name = name;
 
 		return *this;
+	}
+
+	LuaFunctionInfo& WithName(const char* name)
+	{
+		return WithName(strdup(name));
 	}
 
 	LuaFunctionInfo& WithImplementation(lua_CFunction impl)
@@ -86,14 +91,19 @@ public:
 		return *this;
 	}
 
-	LuaFunctionInfo& WithDescription(const char* description)
+	LuaFunctionInfo& WithDescription(char* description)
 	{
 		this->description = description;
 
 		return *this;
 	}
 
-	LuaFunctionInfo& WithParameter(const char* name, LuaVariableInfoInitialiser initialiser)
+	LuaFunctionInfo& WithDescription(const char* description)
+	{
+		return WithDescription(strdup(name));
+	}
+
+	LuaFunctionInfo& WithParameter(char* name, LuaVariableInfoInitialiser initialiser)
 	{
 		parameters.push_back(
 			&BuildVarInfo(name, initialiser)
@@ -102,13 +112,23 @@ public:
 		return *this;
 	}
 
-	LuaFunctionInfo& WithReturnValue(const char* name, LuaVariableInfoInitialiser initialiser)
+	LuaFunctionInfo& WithParameter(const char* name, LuaVariableInfoInitialiser initialiser)
+	{
+		return WithParameter(strdup(name), initialiser);
+	}
+
+	LuaFunctionInfo& WithReturnValue(char* name, LuaVariableInfoInitialiser initialiser)
 	{
 		returnValues.push_back(
 			&BuildVarInfo(name, initialiser)
 		);
 
 		return *this;
+	}
+
+	LuaFunctionInfo& WithReturnValue(const char* name, LuaVariableInfoInitialiser initialiser)
+	{
+		return WithReturnValue(strdup(name), initialiser);
 	}
 
 	const char* GetName()

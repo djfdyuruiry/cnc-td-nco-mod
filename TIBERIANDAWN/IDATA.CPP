@@ -1466,8 +1466,6 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 		&DrChan
 	};
 
-	InitialiseModsIfRequired();
-
 	return By_Type(type);
 }
 

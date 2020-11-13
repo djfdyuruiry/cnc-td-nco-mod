@@ -182,7 +182,10 @@ public:
 
     ~RuleSectionApi()
     {
-        delete titleCaseSectionName;
+        if (titleCaseSectionName != NULL)
+        {
+            delete titleCaseSectionName;
+        }
     }
 
 };

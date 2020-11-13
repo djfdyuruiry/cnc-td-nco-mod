@@ -40,7 +40,7 @@ public:
 	virtual bool IsNil() = 0;
 
 	virtual int GetTableSize(int stackIndex) = 0;
-	virtual void IterateOverTable(int stackIndex, std::function<void(void)> iterateAction) = 0;
+	virtual void IterateOverTable(int stackIndex, std::function<void()> iterateAction) = 0;
 
 	virtual LuaResultWithValue<int>& ReadInteger(int stackIndex) = 0;
 	virtual LuaResultWithValue<long long>& ReadBigInteger(int stackIndex) = 0;

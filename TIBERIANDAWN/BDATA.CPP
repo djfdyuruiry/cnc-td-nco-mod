@@ -3575,8 +3575,6 @@ BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type)
 		&Wood,					//	STRUCT_WOOD_WALL
 	};
 
-	InitialiseModsIfRequired();
-
 	return By_Type(type);
 }
 

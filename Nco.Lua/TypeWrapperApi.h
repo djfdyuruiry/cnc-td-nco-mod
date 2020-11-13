@@ -3,6 +3,8 @@
 #include <functional>
 #include <vector>
 
+#include <TypePatterns.h>
+
 #include "LuaObjectUtils.h"
 #include "LuaTypeWrapper.h"
 #include "LuaResult.h"
@@ -18,7 +20,7 @@ template<class T, class U> class TypeWrapperApi : public TypeApi<T>
 private:
 	U first;
 	std::function<int(void)> getCount;
-	const char* (*typeToString)(U, bool);
+	SERIALISER(U, typeToString);
 
 	static int GetTypesProxy(lua_State* lua)
 	{
@@ -43,15 +45,15 @@ private:
 	}
 
 protected:
-	U(*typeParser)(const char*, bool*, bool);
+	PARSER(U, typeParser);
 	LuaTypeWrapper<T>& technoTypeWrapper;
 
 	TypeWrapperApi(
-		const char* typeName,
+		char* typeName,
 		U first,
 		std::function<int(void)> getCount,
-		U(*typeParser)(const char*, bool*, bool),
-		const char* (*typeToString)(U, bool)
+		PARSER(U, typeParser),
+		SERIALISER(U, typeToString)
 	) :
 		TypeApi(typeName),
 		first(first),

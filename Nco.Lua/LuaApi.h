@@ -27,8 +27,15 @@ public:
 
 	~LuaApi()
 	{
-		delete name;
-		delete description;
+		if (name != NULL)
+		{
+			delete name;
+		}
+
+		if (description != NULL)
+		{
+			delete description;
+		}
 
 		for (auto function : functions) {
 			delete function;
@@ -37,18 +44,28 @@ public:
 		delete &functions;
 	}
 
-	ILuaApi& WithName(const char* name)
+	ILuaApi& WithName(char* name)
 	{
 		this->name = name;
 
 		return *this;
 	}
 
-	ILuaApi& WithDescription(const char* description)
+	ILuaApi& WithDescription(char* description)
 	{
 		this->description = description;
 
 		return *this;
+	}
+
+	ILuaApi& WithName(const char* name)
+	{
+		return WithName(strdup(name));
+	}
+
+	ILuaApi& WithDescription(const char* description)
+	{
+		return WithDescription(strdup(description));
 	}
 
 	ILuaApi& WithFunction(const char* name, lua_CFunction function, FunctionInitialiser functionInitialiser)

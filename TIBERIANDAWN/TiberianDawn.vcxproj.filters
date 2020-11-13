@@ -682,9 +682,6 @@
     <ClInclude Include="RULES.H">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="NCO.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="HOUSES_TYPE.H">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -717,9 +714,6 @@
     </ClInclude>
     <ClInclude Include="LUA_REPL.H">
       <Filter>Source Files\NCO\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="PARSE.H">
-      <Filter>Source Files\NCO\Utils</Filter>
     </ClInclude>
     <ClInclude Include="LUA_EVENTS.H">
       <Filter>Source Files\NCO\Lua\Events</Filter>
@@ -758,9 +752,6 @@
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="tiberian_dawn_rules.h">
-      <Filter>Source Files\NCO\Rules</Filter>
-    </ClInclude>
-    <ClInclude Include="tiberian_dawn_mods.h">
       <Filter>Source Files\NCO\Rules</Filter>
     </ClInclude>
     <ClInclude Include="TiberianDawnRuleSectionBuilder.h">
@@ -813,6 +804,15 @@
     </ClInclude>
     <ClInclude Include="tiberian_dawn_rule_types.h">
       <Filter>Source Files\NCO\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="tiberian_dawn_mods.h">
+      <Filter>Source Files\NCO\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="nco.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="parse.h">
+      <Filter>Source Files\NCO\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1396,14 +1396,8 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="NCO.cpp">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
     <ClCompile Include="LUA_REPL.CPP">
       <Filter>Source Files\NCO\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="PARSE.cpp">
-      <Filter>Source Files\NCO\Utils</Filter>
     </ClCompile>
     <ClCompile Include="LUA_EVENTS.CPP">
       <Filter>Source Files\NCO\Lua\Events</Filter>
@@ -1417,9 +1411,6 @@
     <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
-    <ClCompile Include="tiberian_dawn_mods.cpp">
-      <Filter>Source Files\NCO\Rules</Filter>
-    </ClCompile>
     <ClCompile Include="RULES_INI_WARHEAD.CPP">
       <Filter>Source Files\NCO\Rules\RuleNames</Filter>
     </ClCompile>
@@ -1431,6 +1422,12 @@
     </ClCompile>
     <ClCompile Include="tiberian_dawn_rule_types.cpp">
       <Filter>Source Files\NCO\Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="nco.cpp">
+      <Filter>Source Files\NCO</Filter>
+    </ClCompile>
+    <ClCompile Include="parse.cpp">
+      <Filter>Source Files\NCO\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

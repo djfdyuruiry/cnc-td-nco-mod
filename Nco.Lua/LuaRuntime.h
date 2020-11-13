@@ -28,13 +28,13 @@ public:
 
 	~LuaRuntime()
 	{
+		delete &lua;
+
 		for (auto api : apis) {
 			delete api;
 		}
 
 		delete &apis;
-
-		delete &lua;
 	}
 
 	ILuaRuntime& RegisterApi(ILuaApi& api)

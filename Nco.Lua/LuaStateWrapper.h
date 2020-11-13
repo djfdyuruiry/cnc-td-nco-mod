@@ -161,14 +161,16 @@ public:
 		return lua_rawlen(lua, stackIndex);
 	}
 
-	void IterateOverTable(int stackIndex, std::function<void(void)> iterateAction)
+	void IterateOverTable(int stackIndex, std::function<void()> iterateAction)
 	{
 		lua_pushvalue(lua, stackIndex);
 		lua_pushnil(lua);
 
-		while (lua_next(lua, -2))
+		auto valIndex = -2;
+
+		while (lua_next(lua, valIndex))
 		{
-			lua_pushvalue(lua, -2);
+			lua_pushvalue(lua, valIndex);
 
 			if (iterateAction != NULL)
 			{

@@ -2,6 +2,7 @@
 
 #include <LuaObjectUtils.h>
 #include <TypeWrapperApi.h>
+#include <TypePatterns.h>
 
 #include "IRulesIniSection.h"
 
@@ -23,12 +24,12 @@ protected:
 	IRulesIniSection& rulesInfo;
 
 	RulesSectionTypeWrapperApi(
-		const char* typeName,
+		char* typeName,
 		IRulesIniSection& rulesInfo,
 		U first,
 		std::function<int(void)> getCount,
-		U(*typeParser)(const char*, bool*, bool),
-		const char* (*typeToString)(U, bool)
+		PARSER(U, typeParser),
+		SERIALISER(U, typeToString)
 	) :
 		TypeWrapperApi(typeName, first, getCount, typeParser, typeToString),
 		rulesInfo(rulesInfo)

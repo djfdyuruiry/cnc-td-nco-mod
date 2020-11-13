@@ -19,7 +19,7 @@ class UnitApi : public TechnoTypeApi<UnitTypeClass, UnitType>
 {
 private:
 	UnitApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi("Unit", rulesInfo, UNIT_FIRST, getCount, Parse_Unit_Type, Unit_Type_To_String)
+		TechnoTypeApi(strdup("Unit"), rulesInfo, UNIT_FIRST, getCount, Parse_Unit_Type, Unit_Type_To_String)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			CAN_BE_FOUND_IN_CRATE_RULE,
@@ -96,7 +96,7 @@ private:
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<SpeedType>::Build(Parse_Unit_Speed_Type)
+			ParseCheckValidator<SpeedType>::Build("Unit Speed", Parse_Unit_Speed_Type)
 		).WithFieldWrapper(
 			RATE_OF_TURN_RULE,
 			SIMPLE_EXTRACTOR_UNT(ROT),
