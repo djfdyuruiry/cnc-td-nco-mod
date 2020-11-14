@@ -465,6 +465,7 @@
     <ClInclude Include="REAL.H" />
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
+    <ClInclude Include="TechnoTypeMod.h" />
     <ClInclude Include="TiberianDawnNcoRuntime.h" />
     <ClInclude Include="TiberianDawnRulesInfo.h" />
     <ClInclude Include="RULES.H" />

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <logger.h>
+#include <TypePatterns.h>
 
 #include "IRulesIni.h"
 #include "IRulesIniReader.h"
@@ -16,7 +17,7 @@ protected:
 	template<class T> T GetParsedStringRule(
 		RulesIniRule& rule,
 		const char* typeName,
-		T(*parser)(char*, bool*, bool),
+		PARSER(T, parser),
 		T defaultValue
 	)
 	{

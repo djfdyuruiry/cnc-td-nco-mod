@@ -52,6 +52,11 @@ public:
 
 	static void Shutdown();
 
+    ~TiberianDawnNcoRuntime()
+    {
+        delete &rulesInfo;
+    }
+
 	TiberianDawnRulesInfo& GetRulesInfo();
 
 };

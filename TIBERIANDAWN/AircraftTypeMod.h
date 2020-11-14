@@ -1,19 +1,19 @@
 #pragma once
 
-#include <NcoGameMod.h>
 #include <IRulesRuntime.h>
 
 #include "tiberian_dawn_mods.h"
 #include "tiberian_dawn_rule_keys.h"
+#include "TechnoTypeMod.h"
 #include "TiberianDawnRulesReader.h"
 #include "TiberianDawnRuleSectionBuilder.h"
 #include "type.h"
 
-class AircraftTypeMod : public NcoGameMod<AircraftType, AircraftTypeClass>
+class AircraftTypeMod : public TechnoTypeMod<AircraftType, AircraftTypeClass>
 {
 private:
 	AircraftTypeMod(IRulesRuntime& runtime)
-		: NcoGameMod(
+		: TechnoTypeMod(
 			runtime,
 			"Aircraft",
 			NEW_AIRCRAFT_RULE,

@@ -1,17 +1,16 @@
 #pragma once
 
-#include <NcoGameMod.h>
-
 #include "function.h"
 
 #include "tiberian_dawn_rule_keys.h"
+#include "TechnoTypeMod.h"
 #include "TiberianDawnRuleSectionBuilder.h"
 
-class InfantryTypeMod : public NcoGameMod<InfantryType, InfantryTypeClass>
+class InfantryTypeMod : public TechnoTypeMod<InfantryType, InfantryTypeClass>
 {
 private:
 	InfantryTypeMod(IRulesRuntime& runtime) 
-		: NcoGameMod(
+		: TechnoTypeMod(
 			runtime,
 			"Infantry",
 			NEW_INFANTRY_RULE,

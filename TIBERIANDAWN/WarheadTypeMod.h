@@ -33,6 +33,22 @@ protected:
 		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(typeString);
 	}
 
+	WarheadTypeClass* CloneType(const char* baseTypeString, const char* typeString, WarheadType baseType, WarheadType type)
+	{
+		auto newType = NcoGameMod::CloneType(baseTypeString, typeString, baseType, type);
+
+		newType->FriendlyName = strdup(newType->FriendlyName);
+		
+		auto modifierSize = sizeof(unsigned) * ARMOR_COUNT;
+		auto modifier = newType->Modifier;
+		
+		newType->Modifier = (unsigned*)malloc(modifierSize);
+
+		memcpy(newType->Modifier, modifier, modifierSize);
+
+		return newType;
+	}
+
 	void ReadRulesAndAddType(WarheadTypeClass* type)
 	{
 		WarheadTypeClass::Read_Warhead_Rules(type);

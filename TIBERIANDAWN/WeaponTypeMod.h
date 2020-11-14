@@ -33,6 +33,15 @@ protected:
 		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(typeString);
 	}
 
+	WeaponTypeClass* CloneType(const char* baseTypeString, const char* typeString, WeaponType baseType, WeaponType type)
+	{
+		auto newType = NcoGameMod::CloneType(baseTypeString, typeString, baseType, type);
+
+		newType->FriendlyName = strdup(newType->FriendlyName);
+
+		return newType;
+	}
+
 	void ReadRulesAndAddType(WeaponTypeClass* type)
 	{
 		WeaponTypeClass::Read_Weapon_Rules(type);

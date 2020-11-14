@@ -18,10 +18,6 @@ protected:
 public:
 	static const RulesIniType DEFAULT_RULE_TYPE = BOOL_RULE;
 
-	virtual ~IRulesIniSection()
-	{
-	}
-
 	virtual SectionName GetName() = 0;
 
 	virtual StringHash GetKey() = 0;

@@ -118,6 +118,7 @@ public:
 	{
 		delete &rulesRuntime;
 		delete &luaRuntime;
+		delete &modRuntime;
 	}
 
 	bool RulesInitWasSuccessful()

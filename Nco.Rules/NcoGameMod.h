@@ -48,6 +48,24 @@ protected:
 
 	virtual void ReadRulesAndAddType(U* newType) = 0;
 
+	virtual U* CloneType(const char* baseTypeString, const char* typeString, T baseType, T type)
+	{
+		auto baseTypeInstance = U::By_Type(baseType);
+
+		auto typeClone = (U*)malloc(sizeof(U));
+
+		memcpy(typeClone, baseTypeInstance, sizeof(U));
+
+		typeClone->IsModType = true;
+
+		strcpy(typeClone->ModBaseIniName, baseTypeString);
+		strcpy(typeClone->IniName, typeString);
+
+		typeClone->Type = type;
+
+		return typeClone;
+	}
+
 	virtual T ParseType(SectionName typeString, bool* parseError) = 0;
 
 	bool SetupNewType(SectionName typeString, T type, SectionName baseTypeString)
@@ -71,18 +89,7 @@ protected:
 
 		Log_Info("Mod %s type base: %s", typeName, baseTypeString);
 
-		auto baseTypeInstance = U::By_Type(baseType);
-
-		auto typeClone = (U*)malloc(sizeof(U));
-
-		memcpy(typeClone, baseTypeInstance, sizeof(U));
-
-		typeClone->IsModType = true;
-
-		strcpy(typeClone->ModBaseIniName, baseTypeString);
-		strcpy(typeClone->IniName, typeString);
-
-		typeClone->Type = type;
+		auto typeClone = CloneType(baseTypeString, typeString, baseType, type);
 
 		modTypeInstances[typeClone->Type] = typeClone;
 
@@ -96,6 +103,23 @@ protected:
 	virtual void AddRulesSection(SectionName typeString) = 0;
 
 public:
+	~NcoGameMod()
+	{
+		for (auto [_, modTypeInstance] : modTypeInstances)
+		{
+			delete modTypeInstance;
+		}
+
+		delete &modTypeInstances;
+
+		for (auto modType : modTypes)
+		{
+			delete modType;
+		}
+
+		delete &modTypes;
+	}
+
 	void ReadTypes()
 	{
 		if (modTypes.size() > 0)

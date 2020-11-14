@@ -15,11 +15,14 @@ private:
 	StringHash key;
 	RulesIniType defaultType;
 
-	std::map<StringHash, RulesIniRule*> rules;
-	std::vector<RuleName> ruleNames;
-	std::vector<StringHash> ruleKeys;
+	std::map<StringHash, RulesIniRule*>& rules;
+	std::vector<RuleName>& ruleNames;
+	std::vector<StringHash>& ruleKeys;
 
-	RulesIniSection(SectionName name)
+	RulesIniSection(SectionName name) :
+		rules(*(new std::map<StringHash, RulesIniRule*>())),
+		ruleNames(*(new std::vector<RuleName>())),
+		ruleKeys(*(new std::vector<StringHash>()))
 	{
 		this->name = name;
 		this->key = RuleHashUtils::BuildRuleKey(this->name);
@@ -43,6 +46,12 @@ public:
 
 	virtual ~RulesIniSection()
 	{
+		for (auto [_, rule] : rules)
+		{
+			delete rule;
+		}
+
+		delete &rules;
 	}
 
 	RulesIniSection& WithDefaultType(RulesIniType type)

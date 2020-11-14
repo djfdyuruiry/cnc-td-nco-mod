@@ -814,6 +814,9 @@
     <ClInclude Include="parse.h">
       <Filter>Source Files\NCO\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="TechnoTypeMod.h">
+      <Filter>Source Files\NCO\Mods</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">

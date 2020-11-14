@@ -15,7 +15,9 @@ private:
 	IRulesRuntime& rulesRuntime;
 	std::map<StringHash, IGameMod*>& mods;
 
-	GameModsRuntime(IRulesRuntime& rulesRuntime) : rulesRuntime(rulesRuntime), mods(*(new std::map<StringHash, IGameMod*>()))
+	GameModsRuntime(IRulesRuntime& rulesRuntime) :
+		rulesRuntime(rulesRuntime),
+		mods(*(new std::map<StringHash, IGameMod*>()))
 	{
 	}
 
