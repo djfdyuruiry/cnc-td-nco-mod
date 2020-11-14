@@ -16,10 +16,10 @@
 #include "InfantryTypeMod.h"
 #include "InfoApi.h"
 #include "lua_events.h"
-#include "lua_api_functions_util.h"
 #include "TiberianDawnNcoRuntime.h"
 #include "UnitApi.h"
 #include "UnitTypeMod.h"
+#include "UtilApi.h"
 #include "WarheadApi.h"
 #include "WarheadTypeMod.h"
 #include "WeaponApi.h"
@@ -65,7 +65,7 @@ bool TiberianDawnNcoRuntime::InitialiseLuaApi()
 {
     Log_Debug("Initialising Lua API functions");
 
-    auto legacyLoadersResult = LoadNcoLuaLib(luaRuntime) && Register_Util_Functions();
+    auto ncoLibLoadResult = LoadNcoLuaLib(luaRuntime);
 
     RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetNcoRules());
     RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetEnhancementRules());
@@ -108,10 +108,11 @@ bool TiberianDawnNcoRuntime::InitialiseLuaApi()
     );
 
     RegisterApi<GameApi>(luaRuntime);
+    RegisterApi<UtilApi>(luaRuntime);
 
     luaRuntime.RegisterApi(InfoApi::Build(luaRuntime));
 
-    return legacyLoadersResult;
+    return ncoLibLoadResult;
 }
 
 bool TiberianDawnNcoRuntime::InitialiseLuaEvents()

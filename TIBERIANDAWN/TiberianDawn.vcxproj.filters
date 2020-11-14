@@ -712,17 +712,11 @@
     <ClInclude Include="WeaponTypeMod.h">
       <Filter>Source Files\NCO\Mods</Filter>
     </ClInclude>
-    <ClInclude Include="LUA_REPL.H">
-      <Filter>Source Files\NCO\Lua</Filter>
-    </ClInclude>
     <ClInclude Include="LUA_EVENTS.H">
       <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClInclude>
     <ClInclude Include="GAME_MESSAGES.H">
       <Filter>Source Files\NCO\Lua\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="InfantryApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
@@ -816,6 +810,12 @@
     </ClInclude>
     <ClInclude Include="TechnoTypeMod.h">
       <Filter>Source Files\NCO\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilApi.h">
+      <Filter>Source Files\NCO\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_repl.h">
+      <Filter>Source Files\NCO\Lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1399,9 +1399,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files\NCO</Filter>
     </ClCompile>
-    <ClCompile Include="LUA_REPL.CPP">
-      <Filter>Source Files\NCO\Lua</Filter>
-    </ClCompile>
     <ClCompile Include="LUA_EVENTS.CPP">
       <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClCompile>
@@ -1410,9 +1407,6 @@
     </ClCompile>
     <ClCompile Include="GAME_UTILS.cpp">
       <Filter>Source Files\NCO\Lua\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP">
-      <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClCompile>
     <ClCompile Include="RULES_INI_WARHEAD.CPP">
       <Filter>Source Files\NCO\Rules\RuleNames</Filter>
@@ -1431,6 +1425,9 @@
     </ClCompile>
     <ClCompile Include="parse.cpp">
       <Filter>Source Files\NCO\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_repl.cpp">
+      <Filter>Source Files\NCO\Lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

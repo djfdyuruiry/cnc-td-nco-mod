@@ -240,8 +240,14 @@ void Close_Log_File_If_Open()
 		FAILED_TO_OPEN_LOG_FILE
 		|| LOG_FILE_HANDLE == NULL
 		|| LOG_FILE_HANDLE == INVALID_HANDLE_VALUE
-		)
+	)
 	{
+		if (LOG_FILE_PATH != NULL)
+		{
+			delete LOG_FILE_PATH;
+		}
+
+		LOG_FILE_HANDLE = NULL;
 		return;
 	}
 

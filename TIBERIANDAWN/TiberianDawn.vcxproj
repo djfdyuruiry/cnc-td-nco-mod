@@ -432,9 +432,8 @@
     <ClInclude Include="LOADDLG.H" />
     <ClInclude Include="LOGIC.H" />
     <ClInclude Include="GameApi.h" />
-    <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H" />
     <ClInclude Include="LUA_EVENTS.H" />
-    <ClInclude Include="LUA_REPL.H" />
+    <ClInclude Include="lua_repl.h" />
     <ClInclude Include="InfoApi.h" />
     <ClInclude Include="MAP.H" />
     <ClInclude Include="MAPEDIT.H" />
@@ -519,6 +518,7 @@
     <ClInclude Include="TXTLABEL.H" />
     <ClInclude Include="TYPE.H" />
     <ClInclude Include="UnitApi.h" />
+    <ClInclude Include="UtilApi.h" />
     <ClInclude Include="WarheadApi.h" />
     <ClInclude Include="WarheadTypeMod.h" />
     <ClInclude Include="WeaponApi.h" />
@@ -631,8 +631,7 @@
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="GAME_MESSAGES.CPP" />
     <ClCompile Include="GAME_UTILS.cpp" />
-    <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP" />
-    <ClCompile Include="LUA_REPL.CPP" />
+    <ClCompile Include="lua_repl.cpp" />
     <ClCompile Include="nco.cpp" />
     <ClCompile Include="TiberianDawnNcoRuntime.cpp" />
     <ClCompile Include="tiberian_dawn_rule_types.cpp" />

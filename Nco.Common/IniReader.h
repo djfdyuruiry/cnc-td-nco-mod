@@ -81,21 +81,12 @@ public:
 
 	int ReadInt(char const* section, char const* entry, int def, bool* valueFound)
 	{
-		char	buffer[16];			// Integer staging buffer.
+		char buffer[16];
 
-		/*
-		**	Store the default in the buffer.
-		*/
 		sprintf(buffer, "%d", def);
 
-		/*
-		**	Get the buffer; use itself as the default.
-		*/
 		ReadString(section, entry, buffer, buffer, 15, valueFound);
 
-		/*
-		**	Convert to int & return.
-		*/
 		return(atoi(buffer));
 	}
 
@@ -114,14 +105,14 @@ public:
 	const char* ReadString(char const* section, char const* entry, char const* def, char* retbuffer, int retlen, bool* valueFound)
 	{
 		const char* workptr,		// Working pointer into iniText block.
-			* altworkptr;	// Alternate work pointer.
-		char	sec[50];			// Working section buffer.
+			      * altworkptr;	    // Alternate work pointer.
+		char sec[50];			    // Working section buffer.
 		const char* retval;			// Start of section or entry pointer.
 		const char* next;			// Pointer to start of next section (or EOF).
-		char	c, c2;				// Working character values.
-		int	len;				// Working substring length value.
-		int	entrylen;		// Byte length of specified entry.
-		char* orig_retbuf;	// original retbuffer ptr
+		char c, c2;				    // Working character values.
+		int	len;				    // Working substring length value.
+		int	entrylen;		        // Byte length of specified entry.
+		char* orig_retbuf;	        // original retbuffer ptr
 
 		/*
 		**	Fill in the default value just in case the entry could not be found.
@@ -148,7 +139,7 @@ public:
 		*/
 		sprintf(sec, "[%s]", section);	// sec = section name including []'s
 		strupr(sec);
-		len = strlen(sec);					// len = section name length, incl []'s
+		len = strlen(sec);			    // len = section name length, incl []'s
 
 		/*
 		**	Scan for a matching section
@@ -156,7 +147,6 @@ public:
 		retval = iniText;
 		workptr = iniText;
 		for (;;) {
-
 			/*
 			**	'workptr' = start of next section
 			*/
@@ -187,7 +177,6 @@ public:
 			**	process this section
 			*/
 			if (memicmp(workptr, sec, len) == 0 && (c == '\n')) {
-
 				/*
 				**	Skip work pointer to start of first valid entry.
 				*/
@@ -345,7 +334,6 @@ public:
 					}
 				}
 				else {
-
 					/*
 					**	No entry was specified, so build a list of all entries.
 					**	'workptr' is at 1st entry after section name
@@ -410,7 +398,6 @@ public:
 				}
 			}
 			else {
-
 				/*
 				**	Section name not found; go to the next bracket & try again
 				**	Advance past '[' and keep scanning.

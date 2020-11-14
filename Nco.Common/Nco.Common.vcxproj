@@ -19,21 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lib.cpp" />
-    <ClCompile Include="LOGGER.cpp" />
-    <ClCompile Include="STRINGS.cpp" />
-    <ClCompile Include="UTILS.CPP" />
+    <ClCompile Include="logger.cpp" />
+    <ClCompile Include="strings.cpp" />
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="HashUtils.h" />
     <ClInclude Include="IniReader.h" />
-    <ClInclude Include="LOGGER.H" />
+    <ClInclude Include="logger.h" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="TypePatterns.h" />
-    <ClInclude Include="STRINGS.H" />
+    <ClInclude Include="strings.h" />
     <ClInclude Include="TypeUtils.h" />
-    <ClInclude Include="UTILS.H" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
