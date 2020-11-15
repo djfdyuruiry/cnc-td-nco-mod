@@ -41,3 +41,5 @@ char* FormatString(const char* format, ...);
 char* ToTitleCase(const char* subject);
 
 char* ExtractSubstring(const char* subject, int substringLength, int startIndex = 0);
+
+char* RepeatString(const char* subject, unsigned int times);

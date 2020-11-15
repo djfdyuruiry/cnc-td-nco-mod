@@ -473,3 +473,18 @@ void Stop_Console_Output()
 	CONSOLE_OPEN = false;
 #endif
 }
+
+bool Win32HandleIsValid(HANDLE handle)
+{
+	return handle != NULL && handle != INVALID_HANDLE_VALUE;
+}
+
+void CloseWin32HandleIfValid(HANDLE handle)
+{
+	if (!Win32HandleIsValid(handle))
+	{
+		return;
+	}
+
+	CloseHandle(handle);
+}

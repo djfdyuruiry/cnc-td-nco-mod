@@ -53,3 +53,7 @@ char* Build_Mod_Data_File_Path(const char* filePath);
 void Start_Console_Output();
 
 void Stop_Console_Output();
+
+bool Win32HandleIsValid(HANDLE handle);
+
+void CloseWin32HandleIfValid(HANDLE handle);

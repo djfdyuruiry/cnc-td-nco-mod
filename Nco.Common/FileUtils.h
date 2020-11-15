@@ -27,10 +27,10 @@ public:
 			&& !(fileInfo & FILE_ATTRIBUTE_DIRECTORY);
 	}
 
-	static bool CreateFileHandle(const char* path, HANDLE* fileHandle)
+	static bool CreateFileHandle(const char* path, HANDLE* fileHandle, bool readOnly)
 	{
 		OFSTRUCT ofstruct;
-		*fileHandle = (HANDLE)OpenFile(path, &ofstruct, OF_READ);
+		*fileHandle = (HANDLE)OpenFile(path, &ofstruct, readOnly ? OF_READ : OF_READWRITE);
 
 		if (*fileHandle == INVALID_HANDLE_VALUE)
 		{
@@ -50,7 +50,7 @@ public:
 	{
 		HANDLE fileHandle;
 
-		if (String_Is_Empty(path) || !CreateFileHandle(path, &fileHandle))
+		if (String_Is_Empty(path) || !CreateFileHandle(path, &fileHandle, true))
 		{
 			return NULL;
 		}

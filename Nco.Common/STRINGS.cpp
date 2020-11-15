@@ -322,9 +322,39 @@ char* ExtractSubstring(const char* subject, int substringLength, int startIndex 
 
 	auto substring = Allocate_String(substringLength);
 
-	strncpy(substring, subject, substringLength * sizeof(char));
+	strncpy(substring, subject, substringLength);
 
 	substring[substringLength] = '\0';
 
 	return substring;
+}
+
+char* RepeatString(const char* subject, unsigned int times)
+{
+	if (times == 0u)
+	{
+		return strdup(EMPTY_STRING);
+	}
+
+	if (times == 1u)
+	{
+		return strdup(subject);
+	}
+
+	auto interval = strlen(subject);
+	auto totalLength = interval * times;
+	auto repeatedString = Allocate_String(totalLength);
+
+	for (auto offset = 0u; offset < totalLength - 1; offset += interval)
+	{
+		strncpy(
+			repeatedString + (offset * sizeof(char)),
+			subject,
+			interval
+		);
+	}
+
+	repeatedString[totalLength + 1] = '\0';
+
+	return repeatedString;
 }

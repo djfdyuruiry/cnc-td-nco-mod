@@ -5,11 +5,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * Most of the code in this class is lifted from the Tiberian Dawn profile
+ * reading methods.
+ */
 class IniReader
 {
 private:
 	static void __cdecl strtrim(char* buffer)
-{
+	{
 	__asm {
 		cmp[buffer], 0
 		je	short fini
@@ -48,7 +52,7 @@ private:
 			fini :
 		//ret
 	}
-}
+	}
 
 	const char* iniText;
 

@@ -4,6 +4,7 @@
 
 #include <strings.h>
 #include <Thread.h>
+#include <utils.h>
 
 #include "ILuaRuntime.h"
 #include "LuaType.h"
@@ -20,7 +21,7 @@ private:
 	{
 	}
 
-	void PrintLuaOutput(const char* output)
+	bool PrintLuaOutput(const char* output)
 	{
 		auto length = strlen(output);
 
@@ -28,11 +29,13 @@ private:
 		{
 			Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
 
-			exit(1);
+			return false;
 		}
+
+		return true;
 	}
 
-	void OutputLuaResult(int stackIndex)
+	bool OutputLuaResult(int stackIndex, unsigned int depth = 0)
 	{
 		auto& luaState = luaRuntime.GetState();
 
@@ -41,61 +44,80 @@ private:
 
 		if (luaType.value == LuaType::Bool.value)
 		{
-			PrintLuaOutput(
+			return PrintLuaOutput(
 				Strings_Are_Equal(valueAsString, "TRUE") ? "true" : "false"
 			);
-
-			return;
 		}
 
 		if (luaType.value == LuaType::String.value)
 		{
-			PrintLuaOutput("\"");
-			
-			PrintLuaOutput(valueAsString);
-
-			PrintLuaOutput("\"");
-
-			return;
+			return PrintLuaOutput("\"")
+				&& PrintLuaOutput(valueAsString)
+				&& PrintLuaOutput("\"");
 		}
 
 		if (luaType.value == LuaType::Table.value)
 		{
-			auto index = 0;
+			auto index = -1;
+			auto printStatus = PrintLuaOutput("{\r\n");
 
-			PrintLuaOutput("{\r\n");
+			if (!printStatus)
+			{
+				return false;
+			}
+
+			auto indent = RepeatString("  ", depth + 1);
 
 			luaRuntime.GetState().IterateOverTable(stackIndex, [&]() {
-				PrintLuaOutput(index == 0 ? "  " : ",\r\n  ");
-
-				OutputLuaResult(-2);
-
 				index++;
+
+				if (!printStatus)
+				{
+					return;
+				}
+
+				printStatus = index == 0 ? PrintLuaOutput(indent) : PrintLuaOutput(",\r\n") && PrintLuaOutput(indent);
+
+				if (printStatus && !luaState.IsInt(-1))
+				{
+					// print key if it is not a number index
+					printStatus = printStatus && PrintLuaOutput(luaState.ToString(-1)) 
+						&& PrintLuaOutput(" = \r\n")
+						&& PrintLuaOutput(indent);
+				}
+
+				// output value
+				printStatus = printStatus && OutputLuaResult(-2, depth + 1);
 			});
 
-			PrintLuaOutput("\r\n}");
+			delete indent;
 
-			return;
+			indent = RepeatString("  ", depth);
+
+			printStatus = printStatus && PrintLuaOutput("\r\n") 
+				&& PrintLuaOutput(indent)
+				&& PrintLuaOutput("}");
+
+			delete indent;
+
+			return printStatus;
 		}
 		
 		if (valueAsString != NULL)
 		{
-			PrintLuaOutput(valueAsString);
-
-			return;
+			return PrintLuaOutput(valueAsString);
 		}
 
-		PrintLuaOutput(luaType.value);
+		return PrintLuaOutput(luaType.value);
 	}
 
-	void PrintLuaResult()
+	bool PrintLuaResult()
 	{
-		OutputLuaResult(-1);
-
-		PrintLuaOutput("\r\n");
+		return OutputLuaResult(-1)
+			&& PrintLuaOutput("\r\n");
 	}
 
-	void ReadLuaString()
+	bool ReadLuaString()
 	{
 		if (input != NULL)
 		{
@@ -115,13 +137,18 @@ private:
 		{
 			Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
 
-			exit(1);
+			return false;
 		}
+
+		return true;
 	}
 
 	bool ProcessInput()
 	{
-		ReadLuaString();
+		if (!ReadLuaString())
+		{
+			return false;
+		}
 
 		// strip newline
 		auto trimmedInput = ExtractSubstring(input, -2);
@@ -155,19 +182,21 @@ private:
 		// evaluate lua string
 		if (executeResult.IsErrorResult())
 		{
-			PrintLuaOutput(executeResult.GetError());
-			PrintLuaOutput("\r\n");
+			auto printResult = false;
+
+			printResult = PrintLuaOutput(executeResult.GetError())
+				&& PrintLuaOutput("\r\n");
 
 			delete &executeResult;
 
-			return true;
+			return printResult;
 		}
 
 		delete& executeResult;
 
 		if (String_Starts_With(input, "return"))
 		{
-			PrintLuaResult();
+			return PrintLuaResult();
 		}
 
 		return true;
@@ -179,6 +208,16 @@ protected:
 		stdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		stdIn = GetStdHandle(STD_INPUT_HANDLE);
 
+		if (!Win32HandleIsValid(stdOut) || !Win32HandleIsValid(stdIn))
+		{
+			stdOut = NULL;
+			stdIn = NULL;
+
+			Log_Error("Lua REPL error: failed to open I/O streams");
+
+			return 1;
+		}
+
 		Toggle_Console_Logging();
 		system("cls");
 
@@ -187,13 +226,15 @@ protected:
 		puts("=======================");
 		printf("\nHelp: https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/09.-Lua-Scripting-API\n\n");
 
-		while (ProcessInput())
+		auto processInputResult = false;
+
+		while (processInputResult = ProcessInput())
 		{
 		}
 
 		Toggle_Console_Logging();
 
-		return 0;
+		return processInputResult ? 0 : 1;
 	}
 
 public:
@@ -209,8 +250,8 @@ public:
 			delete input;
 		}
 
-		CloseHandle(stdOut);
-		CloseHandle(stdIn);
+		CloseWin32HandleIfValid(stdOut);
+		CloseWin32HandleIfValid(stdIn);
 	}
 
 	void Enter()
