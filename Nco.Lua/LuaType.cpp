@@ -10,7 +10,7 @@ const LuaType& LuaType::Any = LuaType("any");
 
 const std::map<StringHash, const LuaType&>& LuaType::NameToType = {
 	{ HashUtils::HashString("number"), LuaType::Number },
-	{ HashUtils::HashString("bool"), LuaType::Bool },
+	{ HashUtils::HashString("boolean"), LuaType::Bool },
 	{ HashUtils::HashString("string"), LuaType::String },
 	{ HashUtils::HashString("function"), LuaType::Function },
 	{ HashUtils::HashString("table"), LuaType::Table },

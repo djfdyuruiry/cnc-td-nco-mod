@@ -1,7 +1,8 @@
 #pragma once
 
-#include <RuleSectionApi.h>
 #include <IRulesIniSection.h>
+#include <RuleSectionApi.h>
+#include <LuaRepl.h>
 
 #include "function.h"
 
@@ -17,7 +18,6 @@
 #include "InfantryTypeMod.h"
 #include "InfoApi.h"
 #include "lua_events.h"
-#include "LuaReplThread.h"
 #include "TiberianDawnNcoRuntime.h"
 #include "UnitApi.h"
 #include "UnitTypeMod.h"
@@ -146,9 +146,9 @@ void TiberianDawnNcoRuntime::RegisterThreads()
     {
         return;
     }
-    
+
     #ifndef TEST_CONSOLE
-    RegisterThread<LuaReplThread>();
+    RegisterThread(LuaReplThread::Build(luaRuntime));
     #endif
 }
 

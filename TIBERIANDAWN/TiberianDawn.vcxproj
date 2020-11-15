@@ -433,9 +433,7 @@
     <ClInclude Include="LOGIC.H" />
     <ClInclude Include="GameApi.h" />
     <ClInclude Include="GameMessagesThread.h" />
-    <ClInclude Include="LuaReplThread.h" />
     <ClInclude Include="LUA_EVENTS.H" />
-    <ClInclude Include="lua_repl.h" />
     <ClInclude Include="InfoApi.h" />
     <ClInclude Include="MAP.H" />
     <ClInclude Include="MAPEDIT.H" />
@@ -634,7 +632,6 @@
     <ClCompile Include="ENDING.CPP" />
     <ClCompile Include="GAME_MESSAGES.CPP" />
     <ClCompile Include="GAME_UTILS.cpp" />
-    <ClCompile Include="lua_repl.cpp" />
     <ClCompile Include="TiberianDawnNcoRuntime.cpp" />
     <ClCompile Include="tiberian_dawn_rule_types.cpp" />
     <ClCompile Include="tiberian_dawn_rule_keys.cpp" />

@@ -7,6 +7,7 @@
 
 #include "LuaResult.h"
 #include "LuaResultWithValue.h"
+#include "LuaType.h"
 
 class ILuaStateWrapper
 {
@@ -24,6 +25,9 @@ public:
 
 	virtual const char* GetType(int stackIndex) = 0;
 	virtual const char* GetType() = 0;
+
+	virtual const LuaType& GetLuaType(int stackIndex) = 0;
+	virtual const LuaType& GetLuaType() = 0;
 
 	virtual bool IsString(int stackIndex) = 0;
 	virtual bool IsTable(int stackIndex) = 0;

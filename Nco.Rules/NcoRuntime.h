@@ -104,15 +104,20 @@ protected:
 	virtual void RegisterMods() = 0;
 	virtual void RegisterThreads() = 0;
 
-	template<class T> NcoRuntime& RegisterThread()
+	template<class T> NcoRuntime& RegisterThread(T& thread)
 	{
-		auto& thread = T::Build();
-
 		Log_Debug("Registering thread: %s", thread.GetName());
 
 		threads.push_back(&thread);
 
 		return *this;
+	}
+
+	template<class T> NcoRuntime& RegisterThread()
+	{
+		auto& thread = T::Build();
+
+		return RegisterThread<T>(thread);
 	}
 
 	virtual void Initialise()

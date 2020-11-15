@@ -295,3 +295,36 @@ char* ToTitleCase(const char* subject)
 
 	return titleCaseSubject;
 }
+
+char* ExtractSubstring(const char* subject, int substringLength, int startIndex = 0)
+{
+	auto inputLength = (int)strlen(subject);
+
+	if (startIndex < 0)
+	{
+		startIndex = inputLength + startIndex;
+	}
+
+	if (substringLength < 0)
+	{
+		substringLength = inputLength + substringLength;
+	}
+
+	if (startIndex >= inputLength || substringLength >= inputLength)
+	{
+		return strdup(subject);
+	}
+
+	if (startIndex == 0 && substringLength == 0)
+	{
+		return strdup("");
+	}
+
+	auto substring = Allocate_String(substringLength);
+
+	strncpy(substring, subject, substringLength * sizeof(char));
+
+	substring[substringLength] = '\0';
+
+	return substring;
+}

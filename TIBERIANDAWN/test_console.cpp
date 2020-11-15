@@ -1,10 +1,14 @@
 #ifdef TEST_CONSOLE
 
-#include "function.h"
+#include <logger.h>
+#include <LuaRepl.h>
 
 #include "DllInterface.h"
 
-#include "lua_repl.h"
+#include "game_messages.h"
+#include "lua_events.h"
+#include "parse.h"
+#include "nco.h"
 
 static bool ExecuteLuaFile(const char* filePath)
 {
@@ -104,7 +108,11 @@ static void Parse_Command_Line(const char* commandLine)
 
 		exit(1);
 		#else
-		Enter_Lua_Repl();
+		auto& luaRepl = LuaRepl::Build(NcoLuaRuntime());
+
+		luaRepl.Enter();
+
+		delete &luaRepl;
 
 		exit(0);
 		#endif

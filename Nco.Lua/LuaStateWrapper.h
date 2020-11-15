@@ -6,6 +6,7 @@
 #include <Utils.h>
 
 #include "ILuaStateWrapper.h"
+#include "LuaType.h"
 
 class LuaStateWrapper : public ILuaStateWrapper
 {
@@ -94,6 +95,18 @@ public:
 	const char* GetType()
 	{
 		return luaL_typename(lua, GetStackTop());
+	}
+
+	const LuaType& GetLuaType(int stackIndex)
+	{
+		return LuaType::Parse(
+			GetType(stackIndex)
+		);
+	}
+
+	const LuaType& GetLuaType()
+	{
+		return GetLuaType(GetStackTop());
 	}
 
 	bool IsString(int stackIndex)

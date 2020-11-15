@@ -34,7 +34,7 @@ public:
 		{
 			Log_Error("Failed to parse lua type: %s", typeName);
 
-			return NULL;
+			return LuaType::Any;
 		}
 
 		return index->second;
