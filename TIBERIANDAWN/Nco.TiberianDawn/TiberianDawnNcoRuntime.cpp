@@ -148,6 +148,7 @@ void TiberianDawnNcoRuntime::RegisterThreads()
     }
 
     #ifndef TEST_CONSOLE
+    Start_Console_Output();
     RegisterThread(LuaRepl::Build(luaRuntime));
     #endif
 }
@@ -158,25 +159,14 @@ void TiberianDawnNcoRuntime::Initialise()
     RegisterTiberianDawnRuleTypes();
 
     NcoRuntime::Initialise();
-
-    if (
-        rulesRuntime.LuaIsEnabled()
-        && rulesRuntime.LuaConsoleIsEnabled()
-        && LuaInitWasSuccessful()
-    )
-    {
-        #ifndef TEST_CONSOLE
-        Start_Console_Output();
-        #endif
-    }
 }
 
 bool TiberianDawnNcoRuntime::InternalShutdown()
 {
     if (
         rulesRuntime.LuaIsEnabled()
-        && rulesRuntime.LuaConsoleIsEnabled()
         && LuaInitWasSuccessful()
+        && rulesRuntime.LuaConsoleIsEnabled()
         )
     {
         // TODO: fix if window closed during a mission that this is not called
