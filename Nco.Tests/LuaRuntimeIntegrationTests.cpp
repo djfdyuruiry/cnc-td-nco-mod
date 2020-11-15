@@ -74,8 +74,8 @@ namespace Integration
 
 					auto& apis = luaRuntime->GetApis();
 
-					Assert::AreEqual((size_t)1, apis.size());
-					Assert::AreEqual("testy", apis[0]->GetName());
+					Assert::AreEqual((size_t)2, apis.size());
+					Assert::AreEqual("testy", apis[1]->GetName());
 				}
 
 				TEST_METHOD(When_RegisterApi_IsCalled_ThenApiFunctionCanBeCalledFromLua)
