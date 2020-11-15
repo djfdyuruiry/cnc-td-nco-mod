@@ -67,6 +67,14 @@ namespace Integration
 					lua_close(luaState);
 					delete luaWrapper;
 				}
+
+				TEST_METHOD(When_Runtime_IsBuilt_ThenGetApisReturnsReflectionApi)
+				{
+					auto& apis = luaRuntime->GetApis();
+
+					Assert::AreEqual((size_t)1, apis.size());
+					Assert::AreEqual("Reflection", apis[0]->GetName());
+				}
 				
 				TEST_METHOD(When_RegisterApi_IsCalled_ThenGetApisReturnsNewApi)
 				{
