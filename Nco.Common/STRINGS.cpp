@@ -192,7 +192,7 @@ char* Convert_String_To_Upper_Case(const char* subject)
 	return uppercaseSubject;
 }
 
-char** Parse_Csv_String(char* csvString, unsigned int entrySize, unsigned int* csvEntryCount)
+char** Parse_Csv_String(const char* csvString, unsigned int entrySize, unsigned int* csvEntryCount, const char* seperator = COMMA)
 {
 	if (String_Is_Empty(csvString))
 	{
@@ -207,10 +207,10 @@ char** Parse_Csv_String(char* csvString, unsigned int entrySize, unsigned int* c
 	auto countCsvStringBuffer = strdup(csvString);
 	auto entryCount = 0u;
 	
-	auto token = strtok(countCsvStringBuffer, COMMA);
+	auto token = strtok(countCsvStringBuffer, seperator);
 
 	while (token != NULL) {
-		token = strtok(NULL, COMMA);
+		token = strtok(NULL, seperator);
 		entryCount++;
 	}
 
@@ -222,14 +222,14 @@ char** Parse_Csv_String(char* csvString, unsigned int entrySize, unsigned int* c
 	auto readStringBuffer = strdup(csvString);
 	auto entryIdx = 0u;
 
-	token = strtok(readStringBuffer, COMMA);
+	token = strtok(readStringBuffer, seperator);
 
 	while(token != NULL && entryIdx < entryCount)
 	{
 		csvEntries[entryIdx] = token;
 		entryIdx++;
 
-		token = strtok(NULL, COMMA);
+		token = strtok(NULL, seperator);
 	}
 
 	if (csvEntryCount != NULL)
