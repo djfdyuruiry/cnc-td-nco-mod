@@ -194,7 +194,7 @@ private:
              });
         });
          
-        WithFunction("printString", Lua_Log, [](LuaFunctionInfo& f) {
+        WithFunction("printString", Lua_Print, [](LuaFunctionInfo& f) {
             f.WithDescription("Print a string to standard out")
              .WithParameter("str", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::String);

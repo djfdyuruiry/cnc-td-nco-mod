@@ -34,8 +34,17 @@ static void TestLuaRules() {
 	}
 }
 
+static void GenerateApiDocs() {
+	Log_Info("Generating Lua API docs");
+
+	if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
+	{
+		Log_Error("Lua API docs generation script failed");
+	}
+}
+
 static void DumpRules() {
-	Log_Info("Testing dumping all rules");
+	Log_Info("Dumping all rules");
 
 	if (!ExecuteLuaFile("dump-rules.lua"))
 	{
@@ -127,6 +136,16 @@ static void Parse_Command_Line(const char* commandLine)
 
 		exit(0);
 	}
+	else if (String_Starts_With(commandLine, "--generate-api-docs"))
+	{
+		if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
+		{
+			puts("ERROR: Failed to generate api docs");
+			exit(1);
+		}
+
+		exit(0);
+	}
 }
 
 /// <summary>
@@ -157,6 +176,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 	TestLuaRules();
 
 	DumpRules();
+
+	GenerateApiDocs();
 
 	// mock DLL interface event handler
 	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);

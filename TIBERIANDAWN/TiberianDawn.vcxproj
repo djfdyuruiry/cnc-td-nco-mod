@@ -737,7 +737,6 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
   </ImportGroup>
-
   <!-- NCO -->
   <ItemGroup>
     <ProjectReference Include="..\Nco.Common\Nco.Common.vcxproj">
@@ -750,7 +749,6 @@
       <Project>{00AC5B8D-1A4E-4540-8EBF-F1021FEB9162}</Project>
     </ProjectReference>
   </ItemGroup>
-  
   <ItemGroup>
     <ClInclude Include="Nco.TiberianDawn\AircraftApi.h" />
     <ClInclude Include="Nco.TiberianDawn\AircraftTypeMod.h" />
@@ -765,6 +763,7 @@
     <ClInclude Include="Nco.TiberianDawn\InfantryApi.h" />
     <ClInclude Include="Nco.TiberianDawn\InfantryTypeMod.h" />
     <ClInclude Include="Nco.TiberianDawn\InfoApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\UtilApi.h" />
     <ClInclude Include="Nco.TiberianDawn\lua_events.h" />
     <ClInclude Include="Nco.TiberianDawn\nco.h" />
     <ClInclude Include="Nco.TiberianDawn\parse.h" />
@@ -794,7 +793,6 @@
     <ClInclude Include="Nco.TiberianDawn\WarheadTypeMod.h" />
     <ClInclude Include="Nco.TiberianDawn\WeaponApi.h" />
     <ClInclude Include="Nco.TiberianDawn\WeaponTypeMod.h" />
-
     <ClCompile Include="Nco.TiberianDawn\game_messages.cpp" />
     <ClCompile Include="Nco.TiberianDawn\game_utils.cpp" />
     <ClCompile Include="Nco.TiberianDawn\lua_events.cpp" />
@@ -805,7 +803,6 @@
     <ClCompile Include="Nco.TiberianDawn\tiberian_dawn_rule_keys.cpp" />
     <ClCompile Include="Nco.TiberianDawn\tiberian_dawn_rule_types.cpp" />
   </ItemGroup>
-
   <ItemGroup>
     <Text Include="..\bin\Win32\log\nco.log" />
     <None Include="..\bin\Win32\RULES.INI" />
