@@ -220,6 +220,18 @@ public:
 		}
 	}
 
+	template<class T, class U> void PushTableEntry(T key, U value, int tableIndex = -2)
+	{
+		PushValue<U>(value);
+
+		SetIndex(tableIndex, key);
+	}
+
+	template<class T> void SetTableIndex(T key, int tableIndex = -2)
+	{
+		SetIndex(tableIndex, key);
+	}
+
 	template<class T> void PushValue(T value)
 	{
 		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)

@@ -96,6 +96,9 @@
     <ClInclude Include="LuaRepl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ReflectionApi.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaType.cpp">

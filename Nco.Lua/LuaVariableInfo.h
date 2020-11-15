@@ -9,7 +9,7 @@ private:
 	char* description;
 	LuaType* type;
 
-	LuaVariableInfo() : type((LuaType*)&LuaType::Nil)
+	LuaVariableInfo() : type(LuaType::Any), name(NULL), description(NULL)
 	{
 	}
 
@@ -56,9 +56,9 @@ public:
 		return WithDescription(strdup(description));
 	}
 
-	LuaVariableInfo& WithType(const LuaType& type)
+	LuaVariableInfo& WithType(LuaType* type)
 	{
-		this->type = (LuaType*)&type;
+		this->type = type;
 
 		return *this;
 	}

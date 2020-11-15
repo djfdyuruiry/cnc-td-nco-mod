@@ -15,7 +15,7 @@ private:
 	std::vector<LuaFunctionInfo*>& functions;
 
 protected:
-	LuaApi() : functions(*(new std::vector<LuaFunctionInfo*>))
+	LuaApi() : functions(*(new std::vector<LuaFunctionInfo*>)), name(NULL), description(NULL)
 	{
 	}
 

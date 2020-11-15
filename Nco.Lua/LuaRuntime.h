@@ -9,6 +9,7 @@
 #include "ILuaRuntime.h"
 #include "ILuaStateWrapper.h"
 #include "LuaApi.h"
+#include "ReflectionApi.h"
 
 class LuaRuntime : public ILuaRuntime
 {
@@ -18,6 +19,8 @@ private:
 
 	LuaRuntime(ILuaStateWrapper& lua) : lua(lua), apis(*(new std::vector<ILuaApi*>()))
 	{
+		LuaType::InitIfRequired();
+		RegisterApi(ReflectionApi::Build(*this));
 	}
 
 public:

@@ -41,6 +41,7 @@
     <ClInclude Include="NumericRangeValidator.h" />
     <ClInclude Include="ParseCheckValidator.h" />
     <ClInclude Include="PrimitiveTypeValidator.h" />
+    <ClInclude Include="ReflectionApi.h" />
     <ClInclude Include="TypeApi.h" />
     <ClInclude Include="TypeApiParameters.h" />
     <ClInclude Include="TypeWrapperApi.h" />
