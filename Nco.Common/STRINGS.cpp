@@ -317,7 +317,7 @@ char* ExtractSubstring(const char* subject, int substringLength, int startIndex 
 
 	if (startIndex == 0 && substringLength == 0)
 	{
-		return strdup("");
+		return strdup(EMPTY_STRING);
 	}
 
 	auto substring = Allocate_String(substringLength);

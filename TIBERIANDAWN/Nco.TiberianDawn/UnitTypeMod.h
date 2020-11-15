@@ -1,6 +1,6 @@
 #pragma once
 
-#include "function.h"
+#include "../FUNCTION.H"
 
 #include "tiberian_dawn_rule_keys.h"
 #include "TechnoTypeMod.h"

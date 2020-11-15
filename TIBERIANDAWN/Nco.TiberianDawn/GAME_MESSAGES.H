@@ -1,8 +1,6 @@
 #pragma once
 
-#include <windows.h>
-
-#include "houses_type.h"
+#include "../HOUSES_TYPE.H"
 
 // Game Loop messages
 enum GameLoopMessageType : unsigned char {

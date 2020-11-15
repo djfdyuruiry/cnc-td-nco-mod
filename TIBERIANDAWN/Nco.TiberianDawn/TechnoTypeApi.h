@@ -8,9 +8,11 @@
 #include <RulesSectionTypeWrapperApi.h>
 #include <strings.h>
 
+#include "../DEFINES.H"
+#include "../TYPE.H"
+
 #include "parse.h"
 #include "rules_ini_generic.h"
-#include "type.h"
 
 #define EXTRACTOR_T(f) EXTRACTOR(T, f)
 #define INJECTOR_T(t, f) INJECTOR(T, t, f)

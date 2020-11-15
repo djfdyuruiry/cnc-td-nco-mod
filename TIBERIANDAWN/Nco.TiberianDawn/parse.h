@@ -1,6 +1,6 @@
 #pragma once
 
-#include "defines.h"
+#include "../DEFINES.h"
 
 // generic parsers
 DiffType Parse_Difficulty_Type(char * difficultyTypeString, bool* parseError, bool ignoreModTypes = false);

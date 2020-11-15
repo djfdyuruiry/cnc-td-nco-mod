@@ -9,6 +9,8 @@
 #include <LuaVariableInfo.h>
 #include <strings.h>
 
+#include "../FUNCTION.H"
+
 #include "game_utils.h"
 #include "parse.h"
 #include "rules_ini_superweapon.h"

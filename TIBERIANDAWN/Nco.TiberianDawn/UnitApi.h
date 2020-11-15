@@ -5,10 +5,11 @@
 #include <ParseCheckValidator.h>
 #include <IRulesIniSection.h>
 
+#include "../TYPE.H"
+
 #include "parse.h"
 #include "rules_ini_unit.h"
 #include "TechnoTypeApi.h"
-#include "type.h"
 
 #define EXTRACTOR_UNT(f) EXTRACTOR(UnitTypeClass, f)
 #define INJECTOR_UNT(t, f) INJECTOR(UnitTypeClass, t, f)

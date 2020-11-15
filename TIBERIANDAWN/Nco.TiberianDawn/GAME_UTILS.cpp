@@ -1,6 +1,5 @@
-#include "function.h"
-
-#include "DLLInterface.h"
+#include "../FUNCTION.H"
+#include "../DLLInterface.h"
 
 void Show_Game_Notification(char* message, float durationInSeconds)
 {

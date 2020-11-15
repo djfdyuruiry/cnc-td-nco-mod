@@ -9,11 +9,13 @@
 #include <ParseCheckValidator.h>
 #include <RulesSectionTypeWrapperApi.h>
 
+#include "../DEFINES.H"
+#include "../TYPE.H"
+
 #include "parse.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_warhead.h"
-#include "type.h"
 
 #define EXTRACTOR_WAR(f) EXTRACTOR(WarheadTypeClass, f)
 #define INJECTOR_WAR(t, f) INJECTOR(WarheadTypeClass, t, f)

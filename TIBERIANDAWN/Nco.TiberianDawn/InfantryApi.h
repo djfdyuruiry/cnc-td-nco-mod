@@ -2,11 +2,13 @@
 
 #include <functional>
 
+#include "../DEFINES.H"
+#include "../TYPE.H"
+
 #include "IRulesIniSection.h"
 #include "parse.h"
 #include "rules_ini_infantry.h"
 #include "TechnoTypeApi.h"
-#include "type.h"
 
 #define EXTRACTOR_INF(f) EXTRACTOR(InfantryTypeClass, f)
 #define INJECTOR_INF(t, f) INJECTOR(InfantryTypeClass, t, f)

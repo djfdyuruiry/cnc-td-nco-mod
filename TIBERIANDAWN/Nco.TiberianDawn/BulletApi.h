@@ -6,13 +6,15 @@
 
 #include <ParseCheckValidator.h>
 
+#include "../DEFINES.H"
+#include "../TYPE.H"
+
 #include "IRulesIniSection.h"
 #include "parse.h"
 #include "rules_ini_bullet.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "RulesSectionTypeWrapperApi.h"
-#include "type.h"
 
 #define EXTRACTOR_BLT(f) EXTRACTOR(BulletTypeClass, f)
 #define INJECTOR_BLT(t, f) INJECTOR(BulletTypeClass, t, f)

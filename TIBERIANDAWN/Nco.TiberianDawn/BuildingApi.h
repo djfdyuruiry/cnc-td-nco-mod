@@ -2,11 +2,13 @@
 
 #include <functional>
 
+#include "../DEFINES.H"
+#include "../TYPE.H"
+
 #include "IRulesIniSection.h"
 #include "parse.h"
 #include "rules_ini_building.h"
 #include "TechnoTypeApi.h"
-#include "type.h"
 
 #define EXTRACTOR_BLD(f) EXTRACTOR(BuildingTypeClass, f)
 #define INJECTOR_BLD(t, f) INJECTOR(BuildingTypeClass, t, f)

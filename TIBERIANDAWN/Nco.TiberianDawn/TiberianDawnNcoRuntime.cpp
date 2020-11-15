@@ -4,7 +4,7 @@
 #include <RuleSectionApi.h>
 #include <LuaRepl.h>
 
-#include "function.h"
+#include "../FUNCTION.H"
 
 #include "AircraftApi.h"
 #include "AircraftTypeMod.h"
@@ -148,7 +148,7 @@ void TiberianDawnNcoRuntime::RegisterThreads()
     }
 
     #ifndef TEST_CONSOLE
-    RegisterThread(LuaReplThread::Build(luaRuntime));
+    RegisterThread(LuaRepl::Build(luaRuntime));
     #endif
 }
 
@@ -179,6 +179,7 @@ bool TiberianDawnNcoRuntime::InternalShutdown()
         && LuaInitWasSuccessful()
         )
     {
+        // TODO: fix if window closed during a mission that this is not called
         #ifndef TEST_CONSOLE
         Stop_Console_Output();
         #endif

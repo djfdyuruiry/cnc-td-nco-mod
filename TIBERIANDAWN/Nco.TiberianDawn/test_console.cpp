@@ -3,7 +3,7 @@
 #include <logger.h>
 #include <LuaRepl.h>
 
-#include "DllInterface.h"
+#include "../DllInterface.h"
 
 #include "game_messages.h"
 #include "lua_events.h"

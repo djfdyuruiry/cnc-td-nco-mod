@@ -107,7 +107,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules;./Nco.TiberianDawn</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;5033;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -151,7 +151,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules;./Nco.TiberianDawn</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;5033;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -195,7 +195,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules;./Nco.TiberianDawn</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;5033;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -241,7 +241,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./win32lib;../lib/include;../Nco.Common;../Nco.Lua;../Nco.Rules;./Nco.TiberianDawn</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996;5033;</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -305,7 +305,6 @@
       <PreserveIdentifierCase Condition="'$(Configuration)|$(Platform)'=='TestConsole|Win32'">1</PreserveIdentifierCase>
       <PreserveIdentifierCase Condition="'$(Configuration)|$(Platform)'=='TestConsoleLuaRepl|Win32'">1</PreserveIdentifierCase>
     </MASM>
-    <None Include="GAME_UTILS.H" />
     <None Include="KEYFBUFF.INC" />
     <MASM Include="MMX.ASM">
       <FileType>Document</FileType>
@@ -349,16 +348,66 @@
     <None Include="WINASM.ASM" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Nco.TiberianDawn\AircraftApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\AircraftTypeMod.h" />
+    <ClInclude Include="Nco.TiberianDawn\BuildingApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\BuildingTypeMod.h" />
+    <ClInclude Include="Nco.TiberianDawn\BulletApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\BulletTypeMod.h" />
+    <ClInclude Include="Nco.TiberianDawn\GameApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\GameMessagesThread.h" />
+    <ClInclude Include="Nco.TiberianDawn\GAME_MESSAGES.H" />
+    <ClInclude Include="Nco.TiberianDawn\GAME_UTILS.H" />
+    <ClInclude Include="Nco.TiberianDawn\InfantryApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\InfantryTypeMod.h" />
+    <ClInclude Include="Nco.TiberianDawn\InfoApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\LUA_EVENTS.H" />
+    <ClInclude Include="Nco.TiberianDawn\nco.h" />
+    <ClInclude Include="Nco.TiberianDawn\parse.h" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_AIRCRAFT.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_BUILDING.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_BULLET.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_GAME.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_GENERIC.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_INFANTRY.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_SUPERWEAPON.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_UNIT.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_WARHEAD.H" />
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_WEAPON.H" />
+    <ClInclude Include="Nco.TiberianDawn\TechnoTypeApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\TechnoTypeMod.h" />
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnNcoRuntime.h" />
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnRuleSectionBuilder.h" />
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnRulesInfo.h" />
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnRulesReader.h" />
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeMod.h" />
+    <ClInclude Include="Nco.TiberianDawn\tiberian_dawn_mods.h" />
+    <ClInclude Include="Nco.TiberianDawn\tiberian_dawn_rules.h" />
+    <ClInclude Include="Nco.TiberianDawn\tiberian_dawn_rule_keys.h" />
+    <ClInclude Include="Nco.TiberianDawn\tiberian_dawn_rule_types.h" />
+    <ClInclude Include="Nco.TiberianDawn\UnitTypeMod.h" />
+    <ClInclude Include="Nco.TiberianDawn\WarheadApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\WarheadTypeMod.h" />
+    <ClInclude Include="Nco.TiberianDawn\WeaponApi.h" />
+    <ClInclude Include="Nco.TiberianDawn\WeaponTypeMod.h" />
+    <ClCompile Include="Nco.TiberianDawn\GAME_MESSAGES.CPP" />
+    <ClCompile Include="Nco.TiberianDawn\GAME_UTILS.cpp" />
+    <ClCompile Include="Nco.TiberianDawn\LUA_EVENTS.CPP" />
+    <ClCompile Include="Nco.TiberianDawn\parse.cpp" />
+    <ClCompile Include="Nco.TiberianDawn\RULES_INI_WARHEAD.CPP" />
+    <ClCompile Include="Nco.TiberianDawn\test_console.cpp" />
+    <ClCompile Include="Nco.TiberianDawn\TiberianDawnNcoRuntime.cpp" />
+    <ClCompile Include="Nco.TiberianDawn\tiberian_dawn_rule_keys.cpp" />
+    <ClCompile Include="Nco.TiberianDawn\tiberian_dawn_rule_types.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="ABSTRACT.H" />
     <ClInclude Include="AIRCRAFT.H" />
-    <ClInclude Include="AircraftApi.h" />
     <ClInclude Include="ANIM.H" />
     <ClInclude Include="AUDIO.H" />
     <ClInclude Include="BASE.H" />
     <ClInclude Include="BUILDING.H" />
-    <ClInclude Include="BuildingApi.h" />
     <ClInclude Include="BULLET.H" />
-    <ClInclude Include="BulletApi.h" />
     <ClInclude Include="CARGO.H" />
     <ClInclude Include="CCDDE.H" />
     <ClInclude Include="CCFILE.H" />
@@ -403,7 +452,6 @@
     <ClInclude Include="FUSE.H" />
     <ClInclude Include="GADGET.H" />
     <ClInclude Include="GAMEDLG.H" />
-    <ClInclude Include="GAME_MESSAGES.H" />
     <ClInclude Include="GAUGE.H" />
     <ClInclude Include="GOPTIONS.H" />
     <ClInclude Include="GSCREEN.H" />
@@ -411,12 +459,7 @@
     <ClInclude Include="HELP.H" />
     <ClInclude Include="HOUSE.H" />
     <ClInclude Include="HOUSES_TYPE.H" />
-    <ClInclude Include="InfantryApi.h" />
     <ClInclude Include="INFANTRY.H" />
-    <ClInclude Include="AircraftTypeMod.h" />
-    <ClInclude Include="BuildingTypeMod.h" />
-    <ClInclude Include="BulletTypeMod.h" />
-    <ClInclude Include="InfantryTypeMod.h" />
     <ClInclude Include="INTRO.H" />
     <ClInclude Include="IPX.H" />
     <ClInclude Include="IPX95.H" />
@@ -431,10 +474,6 @@
     <ClInclude Include="LIST.H" />
     <ClInclude Include="LOADDLG.H" />
     <ClInclude Include="LOGIC.H" />
-    <ClInclude Include="GameApi.h" />
-    <ClInclude Include="GameMessagesThread.h" />
-    <ClInclude Include="LUA_EVENTS.H" />
-    <ClInclude Include="InfoApi.h" />
     <ClInclude Include="MAP.H" />
     <ClInclude Include="MAPEDIT.H" />
     <ClInclude Include="MEMCHECK.H" />
@@ -445,7 +484,6 @@
     <ClInclude Include="MOUSE.H" />
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
-    <ClInclude Include="nco.h" />
     <ClInclude Include="NOSEQCON.H" />
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />
@@ -453,7 +491,6 @@
     <ClInclude Include="OPTIONS.H" />
     <ClInclude Include="OVERLAY.H" />
     <ClInclude Include="PACKET.H" />
-    <ClInclude Include="parse.h" />
     <ClInclude Include="PHONE.H" />
     <ClInclude Include="POWER.H" />
     <ClInclude Include="PROFILE.H" />
@@ -464,26 +501,7 @@
     <ClInclude Include="REAL.H" />
     <ClInclude Include="REGION.H" />
     <ClInclude Include="Resource\resource.h" />
-    <ClInclude Include="TechnoTypeMod.h" />
-    <ClInclude Include="TiberianDawnTypeMod.h" />
-    <ClInclude Include="TiberianDawnNcoRuntime.h" />
-    <ClInclude Include="TiberianDawnRulesInfo.h" />
     <ClInclude Include="RULES.H" />
-    <ClInclude Include="tiberian_dawn_rule_keys.h" />
-    <ClInclude Include="TiberianDawnRuleSectionBuilder.h" />
-    <ClInclude Include="RULES_INI_AIRCRAFT.H" />
-    <ClInclude Include="RULES_INI_BUILDING.H" />
-    <ClInclude Include="RULES_INI_BULLET.H" />
-    <ClInclude Include="RULES_INI_GAME.H" />
-    <ClInclude Include="RULES_INI_GENERIC.H" />
-    <ClInclude Include="RULES_INI_INFANTRY.H" />
-    <ClInclude Include="tiberian_dawn_rule_types.h" />
-    <ClInclude Include="TiberianDawnRulesReader.h" />
-    <ClInclude Include="tiberian_dawn_mods.h" />
-    <ClInclude Include="RULES_INI_SUPERWEAPON.H" />
-    <ClInclude Include="RULES_INI_UNIT.H" />
-    <ClInclude Include="RULES_INI_WARHEAD.H" />
-    <ClInclude Include="RULES_INI_WEAPON.H" />
     <ClInclude Include="SAVEDLG.H" />
     <ClInclude Include="SCORE.H" />
     <ClInclude Include="SCREEN.H" />
@@ -506,26 +524,17 @@
     <ClInclude Include="TEAM.H" />
     <ClInclude Include="TEAMTYPE.H" />
     <ClInclude Include="TECHNO.H" />
-    <ClInclude Include="TechnoTypeApi.h" />
     <ClInclude Include="TEMPLATE.H" />
     <ClInclude Include="TERRAIN.H" />
     <ClInclude Include="TEXTBLIT.H" />
     <ClInclude Include="TEXTBTN.H" />
     <ClInclude Include="THEME.H" />
-    <ClInclude Include="tiberian_dawn_rules.h" />
     <ClInclude Include="TOGGLE.H" />
     <ClInclude Include="TRIGGER.H" />
     <ClInclude Include="TURRET.H" />
     <ClInclude Include="TXTLABEL.H" />
     <ClInclude Include="TYPE.H" />
-    <ClInclude Include="UnitApi.h" />
-    <ClInclude Include="UtilApi.h" />
-    <ClInclude Include="WarheadApi.h" />
-    <ClInclude Include="WarheadTypeMod.h" />
-    <ClInclude Include="WeaponApi.h" />
-    <ClInclude Include="WeaponTypeMod.h" />
     <ClInclude Include="UNIT.H" />
-    <ClInclude Include="UnitTypeMod.h" />
     <ClInclude Include="UTRACKER.H" />
     <ClInclude Include="VECTOR.H" />
     <ClInclude Include="VISUDLG.H" />
@@ -630,12 +639,6 @@
     <ClCompile Include="DRIVE.CPP" />
     <ClCompile Include="EDIT.CPP" />
     <ClCompile Include="ENDING.CPP" />
-    <ClCompile Include="GAME_MESSAGES.CPP" />
-    <ClCompile Include="GAME_UTILS.cpp" />
-    <ClCompile Include="TiberianDawnNcoRuntime.cpp" />
-    <ClCompile Include="tiberian_dawn_rule_types.cpp" />
-    <ClCompile Include="tiberian_dawn_rule_keys.cpp" />
-    <ClCompile Include="RULES_INI_WARHEAD.CPP" />
     <ClCompile Include="EVENT.CPP" />
     <ClCompile Include="EXPAND.CPP" />
     <ClCompile Include="FACING.CPP" />
@@ -678,8 +681,6 @@
     <ClCompile Include="LIST.CPP" />
     <ClCompile Include="LOADDLG.CPP" />
     <ClCompile Include="LOGIC.CPP" />
-    <ClCompile Include="LUA_EVENTS.CPP" />
-    <ClCompile Include="test_console.cpp" />
     <ClCompile Include="MAP.CPP" />
     <ClCompile Include="MAPEDDLG.CPP" />
     <ClCompile Include="MAPEDIT.CPP" />
@@ -706,7 +707,6 @@
     <ClCompile Include="OPTIONS.CPP" />
     <ClCompile Include="OVERLAY.CPP" />
     <ClCompile Include="PACKET.CPP" />
-    <ClCompile Include="parse.cpp" />
     <ClCompile Include="POWER.CPP" />
     <ClCompile Include="PROFILE.CPP" />
     <ClCompile Include="QUEUE.CPP" />

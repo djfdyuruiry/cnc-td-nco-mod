@@ -1,6 +1,6 @@
 #pragma once
 
-#include "defines.h"
+#include "../DEFINES.H"
 
 #define WARHEAD_SPREAD_FACTOR_RULE "SpreadFactor"
 

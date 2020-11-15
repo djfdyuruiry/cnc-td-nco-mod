@@ -2,7 +2,8 @@
 
 #include <RulesIniReader.h>
 
-#include "defines.h"
+#include "../DEFINES.H"
+
 #include "parse.h"
 #include "tiberian_dawn_rule_types.h"
 

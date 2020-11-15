@@ -4,11 +4,13 @@
 
 #include <ParseCheckValidator.h>
 
+#include "../DEFINES.H"
+#include "../TYPE.H"
+
 #include "IRulesIniSection.h"
 #include "parse.h"
 #include "rules_ini_aircraft.h"
 #include "TechnoTypeApi.h"
-#include "type.h"
 
 #define EXTRACTOR_AIR(f) EXTRACTOR(AircraftTypeClass, f)
 #define INJECTOR_AIR(t, f) INJECTOR(AircraftTypeClass, t, f)
