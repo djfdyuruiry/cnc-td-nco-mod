@@ -16,6 +16,7 @@ private:
 
 	LuaStateWrapper(lua_State* lua, bool stateOwner) : lua(lua), stateOwner(stateOwner)
 	{
+		LuaType::InitIfRequired();
 	}
 
 	LuaResult& BuildResult(bool errorOccurredDuringExecution)
