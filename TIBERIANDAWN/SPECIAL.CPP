@@ -266,21 +266,21 @@ void Special_Dialog(void)
 }
 
 void SpecialClass::Init(void) {
-	IsSpeedBuild = ReadRuleValue<bool>(SPEEDY_BUILDS_RULE_KEY);
-	IsDefenderAdvantage = !ReadRuleValue<bool>(ATTACKER_ADVANTAGE_RULE_KEY);
-	IsSmartDefense = ReadRuleValue<bool>(SMART_DEFENCE_RULE_KEY);
-	IsTreeTarget = ReadRuleValue<bool>(TARGET_TREES_RULE_KEY);
-	IsMCVDeploy = ReadRuleValue<bool>(MCV_REDEPLOY_RULE_KEY);
-	IsVisceroids = ReadRuleValue<bool>(VISCEROIDS_RULE_KEY);
-	IsInert = ReadRuleValue<bool>(UNITS_INDESTRUCTIBLE_RULE_KEY);
-	IsThreePoint = ReadRuleValue<bool>(THREE_POINT_TURNS_RULE_KEY);
-	IsTGrowth = ReadRuleValue<bool>(TIBERIUM_GROWS_RULE_KEY);
-	IsTSpread = ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
-	IsTFast = !ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
-	IsRoad = ReadRuleValue<bool>(SHOW_BIBS_RULE_KEY);
-	IsScatter = ReadRuleValue<bool>(AUTO_SCATTER_RULE_KEY);
-	IsNamed = ReadRuleValue<bool>(NAME_CIVILIAN_BUILDINGS_RULE_KEY);
-	IsSeparate = ReadRuleValue<bool>(CAN_BUY_HELIPAD_ONLY_RULE_KEY);
+	IsSpeedBuild = NcoRulesRuntime().ReadRuleValue<bool>(SPEEDY_BUILDS_RULE_KEY);
+	IsDefenderAdvantage = !NcoRulesRuntime().ReadRuleValue<bool>(ATTACKER_ADVANTAGE_RULE_KEY);
+	IsSmartDefense = NcoRulesRuntime().ReadRuleValue<bool>(SMART_DEFENCE_RULE_KEY);
+	IsTreeTarget = NcoRulesRuntime().ReadRuleValue<bool>(TARGET_TREES_RULE_KEY);
+	IsMCVDeploy = NcoRulesRuntime().ReadRuleValue<bool>(MCV_REDEPLOY_RULE_KEY);
+	IsVisceroids = NcoRulesRuntime().ReadRuleValue<bool>(VISCEROIDS_RULE_KEY);
+	IsInert = NcoRulesRuntime().ReadRuleValue<bool>(UNITS_INDESTRUCTIBLE_RULE_KEY);
+	IsThreePoint = NcoRulesRuntime().ReadRuleValue<bool>(THREE_POINT_TURNS_RULE_KEY);
+	IsTGrowth = NcoRulesRuntime().ReadRuleValue<bool>(TIBERIUM_GROWS_RULE_KEY);
+	IsTSpread = NcoRulesRuntime().ReadRuleValue<bool>(TIBERIUM_SPREADS_RULE_KEY);
+	IsTFast = !NcoRulesRuntime().ReadRuleValue<bool>(SLOW_TIBERIUM_RULE_KEY);
+	IsRoad = NcoRulesRuntime().ReadRuleValue<bool>(SHOW_BIBS_RULE_KEY);
+	IsScatter = NcoRulesRuntime().ReadRuleValue<bool>(AUTO_SCATTER_RULE_KEY);
+	IsNamed = NcoRulesRuntime().ReadRuleValue<bool>(NAME_CIVILIAN_BUILDINGS_RULE_KEY);
+	IsSeparate = NcoRulesRuntime().ReadRuleValue<bool>(CAN_BUY_HELIPAD_ONLY_RULE_KEY);
 
 	IsVisibleTarget = false;
 	IsShowPath = false;

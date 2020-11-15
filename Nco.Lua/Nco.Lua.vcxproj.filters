@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Api">
+      <UniqueIdentifier>{c7771f47-01d1-45ef-8e1a-607f02e41f95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Api\ValueValidators">
+      <UniqueIdentifier>{23cf041b-299f-479b-bcdf-db25bcc683f3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ILuaStateWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaResultWithValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaStateWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ILuaRuntime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaRuntime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaStateFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaValueUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimitiveTypeValidator.h">
+      <Filter>Header Files\Api\ValueValidators</Filter>
+    </ClInclude>
+    <ClInclude Include="NumericRangeValidator.h">
+      <Filter>Header Files\Api\ValueValidators</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaObjectUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LambdaValidator.h">
+      <Filter>Header Files\Api\ValueValidators</Filter>
+    </ClInclude>
+    <ClInclude Include="ILuaApi.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaApi.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaTypeWrapper.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaValueAdapter.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeApi.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeWrapperApi.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="ILuaValueValidator.h">
+      <Filter>Header Files\Api\ValueValidators</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaFunctionInfo.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaVariableInfo.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeApiParameters.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="ParseCheckValidator.h">
+      <Filter>Header Files\Api\ValueValidators</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaRepl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReflectionApi.h">
+      <Filter>Header Files\Api</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LuaType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Unit">
+      <UniqueIdentifier>{1d916aec-f6f5-4354-95df-7bfa91697925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Integration">
+      <UniqueIdentifier>{08bc35fb-7efe-444a-ac8f-0e709d5001d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Unit\Nco.Lua">
+      <UniqueIdentifier>{2a07b4e6-8948-457d-a9b4-20ca90fc09eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Integration\Nco.Lua">
+      <UniqueIdentifier>{2ea410bf-9216-4d43-9a29-46786a5b8295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Unit\Nco.Common">
+      <UniqueIdentifier>{1e9839aa-9aea-490b-89ce-9c844e179a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Integration\Nco.Common">
+      <UniqueIdentifier>{1e00470f-9204-4ba7-aac1-2675544999a2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LuaStateWrapperTests.cpp">
+      <Filter>Source Files\Unit\Nco.Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaStateWrapperIntegrationTests.cpp">
+      <Filter>Source Files\Integration\Nco.Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilsTests.cpp">
+      <Filter>Source Files\Unit\Nco.Common</Filter>
+    </ClCompile>
+    <ClCompile Include="StringUtilsTests.cpp">
+      <Filter>Source Files\Unit\Nco.Common</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilsIntegrationTests.cpp">
+      <Filter>Source Files\Integration\Nco.Common</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaRuntimeIntegrationTests.cpp">
+      <Filter>Source Files\Integration\Nco.Lua</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="error-script.lua" />
+    <None Include="ok-script.lua" />
+  </ItemGroup>
+</Project>

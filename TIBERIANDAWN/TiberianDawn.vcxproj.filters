@@ -20,11 +20,32 @@
     <Filter Include="game">
       <UniqueIdentifier>{69072ba7-705b-47d4-b4b4-498027c3dfaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\NCO">
-      <UniqueIdentifier>{cd1a7065-eb59-4357-b828-e14139c1768b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="output">
       <UniqueIdentifier>{e1a5a49a-47c3-4ec3-9728-68060898ae27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn">
+      <UniqueIdentifier>{cd1a7065-eb59-4357-b828-e14139c1768b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn\Mods">
+      <UniqueIdentifier>{06fa4c97-90ef-464c-ae7a-22a5223f16a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn\Lua">
+      <UniqueIdentifier>{1694e622-63fd-4660-9ff8-54e748a687bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn\Lua\Events">
+      <UniqueIdentifier>{6f9c4733-686a-468b-ac6f-f0557385c7c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn\Lua\Api">
+      <UniqueIdentifier>{f045b8ed-7c93-40d9-aafb-a6fd63823ed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn\Rules">
+      <UniqueIdentifier>{0f4bd8ca-3e92-4f3e-be31-7037971eaf70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn\Rules\RuleNames">
+      <UniqueIdentifier>{9d307baf-7f3b-4b3b-a7be-6e61413d3bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn\Utils">
+      <UniqueIdentifier>{71dcc86d-b462-42e6-ad2b-d6f92f73da2c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +127,6 @@
     </None>
     <None Include="..\game\RULES-BASE.INI">
       <Filter>game</Filter>
-    </None>
-    <None Include="GAME_UTILS.H">
-      <Filter>Source Files\NCO</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -661,194 +679,143 @@
     <ClInclude Include="RULES.H">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="LUA.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_EVENTS.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LOGGER.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="PARSE.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="UTILS.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="STRINGS.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="NCO.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_REPL.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_GAME.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_GENERIC.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_INFANTRY.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_UNIT.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_AIRCRAFT.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_BUILDING.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_DIFFICULTY.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_WEAPON.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_SUPERWEAPON.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_INFO.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_GAME_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_GENERIC_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_INF_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_UNIT_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_AIR_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_BUILD_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_UTIL.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_GAME.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_WEAPON_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_WARHEAD.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_WARHEAD_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_BULLET.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="LUA_API_FUNCTIONS_BULLET_RULES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="GAME_MESSAGES.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_ENHANCEMENTS.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_CACHE_KEY.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_AI.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_IQ.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_MODS.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RulesIniSection.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RulesIniRule.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="HOUSES_TYPE.H">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RulesIniTypes.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="IRulesIniSection.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RulesIniReader.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RulesIni.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="Optional.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RulesIniRuleKey.h">
-      <Filter>Source Files\NCO</Filter>
     </ClInclude>
     <ClInclude Include="PROFILE.H">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="RulesIniInfo.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RULES_INI_NCO.H">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="RulesIniSectionBuilder.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="NcoGameMod.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="IRulesIniReader.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="IRulesIni.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeMod_Infantry.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeMod_Unit.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeMod_Aircraft.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeMod_Building.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeMod_Bullet.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeMod_Warhead.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeMod_Weapon.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="DLLInterfaceVersion.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\AircraftApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\BuildingApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\BulletApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\GameApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\InfantryApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\InfoApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TechnoTypeApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\WarheadApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\WeaponApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\AircraftTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\BuildingTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\BulletTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\InfantryTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TechnoTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\tiberian_dawn_mods.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\UnitTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\WarheadTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\WeaponTypeMod.h">
+      <Filter>Source Files\Nco.TiberianDawn\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_AIRCRAFT.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_BUILDING.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_BULLET.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_GAME.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_GENERIC.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_INFANTRY.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_SUPERWEAPON.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_UNIT.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_WARHEAD.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RULES_INI_WEAPON.H">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\GAME_MESSAGES.H">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\GAME_UTILS.H">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\LUA_EVENTS.H">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnNcoRuntime.h">
+      <Filter>Source Files\Nco.TiberianDawn</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\GameMessagesThread.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\parse.h">
+      <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\nco.h">
+      <Filter>Source Files\Nco.TiberianDawn</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\tiberian_dawn_rule_keys.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\tiberian_dawn_rule_types.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\tiberian_dawn_rules.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnRuleSectionBuilder.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnRulesInfo.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnRulesReader.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\UtilApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -862,9 +829,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AIRCRAFT.CPP">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ALLOC.CPP">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ANIM.CPP">
@@ -1429,92 +1393,35 @@
     <ClCompile Include="RULES.CPP">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LUA.cpp">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="ALLOC.CPP">
+      <Filter>Source Files\Win32Lib</Filter>
     </ClCompile>
-    <ClCompile Include="LUA_EVENTS.CPP">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\RULES_INI_WARHEAD.CPP">
+      <Filter>Source Files\Nco.TiberianDawn\Rules\RuleNames</Filter>
     </ClCompile>
-    <ClCompile Include="LOGGER.cpp">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\GAME_MESSAGES.CPP">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Events</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\GAME_UTILS.cpp">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Events</Filter>
     </ClCompile>
-    <ClCompile Include="PARSE.cpp">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\LUA_EVENTS.CPP">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Events</Filter>
     </ClCompile>
-    <ClCompile Include="RULES_INI.cpp">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\TiberianDawnNcoRuntime.cpp">
+      <Filter>Source Files\Nco.TiberianDawn</Filter>
     </ClCompile>
-    <ClCompile Include="STRINGS.cpp">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\parse.cpp">
+      <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="UTILS.CPP">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\test_console.cpp">
+      <Filter>Source Files\Nco.TiberianDawn</Filter>
     </ClCompile>
-    <ClCompile Include="LUA_API.CPP">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\tiberian_dawn_rule_keys.cpp">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClCompile>
-    <ClCompile Include="NCO.cpp">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_REPL.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_INFO.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_GAME_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_GENERIC_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_INF_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_UNIT_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_AIR_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_BUILD_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_UTIL.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_GAME.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_WEAPON_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="RULES_INI_WARHEAD.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_WARHEAD_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="LUA_API_FUNCTIONS_BULLET_RULES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="GAME_MESSAGES.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="RULES_CACHE_KEY.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="GAME_UTILS.cpp">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="RULES_INI_MODS.CPP">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
-    <ClCompile Include="RulesIniKeys.cpp">
-      <Filter>Source Files\NCO</Filter>
+    <ClCompile Include="Nco.TiberianDawn\tiberian_dawn_rule_types.cpp">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 
 call "%~dp0lib\log.bat" "INFO" "Running tests"
 
-pushd "%~dp0..\tests\Win32\Debug"
+pushd "%~dp0..\Nco.Tests\Win32\Debug"
 
 vstest.console "Nco.Tests.dll"
 

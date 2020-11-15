@@ -977,6 +977,6 @@ extern bool DLL_Export_Get_Input_Key_State(KeyNumType key);
  * -- New construction options -- 
  */
 
-#include "./nco.h"
+#include <nco.h>
 
 #endif

@@ -275,8 +275,6 @@ AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 		& OrcaHeli,
 	};
 
-	InitialiseModsIfRequired();
-
 	return By_Type(type);
 }
 
@@ -377,7 +375,7 @@ AircraftTypeClass::AircraftTypeClass(
 	IsRotorEquipped = is_rotorequipped;
 	ROT = rot;
 
-	GetRules() << RulesIniSectionBuilder::BuildAircraftSection(IniName);
+NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(IniName);
 	Read_Aircraft_Rules(this);
 }
 void AircraftTypeClass::Read_Aircraft_Rules(AircraftTypeClass* aircraft)
@@ -664,7 +662,7 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Cost(void) const
 {
-	auto repairFactor = ReadRuleValue<double>(AIRCRAFT_REPAIR_FACTOR_RULE_KEY);
+	auto repairFactor = NcoRulesRuntime().ReadRuleValue<double>(AIRCRAFT_REPAIR_FACTOR_RULE_KEY);
 	auto repairPercent = nearbyint(repairFactor * 100);
 
 	return(

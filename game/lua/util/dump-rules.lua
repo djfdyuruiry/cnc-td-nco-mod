@@ -110,7 +110,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
         string.format(
           "%s=%s%s\n",
           ruleName,
-          tostring(ruleValue):gsub(".0$", ""),
+          ruleValue,
           postfix
         )
       )

@@ -32,6 +32,9 @@ copy "%GAME_FILES_PATH%\lua\test\test-lua-rules.lua" "%outDir%"
 if exist "%outDir%dump-rules.lua" del "%outDir%dump-rules.lua"
 copy "%GAME_FILES_PATH%\lua\util\dump-rules.lua" %outDir%"
 
+if exist "%outDir%generate-lua-api-docs.lua" del "%outDir%generate-lua-api-docs.lua"
+copy "%GAME_FILES_PATH%\lua\util\generate-lua-api-docs.lua" %outDir%"
+
 :: log folder
 if exist "%outDir%log" rmdir /Q /S "%outDir%log"
 

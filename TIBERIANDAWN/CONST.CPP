@@ -123,7 +123,7 @@ WeaponTypeClass::WeaponTypeClass(
 
 	auto weaponTypeStr = Weapon_Type_To_String(Type);
 
-	GetRules() << RulesIniSectionBuilder::BuildWeaponSection(weaponTypeStr);
+NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(weaponTypeStr);
 
 	Read_Weapon_Rules(this);
 }
@@ -168,8 +168,6 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 		&WEP_TREX
 	};
 
-	InitialiseModsIfRequired();
-
 	return By_Type(type);
 }
 
@@ -177,7 +175,7 @@ void WeaponTypeClass::Read_Weapon_Rules(WeaponTypeClass* weapon)
 {
 	auto iniName = Weapon_Type_To_String(weapon->Type);
 
-	weapon->Projectile = ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
+	weapon->Projectile = NcoRulesRuntime().ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
 	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
 	weapon->ROF = Read_Weapon_Rate_Of_Fire(iniName, weapon->ROF);
 	weapon->Range = Read_Weapon_Range(iniName, weapon->Range);
@@ -244,7 +242,7 @@ WarheadTypeClass::WarheadTypeClass(
 
 	auto warheadTypeString = Warhead_Type_To_String(type);
 
-	GetRules() << RulesIniSectionBuilder::BuildWarheadSection(warheadTypeString);
+NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(warheadTypeString);
 	Read_Warhead_Rules(this);
 }
 
@@ -252,17 +250,17 @@ void WarheadTypeClass::Read_Warhead_Rules(WarheadTypeClass* warhead)
 {
 	auto iniName = Warhead_Type_To_String(warhead->Type);
 
-	warhead->FriendlyName = ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
-	warhead->SpreadFactor = ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
-	warhead->IsWallDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, warhead->IsWallDestroyer);
-	warhead->IsWoodDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, warhead->IsWoodDestroyer);
-	warhead->IsTiberiumDestroyer = ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, warhead->IsTiberiumDestroyer);
+	warhead->FriendlyName = NcoRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
+	warhead->SpreadFactor = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
+	warhead->IsWallDestroyer = NcoRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, warhead->IsWallDestroyer);
+	warhead->IsWoodDestroyer = NcoRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, warhead->IsWoodDestroyer);
+	warhead->IsTiberiumDestroyer = NcoRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, warhead->IsTiberiumDestroyer);
 
 	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
 	{
 		auto modifierRule = Map_Armor_Modifier_To_Warhead_Rule(armorType);
 
-		warhead->Modifier[armorType] = ReadRuleValue<unsigned int>(iniName, modifierRule, warhead->Modifier[armorType]);
+		warhead->Modifier[armorType] = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, modifierRule, warhead->Modifier[armorType]);
 	}
 }
 
@@ -294,7 +292,6 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 			& WH_HEADBUTT,
 			& WH_FEEDME,
 	};
-	InitialiseModsIfRequired();
 
 	return By_Type(type);
 }
