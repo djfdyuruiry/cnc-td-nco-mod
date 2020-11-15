@@ -12,10 +12,12 @@
 #include "BulletApi.h"
 #include "BulletTypeMod.h"
 #include "GameApi.h"
+#include "GameMessagesThread.h"
 #include "InfantryApi.h"
 #include "InfantryTypeMod.h"
 #include "InfoApi.h"
 #include "lua_events.h"
+#include "LuaReplThread.h"
 #include "TiberianDawnNcoRuntime.h"
 #include "UnitApi.h"
 #include "UnitTypeMod.h"
@@ -131,12 +133,58 @@ void TiberianDawnNcoRuntime::RegisterMods()
         .RegisterMod<UnitTypeMod>();
 }
 
+void TiberianDawnNcoRuntime::RegisterThreads()
+{
+    if (!rulesRuntime.LuaIsEnabled() || !LuaInitWasSuccessful())
+    {
+        return;
+    }
+
+    RegisterThread<GameMessagesThread>();
+
+    if (!rulesRuntime.LuaConsoleIsEnabled())
+    {
+        return;
+    }
+    
+    #ifndef TEST_CONSOLE
+    RegisterThread<LuaReplThread>();
+    #endif
+}
+
 void TiberianDawnNcoRuntime::Initialise()
 {
     InitaliseTiberianDawnRuleKeys();
     RegisterTiberianDawnRuleTypes();
 
     NcoRuntime::Initialise();
+
+    if (
+        rulesRuntime.LuaIsEnabled()
+        && rulesRuntime.LuaConsoleIsEnabled()
+        && LuaInitWasSuccessful()
+    )
+    {
+        #ifndef TEST_CONSOLE
+        Start_Console_Output();
+        #endif
+    }
+}
+
+bool TiberianDawnNcoRuntime::InternalShutdown()
+{
+    if (
+        rulesRuntime.LuaIsEnabled()
+        && rulesRuntime.LuaConsoleIsEnabled()
+        && LuaInitWasSuccessful()
+        )
+    {
+        #ifndef TEST_CONSOLE
+        Stop_Console_Output();
+        #endif
+    }
+
+    return NcoRuntime::InternalShutdown();
 }
 
 TiberianDawnNcoRuntime* TiberianDawnNcoRuntime::INSTANCE = NULL;
@@ -155,10 +203,17 @@ TiberianDawnNcoRuntime& TiberianDawnNcoRuntime::GetInstance()
 
 void TiberianDawnNcoRuntime::Shutdown()
 {
-    if (INSTANCE != NULL)
+    if (INSTANCE == NULL)
     {
-        delete INSTANCE;
+        return;
     }
+
+    if (!INSTANCE->InternalShutdown())
+    {
+        Log_Error("NCO shutdown failed");
+    }
+
+    delete INSTANCE;
 }
 
 TiberianDawnRulesInfo& TiberianDawnNcoRuntime::GetRulesInfo()

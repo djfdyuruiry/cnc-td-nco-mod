@@ -143,7 +143,7 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 	}
 }
 
-DWORD WINAPI Process_Game_Loop_Messages(LPVOID lpParam)
+void Process_Game_Loop_Messages()
 {
 	while (true)
 	{

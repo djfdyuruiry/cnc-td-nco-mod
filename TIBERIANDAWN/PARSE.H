@@ -73,7 +73,6 @@ AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseErro
 const char* Aircraft_Type_To_String(AircraftType aircraftType, bool ignoreModTypes = false);
 
 // building specific
-
 StructType Parse_Structure_Type(char* structTypeString, bool* parseError, bool ignoreModTypes = false);
 
 StructType Parse_Structure_Type(const char* structTypeString, bool* parseError, bool ignoreModTypes = false);

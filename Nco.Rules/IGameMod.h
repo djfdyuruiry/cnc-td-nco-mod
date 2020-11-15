@@ -12,7 +12,7 @@ protected:
 public:
 	virtual void ReadTypes() = 0;
 
-	virtual void InitialiseTypes() = 0;
+	virtual bool InitialiseTypes() = 0;
 
 	virtual StringHash GetTypeKey() = 0;
 

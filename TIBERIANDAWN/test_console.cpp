@@ -6,7 +6,7 @@
 
 #include "lua_repl.h"
 
-static bool Execute_Lua_File(const char* filePath)
+static bool ExecuteLuaFile(const char* filePath)
 {
 	auto& executeResult = NcoLuaRuntime().ExecuteFile(filePath);
 	auto isError = executeResult.IsErrorResult();
@@ -21,7 +21,7 @@ static bool Execute_Lua_File(const char* filePath)
 	return !isError;
 }
 
-static void Test_Lua_Rules() {
+static void TestLuaRules() {
 	Log_Info("Testing Lua rules");
 
 	if (!("test-lua-rules.lua"))
@@ -30,16 +30,16 @@ static void Test_Lua_Rules() {
 	}
 }
 
-static void Dump_Rules() {
+static void DumpRules() {
 	Log_Info("Testing dumping all rules");
 
-	if (!Execute_Lua_File("dump-rules.lua"))
+	if (!ExecuteLuaFile("dump-rules.lua"))
 	{
 		Log_Error("Rule dumping script failed");
 	}
 }
 
-static void Test_Special_Rules() {
+static void TestSpecialRules() {
 	Log_Info("Testing special rules");
 
 	auto special = SpecialClass();
@@ -47,7 +47,7 @@ static void Test_Special_Rules() {
 	special.Init();
 }
 
-static void Test_Game_Loop_Message(GameLoopMessageType message)
+static void TestGameLoopMessage(GameLoopMessageType message)
 {
 	Push_Game_Loop_Message(message);
 
@@ -59,7 +59,7 @@ static void Test_Game_Loop_Message(GameLoopMessageType message)
 	Process_Game_Ui_Messages();
 }
 
-static void Test_Lua_Events()
+static void TestLuaEvents()
 {
 	Log_Debug("Test Console: Testing Lua Events");
 
@@ -73,7 +73,7 @@ static void Test_Lua_Events()
 
 	Log_Info("Testing game tick event handler");
 
-	Test_Game_Loop_Message(GAME_TICK_ELAPSED);
+	TestGameLoopMessage(GAME_TICK_ELAPSED);
 }
 
 static void Game_Event_Callback(const EventCallbackStruct& event)
@@ -111,7 +111,7 @@ static void Parse_Command_Line(const char* commandLine)
 	}
 	else if (String_Starts_With(commandLine, "--dump-rules"))
 	{
-		if (!Execute_Lua_File("dump-rules.lua"))
+		if (!ExecuteLuaFile("dump-rules.lua"))
 		{
 			puts("ERROR: Failed to dump rules file");
 			exit(1);
@@ -144,16 +144,16 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 	Parse_Command_Line(commandLine);
 
-	Test_Special_Rules();
+	TestSpecialRules();
 
-	Test_Lua_Rules();
+	TestLuaRules();
 
-	Dump_Rules();
+	DumpRules();
 
 	// mock DLL interface event handler
 	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
 
-	Test_Lua_Events();
+	TestLuaEvents();
 
 	NCO_Shutdown();
 

@@ -1,17 +1,16 @@
 #pragma once
 
-#include <NcoGameMod.h>
-
 #include "function.h"
 
 #include "tiberian_dawn_rule_keys.h"
 #include "TiberianDawnRuleSectionBuilder.h"
+#include "TiberianDawnTypeMod.h"
 
-class WeaponTypeMod : public NcoGameMod<WeaponType, WeaponTypeClass>
+class WeaponTypeMod : public TiberianDawnTypeMod<WeaponType, WeaponTypeClass>
 {
 private:
 	WeaponTypeMod(IRulesRuntime& runtime)
-		: NcoGameMod(
+		: TiberianDawnTypeMod(
 			runtime,
 			"Weapon",
 			NEW_WEAPONS_RULE,
@@ -31,15 +30,6 @@ protected:
 	void AddRulesSection(SectionName typeString)
 	{
 		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(typeString);
-	}
-
-	WeaponTypeClass* CloneType(const char* baseTypeString, const char* typeString, WeaponType baseType, WeaponType type)
-	{
-		auto newType = NcoGameMod::CloneType(baseTypeString, typeString, baseType, type);
-
-		newType->FriendlyName = strdup(newType->FriendlyName);
-
-		return newType;
 	}
 
 	void ReadRulesAndAddType(WeaponTypeClass* type)

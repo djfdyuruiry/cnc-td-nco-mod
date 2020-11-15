@@ -184,11 +184,11 @@ public:
 		delete &luaScripts;
 	}
 
-	void EnsureRulesIniIsLoaded()
+	bool LoadRulesIfRequired()
 	{
 		if (rules != NULL)
 		{
-			return;
+			return rules->IsValid();
 		}
 
 		rules = &RulesIni::SourceRulesFrom("RULES.INI").AndThenFrom("RULES-DEFAULT.INI");
@@ -199,12 +199,12 @@ public:
 
 		ReadLogSettings();
 		ReadLuaSettings();
+
+		return rules->IsValid();
 	}
 
 	IRulesIni& GetRules()
 	{
-		EnsureRulesIniIsLoaded();
-
 		return *rules;
 	}
 
@@ -215,8 +215,6 @@ public:
 
 	T& GetRulesReader()
 	{
-		EnsureRulesIniIsLoaded();
-
 		return *((T*)rulesReader);
 	}
 

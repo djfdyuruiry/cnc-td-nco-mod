@@ -15,6 +15,7 @@ static const auto INFANTRY_TYPE_MAP = new const char* [INFANTRY_RAMBO] {
     "E5",
     "E6"
 };
+
 static const auto CIVILIAN_TYPE_MAP = new const char* [INFANTRY_C10 - INFANTRY_C1] {
     "C1",
     "C2",

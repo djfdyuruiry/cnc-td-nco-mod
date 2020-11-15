@@ -48,20 +48,15 @@ protected:
 
 	virtual void ReadRulesAndAddType(U* newType) = 0;
 
+	virtual U* GetTypeInstance(T type) = 0;
+
 	virtual U* CloneType(const char* baseTypeString, const char* typeString, T baseType, T type)
 	{
-		auto baseTypeInstance = U::By_Type(baseType);
+		auto baseTypeInstance = GetTypeInstance(baseType);
 
 		auto typeClone = (U*)malloc(sizeof(U));
 
 		memcpy(typeClone, baseTypeInstance, sizeof(U));
-
-		typeClone->IsModType = true;
-
-		strcpy(typeClone->ModBaseIniName, baseTypeString);
-		strcpy(typeClone->IniName, typeString);
-
-		typeClone->Type = type;
 
 		return typeClone;
 	}
@@ -91,7 +86,7 @@ protected:
 
 		auto typeClone = CloneType(baseTypeString, typeString, baseType, type);
 
-		modTypeInstances[typeClone->Type] = typeClone;
+		modTypeInstances[type] = typeClone;
 
 		ReadRulesAndAddType(typeClone);
 
@@ -166,16 +161,16 @@ public:
 		Log_Info("Total game %s types: %u", typeName, totalModTypeCount);
 	}
 
-	void InitialiseTypes()
+	bool InitialiseTypes()
 	{
 		if (initialised)
 		{
-			return;
+			return initialised;
 		}
 
-		initialised = true;
-
 		Log_Info("Initialising %s Mod Types", typeName);
+
+		initialised = true;
 
 		T type = originalTypeCount;
 
@@ -198,13 +193,18 @@ public:
 
 			if (!SetupNewType(typeString, type, baseTypeString))
 			{
-				runtime.GetRules().MarkAsInvalid();
+				initialised = false;
 			}
 
 			type = (T)((char)type + 1);
 		}
 
-		Log_Info("%s Mod Types Initialised", typeName);
+		if (initialised)
+		{
+			Log_Info("%s Mod Types Initialised", typeName);
+		}
+
+		return initialised;
 	}
 
 	StringHash GetTypeKey()

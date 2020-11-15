@@ -12,12 +12,14 @@
 class GameModsRuntime
 {
 private:
+	bool typesRead;
 	IRulesRuntime& rulesRuntime;
 	std::map<StringHash, IGameMod*>& mods;
 
 	GameModsRuntime(IRulesRuntime& rulesRuntime) :
 		rulesRuntime(rulesRuntime),
-		mods(*(new std::map<StringHash, IGameMod*>()))
+		mods(*(new std::map<StringHash, IGameMod*>())),
+		typesRead(false)
 	{
 	}
 
@@ -37,8 +39,15 @@ public:
 		delete &mods;
 	}
 
-	void ReadTypes()
+	void ReadTypesIfRequired()
 	{
+		if (typesRead)
+		{
+			return;
+		}
+
+		typesRead = true;
+
 		Log_Info("Reading NCO mod types");
 
 		for (auto [_, mod] : mods)
@@ -47,14 +56,21 @@ public:
 		}
 	}
 
-	void InitaliseTypes()
+	bool InitaliseTypes()
 	{
 		Log_Info("Initialising NCO mod types");
 
+		auto initSuccess = true;
+
 		for (auto [_, mod] : mods)
 		{
-			mod->InitialiseTypes();
+			if (!mod->InitialiseTypes())
+			{
+				initSuccess = false;
+			}
 		}
+
+		return initSuccess;
 	}
 
 	template<class T> GameModsRuntime& RegisterMod()

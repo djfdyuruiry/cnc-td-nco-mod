@@ -3,7 +3,7 @@
 #include <NcoRuntime.h>
 #include <RulesRuntime.h>
 
-#include "tiberian_dawn_rule_keys.h"
+#include "rules_ini_superweapon.h"
 #include "TiberianDawnRuleSectionBuilder.h"
 #include "TiberianDawnRulesInfo.h"
 #include "TiberianDawnRulesReader.h"
@@ -35,7 +35,7 @@ private:
                 }
             )
         ),
-        rulesInfo(TiberianDawnRulesInfo::BuildRuleInfo(rulesRuntime.GetRules()))
+        rulesInfo(TiberianDawnRulesInfo::BuildRuleInfo(rulesRuntime))
     {
     }
 
@@ -45,7 +45,11 @@ private:
 
     void RegisterMods();
 
+    void RegisterThreads();
+
     void Initialise();
+
+    bool InternalShutdown();
 
 public:
     static TiberianDawnNcoRuntime& GetInstance();

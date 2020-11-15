@@ -33,6 +33,7 @@
     <ClInclude Include="strings.h" />
     <ClInclude Include="TypeUtils.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="Thread.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -364,3 +364,5 @@ BIN
 !TiberianDawn.vcxproj.user
 
 .steam-workshop
+
+*.tlog

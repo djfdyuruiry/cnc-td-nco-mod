@@ -75,7 +75,7 @@ void Process_Game_Ui_Messages();
 void Clear_Game_Ui_Messages();
 
 // game loop message handlers
-DWORD WINAPI Process_Game_Loop_Messages(LPVOID lpParam);
+void Process_Game_Loop_Messages();
 
 void Push_Game_Loop_Message(GameLoopMessageType messageType);
 

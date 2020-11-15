@@ -1,7 +1,7 @@
 #pragma once
 
-#include <IRulesIni.h>
 #include <IRulesIniSection.h>
+#include <IRulesRuntime.h>
 #include <rules_ini_enhancements.h>
 #include <rules_ini_iq.h>
 #include <rules_ini_nco.h>
@@ -14,7 +14,7 @@ static auto INFO_SECTION = "__INFO__";
 class TiberianDawnRulesInfo
 {
 private:
-	IRulesIni& rules;
+	IRulesRuntime& rulesRuntime;
 
 	IRulesIniSection& weaponRules;
 	IRulesIniSection& bulletRules;
@@ -24,8 +24,8 @@ private:
 	IRulesIniSection& aircraftRules;
 	IRulesIniSection& buildingRules;
 
-	TiberianDawnRulesInfo(IRulesIni& rulesIni)
-		: rules(rulesIni),
+	TiberianDawnRulesInfo(IRulesRuntime& rulesRuntime)
+		: rulesRuntime(rulesRuntime),
 		weaponRules(TiberianDawnRuleSectionBuilder::BuildWeaponSection(INFO_SECTION)),
 		bulletRules(TiberianDawnRuleSectionBuilder::BuildBulletSection(INFO_SECTION)),
 		warheadRules(TiberianDawnRuleSectionBuilder::BuildWarheadSection(INFO_SECTION)),
@@ -37,9 +37,9 @@ private:
 	}
 
 public:
-	static TiberianDawnRulesInfo& BuildRuleInfo(IRulesIni& rulesIni)
+	static TiberianDawnRulesInfo& BuildRuleInfo(IRulesRuntime& rulesRuntime)
 	{
-		return *(new TiberianDawnRulesInfo(rulesIni));
+		return *(new TiberianDawnRulesInfo(rulesRuntime));
 	}
 
 	~TiberianDawnRulesInfo()
@@ -55,42 +55,42 @@ public:
 
 	IRulesIniSection& GetNcoRules()
 	{
-		return rules[NCO_RULES_SECTION_NAME];
+		return rulesRuntime.GetRules()[NCO_RULES_SECTION_NAME];
 	}
 
 	IRulesIniSection& GetEnhancementRules()
 	{
-		return rules[ENHANCEMENTS_RULES_SECTION_NAME];
+		return rulesRuntime.GetRules()[ENHANCEMENTS_RULES_SECTION_NAME];
 	}
 
 	IRulesIniSection& GetModRules()
 	{
-		return rules[MOD_RULES_SECTION_NAME];
+		return rulesRuntime.GetRules()[MOD_RULES_SECTION_NAME];
 	}
 
 	IRulesIniSection& GetGameRules()
 	{
-		return rules[GAME_RULES_SECTION_NAME];
+		return rulesRuntime.GetRules()[GAME_RULES_SECTION_NAME];
 	}
 
 	IRulesIniSection& GetDifficultyRules(SectionName difficulty)
 	{
-		return rules[difficulty];
+		return rulesRuntime.GetRules()[difficulty];
 	}
 
 	IRulesIniSection& GetAiRules()
 	{
-		return rules[GAME_RULES_SECTION_NAME];
+		return rulesRuntime.GetRules()[GAME_RULES_SECTION_NAME];
 	}
 
 	IRulesIniSection& GetIqRules()
 	{
-		return rules[IQ_SECTION_NAME];
+		return rulesRuntime.GetRules()[IQ_SECTION_NAME];
 	}
 
 	IRulesIniSection& GetSuperweaponRules(SectionName superwepaon)
 	{
-		return rules[superwepaon];
+		return rulesRuntime.GetRules()[superwepaon];
 	}
 
 	IRulesIniSection& GetWeaponRules()

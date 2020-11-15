@@ -802,20 +802,29 @@
     <ClInclude Include="tiberian_dawn_mods.h">
       <Filter>Source Files\NCO\Rules</Filter>
     </ClInclude>
-    <ClInclude Include="nco.h">
-      <Filter>Source Files\NCO</Filter>
-    </ClInclude>
     <ClInclude Include="parse.h">
       <Filter>Source Files\NCO\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="TechnoTypeMod.h">
-      <Filter>Source Files\NCO\Mods</Filter>
     </ClInclude>
     <ClInclude Include="UtilApi.h">
       <Filter>Source Files\NCO\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="lua_repl.h">
       <Filter>Source Files\NCO\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="TiberianDawnTypeMod.h">
+      <Filter>Source Files\NCO\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="TechnoTypeMod.h">
+      <Filter>Source Files\NCO\Mods</Filter>
+    </ClInclude>
+    <ClInclude Include="nco.h">
+      <Filter>Source Files\NCO</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaReplThread.h">
+      <Filter>Source Files\NCO\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMessagesThread.h">
+      <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -829,9 +838,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AIRCRAFT.CPP">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ALLOC.CPP">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ANIM.CPP">
@@ -1396,9 +1402,6 @@
     <ClCompile Include="RULES.CPP">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
     <ClCompile Include="LUA_EVENTS.CPP">
       <Filter>Source Files\NCO\Lua\Events</Filter>
     </ClCompile>
@@ -1420,14 +1423,17 @@
     <ClCompile Include="tiberian_dawn_rule_types.cpp">
       <Filter>Source Files\NCO\Rules</Filter>
     </ClCompile>
-    <ClCompile Include="nco.cpp">
-      <Filter>Source Files\NCO</Filter>
-    </ClCompile>
     <ClCompile Include="parse.cpp">
       <Filter>Source Files\NCO\Utils</Filter>
     </ClCompile>
     <ClCompile Include="lua_repl.cpp">
       <Filter>Source Files\NCO\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="ALLOC.CPP">
+      <Filter>Source Files\Win32Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="test_console.cpp">
+      <Filter>Source Files\NCO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

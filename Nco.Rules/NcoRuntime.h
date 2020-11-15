@@ -1,11 +1,13 @@
 #pragma once
 
 #include <stdlib.h>
+#include <vector>
 
 #include <ILuaRuntime.h>
 #include <LuaRuntime.h>
 #include <LuaStateFactory.h>
 #include <LuaStateWrapper.h>
+#include <Thread.h>
 #include <Utils.h>
 
 #include "EnhancementKeys.h"
@@ -20,7 +22,7 @@ private:
 	{
 		RegisterMods();
 
-		modRuntime.ReadTypes();
+		modRuntime.ReadTypesIfRequired();
 	}
 
 	bool LoadLuaScripts()
@@ -54,24 +56,21 @@ private:
 
 		if (!InitialiseLuaApi())
 		{
+			Log_Error("Lua setup failed: API could not be initialised");
 			return false;
 		}
-
-		Log_Debug("Lua API intialised");
 
 		if (!InitialiseLuaEvents())
 		{
+			Log_Error("Lua setup failed: events could not be initialised");
 			return false;
 		}
-
-		Log_Debug("Lua events system initialised");
 
 		if (!LoadLuaScripts())
 		{
+			Log_Error("Lua setup failed: script(s) from rules file could not be loaded");
 			return false;
 		}
-
-		Log_Debug("Lua scripts from Rules file loaded");
 
 		return true;
 	}
@@ -79,10 +78,12 @@ private:
 protected:
 	bool rulesInitSuccessful;
 	bool luaInitSuccessful;
-	bool modsInitialised;
+	bool modTypesInitialised;
+	bool threadsStarted;
 	IRulesRuntime& rulesRuntime;
 	ILuaRuntime& luaRuntime;
 	GameModsRuntime& modRuntime;
+	std::vector<Thread*>& threads;
 
 	NcoRuntime(IRulesRuntime& rulesRuntime) :
 		rulesRuntime(rulesRuntime),
@@ -93,32 +94,146 @@ protected:
 				)
 			)
 		),
-		modRuntime(GameModsRuntime::Build(rulesRuntime))
+		modRuntime(GameModsRuntime::Build(rulesRuntime)),
+		threads(*(new std::vector<Thread*>()))
 	{
 	}
 
 	virtual bool InitialiseLuaApi() = 0;
 	virtual bool InitialiseLuaEvents() = 0;
 	virtual void RegisterMods() = 0;
+	virtual void RegisterThreads() = 0;
+
+	template<class T> NcoRuntime& RegisterThread()
+	{
+		auto& thread = T::Build();
+
+		Log_Debug("Registering thread: %s", thread.GetName());
+
+		threads.push_back(&thread);
+
+		return *this;
+	}
 
 	virtual void Initialise()
 	{
 		EnhancementKeys::InitIfNeeded();
 
-		rulesRuntime.EnsureRulesIniIsLoaded();
-
-		rulesInitSuccessful = rulesRuntime.GetRules().IsValid();
+		rulesInitSuccessful = rulesRuntime.LoadRulesIfRequired();
 		luaInitSuccessful = LoadLuaComponents();
 
 		InitialiseMods();
+		RegisterThreads();
+	}
+
+	bool InitialiseModTypesIfRequired()
+	{
+		if (modTypesInitialised)
+		{
+			return true;
+		}
+
+		modTypesInitialised = modRuntime.InitaliseTypes();
+
+		return modTypesInitialised;
+	}
+
+	bool StartThreadsIfRequired()
+	{
+		if (threadsStarted)
+		{
+			return true;
+		}
+
+		threadsStarted = true;
+
+		for (auto thread : threads)
+		{
+			if (!thread->Start())
+			{
+				threadsStarted = false;
+			}
+		}
+
+		return threadsStarted;
+	}
+
+	virtual bool InternalShutdown()
+	{
+		auto shutdownSuccess = true;
+
+		for (auto thread : threads)
+		{
+			if (!thread->Stop())
+			{
+				shutdownSuccess = false;
+			}
+		}
+
+		return shutdownSuccess;
 	}
 
 public:
+	template<class T> static bool Startup()
+	{
+		Log_Info("New Construction Options mod starting up");
+
+		auto& runtime = T::GetInstance();
+
+		if (!runtime.RulesInitWasSuccessful())
+		{
+			Show_Error("NCO startup failed: rules INI failed validation.\n\nPlease check your rules are valid.");
+			return false;
+		}
+
+		if (runtime.GetRulesRuntime().LuaIsEnabled() && !runtime.LuaInitWasSuccessful())
+		{
+			Show_Error("NCO startup failed: errors initialising Lua");
+			return false;
+		}
+		else
+		{
+			Log_Warn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
+		}
+
+		if (!runtime.GetModRuntime().InitaliseTypes())
+		{
+			Show_Error("NCO startup failed: mods types setup failed validation.\n\nPlease check your mode type rules are valid.");
+			return false;
+		}
+
+		if (!runtime.StartThreadsIfRequired())
+		{
+			Show_Error("NCO startup failed: failed to start background threads");
+			return false;
+		}
+
+		Log_Info("New Construction Options mod has started successfully");
+		return true;
+	}
+
+	template<class T> static void Shutdown()
+	{
+		Log_Info("New Construction Options mod shutting down");
+
+		T::Shutdown();
+
+		// this must be the last call - otherwise the file might be reopened by a log call
+		Close_Log_File_If_Open();
+	}
+
 	~NcoRuntime()
 	{
 		delete &rulesRuntime;
 		delete &luaRuntime;
 		delete &modRuntime;
+
+		for (auto thread : threads)
+		{
+			delete thread;
+		}
+
+		delete &threads;
 	}
 
 	bool RulesInitWasSuccessful()
@@ -146,16 +261,4 @@ public:
 		return modRuntime;
 	}
 
-	void InitialiseModTypesIfRequired()
-	{
-		if (!modsInitialised)
-		{
-			return;
-		}
-
-		modsInitialised = true;
-
-
-		modRuntime.InitaliseTypes();
-	}
 };

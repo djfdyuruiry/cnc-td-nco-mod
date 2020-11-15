@@ -15,7 +15,7 @@ protected:
 	}
 
 public:
-	virtual void EnsureRulesIniIsLoaded() = 0;
+	virtual bool LoadRulesIfRequired() = 0;
 
 	virtual IRulesIni& GetRules() = 0;
 
@@ -23,22 +23,16 @@ public:
 
 	template<class T> T ReadRuleValue(SectionName section, RuleName rule, T defaultValue)
 	{
-		EnsureRulesIniIsLoaded();
-
 		return GetBaseRulesReader().ReadRuleValue<T>(section, rule, defaultValue);
 	}
 
 	template<class T> T ReadRuleValue(SectionName section, RuleName rule)
 	{
-		EnsureRulesIniIsLoaded();
-
 		return GetBaseRulesReader().ReadRuleValue<T>(section, rule);
 	}
 
 	template<class T> T ReadRuleValue(const RulesIniRuleKey& key)
 	{
-		EnsureRulesIniIsLoaded();
-
 		return GetBaseRulesReader().ReadRuleValue<T>(key);
 	}
 

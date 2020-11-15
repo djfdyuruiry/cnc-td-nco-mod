@@ -1,17 +1,16 @@
 #pragma once
 
-#include <NcoGameMod.h>
-
 #include "function.h"
 
 #include "tiberian_dawn_rule_keys.h"
 #include "TiberianDawnRuleSectionBuilder.h"
+#include "TiberianDawnTypeMod.h"
 
-class WarheadTypeMod : public NcoGameMod<WarheadType, WarheadTypeClass>
+class WarheadTypeMod : public TiberianDawnTypeMod<WarheadType, WarheadTypeClass>
 {
 private:
 	WarheadTypeMod(IRulesRuntime& runtime)
-		: NcoGameMod(
+		: TiberianDawnTypeMod(
 			runtime,
 			"Warhead",
 			NEW_WARHEADS_RULE,
@@ -35,10 +34,8 @@ protected:
 
 	WarheadTypeClass* CloneType(const char* baseTypeString, const char* typeString, WarheadType baseType, WarheadType type)
 	{
-		auto newType = NcoGameMod::CloneType(baseTypeString, typeString, baseType, type);
+		auto newType = TiberianDawnTypeMod::CloneType(baseTypeString, typeString, baseType, type);
 
-		newType->FriendlyName = strdup(newType->FriendlyName);
-		
 		auto modifierSize = sizeof(unsigned) * ARMOR_COUNT;
 		auto modifier = newType->Modifier;
 		
