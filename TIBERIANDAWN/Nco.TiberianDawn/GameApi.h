@@ -385,6 +385,12 @@ private:
             return 0;
         }
 
+        if (!luaState.IsString(1))
+        {
+            luaState.RaiseError("showGameMessage parameter `message` must be a string");
+            return 0;
+        }
+
         if (!luaState.IsNumber(2))
         {
             luaState.RaiseError("showGameMessage parameter `durationInSeconds` must be a number");
@@ -420,101 +426,114 @@ private:
         WithDescription("Game info and control functions");
 
         WithFunction("showGameMessage", Lua_Show_Game_Message, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
+            f.WithDescription("Show the player an in-game message")
+             .WithParameter("message", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::String);
-            });
+             })
+             .WithParameter("durationInSeconds", [](LuaVariableInfo& p) {
+                p.WithDescription("Display the message for this many seconds; minimum value is `0.1`. Note: this function is async")
+                 .WithType(LuaType::Number);
+             });
         });
 
         WithFunction("refreshSidebar", Lua_Refresh_Sidebar, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Force a refresh of the sidebar; useful if you make a rule change that affects what the user can build and want to reflect that right away. Note: this function is async");
         });
 
         WithFunction("revealEntireMap", Lua_Reveal_Map, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Reveal the entire map to the player; this is permanent unless you call `hideEntireMap`. Note: this function is async");
         });
 
         WithFunction("hideEntireMap", Lua_Hide_Map, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Hide any areas of the map without player units/buildings from the player. Note: this function is async");
         });
 
         WithFunction("getPlayerHouse", Lua_Get_Player_House, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Get the name of the current player house")
+             .WithReturnValue("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("The house name of the player (BADGUY, GOODGUY etc.)")
+                 .WithType(LuaType::String);
+             });
         });
 
         WithFunction("getPlayerBaseHouse", Lua_Get_Player_Base_House, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Get the name of the base house for the current player house. Every house has a base house which it acts like, usually NOD or GDI.")
+             .WithReturnValue("baseHouseName", [](LuaVariableInfo& p) {
+                p.WithDescription("The base house name of the player (BADGUY, GOODGUY etc.)")
+                 .WithType(LuaType::String);
+             });
         });
 
         WithFunction("getActiveHouses", Lua_Get_Active_Houses, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Get all houses that are active in the current scenario")
+             .WithReturnValue("activeHouseNames", [](LuaVariableInfo& p) {
+                p.WithDescription("List of strings, containing the names of active houses.")
+                 .WithType(LuaType::Table);
+             });
         });
 
         WithFunction("modifyHouseCredits", Lua_Modifiy_House_Credits, [](LuaFunctionInfo& f) {
             f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to modify")
+                 .WithType(LuaType::String);
+             })
+             .WithParameter("amount", [](LuaVariableInfo& p) {
+                p.WithDescription("Amount of credits to either add or subtract for current house balance; use negative numbers to deduct credits.")
+                 .WithType(LuaType::Number);
+             });
         });
 
         WithFunction("enableSuperweaponForHouse", Lua_Enable_House_Super_Weapon, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Enable a superweapon for a given house. Note: this function is async")
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to enable superweapon for")
+                 .WithType(LuaType::String);
+             })
+             .WithParameter("superweaponName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the superweapon as it appears in the RULES.INI file")
+                 .WithType(LuaType::String);
+             });
         });
 
         WithFunction("chargeSuperweaponForHouse", Lua_Charge_House_Super_Weapon, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Charge a superweapon for a given house. Note: this function is async")
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to charge superweapon for")
+                 .WithType(LuaType::String);
+             })
+             .WithParameter("superweaponName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the superweapon as it appears in the RULES.INI file")
+                 .WithType(LuaType::String);
+             });
         });
 
         WithFunction("disableSuperweaponForHouse", Lua_Disable_House_Super_Weapon, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Disable a superweapon for a given house. Note: this function is async")
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to disable superweapon for")
+                 .WithType(LuaType::String);
+             })
+             .WithParameter("superweaponName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the superweapon as it appears in the RULES.INI file")
+                 .WithType(LuaType::String);
+             });
         });
 
         WithFunction("clearGameUiMessages", Lua_Clear_Game_Ui_Messages, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Cancel any pending async game UI changes (refresh sidebar, reveal map etc.)");
         });
 
         WithFunction("clearGameLoopMessages", Lua_Clear_Game_Loop_Messages, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Cancel any pending async game events (on game tick etc.)");
         });
 
         WithFunction("clearHouseMessages", Lua_Clear_House_Messages, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Cancel any pending events for a given house (enable/disable superweapon etc.)")
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to cancelevents for")
+                 .WithType(LuaType::String);
+             })
         });
     }
 
