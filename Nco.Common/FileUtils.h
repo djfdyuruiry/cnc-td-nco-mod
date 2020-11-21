@@ -27,6 +27,19 @@ public:
 			&& !(fileInfo & FILE_ATTRIBUTE_DIRECTORY);
 	}
 
+	static bool IsDirectory(const char* path)
+	{
+		if (String_Is_Empty(path))
+		{
+			return false;
+		}
+
+		auto fileInfo = GetFileAttributes(path);
+
+		return fileInfo != INVALID_FILE_ATTRIBUTES
+			&& fileInfo & FILE_ATTRIBUTE_DIRECTORY;
+	}
+
 	static bool CreateFileHandle(const char* path, HANDLE* fileHandle, bool readOnly)
 	{
 		OFSTRUCT ofstruct;

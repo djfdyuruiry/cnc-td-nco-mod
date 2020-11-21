@@ -2,12 +2,16 @@
 #include <string>
 #include <windows.h>
 
+#include "FileUtils.h"
 #include "logger.h"
 #include "strings.h"
 #include "utils.h"
 
-static auto LOG_LINE_LENGTH = 25600;
-static auto LOG_LEVEL_LENGTH = 5;
+static auto LOG_FORMAT = "%02d-%02d-%04d %02d:%02d:%02d.%03d - %s %s\n";
+static const auto LOG_LINE_LENGTH = 25600;
+static const auto LOG_LEVEL_LENGTH = 5;
+static const auto LOG_TIMESTAMP_LENGTH = 27;
+static const auto LOG_FORMAT_LENGTH = LOG_TIMESTAMP_LENGTH + 3 + LOG_LEVEL_LENGTH + LOG_LINE_LENGTH;
 
 static char* CURRENT_LOG_FILE_PATH = NULL;
 static LogLevel CURRENT_LOG_LEVEL = OFF;
@@ -103,9 +107,7 @@ LogLevel Current_Log_Level()
 static void Load_Default_Log_File_Path()
 {
 #ifdef TEST_CONSOLE
-	LOG_FILE_PATH = Allocate_String(MAX_PATH);
-
-	sprintf(LOG_FILE_PATH, "log\\nco.log");
+	LOG_FILE_PATH = strdup("log\\nco.log");
 #else
 	auto documentsPath = Allocate_String(MAX_PATH);
 	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, documentsPath);
@@ -118,15 +120,30 @@ static void Load_Default_Log_File_Path()
 		return;
 	}
 
-	LOG_FILE_PATH = Allocate_String(MAX_PATH);
+	auto cncPath = FormatString("%s\\CnCRemastered", MAX_PATH, documentsPath);
 
-	sprintf(LOG_FILE_PATH, "%s\\CnCRemastered\\nco.log", documentsPath);
+	delete documentsPath;
+
+	if (!FileUtils::IsDirectory(cncPath))
+	{
+		FAILED_TO_OPEN_LOG_FILE = true;
+
+		Log_Error("CNC Remastered document path has not been created yet, logging to file will be disabled. Path: %s", cncPath);
+
+		delete cncPath;
+
+		return;
+	}
+
+	LOG_FILE_PATH = FormatString("%s\\nco.log", MAX_PATH, cncPath);
+
+	delete cncPath;
 #endif	
 }
 
 static void Open_Log_File()
 {
-	if (LOG_FILE_HANDLE != NULL) {
+	if (LOG_FILE_HANDLE != NULL || FAILED_TO_OPEN_LOG_FILE) {
 		return;
 	}
 
@@ -135,11 +152,6 @@ static void Open_Log_File()
 	if (String_Is_Empty(LOG_FILE_PATH))
 	{
 		Load_Default_Log_File_Path();
-	}
-
-	if (FAILED_TO_OPEN_LOG_FILE)
-	{
-		return;
 	}
 
 	bool errorOccurred = false;
@@ -164,14 +176,11 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		return;
 	}
 
-	auto messageBuffer = Allocate_String(LOG_LINE_LENGTH);
-	auto messageWithLevelBuffer = Allocate_String(LOG_LINE_LENGTH + LOG_LEVEL_LENGTH);
-
-	// format message using sprintf
+	// format message
 	va_list formatArgs;
 	va_start(formatArgs, messageFormat);
 
-	vsnprintf(messageBuffer, LOG_LINE_LENGTH, messageFormat, formatArgs);
+	auto formattedMessage = FormatString(messageFormat, LOG_LINE_LENGTH, formatArgs);
 
 	va_end(formatArgs);
 
@@ -180,9 +189,9 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 	GetSystemTime(&now);
 
 	// format final message with log level
-	sprintf(
-		messageWithLevelBuffer,
-		"%02d-%02d-%04d %02d:%02d:%02d.%03d - %s %s\n",
+	auto logMessage = FormatString(
+		LOG_FORMAT,
+		LOG_FORMAT_LENGTH,
 		now.wDay,
 		now.wMonth,
 		now.wYear,
@@ -191,7 +200,7 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 		now.wSecond,
 		now.wMilliseconds,
 		Log_Level_To_String(logLevel),
-		messageBuffer
+		formattedMessage
 	);
 
 	if (!FAILED_TO_OPEN_LOG_FILE && LOG_FILE_HANDLE == NULL)
@@ -202,16 +211,15 @@ void Log(LogLevel logLevel, const char* messageFormat, ...)
 	// output to log file and console
 	if (!FAILED_TO_OPEN_LOG_FILE)
 	{
-		Append_To_File(LOG_FILE_HANDLE, messageWithLevelBuffer);
+		Append_To_File(LOG_FILE_HANDLE, logMessage);
 	}
 
 	if (!ONLY_LOG_ERROR_TO_STD_OUT || logLevel == ERR)
 	{
-		printf("%s", messageWithLevelBuffer);
+		printf(logMessage);
 	}
 
-	delete messageBuffer;
-	delete messageWithLevelBuffer;
+	delete logMessage;
 }
 
 int Get_Log_Line_Length()
