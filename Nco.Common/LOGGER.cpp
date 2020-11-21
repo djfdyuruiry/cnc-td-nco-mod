@@ -133,7 +133,7 @@ static void Load_Default_Log_File_Path()
 
 static void Open_Log_File()
 {
-	if (LOG_FILE_HANDLE != NULL || FAILED_TO_OPEN_LOG_FILE) {
+	if (Win32HandleIsValid(LOG_FILE_HANDLE) || FAILED_TO_OPEN_LOG_FILE) {
 		return;
 	}
 
@@ -147,7 +147,7 @@ static void Open_Log_File()
 	bool errorOccurred = false;
 	LOG_FILE_HANDLE = Open_File_For_Appending(LOG_FILE_PATH, &errorOccurred);
 
-	if (errorOccurred || LOG_FILE_HANDLE == NULL || LOG_FILE_HANDLE == INVALID_HANDLE_VALUE)
+	if (errorOccurred || !Win32HandleIsValid(LOG_FILE_HANDLE))
 	{
 		FAILED_TO_OPEN_LOG_FILE = true;
 
@@ -232,24 +232,12 @@ bool Console_Logging_Enabled()
 
 void Close_Log_File_If_Open()
 {
-	if (
-		FAILED_TO_OPEN_LOG_FILE
-		|| LOG_FILE_HANDLE == NULL
-		|| LOG_FILE_HANDLE == INVALID_HANDLE_VALUE
-	)
+	if (Win32HandleIsValid(LOG_FILE_PATH))
 	{
-		if (LOG_FILE_PATH != NULL)
-		{
-			delete LOG_FILE_PATH;
-		}
-
-		LOG_FILE_HANDLE = NULL;
-		return;
+		Log_Debug("Closing handle for log file: %s", LOG_FILE_PATH);
 	}
 
-	Log_Debug("Closing handle for log file: %s", LOG_FILE_PATH);
-
-	if (!CloseHandle(LOG_FILE_HANDLE))
+	if (!CloseWin32HandleIfValid(LOG_FILE_HANDLE))
 	{
 		With_Win32_Error_Message([&](auto e) {
 			Show_Error("Failed to close handle for log file '%s': %s", LOG_FILE_PATH, e);

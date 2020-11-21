@@ -135,7 +135,7 @@ HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
 		NULL
 	);
 
-	if (file == INVALID_HANDLE_VALUE || file == NULL)
+	if (!Win32HandleIsValid(file))
 	{
 		*errorOccured = true;
 
@@ -147,15 +147,9 @@ HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
 
 void Append_To_File(HANDLE file, char* data)
 {
-	if (file == INVALID_HANDLE_VALUE)
+	if (!Win32HandleIsValid(file))
 	{
 		Show_Error("File handle passed to Append_To_File was invalid");
-		return;
-	}
-
-	if (file == NULL)
-	{
-		Show_Error("File handle passed to Append_To_File was null");
 		return;
 	}
 
@@ -387,8 +381,7 @@ const char* Get_Mod_Data_Path()
 			(LPCSTR)&Get_Mod_Data_Path,
 			&moduleHandle
 		)
-		|| moduleHandle == NULL 
-		|| moduleHandle == INVALID_HANDLE_VALUE
+		|| !Win32HandleIsValid(moduleHandle)
 	)
 	{
 		With_Win32_Error_Message([&](auto e) {
@@ -490,12 +483,12 @@ bool Win32HandleIsValid(HANDLE handle)
 	return handle != NULL && handle != INVALID_HANDLE_VALUE;
 }
 
-void CloseWin32HandleIfValid(HANDLE handle)
+bool CloseWin32HandleIfValid(HANDLE handle)
 {
 	if (!Win32HandleIsValid(handle))
 	{
-		return;
+		return true;
 	}
 
-	CloseHandle(handle);
+	return CloseHandle(handle);
 }

@@ -59,4 +59,4 @@ void Stop_Console_Output();
 
 bool Win32HandleIsValid(HANDLE handle);
 
-void CloseWin32HandleIfValid(HANDLE handle);
+bool CloseWin32HandleIfValid(HANDLE handle);

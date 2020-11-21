@@ -43,18 +43,22 @@ public:
 	static bool CreateFileHandle(const char* path, HANDLE* fileHandle, bool readOnly)
 	{
 		OFSTRUCT ofstruct;
-		*fileHandle = (HANDLE)OpenFile(path, &ofstruct, readOnly ? OF_READ : OF_READWRITE);
+		auto handle = (HANDLE)OpenFile(path, &ofstruct, readOnly ? OF_READ : OF_READWRITE);
 
-		if (*fileHandle == INVALID_HANDLE_VALUE)
+		auto fileOpen = Win32HandleIsValid(handle);
+
+		if (fileOpen)
 		{
-			With_Win32_Error_Message([&] (auto e) {
+			*fileHandle = handle;
+		}
+		else
+		{
+			With_Win32_Error_Message([&](auto e) {
 				Log_Error("Failed to open file '%s': %s", path, e);
 			});
-
-			return false;
 		}
 
-		return true;
+		return fileOpen;
 	}
 
 	static char* ReadFileText(const char* path)
