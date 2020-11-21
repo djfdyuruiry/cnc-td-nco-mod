@@ -7,7 +7,7 @@ typedef unsigned long StringHash;
 class HashUtils final
 {
 private:
-	static const unsigned long HASH_SEED = 5381ul;
+	static const auto HASH_SEED = 5381ul;
 
 	HashUtils()
 	{

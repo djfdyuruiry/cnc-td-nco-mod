@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <windows.h>
 
 void Show_Error(const char* messageFormat, ...);
@@ -9,6 +10,8 @@ const char* Get_Env_Var(const char* envVarName, bool* valueFound);
 char* Get_Win32_Error_Message(DWORD error);
 
 char* Get_Win32_Error_Message();
+
+void With_Win32_Error_Message(std::function<void(const char*)> handler);
 
 HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured);
 

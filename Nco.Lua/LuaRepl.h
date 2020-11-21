@@ -29,7 +29,9 @@ private:
 
 		if (!WriteConsole(stdOut, output, length, NULL, NULL))
 		{
-			Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
+			With_Win32_Error_Message([&] (auto e) {
+				Log_Error("Lua REPL error: %s", e);
+			});
 
 			return false;
 		}
@@ -137,7 +139,9 @@ private:
 		if (!WriteConsole(stdOut, "> ", 2, NULL, NULL)
 			|| !ReadConsole(stdIn, input, MAX_INPUT_LENGTH, &charsRead, NULL))
 		{
-			Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
+			With_Win32_Error_Message([&] (auto e) {
+				Log_Error("Lua REPL error: %s", e);
+			});
 
 			return false;
 		}

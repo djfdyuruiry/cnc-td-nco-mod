@@ -1,13 +1,15 @@
+#include <functional>
 #include <string>
 #include <windows.h>
 
 #include "logger.h"
 #include "strings.h"
+#include "utils.h"
 
 static const auto ONE_HUNDRED_NS_INTERVALS_SINCE_UNIX_EPOCH = 116444736000000000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_MS = 10000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_S = 10000000LL;
-static const auto INT_MIN_STRING_LENGTH = 11;
+static const auto INT_MIN_STRING_LENGTH = 11u;
 
 // length of `\TiberianDawn.xxx`
 static const auto MOD_FILE_NAME_LENGTH = 17u;
@@ -17,9 +19,9 @@ static bool CONSOLE_OPEN = false;
 
 void Show_Error(const char* messageFormat, ...)
 {
-	if (messageFormat == NULL)
+	if (String_Is_Empty(messageFormat))
 	{
-		Show_Error("Message format passed to Show_Error was null");
+		Show_Error("Message format passed to Show_Error was null or blank");
 
 		return;
 	}
@@ -103,6 +105,15 @@ char* Get_Win32_Error_Message()
 	return Get_Win32_Error_Message(
 		GetLastError()
 	);
+}
+
+void With_Win32_Error_Message(std::function<void(const char*)> handler)
+{
+	auto error = Get_Win32_Error_Message();
+
+	handler(error);
+
+	delete error;
 }
 
 HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
@@ -380,7 +391,10 @@ const char* Get_Mod_Data_Path()
 		|| moduleHandle == INVALID_HANDLE_VALUE
 	)
 	{
-		Show_Error("Unable to get handle on module: %s", Get_Win32_Error_Message());
+		With_Win32_Error_Message([&](auto e) {
+			Show_Error("Unable to get handle on module: %s", e);
+		});
+
 		exit(1);
 	}
 
@@ -388,7 +402,10 @@ const char* Get_Mod_Data_Path()
 
 	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
 	{
-		Show_Error("Unable to get mod data path: %s", Get_Win32_Error_Message());
+		With_Win32_Error_Message([&](auto e) {
+			Show_Error("Unable to get mod data path: %s", e);
+		});
+
 		exit(1);
 	}
 
@@ -429,7 +446,9 @@ void Start_Console_Output()
 		&& !AllocConsole()
 		&& !AttachConsole(GetCurrentProcessId()))
 	{
-		Log_Error("Error opening Win32 console: %s", Get_Win32_Error_Message());
+		With_Win32_Error_Message([&](auto e) {
+			Log_Error("Error opening Win32 console: %s", e);
+		});
 
 		exit(1);
 	}

@@ -30,11 +30,11 @@ char* Convert_String_To_Upper_Case(const char* subject);
 
 char** Parse_Csv_String(const char* csvString, unsigned int entrySize, unsigned int* csvEntryCount, const char* seperator = ",");
 
-char* FormatString(const char* format, int maxLength, va_list formatArgs);
+char* FormatString(const char* format, unsigned int maxLength, va_list formatArgs);
 
 char* FormatString(const char* format, va_list formatArgs);
 
-char* FormatString(const char* format, int maxLength, ...);
+char* FormatString(const char* format, unsigned int maxLength, ...);
 
 char* FormatString(const char* format, ...);
 

@@ -2,8 +2,8 @@
 
 #include "utils.h"
 
-static const auto COMMA = ",";
-static const auto EMPTY_STRING = "";
+static auto COMMA = ",";
+static auto EMPTY_STRING = "";
 
 char* Allocate_String(unsigned int length)
 {
@@ -240,7 +240,7 @@ char** Parse_Csv_String(const char* csvString, unsigned int entrySize, unsigned 
 	return csvEntries;
 }
 
-char* FormatString(const char* format, int maxLength, va_list formatArgs)
+char* FormatString(const char* format, unsigned int maxLength, va_list formatArgs)
 {
 	auto stringBuffer = Allocate_String(maxLength);
 
@@ -254,7 +254,7 @@ char* FormatString(const char* format, va_list formatArgs)
 	return FormatString(format, 1024, formatArgs);
 }
 
-char* FormatString(const char* format, int maxLength, ...)
+char* FormatString(const char* format, unsigned  int maxLength, ...)
 {
 	va_list formatArgs;
 	va_start(formatArgs, maxLength);

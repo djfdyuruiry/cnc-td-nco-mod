@@ -47,11 +47,9 @@ public:
 
 		if (*fileHandle == INVALID_HANDLE_VALUE)
 		{
-			auto error = Get_Win32_Error_Message();
-
-			Log_Error("Failed to open file '%s': %s", path, error);
-
-			delete error;
+			With_Win32_Error_Message([&] (auto e) {
+				Log_Error("Failed to open file '%s': %s", path, e);
+			});
 
 			return false;
 		}
@@ -76,12 +74,11 @@ public:
 
 		if (!ReadFile(fileHandle, data, fileSize, NULL, NULL))
 		{
-			auto error = Get_Win32_Error_Message();
-
-			Log_Error("Failed to read text from file '%s': %s", path, error);
+			With_Win32_Error_Message([&] (auto e) {
+				Log_Error("Failed to read text from file '%s': %s", path, e);
+			});
 
 			delete data;
-			delete error;
 
 			return NULL;
 		}

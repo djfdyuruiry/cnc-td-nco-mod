@@ -12,8 +12,6 @@ enum LogLevel : unsigned short {
 
 const char* Log_Level_To_String(LogLevel level);
 
-LogLevel Parse_Log_Level(char* levelString);
-
 LogLevel Parse_Log_Level(const char* levelString);
 
 int Get_Log_Line_Length();

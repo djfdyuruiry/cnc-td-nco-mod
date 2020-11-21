@@ -55,7 +55,9 @@ public:
 
 		if (!threadRunning)
 		{
-			Log_Error("Failed to start thread '%s': %s", name, Get_Win32_Error_Message());
+			With_Win32_Error_Message([&] (auto e) {
+				Log_Error("Failed to start thread '%s': %s", name, e);
+			});
 
 			threadHandle = NULL;
 		}
@@ -80,7 +82,9 @@ public:
 
 		if (threadRunning)
 		{
-			Log_Error("Failed to stop thread '%s': %s", name, Get_Win32_Error_Message());
+			With_Win32_Error_Message([&] (auto e) {
+				Log_Error("Failed to stop thread '%s': %s", name, e);
+			});
 
 			return false;
 		}

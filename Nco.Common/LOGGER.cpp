@@ -8,10 +8,11 @@
 #include "utils.h"
 
 static auto LOG_FORMAT = "%02d-%02d-%04d %02d:%02d:%02d.%03d - %s %s\n";
-static const auto LOG_LINE_LENGTH = 25600;
-static const auto LOG_LEVEL_LENGTH = 5;
-static const auto LOG_TIMESTAMP_LENGTH = 27;
-static const auto LOG_FORMAT_LENGTH = LOG_TIMESTAMP_LENGTH + 3 + LOG_LEVEL_LENGTH + LOG_LINE_LENGTH;
+static const auto LOG_LINE_LENGTH = 25600u;
+static const auto LOG_LEVEL_LENGTH = 5u;
+static const auto LOG_TIMESTAMP_LENGTH = 20u;
+static const auto LOG_SPACING_LENGTH = 4u;
+static const auto LOG_FORMAT_LENGTH = LOG_TIMESTAMP_LENGTH + LOG_SPACING_LENGTH + LOG_LEVEL_LENGTH + LOG_LINE_LENGTH;
 
 static char* CURRENT_LOG_FILE_PATH = NULL;
 static LogLevel CURRENT_LOG_LEVEL = OFF;
@@ -41,7 +42,7 @@ const char* Log_Level_To_String(LogLevel level)
 	}
 }
 
-LogLevel Parse_Log_Level(char* levelString)
+LogLevel Parse_Log_Level(const char* levelString)
 {
 	auto logLevel = INFO;
 
@@ -71,17 +72,6 @@ LogLevel Parse_Log_Level(char* levelString)
 	}
 
 	return logLevel;
-}
-
-LogLevel Parse_Log_Level(const char* levelString)
-{
-	auto levelStr = strdup(levelString);
-
-	auto level = Parse_Log_Level(levelStr);
-
-	delete levelStr;
-
-	return level;
 }
 
 void Set_Current_Log_Path(const char* path)
@@ -161,11 +151,9 @@ static void Open_Log_File()
 	{
 		FAILED_TO_OPEN_LOG_FILE = true;
 
-		Show_Error(
-			"Failed to open log file: %s\n\nCheck folder is present and you have permission to access it: %s",
-			Get_Win32_Error_Message(),
-			LOG_FILE_PATH
-		);
+		With_Win32_Error_Message([&](auto e) {
+			Show_Error("Failed to close handle for log file '%s': %s", LOG_FILE_PATH, e);
+		});
 	}
 }
 
@@ -263,7 +251,9 @@ void Close_Log_File_If_Open()
 
 	if (!CloseHandle(LOG_FILE_HANDLE))
 	{
-		Show_Error("Failed to close handle for log file '%s': %s", LOG_FILE_PATH, Get_Win32_Error_Message());
+		With_Win32_Error_Message([&](auto e) {
+			Show_Error("Failed to close handle for log file '%s': %s", LOG_FILE_PATH, e);
+		});
 	}
 
 	delete LOG_FILE_PATH;

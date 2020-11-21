@@ -23,6 +23,7 @@ private:
 
         WithMethod("getEventNames", this, GetEventNamesProxy, [](LuaFunctionInfo& f) {
             f.WithDescription("Get a list of game events");
+            // TODO: return type
         });
     }
 
