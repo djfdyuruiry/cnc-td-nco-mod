@@ -35,9 +35,7 @@ private:
 
 	IRulesIni& DoSourceRulesFrom(const char* rulesFileName)
 	{
-		auto fullRulesFilePath = Allocate_String(MAX_PATH);
-
-		sprintf(fullRulesFilePath, "%s\\%s", Get_Mod_Data_Path(), rulesFileName);
+		auto fullRulesFilePath = FormatString("%s\\%s", MAX_PATH, Get_Mod_Data_Path(), rulesFileName);
 
 		if (!FileUtils::IsFile(fullRulesFilePath))
 		{

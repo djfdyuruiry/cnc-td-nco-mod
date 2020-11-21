@@ -84,11 +84,7 @@ private:
 		uppercaseName = Convert_String_To_Upper_Case(name);
 		key = RuleHashUtils::BuildRuleKey(section, name);
 
-		auto keyStr = Allocate_String(RULES_INI_ID_SIZE * 2 + 4);
-
-		sprintf(keyStr, "%s -> %s", section, name);
-
-		stringKey = keyStr;
+		stringKey = FormatString("%s -> %s", RULES_INI_ID_SIZE * 2 + 4, section, name);
 	}
 
 	void SetDefaultForRuleType()
@@ -227,6 +223,9 @@ public:
 		delete &valueToAllowAlways;
 
 		delete &validValues;
+
+		delete &uppercaseName;
+		delete &stringKey;
 	}
 
 	RulesIniRule& OfType(RulesIniType type)

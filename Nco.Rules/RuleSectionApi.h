@@ -10,6 +10,8 @@
 class RuleSectionApi : public LuaApi
 {
 private:
+    const int MAX_VALUE_LENGTH = 32;
+
     SectionName titleCaseSectionName;
     IRulesIniSection& section;
 
@@ -85,7 +87,7 @@ private:
         {
             if (Current_Log_Level() == TRACE)
             {
-                auto valueStr = Allocate_String(32);
+                auto valueStr = Allocate_String(MAX_VALUE_LENGTH);
 
                 rule.WriteValueToString(valueStr);
 
@@ -100,7 +102,7 @@ private:
         {
             if (Current_Log_Level() == TRACE)
             {
-                auto valueStr = Allocate_String(32);
+                auto valueStr = Allocate_String(MAX_VALUE_LENGTH);
 
                 rule.WriteDefaultValueToString(valueStr);
 
@@ -153,7 +155,7 @@ private:
 
         if (setOk && Current_Log_Level() == TRACE)
         {
-            auto valueStr = Allocate_String(32);
+            auto valueStr = Allocate_String(MAX_VALUE_LENGTH);
 
             rule.WriteValueToString(valueStr);
 

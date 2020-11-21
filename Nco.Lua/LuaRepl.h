@@ -12,6 +12,8 @@
 class LuaRepl : public Thread
 {
 private:
+	const int MAX_INPUT_LENGTH = 2048;
+
 	ILuaRuntime& luaRuntime;
 	HANDLE stdOut;
 	HANDLE stdIn;
@@ -125,7 +127,7 @@ private:
 		}
 
 		// reset all C and Lua variables
-		input = Allocate_String(2048);
+		input = Allocate_String(MAX_INPUT_LENGTH);
 
 		luaRuntime.GetState().ClearStack();
 
@@ -133,7 +135,7 @@ private:
 		DWORD charsRead;
 
 		if (!WriteConsole(stdOut, "> ", 2, NULL, NULL)
-			|| !ReadConsole(stdIn, input, 2048, &charsRead, NULL))
+			|| !ReadConsole(stdIn, input, MAX_INPUT_LENGTH, &charsRead, NULL))
 		{
 			Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
 

@@ -9,11 +9,10 @@
 using namespace std;
 
 static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
-
-static bool EVENTS_INITIALISED = false;
-
+static const auto MAX_EVENT_ARGS_LENGTH = 1024;
 static const auto LUA_EVENT_COUNT = 3u;
 
+static bool EVENTS_INITIALISED = false;
 static const char** LUA_EVENTS = NULL;
 
 static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil", ...)
@@ -26,18 +25,14 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
 
     Log_Trace("Firing Lua event: %s", name);
 
-    auto argumentsBuffer = Allocate_String(1024);
-
     va_list formatArgs;
     va_start(formatArgs, argumentFormat);
 
-    vsnprintf(argumentsBuffer, 1024, argumentFormat, formatArgs);
+    auto argumentsBuffer = FormatString(argumentFormat, MAX_EVENT_ARGS_LENGTH, formatArgs);
 
     va_end(formatArgs);
 
-    auto scriptBuffer = Allocate_String(2048);
-
-    sprintf(scriptBuffer, FIRE_EVENT_FORMAT, name, argumentsBuffer);
+    auto scriptBuffer = FormatString(FIRE_EVENT_FORMAT, MAX_EVENT_ARGS_LENGTH * 2, name, argumentsBuffer);
 
     delete argumentsBuffer;
 

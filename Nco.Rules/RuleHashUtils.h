@@ -17,9 +17,7 @@ public:
 
 	static StringHash BuildRuleKey(const char* section, const char* ruleName)
 	{
-		auto keyString = Allocate_String(MAX_KEY_LENGTH);
-
-		sprintf(keyString, "%s__%s", section, ruleName);
+		auto keyString = FormatString("%s__%s", MAX_KEY_LENGTH, section, ruleName);
 
 		auto hash = HashUtils::HashString(keyString);
 

@@ -7,6 +7,7 @@
 static const auto ONE_HUNDRED_NS_INTERVALS_SINCE_UNIX_EPOCH = 116444736000000000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_MS = 10000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_S = 10000000LL;
+static const auto INT_MIN_STRING_LENGTH = 11;
 
 // length of `\TiberianDawn.xxx`
 static const auto MOD_FILE_NAME_LENGTH = 17u;
@@ -23,13 +24,10 @@ void Show_Error(const char* messageFormat, ...)
 		return;
 	}
 
-	auto logLineLength = Get_Log_Line_Length();
-	auto formattedMessageBuffer = Allocate_String(logLineLength);
-
 	va_list formatArgs;
 	va_start(formatArgs, messageFormat);
 
-	vsnprintf(formattedMessageBuffer, logLineLength, messageFormat, formatArgs);
+	auto formattedMessageBuffer = FormatString(messageFormat, Get_Log_Line_Length(), formatArgs);
 
 	va_end(formatArgs);
 
@@ -247,7 +245,7 @@ int Parse_Number(char character)
 
 char* Convert_Number_To_String(int number)
 {
-	auto numberBuffer = Allocate_String(11); // INT_MIN string length
+	auto numberBuffer = Allocate_String(INT_MIN_STRING_LENGTH);
 
 	itoa(number, numberBuffer, 10);
 
@@ -413,13 +411,7 @@ const char* Get_Mod_Data_Path()
 
 char* Build_Mod_Data_File_Path(const char* filePath)
 {
-	auto modPath = Get_Mod_Data_Path();
-
-	auto fullFilePath = Allocate_String(MAX_PATH);
-
-	sprintf(fullFilePath, "%s\\%s", modPath, filePath);
-
-	return fullFilePath;
+	return FormatString("%s\\%s", Get_Mod_Data_Path(), filePath);
 }
 
 void Start_Console_Output()

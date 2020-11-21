@@ -531,9 +531,9 @@ private:
         WithFunction("clearHouseMessages", Lua_Clear_House_Messages, [](LuaFunctionInfo& f) {
             f.WithDescription("Cancel any pending events for a given house (enable/disable superweapon etc.)")
              .WithParameter("houseName", [](LuaVariableInfo& p) {
-                p.WithDescription("Name of the house to cancelevents for")
-                 .WithType(LuaType::String);
-             })
+                 p.WithDescription("Name of the house to cancelevents for")
+                  .WithType(LuaType::String);
+             });
         });
     }
 
