@@ -263,7 +263,7 @@ AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 		return Pointers[type];
 	}
 
-	Log_Debug("Initialising Aircraft types");
+	LogDebug("Initialising Aircraft types");
 
 	auto aircraftCount = Read_Aircraft_Count();
 

@@ -199,11 +199,11 @@ int DLL_Startup(const char * command_line_in)
 		return (EXIT_SUCCESS);
 	}
 
-	Log_Trace("Attempting NCO startup");
+	LogTrace("Attempting NCO startup");
 
 	if (!NCO_Startup())
 	{
-		Log_Error("NCO startup FAILED!");
+		LogError("NCO startup FAILED!");
 
 		NCO_Shutdown();
 

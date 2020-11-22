@@ -566,7 +566,7 @@ void CCDebugString (char *string)
 {
 	if (NcoRulesRuntime().ReadRuleValue<bool>(DEBUG_LOGGING_RULE_KEY))
 	{
-		Log_Debug("CCDebugString => %s", string);
+		LogDebug("CCDebugString => %s", string);
 	}
 
 #if (0)

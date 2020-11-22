@@ -72,7 +72,7 @@ protected:
 			return false;
 		}
 
-		Log_Info("Setting up new mod %s type: %s", typeName, typeString);
+		LogInfo("Setting up new mod %s type: %s", typeName, typeString);
 
 		bool parseError = false;
 		auto baseType = ParseType(baseTypeString, &parseError);
@@ -82,7 +82,7 @@ protected:
 			return false;
 		}
 
-		Log_Info("Mod %s type base: %s", typeName, baseTypeString);
+		LogInfo("Mod %s type base: %s", typeName, baseTypeString);
 
 		auto typeClone = CloneType(baseTypeString, typeString, baseType, type);
 
@@ -90,7 +90,7 @@ protected:
 
 		ReadRulesAndAddType(typeClone);
 
-		Log_Info("Mod %s type setup successful", typeName);
+		LogInfo("Mod %s type setup successful", typeName);
 
 		return true;
 	}
@@ -119,16 +119,16 @@ public:
 	{
 		if (modTypes.size() > 0)
 		{
-			Log_Debug("Attempt was made to initialise %s mod types more than once, ignoring", typeName);
+			LogDebug("Attempt was made to initialise %s mod types more than once, ignoring", typeName);
 			return;
 		}
 
-		Log_Info("Reading %s Mod Types", typeName);
+		LogInfo("Reading %s Mod Types", typeName);
 
 		auto newTypesCsv = runtime.ReadRuleValue<char*>(MOD_RULES_SECTION_NAME, modTypesRule);
 
 		if (String_Is_Empty(newTypesCsv)) {
-			Log_Debug("No %s mod types found", typeName);
+			LogDebug("No %s mod types found", typeName);
 			return;
 		}
 
@@ -136,7 +136,7 @@ public:
 		auto modTypeCsvEntries = Parse_Csv_String(newTypesCsv, RulesIniRule::RULES_INI_ID_SIZE, &newTypesCount);
 
 		if (newTypesCount < 1u || modTypeCsvEntries == NULL) {
-			Log_Debug("No %s mod types found", typeName);
+			LogDebug("No %s mod types found", typeName);
 			return;
 		}
 
@@ -157,8 +157,8 @@ public:
 			.GetRule(typeCountRule)
 			.SetValue(totalModTypeCount);
 
-		Log_Info("Mod %s types read: %s", typeName, newTypesCsv);
-		Log_Info("Total game %s types: %u", typeName, totalModTypeCount);
+		LogInfo("Mod %s types read: %s", typeName, newTypesCsv);
+		LogInfo("Total game %s types: %u", typeName, totalModTypeCount);
 	}
 
 	bool InitialiseTypes()
@@ -168,7 +168,7 @@ public:
 			return initialised;
 		}
 
-		Log_Info("Initialising %s Mod Types", typeName);
+		LogInfo("Initialising %s Mod Types", typeName);
 
 		initialised = true;
 
@@ -201,7 +201,7 @@ public:
 
 		if (initialised)
 		{
-			Log_Info("%s Mod Types Initialised", typeName);
+			LogInfo("%s Mod Types Initialised", typeName);
 		}
 
 		return initialised;

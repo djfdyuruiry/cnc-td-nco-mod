@@ -1,7 +1,7 @@
 #include <map>
 #include <queue>
 
-#include <logger.h>
+#include <Logger.h>
 #include <utils.h>
 
 #include "game_messages.h"
@@ -69,7 +69,7 @@ static void Process_Game_Ui_Message(std::map<unsigned int, bool>& messageTypesPr
 
 	if (messageTypesProcessed.find(type) != messageTypesProcessed.end())
 	{
-		Log_Trace("Dropping duplicate UI message for game tick: %u", type);
+		LogTrace("Dropping duplicate UI message for game tick: %u", type);
 
 		GAME_UI_MESSAGE_QUEUE.pop();
 
@@ -80,7 +80,7 @@ static void Process_Game_Ui_Message(std::map<unsigned int, bool>& messageTypesPr
 	
 	if (!processResult)
 	{
-		Log_Error("Encountered unknown Game UI message type: %u", type);
+		LogError("Encountered unknown Game UI message type: %u", type);
 
 		GAME_UI_MESSAGE_QUEUE.pop();
 
@@ -139,7 +139,7 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 	}
 	else
 	{
-		Log_Debug("Encountered Unknown Game Loop message type : %u", type);
+		LogDebug("Encountered Unknown Game Loop message type : %u", type);
 	}
 }
 

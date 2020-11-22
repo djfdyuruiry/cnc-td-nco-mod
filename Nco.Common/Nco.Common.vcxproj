@@ -19,7 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="logger.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LogLevel.cpp" />
     <ClCompile Include="strings.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
@@ -27,7 +28,7 @@
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="HashUtils.h" />
     <ClInclude Include="IniReader.h" />
-    <ClInclude Include="logger.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="TypePatterns.h" />
     <ClInclude Include="strings.h" />

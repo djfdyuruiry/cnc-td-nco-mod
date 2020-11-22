@@ -63,7 +63,7 @@ public:
 
 	ILuaRuntime& RegisterApi(const char* name, LuaApiInitialiser initialiser)
 	{
-		Log_Debug("Registering Lua API: %s", name);
+		LogDebug("Registering Lua API: %s", name);
 
 		auto& api = LuaApi::Build().WithName(name);
 

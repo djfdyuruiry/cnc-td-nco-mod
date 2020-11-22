@@ -1,6 +1,6 @@
 #pragma once
 
-#include <logger.h>
+#include <Logger.h>
 
 #include "IRulesIni.h"
 #include "RulesIniReader.h"

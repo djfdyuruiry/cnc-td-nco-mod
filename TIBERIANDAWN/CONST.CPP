@@ -132,11 +132,11 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 {
 	if (Pointers != NULL)
 	{
-		Log_Trace("Weapon lookup by type: %d", type);
+		LogTrace("Weapon lookup by type: %d", type);
 		return Pointers[type];
 	}
 
-	Log_Trace("WeaponTypeClass::ByType Initializing Weapons");
+	LogTrace("WeaponTypeClass::ByType Initializing Weapons");
 	
 	auto weaponCount = Read_Weapon_Count();
 
@@ -276,7 +276,7 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 		//Log_Trace("Warhead lookup by type: %d", type);
 		return Pointers[type];
 	}
-	Log_Trace("WTC By_Type Initialize Watheads");
+	LogTrace("WTC By_Type Initialize Watheads");
 	auto warheadCount = Read_Warhead_Count();
 	Pointers = new WarheadTypeClass const* [warheadCount] {
 		&WH_SA,

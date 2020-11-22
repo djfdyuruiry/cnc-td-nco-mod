@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-#include "logger.h"
+#include "Logger.h"
 #include "strings.h"
 #include "utils.h"
 
@@ -54,11 +54,41 @@ public:
 		else
 		{
 			With_Win32_Error_Message([&](auto e) {
-				Log_Error("Failed to open file '%s': %s", path, e);
+				LogError("Failed to open file '%s': %s", path, e);
 			});
 		}
 
 		return fileOpen;
+	}
+
+
+	static HANDLE OpenFileForAppending(const char* filename, bool* errorOccured)
+	{
+		if (String_Is_Empty(filename))
+		{
+			Show_Error("Filename passed to OpenFileForAppending was null or empty");
+
+			return NULL;
+		}
+
+		auto file = CreateFile(
+			filename,
+			FILE_APPEND_DATA,
+			FILE_SHARE_READ,
+			NULL,
+			OPEN_ALWAYS,
+			FILE_ATTRIBUTE_NORMAL,
+			NULL
+		);
+
+		if (!Win32HandleIsValid(file))
+		{
+			*errorOccured = true;
+
+			return NULL;
+		}
+
+		return file;
 	}
 
 	static char* ReadFileText(const char* path)
@@ -79,7 +109,7 @@ public:
 		if (!ReadFile(fileHandle, data, fileSize, NULL, NULL))
 		{
 			With_Win32_Error_Message([&] (auto e) {
-				Log_Error("Failed to read text from file '%s': %s", path, e);
+				LogError("Failed to read text from file '%s': %s", path, e);
 			});
 
 			delete data;
@@ -89,4 +119,30 @@ public:
 
 		return data;
 	}
+
+	static void AppendTextToFile(HANDLE file, char* data)
+	{
+		if (String_Is_Empty(data))
+		{
+			return;
+		}
+
+		if (!Win32HandleIsValid(file))
+		{
+			Show_Error("File handle passed to WriteTextToFile was invalid");
+			return;
+		}
+
+		DWORD written;
+
+		// TODO: consider dealing with return val
+		WriteFile(
+			file,
+			data,
+			strlen(data),
+			&written,
+			NULL
+		);
+	}
+
 };

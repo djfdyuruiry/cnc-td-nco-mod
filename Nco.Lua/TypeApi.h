@@ -27,7 +27,7 @@ private:
 
 	TypeApiParameters<T>& GetParameters(const char* operation, ILuaStateWrapper& luaState)
 	{
-		Log_Trace("%s%sRule called from Lua", operation, titleCaseTypeName);
+		LogTrace("%s%sRule called from Lua", operation, titleCaseTypeName);
 
 		int argCount = luaState.GetStackTop();
 
@@ -109,13 +109,13 @@ private:
 			return 0;
 		}
 
-		Log_Debug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
+		LogDebug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
 
 		auto& readResult = ReadRule(luaState, *params.typeInstance, params.ruleName);
 
 		if (!readResult.IsErrorResult())
 		{
-			Log_Debug("get%sRule => Read rule success", titleCaseTypeName);
+			LogDebug("get%sRule => Read rule success", titleCaseTypeName);
 
 			delete &params;
 			delete &readResult;
@@ -142,13 +142,13 @@ private:
 			return 0;
 		}
 
-		Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
+		LogDebug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
 
 		auto& writeResult = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
 
 		if (!writeResult.IsErrorResult())
 		{
-			Log_Debug("set%sRule => Write rule success", titleCaseTypeName);
+			LogDebug("set%sRule => Write rule success", titleCaseTypeName);
 
 			delete &params;
 			delete &writeResult;

@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include <logger.h>
+#include <Logger.h>
 #include <HashUtils.h>
 
 #include "IGameMod.h"
@@ -48,7 +48,7 @@ public:
 
 		typesRead = true;
 
-		Log_Info("Reading NCO mod types");
+		LogInfo("Reading NCO mod types");
 
 		for (auto [_, mod] : mods)
 		{
@@ -58,7 +58,7 @@ public:
 
 	bool InitaliseTypes()
 	{
-		Log_Info("Initialising NCO mod types");
+		LogInfo("Initialising NCO mod types");
 
 		auto initSuccess = true;
 
@@ -79,7 +79,7 @@ public:
 
 		mods[mod.GetTypeKey()] = (IGameMod*)&mod;
 
-		Log_Info("NCO mod registered: %s", mod.GetTypeName());
+		LogInfo("NCO mod registered: %s", mod.GetTypeName());
 
 		return *this;
 	}

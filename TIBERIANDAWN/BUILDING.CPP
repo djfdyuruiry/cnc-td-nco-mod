@@ -1346,7 +1346,7 @@ void BuildingClass::AI(void)
 					**	producing it now.
 					*/
 					if (techno) {
-						Log_Debug("Resolved new type for AI to build: %s", techno->IniName);
+						LogDebug("Resolved new type for AI to build: %s", techno->IniName);
 
 						Factory = new FactoryClass;
 						if (Factory) {

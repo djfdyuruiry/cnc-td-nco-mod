@@ -1,6 +1,6 @@
 #pragma once
 
-#include <logger.h>
+#include <Logger.h>
 #include <TypePatterns.h>
 
 #include "IRulesIni.h"
@@ -56,7 +56,7 @@ protected:
 
 		if (!ruleValueOptional.Present())
 		{
-			Log_Trace("No rules ini value found, default will be used");
+			LogTrace("No rules ini value found, default will be used");
 
 			delete& ruleValueOptional;
 
@@ -78,14 +78,14 @@ protected:
 	{
 		auto defaultValue = rule.GetDefaultValueOr(0u);
 
-		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
-		Log_Trace("Default value: %u", defaultValue);
+		LogTrace("Resolving rule value: %s", rule.GetStringKey());
+		LogTrace("Default value: %u", defaultValue);
 
 		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
-			Log_Trace("No rules ini value found, default will be used");
+			LogTrace("No rules ini value found, default will be used");
 
 			delete& ruleValueOptional;
 
@@ -114,7 +114,7 @@ protected:
 
 		auto ruleValue = strtoul(ruleValueStr, NULL, 10);
 
-		Log_Trace("Rules ini value: %s", ruleValueStr);
+		LogTrace("Rules ini value: %s", ruleValueStr);
 
 		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<unsigned int>())
 		{
@@ -135,8 +135,8 @@ protected:
 			}
 		}
 
-		Log_Trace("Resolved value: %u", ruleValue);
-		Log_Debug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
+		LogTrace("Resolved value: %u", ruleValue);
+		LogDebug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
 		delete& ruleValueOptional;
@@ -148,14 +148,14 @@ protected:
 	{
 		auto defaultValue = rule.GetDefaultValueOr(0.0);
 
-		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
-		Log_Trace("Default value: %f", defaultValue);
+		LogTrace("Resolving rule value: %s", rule.GetStringKey());
+		LogTrace("Default value: %f", defaultValue);
 
 		auto& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
-			Log_Trace("No rules ini value found, default will be used");
+			LogTrace("No rules ini value found, default will be used");
 
 			if (valueFound != NULL)
 			{
@@ -194,7 +194,7 @@ protected:
 
 		auto ruleValue = strtod(ruleValueStr, NULL);
 
-		Log_Trace("Rules ini value: %s", ruleValueStr);
+		LogTrace("Rules ini value: %s", ruleValueStr);
 
 		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<double>())
 		{
@@ -215,8 +215,8 @@ protected:
 			}
 		}
 
-		Log_Trace("Resolved value: %f", ruleValue);
-		Log_Debug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
+		LogTrace("Resolved value: %f", ruleValue);
+		LogDebug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
 		delete& ruleValueOptional;

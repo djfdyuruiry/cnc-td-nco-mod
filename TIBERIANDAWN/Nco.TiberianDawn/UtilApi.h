@@ -3,7 +3,7 @@
 #include <vector>
 
 #include <ILuaStateWrapper.h>
-#include <logger.h>
+#include <Logger.h>
 #include <LuaFunctionInfo.h>
 #include <LuaVariableInfo.h>
 #include <strings.h>
@@ -65,7 +65,7 @@ private:
 
     static int Lua_Toggle_Console_Logging(lua_State* _)
     {
-        Toggle_Console_Logging();
+        GetLogger().ToggleConsoleLogging();
 
         return 0;
     }
@@ -96,11 +96,11 @@ private:
         auto logLevelStr = logLevelStrResult.GetValue();
         auto logLevelUpper = Convert_String_To_Upper_Case(logLevelStr);
 
-        auto logLevel = Parse_Log_Level(logLevelUpper);
+        auto logLevel = ParseLogLevel(logLevelUpper);
 
         delete logLevelUpper;
 
-        Set_Current_Log_Level(logLevel);
+        GetLogger().SetLogLevel(logLevel);
 
         delete &logLevelStrResult;
 
@@ -110,7 +110,7 @@ private:
     static int Lua_Get_Log_Level(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
-        auto logLevel = Log_Level_To_String(Current_Log_Level());
+        auto logLevel = LogLevelToString(GetLogger().GetLogLevel());
 
         luaState.WriteString(logLevel);
 
@@ -173,7 +173,7 @@ private:
         {
             auto& logMessageResult = luaState.ReadString(1);
 
-            Log_Info("Lua => %s", logMessageResult.GetValue());
+            LogInfo("Lua => %s", logMessageResult.GetValue());
 
             delete &logMessageResult;
         }

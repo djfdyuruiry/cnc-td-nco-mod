@@ -1698,7 +1698,7 @@ UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 		return Pointers[type];
 	}
 
-	Log_Debug("UTC Initialising unit types");
+	LogDebug("UTC Initialising unit types");
 
 	auto unitCount = Read_Unit_Count();
 
@@ -1732,7 +1732,7 @@ UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 
 void UnitTypeClass::Read_Unit_Rules(UnitTypeClass* unit)
 {
-	Log_Trace("UnitTypeClass::Read_Unit_Rules");
+	LogTrace("UnitTypeClass::Read_Unit_Rules");
 	auto iniName = unit->IniName;
 
 	Read_Object_Rules(unit);

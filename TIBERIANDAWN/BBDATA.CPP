@@ -527,7 +527,7 @@ BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
 		return Pointers[type];
 	}
 
-	Log_Debug("Initialising Bullet types");
+	LogDebug("Initialising Bullet types");
 
 	auto BulletCount = Read_Bullet_Count();
 
@@ -680,12 +680,12 @@ void BulletTypeClass::Add_Bullet_Type(BulletTypeClass* bulletInstance)
  *=============================================================================================*/
 void BulletTypeClass::One_Time(void)
 {
-	Log_Trace("BulletTypeClass::One_Time start");
+	LogTrace("BulletTypeClass::One_Time start");
 
 	BulletType index;
 	char bulletCount = Read_Bullet_Count();
 	
-	Log_Trace("BulletTypeClass::One_Time bulletCount %d", bulletCount);
+	LogTrace("BulletTypeClass::One_Time bulletCount %d", bulletCount);
 
 	/*
 	**	Load the bullet shapes.
@@ -695,21 +695,21 @@ void BulletTypeClass::One_Time(void)
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char* iniName = bullet->Resolve_Ini_Name();
 
-		Log_Trace("BulletTypeClass::One_Time iniName %s", iniName);
+		LogTrace("BulletTypeClass::One_Time iniName %s", iniName);
 
 		if (!bullet->IsInvisible) {
-			Log_Trace("BulletTypeClass::One_Time ImageName %s", iniName);
+			LogTrace("BulletTypeClass::One_Time ImageName %s", iniName);
 
 			_makepath(fullname, NULL, NULL, iniName, ".SHP");
 
 			RawFileClass file(fullname);
 
 			if (file.Is_Available()) {
-				Log_Trace("BulletTypeClass::One_Time loading file %s", file);
+				LogTrace("BulletTypeClass::One_Time loading file %s", file);
 
 				((void const *&)bullet->ImageData) = Load_Alloc_Data(file);
 			} else {
-				Log_Trace("BulletTypeClass::One_Time retrieve from mix %s", fullname);
+				LogTrace("BulletTypeClass::One_Time retrieve from mix %s", fullname);
 
 				((void const *&)bullet->ImageData) = MixFileClass::Retrieve(fullname);
 			}

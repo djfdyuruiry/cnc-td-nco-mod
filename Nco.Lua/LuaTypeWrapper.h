@@ -125,7 +125,7 @@ public:
 		}
 		else
 		{
-			Log_Warn("No validator configured for field '%s' - value will attempt to be set without validation", fieldName);
+			LogWarn("No validator configured for field '%s' - value will attempt to be set without validation", fieldName);
 		}
 
 		auto& adapter = BuildValueAdapater(fieldKey);

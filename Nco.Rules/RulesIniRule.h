@@ -5,7 +5,7 @@
 
 #include <HashUtils.h>
 #include <ILuaStateWrapper.h>
-#include <logger.h>
+#include <Logger.h>
 #include <strings.h>
 #include <utils.h>
 
@@ -209,7 +209,7 @@ public:
 			LONG_TYPES->push_back(ruleType);
 		}
 
-		Log_Error("Attempted to register extended rule value type, but C++ type used was unsupported. Rule type number: %d", ruleType);
+		LogError("Attempted to register extended rule value type, but C++ type used was unsupported. Rule type number: %d", ruleType);
 	}
 
 	~RulesIniRule()

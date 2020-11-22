@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include <logger.h>
+#include <Logger.h>
 #include <HashUtils.h>
 
 class LuaType final

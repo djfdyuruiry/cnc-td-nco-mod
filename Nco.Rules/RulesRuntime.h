@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <logger.h>
+#include <Logger.h>
 
 #include "lua.h"
 #include "IRulesIni.h"
@@ -44,7 +44,7 @@ private:
 
 	void ReadLuaSettings()
 	{
-		Log_Info("Reading Lua settings from rules ini");
+		LogInfo("Reading Lua settings from rules ini");
 
 		luaIsEnabled = rulesReader->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_SCRIPTS_RULE);
 		luaConsoleIsEnabled = luaIsEnabled && rulesReader->ReadRuleValue<bool>(NCO_RULES_SECTION_NAME, ENABLE_LUA_CONSOLE_RULE);
@@ -72,13 +72,13 @@ private:
 
 	void ReadLogSettings()
 	{
-		Log_Info("Parsing log level and file path from rules ini");
+		LogInfo("Parsing log level and file path from rules ini");
 
 		auto logLevelBuffer = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogLevel");
 
 		Convert_String_To_Upper_Case(logLevelBuffer);
 
-		currentLogLevel = Parse_Log_Level(logLevelBuffer);
+		currentLogLevel = ParseLogLevel(logLevelBuffer);
 		logFilePath = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile");
 
 		delete logLevelBuffer;
@@ -90,12 +90,12 @@ private:
 			.WithRules([](IRulesIniSection& s) {
 				s << s.BuildRule("LogLevel")
 					  .OnlyAccept(std::vector<const char*> {
-						   Log_Level_To_String(OFF),
-						   Log_Level_To_String(ERR),
-						   Log_Level_To_String(WARN),
-						   Log_Level_To_String(INFO),
-						   Log_Level_To_String(DEBUG),
-						   Log_Level_To_String(TRACE)
+						   LogLevelToString(OFF),
+						   LogLevelToString(ERR),
+						   LogLevelToString(WARN),
+						   LogLevelToString(INFO),
+						   LogLevelToString(DEBUG),
+						   LogLevelToString(TRACE)
 					   })
 					   .WithDefault("OFF")
 

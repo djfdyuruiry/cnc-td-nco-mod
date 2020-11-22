@@ -19,7 +19,7 @@ const LuaType& LuaType::Parse(const char* typeName)
 
 	if (index == NameToType->end())
 	{
-		Log_Error("Failed to parse lua type: %s", typeName);
+		LogError("Failed to parse lua type: %s", typeName);
 
 		return *LuaType::Any;
 	}

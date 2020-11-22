@@ -106,7 +106,7 @@ extern bool SpawnedFromWChat;
  *=============================================================================================*/
 bool Init_Game(int , char *[])
 {
-	Log_Debug("Init_Game start");
+	LogDebug("Init_Game start");
 	void const *temp_mouse_shapes;
 
 	CCDebugString ("C&C95 - About to load reslib.dll\n");

@@ -3499,7 +3499,7 @@ BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type)
 		return Pointers[type];
 	}
 
-	Log_Debug("Initialising Building types");
+	LogDebug("Initialising Building types");
 
 	auto BuildingCount = Read_Building_Count();
 
@@ -4591,7 +4591,7 @@ int BuildingTypeClass::Full_Name(void) const
 {
 	if (::Scenario == 3 && Type == STRUCT_MISSION && NcoRulesRuntime().ReadRuleValue<bool>(RENAME_TECH_CENTER_TO_PRISON_RULE_KEY))
 	{
-		Log_Debug("Renaming %s to TXT_PRISON", Structure_Type_To_String(STRUCT_MISSION));
+		LogDebug("Renaming %s to TXT_PRISON", Structure_Type_To_String(STRUCT_MISSION));
 		return(TXT_PRISON);
 	}
 

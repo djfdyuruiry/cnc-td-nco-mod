@@ -1439,7 +1439,7 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 		return Pointers[type];
 	}
 
-	Log_Debug("Initialising infantry types");
+	LogDebug("Initialising infantry types");
 
 	auto infantryCount = Read_Infantry_Count();
 

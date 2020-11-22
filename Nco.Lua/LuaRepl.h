@@ -30,7 +30,7 @@ private:
 		if (!WriteConsole(stdOut, output, length, NULL, NULL))
 		{
 			With_Win32_Error_Message([&] (auto e) {
-				Log_Error("Lua REPL error: %s", e);
+				LogError("Lua REPL error: %s", e);
 			});
 
 			return false;
@@ -140,7 +140,7 @@ private:
 			|| !ReadConsole(stdIn, input, MAX_INPUT_LENGTH, &charsRead, NULL))
 		{
 			With_Win32_Error_Message([&] (auto e) {
-				Log_Error("Lua REPL error: %s", e);
+				LogError("Lua REPL error: %s", e);
 			});
 
 			return false;
@@ -219,12 +219,12 @@ protected:
 			stdOut = NULL;
 			stdIn = NULL;
 
-			Log_Error("Lua REPL error: failed to open I/O streams");
+			LogError("Lua REPL error: failed to open I/O streams");
 
 			return 1;
 		}
 
-		Toggle_Console_Logging();
+		GetLogger().ToggleConsoleLogging();
 		system("cls");
 
 		puts("=======================");
@@ -238,7 +238,7 @@ protected:
 		{
 		}
 
-		Toggle_Console_Logging();
+		GetLogger().ToggleConsoleLogging();
 
 		return processInputResult ? 0 : 1;
 	}

@@ -55,7 +55,7 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
 
     if (loadFailed)
     {
-        Log_Error("Loading NCO lua library failed: %s", loadResult.GetError());
+        LogError("Loading NCO lua library failed: %s", loadResult.GetError());
     }
 
     delete &loadResult;
@@ -65,7 +65,7 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
 
 bool TiberianDawnNcoRuntime::InitialiseLuaApi()
 {
-    Log_Debug("Initialising Lua API functions");
+    LogDebug("Initialising Lua API functions");
 
     auto ncoLibLoadResult = LoadNcoLuaLib(luaRuntime);
 
@@ -201,7 +201,7 @@ void TiberianDawnNcoRuntime::Shutdown()
 
     if (!INSTANCE->InternalShutdown())
     {
-        Log_Error("NCO shutdown failed");
+        LogError("NCO shutdown failed");
     }
 
     delete INSTANCE;

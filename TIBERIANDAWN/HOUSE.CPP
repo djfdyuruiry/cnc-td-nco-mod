@@ -3692,7 +3692,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 
 
 	switch (objecttype) {
-		Log_Trace("Resolving new type for AI to build from factory type: %s", Factory_Type_To_String((FactoryType)objecttype));
+		LogTrace("Resolving new type for AI to build from factory type: %s", Factory_Type_To_String((FactoryType)objecttype));
 
 		/*
 		**	Unit construction is based on the rule that up to twice the number required
@@ -3823,11 +3823,11 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				if (GameToPlay != GAME_NORMAL) {
 					for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 						if (Can_Build(index, Class->House) && InfantryTypeClass::As_Reference(index).Level <= BuildLevel) {
-							Log_Trace("Adding type to counter: %s", Infantry_Type_To_String(index));
+							LogTrace("Adding type to counter: %s", Infantry_Type_To_String(index));
 
 							counter[index] = 16;
 						} else {
-							Log_Trace("Omitting type from counter: %s", Infantry_Type_To_String(index));
+							LogTrace("Omitting type from counter: %s", Infantry_Type_To_String(index));
 
 							counter[index] = 0;
 						}
@@ -3896,7 +3896,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				InfantryType* bestlist = (InfantryType*) calloc(infantryCount, sizeof(InfantryType));
 
 				for (InfantryType utype = INFANTRY_FIRST; utype < infantryCount; utype++) {
-					Log_Trace("AI counter for type %s: %d", Infantry_Type_To_String(utype), counter[utype]);
+					LogTrace("AI counter for type %s: %d", Infantry_Type_To_String(utype), counter[utype]);
 
 					if (counter[utype] > 0 && Can_Build(utype, Class->House) && InfantryTypeClass::As_Reference(utype).Cost_Of() <= Available_Money()) {
 						if (bestval == -1 || bestval < counter[utype]) {
@@ -3904,7 +3904,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 							bestcount = 0;
 						}
 
-						Log_Debug("Adding type to best list: %s", Infantry_Type_To_String(utype));
+						LogDebug("Adding type to best list: %s", Infantry_Type_To_String(utype));
 
 						bestlist[bestcount++] = utype;
 					}

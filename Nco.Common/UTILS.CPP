@@ -2,7 +2,7 @@
 #include <string>
 #include <windows.h>
 
-#include "logger.h"
+#include "Logger.h"
 #include "strings.h"
 #include "utils.h"
 
@@ -29,11 +29,11 @@ void Show_Error(const char* messageFormat, ...)
 	va_list formatArgs;
 	va_start(formatArgs, messageFormat);
 
-	auto formattedMessageBuffer = FormatString(messageFormat, Get_Log_Line_Length(), formatArgs);
+	auto formattedMessageBuffer = FormatString(messageFormat, GetLogger().GetLogLineLength, formatArgs);
 
 	va_end(formatArgs);
 
-	Log_Error(formattedMessageBuffer);
+	LogError(formattedMessageBuffer);
 
 	// we don't want a message box blocking an automated test
 	#ifndef CI_ENV
@@ -114,59 +114,6 @@ void With_Win32_Error_Message(std::function<void(const char*)> handler)
 	handler(error);
 
 	delete error;
-}
-
-HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
-{
-	if (String_Is_Empty(filename))
-	{
-		Show_Error("Filename passed to Open_File_For_Appending was null or empty");
-
-		return NULL;
-	}
-
-	auto file = CreateFile(
-		filename,
-		FILE_APPEND_DATA,
-		FILE_SHARE_READ,
-		NULL,
-		OPEN_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL,
-		NULL
-	);
-
-	if (!Win32HandleIsValid(file))
-	{
-		*errorOccured = true;
-
-		return NULL;
-	}
-
-	return file;
-}
-
-void Append_To_File(HANDLE file, char* data)
-{
-	if (!Win32HandleIsValid(file))
-	{
-		Show_Error("File handle passed to Append_To_File was invalid");
-		return;
-	}
-
-	if (String_Is_Empty(data))
-	{
-		return;
-	}
-
-	DWORD written;
-
-	WriteFile(
-		file,
-		data,
-		strlen(data),
-		&written,
-		NULL
-	);
 }
 
 bool Is_Int_String(char* numberValue)
@@ -414,7 +361,7 @@ const char* Get_Mod_Data_Path()
 
 	delete modDllPath;
 
-	Log_Info("Resolved mod data path: %s", MOD_DATA_PATH);
+	LogInfo("Resolved mod data path: %s", MOD_DATA_PATH);
 
 	return MOD_DATA_PATH;
 }
@@ -431,7 +378,7 @@ void Start_Console_Output()
 #else
 	if (CONSOLE_OPEN)
 	{
-		Log_Warn("Attempt to open Win32 console when it was already open detected, ignoring");
+		LogWarn("Attempt to open Win32 console when it was already open detected, ignoring");
 		return;
 	}
 
@@ -440,7 +387,7 @@ void Start_Console_Output()
 		&& !AttachConsole(GetCurrentProcessId()))
 	{
 		With_Win32_Error_Message([&](auto e) {
-			Log_Error("Error opening Win32 console: %s", e);
+			LogError("Error opening Win32 console: %s", e);
 		});
 
 		exit(1);
@@ -461,13 +408,13 @@ void Stop_Console_Output()
 #else
 	if (!CONSOLE_OPEN)
 	{
-		Log_Warn("Attempt to close Win32 console when it was not alreday open detected, ignoring");
+		LogWarn("Attempt to close Win32 console when it was not alreday open detected, ignoring");
 		return;
 	}
 
 	if (!FreeConsole())
 	{
-		Log_Error("Error closing Win32 console: %s", Get_Win32_Error_Message());
+		LogError("Error closing Win32 console: %s", Get_Win32_Error_Message());
 	}
 
 	fclose(stdout);

@@ -49,7 +49,7 @@ private:
     static int Lua_Clear_House_Messages(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Clear_House_Messages called from Lua");
+        LogTrace("Lua_Clear_House_Messages called from Lua");
 
         auto argCount = luaState.GetStackTop();
 
@@ -168,7 +168,7 @@ private:
         SuperweaponMessageType messageType
     ) {
         auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("%s called from Lua", callingFunctionName);
+        LogTrace("%s called from Lua", callingFunctionName);
 
         auto argCount = luaState.GetStackTop();
 
@@ -244,7 +244,7 @@ private:
     static int Lua_Modifiy_House_Credits(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Modify_House_Credits called from Lua");
+        LogTrace("Lua_Modify_House_Credits called from Lua");
 
         int argCount = luaState.GetStackTop();
 
@@ -274,7 +274,7 @@ private:
 
         if (!housePresent)
         {
-            Log_Error("Ignoring modifyHouseCredits call as house '%s' is not in the current game", House_Type_To_String(houseType));
+            LogError("Ignoring modifyHouseCredits call as house '%s' is not in the current game", House_Type_To_String(houseType));
 
             delete &creditsModifierResult;
 
@@ -293,7 +293,7 @@ private:
     static int Lua_Get_Active_Houses(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Get_Active_Houses called from Lua");
+        LogTrace("Lua_Get_Active_Houses called from Lua");
 
         auto activeHousesCount = Houses.Count();
         auto houses = std::vector<const char*>();
@@ -315,7 +315,7 @@ private:
     static int Lua_Get_Player_Base_House(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Get_Player_House called from Lua");
+        LogTrace("Lua_Get_Player_House called from Lua");
 
         auto playerBaseHouse = House_Type_To_String(PlayerPtr->ActLike);
 
@@ -327,7 +327,7 @@ private:
     static int Lua_Get_Player_House(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Get_Player_House called from Lua");
+        LogTrace("Lua_Get_Player_House called from Lua");
 
         auto playerHouse = House_Type_To_String(PlayerPtr->Class->House);
 
@@ -338,7 +338,7 @@ private:
 
     static int Lua_Hide_Map(lua_State* _)
     {
-        Log_Trace("Lua_Hide_Map called from Lua");
+        LogTrace("Lua_Hide_Map called from Lua");
 
         Push_Hide_Map_Ui_Message();
 
@@ -347,7 +347,7 @@ private:
 
     static int Lua_Reveal_Map(lua_State* _)
     {
-        Log_Trace("Lua_Reveal_Map called from Lua");
+        LogTrace("Lua_Reveal_Map called from Lua");
 
         Push_Reveal_Map_Ui_Message();
 
@@ -356,7 +356,7 @@ private:
 
     static int Lua_Refresh_Map(lua_State* _)
     {
-        Log_Trace("Lua_Refresh_Map called from Lua");
+        LogTrace("Lua_Refresh_Map called from Lua");
 
         Push_Refresh_Map_Ui_Message();
 
@@ -365,7 +365,7 @@ private:
 
     static int Lua_Refresh_Sidebar(lua_State* _)
     {
-        Log_Trace("Lua_Refresh_Sidebar called from Lua");
+        LogTrace("Lua_Refresh_Sidebar called from Lua");
 
         Push_Refresh_Sidebar_Ui_Message();
 
@@ -375,7 +375,7 @@ private:
     static int Lua_Show_Game_Message(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Show_Game_Message called from Lua");
+        LogTrace("Lua_Show_Game_Message called from Lua");
 
         int argCount = luaState.GetStackTop();
 

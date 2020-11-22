@@ -1,4 +1,4 @@
-#include <logger.h>
+#include <Logger.h>
 #include <strings.h>
 #include <utils.h>
 
@@ -19,11 +19,11 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
 {
     if (!NcoRulesRuntime().LuaIsEnabled())
     {
-        Log_Trace("Lua is disabled, skipping firing event: %s", name);
+        LogTrace("Lua is disabled, skipping firing event: %s", name);
         return;
     }
 
-    Log_Trace("Firing Lua event: %s", name);
+    LogTrace("Firing Lua event: %s", name);
 
     va_list formatArgs;
     va_start(formatArgs, argumentFormat);
@@ -44,7 +44,7 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
     }
     else
     {
-        Log_Trace("Lua event fired ok: %s", name);
+        LogTrace("Lua event fired ok: %s", name);
     }
 
     delete& executeResult;
@@ -55,11 +55,11 @@ bool Initialise_Events()
 {
     if (EVENTS_INITIALISED)
     {
-        Log_Warn("Attempted to initialise Lua events more than once, ignoring");
+        LogWarn("Attempted to initialise Lua events more than once, ignoring");
         return true;
     }
 
-    Log_Trace("Initialising Lua events");
+    LogTrace("Initialising Lua events");
 
     auto& executeResult = NcoLuaRuntime().ExecuteScript("Game.Events.initHandlers()");
     auto error = executeResult.IsErrorResult();
