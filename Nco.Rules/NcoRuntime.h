@@ -31,7 +31,7 @@ private:
 		auto& scripts = rulesRuntime.GetLuaScripts();
 
 		for (auto scriptFile : scripts) {
-			auto scriptFilePath = Build_Mod_Data_File_Path(scriptFile);
+			auto scriptFilePath = BuildModDataFilePath(scriptFile);
 			auto& executeResult = luaRuntime.ExecuteFile(scriptFilePath);
 
 			if (executeResult.IsErrorResult())
@@ -90,7 +90,7 @@ protected:
 		luaRuntime(
 			LuaRuntime::Build(
 				LuaStateWrapper::Build(
-					LuaStateFactory::Build(Get_Mod_Data_Path())
+					LuaStateFactory::Build(GetModDataPath())
 				)
 			)
 		),
@@ -187,13 +187,13 @@ public:
 
 		if (!runtime.RulesInitWasSuccessful())
 		{
-			Show_Error("NCO startup failed: rules INI failed validation.\n\nPlease check your rules are valid.");
+			ShowError("NCO startup failed: rules INI failed validation.\n\nPlease check your rules are valid.");
 			return false;
 		}
 
 		if (runtime.GetRulesRuntime().LuaIsEnabled() && !runtime.LuaInitWasSuccessful())
 		{
-			Show_Error("NCO startup failed: errors initialising Lua");
+			ShowError("NCO startup failed: errors initialising Lua");
 			return false;
 		}
 		else
@@ -203,13 +203,13 @@ public:
 
 		if (!runtime.GetModRuntime().InitaliseTypes())
 		{
-			Show_Error("NCO startup failed: mods types setup failed validation.\n\nPlease check your mode type rules are valid.");
+			ShowError("NCO startup failed: mods types setup failed validation.\n\nPlease check your mode type rules are valid.");
 			return false;
 		}
 
 		if (!runtime.StartThreadsIfRequired())
 		{
-			Show_Error("NCO startup failed: failed to start background threads");
+			ShowError("NCO startup failed: failed to start background threads");
 			return false;
 		}
 

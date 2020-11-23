@@ -102,7 +102,7 @@ protected:
 				strcpy(i.ModBaseIniName, strdup(va.Read<const char*>(l, si)));
 			},
 			LambdaValidator<const char*>::Build("String must be at most 32 characters long", [] (const char* v) {
-				return String_Is_Empty(v) || strlen(v) < 33;
+				return StringIsEmpty(v) || strlen(v) < 33;
 			})
 		);
 	}

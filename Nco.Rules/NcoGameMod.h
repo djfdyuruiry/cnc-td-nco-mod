@@ -65,9 +65,9 @@ protected:
 
 	bool SetupNewType(SectionName typeString, T type, SectionName baseTypeString)
 	{
-		if (String_Is_Empty(typeString))
+		if (StringIsEmpty(typeString))
 		{
-			Show_Error("Blank mod %s type in rules file", typeName);
+			ShowError("Blank mod %s type in rules file", typeName);
 
 			return false;
 		}
@@ -127,13 +127,13 @@ public:
 
 		auto newTypesCsv = runtime.ReadRuleValue<char*>(MOD_RULES_SECTION_NAME, modTypesRule);
 
-		if (String_Is_Empty(newTypesCsv)) {
+		if (StringIsEmpty(newTypesCsv)) {
 			LogDebug("No %s mod types found", typeName);
 			return;
 		}
 
 		auto newTypesCount = 0u;
-		auto modTypeCsvEntries = Parse_Csv_String(newTypesCsv, RulesIniRule::RULES_INI_ID_SIZE, &newTypesCount);
+		auto modTypeCsvEntries = ParseCsvString(newTypesCsv, RulesIniRule::RULES_INI_ID_SIZE, &newTypesCount);
 
 		if (newTypesCount < 1u || modTypeCsvEntries == NULL) {
 			LogDebug("No %s mod types found", typeName);
@@ -142,7 +142,7 @@ public:
 
 		for (auto i = 0u; i < newTypesCount; i++)
 		{
-			Convert_String_To_Upper_Case(modTypeCsvEntries[i]);
+			ConvertStringToUpperCase(modTypeCsvEntries[i]);
 
 			modTypes.push_back(modTypeCsvEntries[i]);
 		}
@@ -182,9 +182,9 @@ public:
 
 			auto baseTypeString = runtime.ReadRuleValue<char*>(typeString, BASE_TYPE_RULE);
 
-			if (String_Is_Empty(baseTypeString))
+			if (StringIsEmpty(baseTypeString))
 			{
-				Show_Error("Mod %s type has no %s rule provided: %s", typeName, typeString, BASE_TYPE_RULE);
+				ShowError("Mod %s type has no %s rule provided: %s", typeName, typeString, BASE_TYPE_RULE);
 
 				runtime.GetRules().MarkAsInvalid();
 
@@ -228,7 +228,7 @@ public:
 		{
 			auto typeIniName = typeKvp.second->IniName;
 
-			if (Strings_Are_Equal(iniName, typeIniName))
+			if (StringsAreEqual(iniName, typeIniName))
 			{
 				if (matchFound != NULL)
 				{

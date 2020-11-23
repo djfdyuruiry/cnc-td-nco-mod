@@ -27,7 +27,7 @@ private:
 
 		auto structValueStr = structValueStrOptional.Get<char*>();
 
-		Convert_String_To_Upper_Case(structValueStr);
+		ConvertStringToUpperCase(structValueStr);
 
 		bool parseError = false;
 		auto structValue = Parse_Structure_Type(structValueStr, &parseError);
@@ -39,7 +39,7 @@ private:
 			// unable to parse entry as a structure type
 			rulesIni.MarkAsInvalid();
 
-			Show_Error("Failed to parse prerequisite for [%s]: %s", rule.GetStringKey(), structValueStr);
+			ShowError("Failed to parse prerequisite for [%s]: %s", rule.GetStringKey(), structValueStr);
 
 			return STRUCTF_NONE;
 		}

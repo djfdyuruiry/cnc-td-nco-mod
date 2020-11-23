@@ -148,7 +148,7 @@ void TiberianDawnNcoRuntime::RegisterThreads()
     }
 
     #ifndef TEST_CONSOLE
-    Start_Console_Output();
+    StartConsoleOutput();
     RegisterThread(LuaRepl::Build(luaRuntime));
     #endif
 }
@@ -171,7 +171,7 @@ bool TiberianDawnNcoRuntime::InternalShutdown()
     {
         // TODO: fix if window closed during a mission that this is not called
         #ifndef TEST_CONSOLE
-        Stop_Console_Output();
+        StopConsoleOutput();
         #endif
     }
 

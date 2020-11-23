@@ -75,7 +75,7 @@ public:
 	{
 		if (IsBool(stackIndex))
 		{
-			return Convert_Boolean_To_String(
+			return ConvertBooleanToString(
 				lua_toboolean(lua, stackIndex)
 			);
 		}

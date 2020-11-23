@@ -14,7 +14,7 @@
 class UtilApi : public LuaApi
 {
 private:
-    static int Lua_Build_Mod_Data_File_Path(lua_State* _)
+    static int Lua_BuildModDataFilePath(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
 
@@ -28,7 +28,7 @@ private:
 
         auto& filePathResult = luaState.ReadString(1);
 
-        if (filePathResult.IsErrorResult() || String_Is_Empty(filePathResult.GetValue()))
+        if (filePathResult.IsErrorResult() || StringIsEmpty(filePathResult.GetValue()))
         {
             luaState.RaiseError("buildModDataFilePath parameter `filePath` was nil or blank");
         
@@ -38,7 +38,7 @@ private:
         }
 
         luaState.WriteString(
-            Build_Mod_Data_File_Path(filePathResult.GetValue())
+            BuildModDataFilePath(filePathResult.GetValue())
         );
     
         delete &filePathResult;
@@ -46,19 +46,19 @@ private:
         return 1;
     }
 
-    static int Lua_Get_Mod_Data_Path(lua_State* _)
+    static int Lua_GetModDataPath(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
-        luaState.WriteString(Get_Mod_Data_Path());
+        luaState.WriteString(GetModDataPath());
 
         return 1;
     }
 
-    static int Lua_Get_Now_In_Epoch_Millis(lua_State* _)
+    static int Lua_GetNowInEpochMillis(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
 
-        luaState.WriteBigInteger(Get_Now_In_Epoch_Millis());
+        luaState.WriteBigInteger(GetNowInEpochMillis());
 
         return 1;
     }
@@ -84,7 +84,7 @@ private:
 
         auto& logLevelStrResult = luaState.ReadString(1);
 
-        if (logLevelStrResult.IsErrorResult() || String_Is_Empty(logLevelStrResult.GetValue()))
+        if (logLevelStrResult.IsErrorResult() || StringIsEmpty(logLevelStrResult.GetValue()))
         {
             luaState.RaiseError("setLogLevel parameter `logLevel` was nil or blank");
 
@@ -94,7 +94,7 @@ private:
         }
 
         auto logLevelStr = logLevelStrResult.GetValue();
-        auto logLevelUpper = Convert_String_To_Upper_Case(logLevelStr);
+        auto logLevelUpper = ConvertStringToUpperCase(logLevelStr);
 
         auto logLevel = ParseLogLevel(logLevelUpper);
 
@@ -117,7 +117,7 @@ private:
         return 1;
     }
 
-    static int Lua_Show_Error(lua_State* _)
+    static int Lua_ShowError(lua_State* _)
     {
         auto& luaState = NcoLuaRuntime().GetState();
 
@@ -131,7 +131,7 @@ private:
 
         auto& messageResult = luaState.ReadString(1);
 
-        if (messageResult.IsErrorResult() || String_Is_Empty(messageResult.GetValue()))
+        if (messageResult.IsErrorResult() || StringIsEmpty(messageResult.GetValue()))
         {
             luaState.RaiseError("showError parameter `message` was nil or blank");
 
@@ -140,7 +140,7 @@ private:
             return 0;
         }
 
-        Show_Error(messageResult.GetValue());
+        ShowError(messageResult.GetValue());
 
         delete &messageResult;
 
@@ -201,7 +201,7 @@ private:
              });
         });
          
-        WithFunction("showErrorString", Lua_Show_Error, [](LuaFunctionInfo& f) {
+        WithFunction("showErrorString", Lua_ShowError, [](LuaFunctionInfo& f) {
             f.WithDescription("Display an error to the user in a message box")
              .WithParameter("errorString", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::String);
@@ -228,21 +228,21 @@ private:
             f.WithDescription("Toggle logging to the console on/off");
         });
 
-        WithFunction("getNowInEpochMillis", Lua_Get_Now_In_Epoch_Millis, [](LuaFunctionInfo& f) {
+        WithFunction("getNowInEpochMillis", Lua_GetNowInEpochMillis, [](LuaFunctionInfo& f) {
             f.WithDescription("Get the number of milliseconds between unix epoch and now")
              .WithReturnValue("nowInEpochMillis", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::Number);
              });
         });
 
-        WithFunction("getModDataPath", Lua_Get_Mod_Data_Path, [](LuaFunctionInfo& f) {
+        WithFunction("getModDataPath", Lua_GetModDataPath, [](LuaFunctionInfo& f) {
             f.WithDescription("Get the absolute path to the mod data directory")
              .WithReturnValue("modDataDirPath", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::String);
              });
         });
 
-        WithFunction("buildModDataFilePath", Lua_Build_Mod_Data_File_Path, [](LuaFunctionInfo& f) {
+        WithFunction("buildModDataFilePath", Lua_BuildModDataFilePath, [](LuaFunctionInfo& f) {
             f.WithDescription("Build the absolute path to a file in the mod data directory")
              .WithParameter("filename", [](LuaVariableInfo& p) {
                 p.WithDescription("Mod data filename")

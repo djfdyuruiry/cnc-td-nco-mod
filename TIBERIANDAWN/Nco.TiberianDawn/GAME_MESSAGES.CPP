@@ -124,7 +124,7 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 
 	if (type == GAME_TICK_ELAPSED)
 	{
-		auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
+		auto nowInEpochMillis = GetNowInEpochMillis();
 		auto msSinceLastTick = nowInEpochMillis - LAST_TICK_TIME_IN_EPOCH_MILLIS;
 
 		if (msSinceLastTick < NcoRulesRuntime().GetGameTickIntervalInMs())

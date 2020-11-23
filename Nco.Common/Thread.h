@@ -63,7 +63,7 @@ public:
 
 		if (!threadRunning)
 		{
-			With_Win32_Error_Message([&] (auto e) {
+			WithWin32ErrorMessage([&] (auto e) {
 				LogError("Failed to start thread '%s': %s", name, e);
 			});
 
@@ -90,7 +90,7 @@ public:
 
 		if (threadRunning)
 		{
-			With_Win32_Error_Message([&] (auto e) {
+			WithWin32ErrorMessage([&] (auto e) {
 				LogError("Failed to stop thread '%s': %s", name, e);
 			});
 

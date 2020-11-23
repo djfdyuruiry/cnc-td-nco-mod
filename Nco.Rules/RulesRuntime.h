@@ -52,13 +52,13 @@ private:
 
 		auto onScenarioLoadCsv = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, LUA_SCRIPTS_RULE);
 
-		if (String_Is_Empty(onScenarioLoadCsv))
+		if (StringIsEmpty(onScenarioLoadCsv))
 		{
 			return;
 		}
 
 		auto scriptFileCount = 0u;
-		auto scriptFiles = Parse_Csv_String(
+		auto scriptFiles = ParseCsvString(
 			onScenarioLoadCsv,
 			MAX_PATH,
 			&scriptFileCount
@@ -76,7 +76,7 @@ private:
 
 		auto logLevelBuffer = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogLevel");
 
-		Convert_String_To_Upper_Case(logLevelBuffer);
+		ConvertStringToUpperCase(logLevelBuffer);
 
 		currentLogLevel = ParseLogLevel(logLevelBuffer);
 		logFilePath = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile");

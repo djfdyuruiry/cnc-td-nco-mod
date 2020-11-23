@@ -16,7 +16,7 @@ private:
 public:
 	static bool IsFile(const char* path)
 	{
-		if (String_Is_Empty(path))
+		if (StringIsEmpty(path))
 		{
 			return false;
 		}
@@ -29,7 +29,7 @@ public:
 
 	static bool IsDirectory(const char* path)
 	{
-		if (String_Is_Empty(path))
+		if (StringIsEmpty(path))
 		{
 			return false;
 		}
@@ -53,7 +53,7 @@ public:
 		}
 		else
 		{
-			With_Win32_Error_Message([&](auto e) {
+			WithWin32ErrorMessage([&](auto e) {
 				LogError("Failed to open file '%s': %s", path, e);
 			});
 		}
@@ -64,9 +64,9 @@ public:
 
 	static HANDLE OpenFileForAppending(const char* filename, bool* errorOccured)
 	{
-		if (String_Is_Empty(filename))
+		if (StringIsEmpty(filename))
 		{
-			Show_Error("Filename passed to OpenFileForAppending was null or empty");
+			ShowError("Filename passed to OpenFileForAppending was null or empty");
 
 			return NULL;
 		}
@@ -95,7 +95,7 @@ public:
 	{
 		HANDLE fileHandle;
 
-		if (String_Is_Empty(path) || !CreateFileHandle(path, &fileHandle, true))
+		if (StringIsEmpty(path) || !CreateFileHandle(path, &fileHandle, true))
 		{
 			return NULL;
 		}
@@ -104,11 +104,11 @@ public:
 
 		fileSize = GetFileSize(fileHandle, &fileSize);
 
-		auto data = Allocate_String(fileSize);
+		auto data = AllocateString(fileSize);
 
 		if (!ReadFile(fileHandle, data, fileSize, NULL, NULL))
 		{
-			With_Win32_Error_Message([&] (auto e) {
+			WithWin32ErrorMessage([&] (auto e) {
 				LogError("Failed to read text from file '%s': %s", path, e);
 			});
 
@@ -122,14 +122,14 @@ public:
 
 	static void AppendTextToFile(HANDLE file, char* data)
 	{
-		if (String_Is_Empty(data))
+		if (StringIsEmpty(data))
 		{
 			return;
 		}
 
 		if (!Win32HandleIsValid(file))
 		{
-			Show_Error("File handle passed to WriteTextToFile was invalid");
+			ShowError("File handle passed to WriteTextToFile was invalid");
 			return;
 		}
 

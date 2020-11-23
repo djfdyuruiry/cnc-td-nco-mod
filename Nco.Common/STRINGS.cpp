@@ -5,11 +5,11 @@
 static auto COMMA = ",";
 static auto EMPTY_STRING = "";
 
-char* Allocate_String(unsigned int length)
+char* AllocateString(unsigned int length)
 {
 	if (length == 0)
 	{
-		Show_Error("Length passed to Allocate_String was less than 1");
+		ShowError("Length passed to AllocateString was less than 1");
 
 		return strdup(EMPTY_STRING);
 	}
@@ -22,7 +22,7 @@ char* Allocate_String(unsigned int length)
 	return string;
 }
 
-bool Strings_Are_Equal(char* subject, char* expected)
+bool StringsAreEqual(char* subject, char* expected)
 {
 	if (subject == NULL || expected == NULL)
 	{
@@ -32,7 +32,7 @@ bool Strings_Are_Equal(char* subject, char* expected)
 	return strcmp(subject, expected) == 0;
 }
 
-bool Strings_Are_Equal(const char* subject, char* expected)
+bool StringsAreEqual(const char* subject, char* expected)
 {
 	if (subject == NULL || expected == NULL)
 	{
@@ -41,14 +41,14 @@ bool Strings_Are_Equal(const char* subject, char* expected)
 
 	auto subjectStr = strdup(subject);
 
-	auto result = Strings_Are_Equal(subjectStr, expected);
+	auto result = StringsAreEqual(subjectStr, expected);
 
 	delete subjectStr;
 
 	return result;
 }
 
-bool Strings_Are_Equal(char* subject, const char* expected)
+bool StringsAreEqual(char* subject, const char* expected)
 {
 	if (subject == NULL || expected == NULL)
 	{
@@ -57,14 +57,14 @@ bool Strings_Are_Equal(char* subject, const char* expected)
 
 	auto expectedStr = strdup(expected);
 
-	auto result = Strings_Are_Equal(subject, expectedStr);
+	auto result = StringsAreEqual(subject, expectedStr);
 	
 	delete expectedStr;
 
 	return result;
 }
 
-bool Strings_Are_Equal(const char* subject, const char* expected)
+bool StringsAreEqual(const char* subject, const char* expected)
 {
 	if (subject == NULL || expected == NULL)
 	{
@@ -74,7 +74,7 @@ bool Strings_Are_Equal(const char* subject, const char* expected)
 	auto subjectStr = strdup(subject);
 	auto expectedStr = strdup(expected);
 
-	auto result = Strings_Are_Equal(subjectStr, expectedStr);
+	auto result = StringsAreEqual(subjectStr, expectedStr);
 	
 	delete subjectStr;
 	delete expectedStr;
@@ -82,19 +82,19 @@ bool Strings_Are_Equal(const char* subject, const char* expected)
 	return result;
 }
 
-bool String_Is_Empty(const char* subject)
+bool StringIsEmpty(const char* subject)
 {
-	return subject == NULL || Strings_Are_Equal(subject, EMPTY_STRING);
+	return subject == NULL || StringsAreEqual(subject, EMPTY_STRING);
 }
 
-bool String_Is_Empty(char* subject)
+bool StringIsEmpty(char* subject)
 {
-	return subject == NULL || Strings_Are_Equal(subject, EMPTY_STRING);
+	return subject == NULL || StringsAreEqual(subject, EMPTY_STRING);
 }
 
-bool String_Starts_With(char* subject, char* expected)
+bool StringStartsWith(char* subject, char* expected)
 {
-	if (String_Is_Empty(subject) || String_Is_Empty(expected))
+	if (StringIsEmpty(subject) || StringIsEmpty(expected))
 	{
 		return false;
 	}
@@ -118,41 +118,41 @@ bool String_Starts_With(char* subject, char* expected)
 	return true;
 }
 
-bool String_Starts_With(const char* subject, char* expected)
+bool StringStartsWith(const char* subject, char* expected)
 {
-	if (String_Is_Empty(subject) || String_Is_Empty(expected))
+	if (StringIsEmpty(subject) || StringIsEmpty(expected))
 	{
 		return false;
 	}
 
 	auto subjectStr = strdup(subject);
 
-	auto result = String_Starts_With(subjectStr, expected);
+	auto result = StringStartsWith(subjectStr, expected);
 
 	delete subjectStr;
 
 	return result;
 }
 
-bool String_Starts_With(char* subject, const char* expected)
+bool StringStartsWith(char* subject, const char* expected)
 {
-	if (String_Is_Empty(subject) || String_Is_Empty(expected))
+	if (StringIsEmpty(subject) || StringIsEmpty(expected))
 	{
 		return false;
 	}
 
 	auto expectedStr = strdup(expected);
 
-	auto result = String_Starts_With(subject, expectedStr);
+	auto result = StringStartsWith(subject, expectedStr);
 
 	delete expectedStr;
 
 	return result;
 }
 
-bool String_Starts_With(const char* subject, const char* expected)
+bool StringStartsWith(const char* subject, const char* expected)
 {
-	if (String_Is_Empty(subject) || String_Is_Empty(expected))
+	if (StringIsEmpty(subject) || StringIsEmpty(expected))
 	{
 		return false;
 	}
@@ -160,7 +160,7 @@ bool String_Starts_With(const char* subject, const char* expected)
 	auto subjectStr = strdup(subject);
 	auto expectedStr = strdup(expected);
 
-	auto result = String_Starts_With(subjectStr, expectedStr);
+	auto result = StringStartsWith(subjectStr, expectedStr);
 
 	delete subjectStr;
 	delete expectedStr;
@@ -168,9 +168,9 @@ bool String_Starts_With(const char* subject, const char* expected)
 	return result;
 }
 
-void Convert_String_To_Upper_Case(char* subject)
+void ConvertStringToUpperCase(char* subject)
 {
-	if (String_Is_Empty(subject))
+	if (StringIsEmpty(subject))
 	{
 		return;
 	}
@@ -178,25 +178,25 @@ void Convert_String_To_Upper_Case(char* subject)
 	_strupr(subject);
 }
 
-char* Convert_String_To_Upper_Case(const char* subject)
+char* ConvertStringToUpperCase(const char* subject)
 {
-	if (String_Is_Empty(subject))
+	if (StringIsEmpty(subject))
 	{
 		return strdup(EMPTY_STRING);
 	}
 
 	auto uppercaseSubject = strdup(subject);
 
-	Convert_String_To_Upper_Case(uppercaseSubject);
+	ConvertStringToUpperCase(uppercaseSubject);
 
 	return uppercaseSubject;
 }
 
-char** Parse_Csv_String(const char* csvString, unsigned int entrySize, unsigned int* csvEntryCount, const char* seperator = COMMA)
+char** ParseCsvString(const char* csvString, unsigned int entrySize, unsigned int* csvEntryCount, const char* seperator = COMMA)
 {
-	if (String_Is_Empty(csvString))
+	if (StringIsEmpty(csvString))
 	{
-		Show_Error("CSV string passed to Parse_Csv_String was null or empty");
+		ShowError("CSV string passed to ParseCsvString was null or empty");
 
 		*csvEntryCount = 0u;
 
@@ -242,7 +242,7 @@ char** Parse_Csv_String(const char* csvString, unsigned int entrySize, unsigned 
 
 char* FormatString(const char* format, unsigned int maxLength, va_list formatArgs)
 {
-	auto stringBuffer = Allocate_String(maxLength);
+	auto stringBuffer = AllocateString(maxLength);
 
 	vsnprintf(stringBuffer, maxLength, format, formatArgs);
 
@@ -284,7 +284,7 @@ char* ToTitleCase(const char* subject)
 	{
 		return NULL;
 	}
-	else if (String_Is_Empty(subject))
+	else if (StringIsEmpty(subject))
 	{
 		return strdup(subject);
 	}
@@ -320,7 +320,7 @@ char* ExtractSubstring(const char* subject, int substringLength, int startIndex 
 		return strdup(EMPTY_STRING);
 	}
 
-	auto substring = Allocate_String(substringLength);
+	auto substring = AllocateString(substringLength);
 
 	strncpy(substring, subject, substringLength);
 
@@ -343,7 +343,7 @@ char* RepeatString(const char* subject, unsigned int times)
 
 	auto interval = strlen(subject);
 	auto totalLength = interval * times;
-	auto repeatedString = Allocate_String(totalLength);
+	auto repeatedString = AllocateString(totalLength);
 
 	for (auto offset = 0u; offset < totalLength - 1; offset += interval)
 	{

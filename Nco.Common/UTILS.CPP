@@ -17,11 +17,11 @@ static const auto MOD_FILE_NAME_LENGTH = 17u;
 static char* MOD_DATA_PATH = NULL;
 static bool CONSOLE_OPEN = false;
 
-void Show_Error(const char* messageFormat, ...)
+void ShowError(const char* messageFormat, ...)
 {
-	if (String_Is_Empty(messageFormat))
+	if (StringIsEmpty(messageFormat))
 	{
-		Show_Error("Message format passed to Show_Error was null or blank");
+		ShowError("Message format passed to ShowError was null or blank");
 
 		return;
 	}
@@ -48,8 +48,8 @@ void Show_Error(const char* messageFormat, ...)
 	delete formattedMessageBuffer;
 }
 
-const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
-	if (String_Is_Empty(envVarName))
+const char* GetEnvVar(const char* envVarName, bool* valueFound) {
+	if (StringIsEmpty(envVarName))
 	{
 		if (valueFound != NULL)
 		{
@@ -71,7 +71,7 @@ const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
 		return NULL;
 	}
 
-	auto envVarValue = Allocate_String(requiredSize);
+	auto envVarValue = AllocateString(requiredSize);
 
 	GetEnvironmentVariable(envVarName, envVarValue, requiredSize);
 
@@ -83,7 +83,7 @@ const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
 	return envVarValue;
 }
 
-char* Get_Win32_Error_Message(DWORD error)
+char* GetWin32ErrorMessage(DWORD error)
 {
 	LPSTR messageBuffer = nullptr;
 
@@ -100,25 +100,25 @@ char* Get_Win32_Error_Message(DWORD error)
 	return messageBuffer;
 }
 
-char* Get_Win32_Error_Message()
+char* GetWin32ErrorMessage()
 {
-	return Get_Win32_Error_Message(
+	return GetWin32ErrorMessage(
 		GetLastError()
 	);
 }
 
-void With_Win32_Error_Message(std::function<void(const char*)> handler)
+void WithWin32ErrorMessage(std::function<void(const char*)> handler)
 {
-	auto error = Get_Win32_Error_Message();
+	auto error = GetWin32ErrorMessage();
 
 	handler(error);
 
 	delete error;
 }
 
-bool Is_Int_String(char* numberValue)
+bool IsIntString(char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
@@ -127,28 +127,28 @@ bool Is_Int_String(char* numberValue)
 
 	strtol(numberValue, &remainder, 10);
 
-	return !Strings_Are_Equal(numberValue, remainder);
+	return !StringsAreEqual(numberValue, remainder);
 }
 
-bool Is_Int_String(const char* numberValue)
+bool IsIntString(const char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
 
 	auto numberValueStr = strdup(numberValue);
 
-	auto result = Is_Int_String(numberValueStr);
+	auto result = IsIntString(numberValueStr);
 
 	delete numberValueStr;
 
 	return result;
 }
 
-bool Is_Unsigned_Int_String(char* numberValue)
+bool IsUnsignedIntString(char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
@@ -157,28 +157,28 @@ bool Is_Unsigned_Int_String(char* numberValue)
 
 	strtoul(numberValue, &remainder, 10);
 
-	return !Strings_Are_Equal(numberValue, remainder);
+	return !StringsAreEqual(numberValue, remainder);
 }
 
-bool Is_Unsigned_Int_String(const char* numberValue)
+bool IsUnsignedIntString(const char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
 
 	auto numberValueStr = strdup(numberValue);
 
-	auto result = Is_Unsigned_Int_String(numberValueStr);
+	auto result = IsUnsignedIntString(numberValueStr);
 
 	delete numberValueStr;
 
 	return result;
 }
 
-bool Is_Double_String(char* numberValue)
+bool IsDoubleString(char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
@@ -187,27 +187,27 @@ bool Is_Double_String(char* numberValue)
 
 	strtod(numberValue, &remainder);
 
-	return !Strings_Are_Equal(numberValue, remainder);
+	return !StringsAreEqual(numberValue, remainder);
 }
 
-int Parse_Number(char character)
+int ParseNumber(char character)
 {
 	return character - '0';
 }
 
-char* Convert_Number_To_String(int number)
+char* ConvertNumberToString(int number)
 {
-	auto numberBuffer = Allocate_String(INT_MIN_STRING_LENGTH);
+	auto numberBuffer = AllocateString(INT_MIN_STRING_LENGTH);
 
 	itoa(number, numberBuffer, 10);
 
 	return numberBuffer;
 }
 
-bool Is_Boolean_String(char* booleanValue)
+bool IsBooleanString(char* booleanValue)
 {
-	if (String_Is_Empty(booleanValue)
-		|| (!Strings_Are_Equal(booleanValue, "TRUE") && !Strings_Are_Equal(booleanValue, "FALSE")))
+	if (StringIsEmpty(booleanValue)
+		|| (!StringsAreEqual(booleanValue, "TRUE") && !StringsAreEqual(booleanValue, "FALSE")))
 	{
 		return false;
 	}
@@ -215,9 +215,9 @@ bool Is_Boolean_String(char* booleanValue)
 	return true;
 }
 
-bool Parse_Boolean(char* booleanValue, bool* parseError)
+bool ParseBoolean(char* booleanValue, bool* parseError)
 {
-	if (!Is_Boolean_String(booleanValue))
+	if (!IsBooleanString(booleanValue))
 	{
 		if (parseError != NULL)
 		{
@@ -227,12 +227,12 @@ bool Parse_Boolean(char* booleanValue, bool* parseError)
 		return false;
 	}
 
-	return Strings_Are_Equal(booleanValue, "TRUE");
+	return StringsAreEqual(booleanValue, "TRUE");
 }
 
-bool Parse_Boolean(const char* booleanValue, bool* parseError)
+bool ParseBoolean(const char* booleanValue, bool* parseError)
 {
-	if (String_Is_Empty(booleanValue))
+	if (StringIsEmpty(booleanValue))
 	{
 		if (parseError != NULL)
 		{
@@ -244,18 +244,18 @@ bool Parse_Boolean(const char* booleanValue, bool* parseError)
 
 	auto booleanValueStr = strdup(booleanValue);
 
-	auto result = Parse_Boolean(booleanValueStr, parseError);
+	auto result = ParseBoolean(booleanValueStr, parseError);
 
 	delete booleanValueStr;
 
 	return result;
 }
 
-bool Parse_Boolean_Or_Default(char* booleanValue, bool default)
+bool ParseBooleanOrDefault(char* booleanValue, bool default)
 {
 	bool parseError = false;
 
-	auto value = Parse_Boolean(booleanValue, &parseError);
+	auto value = ParseBoolean(booleanValue, &parseError);
 
 	if (parseError)
 	{
@@ -265,28 +265,28 @@ bool Parse_Boolean_Or_Default(char* booleanValue, bool default)
 	return value;
 }
 
-bool Parse_Boolean_Or_Default(const char* booleanValue, bool default)
+bool ParseBooleanOrDefault(const char* booleanValue, bool default)
 {
-	if (String_Is_Empty(booleanValue))
+	if (StringIsEmpty(booleanValue))
 	{
 		return default;
 	}
 
 	auto booleanValueStr = strdup(booleanValue);
 
-	auto result = Parse_Boolean_Or_Default(booleanValueStr, default);
+	auto result = ParseBooleanOrDefault(booleanValueStr, default);
 
 	delete booleanValueStr;
 
 	return result;
 }
 
-const char* Convert_Boolean_To_String(bool booleanValue)
+const char* ConvertBooleanToString(bool booleanValue)
 {
 	return booleanValue ? "TRUE" : "FALSE";
 }
 
-long long Get_Now_In_Epoch_Nanos()
+long long GetNowInEpochNanos()
 {
 	FILETIME now;
 
@@ -303,17 +303,17 @@ long long Get_Now_In_Epoch_Nanos()
 	return nowIn100NanosSinceEpoch;
 }
 
-long long Get_Now_In_Epoch_Millis()
+long long GetNowInEpochMillis()
 {
-	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_MS;
+	return GetNowInEpochNanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_MS;
 }
 
-long long Get_Now_In_Epoch_Secs()
+long long GetNowInEpochSecs()
 {
-	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_S;
+	return GetNowInEpochNanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_S;
 }
 
-const char* Get_Mod_Data_Path()
+const char* GetModDataPath()
 {
 	if (MOD_DATA_PATH != NULL)
 	{
@@ -325,25 +325,25 @@ const char* Get_Mod_Data_Path()
 	if (
 		!GetModuleHandleEx(
 			GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-			(LPCSTR)&Get_Mod_Data_Path,
+			(LPCSTR)&GetModDataPath,
 			&moduleHandle
 		)
 		|| !Win32HandleIsValid(moduleHandle)
 	)
 	{
-		With_Win32_Error_Message([&](auto e) {
-			Show_Error("Unable to get handle on module: %s", e);
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Unable to get handle on module: %s", e);
 		});
 
 		exit(1);
 	}
 
-	auto modDllPath = Allocate_String(MAX_PATH);
+	auto modDllPath = AllocateString(MAX_PATH);
 
 	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
 	{
-		With_Win32_Error_Message([&](auto e) {
-			Show_Error("Unable to get mod data path: %s", e);
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Unable to get mod data path: %s", e);
 		});
 
 		exit(1);
@@ -352,7 +352,7 @@ const char* Get_Mod_Data_Path()
 	auto modDllPathLength = strlen(modDllPath);
 	auto modPathLength = modDllPathLength - MOD_FILE_NAME_LENGTH;
 
-	MOD_DATA_PATH = Allocate_String(MAX_PATH);
+	MOD_DATA_PATH = AllocateString(MAX_PATH);
 
 	for (auto c = 0u; c < modPathLength; c++)
 	{
@@ -366,12 +366,12 @@ const char* Get_Mod_Data_Path()
 	return MOD_DATA_PATH;
 }
 
-char* Build_Mod_Data_File_Path(const char* filePath)
+char* BuildModDataFilePath(const char* filePath)
 {
-	return FormatString("%s\\%s", Get_Mod_Data_Path(), filePath);
+	return FormatString("%s\\%s", GetModDataPath(), filePath);
 }
 
-void Start_Console_Output()
+void StartConsoleOutput()
 {
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console allocation");
@@ -386,7 +386,7 @@ void Start_Console_Output()
 		&& !AllocConsole()
 		&& !AttachConsole(GetCurrentProcessId()))
 	{
-		With_Win32_Error_Message([&](auto e) {
+		WithWin32ErrorMessage([&](auto e) {
 			LogError("Error opening Win32 console: %s", e);
 		});
 
@@ -401,7 +401,7 @@ void Start_Console_Output()
 #endif
 }
 
-void Stop_Console_Output()
+void StopConsoleOutput()
 {
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console stop");
@@ -414,7 +414,7 @@ void Stop_Console_Output()
 
 	if (!FreeConsole())
 	{
-		LogError("Error closing Win32 console: %s", Get_Win32_Error_Message());
+		LogError("Error closing Win32 console: %s", GetWin32ErrorMessage());
 	}
 
 	fclose(stdout);

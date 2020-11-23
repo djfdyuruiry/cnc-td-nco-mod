@@ -87,7 +87,7 @@ private:
         {
             if (GetLogger().GetLogLevel() == TRACE)
             {
-                auto valueStr = Allocate_String(MAX_VALUE_LENGTH);
+                auto valueStr = AllocateString(MAX_VALUE_LENGTH);
 
                 rule.WriteValueToString(valueStr);
 
@@ -102,7 +102,7 @@ private:
         {
             if (GetLogger().GetLogLevel() == TRACE)
             {
-                auto valueStr = Allocate_String(MAX_VALUE_LENGTH);
+                auto valueStr = AllocateString(MAX_VALUE_LENGTH);
 
                 rule.WriteDefaultValueToString(valueStr);
 
@@ -155,7 +155,7 @@ private:
 
         if (setOk && GetLogger().GetLogLevel() == TRACE)
         {
-            auto valueStr = Allocate_String(MAX_VALUE_LENGTH);
+            auto valueStr = AllocateString(MAX_VALUE_LENGTH);
 
             rule.WriteValueToString(valueStr);
 

@@ -91,7 +91,7 @@ protected:
 			BULLET_WARHEAD_RULE,
 			EXTRACTOR_BLT(Warhead_Type_To_String(i.Warhead)),
 			[](BulletTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
 				i.Warhead = Parse_Warhead_Type(valueUpper, NULL);
 
@@ -146,7 +146,7 @@ protected:
 				strcpy(i.ModBaseIniName, strdup(va.Read<const char*>(l, si)));
 			},
 			LambdaValidator<const char*>::Build("String must be at most 32 characters long", [] (const char* v) {
-				return String_Is_Empty(v) || strlen(v) < 33;
+				return StringIsEmpty(v) || strlen(v) < 33;
 			})
 		);
 	}

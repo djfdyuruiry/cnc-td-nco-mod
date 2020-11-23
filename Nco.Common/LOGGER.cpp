@@ -15,12 +15,12 @@ void Logger::LoadDefaultLogFilePath()
 #ifdef TEST_CONSOLE
 	logFilePath = strdup("log\\nco.log");
 #else
-	auto documentsPath = Allocate_String(MAX_PATH);
+	auto documentsPath = AllocateString(MAX_PATH);
 	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, documentsPath);
 
 	if (FAILED(result))
 	{
-		Show_Error("Failed to read user documents path, logging to file will be disabled");
+		ShowError("Failed to read user documents path, logging to file will be disabled");
 		failedToOpenLogFile = true;
 
 		return;
@@ -53,7 +53,7 @@ void Logger::OpenLogFile()
 		return;
 	}
 
-	if (String_Is_Empty(logFilePath))
+	if (StringIsEmpty(logFilePath))
 	{
 		LoadDefaultLogFilePath();
 	}
@@ -65,8 +65,8 @@ void Logger::OpenLogFile()
 	{
 		failedToOpenLogFile = true;
 
-		With_Win32_Error_Message([&](auto e) {
-			Show_Error("Failed to close handle for log file '%s': %s", logFilePath, e);
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Failed to close handle for log file '%s': %s", logFilePath, e);
 			});
 	}
 }
@@ -80,8 +80,8 @@ void Logger::CloseLogFileIfOpen()
 
 	if (!CloseWin32HandleIfValid(logFileHandle))
 	{
-		With_Win32_Error_Message([&](auto e) {
-			Show_Error("Failed to close handle for log file '%s': %s", logFilePath, e);
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Failed to close handle for log file '%s': %s", logFilePath, e);
 			});
 	}
 

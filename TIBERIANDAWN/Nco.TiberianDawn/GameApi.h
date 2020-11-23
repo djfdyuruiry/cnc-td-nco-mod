@@ -23,7 +23,7 @@ private:
     {
         auto& luaState = NcoLuaRuntime().GetState();
         auto& houseTypeStringResult = luaState.ReadString(index);
-        auto upperHouseTypeString = Convert_String_To_Upper_Case(houseTypeStringResult.GetValue());
+        auto upperHouseTypeString = ConvertStringToUpperCase(houseTypeStringResult.GetValue());
         auto houseType = Parse_House_Type(upperHouseTypeString, parseError);
 
         delete upperHouseTypeString;
@@ -118,7 +118,7 @@ private:
         auto& luaState = NcoLuaRuntime().GetState();
         auto& superWeaponNameResult = luaState.ReadString(index);
 
-        if (superWeaponNameResult.IsErrorResult() || String_Is_Empty(superWeaponNameResult.GetValue()))
+        if (superWeaponNameResult.IsErrorResult() || StringIsEmpty(superWeaponNameResult.GetValue()))
         {
             luaState.RaiseError("%s parameter `superWeaponName` was nil or empty", callingFunctionName);
 
@@ -133,17 +133,17 @@ private:
         }
 
         auto weapon = NO_SUPERWEAPON;
-        auto uppercaseName = Convert_String_To_Upper_Case(superWeaponNameResult.GetValue());
+        auto uppercaseName = ConvertStringToUpperCase(superWeaponNameResult.GetValue());
 
-        if (Strings_Are_Equal(uppercaseName, AIRSTRIKE_SECTION_NAME_UPPER))
+        if (StringsAreEqual(uppercaseName, AIRSTRIKE_SECTION_NAME_UPPER))
         {
             weapon = AIRSTRIKE;
         }
-        else if (Strings_Are_Equal(uppercaseName, ION_CANNON_SECTION_NAME_UPPER))
+        else if (StringsAreEqual(uppercaseName, ION_CANNON_SECTION_NAME_UPPER))
         {
             weapon = ION_CANNON;
         }
-        else if (Strings_Are_Equal(uppercaseName, NUCLEAR_STRIKE_SECTION_NAME_UPPER))
+        else if (StringsAreEqual(uppercaseName, NUCLEAR_STRIKE_SECTION_NAME_UPPER))
         {
             weapon = NUCLEAR_STRIKE;
         }

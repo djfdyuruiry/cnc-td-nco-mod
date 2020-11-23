@@ -13,361 +13,361 @@ namespace Unit
 			TEST_CLASS(UtilsTests)
 			{
 			public:
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithConstStringContainingAnInt_ThenTrueIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithConstStringContainingAnInt_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Is_Int_String("938")
+						IsIntString("938")
 					);
 				}
 
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithConstStringContainingAnSingleDigit_ThenTrueIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithConstStringContainingAnSingleDigit_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Is_Int_String("1")
+						IsIntString("1")
 					);
 				}
 
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithConstStringContainingNoNumbers_ThenFalseIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithConstStringContainingNoNumbers_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Int_String("null")
+						IsIntString("null")
 					);
 				}
 
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithNonConstStringContainingAnInt_ThenTrueIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithNonConstStringContainingAnInt_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Is_Int_String(strdup("938"))
+						IsIntString(strdup("938"))
 					);
 				}
 
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithNonConstStringContainingNoNumbers_ThenFalseIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithNonConstStringContainingNoNumbers_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Int_String(strdup("null"))
+						IsIntString(strdup("null"))
 					);
 				}
 
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithConstNullString_ThenFalseIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithConstNullString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Int_String((const char*)NULL)
+						IsIntString((const char*)NULL)
 					);
 				}
 
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithConstEmptyString_ThenFalseIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithConstEmptyString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Int_String("")
+						IsIntString("")
 					);
 				}
 
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithNonConstNullString_ThenFalseIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithNonConstNullString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Int_String((char*)NULL)
+						IsIntString((char*)NULL)
 					);
 				}
 
-				TEST_METHOD(When_Is_Int_String_IsCalled_WithNonConstEmptyString_ThenFalseIsReturned)
+				TEST_METHOD(When_IsIntString_IsCalled_WithNonConstEmptyString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Int_String(strdup(""))
+						IsIntString(strdup(""))
 					);
 				}
 
-				TEST_METHOD(When_Is_Double_String_IsCalled_WithStringContainingAnInt_ThenTrueIsReturned)
+				TEST_METHOD(When_IsDoubleString_IsCalled_WithStringContainingAnInt_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Is_Double_String("39")
+						IsDoubleString("39")
 					);
 				}
 
-				TEST_METHOD(When_Is_Double_String_IsCalled_WithStringContainingADouble_ThenTrueIsReturned)
+				TEST_METHOD(When_IsDoubleString_IsCalled_WithStringContainingADouble_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Is_Double_String("837.38")
+						IsDoubleString("837.38")
 					);
 				}
 
-				TEST_METHOD(When_Is_Double_String_IsCalled_WithStringContainingNoNumbers_ThenFalseIsReturned)
+				TEST_METHOD(When_IsDoubleString_IsCalled_WithStringContainingNoNumbers_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Double_String("kane lives!")
+						IsDoubleString("kane lives!")
 					);
 				}
 
-				TEST_METHOD(When_Is_Double_String_IsCalled_WithNullString_ThenFalseIsReturned)
+				TEST_METHOD(When_IsDoubleString_IsCalled_WithNullString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Double_String((char*)NULL)
+						IsDoubleString((char*)NULL)
 					);
 				}
 
-				TEST_METHOD(When_Is_Double_String_IsCalled_WithEmptyString_ThenFalseIsReturned)
+				TEST_METHOD(When_IsDoubleString_IsCalled_WithEmptyString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Double_String("")
+						IsDoubleString("")
 					);
 				}
 
-				TEST_METHOD(When_Parse_Number_IsCalled_WithNumberChar_ThenNumberIsReturned)
+				TEST_METHOD(When_ParseNumber_IsCalled_WithNumberChar_ThenNumberIsReturned)
 				{
 					Assert::AreEqual(
 						9,
-						Parse_Number('9')
+						ParseNumber('9')
 					);
 				}
 
-				TEST_METHOD(When_Convert_Number_To_String_IsCalled_WithMinInt_ThenStringIsReturned)
+				TEST_METHOD(When_ConvertNumberToString_IsCalled_WithMinInt_ThenStringIsReturned)
 				{
 					Assert::AreEqual(
 						"-2147483648",
-						Convert_Number_To_String(INT_MIN)
+						ConvertNumberToString(INT_MIN)
 					);
 				}
 
-				TEST_METHOD(When_Convert_Number_To_String_IsCalled_WithZero_ThenStringIsReturned)
+				TEST_METHOD(When_ConvertNumberToString_IsCalled_WithZero_ThenStringIsReturned)
 				{
 					Assert::AreEqual(
 						"0",
-						Convert_Number_To_String(0)
+						ConvertNumberToString(0)
 					);
 				}
 
-				TEST_METHOD(When_Convert_Number_To_String_IsCalled_WithIntMax_ThenStringIsReturned)
+				TEST_METHOD(When_ConvertNumberToString_IsCalled_WithIntMax_ThenStringIsReturned)
 				{
 					Assert::AreEqual(
 						"2147483647",
-						Convert_Number_To_String(INT_MAX)
+						ConvertNumberToString(INT_MAX)
 					);
 				}
 
-				TEST_METHOD(When_Is_Boolean_String_IsCalled_WithUppercaseStringContainingTrue_ThenTrueIsReturned)
+				TEST_METHOD(When_IsBooleanString_IsCalled_WithUppercaseStringContainingTrue_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Is_Boolean_String("TRUE")
+						IsBooleanString("TRUE")
 					);
 				}
 
-				TEST_METHOD(When_Is_Boolean_String_IsCalled_WithLoweraseStringContainingTrue_ThenFalseIsReturned)
+				TEST_METHOD(When_IsBooleanString_IsCalled_WithLoweraseStringContainingTrue_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Boolean_String("true")
+						IsBooleanString("true")
 					);
 				}
 
-				TEST_METHOD(When_Is_Boolean_String_IsCalled_WithUppercaseStringContainingFalse_ThenTrueIsReturned)
+				TEST_METHOD(When_IsBooleanString_IsCalled_WithUppercaseStringContainingFalse_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Is_Boolean_String("FALSE")
+						IsBooleanString("FALSE")
 					);
 				}
 
-				TEST_METHOD(When_Is_Boolean_String_IsCalled_WithLoweraseStringContainingFalse_ThenFalseIsReturned)
+				TEST_METHOD(When_IsBooleanString_IsCalled_WithLoweraseStringContainingFalse_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Boolean_String("false")
+						IsBooleanString("false")
 					);
 				}
 
-				TEST_METHOD(When_Is_Boolean_String_IsCalled_WithNullString_ThenFalseIsReturned)
+				TEST_METHOD(When_IsBooleanString_IsCalled_WithNullString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Boolean_String(NULL)
+						IsBooleanString(NULL)
 					);
 				}
 
-				TEST_METHOD(When_Is_Boolean_String_IsCalled_WithBlankString_ThenFalseIsReturned)
+				TEST_METHOD(When_IsBooleanString_IsCalled_WithBlankString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Is_Boolean_String("")
+						IsBooleanString("")
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithUppercaseStringContainingTrue_ThenTrueIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithUppercaseStringContainingTrue_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Parse_Boolean("TRUE", NULL)
+						ParseBoolean("TRUE", NULL)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithUppercaseStringContainingTrue_ThenParseErrorIsNotReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithUppercaseStringContainingTrue_ThenParseErrorIsNotReturned)
 				{
 					bool parseError = false;
 
-					Parse_Boolean("TRUE", &parseError);
+					ParseBoolean("TRUE", &parseError);
 
 					Assert::AreEqual(false, parseError);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithLowercaseStringContainingTrue_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingTrue_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Parse_Boolean("true", NULL)
+						ParseBoolean("true", NULL)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithLowercaseStringContainingTrue_ThenParseErrorIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingTrue_ThenParseErrorIsReturned)
 				{
 					bool parseError = false;
 
-					Parse_Boolean("true", &parseError);
+					ParseBoolean("true", &parseError);
 
 					Assert::AreEqual(true, parseError);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithUppercaseStringContainingFalse_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithUppercaseStringContainingFalse_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Parse_Boolean("FALSE", NULL)
+						ParseBoolean("FALSE", NULL)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithUppercaseStringContainingFalse_ThenParseErrorIsNotReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithUppercaseStringContainingFalse_ThenParseErrorIsNotReturned)
 				{
 					bool parseError = false;
 
-					Parse_Boolean("FALSE", &parseError);
+					ParseBoolean("FALSE", &parseError);
 
 					Assert::AreEqual(false, parseError);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithLowercaseStringContainingFalse_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingFalse_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Parse_Boolean("false", NULL)
+						ParseBoolean("false", NULL)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithLowercaseStringContainingFalse_ThenParseErrorIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingFalse_ThenParseErrorIsReturned)
 				{
 					bool parseError = false;
 
-					Parse_Boolean("false", &parseError);
+					ParseBoolean("false", &parseError);
 
 					Assert::AreEqual(true, parseError);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithNullString_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithNullString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Parse_Boolean((char*)NULL, NULL)
+						ParseBoolean((char*)NULL, NULL)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithNullString_ThenParseErrorIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithNullString_ThenParseErrorIsReturned)
 				{
 					bool parseError = false;
 
-					Parse_Boolean((char*)NULL, &parseError);
+					ParseBoolean((char*)NULL, &parseError);
 
 					Assert::AreEqual(true, parseError);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithEmptyString_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithEmptyString_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Parse_Boolean("", NULL)
+						ParseBoolean("", NULL)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_IsCalled_WithEmptyString_ThenParseErrorIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithEmptyString_ThenParseErrorIsReturned)
 				{
 					bool parseError = false;
 
-					Parse_Boolean("", &parseError);
+					ParseBoolean("", &parseError);
 
 					Assert::AreEqual(true, parseError);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_Or_Default_IsCalled_WithUppercaseStringContainingTrueAndDefaultOfFalse_ThenTrueIsReturned)
+				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithUppercaseStringContainingTrueAndDefaultOfFalse_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Parse_Boolean_Or_Default("TRUE", false)
+						ParseBooleanOrDefault("TRUE", false)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_Or_Default_IsCalled_WithLowercaseStringContainingTrueAndDefaultOfFalse_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithLowercaseStringContainingTrueAndDefaultOfFalse_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Parse_Boolean_Or_Default("true", false)
+						ParseBooleanOrDefault("true", false)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_Or_Default_IsCalled_WithUppercaseStringContainingTrueAndDefaultOfTrue_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithUppercaseStringContainingTrueAndDefaultOfTrue_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
 						false,
-						Parse_Boolean_Or_Default("FALSE", true)
+						ParseBooleanOrDefault("FALSE", true)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_Or_Default_IsCalled_WithLowercaseStringContainingFalseAndDefaultOfTrue_ThenTrueIsReturned)
+				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithLowercaseStringContainingFalseAndDefaultOfTrue_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Parse_Boolean_Or_Default("false", true)
+						ParseBooleanOrDefault("false", true)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_Or_Default_IsCalled_WithNullString_ThenDefaultIsReturned)
+				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithNullString_ThenDefaultIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Parse_Boolean_Or_Default((char*)NULL, true)
+						ParseBooleanOrDefault((char*)NULL, true)
 					);
 				}
 
-				TEST_METHOD(When_Parse_Boolean_Or_Default_IsCalled_WithEmptyString_ThenDefaultIsReturned)
+				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithEmptyString_ThenDefaultIsReturned)
 				{
 					Assert::AreEqual(
 						true,
-						Parse_Boolean_Or_Default("", true)
+						ParseBooleanOrDefault("", true)
 					);
 				}
 
-				TEST_METHOD(When_Convert_Boolean_To_String_IsCalled_WithFalse_ThenFalseStringIsReturned)
+				TEST_METHOD(When_ConvertBooleanToString_IsCalled_WithFalse_ThenFalseStringIsReturned)
 				{
 					Assert::AreEqual(
 						"FALSE",
-						Convert_Boolean_To_String(false)
+						ConvertBooleanToString(false)
 					);
 				}
 
-				TEST_METHOD(When_Convert_Boolean_To_String_IsCalled_WithTrue_ThenTrueStringIsReturned)
+				TEST_METHOD(When_ConvertBooleanToString_IsCalled_WithTrue_ThenTrueStringIsReturned)
 				{
 					Assert::AreEqual(
 						"TRUE",
-						Convert_Boolean_To_String(true)
+						ConvertBooleanToString(true)
 					);
 				}
 

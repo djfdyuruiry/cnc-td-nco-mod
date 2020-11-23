@@ -40,7 +40,7 @@ public:
 		}
 
 		bool parseError = false;
-		auto valueUpper = Convert_String_To_Upper_Case(result.GetValue());
+		auto valueUpper = ConvertStringToUpperCase(result.GetValue());
 
 		delete &result;
 

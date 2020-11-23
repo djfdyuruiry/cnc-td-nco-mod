@@ -40,7 +40,7 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
 
     if (executeResult.IsErrorResult())
     {
-        Show_Error("Error firing Lua event: %s\n%s", name, executeResult.GetError());
+        ShowError("Error firing Lua event: %s\n%s", name, executeResult.GetError());
     }
     else
     {
@@ -66,7 +66,7 @@ bool Initialise_Events()
 
     if (error)
     {
-        Show_Error("Error initialising event handlers: %s", executeResult.GetError());
+        ShowError("Error initialising event handlers: %s", executeResult.GetError());
     }
 
     delete& executeResult;

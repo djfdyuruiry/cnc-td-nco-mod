@@ -20,7 +20,7 @@ public:
 
 		luaL_openlibs(lua);
 
-		if (String_Is_Empty(libraryPath))
+		if (StringIsEmpty(libraryPath))
 		{
 			LogError("Blank library path passed to LuaStateFactory::Build - Lua state will likely be unusable");
 

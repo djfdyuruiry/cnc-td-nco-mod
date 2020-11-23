@@ -81,7 +81,7 @@ private:
 		InitIfNeeded();
 
 		sectionKey = RuleHashUtils::BuildRuleKey(section);
-		uppercaseName = Convert_String_To_Upper_Case(name);
+		uppercaseName = ConvertStringToUpperCase(name);
 		key = RuleHashUtils::BuildRuleKey(section, name);
 
 		stringKey = FormatString("%s -> %s", RULES_INI_ID_SIZE * 2 + 4, section, name);
@@ -151,7 +151,7 @@ private:
 		}
 		else if (type == BOOL_RULE)
 		{
-			sprintf(string, "%s", Convert_Boolean_To_String(ruleValue.Get<bool>()));
+			sprintf(string, "%s", ConvertBooleanToString(ruleValue.Get<bool>()));
 		}
 		else if (type == UNSIGNED_INT_RULE || IsExtendedType(UINT_TYPES, type))
 		{

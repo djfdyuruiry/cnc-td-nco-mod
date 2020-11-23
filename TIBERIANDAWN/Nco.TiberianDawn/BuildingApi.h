@@ -70,7 +70,7 @@ private:
 			FACTORY_TYPE_RULE,
 			EXTRACTOR_BLD(Factory_Type_To_String((FactoryType)i.ToBuild)),
 			[](BuildingTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
 				i.ToBuild = (RTTIType)Parse_Factory_Type(valueUpper, NULL);
 

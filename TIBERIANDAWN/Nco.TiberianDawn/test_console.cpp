@@ -110,7 +110,7 @@ static void Pause()
 
 static void Parse_Command_Line(const char* commandLine)
 {
-	if (String_Starts_With(commandLine, "--lua-repl"))
+	if (StringStartsWith(commandLine, "--lua-repl"))
 	{
 		#ifdef CI_ENV
 		puts("ERROR: CI environment detected - Lua REPL not supported");
@@ -126,7 +126,7 @@ static void Parse_Command_Line(const char* commandLine)
 		exit(0);
 		#endif
 	}
-	else if (String_Starts_With(commandLine, "--dump-rules"))
+	else if (StringStartsWith(commandLine, "--dump-rules"))
 	{
 		if (!ExecuteLuaFile("dump-rules.lua"))
 		{
@@ -136,7 +136,7 @@ static void Parse_Command_Line(const char* commandLine)
 
 		exit(0);
 	}
-	else if (String_Starts_With(commandLine, "--generate-api-docs"))
+	else if (StringStartsWith(commandLine, "--generate-api-docs"))
 	{
 		if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
 		{
@@ -153,7 +153,7 @@ static void Parse_Command_Line(const char* commandLine)
 /// </summary>
 int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int windowState)
 {
-	Start_Console_Output();
+	StartConsoleOutput();
 
 	puts("========================");
 	puts("  NCO Mod: Test Console  ");
@@ -190,7 +190,7 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 	Pause();
 
-	Stop_Console_Output();
+	StopConsoleOutput();
 
 	return 0;
 }

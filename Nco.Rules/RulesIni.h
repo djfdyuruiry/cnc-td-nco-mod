@@ -35,7 +35,7 @@ private:
 
 	IRulesIni& DoSourceRulesFrom(const char* rulesFileName)
 	{
-		auto fullRulesFilePath = FormatString("%s\\%s", MAX_PATH, Get_Mod_Data_Path(), rulesFileName);
+		auto fullRulesFilePath = FormatString("%s\\%s", MAX_PATH, GetModDataPath(), rulesFileName);
 
 		if (!FileUtils::IsFile(fullRulesFilePath))
 		{
@@ -76,7 +76,7 @@ private:
 
 		for (auto validValue : validValues)
 		{
-			if (Strings_Are_Equal(valueBuffer, validValue))
+			if (StringsAreEqual(valueBuffer, validValue))
 			{
 				valueIsValid = true;
 				break;
@@ -91,7 +91,7 @@ private:
 		rulesAreValid = false;
 
 		auto validValuesSize = validValues.size();
-		auto validValuesCsv = Allocate_String(validValuesSize * RULES_STRING_LENGTH);
+		auto validValuesCsv = AllocateString(validValuesSize * RULES_STRING_LENGTH);
 		auto idx = 0;
 
 		for (auto validValue : validValues)
@@ -106,7 +106,7 @@ private:
 			idx++;
 		}
 
-		Show_Error(
+		ShowError(
 			"Rule [%s] must be in the list (%s). Value provided: %s",
 			rule.GetStringKey(),
 			validValuesCsv,
@@ -165,7 +165,7 @@ public:
 
 		bool valueFound = false;
 		Optional& valueBufferOptional = Optional::BuildOptional();
-		auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
+		auto valueBuffer = AllocateString(RULES_STRING_LENGTH);
 
 		for (auto reader: rulesIniReaders)
 		{
@@ -207,7 +207,7 @@ public:
 
 		auto valueBuffer = valueBufferOptional.Get<char*>();
 
-		if (String_Is_Empty(valueBuffer))
+		if (StringIsEmpty(valueBuffer))
 		{
 			LogTrace("Resolved rule value was empty, default will be returned");
 
@@ -285,7 +285,7 @@ public:
 			{
 				rulesAreValid = false;
 
-				Show_Error(
+				ShowError(
 					"Rule [%s] must be between %d and %d (inclusive). Value provided: %d",
 					rule.GetStringKey(),
 					minValueInclusive,

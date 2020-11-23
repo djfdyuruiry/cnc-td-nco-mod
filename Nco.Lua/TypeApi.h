@@ -40,7 +40,7 @@ private:
 
 		auto& typeInstanceNameResult = luaState.ReadString(1);
 
-		if (typeInstanceNameResult.IsErrorResult() || String_Is_Empty(typeInstanceNameResult.GetValue()))
+		if (typeInstanceNameResult.IsErrorResult() || StringIsEmpty(typeInstanceNameResult.GetValue()))
 		{
 			luaState.RaiseError("%s%sRule argument `typeName` was nil or blank", operation, titleCaseTypeName);
 
@@ -61,7 +61,7 @@ private:
 		auto& typeInstance = ParseType(typeInstanceNameResult.GetValue());
 		auto& ruleNameParameterResult = luaState.ReadString(2);
 
-		if (ruleNameParameterResult.IsErrorResult() || String_Is_Empty(ruleNameParameterResult.GetValue()))
+		if (ruleNameParameterResult.IsErrorResult() || StringIsEmpty(ruleNameParameterResult.GetValue()))
 		{
 			luaState.RaiseError("%s%sRule argument `ruleName` was nil", operation, titleCaseTypeName);
 

@@ -3,59 +3,55 @@
 #include <functional>
 #include <windows.h>
 
-void Show_Error(const char* messageFormat, ...);
+void ShowError(const char* messageFormat, ...);
 
-const char* Get_Env_Var(const char* envVarName, bool* valueFound);
+const char* GetEnvVar(const char* envVarName, bool* valueFound);
 
-char* Get_Win32_Error_Message(DWORD error);
+char* GetWin32ErrorMessage(DWORD error);
 
-char* Get_Win32_Error_Message();
+char* GetWin32ErrorMessage();
 
-void With_Win32_Error_Message(std::function<void(const char*)> handler);
+void WithWin32ErrorMessage(std::function<void(const char*)> handler);
 
-HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured);
+bool IsIntString(char* numberValue);
 
-void Append_To_File(HANDLE file, char* data);
+bool IsIntString(const char* numberValue);
 
-bool Is_Int_String(char* numberValue);
+bool IsUnsignedIntString(char* numberValue);
 
-bool Is_Int_String(const char* numberValue);
+bool IsUnsignedIntString(const char* numberValue);
 
-bool Is_Unsigned_Int_String(char* numberValue);
+bool IsDoubleString(char* numberValue);
 
-bool Is_Unsigned_Int_String(const char* numberValue);
+int ParseNumber(char character);
 
-bool Is_Double_String(char* numberValue);
+char* ConvertNumberToString(int number);
 
-int Parse_Number(char character);
+bool IsBooleanString(char* booleanValue);
 
-char* Convert_Number_To_String(int number);
+bool ParseBoolean(char* booleanValue, bool* parseError);
 
-bool Is_Boolean_String(char* booleanValue);
+bool ParseBoolean(const char* booleanValue, bool* parseError);
 
-bool Parse_Boolean(char* booleanValue, bool* parseError);
+bool ParseBooleanOrDefault(char* booleanValue, bool default);
 
-bool Parse_Boolean(const char* booleanValue, bool* parseError);
+bool ParseBooleanOrDefault(const char* booleanValue, bool default);
 
-bool Parse_Boolean_Or_Default(char* booleanValue, bool default);
+const char* ConvertBooleanToString(bool booleanValue);
 
-bool Parse_Boolean_Or_Default(const char* booleanValue, bool default);
+long long GetNowInEpochNanos();
 
-const char* Convert_Boolean_To_String(bool booleanValue);
+long long GetNowInEpochMillis();
 
-long long Get_Now_In_Epoch_Nanos();
+long long GetNowInEpochSecs();
 
-long long Get_Now_In_Epoch_Millis();
+const char* GetModDataPath();
 
-long long Get_Now_In_Epoch_Secs();
+char* BuildModDataFilePath(const char* filePath);
 
-const char* Get_Mod_Data_Path();
+void StartConsoleOutput();
 
-char* Build_Mod_Data_File_Path(const char* filePath);
-
-void Start_Console_Output();
-
-void Stop_Console_Output();
+void StopConsoleOutput();
 
 bool Win32HandleIsValid(HANDLE handle);
 

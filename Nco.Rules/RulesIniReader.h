@@ -30,7 +30,7 @@ protected:
 
 		auto stringValue = stringValueOptional.Get<char*>();
 
-		Convert_String_To_Upper_Case(stringValue);
+		ConvertStringToUpperCase(stringValue);
 
 		bool parseError = false;
 		auto parsedValue = parser(stringValue, &parseError, parseError);
@@ -39,7 +39,7 @@ protected:
 		{
 			rulesIni.MarkAsInvalid();
 
-			Show_Error("Failed to parse %s for [%s]: %s", typeName, rule.GetStringKey(), stringValue);
+			ShowError("Failed to parse %s for [%s]: %s", typeName, rule.GetStringKey(), stringValue);
 
 			return rule.GetDefaultValueOr<T>(defaultValue);
 		}
@@ -65,9 +65,9 @@ protected:
 
 		auto ruleValue = ruleValueOptional.Get<char*>();
 
-		Convert_String_To_Upper_Case(ruleValue);
+		ConvertStringToUpperCase(ruleValue);
 
-		auto boolValue = Strings_Are_Equal(ruleValue, "TRUE");
+		auto boolValue = StringsAreEqual(ruleValue, "TRUE");
 
 		delete& ruleValueOptional;
 
@@ -94,13 +94,13 @@ protected:
 
 		auto ruleValueStr = ruleValueOptional.Get<char*>();
 
-		bool isValid = Is_Unsigned_Int_String(ruleValueStr);
+		bool isValid = IsUnsignedIntString(ruleValueStr);
 
 		if (!isValid)
 		{
 			rulesIni.MarkAsInvalid();
 
-			Show_Error(
+			ShowError(
 				"Rule [%s] must be a unsigned integer number. Value provided: %s",
 				rule.GetStringKey(),
 				ruleValueStr
@@ -125,7 +125,7 @@ protected:
 			{
 				rulesIni.MarkAsInvalid();
 
-				Show_Error(
+				ShowError(
 					"Rule [%s] must be between %u and %u (inclusive). Value provided: %u",
 					rule.GetStringKey(),
 					minValueInclusive,
@@ -174,13 +174,13 @@ protected:
 
 		auto ruleValueStr = ruleValueOptional.Get<char*>();
 
-		bool isValid = Is_Double_String(ruleValueStr);
+		bool isValid = IsDoubleString(ruleValueStr);
 
 		if (!isValid)
 		{
 			rulesIni.MarkAsInvalid();
 
-			Show_Error(
+			ShowError(
 				"Rule [%s] must be a floating point number. Value provided: %s",
 				rule.GetStringKey(),
 				ruleValueStr
@@ -205,7 +205,7 @@ protected:
 			{
 				rulesIni.MarkAsInvalid();
 
-				Show_Error(
+				ShowError(
 					"Rule [%s] must be between %f and %f (inclusive). Value provided: %f",
 					rule.GetStringKey(),
 					minValueInclusive,
@@ -245,7 +245,7 @@ protected:
 		{
 			rulesIni.MarkAsInvalid();
 
-			Show_Error(
+			ShowError(
 				"Rule [%s] must be a floating point number between 0.00 and 0.99 (inclusive), value provided: %f",
 				rule.GetStringKey(),
 				ruleValueAsDouble

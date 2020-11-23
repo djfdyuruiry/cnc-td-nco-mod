@@ -41,7 +41,7 @@ public:
 
 	bool IsErrorResult()
 	{
-		return !String_Is_Empty(error);
+		return !StringIsEmpty(error);
 	}
 
 	const char* GetError()

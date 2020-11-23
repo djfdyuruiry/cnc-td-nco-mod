@@ -16,7 +16,7 @@ private:
 public:
 	static StringHash HashString(const char* string)
 	{
-		auto stringUpper = Convert_String_To_Upper_Case(string);
+		auto stringUpper = ConvertStringToUpperCase(string);
 		auto stringChar = 0;
 		auto hash = HASH_SEED;
 

@@ -91,7 +91,7 @@ private:
 			UNIT_SPEED_RULE,
 			EXTRACTOR_UNT(Unit_Speed_Type_To_String(i.Speed)),
 			[](UnitTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
 				i.Speed = Parse_Unit_Speed_Type(valueUpper, NULL);
 

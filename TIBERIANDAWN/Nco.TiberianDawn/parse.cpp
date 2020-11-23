@@ -32,15 +32,15 @@ DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError, boo
 {
     DiffType difficultyType;
 
-    if (Strings_Are_Equal(difficultyTypeString, "EASY"))
+    if (StringsAreEqual(difficultyTypeString, "EASY"))
     {
         difficultyType = DIFF_EASY;
     }
-    else if (Strings_Are_Equal(difficultyTypeString, "NORMAL"))
+    else if (StringsAreEqual(difficultyTypeString, "NORMAL"))
     {
         difficultyType = DIFF_NORMAL;
     }
-    else if (Strings_Are_Equal(difficultyTypeString, "HARD"))
+    else if (StringsAreEqual(difficultyTypeString, "HARD"))
     {
         difficultyType = DIFF_HARD;
     }
@@ -51,7 +51,7 @@ DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError, boo
             *parseError = true;
         }
 
-        Show_Error("Unable to parse difficulty from string: %s", difficultyTypeString);
+        ShowError("Unable to parse difficulty from string: %s", difficultyTypeString);
     }
 
     return difficultyType;
@@ -75,7 +75,7 @@ const char* Difficulty_Type_To_String(DiffType difficultyType)
     }
     else
     {
-        Show_Error("Unable to convert difficulty type to string: %d", difficultyType);
+        ShowError("Unable to convert difficulty type to string: %d", difficultyType);
     }
 
     return difficultyTypeString;
@@ -85,47 +85,47 @@ HousesType Parse_House_Type(char* houseTypeString, bool* parseError, bool ignore
 {
     HousesType house;
 
-    if (Strings_Are_Equal(houseTypeString, "NONE"))
+    if (StringsAreEqual(houseTypeString, "NONE"))
     {
         house = HOUSE_NONE;
     }
-    else if (Strings_Are_Equal(houseTypeString, "GOODGUY"))
+    else if (StringsAreEqual(houseTypeString, "GOODGUY"))
     {
         house = HOUSE_GOOD;
     }
-    else if (Strings_Are_Equal(houseTypeString, "BADGUY"))
+    else if (StringsAreEqual(houseTypeString, "BADGUY"))
 	{
 		house = HOUSE_BAD;
 	}
-	else if (Strings_Are_Equal(houseTypeString, "NEUTRAL"))
+	else if (StringsAreEqual(houseTypeString, "NEUTRAL"))
 	{
 		house = HOUSE_NEUTRAL;
 	}
-	else if (Strings_Are_Equal(houseTypeString, "JP"))
+	else if (StringsAreEqual(houseTypeString, "JP"))
 	{
 		house = HOUSE_JP;
 	}
-	else if (Strings_Are_Equal(houseTypeString, "MULTI1"))
+	else if (StringsAreEqual(houseTypeString, "MULTI1"))
 	{
 		house = HOUSE_MULTI1;
 	}
-	else if (Strings_Are_Equal(houseTypeString, "MULTI2"))
+	else if (StringsAreEqual(houseTypeString, "MULTI2"))
 	{
         house = HOUSE_MULTI2;
 	}
-	else if (Strings_Are_Equal(houseTypeString, "MULTI3"))
+	else if (StringsAreEqual(houseTypeString, "MULTI3"))
 	{
         house = HOUSE_MULTI3;
 	}
-	else if (Strings_Are_Equal(houseTypeString, "MULTI4"))
+	else if (StringsAreEqual(houseTypeString, "MULTI4"))
 	{
         house = HOUSE_MULTI4;
 	}
-	else if (Strings_Are_Equal(houseTypeString, "MULTI5"))
+	else if (StringsAreEqual(houseTypeString, "MULTI5"))
 	{
         house = HOUSE_MULTI5;
 	}
-	else if (Strings_Are_Equal(houseTypeString, "MULTI6"))
+	else if (StringsAreEqual(houseTypeString, "MULTI6"))
 	{
         house = HOUSE_MULTI6;
 	}
@@ -136,7 +136,7 @@ HousesType Parse_House_Type(char* houseTypeString, bool* parseError, bool ignore
             *parseError = true;
         }
 
-        Show_Error("Unable to parse house from string: %s", houseTypeString);
+        ShowError("Unable to parse house from string: %s", houseTypeString);
     }
 
 	return house;
@@ -156,7 +156,7 @@ HousesType Parse_House_Type(const char* houseTypeString, bool* parseError, bool 
 int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError, bool ignoreModTypes)
 {
     auto houseNameListSize = 0u;
-    auto houseNameList = Parse_Csv_String(houseListCsv, HOUSE_NAME_MAX_LENGTH, &houseNameListSize);
+    auto houseNameList = ParseCsvString(houseListCsv, HOUSE_NAME_MAX_LENGTH, &houseNameListSize);
 
     if (houseNameList == NULL)
     {
@@ -213,9 +213,9 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError, bool ignoreM
 
 int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(houseListCsv))
+    if (StringIsEmpty(houseListCsv))
     {
-        Show_Error("CSV passed to Parse_House_Name_List_Csv was null or empty");
+        ShowError("CSV passed to Parse_House_Name_List_Csv was null or empty");
 
         if (parseError != NULL)
         {
@@ -284,7 +284,7 @@ const char* House_Type_To_String(HousesType houseType)
     }
     else
     {
-        Show_Error("Unable to convert house type to string: %d", houseType);
+        ShowError("Unable to convert house type to string: %d", houseType);
     }
 
     return houseTypeString;
@@ -392,7 +392,7 @@ StructType Prerequisite_To_Structure_Type(long prerequisite)
     }
     else
     {
-        Show_Error("Unable to convert prerequiste to structure type: %d", structType);
+        ShowError("Unable to convert prerequiste to structure type: %d", structType);
     }
 
     return structType;
@@ -409,107 +409,107 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError, bool igno
 {
     WeaponType weaponType = WEAPON_NONE;
 
-    if (Strings_Are_Equal(weaponTypeString, "NONE"))
+    if (StringsAreEqual(weaponTypeString, "NONE"))
     {
         return WEAPON_NONE;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "RIFLE"))
+    else if (StringsAreEqual(weaponTypeString, "RIFLE"))
     {
         return WEAPON_RIFLE;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "CHAIN_GUN"))
+    else if (StringsAreEqual(weaponTypeString, "CHAIN_GUN"))
     {
         return WEAPON_CHAIN_GUN;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "PISTOL"))
+    else if (StringsAreEqual(weaponTypeString, "PISTOL"))
     {
         return WEAPON_PISTOL;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "M16"))
+    else if (StringsAreEqual(weaponTypeString, "M16"))
     {
         return WEAPON_M16;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "DRAGON"))
+    else if (StringsAreEqual(weaponTypeString, "DRAGON"))
     {
         return WEAPON_DRAGON;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "FLAMETHROWER"))
+    else if (StringsAreEqual(weaponTypeString, "FLAMETHROWER"))
     {
         return WEAPON_FLAMETHROWER;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "FLAME_TONGUE"))
+    else if (StringsAreEqual(weaponTypeString, "FLAME_TONGUE"))
     {
         return WEAPON_FLAME_TONGUE;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "CHEMSPRAY"))
+    else if (StringsAreEqual(weaponTypeString, "CHEMSPRAY"))
     {
         return WEAPON_CHEMSPRAY;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "GRENADE"))
+    else if (StringsAreEqual(weaponTypeString, "GRENADE"))
     {
         return WEAPON_GRENADE;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "75MM"))
+    else if (StringsAreEqual(weaponTypeString, "75MM"))
     {
         return WEAPON_75MM;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "105MM"))
+    else if (StringsAreEqual(weaponTypeString, "105MM"))
     {
         return WEAPON_105MM;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "120MM"))
+    else if (StringsAreEqual(weaponTypeString, "120MM"))
     {
         return WEAPON_120MM;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "TURRET_GUN"))
+    else if (StringsAreEqual(weaponTypeString, "TURRET_GUN"))
     {
         return WEAPON_TURRET_GUN;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "MAMMOTH_TUSK"))
+    else if (StringsAreEqual(weaponTypeString, "MAMMOTH_TUSK"))
     {
         return WEAPON_MAMMOTH_TUSK;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "ROCKET_LAUNCHER"))
+    else if (StringsAreEqual(weaponTypeString, "ROCKET_LAUNCHER"))
     {
         return WEAPON_MLRS;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "155MM"))
+    else if (StringsAreEqual(weaponTypeString, "155MM"))
     {
         return WEAPON_155MM;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "M60MG"))
+    else if (StringsAreEqual(weaponTypeString, "M60MG"))
     {
         return WEAPON_M60MG;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "TOMAHAWK"))
+    else if (StringsAreEqual(weaponTypeString, "TOMAHAWK"))
     {
         return WEAPON_TOMAHAWK;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "TOWTWO"))
+    else if (StringsAreEqual(weaponTypeString, "TOWTWO"))
     {
         return WEAPON_TOW_TWO;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "NAPALM"))
+    else if (StringsAreEqual(weaponTypeString, "NAPALM"))
     {
         return WEAPON_NAPALM;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "OBELISK_LASER"))
+    else if (StringsAreEqual(weaponTypeString, "OBELISK_LASER"))
     {
         return WEAPON_OBELISK_LASER;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "NIKE"))
+    else if (StringsAreEqual(weaponTypeString, "NIKE"))
     {
         return WEAPON_NIKE;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "HONEST_JOHN"))
+    else if (StringsAreEqual(weaponTypeString, "HONEST_JOHN"))
     {
         return WEAPON_HONEST_JOHN;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "DINO_RAM"))
+    else if (StringsAreEqual(weaponTypeString, "DINO_RAM"))
     {
         return WEAPON_STEG;
     }
-    else if (Strings_Are_Equal(weaponTypeString, "DINO_BITE"))
+    else if (StringsAreEqual(weaponTypeString, "DINO_BITE"))
     {
         return WEAPON_TREX;
     }
@@ -531,16 +531,16 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError, bool igno
         *parseError = true;
     }
 
-    Show_Error("Unable to parse weapon type from string: %s", weaponTypeString);
+    ShowError("Unable to parse weapon type from string: %s", weaponTypeString);
 
     return weaponType;
 }
 
 WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(weaponTypeString))
+    if (StringIsEmpty(weaponTypeString))
     {
-        Show_Error("Weapon type passed to Parse_Weapon_Type was null or empty");
+        ShowError("Weapon type passed to Parse_Weapon_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -673,7 +673,7 @@ const char* Weapon_Type_To_String(WeaponType weaponType, bool ignoreModTypes)
     }
     else
     {
-        Show_Error("Unable to convert weapon type to string: %d", weaponType);
+        ShowError("Unable to convert weapon type to string: %d", weaponType);
     }
 
     return weaponTypeString;
@@ -683,23 +683,23 @@ ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError, bool ignoreM
 {
     ArmorType armor;
 
-    if (Strings_Are_Equal(armorTypeString, "NONE"))
+    if (StringsAreEqual(armorTypeString, "NONE"))
     {
         armor = ARMOR_NONE;
     }
-    else if (Strings_Are_Equal(armorTypeString, "WOOD"))
+    else if (StringsAreEqual(armorTypeString, "WOOD"))
     {
         armor = ARMOR_WOOD;
     }
-    else if (Strings_Are_Equal(armorTypeString, "ALUMINUM"))
+    else if (StringsAreEqual(armorTypeString, "ALUMINUM"))
     {
         armor = ARMOR_ALUMINUM;
     }
-    else if (Strings_Are_Equal(armorTypeString, "STEEL"))
+    else if (StringsAreEqual(armorTypeString, "STEEL"))
     {
         armor = ARMOR_STEEL;
     }
-    else if (Strings_Are_Equal(armorTypeString, "CONCRETE"))
+    else if (StringsAreEqual(armorTypeString, "CONCRETE"))
     {
         armor = ARMOR_CONCRETE;
     }
@@ -710,7 +710,7 @@ ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError, bool ignoreM
             *parseError = true;
         }
 
-        Show_Error("Unable to parse armor type from string: %s", armorTypeString);
+        ShowError("Unable to parse armor type from string: %s", armorTypeString);
     }
 
     return armor;
@@ -718,9 +718,9 @@ ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError, bool ignoreM
 
 ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(armorTypeString))
+    if (StringIsEmpty(armorTypeString))
     {
-        Show_Error("Armor type passed to Parse_Armor_Type was null or empty");
+        ShowError("Armor type passed to Parse_Armor_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -765,7 +765,7 @@ const char* Armor_Type_To_String(ArmorType armorType)
     }
     else
     {
-        Show_Error("Unable to convert armor type to string: %u", armorType);
+        ShowError("Unable to convert armor type to string: %u", armorType);
     }
 
     return armorTypeString;
@@ -775,83 +775,83 @@ BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError, bool igno
 {
     BulletType bullet = BULLET_NONE;
 
-    if (Strings_Are_Equal(bulletTypeString, "NONE"))
+    if (StringsAreEqual(bulletTypeString, "NONE"))
     {
         return BULLET_NONE;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "SNIPER"))
+    else if (StringsAreEqual(bulletTypeString, "SNIPER"))
     {
         return BULLET_SNIPER;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "BULLET"))
+    else if (StringsAreEqual(bulletTypeString, "BULLET"))
     {
         return BULLET_BULLET;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "SPREADFIRE"))
+    else if (StringsAreEqual(bulletTypeString, "SPREADFIRE"))
     {
         return BULLET_SPREADFIRE;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "APDS"))
+    else if (StringsAreEqual(bulletTypeString, "APDS"))
     {
         return BULLET_APDS;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "ARTILLERY_SHELL"))
+    else if (StringsAreEqual(bulletTypeString, "ARTILLERY_SHELL"))
     {
         return BULLET_HE;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "SS_MISSILE"))
+    else if (StringsAreEqual(bulletTypeString, "SS_MISSILE"))
     {
         return BULLET_SSM;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "MLRS_ROCKET"))
+    else if (StringsAreEqual(bulletTypeString, "MLRS_ROCKET"))
     {
         return BULLET_SSM2;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "SAM_MISSILE"))
+    else if (StringsAreEqual(bulletTypeString, "SAM_MISSILE"))
     {
         return BULLET_SAM;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "TOW_MISSILE"))
+    else if (StringsAreEqual(bulletTypeString, "TOW_MISSILE"))
     {
         return BULLET_TOW;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "FLAME"))
+    else if (StringsAreEqual(bulletTypeString, "FLAME"))
     {
         return BULLET_FLAME;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "CHEMICALS"))
+    else if (StringsAreEqual(bulletTypeString, "CHEMICALS"))
     {
         return BULLET_CHEMSPRAY;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "NAPALM_BOMB"))
+    else if (StringsAreEqual(bulletTypeString, "NAPALM_BOMB"))
     {
         return BULLET_NAPALM;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "GRENADE_BOMB"))
+    else if (StringsAreEqual(bulletTypeString, "GRENADE_BOMB"))
     {
         return BULLET_GRENADE;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "LASER_BEAM"))
+    else if (StringsAreEqual(bulletTypeString, "LASER_BEAM"))
     {
         return BULLET_LASER;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "NUKE_UP"))
+    else if (StringsAreEqual(bulletTypeString, "NUKE_UP"))
     {
         return BULLET_NUKE_UP;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "NUKE_DOWN"))
+    else if (StringsAreEqual(bulletTypeString, "NUKE_DOWN"))
     {
         return BULLET_NUKE_DOWN;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "HONEST_JOHN_MISSILE"))
+    else if (StringsAreEqual(bulletTypeString, "HONEST_JOHN_MISSILE"))
     {
         return BULLET_HONEST_JOHN;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "GORE"))
+    else if (StringsAreEqual(bulletTypeString, "GORE"))
     {
         return BULLET_HEADBUTT;
     }
-    else if (Strings_Are_Equal(bulletTypeString, "CHEW"))
+    else if (StringsAreEqual(bulletTypeString, "CHEW"))
     {
         return BULLET_TREXBITE;
     }
@@ -870,16 +870,16 @@ BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError, bool igno
         *parseError = true;
     }
 
-    Show_Error("Unable to parse bullet type from string: %s", bulletTypeString);
+    ShowError("Unable to parse bullet type from string: %s", bulletTypeString);
 
     return bullet;
 }
 
 BulletType Parse_Bullet_Type(const char* bulletTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(bulletTypeString))
+    if (StringIsEmpty(bulletTypeString))
     {
-        Show_Error("Bullet type passed to Parse_Bullet_Type was null or empty");
+        ShowError("Bullet type passed to Parse_Bullet_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -988,7 +988,7 @@ const char* Bullet_Type_To_String(BulletType bulletType, bool ignoreModTypes)
     }
     else
     {
-        Show_Error("Unable to convert bullet type to string: %d", bulletType);
+        ShowError("Unable to convert bullet type to string: %d", bulletType);
     }
 
     return bulletTypeString;
@@ -998,51 +998,51 @@ WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError, bool i
 {
     WarheadType warhead = WARHEAD_NONE;
 
-    if (Strings_Are_Equal(warheadTypeString, "SA"))
+    if (StringsAreEqual(warheadTypeString, "SA"))
     {
         return WARHEAD_SA;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "HE"))
+    else if (StringsAreEqual(warheadTypeString, "HE"))
     {
         return WARHEAD_HE;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "AP"))
+    else if (StringsAreEqual(warheadTypeString, "AP"))
     {
         return WARHEAD_AP;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "FIRE"))
+    else if (StringsAreEqual(warheadTypeString, "FIRE"))
     {
         return WARHEAD_FIRE;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "LASER"))
+    else if (StringsAreEqual(warheadTypeString, "LASER"))
     {
         return WARHEAD_LASER;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "PB"))
+    else if (StringsAreEqual(warheadTypeString, "PB"))
     {
         return WARHEAD_PB;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "FIST"))
+    else if (StringsAreEqual(warheadTypeString, "FIST"))
     {
         return WARHEAD_FIST;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "FOOT"))
+    else if (StringsAreEqual(warheadTypeString, "FOOT"))
     {
         return WARHEAD_FOOT;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "HOLLOW_POINT"))
+    else if (StringsAreEqual(warheadTypeString, "HOLLOW_POINT"))
     {
         return WARHEAD_HOLLOW_POINT;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "SPORE"))
+    else if (StringsAreEqual(warheadTypeString, "SPORE"))
     {
         return WARHEAD_SPORE;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "HEADBUTT"))
+    else if (StringsAreEqual(warheadTypeString, "HEADBUTT"))
     {
         return WARHEAD_HEADBUTT;
     }
-    else if (Strings_Are_Equal(warheadTypeString, "FEEDME"))
+    else if (StringsAreEqual(warheadTypeString, "FEEDME"))
     {
         return WARHEAD_FEEDME;
     }
@@ -1062,16 +1062,16 @@ WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError, bool i
         *parseError = true;
     }
 
-    Show_Error("Unable to parse warhead type from string: %s", warheadTypeString);
+    ShowError("Unable to parse warhead type from string: %s", warheadTypeString);
 
     return warhead;
 }
 
 WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(warheadTypeString))
+    if (StringIsEmpty(warheadTypeString))
     {
-        Show_Error("Warhead type passed to Parse_Warhead_Type was null or empty");
+        ShowError("Warhead type passed to Parse_Warhead_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -1148,7 +1148,7 @@ const char* Warhead_Type_To_String(WarheadType warheadType, bool ignoreModTypes)
     }
     else
     {
-        Show_Error("Unable to convert warhead type to string: %u", warheadType);
+        ShowError("Unable to convert warhead type to string: %u", warheadType);
     }
 
     return warheadTypeString;
@@ -1158,27 +1158,27 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError, boo
 {
     InfantryType infantryType = INFANTRY_NONE;
 
-    if (Strings_Are_Equal(infantryTypeString, "NONE"))
+    if (StringsAreEqual(infantryTypeString, "NONE"))
     {
         return INFANTRY_NONE;
     }
-    else if (Strings_Are_Equal(infantryTypeString, "RMBO"))
+    else if (StringsAreEqual(infantryTypeString, "RMBO"))
     {
         return INFANTRY_RAMBO;
     }
-    else if (Strings_Are_Equal(infantryTypeString, "NIKOOMBA"))
+    else if (StringsAreEqual(infantryTypeString, "NIKOOMBA"))
     {
         return INFANTRY_C10;
     }
-    else if (Strings_Are_Equal(infantryTypeString, "MOEBIUS"))
+    else if (StringsAreEqual(infantryTypeString, "MOEBIUS"))
     {
         return INFANTRY_MOEBIUS;
     }
-    else if (Strings_Are_Equal(infantryTypeString, "DELPHI"))
+    else if (StringsAreEqual(infantryTypeString, "DELPHI"))
     {
         return INFANTRY_DELPHI;
     }
-    else if (Strings_Are_Equal(infantryTypeString, "CHAN"))
+    else if (StringsAreEqual(infantryTypeString, "CHAN"))
     {
         return INFANTRY_CHAN;
     }
@@ -1186,7 +1186,7 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError, boo
     if (strlen(infantryTypeString) == 2) {
         if (infantryTypeString[0] == 'E')
         {
-            auto number = Parse_Number(infantryTypeString[1]);
+            auto number = ParseNumber(infantryTypeString[1]);
 
             if (number > 0 && number < 7)
             {
@@ -1195,7 +1195,7 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError, boo
         }
         else if (infantryTypeString[0] == 'C')
         {
-            auto number = Parse_Number(infantryTypeString[1]);
+            auto number = ParseNumber(infantryTypeString[1]);
 
             if (number > 0 && number < 10)
             {
@@ -1220,16 +1220,16 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError, boo
         *parseError = true;
     }
 
-    Show_Error("Unable to parse infantry type from string: %s", infantryTypeString);
+    ShowError("Unable to parse infantry type from string: %s", infantryTypeString);
 
     return infantryType;
 }
 
 InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(infantryTypeString))
+    if (StringIsEmpty(infantryTypeString))
     {
-        Show_Error("Infantry type passed to Parse_Infantry_Type was null or empty");
+        ShowError("Infantry type passed to Parse_Infantry_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -1294,7 +1294,7 @@ const char* Infantry_Type_To_String(InfantryType infantryType, bool ignoreModTyp
     }
     else
     {
-        Show_Error("Unable to convert infantry type to string: %d", infantryType);
+        ShowError("Unable to convert infantry type to string: %d", infantryType);
     }
 
     return infantryTypeString;
@@ -1302,95 +1302,95 @@ const char* Infantry_Type_To_String(InfantryType infantryType, bool ignoreModTyp
 
 UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (Strings_Are_Equal(unitTypeString, "NONE"))
+    if (StringsAreEqual(unitTypeString, "NONE"))
     {
         return UNIT_NONE;
     }
-    else if (Strings_Are_Equal(unitTypeString, "HTNK"))
+    else if (StringsAreEqual(unitTypeString, "HTNK"))
     {
         return UNIT_HTANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "MTNK"))
+    else if (StringsAreEqual(unitTypeString, "MTNK"))
     {
         return UNIT_MTANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "LTNK"))
+    else if (StringsAreEqual(unitTypeString, "LTNK"))
     {
         return UNIT_LTANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "STNK"))
+    else if (StringsAreEqual(unitTypeString, "STNK"))
     {
         return UNIT_STANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "FTNK"))
+    else if (StringsAreEqual(unitTypeString, "FTNK"))
     {
         return UNIT_FTANK;
     }
-    else if (Strings_Are_Equal(unitTypeString, "VICE"))
+    else if (StringsAreEqual(unitTypeString, "VICE"))
     {
         return UNIT_VICE;
     }
-    else if (Strings_Are_Equal(unitTypeString, "APC"))
+    else if (StringsAreEqual(unitTypeString, "APC"))
     {
         return UNIT_APC;
     }
-    else if (Strings_Are_Equal(unitTypeString, "MSAM"))
+    else if (StringsAreEqual(unitTypeString, "MSAM"))
     {
         return UNIT_MLRS;
     }
-    else if (Strings_Are_Equal(unitTypeString, "JEEP"))
+    else if (StringsAreEqual(unitTypeString, "JEEP"))
     {
         return UNIT_JEEP;
     }
-    else if (Strings_Are_Equal(unitTypeString, "BGGY"))
+    else if (StringsAreEqual(unitTypeString, "BGGY"))
     {
         return UNIT_BUGGY;
     }
-    else if (Strings_Are_Equal(unitTypeString, "HARV"))
+    else if (StringsAreEqual(unitTypeString, "HARV"))
     {
         return UNIT_HARVESTER;
     }
-    else if (Strings_Are_Equal(unitTypeString, "ARTY"))
+    else if (StringsAreEqual(unitTypeString, "ARTY"))
     {
         return UNIT_ARTY;
     }
-    else if (Strings_Are_Equal(unitTypeString, "MLRS"))
+    else if (StringsAreEqual(unitTypeString, "MLRS"))
     {
         return UNIT_MSAM;
     }
-    else if (Strings_Are_Equal(unitTypeString, "LST"))
+    else if (StringsAreEqual(unitTypeString, "LST"))
     {
         return UNIT_HOVER;
     }
-    else if (Strings_Are_Equal(unitTypeString, "MHQ"))
+    else if (StringsAreEqual(unitTypeString, "MHQ"))
     {
         return UNIT_MHQ;
     }
-    else if (Strings_Are_Equal(unitTypeString, "BOAT"))
+    else if (StringsAreEqual(unitTypeString, "BOAT"))
     {
         return UNIT_GUNBOAT;
     }
-    else if (Strings_Are_Equal(unitTypeString, "MCV"))
+    else if (StringsAreEqual(unitTypeString, "MCV"))
     {
         return UNIT_MCV;
     }
-    else if (Strings_Are_Equal(unitTypeString, "BIKE"))
+    else if (StringsAreEqual(unitTypeString, "BIKE"))
     {
         return UNIT_BIKE;
     }
-    else if (Strings_Are_Equal(unitTypeString, "TRIC"))
+    else if (StringsAreEqual(unitTypeString, "TRIC"))
     {
         return UNIT_TRIC;
     }
-    else if (Strings_Are_Equal(unitTypeString, "TREX"))
+    else if (StringsAreEqual(unitTypeString, "TREX"))
     {
         return UNIT_TREX;
     }
-    else if (Strings_Are_Equal(unitTypeString, "RAPT"))
+    else if (StringsAreEqual(unitTypeString, "RAPT"))
     {
         return UNIT_RAPT;
     }
-    else if (Strings_Are_Equal(unitTypeString, "STEG"))
+    else if (StringsAreEqual(unitTypeString, "STEG"))
     {
         return UNIT_STEG;
     }
@@ -1410,16 +1410,16 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError, bool ignoreModT
         *parseError = true;
     }
 
-    Show_Error("Unable to parse unit type from string: %s", unitTypeString);
+    ShowError("Unable to parse unit type from string: %s", unitTypeString);
 
     return UNIT_NONE;
 }
 
 UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(unitTypeString))
+    if (StringIsEmpty(unitTypeString))
     {
-        Show_Error("Unit type passed to Parse_Unit_Type was null or empty");
+        ShowError("Unit type passed to Parse_Unit_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -1540,7 +1540,7 @@ const char* Unit_Type_To_String(UnitType unitType, bool ignoreModTypes)
     }
     else
     {
-        Show_Error("Unable to convert unit type to string: %d", unitType);
+        ShowError("Unable to convert unit type to string: %d", unitType);
     }
 
     return unitTypeString;
@@ -1550,35 +1550,35 @@ SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError, boo
 {
     SpeedType speedType = SPEED_NONE;
 
-    if (Strings_Are_Equal(unitSpeedTypeString, "NONE"))
+    if (StringsAreEqual(unitSpeedTypeString, "NONE"))
     {
         speedType = SPEED_NONE;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "FOOT"))
+    else if (StringsAreEqual(unitSpeedTypeString, "FOOT"))
     {
         speedType = SPEED_FOOT;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "TRACK"))
+    else if (StringsAreEqual(unitSpeedTypeString, "TRACK"))
     {
         speedType = SPEED_TRACK;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "HARVESTER"))
+    else if (StringsAreEqual(unitSpeedTypeString, "HARVESTER"))
     {
         speedType = SPEED_HARVESTER;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "WHEEL"))
+    else if (StringsAreEqual(unitSpeedTypeString, "WHEEL"))
     {
         speedType = SPEED_WHEEL;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "WINGED"))
+    else if (StringsAreEqual(unitSpeedTypeString, "WINGED"))
     {
         speedType = SPEED_WINGED;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "HOVER"))
+    else if (StringsAreEqual(unitSpeedTypeString, "HOVER"))
     {
         speedType = SPEED_HOVER;
     }
-    else if (Strings_Are_Equal(unitSpeedTypeString, "FLOAT"))
+    else if (StringsAreEqual(unitSpeedTypeString, "FLOAT"))
     {
         speedType = SPEED_FLOAT;
     }
@@ -1589,7 +1589,7 @@ SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError, boo
             *parseError = true;
         }
 
-        Show_Error("Unable to parse unit speed type from string: %s", unitSpeedTypeString);
+        ShowError("Unable to parse unit speed type from string: %s", unitSpeedTypeString);
     }
 
     return speedType;
@@ -1597,9 +1597,9 @@ SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError, boo
 
 SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(unitSpeedTypeString))
+    if (StringIsEmpty(unitSpeedTypeString))
     {
-        Show_Error("Unit speed type passed to Parse_Unit_Speed_Type was null or empty");
+        ShowError("Unit speed type passed to Parse_Unit_Speed_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -1656,7 +1656,7 @@ const char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
     }
     else
     {
-        Show_Error("Unable to convert unit speed type to string: %d", unitSpeedType);
+        ShowError("Unable to convert unit speed type to string: %d", unitSpeedType);
     }
 
     return unitSpeedTypeString;
@@ -1666,27 +1666,27 @@ AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError, boo
 {
     AircraftType aircraftType = AIRCRAFT_NONE;
 
-    if (Strings_Are_Equal(aircraftTypeString, "NONE"))
+    if (StringsAreEqual(aircraftTypeString, "NONE"))
     {
         return AIRCRAFT_NONE;
     }
-    else if (Strings_Are_Equal(aircraftTypeString, "A10"))
+    else if (StringsAreEqual(aircraftTypeString, "A10"))
     {
         return AIRCRAFT_A10;
     }
-    else if (Strings_Are_Equal(aircraftTypeString, "C17"))
+    else if (StringsAreEqual(aircraftTypeString, "C17"))
     {
         return AIRCRAFT_CARGO;
     }
-    else if (Strings_Are_Equal(aircraftTypeString, "HELI"))
+    else if (StringsAreEqual(aircraftTypeString, "HELI"))
     {
         return AIRCRAFT_HELICOPTER;
     }
-    else if (Strings_Are_Equal(aircraftTypeString, "ORCA"))
+    else if (StringsAreEqual(aircraftTypeString, "ORCA"))
     {
         return AIRCRAFT_ORCA;
     }
-    else if (Strings_Are_Equal(aircraftTypeString, "TRAN"))
+    else if (StringsAreEqual(aircraftTypeString, "TRAN"))
     {
         return AIRCRAFT_TRANSPORT;
     }
@@ -1705,16 +1705,16 @@ AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError, boo
         *parseError = true;
     }
 
-    Show_Error("Unable to parse aircraft type from string: %s", aircraftTypeString);
+    ShowError("Unable to parse aircraft type from string: %s", aircraftTypeString);
 
     return aircraftType;
 }
 
 AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(aircraftTypeString))
+    if (StringIsEmpty(aircraftTypeString))
     {
-        Show_Error("Aircraft type passed to Parse_Aircraft_Type was null or empty");
+        ShowError("Aircraft type passed to Parse_Aircraft_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -1767,7 +1767,7 @@ const char* Aircraft_Type_To_String(AircraftType aircraftType, bool ignoreModTyp
     }
     else
     {
-        Show_Error("Unable to convert aircraft type to string: %d", aircraftType);
+        ShowError("Unable to convert aircraft type to string: %d", aircraftType);
     }
 
     return aircraftTypeString;
@@ -1777,267 +1777,267 @@ StructType Parse_Structure_Type(char* structTypeString, bool* parseError, bool i
 {
     StructType structType = STRUCT_NONE;
 
-    if (Strings_Are_Equal(structTypeString, "NONE"))
+    if (StringsAreEqual(structTypeString, "NONE"))
     {
         return STRUCT_NONE;
     }
-    else if (Strings_Are_Equal(structTypeString, "WEAP"))
+    else if (StringsAreEqual(structTypeString, "WEAP"))
     {
         return STRUCT_WEAP;
     }
-    else if (Strings_Are_Equal(structTypeString, "GTWR"))
+    else if (StringsAreEqual(structTypeString, "GTWR"))
     {
         return STRUCT_GTOWER;
     }
-    else if (Strings_Are_Equal(structTypeString, "ATWR"))
+    else if (StringsAreEqual(structTypeString, "ATWR"))
     {
         return STRUCT_ATOWER;
     }
-    else if (Strings_Are_Equal(structTypeString, "OBLI"))
+    else if (StringsAreEqual(structTypeString, "OBLI"))
     {
         return STRUCT_OBELISK;
     }
-    else if (Strings_Are_Equal(structTypeString, "HQ"))
+    else if (StringsAreEqual(structTypeString, "HQ"))
     {
         return STRUCT_RADAR;
     }
-    else if (Strings_Are_Equal(structTypeString, "GUN"))
+    else if (StringsAreEqual(structTypeString, "GUN"))
     {
         return STRUCT_TURRET;
     }
-    else if (Strings_Are_Equal(structTypeString, "FACT"))
+    else if (StringsAreEqual(structTypeString, "FACT"))
     {
         return STRUCT_CONST;
     }
-    else if (Strings_Are_Equal(structTypeString, "PROC"))
+    else if (StringsAreEqual(structTypeString, "PROC"))
     {
         return STRUCT_REFINERY;
     }
-    else if (Strings_Are_Equal(structTypeString, "SILO"))
+    else if (StringsAreEqual(structTypeString, "SILO"))
     {
         return STRUCT_STORAGE;
     }
-    else if (Strings_Are_Equal(structTypeString, "HPAD"))
+    else if (StringsAreEqual(structTypeString, "HPAD"))
     {
         return STRUCT_HELIPAD;
     }
-    else if (Strings_Are_Equal(structTypeString, "SAM"))
+    else if (StringsAreEqual(structTypeString, "SAM"))
     {
         return STRUCT_SAM;
     }
-    else if (Strings_Are_Equal(structTypeString, "AFLD"))
+    else if (StringsAreEqual(structTypeString, "AFLD"))
     {
         return STRUCT_AIRSTRIP;
     }
-    else if (Strings_Are_Equal(structTypeString, "NUKE"))
+    else if (StringsAreEqual(structTypeString, "NUKE"))
     {
         return STRUCT_POWER;
     }
-    else if (Strings_Are_Equal(structTypeString, "NUK2"))
+    else if (StringsAreEqual(structTypeString, "NUK2"))
     {
         return STRUCT_ADVANCED_POWER;
     }
-    else if (Strings_Are_Equal(structTypeString, "HOSP"))
+    else if (StringsAreEqual(structTypeString, "HOSP"))
     {
         return STRUCT_HOSPITAL;
     }
-    else if (Strings_Are_Equal(structTypeString, "PYLE"))
+    else if (StringsAreEqual(structTypeString, "PYLE"))
     {
         return STRUCT_BARRACKS;
     }
-    else if (Strings_Are_Equal(structTypeString, "ARCO"))
+    else if (StringsAreEqual(structTypeString, "ARCO"))
     {
         return STRUCT_TANKER;
     }
-    else if (Strings_Are_Equal(structTypeString, "FIX"))
+    else if (StringsAreEqual(structTypeString, "FIX"))
     {
         return STRUCT_REPAIR;
     }
-    else if (Strings_Are_Equal(structTypeString, "BIO"))
+    else if (StringsAreEqual(structTypeString, "BIO"))
     {
         return STRUCT_BIO_LAB;
     }
-    else if (Strings_Are_Equal(structTypeString, "HAND"))
+    else if (StringsAreEqual(structTypeString, "HAND"))
     {
         return STRUCT_HAND;
     }
-    else if (Strings_Are_Equal(structTypeString, "TMPL"))
+    else if (StringsAreEqual(structTypeString, "TMPL"))
     {
         return STRUCT_TEMPLE;
     }
-    else if (Strings_Are_Equal(structTypeString, "EYE"))
+    else if (StringsAreEqual(structTypeString, "EYE"))
     {
         return STRUCT_EYE;
     }
-    else if (Strings_Are_Equal(structTypeString, "MISS"))
+    else if (StringsAreEqual(structTypeString, "MISS"))
     {
         return STRUCT_MISSION;
     }
-    else if (Strings_Are_Equal(structTypeString, "V01"))
+    else if (StringsAreEqual(structTypeString, "V01"))
     {
         return STRUCT_V01;
     }
-    else if (Strings_Are_Equal(structTypeString, "V02"))
+    else if (StringsAreEqual(structTypeString, "V02"))
     {
         return STRUCT_V02;
     }
-    else if (Strings_Are_Equal(structTypeString, "V03"))
+    else if (StringsAreEqual(structTypeString, "V03"))
     {
         return STRUCT_V03;
     }
-    else if (Strings_Are_Equal(structTypeString, "V04"))
+    else if (StringsAreEqual(structTypeString, "V04"))
     {
         return STRUCT_V04;
     }
-    else if (Strings_Are_Equal(structTypeString, "V05"))
+    else if (StringsAreEqual(structTypeString, "V05"))
     {
         return STRUCT_V05;
     }
-    else if (Strings_Are_Equal(structTypeString, "V06"))
+    else if (StringsAreEqual(structTypeString, "V06"))
     {
         return STRUCT_V06;
     }
-    else if (Strings_Are_Equal(structTypeString, "V07"))
+    else if (StringsAreEqual(structTypeString, "V07"))
     {
         return STRUCT_V07;
     }
-    else if (Strings_Are_Equal(structTypeString, "V08"))
+    else if (StringsAreEqual(structTypeString, "V08"))
     {
         return STRUCT_V08;
     }
-    else if (Strings_Are_Equal(structTypeString, "V09"))
+    else if (StringsAreEqual(structTypeString, "V09"))
     {
         return STRUCT_V09;
     }
-    else if (Strings_Are_Equal(structTypeString, "V10"))
+    else if (StringsAreEqual(structTypeString, "V10"))
     {
         return STRUCT_V10;
     }
-    else if (Strings_Are_Equal(structTypeString, "V11"))
+    else if (StringsAreEqual(structTypeString, "V11"))
     {
         return STRUCT_V11;
     }
-    else if (Strings_Are_Equal(structTypeString, "V12"))
+    else if (StringsAreEqual(structTypeString, "V12"))
     {
         return STRUCT_V12;
     }
-    else if (Strings_Are_Equal(structTypeString, "V13"))
+    else if (StringsAreEqual(structTypeString, "V13"))
     {
         return STRUCT_V13;
     }
-    else if (Strings_Are_Equal(structTypeString, "V14"))
+    else if (StringsAreEqual(structTypeString, "V14"))
     {
         return STRUCT_V14;
     }
-    else if (Strings_Are_Equal(structTypeString, "V15"))
+    else if (StringsAreEqual(structTypeString, "V15"))
     {
         return STRUCT_V15;
     }
-    else if (Strings_Are_Equal(structTypeString, "V16"))
+    else if (StringsAreEqual(structTypeString, "V16"))
     {
         return STRUCT_V16;
     }
-    else if (Strings_Are_Equal(structTypeString, "V17"))
+    else if (StringsAreEqual(structTypeString, "V17"))
     {
         return STRUCT_V17;
     }
-    else if (Strings_Are_Equal(structTypeString, "V18"))
+    else if (StringsAreEqual(structTypeString, "V18"))
     {
         return STRUCT_V18;
     }
-    else if (Strings_Are_Equal(structTypeString, "V19"))
+    else if (StringsAreEqual(structTypeString, "V19"))
     {
         return STRUCT_PUMP;
     }
-    else if (Strings_Are_Equal(structTypeString, "V20"))
+    else if (StringsAreEqual(structTypeString, "V20"))
     {
         return STRUCT_V20;
     }
-    else if (Strings_Are_Equal(structTypeString, "V21"))
+    else if (StringsAreEqual(structTypeString, "V21"))
     {
         return STRUCT_V21;
     }
-    else if (Strings_Are_Equal(structTypeString, "V22"))
+    else if (StringsAreEqual(structTypeString, "V22"))
     {
         return STRUCT_V22;
     }
-    else if (Strings_Are_Equal(structTypeString, "V23"))
+    else if (StringsAreEqual(structTypeString, "V23"))
     {
         return STRUCT_V23;
     }
-    else if (Strings_Are_Equal(structTypeString, "V24"))
+    else if (StringsAreEqual(structTypeString, "V24"))
     {
         return STRUCT_V24;
     }
-    else if (Strings_Are_Equal(structTypeString, "V25"))
+    else if (StringsAreEqual(structTypeString, "V25"))
     {
         return STRUCT_V25;
     }
-    else if (Strings_Are_Equal(structTypeString, "V26"))
+    else if (StringsAreEqual(structTypeString, "V26"))
     {
         return STRUCT_V26;
     }
-    else if (Strings_Are_Equal(structTypeString, "V27"))
+    else if (StringsAreEqual(structTypeString, "V27"))
     {
         return STRUCT_V27;
     }
-    else if (Strings_Are_Equal(structTypeString, "V28"))
+    else if (StringsAreEqual(structTypeString, "V28"))
     {
         return STRUCT_V28;
     }
-    else if (Strings_Are_Equal(structTypeString, "V29"))
+    else if (StringsAreEqual(structTypeString, "V29"))
     {
         return STRUCT_V29;
     }
-    else if (Strings_Are_Equal(structTypeString, "V30"))
+    else if (StringsAreEqual(structTypeString, "V30"))
     {
         return STRUCT_V30;
     }
-    else if (Strings_Are_Equal(structTypeString, "V31"))
+    else if (StringsAreEqual(structTypeString, "V31"))
     {
         return STRUCT_V31;
     }
-    else if (Strings_Are_Equal(structTypeString, "V32"))
+    else if (StringsAreEqual(structTypeString, "V32"))
     {
         return STRUCT_V32;
     }
-    else if (Strings_Are_Equal(structTypeString, "V33"))
+    else if (StringsAreEqual(structTypeString, "V33"))
     {
         return STRUCT_V33;
     }
-    else if (Strings_Are_Equal(structTypeString, "V34"))
+    else if (StringsAreEqual(structTypeString, "V34"))
     {
         return STRUCT_V34;
     }
-    else if (Strings_Are_Equal(structTypeString, "V35"))
+    else if (StringsAreEqual(structTypeString, "V35"))
     {
         return STRUCT_V35;
     }
-    else if (Strings_Are_Equal(structTypeString, "V36"))
+    else if (StringsAreEqual(structTypeString, "V36"))
     {
         return STRUCT_V36;
     }
-    else if (Strings_Are_Equal(structTypeString, "V37"))
+    else if (StringsAreEqual(structTypeString, "V37"))
     {
         return STRUCT_V37;
     }
-    else if (Strings_Are_Equal(structTypeString, "SBAG"))
+    else if (StringsAreEqual(structTypeString, "SBAG"))
     {
         return STRUCT_SANDBAG_WALL;
     }
-    else if (Strings_Are_Equal(structTypeString, "CYCL"))
+    else if (StringsAreEqual(structTypeString, "CYCL"))
     {
         return STRUCT_CYCLONE_WALL;
     }
-    else if (Strings_Are_Equal(structTypeString, "BRIK"))
+    else if (StringsAreEqual(structTypeString, "BRIK"))
     {
         return STRUCT_BRICK_WALL;
     }
-    else if (Strings_Are_Equal(structTypeString, "BARB"))
+    else if (StringsAreEqual(structTypeString, "BARB"))
     {
         return STRUCT_BARBWIRE_WALL;
     }
-    else if (Strings_Are_Equal(structTypeString, "WOOD"))
+    else if (StringsAreEqual(structTypeString, "WOOD"))
     {
         return STRUCT_WOOD_WALL;
     }
@@ -2056,16 +2056,16 @@ StructType Parse_Structure_Type(char* structTypeString, bool* parseError, bool i
         *parseError = true;
     }
 
-    Show_Error("Unable to parse structure from string: %s", structTypeString);
+    ShowError("Unable to parse structure from string: %s", structTypeString);
 
     return structType;
 }
 
 StructType Parse_Structure_Type(const char* structTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(structTypeString))
+    if (StringIsEmpty(structTypeString))
     {
-        Show_Error("Structure type passed to Parse_Structure_Type was null or empty");
+        ShowError("Structure type passed to Parse_Structure_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -2358,7 +2358,7 @@ const char* Structure_Type_To_String(StructType structType, bool ignoreModTypes)
     }
     else
     {
-        Show_Error("Unable to convert structure type to string: %d", structType);
+        ShowError("Unable to convert structure type to string: %d", structType);
     }
 
     return structTypeString;
@@ -2390,23 +2390,23 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError, bool i
 {
     FactoryType factoryType;
 
-    if (Strings_Are_Equal(factoryTypeString, "NONE"))
+    if (StringsAreEqual(factoryTypeString, "NONE"))
     {
         factoryType = FACTORY_TYPE_NONE;
     }
-    else if (Strings_Are_Equal(factoryTypeString, "INFANTRY"))
+    else if (StringsAreEqual(factoryTypeString, "INFANTRY"))
     {
         factoryType = FACTORY_TYPE_INFANTRY;
     }
-    else if (Strings_Are_Equal(factoryTypeString, "UNIT"))
+    else if (StringsAreEqual(factoryTypeString, "UNIT"))
     {
         factoryType = FACTORY_TYPE_UNIT;
     }
-    else if (Strings_Are_Equal(factoryTypeString, "AIRCRAFT"))
+    else if (StringsAreEqual(factoryTypeString, "AIRCRAFT"))
     {
         factoryType = FACTORY_TYPE_AIRCRAFT;
     }
-    else if (Strings_Are_Equal(factoryTypeString, "BUILDING"))
+    else if (StringsAreEqual(factoryTypeString, "BUILDING"))
     {
         factoryType = FACTORY_TYPE_BUILDING;
     }
@@ -2417,7 +2417,7 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError, bool i
             *parseError = true;
         }
 
-        Show_Error("Unable to parse factory type from string: %s", factoryTypeString);
+        ShowError("Unable to parse factory type from string: %s", factoryTypeString);
     }
 
     return factoryType;
@@ -2425,9 +2425,9 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError, bool i
 
 FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError, bool ignoreModTypes)
 {
-    if (String_Is_Empty(factoryTypeString))
+    if (StringIsEmpty(factoryTypeString))
     {
-        Show_Error("Factory type passed to Parse_Factory_Type was null or empty");
+        ShowError("Factory type passed to Parse_Factory_Type was null or empty");
 
         if (parseError != NULL)
         {
@@ -2472,7 +2472,7 @@ const char* Factory_Type_To_String(FactoryType factoryType)
     }
     else
     {
-        Show_Error("Unable to convert factory type to string: %d", factoryType);
+        ShowError("Unable to convert factory type to string: %d", factoryType);
     }
 
     return factoryTypeString;

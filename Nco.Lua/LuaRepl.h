@@ -29,7 +29,7 @@ private:
 
 		if (!WriteConsole(stdOut, output, length, NULL, NULL))
 		{
-			With_Win32_Error_Message([&] (auto e) {
+			WithWin32ErrorMessage([&] (auto e) {
 				LogError("Lua REPL error: %s", e);
 			});
 
@@ -49,7 +49,7 @@ private:
 		if (luaType.value == LuaType::Bool->value)
 		{
 			return PrintLuaOutput(
-				Strings_Are_Equal(valueAsString, "TRUE") ? "true" : "false"
+				StringsAreEqual(valueAsString, "TRUE") ? "true" : "false"
 			);
 		}
 
@@ -129,7 +129,7 @@ private:
 		}
 
 		// reset all C and Lua variables
-		input = Allocate_String(MAX_INPUT_LENGTH);
+		input = AllocateString(MAX_INPUT_LENGTH);
 
 		luaRuntime.GetState().ClearStack();
 
@@ -139,7 +139,7 @@ private:
 		if (!WriteConsole(stdOut, "> ", 2, NULL, NULL)
 			|| !ReadConsole(stdIn, input, MAX_INPUT_LENGTH, &charsRead, NULL))
 		{
-			With_Win32_Error_Message([&] (auto e) {
+			WithWin32ErrorMessage([&] (auto e) {
 				LogError("Lua REPL error: %s", e);
 			});
 
@@ -159,14 +159,14 @@ private:
 		// strip newline
 		auto trimmedInput = ExtractSubstring(input, -2);
 
-		if (Strings_Are_Equal(trimmedInput, "exit"))
+		if (StringsAreEqual(trimmedInput, "exit"))
 		{
 			delete trimmedInput;
 
 			return false;
 		}
 
-		if (Strings_Are_Equal(trimmedInput, "clear"))
+		if (StringsAreEqual(trimmedInput, "clear"))
 		{
 			system("cls");
 			delete trimmedInput;
@@ -174,7 +174,7 @@ private:
 			return true;
 		}
 
-		if (String_Is_Empty(trimmedInput))
+		if (StringIsEmpty(trimmedInput))
 		{
 			delete trimmedInput;
 
@@ -200,7 +200,7 @@ private:
 
 		delete& executeResult;
 
-		if (String_Starts_With(input, "return"))
+		if (StringStartsWith(input, "return"))
 		{
 			return PrintLuaResult();
 		}
