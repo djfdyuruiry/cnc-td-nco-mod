@@ -25,7 +25,7 @@ class BulletApi : public RulesSectionTypeWrapperApi<BulletTypeClass, BulletType>
 {
 protected:
 	BulletApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi(strdup("Bullet"), rulesInfo, BULLET_FIRST, getCount, Parse_Bullet_Type, Bullet_Type_To_String)
+		RulesSectionTypeWrapperApi(strdup("Bullet"), rulesInfo, BULLET_FIRST, getCount, ParseBulletType, BulletTypeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BULLET_HIGH_RULE,
@@ -89,15 +89,15 @@ protected:
 			PrimitiveTypeValidator<bool>::Build()
 		).WithFieldWrapper(
 			BULLET_WARHEAD_RULE,
-			EXTRACTOR_BLT(Warhead_Type_To_String(i.Warhead)),
+			EXTRACTOR_BLT(WarheadTypeToString(i.Warhead)),
 			[](BulletTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Warhead = Parse_Warhead_Type(valueUpper, NULL);
+				i.Warhead = ParseWarheadType(valueUpper, NULL);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<WarheadType>::Build("Warhead", Parse_Warhead_Type)
+			ParseCheckValidator<WarheadType>::Build("Warhead", ParseWarheadType)
 		).WithFieldWrapper(
 			BULLET_ARMING_RULE,
 			SIMPLE_EXTRACTOR_BLT(Arming),

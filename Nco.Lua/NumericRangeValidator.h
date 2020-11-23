@@ -30,7 +30,7 @@ public:
 			return primitiveResult;
 		}
 
-		delete & primitiveResult;
+		delete &primitiveResult;
 
 		auto& valueResult = lua.PullValue<T>(stackIndex);
 

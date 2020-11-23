@@ -24,7 +24,7 @@ private:
 protected:
 	InfantryType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Infantry_Type(typeString, parseError, false);
+		return ParseInfantryType(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)
@@ -34,7 +34,7 @@ protected:
 
 	void ReadRulesAndAddType(InfantryTypeClass* type)
 	{
-		InfantryTypeClass::Read_Infantry_Rules(type);
+		InfantryTypeClass::ReadInfantryRules(type);
 
 		InfantryTypeClass::Add_Infantry_Type(type);
 	}

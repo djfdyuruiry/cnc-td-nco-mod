@@ -3726,15 +3726,15 @@ BuildingTypeClass::BuildingTypeClass(
 
 NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(IniName);
 
-	Read_Building_Rules(this);
+	ReadBuildingRules(this);
 }
 
-void BuildingTypeClass::Read_Building_Rules(BuildingTypeClass* building)
+void BuildingTypeClass::ReadBuildingRules(BuildingTypeClass* building)
 {
 	auto iniName = building->IniName;
 
-	Read_Object_Rules(building);
-	Read_Techno_Rules(building);
+	ReadObjectRules(building);
+	ReadTechnoRules(building);
 
 	building->IsBibbed = Read_Is_Bibbed(iniName, building->IsBibbed);
 	building->IsWall = Read_Is_Wall(iniName, building->IsWall);
@@ -4591,7 +4591,7 @@ int BuildingTypeClass::Full_Name(void) const
 {
 	if (::Scenario == 3 && Type == STRUCT_MISSION && NcoRulesRuntime().ReadRuleValue<bool>(RENAME_TECH_CENTER_TO_PRISON_RULE_KEY))
 	{
-		LogDebug("Renaming %s to TXT_PRISON", Structure_Type_To_String(STRUCT_MISSION));
+		LogDebug("Renaming %s to TXT_PRISON", StructureTypeToString(STRUCT_MISSION));
 		return(TXT_PRISON);
 	}
 

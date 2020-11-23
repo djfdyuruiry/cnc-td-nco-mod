@@ -24,7 +24,7 @@ private:
 protected:
 	UnitType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Unit_Type(typeString, parseError, false);
+		return ParseUnitType(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)
@@ -34,7 +34,7 @@ protected:
 
 	void ReadRulesAndAddType(UnitTypeClass* type)
 	{
-		UnitTypeClass::Read_Unit_Rules(type);
+		UnitTypeClass::ReadUnitRules(type);
 
 		UnitTypeClass::Add_Unit_Type(type);
 	}

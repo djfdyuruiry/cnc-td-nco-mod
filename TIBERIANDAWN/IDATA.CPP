@@ -1469,12 +1469,12 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 	return By_Type(type);
 }
 
-void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
+void InfantryTypeClass::ReadInfantryRules(InfantryTypeClass* infantry)
 {
 	auto iniName = infantry->IniName;
 
-	Read_Object_Rules(infantry);
-	Read_Techno_Rules(infantry);
+	ReadObjectRules(infantry);
+	ReadTechnoRules(infantry);
 
 	infantry->IsCrushable = Read_Is_Crushable(iniName, infantry->IsCrushable);
 	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
@@ -1562,7 +1562,7 @@ InfantryTypeClass::InfantryTypeClass(
 
 NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(IniName);
 
-	Read_Infantry_Rules(this);
+	ReadInfantryRules(this);
 
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;

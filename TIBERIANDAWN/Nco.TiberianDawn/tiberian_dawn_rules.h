@@ -84,7 +84,7 @@
 // iq lookups
 #define Read_Max_Iq_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(IQ_SECTION_NAME, MAX_IQ_RULE)
 
-#define Read_Iq_Rule(entry) NcoRulesRuntime().ReadRuleValue<unsigned int>(IQ_SECTION_NAME, entry)
+#define ReadIqRule(entry) NcoRulesRuntime().ReadRuleValue<unsigned int>(IQ_SECTION_NAME, entry)
 
 // weapon lookups
 #define Read_Weapon_Damage(bulletType, defaultValue) (unsigned char) NcoRulesRuntime().ReadRuleValue<unsigned int>(bulletType, WEAPON_DAMAGE_RULE, defaultValue)

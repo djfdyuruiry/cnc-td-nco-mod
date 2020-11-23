@@ -92,7 +92,7 @@ bool ObjectClass::Is_Infantry(void) const
 	return(false);
 }
 
-void ObjectTypeClass::Read_Object_Rules(ObjectTypeClass* type)
+void ObjectTypeClass::ReadObjectRules(ObjectTypeClass* type)
 {
 	if (!type->LoadObjectRules)
 	{

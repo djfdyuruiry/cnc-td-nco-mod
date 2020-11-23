@@ -28,7 +28,7 @@ static const auto CIVILIAN_TYPE_MAP = new const char* [INFANTRY_C10 - INFANTRY_C
     "C9"
 };
 
-DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError, bool ignoreModTypes)
+DiffType ParseDifficultyType(char* difficultyTypeString, bool* parseError, bool ignoreModTypes)
 {
     DiffType difficultyType;
 
@@ -57,7 +57,7 @@ DiffType Parse_Difficulty_Type(char* difficultyTypeString, bool* parseError, boo
     return difficultyType;
 }
 
-const char* Difficulty_Type_To_String(DiffType difficultyType)
+const char* DifficultyTypeToString(DiffType difficultyType)
 {
     const char* difficultyTypeString;
 
@@ -81,7 +81,7 @@ const char* Difficulty_Type_To_String(DiffType difficultyType)
     return difficultyTypeString;
 }
 
-HousesType Parse_House_Type(char* houseTypeString, bool* parseError, bool ignoreModTypes)
+HousesType ParseHouseType(char* houseTypeString, bool* parseError, bool ignoreModTypes)
 {
     HousesType house;
 
@@ -142,18 +142,18 @@ HousesType Parse_House_Type(char* houseTypeString, bool* parseError, bool ignore
 	return house;
 }
 
-HousesType Parse_House_Type(const char* houseTypeString, bool* parseError, bool ignoreModTypes)
+HousesType ParseHouseType(const char* houseTypeString, bool* parseError, bool ignoreModTypes)
 {
     auto houseTypeStr = strdup(houseTypeString);
 
-    auto houseType = Parse_House_Type(houseTypeStr, parseError, ignoreModTypes);
+    auto houseType = ParseHouseType(houseTypeStr, parseError, ignoreModTypes);
 
     delete houseTypeStr;
 
     return houseType;
 }
 
-int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError, bool ignoreModTypes)
+int ParseHouseNameListCsv(char* houseListCsv, bool* parseError, bool ignoreModTypes)
 {
     auto houseNameListSize = 0u;
     auto houseNameList = ParseCsvString(houseListCsv, HOUSE_NAME_MAX_LENGTH, &houseNameListSize);
@@ -174,7 +174,7 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError, bool ignoreM
     for (auto i = 0u; i < houseNameListSize; i++)
     {
         bool houseParseError = false;
-        auto house = Parse_House_Type(houseNameList[i], &houseParseError, ignoreModTypes);
+        auto house = ParseHouseType(houseNameList[i], &houseParseError, ignoreModTypes);
 
         if (houseParseError)
         {
@@ -211,11 +211,11 @@ int Parse_House_Name_List_Csv(char* houseListCsv, bool* parseError, bool ignoreM
     return houseList;
 }
 
-int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError, bool ignoreModTypes)
+int ParseHouseNameListCsv(const char* houseListCsv, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(houseListCsv))
     {
-        ShowError("CSV passed to Parse_House_Name_List_Csv was null or empty");
+        ShowError("CSV passed to ParseHouseNameListCsv was null or empty");
 
         if (parseError != NULL)
         {
@@ -227,14 +227,14 @@ int Parse_House_Name_List_Csv(const char* houseListCsv, bool* parseError, bool i
 
     auto houseTypeCsvStr = strdup(houseListCsv);
 
-    auto owner = Parse_House_Name_List_Csv(houseTypeCsvStr, parseError, ignoreModTypes);
+    auto owner = ParseHouseNameListCsv(houseTypeCsvStr, parseError, ignoreModTypes);
 
     delete houseTypeCsvStr;
 
     return owner;
 }
 
-const char* House_Type_To_String(HousesType houseType)
+const char* HouseTypeToString(HousesType houseType)
 {
     const char* houseTypeString;
 
@@ -290,7 +290,7 @@ const char* House_Type_To_String(HousesType houseType)
     return houseTypeString;
 }
 
-StructType Prerequisite_To_Structure_Type(long prerequisite)
+StructType PrerequisiteToStructureType(long prerequisite)
 {
     auto structType = STRUCT_NONE;
     
@@ -398,14 +398,14 @@ StructType Prerequisite_To_Structure_Type(long prerequisite)
     return structType;
 }
 
-const char* Prerequisite_To_String(long prerequisite)
+const char* PrerequisiteToString(long prerequisite)
 {
-    return Structure_Type_To_String(
-        Prerequisite_To_Structure_Type(prerequisite)
+    return StructureTypeToString(
+        PrerequisiteToStructureType(prerequisite)
     );
 }
 
-WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError, bool ignoreModTypes)
+WeaponType ParseWeaponType(char* weaponTypeString, bool* parseError, bool ignoreModTypes)
 {
     WeaponType weaponType = WEAPON_NONE;
 
@@ -536,11 +536,11 @@ WeaponType Parse_Weapon_Type(char* weaponTypeString, bool* parseError, bool igno
     return weaponType;
 }
 
-WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError, bool ignoreModTypes)
+WeaponType ParseWeaponType(const char* weaponTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(weaponTypeString))
     {
-        ShowError("Weapon type passed to Parse_Weapon_Type was null or empty");
+        ShowError("Weapon type passed to ParseWeaponType was null or empty");
 
         if (parseError != NULL)
         {
@@ -552,14 +552,14 @@ WeaponType Parse_Weapon_Type(const char* weaponTypeString, bool* parseError, boo
 
     auto weaponTypeStr = strdup(weaponTypeString);
 
-    auto weaponType = Parse_Weapon_Type(weaponTypeStr, parseError, ignoreModTypes);
+    auto weaponType = ParseWeaponType(weaponTypeStr, parseError, ignoreModTypes);
 
     delete weaponTypeStr;
 
     return weaponType;
 }
 
-const char* Weapon_Type_To_String(WeaponType weaponType, bool ignoreModTypes)
+const char* WeaponTypeToString(WeaponType weaponType, bool ignoreModTypes)
 {
     const char* weaponTypeString;
 
@@ -679,7 +679,7 @@ const char* Weapon_Type_To_String(WeaponType weaponType, bool ignoreModTypes)
     return weaponTypeString;
 }
 
-ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError, bool ignoreModTypes)
+ArmorType ParseArmorType(char* armorTypeString, bool* parseError, bool ignoreModTypes)
 {
     ArmorType armor;
 
@@ -716,11 +716,11 @@ ArmorType Parse_Armor_Type(char* armorTypeString, bool* parseError, bool ignoreM
     return armor;
 }
 
-ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError, bool ignoreModTypes)
+ArmorType ParseArmorType(const char* armorTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(armorTypeString))
     {
-        ShowError("Armor type passed to Parse_Armor_Type was null or empty");
+        ShowError("Armor type passed to ParseArmorType was null or empty");
 
         if (parseError != NULL)
         {
@@ -732,14 +732,14 @@ ArmorType Parse_Armor_Type(const char* armorTypeString, bool* parseError, bool i
 
     auto armorTypeStr = strdup(armorTypeString);
 
-    auto armorType = Parse_Armor_Type(armorTypeStr, parseError, ignoreModTypes);
+    auto armorType = ParseArmorType(armorTypeStr, parseError, ignoreModTypes);
 
     delete armorTypeStr;
 
     return armorType;
 }
 
-const char* Armor_Type_To_String(ArmorType armorType)
+const char* ArmorTypeToString(ArmorType armorType)
 {
     const char* armorTypeString;
 
@@ -771,7 +771,7 @@ const char* Armor_Type_To_String(ArmorType armorType)
     return armorTypeString;
 }
 
-BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError, bool ignoreModTypes)
+BulletType ParseBulletType(char* bulletTypeString, bool* parseError, bool ignoreModTypes)
 {
     BulletType bullet = BULLET_NONE;
 
@@ -875,11 +875,11 @@ BulletType Parse_Bullet_Type(char* bulletTypeString, bool* parseError, bool igno
     return bullet;
 }
 
-BulletType Parse_Bullet_Type(const char* bulletTypeString, bool* parseError, bool ignoreModTypes)
+BulletType ParseBulletType(const char* bulletTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(bulletTypeString))
     {
-        ShowError("Bullet type passed to Parse_Bullet_Type was null or empty");
+        ShowError("Bullet type passed to ParseBulletType was null or empty");
 
         if (parseError != NULL)
         {
@@ -891,14 +891,14 @@ BulletType Parse_Bullet_Type(const char* bulletTypeString, bool* parseError, boo
 
     auto bulletTypeStr = strdup(bulletTypeString);
 
-    auto bulletType = Parse_Bullet_Type(bulletTypeStr, parseError, ignoreModTypes);
+    auto bulletType = ParseBulletType(bulletTypeStr, parseError, ignoreModTypes);
 
     delete bulletTypeStr;
 
     return bulletType;
 }
 
-const char* Bullet_Type_To_String(BulletType bulletType, bool ignoreModTypes)
+const char* BulletTypeToString(BulletType bulletType, bool ignoreModTypes)
 {
     const char* bulletTypeString;
 
@@ -994,7 +994,7 @@ const char* Bullet_Type_To_String(BulletType bulletType, bool ignoreModTypes)
     return bulletTypeString;
 }
 
-WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError, bool ignoreModTypes)
+WarheadType ParseWarheadType(char* warheadTypeString, bool* parseError, bool ignoreModTypes)
 {
     WarheadType warhead = WARHEAD_NONE;
 
@@ -1067,11 +1067,11 @@ WarheadType Parse_Warhead_Type(char* warheadTypeString, bool* parseError, bool i
     return warhead;
 }
 
-WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError, bool ignoreModTypes)
+WarheadType ParseWarheadType(const char* warheadTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(warheadTypeString))
     {
-        ShowError("Warhead type passed to Parse_Warhead_Type was null or empty");
+        ShowError("Warhead type passed to ParseWarheadType was null or empty");
 
         if (parseError != NULL)
         {
@@ -1083,14 +1083,14 @@ WarheadType Parse_Warhead_Type(const char* warheadTypeString, bool* parseError, 
 
     auto warheadTypeStr = strdup(warheadTypeString);
 
-    auto warheadType = Parse_Warhead_Type(warheadTypeStr, parseError, ignoreModTypes);
+    auto warheadType = ParseWarheadType(warheadTypeStr, parseError, ignoreModTypes);
 
     delete warheadTypeStr;
 
     return warheadType;
 }
 
-const char* Warhead_Type_To_String(WarheadType warheadType, bool ignoreModTypes)
+const char* WarheadTypeToString(WarheadType warheadType, bool ignoreModTypes)
 {
     const char* warheadTypeString;
 
@@ -1154,7 +1154,7 @@ const char* Warhead_Type_To_String(WarheadType warheadType, bool ignoreModTypes)
     return warheadTypeString;
 }
 
-InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError, bool ignoreModTypes)
+InfantryType ParseInfantryType(char* infantryTypeString, bool* parseError, bool ignoreModTypes)
 {
     InfantryType infantryType = INFANTRY_NONE;
 
@@ -1225,11 +1225,11 @@ InfantryType Parse_Infantry_Type(char* infantryTypeString, bool* parseError, boo
     return infantryType;
 }
 
-InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseError, bool ignoreModTypes)
+InfantryType ParseInfantryType(const char* infantryTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(infantryTypeString))
     {
-        ShowError("Infantry type passed to Parse_Infantry_Type was null or empty");
+        ShowError("Infantry type passed to ParseInfantryType was null or empty");
 
         if (parseError != NULL)
         {
@@ -1241,14 +1241,14 @@ InfantryType Parse_Infantry_Type(const char* infantryTypeString, bool* parseErro
 
     auto infantryTypeStr = strdup(infantryTypeString);
 
-    InfantryType result = Parse_Infantry_Type(infantryTypeStr, parseError, ignoreModTypes);
+    InfantryType result = ParseInfantryType(infantryTypeStr, parseError, ignoreModTypes);
 
     delete infantryTypeStr;
 
     return result;
 }
 
-const char* Infantry_Type_To_String(InfantryType infantryType, bool ignoreModTypes)
+const char* InfantryTypeToString(InfantryType infantryType, bool ignoreModTypes)
 {
     const char* infantryTypeString;
 
@@ -1300,7 +1300,7 @@ const char* Infantry_Type_To_String(InfantryType infantryType, bool ignoreModTyp
     return infantryTypeString;
 }
 
-UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError, bool ignoreModTypes)
+UnitType ParseUnitType(char* unitTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringsAreEqual(unitTypeString, "NONE"))
     {
@@ -1415,11 +1415,11 @@ UnitType Parse_Unit_Type(char* unitTypeString, bool* parseError, bool ignoreModT
     return UNIT_NONE;
 }
 
-UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError, bool ignoreModTypes)
+UnitType ParseUnitType(const char* unitTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(unitTypeString))
     {
-        ShowError("Unit type passed to Parse_Unit_Type was null or empty");
+        ShowError("Unit type passed to ParseUnitType was null or empty");
 
         if (parseError != NULL)
         {
@@ -1431,14 +1431,14 @@ UnitType Parse_Unit_Type(const char* unitTypeString, bool* parseError, bool igno
 
     auto unitTypeStr = strdup(unitTypeString);
 
-    UnitType result = Parse_Unit_Type(unitTypeStr, parseError, ignoreModTypes);
+    UnitType result = ParseUnitType(unitTypeStr, parseError, ignoreModTypes);
 
     delete unitTypeStr;
 
     return result;
 }
 
-const char* Unit_Type_To_String(UnitType unitType, bool ignoreModTypes)
+const char* UnitTypeToString(UnitType unitType, bool ignoreModTypes)
 {
     const char* unitTypeString;
 
@@ -1546,7 +1546,7 @@ const char* Unit_Type_To_String(UnitType unitType, bool ignoreModTypes)
     return unitTypeString;
 }
 
-SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes)
+SpeedType ParseUnitSpeedType(char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes)
 {
     SpeedType speedType = SPEED_NONE;
 
@@ -1595,11 +1595,11 @@ SpeedType Parse_Unit_Speed_Type(char* unitSpeedTypeString, bool* parseError, boo
     return speedType;
 }
 
-SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes)
+SpeedType ParseUnitSpeedType(const char* unitSpeedTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(unitSpeedTypeString))
     {
-        ShowError("Unit speed type passed to Parse_Unit_Speed_Type was null or empty");
+        ShowError("Unit speed type passed to ParseUnitSpeedType was null or empty");
 
         if (parseError != NULL)
         {
@@ -1611,14 +1611,14 @@ SpeedType Parse_Unit_Speed_Type(const char* unitSpeedTypeString, bool* parseErro
 
     auto unitSpeedTypeStr = strdup(unitSpeedTypeString);
 
-    auto unitSpeedType = Parse_Unit_Speed_Type(unitSpeedTypeStr, parseError, ignoreModTypes);
+    auto unitSpeedType = ParseUnitSpeedType(unitSpeedTypeStr, parseError, ignoreModTypes);
 
     delete unitSpeedTypeStr;
 
     return unitSpeedType;
 }
 
-const char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
+const char* UnitSpeedTypeToString(SpeedType unitSpeedType)
 {
     const char* unitSpeedTypeString;
 
@@ -1662,7 +1662,7 @@ const char* Unit_Speed_Type_To_String(SpeedType unitSpeedType)
     return unitSpeedTypeString;
 }
 
-AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError, bool ignoreModTypes)
+AircraftType ParseAircraftType(char* aircraftTypeString, bool* parseError, bool ignoreModTypes)
 {
     AircraftType aircraftType = AIRCRAFT_NONE;
 
@@ -1710,11 +1710,11 @@ AircraftType Parse_Aircraft_Type(char* aircraftTypeString, bool* parseError, boo
     return aircraftType;
 }
 
-AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseError, bool ignoreModTypes)
+AircraftType ParseAircraftType(const char* aircraftTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(aircraftTypeString))
     {
-        ShowError("Aircraft type passed to Parse_Aircraft_Type was null or empty");
+        ShowError("Aircraft type passed to ParseAircraftType was null or empty");
 
         if (parseError != NULL)
         {
@@ -1726,14 +1726,14 @@ AircraftType Parse_Aircraft_Type(const char* aircraftTypeString, bool* parseErro
 
     auto aircraftTypeStr = strdup(aircraftTypeString);
 
-    auto aircraftType = Parse_Aircraft_Type(aircraftTypeStr, parseError, ignoreModTypes);
+    auto aircraftType = ParseAircraftType(aircraftTypeStr, parseError, ignoreModTypes);
 
     delete aircraftTypeStr;
 
     return aircraftType;
 }
 
-const char* Aircraft_Type_To_String(AircraftType aircraftType, bool ignoreModTypes)
+const char* AircraftTypeToString(AircraftType aircraftType, bool ignoreModTypes)
 {
     const char* aircraftTypeString;
 
@@ -1773,7 +1773,7 @@ const char* Aircraft_Type_To_String(AircraftType aircraftType, bool ignoreModTyp
     return aircraftTypeString;
 }
 
-StructType Parse_Structure_Type(char* structTypeString, bool* parseError, bool ignoreModTypes)
+StructType ParseStructureType(char* structTypeString, bool* parseError, bool ignoreModTypes)
 {
     StructType structType = STRUCT_NONE;
 
@@ -2061,11 +2061,11 @@ StructType Parse_Structure_Type(char* structTypeString, bool* parseError, bool i
     return structType;
 }
 
-StructType Parse_Structure_Type(const char* structTypeString, bool* parseError, bool ignoreModTypes)
+StructType ParseStructureType(const char* structTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(structTypeString))
     {
-        ShowError("Structure type passed to Parse_Structure_Type was null or empty");
+        ShowError("Structure type passed to ParseStructureType was null or empty");
 
         if (parseError != NULL)
         {
@@ -2077,14 +2077,14 @@ StructType Parse_Structure_Type(const char* structTypeString, bool* parseError, 
 
     auto structTypeStr = strdup(structTypeString);
 
-    auto structType = Parse_Structure_Type(structTypeStr, parseError, ignoreModTypes);
+    auto structType = ParseStructureType(structTypeStr, parseError, ignoreModTypes);
 
     delete structTypeStr;
 
     return structType;
 }
 
-const char* Structure_Type_To_String(StructType structType, bool ignoreModTypes)
+const char* StructureTypeToString(StructType structType, bool ignoreModTypes)
 {
     const char* structTypeString;
 
@@ -2364,7 +2364,7 @@ const char* Structure_Type_To_String(StructType structType, bool ignoreModTypes)
     return structTypeString;
 }
 
-long Structure_Type_To_Prerequisite(StructType structType, bool* parseError, bool ignoreModTypes)
+long StructureTypeToPrerequisite(StructType structType, bool* parseError, bool ignoreModTypes)
 {
     if (structType == STRUCT_NONE)
     {
@@ -2386,7 +2386,7 @@ long Structure_Type_To_Prerequisite(StructType structType, bool* parseError, boo
     return 1L << structType;
 }
 
-FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError, bool ignoreModTypes)
+FactoryType ParseFactoryType(char* factoryTypeString, bool* parseError, bool ignoreModTypes)
 {
     FactoryType factoryType;
 
@@ -2423,11 +2423,11 @@ FactoryType Parse_Factory_Type(char* factoryTypeString, bool* parseError, bool i
     return factoryType;
 }
 
-FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError, bool ignoreModTypes)
+FactoryType ParseFactoryType(const char* factoryTypeString, bool* parseError, bool ignoreModTypes)
 {
     if (StringIsEmpty(factoryTypeString))
     {
-        ShowError("Factory type passed to Parse_Factory_Type was null or empty");
+        ShowError("Factory type passed to ParseFactoryType was null or empty");
 
         if (parseError != NULL)
         {
@@ -2439,14 +2439,14 @@ FactoryType Parse_Factory_Type(const char* factoryTypeString, bool* parseError, 
 
     auto factoryTypeStr = strdup(factoryTypeString);
 
-    auto factoryType = Parse_Factory_Type(factoryTypeStr, parseError, ignoreModTypes);
+    auto factoryType = ParseFactoryType(factoryTypeStr, parseError, ignoreModTypes);
 
     delete factoryTypeStr;
 
     return factoryType;
 }
 
-const char* Factory_Type_To_String(FactoryType factoryType)
+const char* FactoryTypeToString(FactoryType factoryType)
 {
     const char* factoryTypeString;
 

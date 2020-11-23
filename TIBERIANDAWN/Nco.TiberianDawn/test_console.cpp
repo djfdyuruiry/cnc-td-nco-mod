@@ -82,7 +82,7 @@ static void TestLuaEvents()
 
 	LogInfo("Testing setting rules from save load event handler");
 
-	On_Save_Load(House_Type_To_String(HOUSE_GOOD), 4);
+	On_Save_Load(HouseTypeToString(HOUSE_GOOD), 4);
 
 	LogInfo("Testing game tick event handler");
 
@@ -159,11 +159,11 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 	puts("  NCO Mod: Test Console  ");
 	puts("=========================");
 
-	if (!NCO_Startup())
+	if (!NcoStartup())
 	{
-		NCO_Shutdown();
+		NcoShutdown();
 
-		puts("Test Console: ERROR! NCO_Startup failed - bailing out!");
+		puts("Test Console: ERROR! NcoStartup failed - bailing out!");
 		Pause();
 
 		return 1;
@@ -184,7 +184,7 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 	TestLuaEvents();
 
-	NCO_Shutdown();
+	NcoShutdown();
 
 	puts("Test Console: finishing normally");
 

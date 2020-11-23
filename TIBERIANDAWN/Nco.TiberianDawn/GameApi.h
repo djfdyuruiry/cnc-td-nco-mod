@@ -19,12 +19,12 @@
 class GameApi : public LuaApi
 {
 private:
-    static HousesType Lua_Parse_House_Type(int index, const char* callingFunctionName, bool* parseError)
+    static HousesType Lua_ParseHouseType(int index, const char* callingFunctionName, bool* parseError)
     {
         auto& luaState = NcoLuaRuntime().GetState();
         auto& houseTypeStringResult = luaState.ReadString(index);
         auto upperHouseTypeString = ConvertStringToUpperCase(houseTypeStringResult.GetValue());
-        auto houseType = Parse_House_Type(upperHouseTypeString, parseError);
+        auto houseType = ParseHouseType(upperHouseTypeString, parseError);
 
         delete upperHouseTypeString;
 
@@ -61,7 +61,7 @@ private:
         }
 
         bool parseError = false;
-        auto house = Lua_Parse_House_Type(1, "clearHouseMessages", &parseError);
+        auto house = Lua_ParseHouseType(1, "clearHouseMessages", &parseError);
 
         if (parseError)
         {
@@ -113,7 +113,7 @@ private:
         return NULL;
     }
 
-    static SuperweaponType Lua_Parse_Superweapon_Type(int index, const char* callingFunctionName, bool* invalidValue)
+    static SuperweaponType Lua_ParseSuperweaponType(int index, const char* callingFunctionName, bool* invalidValue)
     {
         auto& luaState = NcoLuaRuntime().GetState();
         auto& superWeaponNameResult = luaState.ReadString(index);
@@ -179,14 +179,14 @@ private:
         }
 
         bool parseError = false;
-        auto house = Lua_Parse_House_Type(1, callingLuaFunctionName, &parseError);
+        auto house = Lua_ParseHouseType(1, callingLuaFunctionName, &parseError);
 
         if (parseError)
         {
             return 0;
         }
 
-        auto superweapon = Lua_Parse_Superweapon_Type(2, callingLuaFunctionName, &parseError);
+        auto superweapon = Lua_ParseSuperweaponType(2, callingLuaFunctionName, &parseError);
 
         if (parseError)
         {
@@ -255,7 +255,7 @@ private:
         }
 
         bool invalidValue = false;
-        auto houseType = Lua_Parse_House_Type(1, "modifyHouseCredits", &invalidValue);
+        auto houseType = Lua_ParseHouseType(1, "modifyHouseCredits", &invalidValue);
 
         if (invalidValue)
         {
@@ -274,7 +274,7 @@ private:
 
         if (!housePresent)
         {
-            LogError("Ignoring modifyHouseCredits call as house '%s' is not in the current game", House_Type_To_String(houseType));
+            LogError("Ignoring modifyHouseCredits call as house '%s' is not in the current game", HouseTypeToString(houseType));
 
             delete &creditsModifierResult;
 
@@ -303,7 +303,7 @@ private:
             auto house = Houses.Raw_Ptr(i);
 
             houses.push_back(
-                House_Type_To_String(house->Class->House)
+                HouseTypeToString(house->Class->House)
             );
         }
 
@@ -317,7 +317,7 @@ private:
         auto& luaState = NcoLuaRuntime().GetState();
         LogTrace("Lua_Get_Player_House called from Lua");
 
-        auto playerBaseHouse = House_Type_To_String(PlayerPtr->ActLike);
+        auto playerBaseHouse = HouseTypeToString(PlayerPtr->ActLike);
 
         luaState.WriteString(playerBaseHouse);
 
@@ -329,7 +329,7 @@ private:
         auto& luaState = NcoLuaRuntime().GetState();
         LogTrace("Lua_Get_Player_House called from Lua");
 
-        auto playerHouse = House_Type_To_String(PlayerPtr->Class->House);
+        auto playerHouse = HouseTypeToString(PlayerPtr->Class->House);
 
         luaState.WriteString(playerHouse);
 

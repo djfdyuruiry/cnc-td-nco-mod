@@ -26,7 +26,7 @@ class WarheadApi : public RulesSectionTypeWrapperApi<WarheadTypeClass, WarheadTy
 {
 protected:
 	WarheadApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi(strdup("Warhead"), rulesInfo, WARHEAD_FIRST, getCount, Parse_Warhead_Type, Warhead_Type_To_String)
+		RulesSectionTypeWrapperApi(strdup("Warhead"), rulesInfo, WARHEAD_FIRST, getCount, ParseWarheadType, WarheadTypeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WARHEAD_SPREAD_FACTOR_RULE,

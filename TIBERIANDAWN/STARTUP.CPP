@@ -139,7 +139,7 @@ BOOL WINAPI DllMain(HINSTANCE instance, unsigned int fdwReason, void *lpvReserve
 
 			Uninit_Game();
 
-			NCO_Shutdown();
+			NcoShutdown();
 
 			break;
 			
@@ -201,11 +201,11 @@ int DLL_Startup(const char * command_line_in)
 
 	LogTrace("Attempting NCO startup");
 
-	if (!NCO_Startup())
+	if (!NcoStartup())
 	{
 		LogError("NCO startup FAILED!");
 
-		NCO_Shutdown();
+		NcoShutdown();
 
 		return(EXIT_FAILURE);
 	}

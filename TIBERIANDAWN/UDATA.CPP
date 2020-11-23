@@ -1328,7 +1328,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 
 NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildUnitSection(IniName);
 
-	Read_Unit_Rules(this);
+	ReadUnitRules(this);
 }
 
 
@@ -1730,13 +1730,13 @@ UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 	return By_Type(type);
 }
 
-void UnitTypeClass::Read_Unit_Rules(UnitTypeClass* unit)
+void UnitTypeClass::ReadUnitRules(UnitTypeClass* unit)
 {
-	LogTrace("UnitTypeClass::Read_Unit_Rules");
+	LogTrace("UnitTypeClass::ReadUnitRules");
 	auto iniName = unit->IniName;
 
-	Read_Object_Rules(unit);
-	Read_Techno_Rules(unit);
+	ReadObjectRules(unit);
+	ReadTechnoRules(unit);
 
 	unit->IsCrateGoodie = Read_Can_Be_Found_In_Crate(iniName, unit->IsCrateGoodie);
 	unit->IsPieceOfEight = Read_Limited_Facings(iniName, unit->IsPieceOfEight);

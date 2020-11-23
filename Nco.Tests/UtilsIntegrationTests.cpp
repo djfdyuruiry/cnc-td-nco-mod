@@ -62,6 +62,7 @@ namespace Integration
 
 					Assert::IsFalse(valueFound);
 				}
+			};
 		}
 	}
 

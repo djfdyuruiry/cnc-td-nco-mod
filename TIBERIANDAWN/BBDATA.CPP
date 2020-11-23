@@ -625,14 +625,14 @@ BulletTypeClass::BulletTypeClass(
 
 NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(IniName);
 
-	Read_Bullet_Rules(this);
+	ReadBulletRules(this);
 }
 
-void BulletTypeClass::Read_Bullet_Rules(BulletTypeClass* bullet)
+void BulletTypeClass::ReadBulletRules(BulletTypeClass* bullet)
 {
 	auto iniName = bullet->IniName;
 
-	Read_Object_Rules(bullet);
+	ReadObjectRules(bullet);
 	
 	bullet->FriendlyName = NcoRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
 	bullet->Image = NcoRulesRuntime().ReadRuleValue<char*>(iniName, IMAGE_RULE, bullet->Image);

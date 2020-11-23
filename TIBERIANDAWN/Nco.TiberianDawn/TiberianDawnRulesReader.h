@@ -30,7 +30,7 @@ private:
 		ConvertStringToUpperCase(structValueStr);
 
 		bool parseError = false;
-		auto structValue = Parse_Structure_Type(structValueStr, &parseError);
+		auto structValue = ParseStructureType(structValueStr, &parseError);
 
 		delete& structValueStrOptional;
 
@@ -57,7 +57,7 @@ private:
 		return GetParsedStringRule(
 			rule,
 			"houses",
-			&Parse_House_Name_List_Csv,
+			&ParseHouseNameListCsv,
 			(int)HOUSEF_NONE
 		);
 	}
@@ -67,7 +67,7 @@ private:
 		return GetParsedStringRule(
 			rule,
 			"weapon",
-			&Parse_Weapon_Type,
+			&ParseWeaponType,
 			WEAPON_NONE
 		);
 	}
@@ -77,7 +77,7 @@ private:
 		return GetParsedStringRule(
 			rule,
 			"armor",
-			&Parse_Armor_Type,
+			&ParseArmorType,
 			ARMOR_NONE
 		);
 	}
@@ -87,7 +87,7 @@ private:
 		return GetParsedStringRule(
 			rule,
 			"unit speed",
-			&Parse_Unit_Speed_Type,
+			&ParseUnitSpeedType,
 			SPEED_NONE
 		);
 	}
@@ -97,7 +97,7 @@ private:
 		return GetParsedStringRule(
 			rule,
 			"factory type",
-			&Parse_Factory_Type,
+			&ParseFactoryType,
 			FACTORY_TYPE_NONE
 		);
 	}
@@ -107,7 +107,7 @@ private:
 		return GetParsedStringRule(
 			rule,
 			"warhead",
-			&Parse_Warhead_Type,
+			&ParseWarheadType,
 			WARHEAD_NONE
 		);
 	}
@@ -117,7 +117,7 @@ private:
 		return GetParsedStringRule(
 			rule,
 			"bullet",
-			&Parse_Bullet_Type,
+			&ParseBulletType,
 			BULLET_NONE
 		);
 	}

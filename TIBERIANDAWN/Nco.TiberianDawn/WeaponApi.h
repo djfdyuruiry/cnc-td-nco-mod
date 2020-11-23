@@ -23,19 +23,19 @@ class WeaponApi : public RulesSectionTypeWrapperApi<WeaponTypeClass, WeaponType>
 {
 protected:
 	WeaponApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi(strdup("Weapon"), rulesInfo, WEAPON_FIRST, getCount, Parse_Weapon_Type, Weapon_Type_To_String)
+		RulesSectionTypeWrapperApi(strdup("Weapon"), rulesInfo, WEAPON_FIRST, getCount, ParseWeaponType, WeaponTypeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WEAPON_PROJECTILE_RULE,
-			EXTRACTOR_WEAP(Bullet_Type_To_String(i.Projectile)),
+			EXTRACTOR_WEAP(BulletTypeToString(i.Projectile)),
 			[](WeaponTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Projectile = Parse_Bullet_Type(valueUpper, NULL);
+				i.Projectile = ParseBulletType(valueUpper, NULL);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<BulletType>::Build("Bullet", Parse_Bullet_Type)
+			ParseCheckValidator<BulletType>::Build("Bullet", ParseBulletType)
 		).WithFieldWrapper(
 			WEAPON_DAMAGE_RULE,
 			SIMPLE_EXTRACTOR_WEAP(Attack),

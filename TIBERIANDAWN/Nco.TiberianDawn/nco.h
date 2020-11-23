@@ -7,6 +7,6 @@
 #include "tiberian_dawn_rule_keys.h"
 #include "TiberianDawnNcoRuntime.h"
 
-#define NCO_Startup() NcoRuntime::Startup<TiberianDawnNcoRuntime>()
+#define NcoStartup() NcoRuntime::Startup<TiberianDawnNcoRuntime>()
 
-#define NCO_Shutdown() NcoRuntime::Shutdown<TiberianDawnNcoRuntime>()
+#define NcoShutdown() NcoRuntime::Shutdown<TiberianDawnNcoRuntime>()

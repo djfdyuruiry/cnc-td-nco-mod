@@ -20,7 +20,7 @@ class UnitApi : public TechnoTypeApi<UnitTypeClass, UnitType>
 {
 private:
 	UnitApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi(strdup("Unit"), rulesInfo, UNIT_FIRST, getCount, Parse_Unit_Type, Unit_Type_To_String)
+		TechnoTypeApi(strdup("Unit"), rulesInfo, UNIT_FIRST, getCount, ParseUnitType, UnitTypeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			CAN_BE_FOUND_IN_CRATE_RULE,
@@ -89,15 +89,15 @@ private:
 			PrimitiveTypeValidator<bool>::Build()
 		).WithFieldWrapper(
 			UNIT_SPEED_RULE,
-			EXTRACTOR_UNT(Unit_Speed_Type_To_String(i.Speed)),
+			EXTRACTOR_UNT(UnitSpeedTypeToString(i.Speed)),
 			[](UnitTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Speed = Parse_Unit_Speed_Type(valueUpper, NULL);
+				i.Speed = ParseUnitSpeedType(valueUpper, NULL);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<SpeedType>::Build("Unit Speed", Parse_Unit_Speed_Type)
+			ParseCheckValidator<SpeedType>::Build("Unit Speed", ParseUnitSpeedType)
 		).WithFieldWrapper(
 			RATE_OF_TURN_RULE,
 			SIMPLE_EXTRACTOR_UNT(ROT),

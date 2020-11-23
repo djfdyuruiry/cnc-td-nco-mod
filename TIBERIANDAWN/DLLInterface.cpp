@@ -2020,7 +2020,7 @@ void DLLExportClass::Config(const CNCRulesDataStruct& rules)
 {
 	for (auto d = DIFF_EASY; d < DIFF_COUNT; ++d)
 	{
-		auto difficultyName = Difficulty_Type_To_String(d);
+		auto difficultyName = DifficultyTypeToString(d);
 
 		Rule.Diff[d].FirepowerBias = Read_Double_Difficulty_Rule(difficultyName, FIREPOWER_DIFFICULTY_RULE);
 		Rule.Diff[d].GroundspeedBias = Read_Double_Difficulty_Rule(difficultyName, GROUNDSPEED_DIFFICULTY_RULE);

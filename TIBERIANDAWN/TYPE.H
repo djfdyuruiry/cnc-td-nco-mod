@@ -194,7 +194,7 @@ class ObjectTypeClass : public AbstractTypeClass
 
 		static void One_Time(void);
 
-		static void Read_Object_Rules(ObjectTypeClass* type);
+		static void ReadObjectRules(ObjectTypeClass* type);
 
 		virtual int  Max_Pips(void) const;
 		virtual void  Dimensions(int &width, int &height) const;
@@ -409,7 +409,7 @@ class TechnoTypeClass : public ObjectTypeClass
 				WeaponType secondary,
 				ArmorType armor);
 
-		static void Read_Techno_Rules(TechnoTypeClass* type);
+		static void ReadTechnoRules(TechnoTypeClass* type);
 
 		virtual void Calculate_Risk(void) const;
 		virtual int  Raw_Cost(void) const;
@@ -494,7 +494,7 @@ public:
 
 	static WeaponTypeClass const& As_Reference(WeaponType type) { return *By_Type(type); };
 
-	static void Read_Weapon_Rules(WeaponTypeClass* type);
+	static void ReadWeaponRules(WeaponTypeClass* type);
 	static void Add_Weapon_Type(WeaponTypeClass* type);
 	
 	virtual RTTIType  What_Am_I(void) const { return RTTI_NONE; };
@@ -582,7 +582,7 @@ public:
 		bool isTiberiumDestroyer,
 		unsigned armorModifiers[ARMOR_COUNT]
 	);
-	static void Read_Warhead_Rules(WarheadTypeClass* type);
+	static void ReadWarheadRules(WarheadTypeClass* type);
 	static void Add_Warhead_Type(WarheadTypeClass* type);
 	virtual RTTIType  What_Am_I(void) const { return RTTI_NONE; };
 	static void  Init(TheaterType) {};
@@ -902,7 +902,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BUILDINGTYPE;};
 		operator StructType(void) const {return(Type);};
 
-		static void Read_Building_Rules(BuildingTypeClass* type);
+		static void ReadBuildingRules(BuildingTypeClass* type);
 		static void Add_Building_Type(BuildingTypeClass* type);
 		
 		static BuildingTypeClass const &  As_Reference(StructType type) { return *By_Type(type); };
@@ -1163,7 +1163,7 @@ private:
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
-		static void Read_Unit_Rules(UnitTypeClass* type);
+		static void ReadUnitRules(UnitTypeClass* type);
 		static void Add_Unit_Type(UnitTypeClass* type);
 
 		virtual void  Dimensions(int &width, int &height) const;
@@ -1305,7 +1305,7 @@ class InfantryTypeClass : public TechnoTypeClass
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
-		static void Read_Infantry_Rules(InfantryTypeClass* infantry);
+		static void ReadInfantryRules(InfantryTypeClass* infantry);
 		static void Add_Infantry_Type(InfantryTypeClass* infantryObject);
 
 		char* Resolve_Ini_Name();
@@ -1490,7 +1490,7 @@ class BulletTypeClass : public ObjectTypeClass
 			WarheadType warhead,
 			AnimType explosion);
 
-		static void Read_Bullet_Rules(BulletTypeClass* type);
+		static void ReadBulletRules(BulletTypeClass* type);
 		static void Add_Bullet_Type(BulletTypeClass* type);
 
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
@@ -1945,7 +1945,7 @@ class AircraftTypeClass : public TechnoTypeClass
 				MissionType deforder);
 		virtual RTTIType  What_Am_I(void) const;
 
-		static void Read_Aircraft_Rules(AircraftTypeClass* type);
+		static void ReadAircraftRules(AircraftTypeClass* type);
 		static void Add_Aircraft_Type(AircraftTypeClass* type);
 
 		static AircraftType  From_Name(char const *name);

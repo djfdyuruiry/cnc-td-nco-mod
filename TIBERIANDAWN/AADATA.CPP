@@ -376,14 +376,14 @@ AircraftTypeClass::AircraftTypeClass(
 	ROT = rot;
 
 NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(IniName);
-	Read_Aircraft_Rules(this);
+	ReadAircraftRules(this);
 }
-void AircraftTypeClass::Read_Aircraft_Rules(AircraftTypeClass* aircraft)
+void AircraftTypeClass::ReadAircraftRules(AircraftTypeClass* aircraft)
 {
 	auto iniName = aircraft->IniName;
 
-	Read_Object_Rules(aircraft);
-	Read_Techno_Rules(aircraft);
+	ReadObjectRules(aircraft);
+	ReadTechnoRules(aircraft);
 
 	aircraft->IsFixedWing = Read_Cant_Hover(iniName, aircraft->IsFixedWing);
 	aircraft->IsLandable = Read_Can_Land(iniName, aircraft->IsLandable);
