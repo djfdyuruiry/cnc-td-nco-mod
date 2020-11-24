@@ -214,7 +214,7 @@ void HouseClass::One_Time(void)
 	/*
 	** Required for Red Alert AI. ST - 7/23/2019 3:21PM
 	*/
-	BuildChoice.Set_Heap(Read_Building_Count());
+	BuildChoice.Set_Heap(ReadBuildingCount());
 #endif
 }
 
@@ -492,10 +492,10 @@ HouseClass::HouseClass(HousesType house) :
 	RadarSpied = 0;
 	PointTotal = 0;
 
-	auto bquantitySize = Read_Building_Count() * sizeof(int);
-	auto aquantitySize = Read_Aircraft_Count() * sizeof(int);
-	auto iquantitySize = Read_Infantry_Count() * sizeof(int);
-	auto uquantitySize = Read_Unit_Count() * sizeof(int);
+	auto bquantitySize = ReadBuildingCount() * sizeof(int);
+	auto aquantitySize = ReadAircraftCount() * sizeof(int);
+	auto iquantitySize = ReadInfantryCount() * sizeof(int);
+	auto uquantitySize = ReadUnitCount() * sizeof(int);
 
 	BQuantity = (int*)calloc(bquantitySize, sizeof(int));
 	AQuantity = (int*) calloc(aquantitySize, sizeof(int));
@@ -3713,7 +3713,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 					techno = 0;
 				}
 
-				char unitCount = Read_Unit_Count();
+				char unitCount = ReadUnitCount();
 
 				int* counter = (int*) calloc(unitCount, sizeof(int));
 
@@ -3816,7 +3816,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 		case RTTI_INFANTRY:
 		case RTTI_INFANTRYTYPE:
 			if (CurUnits < MaxUnit) {
-				char infantryCount = Read_Infantry_Count();
+				char infantryCount = ReadInfantryCount();
 
 				int* counter = (int*) calloc(infantryCount, sizeof(int));
 
@@ -5031,20 +5031,20 @@ void HouseClass::Check_Pertinent_Structures(void)
  *=============================================================================================*/
 void HouseClass::Init_Unit_Trackers(void)
 {
-	char infantryCount = Read_Infantry_Count();
-	char unitCount = Read_Unit_Count();
+	char infantryCount = ReadInfantryCount();
+	char unitCount = ReadUnitCount();
 
-	AircraftTotals = new UnitTrackerClass( (int) Read_Aircraft_Count());
+	AircraftTotals = new UnitTrackerClass( (int) ReadAircraftCount());
 	InfantryTotals = new UnitTrackerClass( (int) infantryCount);
 	UnitTotals = new UnitTrackerClass ( (int) unitCount);
-	BuildingTotals = new UnitTrackerClass ( (int) Read_Building_Count());
+	BuildingTotals = new UnitTrackerClass ( (int) ReadBuildingCount());
 
-	DestroyedAircraft = new UnitTrackerClass ( (int) Read_Aircraft_Count());
+	DestroyedAircraft = new UnitTrackerClass ( (int) ReadAircraftCount());
 	DestroyedInfantry = new UnitTrackerClass( (int) infantryCount);
 	DestroyedUnits = new UnitTrackerClass ( (int) unitCount);
-	DestroyedBuildings = new UnitTrackerClass ( (int) Read_Building_Count());
+	DestroyedBuildings = new UnitTrackerClass ( (int) ReadBuildingCount());
 
-	CapturedBuildings = new UnitTrackerClass ( (int) Read_Building_Count());
+	CapturedBuildings = new UnitTrackerClass ( (int) ReadBuildingCount());
 	TotalCrates = new UnitTrackerClass ( TOTAL_CRATE_TYPES );	//15 crate types
 }
 
@@ -6807,7 +6807,7 @@ int HouseClass::AI_Unit(void)
 
 	//if (Session.Type == GAME_NORMAL) {  // Why? ST - 7/24/2019 2:38PM	
 
-		char unitCount = Read_Unit_Count();
+		char unitCount = ReadUnitCount();
 
 		int* counter = (int*) calloc(unitCount, sizeof(int));
 
@@ -7177,7 +7177,7 @@ int HouseClass::AI_Infantry(void)
 			int				Value;	// Relative value assigned.
 		};
 
-		char infantryCount = Read_Infantry_Count();
+		char infantryCount = ReadInfantryCount();
 		TypeTrack* typetrack = (TypeTrack*) calloc(infantryCount, sizeof(TypeTrack));
 
 		int count = 0;

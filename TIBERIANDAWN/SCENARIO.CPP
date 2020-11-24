@@ -784,7 +784,7 @@ void Fixup_Scenario(void)
 	*/
 	bool is_scg08ea = GameToPlay == GAME_NORMAL && PlayerPtr->ActLike == HOUSE_GOOD && Scenario == 8 && ScenVar == SCEN_VAR_B;
 
-	char infantryCount = Read_Infantry_Count();
+	char infantryCount = ReadInfantryCount();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		InfantryTypeClass& infantry_type = (InfantryTypeClass&)InfantryTypeClass::As_Reference(index);

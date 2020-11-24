@@ -529,7 +529,7 @@ BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
 
 	LogDebug("Initialising Bullet types");
 
-	auto BulletCount = Read_Bullet_Count();
+	auto BulletCount = ReadBulletCount();
 
 	Pointers = new BulletTypeClass const* [BulletCount] {
 		&ClassSniper,		//	BULLET_SNIPER
@@ -683,7 +683,7 @@ void BulletTypeClass::One_Time(void)
 	LogTrace("BulletTypeClass::One_Time start");
 
 	BulletType index;
-	char bulletCount = Read_Bullet_Count();
+	char bulletCount = ReadBulletCount();
 	
 	LogTrace("BulletTypeClass::One_Time bulletCount %d", bulletCount);
 

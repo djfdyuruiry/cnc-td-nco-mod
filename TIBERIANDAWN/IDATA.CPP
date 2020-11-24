@@ -1441,7 +1441,7 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 
 	LogDebug("Initialising infantry types");
 
-	auto infantryCount = Read_Infantry_Count();
+	auto infantryCount = ReadInfantryCount();
 
 	Pointers = new InfantryTypeClass const *[infantryCount]{
 		&E1,
@@ -1846,7 +1846,7 @@ void InfantryTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void InfantryTypeClass::Prep_For_Add(void)
 {
-	char infantryCount = Read_Infantry_Count();
+	char infantryCount = ReadInfantryCount();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		Map.Add_To_List(&As_Reference(index));
@@ -1875,7 +1875,7 @@ void InfantryTypeClass::Prep_For_Add(void)
 InfantryType InfantryTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		char infantryCount = Read_Infantry_Count();
+		char infantryCount = ReadInfantryCount();
 
 		for (InfantryType classid = INFANTRY_FIRST; classid < infantryCount; classid++) {
 			if (stricmp(By_Type(classid)->IniName, name) == 0) {
@@ -1904,7 +1904,7 @@ InfantryType InfantryTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void InfantryTypeClass::One_Time(void)
 {
-	char infantryCount = Read_Infantry_Count();
+	char infantryCount = ReadInfantryCount();
 	InfantryType index;
 
 	for (index = INFANTRY_FIRST; index < infantryCount; index++) {
@@ -1961,7 +1961,7 @@ void InfantryTypeClass::Init(TheaterType theater)
 		return;
 	}
 
-	char infantryCount = Read_Infantry_Count();
+	char infantryCount = ReadInfantryCount();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		InfantryTypeClass const *uclass = &As_Reference(index);
