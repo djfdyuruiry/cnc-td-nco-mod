@@ -68,21 +68,21 @@ private:
             return 0;
         }
 
-        Clear_House_Messages(house);
+        ClearHouseMessages(house);
 
         return 0;
     }
 
     static int Lua_Clear_Game_Loop_Messages(lua_State* _)
     {
-        Clear_Game_Loop_Messages();
+        ClearGameLoopMessages();
 
         return 0;
     }
 
     static int Lua_Clear_Game_Ui_Messages(lua_State* _)
     {
-        Clear_Game_Ui_Messages();
+        ClearGameUiMessages();
 
         return 0;
     }
@@ -212,7 +212,7 @@ private:
         message.superweapon = superweapon;
         message.superweaponMessage = messageType;
 
-        Push_House_Message(house, SUPERWEAPON_MESSAGE, message);
+        PushHouseMessage(house, SUPERWEAPON_MESSAGE, message);
 
         return 0;
     }
@@ -340,7 +340,7 @@ private:
     {
         LogTrace("Lua_Hide_Map called from Lua");
 
-        Push_Hide_Map_Ui_Message();
+        PushHideMapUiMessage();
 
         return 0;
     }
@@ -349,7 +349,7 @@ private:
     {
         LogTrace("Lua_Reveal_Map called from Lua");
 
-        Push_Reveal_Map_Ui_Message();
+        PushRevealMapUiMessage();
 
         return 0;
     }
@@ -358,7 +358,7 @@ private:
     {
         LogTrace("Lua_Refresh_Map called from Lua");
 
-        Push_Refresh_Map_Ui_Message();
+        PushRefreshMapUiMessage();
 
         return 0;
     }
@@ -367,7 +367,7 @@ private:
     {
         LogTrace("Lua_Refresh_Sidebar called from Lua");
 
-        Push_Refresh_Sidebar_Ui_Message();
+        PushRefreshSidebarUiMessage();
 
         return 0;
     }
@@ -412,7 +412,7 @@ private:
             return 0;
         }
 
-        Push_Show_Notification_Ui_Message(messageResult.GetValue(), durationInSecondsResult.GetValue());
+        PushShowNotificationUiMessage(messageResult.GetValue(), durationInSecondsResult.GetValue());
 
         delete &messageResult;
         delete &durationInSecondsResult;

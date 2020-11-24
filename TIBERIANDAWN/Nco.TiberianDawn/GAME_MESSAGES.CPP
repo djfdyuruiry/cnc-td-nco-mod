@@ -30,7 +30,7 @@ static void Push_Message_Of_Type(GameUiMessageType type)
 	Push_Message_Of_Type(type, uiMessage);
 }
 
-void Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds)
+void PushShowNotificationUiMessage(const char* message, float durationInSeconds)
 {
 	GameUiMessage uiMessage;
 
@@ -40,22 +40,22 @@ void Push_Show_Notification_Ui_Message(const char* message, float durationInSeco
 	Push_Message_Of_Type(SHOW_NOTIFICATION_MESSAGE, uiMessage);
 }
 
-void Push_Refresh_Sidebar_Ui_Message()
+void PushRefreshSidebarUiMessage()
 {
 	Push_Message_Of_Type(REFRESH_SIDEBAR_MESSAGE);
 }
 
-void Push_Refresh_Map_Ui_Message()
+void PushRefreshMapUiMessage()
 {
 	Push_Message_Of_Type(REFRESH_MAP_MESSAGE);
 }
 
-void Push_Reveal_Map_Ui_Message()
+void PushRevealMapUiMessage()
 {
 	Push_Message_Of_Type(REVEAL_ENTIRE_MAP_MESSAGE);
 }
 
-void Push_Hide_Map_Ui_Message()
+void PushHideMapUiMessage()
 {
 	Push_Message_Of_Type(HIDE_ENTIRE_MAP_MESSAGE);
 }
@@ -92,7 +92,7 @@ static void Process_Game_Ui_Message(std::map<unsigned int, bool>& messageTypesPr
 	GAME_UI_MESSAGE_QUEUE.pop();
 }
 
-void Process_Game_Ui_Messages()
+void ProcessGameUiMessages()
 {
 	std::map<unsigned int, bool> messageTypesProcessed;
 
@@ -102,7 +102,7 @@ void Process_Game_Ui_Messages()
 	}
 }
 
-void Clear_Game_Ui_Messages()
+void ClearGameUiMessages()
 {
 	while (!GAME_UI_MESSAGE_QUEUE.empty())
 	{
@@ -143,7 +143,7 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 	}
 }
 
-void Process_Game_Loop_Messages()
+void ProcessGameLoopMessages()
 {
 	while (true)
 	{
@@ -160,7 +160,7 @@ void Process_Game_Loop_Messages()
 	}
 }
 
-void Push_Game_Loop_Message(GameLoopMessageType messageType)
+void PushGameLoopMessage(GameLoopMessageType messageType)
 {
 	GameLoopMessage loopMessage;
 
@@ -169,12 +169,12 @@ void Push_Game_Loop_Message(GameLoopMessageType messageType)
 	GAME_LOOP_MESSAGE_QUEUE.push(loopMessage);
 }
 
-bool Game_Loop_Messages_Pending()
+bool GameLoopMessagesPending()
 {
 	return !GAME_LOOP_MESSAGE_QUEUE.empty();
 }
 
-void Clear_Game_Loop_Messages()
+void ClearGameLoopMessages()
 {
 	while (!GAME_LOOP_MESSAGE_QUEUE.empty())
 	{
@@ -198,14 +198,14 @@ static void Ensure_House_Message_Queue_Initialised(HousesType houseType, HouseMe
 	}
 }
 
-void Push_House_Message(HousesType houseType, HouseMessageType messageType, HouseMessage message)
+void PushHouseMessage(HousesType houseType, HouseMessageType messageType, HouseMessage message)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
 	HOUSE_MESSAGE_QUEUES[houseType][messageType].push(message);
 }
 
-bool Is_House_Message_Present(HousesType houseType, HouseMessageType messageType)
+bool IsHouseMessagePresent(HousesType houseType, HouseMessageType messageType)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
@@ -214,7 +214,7 @@ bool Is_House_Message_Present(HousesType houseType, HouseMessageType messageType
 	return !houseMessageQueues[messageType].empty();
 }
 
-HouseMessage Pop_House_Message(HousesType houseType, HouseMessageType messageType)
+HouseMessage PopHouseMessage(HousesType houseType, HouseMessageType messageType)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
@@ -228,7 +228,7 @@ HouseMessage Pop_House_Message(HousesType houseType, HouseMessageType messageTyp
 	return message;
 }
 
-void Clear_House_Messages(HousesType houseType)
+void ClearHouseMessages(HousesType houseType)
 {
 	if (HOUSE_MESSAGE_QUEUES.find(houseType) == HOUSE_MESSAGE_QUEUES.end())
 	{

@@ -1289,12 +1289,12 @@ void HouseClass::AI(void)
 		TriggerTime = TICKS_PER_MINUTE/10;
 	}
 
-	bool superweaponMessagePresent = Is_House_Message_Present(Class->House, SUPERWEAPON_MESSAGE);
+	bool superweaponMessagePresent = IsHouseMessagePresent(Class->House, SUPERWEAPON_MESSAGE);
 
 	HouseMessage houseMessage{};
 
 	if (superweaponMessagePresent) {
-		houseMessage = Pop_House_Message(Class->House, SUPERWEAPON_MESSAGE);
+		houseMessage = PopHouseMessage(Class->House, SUPERWEAPON_MESSAGE);
 	}
 
 	auto ionCannonMessageRecieved = superweaponMessagePresent

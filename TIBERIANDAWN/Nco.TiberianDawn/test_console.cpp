@@ -62,14 +62,14 @@ static void TestSpecialRules() {
 
 static void TestGameLoopMessage(GameLoopMessageType message)
 {
-	Push_Game_Loop_Message(message);
+	PushGameLoopMessage(message);
 
-	while (Game_Loop_Messages_Pending())
+	while (GameLoopMessagesPending())
 	{
 		Sleep(10);
 	}
 
-	Process_Game_Ui_Messages();
+	ProcessGameUiMessages();
 }
 
 static void TestLuaEvents()
