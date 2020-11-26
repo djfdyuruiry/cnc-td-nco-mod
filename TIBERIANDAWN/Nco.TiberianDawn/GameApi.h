@@ -429,7 +429,7 @@ private:
 
         if (messageResult.IsErrorResult() || messageResult.GetValue() == NULL)
         {
-            delete& messageResult;
+            delete &messageResult;
 
             lua.RaiseError("showGameMessage parameter `message` was nil");
             return 0;

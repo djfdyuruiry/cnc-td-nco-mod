@@ -6,20 +6,18 @@
 #include "lua_events.h"
 #include "TiberianDawnNcoRuntime.h"
 
-using namespace std;
-
-static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
+static auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
 static const auto MAX_EVENT_ARGS_LENGTH = 1024;
 static const auto LUA_EVENT_COUNT = 3u;
 
 static bool EVENTS_INITIALISED = false;
 static const char** LUA_EVENTS = NULL;
 
-static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil", ...)
+static void FireLuaEvent(const char* name, const char* argumentFormat = "nil", ...)
 {
     if (!NcoRulesRuntime().LuaIsEnabled())
     {
-        LogTrace("Lua is disabled, skipping firing event: %s", name);
+        LogTrace("Lua is disabled, ignoring event: %s", name);
         return;
     }
 
@@ -38,6 +36,8 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
 
     auto& executeResult = NcoLuaRuntime().ExecuteScript(scriptBuffer);
 
+    delete scriptBuffer;
+
     if (executeResult.IsErrorResult())
     {
         ShowError("Error firing Lua event: %s\n%s", name, executeResult.GetError());
@@ -47,8 +47,7 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
         LogTrace("Lua event fired ok: %s", name);
     }
 
-    delete& executeResult;
-    delete scriptBuffer;
+    delete &executeResult;
 }
 
 bool InitialiseEvents()
@@ -69,7 +68,7 @@ bool InitialiseEvents()
         ShowError("Error initialising event handlers: %s", executeResult.GetError());
     }
 
-    delete& executeResult;
+    delete &executeResult;
 
     EVENTS_INITIALISED = true;
 
@@ -88,8 +87,8 @@ const char** GetEventNames()
         LUA_EVENTS = new const char* [LUA_EVENT_COUNT]
         {
             ON_SCENARIO_START_EVENT,
-                ON_SAVE_LOAD_EVENT,
-                ON_GAME_TICK_EVENT
+            ON_SAVE_LOAD_EVENT,
+            ON_GAME_TICK_EVENT
         };
     }
 
@@ -99,7 +98,7 @@ const char** GetEventNames()
 // sync messages
 void OnScenarioLoad(char* name)
 {
-    Fire_Lua_Event(
+    FireLuaEvent(
         ON_SCENARIO_START_EVENT,
         "'%s'",
         name
@@ -108,7 +107,7 @@ void OnScenarioLoad(char* name)
 
 void OnSaveLoad(const char* playerHouse, unsigned int scenarioNumber)
 {
-    Fire_Lua_Event(
+    FireLuaEvent(
         ON_SAVE_LOAD_EVENT,
         "'%s', %u",
         playerHouse,
@@ -119,5 +118,5 @@ void OnSaveLoad(const char* playerHouse, unsigned int scenarioNumber)
 // async messages
 void OnGameTick()
 {
-    Fire_Lua_Event(ON_GAME_TICK_EVENT);
+    FireLuaEvent(ON_GAME_TICK_EVENT);
 }

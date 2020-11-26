@@ -58,7 +58,7 @@ protected:
 		{
 			LogTrace("No rules ini value found, default will be used");
 
-			delete& ruleValueOptional;
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -69,7 +69,7 @@ protected:
 
 		auto boolValue = StringsAreEqual(ruleValue, "TRUE");
 
-		delete& ruleValueOptional;
+		delete &ruleValueOptional;
 
 		return boolValue;
 	}
@@ -87,7 +87,7 @@ protected:
 		{
 			LogTrace("No rules ini value found, default will be used");
 
-			delete& ruleValueOptional;
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -107,7 +107,7 @@ protected:
 			);
 
 			delete ruleValueStr;
-			delete& ruleValueOptional;
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -139,7 +139,7 @@ protected:
 		LogDebug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
-		delete& ruleValueOptional;
+		delete &ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -162,7 +162,7 @@ protected:
 				*valueFound = false;
 			}
 
-			delete& ruleValueOptional;
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -187,7 +187,7 @@ protected:
 			);
 
 			delete ruleValueStr;
-			delete& ruleValueOptional;
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -219,7 +219,7 @@ protected:
 		LogDebug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
 
 		delete ruleValueStr;
-		delete& ruleValueOptional;
+		delete &ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -296,7 +296,7 @@ public:
 
 		RulesIniRule& rule = GetRule(key);
 
-		delete& key;
+		delete &key;
 
 		return rule;
 	}

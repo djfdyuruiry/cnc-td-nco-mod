@@ -98,7 +98,7 @@ public:
 
 		auto ruleValue = ReadRuleValue<T>(key);
 
-		delete& key;
+		delete &key;
 
 		return ruleValue;
 	}
@@ -109,7 +109,7 @@ public:
 
 		RulesIniRule& rule = GetRule(key);
 
-		delete& key;
+		delete &key;
 
 		if (!rule.HasValue())
 		{

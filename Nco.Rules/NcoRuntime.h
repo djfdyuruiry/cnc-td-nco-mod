@@ -38,7 +38,7 @@ private:
 			{
 				LogError("Error loading rules lua script '%s': %s", scriptFilePath, executeResult.GetError());
 
-				delete& executeResult;
+				delete &executeResult;
 
 				executionOk = false;
 			}

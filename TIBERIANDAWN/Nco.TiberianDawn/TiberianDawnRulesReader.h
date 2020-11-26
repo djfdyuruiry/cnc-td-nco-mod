@@ -20,7 +20,7 @@ private:
 
 		if (!structValueStrOptional.Present())
 		{
-			delete& structValueStrOptional;
+			delete &structValueStrOptional;
 
 			return rule.GetDefaultValueOr(STRUCTF_NONE);
 		}
@@ -32,7 +32,7 @@ private:
 		bool parseError = false;
 		auto structValue = ParseStructureType(structValueStr, &parseError);
 
-		delete& structValueStrOptional;
+		delete &structValueStrOptional;
 
 		if (parseError)
 		{

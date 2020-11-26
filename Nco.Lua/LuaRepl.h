@@ -198,7 +198,7 @@ private:
 			return printResult;
 		}
 
-		delete& executeResult;
+		delete &executeResult;
 
 		if (StringStartsWith(input, "return"))
 		{

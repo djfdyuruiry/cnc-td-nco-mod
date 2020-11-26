@@ -13,7 +13,8 @@ void RefreshGameMap()
 
 void RefreshSidebar()
 {
-	for (auto index = 0; index < Buildings.Count(); index++) {
+	for (auto index = 0; index < Buildings.Count(); index++)
+	{
 		Buildings.Ptr(index)->Update_Buildables();
 	}
 
@@ -22,7 +23,8 @@ void RefreshSidebar()
 
 void RevealEntireMapToPlayer()
 {
-	for (auto c = 0; c < MAP_CELL_TOTAL; c++) {
+	for (auto c = 0; c < MAP_CELL_TOTAL; c++)
+	{
 		Map.Map_Cell(c, PlayerPtr, true);
 	}
 
@@ -47,7 +49,7 @@ void HideEntireMapFromPlayer()
 	{
 		ObjectClass* object = Map.Layer[LAYER_GROUND][i];
 
-		if (object && object->Is_Techno() && ((TechnoClass*)object)->House == PlayerPtr)
+		if (object != NULL && object->Is_Techno() && ((TechnoClass*)object)->House == PlayerPtr)
 		{
 			object->Look();
 		}

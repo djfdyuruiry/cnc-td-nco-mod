@@ -16,18 +16,18 @@ static std::map<char, std::map<HouseMessageType, std::queue<HouseMessage>>> HOUS
 static auto LAST_TICK_TIME_IN_EPOCH_MILLIS = 0LL;
 
 // message queuing
-static void Push_Message_Of_Type(GameUiMessageType type, GameUiMessage uiMessage)
+static void PushMessageOfType(GameUiMessageType type, GameUiMessage uiMessage)
 {
 	uiMessage.type = type;
 
 	GAME_UI_MESSAGE_QUEUE.push(uiMessage);
 }
 
-static void Push_Message_Of_Type(GameUiMessageType type)
+static void PushMessageOfType(GameUiMessageType type)
 {
 	GameUiMessage uiMessage{};
 
-	Push_Message_Of_Type(type, uiMessage);
+	PushMessageOfType(type, uiMessage);
 }
 
 void PushShowNotificationUiMessage(const char* message, float durationInSeconds)
@@ -37,32 +37,32 @@ void PushShowNotificationUiMessage(const char* message, float durationInSeconds)
 	uiMessage.message = strdup(message);
 	uiMessage.durationInSeconds = durationInSeconds;
 
-	Push_Message_Of_Type(SHOW_NOTIFICATION_MESSAGE, uiMessage);
+	PushMessageOfType(SHOW_NOTIFICATION_MESSAGE, uiMessage);
 }
 
 void PushRefreshSidebarUiMessage()
 {
-	Push_Message_Of_Type(REFRESH_SIDEBAR_MESSAGE);
+	PushMessageOfType(REFRESH_SIDEBAR_MESSAGE);
 }
 
 void PushRefreshMapUiMessage()
 {
-	Push_Message_Of_Type(REFRESH_MAP_MESSAGE);
+	PushMessageOfType(REFRESH_MAP_MESSAGE);
 }
 
 void PushRevealMapUiMessage()
 {
-	Push_Message_Of_Type(REVEAL_ENTIRE_MAP_MESSAGE);
+	PushMessageOfType(REVEAL_ENTIRE_MAP_MESSAGE);
 }
 
 void PushHideMapUiMessage()
 {
-	Push_Message_Of_Type(HIDE_ENTIRE_MAP_MESSAGE);
+	PushMessageOfType(HIDE_ENTIRE_MAP_MESSAGE);
 }
 
 // game ui message handlers
 
-static void ProcessGameUiMessage(std::map<unsigned int, bool>& messageTypesProcessed)
+static void ProcessNextGameUiMessage(std::map<unsigned int, bool>& messageTypesProcessed)
 {
 	auto uiMessage = GAME_UI_MESSAGE_QUEUE.front();
 	auto type = uiMessage.type;
@@ -98,7 +98,7 @@ void ProcessGameUiMessages()
 
 	while (!GAME_UI_MESSAGE_QUEUE.empty())
 	{
-		ProcessGameUiMessage(messageTypesProcessed);
+		ProcessNextGameUiMessage(messageTypesProcessed);
 	}
 }
 
@@ -190,11 +190,11 @@ static void Ensure_House_Message_Queue_Initialised(HousesType houseType, HouseMe
 		HOUSE_MESSAGE_QUEUES[houseType] = std::map<HouseMessageType, std::queue<HouseMessage>>();
 	}
 
-	auto houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
+	auto& houseMessageQueue = HOUSE_MESSAGE_QUEUES[houseType];
 
-	if (houseMessageQueues.find(messageType) == houseMessageQueues.end())
+	if (houseMessageQueue.find(messageType) == houseMessageQueue.end())
 	{
-		houseMessageQueues[messageType] = std::queue<HouseMessage>();
+		houseMessageQueue[messageType] = std::queue<HouseMessage>();
 	}
 }
 
@@ -209,7 +209,7 @@ bool IsHouseMessagePresent(HousesType houseType, HouseMessageType messageType)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
-	auto houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
+	auto& houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
 
 	return !houseMessageQueues[messageType].empty();
 }
@@ -218,12 +218,10 @@ HouseMessage PopHouseMessage(HousesType houseType, HouseMessageType messageType)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
-	auto messageQueue = HOUSE_MESSAGE_QUEUES[houseType][messageType];
+	auto& messageQueue = HOUSE_MESSAGE_QUEUES[houseType][messageType];
 	auto message = messageQueue.front();
 
 	messageQueue.pop();
-
-	HOUSE_MESSAGE_QUEUES[houseType][messageType] = messageQueue;
 
 	return message;
 }
