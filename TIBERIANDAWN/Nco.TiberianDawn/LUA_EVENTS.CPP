@@ -51,7 +51,7 @@ static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil",
     delete scriptBuffer;
 }
 
-bool Initialise_Events()
+bool InitialiseEvents()
 {
     if (EVENTS_INITIALISED)
     {
@@ -76,12 +76,12 @@ bool Initialise_Events()
     return !error;
 };
 
-int Get_Event_Count()
+int GetEventCount()
 {
     return LUA_EVENT_COUNT;
 }
 
-const char** Get_Event_Names()
+const char** GetEventNames()
 {
     if (LUA_EVENTS == NULL)
     {
@@ -97,7 +97,7 @@ const char** Get_Event_Names()
 }
 
 // sync messages
-void On_Scenario_Load(char* name)
+void OnScenarioLoad(char* name)
 {
     Fire_Lua_Event(
         ON_SCENARIO_START_EVENT,
@@ -106,7 +106,7 @@ void On_Scenario_Load(char* name)
     );
 }
 
-void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber)
+void OnSaveLoad(const char* playerHouse, unsigned int scenarioNumber)
 {
     Fire_Lua_Event(
         ON_SAVE_LOAD_EVENT,
@@ -117,7 +117,7 @@ void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber)
 }
 
 // async messages
-void On_Game_Tick()
+void OnGameTick()
 {
     Fire_Lua_Event(ON_GAME_TICK_EVENT);
 }

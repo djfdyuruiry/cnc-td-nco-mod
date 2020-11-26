@@ -119,7 +119,7 @@ bool TiberianDawnNcoRuntime::InitialiseLuaApi()
 
 bool TiberianDawnNcoRuntime::InitialiseLuaEvents()
 {
-    return Initialise_Events();
+    return InitialiseEvents();
 }
 
 void TiberianDawnNcoRuntime::RegisterMods()

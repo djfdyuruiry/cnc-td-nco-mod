@@ -347,7 +347,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	WWGetPrivateProfileString("Basic", "Theme", "No Theme", buf, sizeof(buf), buffer);
 	TransitTheme = Theme.From_Name(buf);
 
-	On_Scenario_Load(root);
+	OnScenarioLoad(root);
 
 	/*
 	**	Read in the team-type data. The team types must be created before any

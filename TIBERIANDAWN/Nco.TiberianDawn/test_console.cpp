@@ -62,14 +62,14 @@ static void TestSpecialRules() {
 
 static void TestGameLoopMessage(GameLoopMessageType message)
 {
-	Push_Game_Loop_Message(message);
+	PushGameLoopMessage(message);
 
-	while (Game_Loop_Messages_Pending())
+	while (GameLoopMessagesPending())
 	{
 		Sleep(10);
 	}
 
-	Process_Game_Ui_Messages();
+	ProcessGameUiMessages();
 }
 
 static void TestLuaEvents()
@@ -78,11 +78,11 @@ static void TestLuaEvents()
 
 	LogInfo("Testing setting rules from scenario start event handler");
 
-	On_Scenario_Load("SCG01EA");
+	OnScenarioLoad("SCG01EA");
 
 	LogInfo("Testing setting rules from save load event handler");
 
-	On_Save_Load(HouseTypeToString(HOUSE_GOOD), 4);
+	OnSaveLoad(HouseTypeToString(HOUSE_GOOD), 4);
 
 	LogInfo("Testing game tick event handler");
 

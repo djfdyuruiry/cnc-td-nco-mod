@@ -463,7 +463,7 @@ bool Load_Game(const char *file_name)
 
 	Call_Back();
 
-	On_Save_Load(HouseTypeToString(house), scenario);
+	OnSaveLoad(HouseTypeToString(house), scenario);
 
 	/*
 	**	Load the map.  The map comes first, since it loads the Theater & init's

@@ -11,7 +11,7 @@ class InfoApi : public LuaApi
 private:
     static int GetEventNamesProxy(lua_State* lua)
     {
-        return LUA_METHOD_PROXY(InfoApi, GetEventNames);
+        return LUA_METHOD_PROXY(InfoApi, GetEventNamesLua);
     }
 
     ILuaRuntime& runtime;
@@ -27,12 +27,12 @@ private:
         });
     }
 
-    int GetEventNames(ILuaStateWrapper& lua)
+    int GetEventNamesLua(ILuaStateWrapper& lua)
     {
         auto& events = std::vector<const char*>();
-        auto eventNames = Get_Event_Names();
+        auto eventNames = GetEventNames();
 
-        for (auto i = 0; i < Get_Event_Count(); i++)
+        for (auto i = 0; i < GetEventCount(); i++)
         {
             events.push_back(eventNames[i]);
         }
