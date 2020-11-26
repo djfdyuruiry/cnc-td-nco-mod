@@ -244,7 +244,7 @@ void FactoryClass::AI(void)
 		**  NCO: added rule lookups and seperated stages from factory count multiplier calculation
 		*/
 		if (Object && House->IsHuman) {
-			double factoryCountMultiplier = Read_Factory_Count_Multiplier_Rule();
+			double factoryCountMultiplier = ReadFactoryCount_Multiplier_Rule();
 			int modifiedStages = stages;
 
 			switch (Object->What_Am_I()) {

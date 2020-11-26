@@ -22,33 +22,33 @@
 #define Read_Full_Cost_Multi_Wall_Length_Rule() NcoRulesRuntime().ReadRuleValue<bool>(EnhancementKeys::FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)
 
 // mod lookups
-#define Read_New_Aircraft_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_AIRCRAFT_COUNT_RULE)
+#define ReadNewAircraftCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_AIRCRAFT_COUNT_RULE)
 
-#define Read_Aircraft_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(AIRCRAFT_COUNT_RULE_KEY)
+#define ReadAircraftCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(AIRCRAFT_COUNT_RULE_KEY)
 
-#define Read_New_Building_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_BUILDING_COUNT_RULE)
+#define ReadNewBuildingCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_BUILDING_COUNT_RULE)
 
-#define Read_Building_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(BUILDING_COUNT_RULE_KEY)
+#define ReadBuildingCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(BUILDING_COUNT_RULE_KEY)
 
-#define Read_New_Bullet_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_BULLET_COUNT_RULE)
+#define ReadNewBulletCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_BULLET_COUNT_RULE)
 
-#define Read_Bullet_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(BULLET_COUNT_RULE_KEY)
+#define ReadBulletCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(BULLET_COUNT_RULE_KEY)
 
-#define Read_New_Infantry_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE)
+#define ReadNewInfantryCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_INFANTRY_COUNT_RULE)
 
-#define Read_Infantry_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(INFANTRY_COUNT_RULE_KEY)
+#define ReadInfantryCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(INFANTRY_COUNT_RULE_KEY)
 
-#define Read_New_Unit_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_UNIT_COUNT_RULE)
+#define ReadNewUnitCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_UNIT_COUNT_RULE)
 
-#define Read_Unit_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(UNIT_COUNT_RULE_KEY)
+#define ReadUnitCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(UNIT_COUNT_RULE_KEY)
 
-#define Read_New_Warhead_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_WARHEAD_COUNT_RULE)
+#define ReadNewWarheadCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_WARHEAD_COUNT_RULE)
 
-#define Read_Warhead_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(WARHEAD_COUNT_RULE_KEY)
+#define ReadWarheadCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(WARHEAD_COUNT_RULE_KEY)
 
-#define Read_New_Weapon_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_WEAPON_COUNT_RULE)
+#define ReadNewWeaponCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_WEAPON_COUNT_RULE)
 
-#define Read_Weapon_Count() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(WEAPON_COUNT_RULE_KEY)
+#define ReadWeaponCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(WEAPON_COUNT_RULE_KEY)
 
 // game lookups
 #define Read_Build_Distance_Game_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(MAX_BUILD_DISTANCE_RULE_KEY)
@@ -61,7 +61,7 @@
 
 #define Read_Production_Steps_Per_Tick_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(PRODUCTION_STEPS_PER_TICK_RULE_KEY)
 
-#define Read_Factory_Count_Multiplier_Rule() NcoRulesRuntime().ReadRuleValue<double>(FACTORY_COUNT_STEP_MULTIPLER_RULE_KEY)
+#define ReadFactoryCount_Multiplier_Rule() NcoRulesRuntime().ReadRuleValue<double>(FACTORY_COUNT_STEP_MULTIPLER_RULE_KEY)
 
 #define Read_Total_Production_Steps_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(TOTAL_PRODUCTION_STEPS_RULE_KEY)
 

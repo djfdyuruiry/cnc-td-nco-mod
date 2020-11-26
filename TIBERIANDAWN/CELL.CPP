@@ -2186,7 +2186,7 @@ bool CellClass::Goodie_Check(FootClass * object, bool check_steel)
 						utp = &UnitTypeClass::As_Reference(UNIT_HARVESTER);
 					}
 					
-					char unitCount = Read_Unit_Count();
+					char unitCount = ReadUnitCount();
 
 					while (!utp) {
 						UnitType utype = Random_Pick(UNIT_FIRST, (UnitType)(unitCount-1));

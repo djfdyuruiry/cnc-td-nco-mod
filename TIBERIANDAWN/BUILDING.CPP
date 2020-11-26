@@ -2555,8 +2555,8 @@ void BuildingClass::Update_Buildables(void)
 	bool buildable_via_capture = (IsCaptured && ActLike != House->ActLike) ? true : false;
 
 	if (!IsInLimbo && Is_Discovered_By_Player()) {
-		char infantryCount = Read_Infantry_Count();
-		char unitCount = Read_Unit_Count();
+		char infantryCount = ReadInfantryCount();
+		char unitCount = ReadUnitCount();
 
 		switch (Class->ToBuild) {
 			StructType i;
@@ -2565,7 +2565,7 @@ void BuildingClass::Update_Buildables(void)
 			AircraftType a;
 
 			case RTTI_BUILDINGTYPE:
-				for (i = STRUCT_FIRST; i < Read_Building_Count(); i++) {
+				for (i = STRUCT_FIRST; i < ReadBuildingCount(); i++) {
 					if (PlayerPtr->Can_Build(i, ActLike)) {
 //						if (BuildingTypeClass::As_Reference(i).Who_Can_Build_Me(true, true, ActLike)) {
 							if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
@@ -2607,7 +2607,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_AIRCRAFTTYPE:
-				for (a = AIRCRAFT_FIRST; a < Read_Aircraft_Count(); a++) {
+				for (a = AIRCRAFT_FIRST; a < ReadAircraftCount(); a++) {
 					if (PlayerPtr->Can_Build(a, ActLike)) {
 //						if (AircraftTypeClass::As_Reference(a).Who_Can_Build_Me(true, true, ActLike)) {
 							if (GameToPlay == GAME_GLYPHX_MULTIPLAYER) {
@@ -2645,8 +2645,8 @@ void BuildingClass::Update_Buildables(void)
 	Validate();
 
 	if (House == PlayerPtr && !IsInLimbo && IsDiscoveredByPlayer) {
-		char infantryCount = Read_Infantry_Count();
-		char unitCount = Read_Unit_Count();
+		char infantryCount = ReadInfantryCount();
+		char unitCount = ReadUnitCount();
 
 		switch (Class->ToBuild) {
 			StructType i;
@@ -2655,7 +2655,7 @@ void BuildingClass::Update_Buildables(void)
 			AircraftType a;
 
 			case RTTI_BUILDINGTYPE:
-				for (i = STRUCT_FIRST; i < Read_Building_Count(); i++) {
+				for (i = STRUCT_FIRST; i < ReadBuildingCount(); i++) {
 					if (PlayerPtr->Can_Build(i, ActLike)) {
 //						if (BuildingTypeClass::As_Reference(i).Who_Can_Build_Me(true, true, ActLike)) {
 							Map.Add(RTTI_BUILDINGTYPE, i);
@@ -2685,7 +2685,7 @@ void BuildingClass::Update_Buildables(void)
 				break;
 
 			case RTTI_AIRCRAFTTYPE:
-				for (a = AIRCRAFT_FIRST; a < Read_Aircraft_Count(); a++) {
+				for (a = AIRCRAFT_FIRST; a < ReadAircraftCount(); a++) {
 					if (PlayerPtr->Can_Build(a, ActLike)) {
 //						if (AircraftTypeClass::As_Reference(a).Who_Can_Build_Me(true, true, ActLike)) {
 							Map.Add(RTTI_AIRCRAFTTYPE, a);

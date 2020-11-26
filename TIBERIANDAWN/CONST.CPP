@@ -138,7 +138,7 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 
 	LogTrace("WeaponTypeClass::ByType Initializing Weapons");
 	
-	auto weaponCount = Read_Weapon_Count();
+	auto weaponCount = ReadWeaponCount();
 
 	Pointers = new WeaponTypeClass const* [weaponCount] {
 		&WEP_RIFLE,
@@ -277,7 +277,7 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 		return Pointers[type];
 	}
 	LogTrace("WTC By_Type Initialize Watheads");
-	auto warheadCount = Read_Warhead_Count();
+	auto warheadCount = ReadWarheadCount();
 	Pointers = new WarheadTypeClass const* [warheadCount] {
 		&WH_SA,
 			& WH_HE,

@@ -82,7 +82,6 @@ bool GameLoopMessagesPending();
 void ClearGameLoopMessages();
 
 // house message handlers
-
 void PushHouseMessage(HousesType houseType, HouseMessageType messageType, HouseMessage message);
 
 bool IsHouseMessagePresent(HousesType houseType, HouseMessageType messageType);

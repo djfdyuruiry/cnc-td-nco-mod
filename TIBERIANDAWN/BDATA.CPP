@@ -3501,7 +3501,7 @@ BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type)
 
 	LogDebug("Initialising Building types");
 
-	auto BuildingCount = Read_Building_Count();
+	auto BuildingCount = ReadBuildingCount();
 
 	Pointers = new BuildingTypeClass const* [BuildingCount] {
 		&ClassWeapon,			//	STRUCT_WEAP
@@ -3811,7 +3811,7 @@ void BuildingTypeClass::One_Time(void)
 		{STRUCT_TEMPLE,	BSTATE_ACTIVE,			0,	5,	1},
 	};
 
-	for (StructType sindex = STRUCT_FIRST; sindex < Read_Building_Count(); sindex++) {
+	for (StructType sindex = STRUCT_FIRST; sindex < ReadBuildingCount(); sindex++) {
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char	buffer[_MAX_FNAME];
 		BuildingTypeClass* building = (BuildingTypeClass*)&As_Reference(sindex);
@@ -3892,7 +3892,7 @@ void BuildingTypeClass::One_Time(void)
 StructType BuildingTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		for (StructType classid = STRUCT_FIRST; classid < Read_Building_Count(); classid++) {
+		for (StructType classid = STRUCT_FIRST; classid < ReadBuildingCount(); classid++) {
 			if (stricmp(As_Reference(classid).IniName, name) == 0) {
 				return(classid);
 			}
@@ -3951,7 +3951,7 @@ void BuildingTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void BuildingTypeClass::Prep_For_Add(void)
 {
-	for (StructType index = STRUCT_FIRST; index < Read_Building_Count(); index++) {
+	for (StructType index = STRUCT_FIRST; index < ReadBuildingCount(); index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(&As_Reference(index));
 		}
@@ -4180,7 +4180,7 @@ void BuildingTypeClass::Init(TheaterType theater)
 	if (theater != LastTheater){
 		char fullname[_MAX_FNAME+_MAX_EXT];
 
-		for (StructType sindex = STRUCT_FIRST; sindex < Read_Building_Count(); sindex++) {
+		for (StructType sindex = STRUCT_FIRST; sindex < ReadBuildingCount(); sindex++) {
 			BuildingTypeClass const *classptr = &As_Reference(sindex);
 
 			if (classptr->IsTheater) {

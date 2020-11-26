@@ -667,7 +667,7 @@ const char* WeaponTypeToString(WeaponType weaponType, bool ignoreModTypes)
     {
         weaponTypeString = "DINO_BITE";
     }
-    else if (!ignoreModTypes && weaponType < Read_Weapon_Count())
+    else if (!ignoreModTypes && weaponType < ReadWeaponCount())
     {
         weaponTypeString = GetNewWeaponIniName(weaponType);
     }
@@ -982,7 +982,7 @@ const char* BulletTypeToString(BulletType bulletType, bool ignoreModTypes)
     {
         bulletTypeString = "CHEW";
     }
-    else if (!ignoreModTypes && bulletType < Read_Bullet_Count())
+    else if (!ignoreModTypes && bulletType < ReadBulletCount())
     {
         bulletTypeString = GetNewBulletIniName(bulletType);
     }
@@ -1142,7 +1142,7 @@ const char* WarheadTypeToString(WarheadType warheadType, bool ignoreModTypes)
     {
         warheadTypeString = "FEEDME";
     }
-    else if (!ignoreModTypes && warheadType < Read_Warhead_Count())
+    else if (!ignoreModTypes && warheadType < ReadWarheadCount())
     {
         warheadTypeString = GetNewWarheadIniName(warheadType);
     }
@@ -1288,7 +1288,7 @@ const char* InfantryTypeToString(InfantryType infantryType, bool ignoreModTypes)
 
         infantryTypeString = CIVILIAN_TYPE_MAP[index];
     }
-    else if (!ignoreModTypes && infantryType < Read_Infantry_Count())
+    else if (!ignoreModTypes && infantryType < ReadInfantryCount())
     {
         infantryTypeString = GetNewInfantryIniName(infantryType);
     }
@@ -1534,7 +1534,7 @@ const char* UnitTypeToString(UnitType unitType, bool ignoreModTypes)
     {
         unitTypeString = "STEG";
     }
-    else if (!ignoreModTypes && unitType < Read_Unit_Count())
+    else if (!ignoreModTypes && unitType < ReadUnitCount())
     {
         unitTypeString = GetNewUnitIniName(unitType);
     }
@@ -1761,7 +1761,7 @@ const char* AircraftTypeToString(AircraftType aircraftType, bool ignoreModTypes)
     {
         aircraftTypeString = "ORCA";
     }
-    else if (!ignoreModTypes && aircraftType < Read_Infantry_Count())
+    else if (!ignoreModTypes && aircraftType < ReadInfantryCount())
     {
         aircraftTypeString = GetNewAircraftIniName(aircraftType);
     }
@@ -2352,7 +2352,7 @@ const char* StructureTypeToString(StructType structType, bool ignoreModTypes)
     {
         structTypeString = "WOOD";
     }
-    else if (!ignoreModTypes && structType < Read_Building_Count())
+    else if (!ignoreModTypes && structType < ReadBuildingCount())
     {
         structTypeString = GetNewBuildingIniName(structType);
     }
@@ -2371,7 +2371,7 @@ long StructureTypeToPrerequisite(StructType structType, bool* parseError, bool i
         return STRUCTF_NONE;
     }
 
-    auto structCount = ignoreModTypes ? STRUCT_COUNT : Read_Building_Count();
+    auto structCount = ignoreModTypes ? STRUCT_COUNT : ReadBuildingCount();
 
     if (structType < STRUCT_FIRST || structType > structCount - 1)
     {

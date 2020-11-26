@@ -7117,7 +7117,7 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 
 	HousesType house = PlayerPtr->Class->House;
 		
-	for (StructType sindex = STRUCT_FIRST; sindex < Read_Building_Count(); sindex++) {
+	for (StructType sindex = STRUCT_FIRST; sindex < ReadBuildingCount(); sindex++) {
 		BuildingTypeClass const & building_type = BuildingTypeClass::As_Reference(sindex);
 
 		if (building_type.IsBuildable) {
@@ -7137,7 +7137,7 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}	
 	}
 
-	char unitCount = Read_Unit_Count();
+	char unitCount = ReadUnitCount();
 
 	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
 		UnitTypeClass const & unit_type = UnitTypeClass::As_Reference(index);
@@ -7162,7 +7162,7 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}
 	}
 
-	char infantryCount = Read_Infantry_Count();
+	char infantryCount = ReadInfantryCount();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		InfantryTypeClass	const &infantry_type = InfantryTypeClass::As_Reference(index);
@@ -7187,7 +7187,7 @@ void DLLExportClass::Debug_Spawn_All(int x, int y)
 		}
 	}
 
-	for (AircraftType index = AIRCRAFT_FIRST; index < Read_Aircraft_Count(); index++) {
+	for (AircraftType index = AIRCRAFT_FIRST; index < ReadAircraftCount(); index++) {
 		AircraftTypeClass	const &aircraft_type = AircraftTypeClass::As_Reference(index);
 
 		/*
@@ -7895,7 +7895,7 @@ void DLLExportClass::Decode_Pointers(void)
 		if (PlacementType[i]) {
 			StructType type = (StructType) reinterpret_cast<unsigned int>(PlacementType[i]);
 			PlacementType[i] = NULL;
-			if (type >= STRUCT_FIRST && type < Read_Building_Count()) {
+			if (type >= STRUCT_FIRST && type < ReadBuildingCount()) {
 				
 				TechnoTypeClass const * tech = Fetch_Techno_Type(RTTI_BUILDINGTYPE, type);
 				if (tech) {

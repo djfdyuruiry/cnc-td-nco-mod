@@ -1380,7 +1380,7 @@ short const * UnitTypeClass::Occupy_List(bool ) const
 UnitType UnitTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		char unitCount = Read_Unit_Count();
+		char unitCount = ReadUnitCount();
 
 		for (UnitType classid = UNIT_FIRST; classid < unitCount; classid++) {
 			if (stricmp(Pointers[classid]->IniName, name) == 0) {
@@ -1443,7 +1443,7 @@ void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType ho
  *=============================================================================================*/
 void UnitTypeClass::Prep_For_Add(void)
 {
-	char unitCount = Read_Unit_Count();
+	char unitCount = ReadUnitCount();
 
 	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
 		if (As_Reference(index).Get_Image_Data() != NULL) {
@@ -1471,7 +1471,7 @@ void UnitTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 void UnitTypeClass::One_Time(void)
 {
-	char unitCount = Read_Unit_Count();
+	char unitCount = ReadUnitCount();
 
 	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
@@ -1553,7 +1553,7 @@ void UnitTypeClass::Init(TheaterType theater)
 		return;
 	}
 
-	char unitCount = Read_Unit_Count();
+	char unitCount = ReadUnitCount();
 
 	for (UnitType index = UNIT_FIRST; index < unitCount; index++) {
 		UnitTypeClass const* uclass = &As_Reference(index);
@@ -1700,7 +1700,7 @@ UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 
 	LogDebug("UTC Initialising unit types");
 
-	auto unitCount = Read_Unit_Count();
+	auto unitCount = ReadUnitCount();
 
 	Pointers = new UnitTypeClass const* [unitCount] {
 		&UnitHTank,		
