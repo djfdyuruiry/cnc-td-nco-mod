@@ -368,6 +368,11 @@ public:
 		delete message;
 	}
 
+	void RaiseError(LuaResult& result)
+	{
+		RaiseError(result.GetError());
+	}
+
 	LuaResult& ExecuteScript(const char* script)
 	{
 		return BuildResult(

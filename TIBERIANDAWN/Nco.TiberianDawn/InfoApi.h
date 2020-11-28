@@ -22,8 +22,11 @@ private:
         WithDescription("General info functions");
 
         WithMethod("getEventNames", this, GetEventNamesProxy, [](LuaFunctionInfo& f) {
-            f.WithDescription("Get a list of game events");
-            // TODO: return type
+            f.WithDescription("Get a list of game events")
+             .WithReturnValue("eventNames", [](LuaVariableInfo& v) {
+                v.WithDescription("Table of strings containing the names of game events")
+                 .WithType(LuaType::Table);
+             });
         });
     }
 

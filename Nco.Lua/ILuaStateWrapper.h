@@ -270,6 +270,7 @@ public:
 	virtual void ClearStack() = 0;
 
 	virtual void RaiseError(const char* messageFormat, ...) = 0;
+	virtual void RaiseError(LuaResult& result) = 0;
 
 	virtual LuaResult& ExecuteScript(const char* script) = 0;
 	virtual LuaResult& ExecuteFile(const char* filePath) = 0;
