@@ -187,8 +187,8 @@ public:
 	virtual void WriteNumber(double value) = 0;
 	virtual void WriteBool(bool value) = 0;
 	virtual void WriteString(const char* value) = 0;
-	virtual void WriteFunction(const char* name, lua_CFunction function) = 0;
-	virtual void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy) = 0;
+	virtual void WriteFunction(const char* name, lua_CFunction function, void* functionInfo) = 0;
+	virtual void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy, void* functionInfo) = 0;
 	virtual void WriteNil() = 0;
 	virtual void WriteTable(unsigned int expectedSize = 0) = 0;
 

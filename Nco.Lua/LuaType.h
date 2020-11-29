@@ -2,7 +2,6 @@
 
 #include <map>
 
-#include <Logger.h>
 #include <HashUtils.h>
 
 class LuaType final
@@ -28,4 +27,6 @@ public:
 	static const LuaType& Parse(const char* typeName);
 
 	static void InitIfRequired();
+
+	static bool AreEqual(const LuaType& expected, const LuaType& actual);
 };

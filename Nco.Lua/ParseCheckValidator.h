@@ -52,7 +52,7 @@ public:
 
 			delete valueUpper;
 
-			return LuaResult::Build(error);
+			return LuaResult::BuildWithError(error);
 		}
 
 		delete valueUpper;

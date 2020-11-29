@@ -1,3 +1,6 @@
+#include <logger.h>
+#include <strings.h>
+
 #include "LuaType.h"
 
 LuaType* LuaType::Number;
@@ -53,4 +56,9 @@ void LuaType::InitIfRequired()
 	nameToType[HashUtils::HashString("table")] = LuaType::Table;
 	nameToType[HashUtils::HashString("nil")] = LuaType::Nil;
 	nameToType[HashUtils::HashString("any")] = LuaType::Any;
+}
+
+bool LuaType::AreEqual(const LuaType& expected, const LuaType& actual)
+{
+	return StringsAreEqual(expected.value, actual.value);
 }

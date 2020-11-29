@@ -48,11 +48,11 @@ public:
 		{
 			if (!function->IsObjectMethod())
 			{
-				lua.WriteFunction(function->GetName(), function->GetFunction());
+				lua.WriteFunction(function->GetName(), function->GetFunction(), function);
 			}
 			else
 			{
-				lua.WriteMethod(function->GetName(), function->GetImplementationObject(), function->GetMethodProxy());
+				lua.WriteMethod(function->GetName(), function->GetImplementationObject(), function->GetMethodProxy(), function);
 			}
 		}
 
@@ -89,8 +89,9 @@ public:
 	{
 		if (!FileUtils::IsFile(filePath))
 		{
-			return LuaResult::Build(
-				FormatString("Lua script file was not found: '%s'", filePath)
+			return LuaResult::BuildWithError(
+				"Lua script file was not found: '%s'",
+				filePath
 			);
 		}
 

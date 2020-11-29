@@ -19,17 +19,22 @@
 class GameApi : public LuaApi
 {
 private:
-    static LuaResultWithValue<HousesType>& ParseHouseTypeLua(ILuaStateWrapper& lua, int index, const char* callingFunctionName)
+    static LuaResultWithValue<HousesType>& ParseHouseTypeLua(
+        ILuaStateWrapper& lua,
+        int index,
+        const char* callingFunctionName
+    )
     {
         auto& houseTypeStringResult = lua.ReadString(index);
 
         if (houseTypeStringResult.IsErrorResult())
         {
-            auto& result = LuaResultWithValue<HousesType>::BuildWithError(houseTypeStringResult.GetError());
-
             delete &houseTypeStringResult;
 
-            return result;
+            return LuaResultWithValue<HousesType>::BuildWithError(
+                "%s parameter `houseName` was nil, empty or not a string",
+                callingFunctionName
+            );
         }
 
         auto houseTypeString = houseTypeStringResult.GetValue();
@@ -45,11 +50,9 @@ private:
         if (parseError)
         {
             return LuaResultWithValue<HousesType>::BuildWithError(
-                FormatString(
-                    "%s parameter `houseName` was not a valid house: %s",
-                    callingFunctionName,
-                    houseTypeString
-                )
+                "%s parameter `houseName` was not a valid house: %s",
+                callingFunctionName,
+                houseTypeString
             );
         }
 
@@ -83,6 +86,8 @@ private:
         }
 
         ClearHouseMessages(houseResult.GetValue());
+        
+        delete &houseResult;
 
         return 0;
     }
@@ -101,8 +106,7 @@ private:
         return 0;
     }
 
-
-    static HouseClass* GetHouseByType(HousesType houseType, bool* housePresent)
+    static HouseClass* GetHouseByType(HousesType houseType)
     {
         for (auto i = 0; i < Houses.Count(); i++)
         {
@@ -110,44 +114,32 @@ private:
 
             if (house != NULL && house->Class->House == houseType)
             {
-                if (housePresent != NULL)
-                {
-                    *housePresent = true;
-                }
-
                 return house;
             }
-        }
-
-        if (housePresent != NULL)
-        {
-            *housePresent = false;
         }
 
         return NULL;
     }
 
-    static SuperweaponType ParseSuperweaponTypeLua(int index, const char* callingFunctionName, bool* invalidValue)
+    static LuaResultWithValue<SuperweaponType>& ParseSuperweaponTypeLua(ILuaStateWrapper& lua, int index, const char* callingFunctionName)
     {
-        auto& lua = NcoLuaRuntime().GetState();
         auto& superWeaponNameResult = lua.ReadString(index);
 
         if (superWeaponNameResult.IsErrorResult() || StringIsEmpty(superWeaponNameResult.GetValue()))
         {
-            lua.RaiseError("%s parameter `superWeaponName` was nil or empty", callingFunctionName);
-
-            if (invalidValue != NULL)
-            {
-                *invalidValue = true;
-            }
-
             delete &superWeaponNameResult;
 
-            return NO_SUPERWEAPON;
+            return LuaResultWithValue<SuperweaponType>::BuildWithError(
+                "%s parameter `superWeaponName` was nil or empty",
+                callingFunctionName
+            );
         }
 
         auto weapon = NO_SUPERWEAPON;
-        auto uppercaseName = ConvertStringToUpperCase(superWeaponNameResult.GetValue());
+        auto name = superWeaponNameResult.GetValue();
+        auto uppercaseName = ConvertStringToUpperCase(name);
+
+        delete &superWeaponNameResult;
 
         if (StringsAreEqual(uppercaseName, AIRSTRIKE_SECTION_NAME_UPPER))
         {
@@ -163,17 +155,18 @@ private:
         }
         else
         {
-            lua.RaiseError(
+            delete uppercaseName;
+
+            return LuaResultWithValue<SuperweaponType>::BuildWithError(
                 "%s parameter `superWeaponName` was not recognised as a superweapon name: %s",
                 callingFunctionName,
-                superWeaponNameResult.GetValue()
+                name
             );
         }
 
         delete uppercaseName;
-        delete &superWeaponNameResult;
 
-        return weapon;
+        return LuaResultWithValue<SuperweaponType>::BuildWithValue(weapon);
     }
 
     static int SendHouseSuperWeaponMessageLua(
@@ -192,7 +185,6 @@ private:
             return 0;
         }
 
-        bool parseError = false;
         auto& houseResult = ParseHouseTypeLua(lua, 1, callingLuaFunctionName);
 
         if (houseResult.IsErrorResult())
@@ -205,16 +197,23 @@ private:
         }
 
         auto house = houseResult.GetValue();
-        auto superweapon = ParseSuperweaponTypeLua(2, callingLuaFunctionName, &parseError);
+        auto& superweaponResult = ParseSuperweaponTypeLua(lua, 2, callingLuaFunctionName);
         
         delete &houseResult;
 
-        if (parseError)
+        if (superweaponResult.IsErrorResult())
         {
+            lua.RaiseError(superweaponResult.GetError());
+
+            delete &superweaponResult;
+
             return 0;
         }
 
+        auto superweapon = superweaponResult.GetValue();
         auto oneTime = false;
+
+        delete &superweaponResult;
 
         if (argCount > 2)
         {
@@ -298,15 +297,14 @@ private:
 
         auto& creditsModifierResult = lua.ReadInteger(2);
 
-        bool housePresent = false;
-        auto house = GetHouseByType(houseType, &housePresent);
+        auto house = GetHouseByType(houseType);
         auto creditsModifier = creditsModifierResult.GetValue();
 
         delete &creditsModifierResult;
 
-        if (!housePresent)
+        if (house == NULL)
         {
-            LogWarn("Ignoring modifyHouseCredits call as house '%s' is not in the current game", HouseTypeToString(houseType));
+            lua.RaiseError("House '%s' is not in the current game", HouseTypeToString(houseType));
 
             return 0;
         }

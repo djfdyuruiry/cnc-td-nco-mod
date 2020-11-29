@@ -52,7 +52,7 @@ public:
 			return LuaResult::Build();
 		}
 
-		return LuaResult::Build(failureMessage);
+		return LuaResult::BuildWithError(failureMessage);
 	}
 
 };

@@ -57,7 +57,7 @@ public:
 			return LuaResult::Build();
 		}
 
-		return LuaResult::Build(error);
+		return LuaResult::BuildWithError(error);
 	}
 
 };
