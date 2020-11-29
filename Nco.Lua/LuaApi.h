@@ -72,7 +72,8 @@ public:
 	{
 		auto& functionInfo = LuaFunctionInfo::Build()
 			.WithName(name)
-			.WithImplementation(function);
+			.WithImplementation(function)
+			.WithParameterValidation();
 
 		if (functionInitialiser != NULL)
 		{

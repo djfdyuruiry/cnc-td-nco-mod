@@ -18,19 +18,16 @@ private:
     {
         auto& luaState = NcoLuaRuntime().GetState();
 
-        int argCount = luaState.GetStackTop();
-
-        if (argCount < 1)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(luaState))
         {
-            luaState.RaiseError("buildModDataFilePath requires exactly one argument");
             return 0;
         }
 
         auto& filePathResult = luaState.ReadString(1);
 
-        if (filePathResult.IsErrorResult() || StringIsEmpty(filePathResult.GetValue()))
+        if (StringIsEmpty(filePathResult.GetValue()))
         {
-            luaState.RaiseError("buildModDataFilePath parameter `filePath` was nil or blank");
+            luaState.RaiseError("buildModDataFilePath parameter `filePath` was blank");
         
             delete &filePathResult;
         
@@ -74,19 +71,16 @@ private:
     {
         auto& luaState = NcoLuaRuntime().GetState();
 
-        int argCount = luaState.GetStackTop();
-
-        if (argCount < 1)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(luaState))
         {
-            luaState.RaiseError("setLogLevel requires exactly one argument");
             return 0;
         }
 
         auto& logLevelStrResult = luaState.ReadString(1);
 
-        if (logLevelStrResult.IsErrorResult() || StringIsEmpty(logLevelStrResult.GetValue()))
+        if (StringIsEmpty(logLevelStrResult.GetValue()))
         {
-            luaState.RaiseError("setLogLevel parameter `logLevel` was nil or blank");
+            luaState.RaiseError("setLogLevel parameter `logLevel` was blank");
 
             delete &logLevelStrResult;
 
@@ -121,19 +115,16 @@ private:
     {
         auto& luaState = NcoLuaRuntime().GetState();
 
-        int argCount = luaState.GetStackTop();
-
-        if (argCount < 1)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(luaState))
         {
-            luaState.RaiseError("showError requires exactly one argument");
             return 0;
         }
 
         auto& messageResult = luaState.ReadString(1);
 
-        if (messageResult.IsErrorResult() || StringIsEmpty(messageResult.GetValue()))
+        if (StringIsEmpty(messageResult.GetValue()))
         {
-            luaState.RaiseError("showError parameter `message` was nil or blank");
+            luaState.RaiseError("showError parameter `message` was blank");
 
             delete &messageResult;
 
@@ -156,7 +147,10 @@ private:
         {
             auto& printMessageResult = luaState.ReadString(1);
 
-            puts(printMessageResult.GetValue());
+            if (!printMessageResult.IsErrorResult())
+            {
+                puts(printMessageResult.GetValue());
+            }
 
             delete &printMessageResult;
         }
@@ -173,7 +167,10 @@ private:
         {
             auto& logMessageResult = luaState.ReadString(1);
 
-            LogInfo("Lua => %s", logMessageResult.GetValue());
+            if (!logMessageResult.IsErrorResult())
+            {
+                LogInfo("Lua => %s", logMessageResult.GetValue());
+            }
 
             delete &logMessageResult;
         }
@@ -196,7 +193,7 @@ private:
          
         WithFunction("printString", Lua_Print, [](LuaFunctionInfo& f) {
             f.WithDescription("Print a string to standard out")
-             .WithParameter("str", [](LuaVariableInfo& p) {
+             .WithOptionalParameter("str", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::String);
              });
         });

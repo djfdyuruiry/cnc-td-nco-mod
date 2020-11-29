@@ -26,20 +26,17 @@ private:
     )
     {
         auto& houseTypeStringResult = lua.ReadString(index);
-
-        if (houseTypeStringResult.IsErrorResult())
-        {
-            delete &houseTypeStringResult;
-
-            return LuaResultWithValue<HousesType>::BuildWithError(
-                "%s parameter `houseName` was nil, empty or not a string",
-                callingFunctionName
-            );
-        }
-
         auto houseTypeString = houseTypeStringResult.GetValue();
         
         delete &houseTypeStringResult;
+
+        if (StringIsEmpty(houseTypeString))
+        {
+            return LuaResultWithValue<HousesType>::BuildWithError(
+                "%s parameter `houseName` was blank",
+                callingFunctionName
+            );
+        }
 
         bool parseError = false;
         auto upperHouseTypeString = ConvertStringToUpperCase(houseTypeString);
@@ -64,19 +61,14 @@ private:
         auto& lua = NcoLuaRuntime().GetState();
         LogTrace("Lua_Clear_House_Messages called from Lua");
 
-        auto argCount = lua.GetStackTop();
-
-        if (argCount < 1)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
         {
-            lua.RaiseError("clearHouseMessages requires at least one argument");
-
             return 0;
         }
 
-        bool parseError = false;
         auto& houseResult = ParseHouseTypeLua(lua, 1, "clearHouseMessages");
 
-        if (parseError)
+        if (houseResult.IsErrorResult())
         {
             lua.RaiseError(houseResult.GetError());
 
@@ -124,19 +116,20 @@ private:
     static LuaResultWithValue<SuperweaponType>& ParseSuperweaponTypeLua(ILuaStateWrapper& lua, int index, const char* callingFunctionName)
     {
         auto& superWeaponNameResult = lua.ReadString(index);
+        auto name = superWeaponNameResult.GetValue();
 
-        if (superWeaponNameResult.IsErrorResult() || StringIsEmpty(superWeaponNameResult.GetValue()))
+        delete &superWeaponNameResult;
+
+        if (StringIsEmpty(name))
         {
-            delete &superWeaponNameResult;
 
             return LuaResultWithValue<SuperweaponType>::BuildWithError(
-                "%s parameter `superWeaponName` was nil or empty",
+                "%s parameter `superWeaponName` was empty",
                 callingFunctionName
             );
         }
 
         auto weapon = NO_SUPERWEAPON;
-        auto name = superWeaponNameResult.GetValue();
         auto uppercaseName = ConvertStringToUpperCase(name);
 
         delete &superWeaponNameResult;
@@ -177,11 +170,8 @@ private:
         auto& lua = NcoLuaRuntime().GetState();
         LogTrace("%s called from Lua", callingFunctionName);
 
-        auto argCount = lua.GetStackTop();
-
-        if (argCount < 2)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
         {
-            lua.RaiseError("%s requires at least two arguments", callingLuaFunctionName);
             return 0;
         }
 
@@ -215,14 +205,8 @@ private:
 
         delete &superweaponResult;
 
-        if (argCount > 2)
+        if (lua.GetStackTop() > 2)
         {
-            if (!lua.IsBool(3))
-            {
-                lua.RaiseError("%s parameter `oneTimeOnly` must be a boolean", callingLuaFunctionName);
-                return 0;
-            }
-
             oneTime = lua.ReadBool(3).GetValue();
         }
 
@@ -266,11 +250,8 @@ private:
         auto& lua = NcoLuaRuntime().GetState();
         LogTrace("Lua_Modify_House_Credits called from Lua");
 
-        int argCount = lua.GetStackTop();
-
-        if (argCount < 2)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
         {
-            lua.RaiseError("modifyHouseCredits requires exactly two arguments");
             return 0;
         }
 
@@ -288,12 +269,6 @@ private:
         auto houseType = houseTypeResult.GetValue();
 
         delete &houseTypeResult;
-
-        if (!lua.IsNumber(2))
-        {
-            lua.RaiseError("modifyHouseCredits parameter `creditsModifier` must be a number");
-            return 0;
-        }
 
         auto& creditsModifierResult = lua.ReadInteger(2);
 
@@ -403,42 +378,19 @@ private:
         auto& lua = NcoLuaRuntime().GetState();
         LogTrace("Lua_Show_Game_Message called from Lua");
 
-        int argCount = lua.GetStackTop();
-
-        if (argCount < 2)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
         {
-            lua.RaiseError("showGameMessage requires exactly two arguments");
-            return 0;
-        }
-
-        if (!lua.IsString(1))
-        {
-            lua.RaiseError("showGameMessage parameter `message` must be a string");
-            return 0;
-        }
-
-        if (!lua.IsNumber(2))
-        {
-            lua.RaiseError("showGameMessage parameter `durationInSeconds` must be a number");
             return 0;
         }
 
         auto& messageResult = lua.ReadString(1);
-
-        if (messageResult.IsErrorResult() || messageResult.GetValue() == NULL)
-        {
-            delete &messageResult;
-
-            lua.RaiseError("showGameMessage parameter `message` was nil");
-            return 0;
-        }
 
         auto message = messageResult.GetValue();
         auto& durationInSecondsResult = lua.ReadDouble(2);
         
         delete &messageResult;
 
-        if (durationInSecondsResult.IsErrorResult() || durationInSecondsResult.GetValue() < 0.1)
+        if (durationInSecondsResult.GetValue() < 0.1)
         {
             delete &durationInSecondsResult;
 

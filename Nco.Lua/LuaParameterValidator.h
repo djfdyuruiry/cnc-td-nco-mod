@@ -16,7 +16,15 @@ public:
 			return true;
 		}
 
+		unsigned int numberOfParametersExpected = functionInfo.GetRequiredParameterCount();
 		unsigned int numberOfParametersPassed = lua.GetStackTop();
+
+		if (numberOfParametersPassed < numberOfParametersExpected)
+		{
+			lua.RaiseError("%s requires at least %d parameters", functionInfo.GetName(), numberOfParametersExpected);
+
+			return false;
+		}
 
 		for (auto parameterPtr : functionInfo.GetParameters())
 		{
@@ -38,6 +46,22 @@ public:
 
 			auto& parameterType = parameter.GetType();
 			auto& actualType = lua.GetLuaType(parameterIndex);
+
+			if (LuaType::AreEqual(parameterType, LuaType::Any))
+			{
+				if (!lua.IsNil(parameterIndex))
+				{
+					continue;
+				}
+
+				lua.RaiseError(
+					"%s parameter `%s` must be not be nil",
+					functionInfo.GetName(),
+					parameter.GetName()
+				);
+
+				return false;
+			}
 
 			if (LuaType::AreEqual(parameterType, actualType))
 			{

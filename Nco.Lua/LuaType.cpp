@@ -62,3 +62,8 @@ bool LuaType::AreEqual(const LuaType& expected, const LuaType& actual)
 {
 	return StringsAreEqual(expected.value, actual.value);
 }
+
+bool LuaType::AreEqual(const LuaType& expected, LuaType* actual)
+{
+	return StringsAreEqual(expected.value, actual->value);
+}

@@ -169,8 +169,8 @@ bool TiberianDawnNcoRuntime::InternalShutdown()
         && rulesRuntime.LuaConsoleIsEnabled()
         )
     {
-        // TODO: fix if window closed during a mission that this is not called
         #ifndef TEST_CONSOLE
+        // TODO: fix if window closed during a mission that this is not called
         StopConsoleOutput();
         #endif
     }

@@ -29,4 +29,6 @@ public:
 	static void InitIfRequired();
 
 	static bool AreEqual(const LuaType& expected, const LuaType& actual);
+
+	static bool LuaType::AreEqual(const LuaType& expected, LuaType* actual);
 };

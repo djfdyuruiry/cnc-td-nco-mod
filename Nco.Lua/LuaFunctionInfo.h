@@ -23,10 +23,13 @@ private:
 	std::vector<LuaVariableInfo*>& parameters;
 	std::vector<LuaVariableInfo*>& returnValues;
 
+	unsigned int requiredParameterCount;
+
 	LuaFunctionInfo() : parameters(*(new std::vector<LuaVariableInfo*>())),
 		returnValues(*(new std::vector<LuaVariableInfo*>())),
 		implementationObject(NULL),
-		parameterValidationEnabled(false)
+		parameterValidationEnabled(false),
+		requiredParameterCount(0)
 	{
 	}
 
@@ -68,7 +71,7 @@ public:
 
 	LuaFunctionInfo& WithImplementation(lua_CFunction impl)
 	{
-		this->luaFunction = impl;
+		luaFunction = impl;
 
 		return *this;
 	}
@@ -104,6 +107,8 @@ public:
 		}
 
 		parameters.push_back(&varInfo);
+
+		requiredParameterCount++;
 
 		return *this;
 	}
@@ -188,6 +193,11 @@ public:
 	bool HasParameters()
 	{
 		return parameters.size() > 0;
+	}
+
+	unsigned int GetRequiredParameterCount()
+	{
+		return requiredParameterCount;
 	}
 
 	const std::vector<LuaVariableInfo*>& GetReturnValues()

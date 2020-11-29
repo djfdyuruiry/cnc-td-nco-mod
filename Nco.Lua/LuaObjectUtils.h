@@ -7,7 +7,7 @@
 #include "LuaStateWrapper.h"
 #include "LuaParameterValidator.h"
 
-#define LUA_METHOD_PROXY(t, m) LuaObjectUtils::BootstrapProxyCall<t>(lua, [](ILuaStateWrapper& l, t& a) { \
+#define LUA_METHOD_PROXY(t, m) LuaObjectUtils::BootstrapMethodCall<t>(lua, [](ILuaStateWrapper& l, t& a) { \
 	return a.m(l); \
 })
 
@@ -18,30 +18,29 @@ private:
 	{
 	}
 
-	template<class T> static T* ReadUserData(ILuaStateWrapper& state, const char* name, int upvalueIndex)
+	template<class T> static T* ReadUserData(ILuaStateWrapper& lua, const char* name, int upvalueIndex)
 	{
-		auto objectStackIndex = state.GetUpvalueStackIndex(1);
-		auto& objectResult = state.ReadUserData(objectStackIndex);
+		auto objectStackIndex = lua.GetUpvalueStackIndex(upvalueIndex);
+		auto& objectResult = lua.ReadUserData(objectStackIndex);
 
 		if (objectResult.IsErrorResult())
 		{
-			state.RaiseError("[lua->c++ object proxy] Failed to get %s pointer: %s", name, objectResult.GetError());
+			lua.RaiseError("[lua->c++ object proxy] Failed to get %s pointer: %s", name, objectResult.GetError());
 
-			delete &objectResult;
-			delete &state;
+			delete& objectResult;
 
 			return 0;
 		}
 
 		auto object = objectResult.GetValue();
 
-		delete &objectResult;
+		delete& objectResult;
 
 		if (object == NULL)
 		{
-			state.RaiseError("[lua->c++ object proxy error] %s pointer stored in userdata was NULL", name);
+			lua.RaiseError("[lua->c++ object proxy error] %s pointer stored in userdata was NULL", name);
 
-			delete &state;
+			delete& lua;
 
 			return NULL;
 		}
@@ -50,33 +49,44 @@ private:
 	}
 
 public:
-	template<class T> static int BootstrapProxyCall(
-		lua_State* lua,
+	static LuaFunctionInfo* GetCurrentFunctionInfo(ILuaStateWrapper& lua)
+	{
+		return ReadUserData<LuaFunctionInfo>(lua, "function info", 1);
+	}
+
+	static bool ValidateFunctionParameters(ILuaStateWrapper& lua, LuaFunctionInfo& functionInfo)
+	{
+		return !functionInfo.ParameterValidationIsEnabled()
+			|| LuaParameterValidator::ValidateInvocationParameters(functionInfo, lua);
+	}
+
+	static bool ValidateCurrentFunctionParameters(ILuaStateWrapper& lua)
+	{
+		auto functionInfo = GetCurrentFunctionInfo(lua);
+
+		return functionInfo != NULL
+			&& ValidateFunctionParameters(lua, *functionInfo);
+	}
+
+	template<class T> static int BootstrapMethodCall(
+		lua_State* luaState,
 		std::function<int(ILuaStateWrapper&, T&)> handler
 	)
 	{
-		auto& state = LuaStateWrapper::Build(lua, false);
+		auto& lua = LuaStateWrapper::Build(luaState, false);
+		auto result = 0;
 
-		auto object = ReadUserData<T>(state, "object", 1);
-		auto functionInfo = ReadUserData<LuaFunctionInfo>(state, "function info", 2);
-
-		if (object == NULL || functionInfo == NULL)
+		if (ValidateCurrentFunctionParameters(lua))
 		{
-			return 0;
+			auto object = ReadUserData<T>(lua, "object", 2);
+
+			if (object != NULL)
+			{
+				result = handler(lua, *object);
+			}
 		}
 
-		if
-		(
-			functionInfo->ParameterValidationIsEnabled()
-			&& !LuaParameterValidator::ValidateInvocationParameters(*functionInfo, state)
-		)
-		{
-			return 0;
-		}
-
-		auto result = handler(state, *object);
-
-		delete &state;
+		delete &lua;
 
 		return result;
 	}
