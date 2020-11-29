@@ -122,7 +122,6 @@ private:
 
         if (StringIsEmpty(name))
         {
-
             return LuaResultWithValue<SuperweaponType>::BuildWithError(
                 "%s parameter `superWeaponName` was empty",
                 callingFunctionName
@@ -131,8 +130,6 @@ private:
 
         auto weapon = NO_SUPERWEAPON;
         auto uppercaseName = ConvertStringToUpperCase(name);
-
-        delete &superWeaponNameResult;
 
         if (StringsAreEqual(uppercaseName, AIRSTRIKE_SECTION_NAME_UPPER))
         {
@@ -187,9 +184,10 @@ private:
         }
 
         auto house = houseResult.GetValue();
-        auto& superweaponResult = ParseSuperweaponTypeLua(lua, 2, callingLuaFunctionName);
-        
+
         delete &houseResult;
+
+        auto& superweaponResult = ParseSuperweaponTypeLua(lua, 2, callingLuaFunctionName);
 
         if (superweaponResult.IsErrorResult())
         {
@@ -201,9 +199,10 @@ private:
         }
 
         auto superweapon = superweaponResult.GetValue();
-        auto oneTime = false;
 
         delete &superweaponResult;
+
+        auto oneTime = false;
 
         if (lua.GetStackTop() > 2)
         {
