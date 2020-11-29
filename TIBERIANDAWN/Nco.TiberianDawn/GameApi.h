@@ -222,7 +222,7 @@ private:
 
     static int DisableHouseSuperWeaponLua(lua_State* _) {
         return SendHouseSuperWeaponMessageLua(
-            "Lua_Enable_House_Super_Weapon_Message",
+            "DisableHouseSuperWeaponLua",
             "disableSuperWeaponForHouse",
             DISABLE_SUPERWEAPON
         );
@@ -230,7 +230,7 @@ private:
 
     static int ChargeHouseSuperWeaponLua(lua_State* _) {
         return SendHouseSuperWeaponMessageLua(
-            "Lua_Enable_House_Super_Weapon_Message",
+            "ChargeHouseSuperWeaponLua",
             "chargeSuperWeaponForHouse",
             CHARGE_SUPERWEAPON
         );
@@ -238,7 +238,7 @@ private:
 
     static int EnableHouseSuperWeaponLua(lua_State* _) {
         return SendHouseSuperWeaponMessageLua(
-            "Lua_Enable_House_Super_Weapon_Message",
+            "EnableHouseSuperWeaponLua",
             "enableSuperWeaponForHouse",
             ENABLE_SUPERWEAPON
         );
