@@ -46,21 +46,21 @@ private:
 		auto valueAsString = luaState.ToString(stackIndex);
 		auto luaType = luaState.GetLuaType(stackIndex);
 
-		if (luaType.value == LuaType::Bool->value)
+		if (LuaType::AreEqual(luaType, LuaType::Bool))
 		{
 			return PrintLuaOutput(
 				StringsAreEqual(valueAsString, "TRUE") ? "true" : "false"
 			);
 		}
 
-		if (luaType.value == LuaType::String->value)
+		if (LuaType::AreEqual(luaType, LuaType::String))
 		{
 			return PrintLuaOutput("\"")
 				&& PrintLuaOutput(valueAsString)
 				&& PrintLuaOutput("\"");
 		}
 
-		if (luaType.value == LuaType::Table->value)
+		if (LuaType::AreEqual(luaType, LuaType::Table))
 		{
 			auto index = -1;
 			auto printStatus = PrintLuaOutput("{\r\n");
