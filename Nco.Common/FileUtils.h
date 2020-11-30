@@ -129,7 +129,7 @@ public:
 
 		if (!Win32HandleIsValid(file))
 		{
-			ShowError("File handle passed to WriteTextToFile was invalid");
+			ShowError("File handle passed to AppendTextToFile was invalid");
 			return;
 		}
 

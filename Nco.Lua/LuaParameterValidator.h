@@ -7,15 +7,47 @@
 
 class LuaParameterValidator final
 {
-public:
-	// TODO: use in non-method based calls by getting function info ptr upvalue added by LuaAppi
-	static bool ValidateInvocationParameters(LuaFunctionInfo& functionInfo, ILuaStateWrapper& lua)
+private:
+	static bool ValidateParameter(LuaFunctionInfo& functionInfo, ILuaStateWrapper& lua, LuaVariableInfo& parameter)
 	{
-		if (!functionInfo.HasParameters())
+		auto parameterIndex = parameter.GetParameterIndex();
+		auto& parameterType = parameter.GetType();
+
+		if (LuaType::AreEqual(parameterType, LuaType::Any))
+		{
+			if (!lua.IsNil(parameterIndex))
+			{
+				return true;
+			}
+
+			lua.RaiseError(
+				"%s parameter `%s` must be not be nil",
+				functionInfo.GetName(),
+				parameter.GetName()
+			);
+
+			return false;
+		}
+
+		auto& actualType = lua.GetLuaType(parameterIndex);
+
+		if (LuaType::AreEqual(parameterType, actualType))
 		{
 			return true;
 		}
 
+		lua.RaiseError(
+			"%s parameter `%s` must be a %s",
+			functionInfo.GetName(),
+			parameter.GetName(),
+			parameterType.value
+		);
+
+		return false;
+	}
+
+	static bool NumberOfPararmetersIsCorrect(LuaFunctionInfo& functionInfo, ILuaStateWrapper& lua)
+	{
 		unsigned int numberOfParametersExpected = functionInfo.GetRequiredParameterCount();
 		unsigned int numberOfParametersPassed = lua.GetStackTop();
 
@@ -26,56 +58,28 @@ public:
 			return false;
 		}
 
-		for (auto parameterPtr : functionInfo.GetParameters())
+		return true;
+	}
+
+public:
+	static bool ValidateInvocationParameters(LuaFunctionInfo& functionInfo, ILuaStateWrapper& lua)
+	{
+		if (!functionInfo.HasParameters())
 		{
-			auto& parameter = *parameterPtr;
-			auto parameterIndex = parameter.GetParameterIndex();
-			auto isPresent = numberOfParametersPassed >= parameterIndex;
+			return true;
+		}
 
-			if (!isPresent)
-			{
-				if (parameter.IsOptional())
-				{
-					continue;
-				}
-
-				lua.RaiseError("%s parameter `%s` is required", functionInfo.GetName(), parameter.GetName());
-
-				return false;
-			}
-
-			auto& parameterType = parameter.GetType();
-			auto& actualType = lua.GetLuaType(parameterIndex);
-
-			if (LuaType::AreEqual(parameterType, LuaType::Any))
-			{
-				if (!lua.IsNil(parameterIndex))
-				{
-					continue;
-				}
-
-				lua.RaiseError(
-					"%s parameter `%s` must be not be nil",
-					functionInfo.GetName(),
-					parameter.GetName()
-				);
-
-				return false;
-			}
-
-			if (LuaType::AreEqual(parameterType, actualType))
-			{
-				continue;
-			}
-
-			lua.RaiseError(
-				"%s parameter `%s` must be a %s",
-				functionInfo.GetName(),
-				parameter.GetName(),
-				parameterType.value
-			);
-
+		if (!NumberOfPararmetersIsCorrect(functionInfo, lua))
+		{
 			return false;
+		}
+
+		for (auto parameter : functionInfo.GetParameters())
+		{
+			if (!ValidateParameter(functionInfo, lua, *parameter))
+			{
+				return false;
+			}
 		}
 
 		return true;
