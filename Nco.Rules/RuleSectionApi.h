@@ -10,6 +10,8 @@
 class RuleSectionApi : public LuaApi
 {
 private:
+    const int MAX_VALUE_LENGTH = 32;
+
     SectionName titleCaseSectionName;
     IRulesIniSection& section;
 
@@ -57,7 +59,7 @@ private:
 
     int ReadRule(ILuaStateWrapper& luaState)
     {
-        Log_Trace("get%sRule called from Lua", titleCaseSectionName);
+        LogTrace("get%sRule called from Lua", titleCaseSectionName);
 
         auto argCount = luaState.GetStackTop();
 
@@ -74,7 +76,7 @@ private:
         {
             luaState.RaiseError("Rule '%s' passed to get%sRule was not recognised", titleCaseSectionName, ruleNameResult.GetValue());
 
-            delete& ruleNameResult;
+            delete &ruleNameResult;
 
             return 0;
         }
@@ -83,13 +85,13 @@ private:
 
         if (rule.HasValue())
         {
-            if (Current_Log_Level() == TRACE)
+            if (GetLogger().GetLogLevel() == TRACE)
             {
-                auto valueStr = Allocate_String(32);
+                auto valueStr = AllocateString(MAX_VALUE_LENGTH);
 
                 rule.WriteValueToString(valueStr);
 
-                Log_Trace("get%sRule: Read rule value %s: %s", titleCaseSectionName, rule.GetStringKey(), valueStr);
+                LogTrace("get%sRule: Read rule value %s: %s", titleCaseSectionName, rule.GetStringKey(), valueStr);
 
                 delete valueStr;
             }
@@ -98,13 +100,13 @@ private:
         }
         else if (rule.HasDefaultValue())
         {
-            if (Current_Log_Level() == TRACE)
+            if (GetLogger().GetLogLevel() == TRACE)
             {
-                auto valueStr = Allocate_String(32);
+                auto valueStr = AllocateString(MAX_VALUE_LENGTH);
 
                 rule.WriteDefaultValueToString(valueStr);
 
-                Log_Trace("get%sRule: Read rule value %s: %s", titleCaseSectionName, rule.GetStringKey(), valueStr);
+                LogTrace("get%sRule: Read rule value %s: %s", titleCaseSectionName, rule.GetStringKey(), valueStr);
 
                 delete valueStr;
             }
@@ -113,19 +115,19 @@ private:
         }
         else
         {
-            Log_Trace("get%sRule: No value for rule %s, returning nil", titleCaseSectionName, rule.GetStringKey());
+            LogTrace("get%sRule: No value for rule %s, returning nil", titleCaseSectionName, rule.GetStringKey());
 
             luaState.WriteNil();
         }
 
-        delete& ruleNameResult;
+        delete &ruleNameResult;
 
         return 1;
     }
 
     int WriteRule(ILuaStateWrapper& luaState)
     {
-        Log_Trace("set%sRule called from Lua", titleCaseSectionName);
+        LogTrace("set%sRule called from Lua", titleCaseSectionName);
 
         auto argCount = luaState.GetStackTop();
 
@@ -142,7 +144,7 @@ private:
         {
             luaState.RaiseError("Rule '%s' passed to set%sRule was not recognised", ruleNameResult.GetValue(), titleCaseSectionName);
 
-            delete& ruleNameResult;
+            delete &ruleNameResult;
 
             return 0;
         }
@@ -151,18 +153,18 @@ private:
 
         auto setOk = rule.SetValueFromLuaState(luaState, 2);
 
-        if (setOk && Current_Log_Level() == TRACE)
+        if (setOk && GetLogger().GetLogLevel() == TRACE)
         {
-            auto valueStr = Allocate_String(32);
+            auto valueStr = AllocateString(MAX_VALUE_LENGTH);
 
             rule.WriteValueToString(valueStr);
 
-            Log_Trace("set%sRule: Set rule value %s: %s", titleCaseSectionName, rule.GetStringKey(), valueStr);
+            LogTrace("set%sRule: Set rule value %s: %s", titleCaseSectionName, rule.GetStringKey(), valueStr);
 
             delete valueStr;
         }
 
-        delete& ruleNameResult;
+        delete &ruleNameResult;
 
         return 0;
     }

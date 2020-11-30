@@ -12,6 +12,8 @@
 class LuaRepl : public Thread
 {
 private:
+	const int MAX_INPUT_LENGTH = 2048;
+
 	ILuaRuntime& luaRuntime;
 	HANDLE stdOut;
 	HANDLE stdIn;
@@ -27,7 +29,9 @@ private:
 
 		if (!WriteConsole(stdOut, output, length, NULL, NULL))
 		{
-			Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
+			WithWin32ErrorMessage([&] (auto e) {
+				LogError("Lua REPL error: %s", e);
+			});
 
 			return false;
 		}
@@ -42,21 +46,21 @@ private:
 		auto valueAsString = luaState.ToString(stackIndex);
 		auto luaType = luaState.GetLuaType(stackIndex);
 
-		if (luaType.value == LuaType::Bool->value)
+		if (LuaType::AreEqual(luaType, LuaType::Bool))
 		{
 			return PrintLuaOutput(
-				Strings_Are_Equal(valueAsString, "TRUE") ? "true" : "false"
+				StringsAreEqual(valueAsString, "TRUE") ? "true" : "false"
 			);
 		}
 
-		if (luaType.value == LuaType::String->value)
+		if (LuaType::AreEqual(luaType, LuaType::String))
 		{
 			return PrintLuaOutput("\"")
 				&& PrintLuaOutput(valueAsString)
 				&& PrintLuaOutput("\"");
 		}
 
-		if (luaType.value == LuaType::Table->value)
+		if (LuaType::AreEqual(luaType, LuaType::Table))
 		{
 			auto index = -1;
 			auto printStatus = PrintLuaOutput("{\r\n");
@@ -125,7 +129,7 @@ private:
 		}
 
 		// reset all C and Lua variables
-		input = Allocate_String(2048);
+		input = AllocateString(MAX_INPUT_LENGTH);
 
 		luaRuntime.GetState().ClearStack();
 
@@ -133,9 +137,11 @@ private:
 		DWORD charsRead;
 
 		if (!WriteConsole(stdOut, "> ", 2, NULL, NULL)
-			|| !ReadConsole(stdIn, input, 2048, &charsRead, NULL))
+			|| !ReadConsole(stdIn, input, MAX_INPUT_LENGTH, &charsRead, NULL))
 		{
-			Log_Error("Lua REPL error: %s", Get_Win32_Error_Message());
+			WithWin32ErrorMessage([&] (auto e) {
+				LogError("Lua REPL error: %s", e);
+			});
 
 			return false;
 		}
@@ -153,14 +159,14 @@ private:
 		// strip newline
 		auto trimmedInput = ExtractSubstring(input, -2);
 
-		if (Strings_Are_Equal(trimmedInput, "exit"))
+		if (StringsAreEqual(trimmedInput, "exit"))
 		{
 			delete trimmedInput;
 
 			return false;
 		}
 
-		if (Strings_Are_Equal(trimmedInput, "clear"))
+		if (StringsAreEqual(trimmedInput, "clear"))
 		{
 			system("cls");
 			delete trimmedInput;
@@ -168,7 +174,7 @@ private:
 			return true;
 		}
 
-		if (String_Is_Empty(trimmedInput))
+		if (StringIsEmpty(trimmedInput))
 		{
 			delete trimmedInput;
 
@@ -192,9 +198,9 @@ private:
 			return printResult;
 		}
 
-		delete& executeResult;
+		delete &executeResult;
 
-		if (String_Starts_With(input, "return"))
+		if (StringStartsWith(input, "return"))
 		{
 			return PrintLuaResult();
 		}
@@ -213,12 +219,12 @@ protected:
 			stdOut = NULL;
 			stdIn = NULL;
 
-			Log_Error("Lua REPL error: failed to open I/O streams");
+			LogError("Lua REPL error: failed to open I/O streams");
 
 			return 1;
 		}
 
-		Toggle_Console_Logging();
+		GetLogger().ToggleConsoleLogging();
 		system("cls");
 
 		puts("=======================");
@@ -232,7 +238,7 @@ protected:
 		{
 		}
 
-		Toggle_Console_Logging();
+		GetLogger().ToggleConsoleLogging();
 
 		return processInputResult ? 0 : 1;
 	}

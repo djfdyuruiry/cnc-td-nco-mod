@@ -446,7 +446,7 @@ BOOL TcpipManagerClass::Add_Client(void)
 	addrsize = sizeof(addr);
 	ConnectSocket = accept (ListenSocket, (LPSOCKADDR)&addr, &addrsize);
 	if (ConnectSocket == INVALID_SOCKET) {
-		//Show_Error("accept", WSAGetLastError());
+		//ShowError("accept", WSAGetLastError());
 		return(FALSE);
 	}
 

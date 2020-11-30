@@ -35,9 +35,7 @@ private:
 
 	IRulesIni& DoSourceRulesFrom(const char* rulesFileName)
 	{
-		auto fullRulesFilePath = Allocate_String(MAX_PATH);
-
-		sprintf(fullRulesFilePath, "%s\\%s", Get_Mod_Data_Path(), rulesFileName);
+		auto fullRulesFilePath = FormatString("%s\\%s", MAX_PATH, GetModDataPath(), rulesFileName);
 
 		if (!FileUtils::IsFile(fullRulesFilePath))
 		{
@@ -78,7 +76,7 @@ private:
 
 		for (auto validValue : validValues)
 		{
-			if (Strings_Are_Equal(valueBuffer, validValue))
+			if (StringsAreEqual(valueBuffer, validValue))
 			{
 				valueIsValid = true;
 				break;
@@ -93,7 +91,7 @@ private:
 		rulesAreValid = false;
 
 		auto validValuesSize = validValues.size();
-		auto validValuesCsv = Allocate_String(validValuesSize * RULES_STRING_LENGTH);
+		auto validValuesCsv = AllocateString(validValuesSize * RULES_STRING_LENGTH);
 		auto idx = 0;
 
 		for (auto validValue : validValues)
@@ -108,7 +106,7 @@ private:
 			idx++;
 		}
 
-		Show_Error(
+		ShowError(
 			"Rule [%s] must be in the list (%s). Value provided: %s",
 			rule.GetStringKey(),
 			validValuesCsv,
@@ -163,11 +161,11 @@ public:
 
 	Optional& ReadOptionalStringRule(RulesIniRule& rule)
 	{
-		Log_Trace("Resolving optional rule value: %s", rule.GetStringKey());
+		LogTrace("Resolving optional rule value: %s", rule.GetStringKey());
 
 		bool valueFound = false;
 		Optional& valueBufferOptional = Optional::BuildOptional();
-		auto valueBuffer = Allocate_String(RULES_STRING_LENGTH);
+		auto valueBuffer = AllocateString(RULES_STRING_LENGTH);
 
 		for (auto reader: rulesIniReaders)
 		{
@@ -193,14 +191,14 @@ public:
 	{
 		auto defaultValue = rule.GetDefaultValueOr("");
 
-		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
-		Log_Trace("Default value: %s", defaultValue);
+		LogTrace("Resolving rule value: %s", rule.GetStringKey());
+		LogTrace("Default value: %s", defaultValue);
 
 		auto valueBufferOptional = ReadOptionalStringRule(rule);
 
 		if (!valueBufferOptional.Present())
 		{
-			Log_Trace("No rules ini value found, default will be returned");
+			LogTrace("No rules ini value found, default will be returned");
 
 			auto defaultCopy = strdup(rule.GetDefaultValueOr(defaultValue));
 
@@ -209,9 +207,9 @@ public:
 
 		auto valueBuffer = valueBufferOptional.Get<char*>();
 
-		if (String_Is_Empty(valueBuffer))
+		if (StringIsEmpty(valueBuffer))
 		{
-			Log_Trace("Resolved rule value was empty, default will be returned");
+			LogTrace("Resolved rule value was empty, default will be returned");
 
 			auto defaultCopy = strdup(rule.GetDefaultValueOr(defaultValue));
 
@@ -225,15 +223,15 @@ public:
 			ValidateStringRuleValue(rule, valueBuffer);
 		}
 
-		Log_Trace("Resolved value: %s", valueBuffer);
-		Log_Debug("Setting rule [%s] = %s", rule.GetStringKey(), valueBuffer);
+		LogTrace("Resolved value: %s", valueBuffer);
+		LogDebug("Setting rule [%s] = %s", rule.GetStringKey(), valueBuffer);
 
 		return valueBuffer;
 	}
 
 	Optional& ReadOptionalIntRule(RulesIniRule& rule)
 	{
-		Log_Trace("Resolving optional rule value: %s", rule.GetStringKey());
+		LogTrace("Resolving optional rule value: %s", rule.GetStringKey());
 
 		bool valueFound = false;
 		Optional& valueOptional = Optional::BuildOptional();
@@ -260,8 +258,8 @@ public:
 	{
 		auto defaultValue = rule.GetDefaultValueOr(0);
 
-		Log_Trace("Resolving rule value: %s", rule.GetStringKey());
-		Log_Trace("Default value: %d", defaultValue);
+		LogTrace("Resolving rule value: %s", rule.GetStringKey());
+		LogTrace("Default value: %d", defaultValue);
 
 		bool valueFound = false;
 
@@ -269,14 +267,14 @@ public:
 
 		if (!ruleValueOptional.Present())
 		{
-			Log_Trace("No rules ini value found, default will be used");
+			LogTrace("No rules ini value found, default will be used");
 
 			return defaultValue;
 		}
 
 		auto ruleValue = ruleValueOptional.Get<int>();
 
-		Log_Trace("Rules ini value: %d", ruleValue);
+		LogTrace("Rules ini value: %d", ruleValue);
 
 		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<int>())
 		{
@@ -287,7 +285,7 @@ public:
 			{
 				rulesAreValid = false;
 
-				Show_Error(
+				ShowError(
 					"Rule [%s] must be between %d and %d (inclusive). Value provided: %d",
 					rule.GetStringKey(),
 					minValueInclusive,
@@ -297,8 +295,8 @@ public:
 			}
 		}
 
-		Log_Trace("Resolved value: %d", ruleValue);
-		Log_Debug("Setting rule [%s] = %d", rule.GetStringKey(), ruleValue);
+		LogTrace("Resolved value: %d", ruleValue);
+		LogDebug("Setting rule [%s] = %d", rule.GetStringKey(), ruleValue);
 
 		return ruleValue;
 	}

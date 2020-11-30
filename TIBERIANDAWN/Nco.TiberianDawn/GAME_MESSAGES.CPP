@@ -1,7 +1,7 @@
 #include <map>
 #include <queue>
 
-#include <logger.h>
+#include <Logger.h>
 #include <utils.h>
 
 #include "game_messages.h"
@@ -16,71 +16,71 @@ static std::map<char, std::map<HouseMessageType, std::queue<HouseMessage>>> HOUS
 static auto LAST_TICK_TIME_IN_EPOCH_MILLIS = 0LL;
 
 // message queuing
-static void Push_Message_Of_Type(GameUiMessageType type, GameUiMessage uiMessage)
+static void PushMessageOfType(GameUiMessageType type, GameUiMessage uiMessage)
 {
 	uiMessage.type = type;
 
 	GAME_UI_MESSAGE_QUEUE.push(uiMessage);
 }
 
-static void Push_Message_Of_Type(GameUiMessageType type)
+static void PushMessageOfType(GameUiMessageType type)
 {
 	GameUiMessage uiMessage{};
 
-	Push_Message_Of_Type(type, uiMessage);
+	PushMessageOfType(type, uiMessage);
 }
 
-void Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds)
+void PushShowNotificationUiMessage(const char* message, float durationInSeconds)
 {
 	GameUiMessage uiMessage;
 
 	uiMessage.message = strdup(message);
 	uiMessage.durationInSeconds = durationInSeconds;
 
-	Push_Message_Of_Type(SHOW_NOTIFICATION_MESSAGE, uiMessage);
+	PushMessageOfType(SHOW_NOTIFICATION_MESSAGE, uiMessage);
 }
 
-void Push_Refresh_Sidebar_Ui_Message()
+void PushRefreshSidebarUiMessage()
 {
-	Push_Message_Of_Type(REFRESH_SIDEBAR_MESSAGE);
+	PushMessageOfType(REFRESH_SIDEBAR_MESSAGE);
 }
 
-void Push_Refresh_Map_Ui_Message()
+void PushRefreshMapUiMessage()
 {
-	Push_Message_Of_Type(REFRESH_MAP_MESSAGE);
+	PushMessageOfType(REFRESH_MAP_MESSAGE);
 }
 
-void Push_Reveal_Map_Ui_Message()
+void PushRevealMapUiMessage()
 {
-	Push_Message_Of_Type(REVEAL_ENTIRE_MAP_MESSAGE);
+	PushMessageOfType(REVEAL_ENTIRE_MAP_MESSAGE);
 }
 
-void Push_Hide_Map_Ui_Message()
+void PushHideMapUiMessage()
 {
-	Push_Message_Of_Type(HIDE_ENTIRE_MAP_MESSAGE);
+	PushMessageOfType(HIDE_ENTIRE_MAP_MESSAGE);
 }
 
 // game ui message handlers
 
-static void Process_Game_Ui_Message(std::map<unsigned int, bool>& messageTypesProcessed)
+static void ProcessNextGameUiMessage(std::map<unsigned int, bool>& messageTypesProcessed)
 {
 	auto uiMessage = GAME_UI_MESSAGE_QUEUE.front();
 	auto type = uiMessage.type;
 
 	if (messageTypesProcessed.find(type) != messageTypesProcessed.end())
 	{
-		Log_Trace("Dropping duplicate UI message for game tick: %u", type);
+		LogTrace("Dropping duplicate UI message for game tick: %u", type);
 
 		GAME_UI_MESSAGE_QUEUE.pop();
 
 		return;
 	}
 
-	auto processResult = Process_Game_Ui_Message(uiMessage);
+	auto processResult = ProcessGameUiMessage(uiMessage);
 	
 	if (!processResult)
 	{
-		Log_Error("Encountered unknown Game UI message type: %u", type);
+		LogError("Encountered unknown Game UI message type: %u", type);
 
 		GAME_UI_MESSAGE_QUEUE.pop();
 
@@ -92,17 +92,17 @@ static void Process_Game_Ui_Message(std::map<unsigned int, bool>& messageTypesPr
 	GAME_UI_MESSAGE_QUEUE.pop();
 }
 
-void Process_Game_Ui_Messages()
+void ProcessGameUiMessages()
 {
 	std::map<unsigned int, bool> messageTypesProcessed;
 
 	while (!GAME_UI_MESSAGE_QUEUE.empty())
 	{
-		Process_Game_Ui_Message(messageTypesProcessed);
+		ProcessNextGameUiMessage(messageTypesProcessed);
 	}
 }
 
-void Clear_Game_Ui_Messages()
+void ClearGameUiMessages()
 {
 	while (!GAME_UI_MESSAGE_QUEUE.empty())
 	{
@@ -124,7 +124,7 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 
 	if (type == GAME_TICK_ELAPSED)
 	{
-		auto nowInEpochMillis = Get_Now_In_Epoch_Millis();
+		auto nowInEpochMillis = GetNowInEpochMillis();
 		auto msSinceLastTick = nowInEpochMillis - LAST_TICK_TIME_IN_EPOCH_MILLIS;
 
 		if (msSinceLastTick < NcoRulesRuntime().GetGameTickIntervalInMs())
@@ -133,17 +133,17 @@ static void Process_Game_Loop_Message(GameLoopMessage loopMessage)
 			return;
 		}
 
-		On_Game_Tick();
+		OnGameTick();
 
 		LAST_TICK_TIME_IN_EPOCH_MILLIS = nowInEpochMillis;
 	}
 	else
 	{
-		Log_Debug("Encountered Unknown Game Loop message type : %u", type);
+		LogDebug("Encountered Unknown Game Loop message type : %u", type);
 	}
 }
 
-void Process_Game_Loop_Messages()
+void ProcessGameLoopMessages()
 {
 	while (true)
 	{
@@ -160,7 +160,7 @@ void Process_Game_Loop_Messages()
 	}
 }
 
-void Push_Game_Loop_Message(GameLoopMessageType messageType)
+void PushGameLoopMessage(GameLoopMessageType messageType)
 {
 	GameLoopMessage loopMessage;
 
@@ -169,12 +169,12 @@ void Push_Game_Loop_Message(GameLoopMessageType messageType)
 	GAME_LOOP_MESSAGE_QUEUE.push(loopMessage);
 }
 
-bool Game_Loop_Messages_Pending()
+bool GameLoopMessagesPending()
 {
 	return !GAME_LOOP_MESSAGE_QUEUE.empty();
 }
 
-void Clear_Game_Loop_Messages()
+void ClearGameLoopMessages()
 {
 	while (!GAME_LOOP_MESSAGE_QUEUE.empty())
 	{
@@ -190,45 +190,43 @@ static void Ensure_House_Message_Queue_Initialised(HousesType houseType, HouseMe
 		HOUSE_MESSAGE_QUEUES[houseType] = std::map<HouseMessageType, std::queue<HouseMessage>>();
 	}
 
-	auto houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
+	auto& houseMessageQueue = HOUSE_MESSAGE_QUEUES[houseType];
 
-	if (houseMessageQueues.find(messageType) == houseMessageQueues.end())
+	if (houseMessageQueue.find(messageType) == houseMessageQueue.end())
 	{
-		houseMessageQueues[messageType] = std::queue<HouseMessage>();
+		houseMessageQueue[messageType] = std::queue<HouseMessage>();
 	}
 }
 
-void Push_House_Message(HousesType houseType, HouseMessageType messageType, HouseMessage message)
+void PushHouseMessage(HousesType houseType, HouseMessageType messageType, HouseMessage message)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
 	HOUSE_MESSAGE_QUEUES[houseType][messageType].push(message);
 }
 
-bool Is_House_Message_Present(HousesType houseType, HouseMessageType messageType)
+bool IsHouseMessagePresent(HousesType houseType, HouseMessageType messageType)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
-	auto houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
+	auto& houseMessageQueues = HOUSE_MESSAGE_QUEUES[houseType];
 
 	return !houseMessageQueues[messageType].empty();
 }
 
-HouseMessage Pop_House_Message(HousesType houseType, HouseMessageType messageType)
+HouseMessage PopHouseMessage(HousesType houseType, HouseMessageType messageType)
 {
 	Ensure_House_Message_Queue_Initialised(houseType, messageType);
 
-	auto messageQueue = HOUSE_MESSAGE_QUEUES[houseType][messageType];
+	auto& messageQueue = HOUSE_MESSAGE_QUEUES[houseType][messageType];
 	auto message = messageQueue.front();
 
 	messageQueue.pop();
 
-	HOUSE_MESSAGE_QUEUES[houseType][messageType] = messageQueue;
-
 	return message;
 }
 
-void Clear_House_Messages(HousesType houseType)
+void ClearHouseMessages(HousesType houseType)
 {
 	if (HOUSE_MESSAGE_QUEUES.find(houseType) == HOUSE_MESSAGE_QUEUES.end())
 	{

@@ -24,7 +24,7 @@ private:
 protected:
 	StructType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Structure_Type(typeString, parseError, false);
+		return ParseStructureType(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)
@@ -34,7 +34,7 @@ protected:
 
 	void ReadRulesAndAddType(BuildingTypeClass* type)
 	{
-		BuildingTypeClass::Read_Building_Rules(type);
+		BuildingTypeClass::ReadBuildingRules(type);
 
 		BuildingTypeClass::Add_Building_Type(type);
 	}

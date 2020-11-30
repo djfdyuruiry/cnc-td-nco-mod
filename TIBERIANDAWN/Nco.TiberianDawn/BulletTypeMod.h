@@ -24,7 +24,7 @@ private:
 protected:
 	BulletType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Bullet_Type(typeString, parseError, false);
+		return ParseBulletType(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)
@@ -34,7 +34,7 @@ protected:
 
 	void ReadRulesAndAddType(BulletTypeClass* type)
 	{
-		BulletTypeClass::Read_Bullet_Rules(type);
+		BulletTypeClass::ReadBulletRules(type);
 
 		BulletTypeClass::Add_Bullet_Type(type);
 	}

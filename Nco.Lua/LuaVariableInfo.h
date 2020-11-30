@@ -8,8 +8,22 @@ private:
 	char* name;
 	char* description;
 	LuaType* type;
+	
+	bool isParameter;
+	bool isOptional;
+	bool isReturnValue;
 
-	LuaVariableInfo() : type(LuaType::Any), name(NULL), description(NULL)
+	unsigned int parameterIndex;
+	unsigned int returnValueIndex;
+
+	LuaVariableInfo() :
+		name(NULL),
+		description(NULL),
+		type(LuaType::Any),
+		isParameter(false),
+		isReturnValue(false),
+		parameterIndex(0),
+		returnValueIndex(0)
 	{
 	}
 
@@ -17,6 +31,27 @@ public:
 	static LuaVariableInfo& Build()
 	{
 		return *(new LuaVariableInfo());
+	}
+
+	static LuaVariableInfo& BuildParameter(unsigned int index, bool isOptional = false)
+	{
+		auto& instance = *(new LuaVariableInfo());
+
+		instance.isParameter = true;
+		instance.isOptional = isOptional;
+		instance.parameterIndex = index;
+
+		return instance;
+	}
+
+	static LuaVariableInfo& BuildReturnValue(unsigned int index)
+	{
+		auto& instance = *(new LuaVariableInfo());
+
+		instance.isReturnValue = true;
+		instance.returnValueIndex = index;
+
+		return instance;
 	}
 
 	~LuaVariableInfo()
@@ -76,6 +111,31 @@ public:
 	const LuaType& GetType()
 	{
 		return *type;
+	}
+
+	bool IsParameter()
+	{
+		return isParameter;
+	}
+
+	bool IsOptional()
+	{
+		return isOptional;
+	}
+
+	bool IsReturnValue()
+	{
+		return isReturnValue;
+	}
+
+	unsigned int GetParameterIndex()
+	{
+		return parameterIndex;
+	}
+
+	unsigned int GetReturnValueIndex()
+	{
+		return returnValueIndex;
 	}
 
 };

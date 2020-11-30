@@ -1,6 +1,6 @@
 #ifdef TEST_CONSOLE
 
-#include <logger.h>
+#include <Logger.h>
 #include <LuaRepl.h>
 
 #include "../DllInterface.h"
@@ -17,7 +17,7 @@ static bool ExecuteLuaFile(const char* filePath)
 
 	if (isError)
 	{
-		Log_Error("%s script error: %s", filePath, executeResult.GetError());
+		LogError("%s script error: %s", filePath, executeResult.GetError());
 	}
 
 	delete &executeResult;
@@ -26,34 +26,34 @@ static bool ExecuteLuaFile(const char* filePath)
 }
 
 static void TestLuaRules() {
-	Log_Info("Testing Lua rules");
+	LogInfo("Testing Lua rules");
 
 	if (!("test-lua-rules.lua"))
 	{
-		Log_Error("Lua rules test script failed");
+		LogError("Lua rules test script failed");
 	}
 }
 
 static void GenerateApiDocs() {
-	Log_Info("Generating Lua API docs");
+	LogInfo("Generating Lua API docs");
 
 	if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
 	{
-		Log_Error("Lua API docs generation script failed");
+		LogError("Lua API docs generation script failed");
 	}
 }
 
 static void DumpRules() {
-	Log_Info("Dumping all rules");
+	LogInfo("Dumping all rules");
 
 	if (!ExecuteLuaFile("dump-rules.lua"))
 	{
-		Log_Error("Rule dumping script failed");
+		LogError("Rule dumping script failed");
 	}
 }
 
 static void TestSpecialRules() {
-	Log_Info("Testing special rules");
+	LogInfo("Testing special rules");
 
 	auto special = SpecialClass();
 
@@ -62,29 +62,29 @@ static void TestSpecialRules() {
 
 static void TestGameLoopMessage(GameLoopMessageType message)
 {
-	Push_Game_Loop_Message(message);
+	PushGameLoopMessage(message);
 
-	while (Game_Loop_Messages_Pending())
+	while (GameLoopMessagesPending())
 	{
 		Sleep(10);
 	}
 
-	Process_Game_Ui_Messages();
+	ProcessGameUiMessages();
 }
 
 static void TestLuaEvents()
 {
-	Log_Debug("Test Console: Testing Lua Events");
+	LogDebug("Test Console: Testing Lua Events");
 
-	Log_Info("Testing setting rules from scenario start event handler");
+	LogInfo("Testing setting rules from scenario start event handler");
 
-	On_Scenario_Load("SCG01EA");
+	OnScenarioLoad("SCG01EA");
 
-	Log_Info("Testing setting rules from save load event handler");
+	LogInfo("Testing setting rules from save load event handler");
 
-	On_Save_Load(House_Type_To_String(HOUSE_GOOD), 4);
+	OnSaveLoad(HouseTypeToString(HOUSE_GOOD), 4);
 
-	Log_Info("Testing game tick event handler");
+	LogInfo("Testing game tick event handler");
 
 	TestGameLoopMessage(GAME_TICK_ELAPSED);
 }
@@ -93,7 +93,7 @@ static void Game_Event_Callback(const EventCallbackStruct& event)
 {
 	if (event.EventType == CALLBACK_EVENT_MESSAGE)
 	{
-		Log_Info(
+		LogInfo(
 			"Game message emitted for %f seconds: %s",
 			event.Message.TimeoutSeconds,
 			event.Message.Message
@@ -110,7 +110,7 @@ static void Pause()
 
 static void Parse_Command_Line(const char* commandLine)
 {
-	if (String_Starts_With(commandLine, "--lua-repl"))
+	if (StringStartsWith(commandLine, "--lua-repl"))
 	{
 		#ifdef CI_ENV
 		puts("ERROR: CI environment detected - Lua REPL not supported");
@@ -126,7 +126,7 @@ static void Parse_Command_Line(const char* commandLine)
 		exit(0);
 		#endif
 	}
-	else if (String_Starts_With(commandLine, "--dump-rules"))
+	else if (StringStartsWith(commandLine, "--dump-rules"))
 	{
 		if (!ExecuteLuaFile("dump-rules.lua"))
 		{
@@ -136,7 +136,7 @@ static void Parse_Command_Line(const char* commandLine)
 
 		exit(0);
 	}
-	else if (String_Starts_With(commandLine, "--generate-api-docs"))
+	else if (StringStartsWith(commandLine, "--generate-api-docs"))
 	{
 		if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
 		{
@@ -153,17 +153,17 @@ static void Parse_Command_Line(const char* commandLine)
 /// </summary>
 int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int windowState)
 {
-	Start_Console_Output();
+	StartConsoleOutput();
 
 	puts("========================");
 	puts("  NCO Mod: Test Console  ");
 	puts("=========================");
 
-	if (!NCO_Startup())
+	if (!NcoStartup())
 	{
-		NCO_Shutdown();
+		NcoShutdown();
 
-		puts("Test Console: ERROR! NCO_Startup failed - bailing out!");
+		puts("Test Console: ERROR! NcoStartup failed - bailing out!");
 		Pause();
 
 		return 1;
@@ -184,13 +184,13 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 	TestLuaEvents();
 
-	NCO_Shutdown();
+	NcoShutdown();
 
 	puts("Test Console: finishing normally");
 
 	Pause();
 
-	Stop_Console_Output();
+	StopConsoleOutput();
 
 	return 0;
 }

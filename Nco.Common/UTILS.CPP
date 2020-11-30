@@ -1,12 +1,15 @@
+#include <functional>
 #include <string>
 #include <windows.h>
 
-#include "logger.h"
+#include "Logger.h"
 #include "strings.h"
+#include "utils.h"
 
 static const auto ONE_HUNDRED_NS_INTERVALS_SINCE_UNIX_EPOCH = 116444736000000000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_MS = 10000LL;
 static const auto ONE_HUNDRED_NS_INTERVALS_IN_1_S = 10000000LL;
+static const auto INT_MIN_STRING_LENGTH = 11u;
 
 // length of `\TiberianDawn.xxx`
 static const auto MOD_FILE_NAME_LENGTH = 17u;
@@ -14,26 +17,23 @@ static const auto MOD_FILE_NAME_LENGTH = 17u;
 static char* MOD_DATA_PATH = NULL;
 static bool CONSOLE_OPEN = false;
 
-void Show_Error(const char* messageFormat, ...)
+void ShowError(const char* messageFormat, ...)
 {
-	if (messageFormat == NULL)
+	if (StringIsEmpty(messageFormat))
 	{
-		Show_Error("Message format passed to Show_Error was null");
+		ShowError("Message format passed to ShowError was null or blank");
 
 		return;
 	}
 
-	auto logLineLength = Get_Log_Line_Length();
-	auto formattedMessageBuffer = Allocate_String(logLineLength);
-
 	va_list formatArgs;
 	va_start(formatArgs, messageFormat);
 
-	vsnprintf(formattedMessageBuffer, logLineLength, messageFormat, formatArgs);
+	auto formattedMessageBuffer = FormatString(messageFormat, GetLogger().GetLogLineLength, formatArgs);
 
 	va_end(formatArgs);
 
-	Log_Error(formattedMessageBuffer);
+	LogError(formattedMessageBuffer);
 
 	// we don't want a message box blocking an automated test
 	#ifndef CI_ENV
@@ -48,8 +48,8 @@ void Show_Error(const char* messageFormat, ...)
 	delete formattedMessageBuffer;
 }
 
-const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
-	if (String_Is_Empty(envVarName))
+const char* GetEnvVar(const char* envVarName, bool* valueFound) {
+	if (StringIsEmpty(envVarName))
 	{
 		if (valueFound != NULL)
 		{
@@ -71,7 +71,7 @@ const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
 		return NULL;
 	}
 
-	auto envVarValue = Allocate_String(requiredSize);
+	auto envVarValue = AllocateString(requiredSize);
 
 	GetEnvironmentVariable(envVarName, envVarValue, requiredSize);
 
@@ -83,7 +83,7 @@ const char* Get_Env_Var(const char* envVarName, bool* valueFound) {
 	return envVarValue;
 }
 
-char* Get_Win32_Error_Message(DWORD error)
+char* GetWin32ErrorMessage(DWORD error)
 {
 	LPSTR messageBuffer = nullptr;
 
@@ -100,75 +100,25 @@ char* Get_Win32_Error_Message(DWORD error)
 	return messageBuffer;
 }
 
-char* Get_Win32_Error_Message()
+char* GetWin32ErrorMessage()
 {
-	return Get_Win32_Error_Message(
+	return GetWin32ErrorMessage(
 		GetLastError()
 	);
 }
 
-HANDLE Open_File_For_Appending(const char* filename, bool* errorOccured)
+void WithWin32ErrorMessage(std::function<void(const char*)> handler)
 {
-	if (String_Is_Empty(filename))
-	{
-		Show_Error("Filename passed to Open_File_For_Appending was null or empty");
+	auto error = GetWin32ErrorMessage();
 
-		return NULL;
-	}
+	handler(error);
 
-	auto file = CreateFile(
-		filename,
-		FILE_APPEND_DATA,
-		FILE_SHARE_READ,
-		NULL,
-		OPEN_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL,
-		NULL
-	);
-
-	if (file == INVALID_HANDLE_VALUE || file == NULL)
-	{
-		*errorOccured = true;
-
-		return NULL;
-	}
-
-	return file;
+	delete error;
 }
 
-void Append_To_File(HANDLE file, char* data)
+bool IsIntString(char* numberValue)
 {
-	if (file == INVALID_HANDLE_VALUE)
-	{
-		Show_Error("File handle passed to Append_To_File was invalid");
-		return;
-	}
-
-	if (file == NULL)
-	{
-		Show_Error("File handle passed to Append_To_File was null");
-		return;
-	}
-
-	if (String_Is_Empty(data))
-	{
-		return;
-	}
-
-	DWORD written;
-
-	WriteFile(
-		file,
-		data,
-		strlen(data),
-		&written,
-		NULL
-	);
-}
-
-bool Is_Int_String(char* numberValue)
-{
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
@@ -177,28 +127,28 @@ bool Is_Int_String(char* numberValue)
 
 	strtol(numberValue, &remainder, 10);
 
-	return !Strings_Are_Equal(numberValue, remainder);
+	return !StringsAreEqual(numberValue, remainder);
 }
 
-bool Is_Int_String(const char* numberValue)
+bool IsIntString(const char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
 
 	auto numberValueStr = strdup(numberValue);
 
-	auto result = Is_Int_String(numberValueStr);
+	auto result = IsIntString(numberValueStr);
 
 	delete numberValueStr;
 
 	return result;
 }
 
-bool Is_Unsigned_Int_String(char* numberValue)
+bool IsUnsignedIntString(char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
@@ -207,28 +157,28 @@ bool Is_Unsigned_Int_String(char* numberValue)
 
 	strtoul(numberValue, &remainder, 10);
 
-	return !Strings_Are_Equal(numberValue, remainder);
+	return !StringsAreEqual(numberValue, remainder);
 }
 
-bool Is_Unsigned_Int_String(const char* numberValue)
+bool IsUnsignedIntString(const char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
 
 	auto numberValueStr = strdup(numberValue);
 
-	auto result = Is_Unsigned_Int_String(numberValueStr);
+	auto result = IsUnsignedIntString(numberValueStr);
 
 	delete numberValueStr;
 
 	return result;
 }
 
-bool Is_Double_String(char* numberValue)
+bool IsDoubleString(char* numberValue)
 {
-	if (String_Is_Empty(numberValue))
+	if (StringIsEmpty(numberValue))
 	{
 		return false;
 	}
@@ -237,27 +187,27 @@ bool Is_Double_String(char* numberValue)
 
 	strtod(numberValue, &remainder);
 
-	return !Strings_Are_Equal(numberValue, remainder);
+	return !StringsAreEqual(numberValue, remainder);
 }
 
-int Parse_Number(char character)
+int ParseNumber(char character)
 {
 	return character - '0';
 }
 
-char* Convert_Number_To_String(int number)
+char* ConvertNumberToString(int number)
 {
-	auto numberBuffer = Allocate_String(11); // INT_MIN string length
+	auto numberBuffer = AllocateString(INT_MIN_STRING_LENGTH);
 
 	itoa(number, numberBuffer, 10);
 
 	return numberBuffer;
 }
 
-bool Is_Boolean_String(char* booleanValue)
+bool IsBooleanString(char* booleanValue)
 {
-	if (String_Is_Empty(booleanValue)
-		|| (!Strings_Are_Equal(booleanValue, "TRUE") && !Strings_Are_Equal(booleanValue, "FALSE")))
+	if (StringIsEmpty(booleanValue)
+		|| (!StringsAreEqual(booleanValue, "TRUE") && !StringsAreEqual(booleanValue, "FALSE")))
 	{
 		return false;
 	}
@@ -265,9 +215,9 @@ bool Is_Boolean_String(char* booleanValue)
 	return true;
 }
 
-bool Parse_Boolean(char* booleanValue, bool* parseError)
+bool ParseBoolean(char* booleanValue, bool* parseError)
 {
-	if (!Is_Boolean_String(booleanValue))
+	if (!IsBooleanString(booleanValue))
 	{
 		if (parseError != NULL)
 		{
@@ -277,12 +227,12 @@ bool Parse_Boolean(char* booleanValue, bool* parseError)
 		return false;
 	}
 
-	return Strings_Are_Equal(booleanValue, "TRUE");
+	return StringsAreEqual(booleanValue, "TRUE");
 }
 
-bool Parse_Boolean(const char* booleanValue, bool* parseError)
+bool ParseBoolean(const char* booleanValue, bool* parseError)
 {
-	if (String_Is_Empty(booleanValue))
+	if (StringIsEmpty(booleanValue))
 	{
 		if (parseError != NULL)
 		{
@@ -294,18 +244,18 @@ bool Parse_Boolean(const char* booleanValue, bool* parseError)
 
 	auto booleanValueStr = strdup(booleanValue);
 
-	auto result = Parse_Boolean(booleanValueStr, parseError);
+	auto result = ParseBoolean(booleanValueStr, parseError);
 
 	delete booleanValueStr;
 
 	return result;
 }
 
-bool Parse_Boolean_Or_Default(char* booleanValue, bool default)
+bool ParseBooleanOrDefault(char* booleanValue, bool default)
 {
 	bool parseError = false;
 
-	auto value = Parse_Boolean(booleanValue, &parseError);
+	auto value = ParseBoolean(booleanValue, &parseError);
 
 	if (parseError)
 	{
@@ -315,28 +265,28 @@ bool Parse_Boolean_Or_Default(char* booleanValue, bool default)
 	return value;
 }
 
-bool Parse_Boolean_Or_Default(const char* booleanValue, bool default)
+bool ParseBooleanOrDefault(const char* booleanValue, bool default)
 {
-	if (String_Is_Empty(booleanValue))
+	if (StringIsEmpty(booleanValue))
 	{
 		return default;
 	}
 
 	auto booleanValueStr = strdup(booleanValue);
 
-	auto result = Parse_Boolean_Or_Default(booleanValueStr, default);
+	auto result = ParseBooleanOrDefault(booleanValueStr, default);
 
 	delete booleanValueStr;
 
 	return result;
 }
 
-const char* Convert_Boolean_To_String(bool booleanValue)
+const char* ConvertBooleanToString(bool booleanValue)
 {
 	return booleanValue ? "TRUE" : "FALSE";
 }
 
-long long Get_Now_In_Epoch_Nanos()
+long long GetNowInEpochNanos()
 {
 	FILETIME now;
 
@@ -353,17 +303,17 @@ long long Get_Now_In_Epoch_Nanos()
 	return nowIn100NanosSinceEpoch;
 }
 
-long long Get_Now_In_Epoch_Millis()
+long long GetNowInEpochMillis()
 {
-	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_MS;
+	return GetNowInEpochNanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_MS;
 }
 
-long long Get_Now_In_Epoch_Secs()
+long long GetNowInEpochSecs()
 {
-	return Get_Now_In_Epoch_Nanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_S;
+	return GetNowInEpochNanos() / ONE_HUNDRED_NS_INTERVALS_IN_1_S;
 }
 
-const char* Get_Mod_Data_Path()
+const char* GetModDataPath()
 {
 	if (MOD_DATA_PATH != NULL)
 	{
@@ -375,29 +325,34 @@ const char* Get_Mod_Data_Path()
 	if (
 		!GetModuleHandleEx(
 			GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-			(LPCSTR)&Get_Mod_Data_Path,
+			(LPCSTR)&GetModDataPath,
 			&moduleHandle
 		)
-		|| moduleHandle == NULL 
-		|| moduleHandle == INVALID_HANDLE_VALUE
+		|| !Win32HandleIsValid(moduleHandle)
 	)
 	{
-		Show_Error("Unable to get handle on module: %s", Get_Win32_Error_Message());
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Unable to get handle on module: %s", e);
+		});
+
 		exit(1);
 	}
 
-	auto modDllPath = Allocate_String(MAX_PATH);
+	auto modDllPath = AllocateString(MAX_PATH);
 
 	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
 	{
-		Show_Error("Unable to get mod data path: %s", Get_Win32_Error_Message());
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Unable to get mod data path: %s", e);
+		});
+
 		exit(1);
 	}
 
 	auto modDllPathLength = strlen(modDllPath);
 	auto modPathLength = modDllPathLength - MOD_FILE_NAME_LENGTH;
 
-	MOD_DATA_PATH = Allocate_String(MAX_PATH);
+	MOD_DATA_PATH = AllocateString(MAX_PATH);
 
 	for (auto c = 0u; c < modPathLength; c++)
 	{
@@ -406,30 +361,24 @@ const char* Get_Mod_Data_Path()
 
 	delete modDllPath;
 
-	Log_Info("Resolved mod data path: %s", MOD_DATA_PATH);
+	LogInfo("Resolved mod data path: %s", MOD_DATA_PATH);
 
 	return MOD_DATA_PATH;
 }
 
-char* Build_Mod_Data_File_Path(const char* filePath)
+char* BuildModDataFilePath(const char* filePath)
 {
-	auto modPath = Get_Mod_Data_Path();
-
-	auto fullFilePath = Allocate_String(MAX_PATH);
-
-	sprintf(fullFilePath, "%s\\%s", modPath, filePath);
-
-	return fullFilePath;
+	return FormatString("%s\\%s", GetModDataPath(), filePath);
 }
 
-void Start_Console_Output()
+void StartConsoleOutput()
 {
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console allocation");
 #else
 	if (CONSOLE_OPEN)
 	{
-		Log_Warn("Attempt to open Win32 console when it was already open detected, ignoring");
+		LogWarn("Attempt to open Win32 console when it was already open detected, ignoring");
 		return;
 	}
 
@@ -437,7 +386,9 @@ void Start_Console_Output()
 		&& !AllocConsole()
 		&& !AttachConsole(GetCurrentProcessId()))
 	{
-		Log_Error("Error opening Win32 console: %s", Get_Win32_Error_Message());
+		WithWin32ErrorMessage([&](auto e) {
+			LogError("Error opening Win32 console: %s", e);
+		});
 
 		exit(1);
 	}
@@ -450,20 +401,20 @@ void Start_Console_Output()
 #endif
 }
 
-void Stop_Console_Output()
+void StopConsoleOutput()
 {
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console stop");
 #else
 	if (!CONSOLE_OPEN)
 	{
-		Log_Warn("Attempt to close Win32 console when it was not alreday open detected, ignoring");
+		LogWarn("Attempt to close Win32 console when it was not alreday open detected, ignoring");
 		return;
 	}
 
 	if (!FreeConsole())
 	{
-		Log_Error("Error closing Win32 console: %s", Get_Win32_Error_Message());
+		LogError("Error closing Win32 console: %s", GetWin32ErrorMessage());
 	}
 
 	fclose(stdout);
@@ -479,12 +430,12 @@ bool Win32HandleIsValid(HANDLE handle)
 	return handle != NULL && handle != INVALID_HANDLE_VALUE;
 }
 
-void CloseWin32HandleIfValid(HANDLE handle)
+bool CloseWin32HandleIfValid(HANDLE handle)
 {
 	if (!Win32HandleIsValid(handle))
 	{
-		return;
+		return true;
 	}
 
-	CloseHandle(handle);
+	return CloseHandle(handle);
 }

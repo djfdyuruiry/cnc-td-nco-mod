@@ -1,5 +1,6 @@
 #pragma once
 
+#include <strings.h>
 #include <TypeUtils.h>
 
 #include "LuaResult.h"
@@ -24,9 +25,16 @@ public:
 		return *(new LuaResultWithValue<T>(TypeUtils::GetDefaultValue<T>(), error));
 	}
 
-	static LuaResultWithValue& BuildWithError(const char* error)
+	static LuaResultWithValue& BuildWithError(const char* error, ...)
 	{
-		return BuildWithError(strdup(error));
+		va_list formatArgs;
+		va_start(formatArgs, error);
+
+		auto& instance = BuildWithError(FormatString(error, formatArgs));
+
+		va_end(formatArgs);
+
+		return instance;
 	}
 
 	T GetValue()

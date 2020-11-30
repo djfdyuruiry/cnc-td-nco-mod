@@ -27,7 +27,7 @@ private:
 
 	TypeApiParameters<T>& GetParameters(const char* operation, ILuaStateWrapper& luaState)
 	{
-		Log_Trace("%s%sRule called from Lua", operation, titleCaseTypeName);
+		LogTrace("%s%sRule called from Lua", operation, titleCaseTypeName);
 
 		int argCount = luaState.GetStackTop();
 
@@ -40,7 +40,7 @@ private:
 
 		auto& typeInstanceNameResult = luaState.ReadString(1);
 
-		if (typeInstanceNameResult.IsErrorResult() || String_Is_Empty(typeInstanceNameResult.GetValue()))
+		if (typeInstanceNameResult.IsErrorResult() || StringIsEmpty(typeInstanceNameResult.GetValue()))
 		{
 			luaState.RaiseError("%s%sRule argument `typeName` was nil or blank", operation, titleCaseTypeName);
 
@@ -61,7 +61,7 @@ private:
 		auto& typeInstance = ParseType(typeInstanceNameResult.GetValue());
 		auto& ruleNameParameterResult = luaState.ReadString(2);
 
-		if (ruleNameParameterResult.IsErrorResult() || String_Is_Empty(ruleNameParameterResult.GetValue()))
+		if (ruleNameParameterResult.IsErrorResult() || StringIsEmpty(ruleNameParameterResult.GetValue()))
 		{
 			luaState.RaiseError("%s%sRule argument `ruleName` was nil", operation, titleCaseTypeName);
 
@@ -109,13 +109,13 @@ private:
 			return 0;
 		}
 
-		Log_Debug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
+		LogDebug("get%sRule => attempting to read value of rule '%s'", titleCaseTypeName, params.ruleName);
 
 		auto& readResult = ReadRule(luaState, *params.typeInstance, params.ruleName);
 
 		if (!readResult.IsErrorResult())
 		{
-			Log_Debug("get%sRule => Read rule success", titleCaseTypeName);
+			LogDebug("get%sRule => Read rule success", titleCaseTypeName);
 
 			delete &params;
 			delete &readResult;
@@ -142,13 +142,13 @@ private:
 			return 0;
 		}
 
-		Log_Debug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
+		LogDebug("set%sRule => attempting to write value of rule '%s'", titleCaseTypeName, params.ruleName);
 
 		auto& writeResult = WriteRule(luaState, *params.typeInstance, params.ruleName, 3);
 
 		if (!writeResult.IsErrorResult())
 		{
-			Log_Debug("set%sRule => Write rule success", titleCaseTypeName);
+			LogDebug("set%sRule => Write rule success", titleCaseTypeName);
 
 			delete &params;
 			delete &writeResult;

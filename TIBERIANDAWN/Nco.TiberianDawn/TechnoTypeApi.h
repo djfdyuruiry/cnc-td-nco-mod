@@ -43,18 +43,18 @@ protected:
 			NumbericRangeValidator<unsigned char>::Build(0, 99)
 		).WithFieldWrapper(
 			PREREQUISITE_RULE,
-			EXTRACTOR_T(Prerequisite_To_String(i.Pre)),
+			EXTRACTOR_T(PrerequisiteToString(i.Pre)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Pre = Structure_Type_To_Prerequisite(
-					Parse_Structure_Type(valueUpper, NULL),
+				i.Pre = StructureTypeToPrerequisite(
+					ParseStructureType(valueUpper, NULL),
 					NULL
 				);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<StructType>::Build("Building", Parse_Structure_Type)
+			ParseCheckValidator<StructType>::Build("Building", ParseStructureType)
 		).WithFieldWrapper(
 			COST_RULE,
 			SIMPLE_EXTRACTOR_T(Cost),
@@ -86,49 +86,49 @@ protected:
 			std::vector<const char*> { OWNER_RULE, HOUSES_RULE },
 			SIMPLE_EXTRACTOR_T(HouseListCsv),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Ownable = Parse_House_Name_List_Csv(valueUpper, NULL);
+				i.Ownable = ParseHouseNameListCsv(valueUpper, NULL);
 				i.HouseListCsv = strdup(valueUpper);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<int>::Build("House List", Parse_House_Name_List_Csv)
+			ParseCheckValidator<int>::Build("House List", ParseHouseNameListCsv)
 		).WithFieldWrapper(
 			PRIMARY_WEAPON_RULE,
-			EXTRACTOR_T(Weapon_Type_To_String(i.Primary)),
+			EXTRACTOR_T(WeaponTypeToString(i.Primary)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Primary = Parse_Weapon_Type(valueUpper, NULL);
+				i.Primary = ParseWeaponType(valueUpper, NULL);
 
 				delete valueUpper;
 
 				i.Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
 			},
-			ParseCheckValidator<WeaponType>::Build("Weapon", Parse_Weapon_Type)
+			ParseCheckValidator<WeaponType>::Build("Weapon", ParseWeaponType)
 		).WithFieldWrapper(
 			SECONDARY_WEAPON_RULE,
-			EXTRACTOR_T(Weapon_Type_To_String(i.Secondary)),
+			EXTRACTOR_T(WeaponTypeToString(i.Secondary)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Secondary = Parse_Weapon_Type(valueUpper, NULL);
+				i.Secondary = ParseWeaponType(valueUpper, NULL);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<WeaponType>::Build("Weapon", Parse_Weapon_Type)
+			ParseCheckValidator<WeaponType>::Build("Weapon", ParseWeaponType)
 		).WithFieldWrapper(
 			ARMOR_RULE,
-			EXTRACTOR_T(Armor_Type_To_String(i.Armor)),
+			EXTRACTOR_T(ArmorTypeToString(i.Armor)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Armor = Parse_Armor_Type(valueUpper, NULL);
+				i.Armor = ParseArmorType(valueUpper, NULL);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<ArmorType>::Build("Armor", Parse_Armor_Type)
+			ParseCheckValidator<ArmorType>::Build("Armor", ParseArmorType)
 		).WithFieldWrapper(
 			AMMO_RULE,
 			SIMPLE_EXTRACTOR_T(MaxAmmo),
@@ -206,7 +206,7 @@ protected:
 				strcpy(i.ModBaseIniName, strdup(va.Read<const char*>(l, si)));
 			},
 			LambdaValidator<const char*>::Build("String must be at most 32 characters long", [] (const char* v) {
-				return String_Is_Empty(v) || strlen(v) < 33;
+				return StringIsEmpty(v) || strlen(v) < 33;
 			})
 		).WithFieldWrapper(
 			IMAGE_RULE,

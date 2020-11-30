@@ -1,4 +1,4 @@
-#include <logger.h>
+#include <Logger.h>
 #include <strings.h>
 #include <utils.h>
 
@@ -6,95 +6,89 @@
 #include "lua_events.h"
 #include "TiberianDawnNcoRuntime.h"
 
-using namespace std;
-
-static const auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
-
-static bool EVENTS_INITIALISED = false;
-
+static auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
+static const auto MAX_EVENT_ARGS_LENGTH = 1024;
 static const auto LUA_EVENT_COUNT = 3u;
 
+static bool EVENTS_INITIALISED = false;
 static const char** LUA_EVENTS = NULL;
 
-static void Fire_Lua_Event(const char* name, const char* argumentFormat = "nil", ...)
+static void FireLuaEvent(const char* name, const char* argumentFormat = "nil", ...)
 {
     if (!NcoRulesRuntime().LuaIsEnabled())
     {
-        Log_Trace("Lua is disabled, skipping firing event: %s", name);
+        LogTrace("Lua is disabled, ignoring event: %s", name);
         return;
     }
 
-    Log_Trace("Firing Lua event: %s", name);
-
-    auto argumentsBuffer = Allocate_String(1024);
+    LogTrace("Firing Lua event: %s", name);
 
     va_list formatArgs;
     va_start(formatArgs, argumentFormat);
 
-    vsnprintf(argumentsBuffer, 1024, argumentFormat, formatArgs);
+    auto argumentsBuffer = FormatString(argumentFormat, MAX_EVENT_ARGS_LENGTH, formatArgs);
 
     va_end(formatArgs);
 
-    auto scriptBuffer = Allocate_String(2048);
-
-    sprintf(scriptBuffer, FIRE_EVENT_FORMAT, name, argumentsBuffer);
+    auto scriptBuffer = FormatString(FIRE_EVENT_FORMAT, MAX_EVENT_ARGS_LENGTH * 2, name, argumentsBuffer);
 
     delete argumentsBuffer;
 
     auto& executeResult = NcoLuaRuntime().ExecuteScript(scriptBuffer);
 
+    delete scriptBuffer;
+
     if (executeResult.IsErrorResult())
     {
-        Show_Error("Error firing Lua event: %s\n%s", name, executeResult.GetError());
+        ShowError("Error firing Lua event: %s\n%s", name, executeResult.GetError());
     }
     else
     {
-        Log_Trace("Lua event fired ok: %s", name);
+        LogTrace("Lua event fired ok: %s", name);
     }
 
-    delete& executeResult;
-    delete scriptBuffer;
+    delete &executeResult;
 }
 
-bool Initialise_Events()
+bool InitialiseEvents()
 {
     if (EVENTS_INITIALISED)
     {
-        Log_Warn("Attempted to initialise Lua events more than once, ignoring");
+        LogWarn("Attempted to initialise Lua events more than once, ignoring");
         return true;
     }
 
-    Log_Trace("Initialising Lua events");
+    LogTrace("Initialising Lua events");
 
     auto& executeResult = NcoLuaRuntime().ExecuteScript("Game.Events.initHandlers()");
     auto error = executeResult.IsErrorResult();
 
     if (error)
     {
-        Show_Error("Error initialising event handlers: %s", executeResult.GetError());
+        ShowError("Error initialising event handlers: %s", executeResult.GetError());
     }
 
-    delete& executeResult;
+    delete &executeResult;
 
     EVENTS_INITIALISED = true;
 
     return !error;
 };
 
-int Get_Event_Count()
+int GetEventCount()
 {
     return LUA_EVENT_COUNT;
 }
 
-const char** Get_Event_Names()
+const char** GetEventNames()
 {
     if (LUA_EVENTS == NULL)
     {
         LUA_EVENTS = new const char* [LUA_EVENT_COUNT]
         {
             ON_SCENARIO_START_EVENT,
-                ON_SAVE_LOAD_EVENT,
-                ON_GAME_TICK_EVENT
+            ON_SAVE_LOAD_EVENT,
+            ON_GAME_TICK_EVENT
         };
     }
 
@@ -102,18 +96,18 @@ const char** Get_Event_Names()
 }
 
 // sync messages
-void On_Scenario_Load(char* name)
+void OnScenarioLoad(char* name)
 {
-    Fire_Lua_Event(
+    FireLuaEvent(
         ON_SCENARIO_START_EVENT,
         "'%s'",
         name
     );
 }
 
-void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber)
+void OnSaveLoad(const char* playerHouse, unsigned int scenarioNumber)
 {
-    Fire_Lua_Event(
+    FireLuaEvent(
         ON_SAVE_LOAD_EVENT,
         "'%s', %u",
         playerHouse,
@@ -122,7 +116,7 @@ void On_Save_Load(const char* playerHouse, unsigned int scenarioNumber)
 }
 
 // async messages
-void On_Game_Tick()
+void OnGameTick()
 {
-    Fire_Lua_Event(ON_GAME_TICK_EVENT);
+    FireLuaEvent(ON_GAME_TICK_EVENT);
 }

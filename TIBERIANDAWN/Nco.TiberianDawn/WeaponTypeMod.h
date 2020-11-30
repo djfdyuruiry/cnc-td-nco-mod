@@ -24,7 +24,7 @@ private:
 protected:
 	WeaponType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Weapon_Type(typeString, parseError, true);
+		return ParseWeaponType(typeString, parseError, true);
 	}
 
 	void AddRulesSection(SectionName typeString)
@@ -34,7 +34,7 @@ protected:
 
 	void ReadRulesAndAddType(WeaponTypeClass* type)
 	{
-		WeaponTypeClass::Read_Weapon_Rules(type);
+		WeaponTypeClass::ReadWeaponRules(type);
 
 		WeaponTypeClass::Add_Weapon_Type(type);
 	}

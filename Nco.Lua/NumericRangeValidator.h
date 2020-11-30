@@ -30,7 +30,7 @@ public:
 			return primitiveResult;
 		}
 
-		delete & primitiveResult;
+		delete &primitiveResult;
 
 		auto& valueResult = lua.PullValue<T>(stackIndex);
 
@@ -48,7 +48,7 @@ public:
 			return LuaResult::Build();
 		}
 
-		return LuaResult::Build(FormatString("Number must be in the range %d-%d (inclusive)", minInclusive, maxInclusive));
+		return LuaResult::BuildWithError("Number must be in the range %d-%d (inclusive)", minInclusive, maxInclusive);
 	}
 
 };

@@ -210,8 +210,8 @@ void Enable_Uncompressed_Shapes (void)
 
 unsigned long Build_Frame(void const *dataptr, unsigned short framenumber, void *buffptr)
 {
-	Process_Game_Ui_Messages();
-	Push_Game_Loop_Message(GAME_TICK_ELAPSED);
+	ProcessGameUiMessages();
+	PushGameLoopMessage(GAME_TICK_ELAPSED);
 
 #ifdef FIXIT_SCORE_CRASH
 	char * ptr;

@@ -24,7 +24,7 @@ private:
 protected:
 	WarheadType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Warhead_Type(typeString, parseError, false);
+		return ParseWarheadType(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)
@@ -48,7 +48,7 @@ protected:
 
 	void ReadRulesAndAddType(WarheadTypeClass* type)
 	{
-		WarheadTypeClass::Read_Warhead_Rules(type);
+		WarheadTypeClass::ReadWarheadRules(type);
 
 		WarheadTypeClass::Add_Warhead_Type(type);
 	}

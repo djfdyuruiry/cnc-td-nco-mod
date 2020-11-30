@@ -19,76 +19,86 @@
 class GameApi : public LuaApi
 {
 private:
-    static HousesType Lua_Parse_House_Type(int index, const char* callingFunctionName, bool* parseError)
+    static LuaResultWithValue<HousesType>& ParseHouseTypeLua(
+        ILuaStateWrapper& lua,
+        int index,
+        const char* callingFunctionName
+    )
     {
-        auto& luaState = NcoLuaRuntime().GetState();
-        auto& houseTypeStringResult = luaState.ReadString(index);
-        auto upperHouseTypeString = Convert_String_To_Upper_Case(houseTypeStringResult.GetValue());
-        auto houseType = Parse_House_Type(upperHouseTypeString, parseError);
-
-        delete upperHouseTypeString;
-
-        if (*parseError)
-        {
-            luaState.RaiseError(
-                "%s parameter `houseName` was not a valid house: %s",
-                callingFunctionName,
-                houseTypeStringResult.GetValue()
-            );
-
-            delete &houseTypeStringResult;
-
-            return HOUSE_NONE;
-        }
-
+        auto& houseTypeStringResult = lua.ReadString(index);
+        auto houseTypeString = houseTypeStringResult.GetValue();
+        
         delete &houseTypeStringResult;
 
-        return houseType;
-    }
-
-    static int Lua_Clear_House_Messages(lua_State* _)
-    {
-        auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Clear_House_Messages called from Lua");
-
-        auto argCount = luaState.GetStackTop();
-
-        if (argCount < 1)
+        if (StringIsEmpty(houseTypeString))
         {
-            luaState.RaiseError("clearHouseMessages requires at least one argument");
-
-            return 0;
+            return LuaResultWithValue<HousesType>::BuildWithError(
+                "%s parameter `houseName` was blank",
+                callingFunctionName
+            );
         }
 
         bool parseError = false;
-        auto house = Lua_Parse_House_Type(1, "clearHouseMessages", &parseError);
+        auto upperHouseTypeString = ConvertStringToUpperCase(houseTypeString);
+        auto houseType = ParseHouseType(upperHouseTypeString, &parseError);
+
+        delete upperHouseTypeString;
 
         if (parseError)
+        {
+            return LuaResultWithValue<HousesType>::BuildWithError(
+                "%s parameter `houseName` was not a valid house: %s",
+                callingFunctionName,
+                houseTypeString
+            );
+        }
+
+        return LuaResultWithValue<HousesType>::BuildWithValue(houseType);
+    }
+
+    static int ClearHouseMessagesLua(lua_State* _)
+    {
+        auto& lua = NcoLuaRuntime().GetState();
+        LogTrace("Lua_Clear_House_Messages called from Lua");
+
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
         {
             return 0;
         }
 
-        Clear_House_Messages(house);
+        auto& houseResult = ParseHouseTypeLua(lua, 1, "clearHouseMessages");
+
+        if (houseResult.IsErrorResult())
+        {
+            lua.RaiseError(houseResult.GetError());
+
+            delete &houseResult;
+
+            return 0;
+        }
+
+        ClearHouseMessages(houseResult.GetValue());
+        
+        delete &houseResult;
 
         return 0;
     }
 
-    static int Lua_Clear_Game_Loop_Messages(lua_State* _)
+    static int ClearGameLoopMessagesLua(lua_State* _)
     {
-        Clear_Game_Loop_Messages();
+        ClearGameLoopMessages();
 
         return 0;
     }
 
-    static int Lua_Clear_Game_Ui_Messages(lua_State* _)
+    static int ClearGameUiMessagesLua(lua_State* _)
     {
-        Clear_Game_Ui_Messages();
+        ClearGameUiMessages();
 
         return 0;
     }
 
-
-    static HouseClass* Get_House_By_Type(HousesType houseType, bool* housePresent)
+    static HouseClass* GetHouseByType(HousesType houseType)
     {
         for (auto i = 0; i < Houses.Count(); i++)
         {
@@ -96,114 +106,107 @@ private:
 
             if (house != NULL && house->Class->House == houseType)
             {
-                if (housePresent != NULL)
-                {
-                    *housePresent = true;
-                }
-
                 return house;
             }
-        }
-
-        if (housePresent != NULL)
-        {
-            *housePresent = false;
         }
 
         return NULL;
     }
 
-    static SuperweaponType Lua_Parse_Superweapon_Type(int index, const char* callingFunctionName, bool* invalidValue)
+    static LuaResultWithValue<SuperweaponType>& ParseSuperweaponTypeLua(ILuaStateWrapper& lua, int index, const char* callingFunctionName)
     {
-        auto& luaState = NcoLuaRuntime().GetState();
-        auto& superWeaponNameResult = luaState.ReadString(index);
+        auto& superWeaponNameResult = lua.ReadString(index);
+        auto name = superWeaponNameResult.GetValue();
 
-        if (superWeaponNameResult.IsErrorResult() || String_Is_Empty(superWeaponNameResult.GetValue()))
+        delete &superWeaponNameResult;
+
+        if (StringIsEmpty(name))
         {
-            luaState.RaiseError("%s parameter `superWeaponName` was nil or empty", callingFunctionName);
-
-            if (invalidValue != NULL)
-            {
-                *invalidValue = true;
-            }
-
-            delete &superWeaponNameResult;
-
-            return NO_SUPERWEAPON;
+            return LuaResultWithValue<SuperweaponType>::BuildWithError(
+                "%s parameter `superWeaponName` was empty",
+                callingFunctionName
+            );
         }
 
         auto weapon = NO_SUPERWEAPON;
-        auto uppercaseName = Convert_String_To_Upper_Case(superWeaponNameResult.GetValue());
+        auto uppercaseName = ConvertStringToUpperCase(name);
 
-        if (Strings_Are_Equal(uppercaseName, AIRSTRIKE_SECTION_NAME_UPPER))
+        if (StringsAreEqual(uppercaseName, AIRSTRIKE_SECTION_NAME_UPPER))
         {
             weapon = AIRSTRIKE;
         }
-        else if (Strings_Are_Equal(uppercaseName, ION_CANNON_SECTION_NAME_UPPER))
+        else if (StringsAreEqual(uppercaseName, ION_CANNON_SECTION_NAME_UPPER))
         {
             weapon = ION_CANNON;
         }
-        else if (Strings_Are_Equal(uppercaseName, NUCLEAR_STRIKE_SECTION_NAME_UPPER))
+        else if (StringsAreEqual(uppercaseName, NUCLEAR_STRIKE_SECTION_NAME_UPPER))
         {
             weapon = NUCLEAR_STRIKE;
         }
         else
         {
-            luaState.RaiseError(
+            delete uppercaseName;
+
+            return LuaResultWithValue<SuperweaponType>::BuildWithError(
                 "%s parameter `superWeaponName` was not recognised as a superweapon name: %s",
                 callingFunctionName,
-                superWeaponNameResult.GetValue()
+                name
             );
         }
 
         delete uppercaseName;
-        delete &superWeaponNameResult;
 
-        return weapon;
+        return LuaResultWithValue<SuperweaponType>::BuildWithValue(weapon);
     }
 
-    static int Lua_Send_House_Super_Weapon_Message(
+    static int SendHouseSuperWeaponMessageLua(
         const char* callingFunctionName,
         const char* callingLuaFunctionName,
         SuperweaponMessageType messageType
     ) {
-        auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("%s called from Lua", callingFunctionName);
+        auto& lua = NcoLuaRuntime().GetState();
+        LogTrace("%s called from Lua", callingFunctionName);
 
-        auto argCount = luaState.GetStackTop();
-
-        if (argCount < 2)
-        {
-            luaState.RaiseError("%s requires at least two arguments", callingLuaFunctionName);
-            return 0;
-        }
-
-        bool parseError = false;
-        auto house = Lua_Parse_House_Type(1, callingLuaFunctionName, &parseError);
-
-        if (parseError)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
         {
             return 0;
         }
 
-        auto superweapon = Lua_Parse_Superweapon_Type(2, callingLuaFunctionName, &parseError);
+        auto& houseResult = ParseHouseTypeLua(lua, 1, callingLuaFunctionName);
 
-        if (parseError)
+        if (houseResult.IsErrorResult())
         {
+            lua.RaiseError(houseResult);
+
+            delete &houseResult;
+
             return 0;
         }
+
+        auto house = houseResult.GetValue();
+
+        delete &houseResult;
+
+        auto& superweaponResult = ParseSuperweaponTypeLua(lua, 2, callingLuaFunctionName);
+
+        if (superweaponResult.IsErrorResult())
+        {
+            lua.RaiseError(superweaponResult.GetError());
+
+            delete &superweaponResult;
+
+            return 0;
+        }
+
+        auto superweapon = superweaponResult.GetValue();
+
+        delete &superweaponResult;
 
         auto oneTime = false;
 
-        if (argCount > 2)
+        if (lua.GetStackTop() > 2)
         {
-            if (!luaState.IsBool(3))
-            {
-                luaState.RaiseError("%s parameter `oneTimeOnly` must be a boolean", callingLuaFunctionName);
-                return 0;
-            }
-
-            oneTime = luaState.ReadBool(3).GetValue();
+            oneTime = lua.ReadBool(3).GetValue();
         }
 
         HouseMessage message{};
@@ -212,88 +215,85 @@ private:
         message.superweapon = superweapon;
         message.superweaponMessage = messageType;
 
-        Push_House_Message(house, SUPERWEAPON_MESSAGE, message);
+        PushHouseMessage(house, SUPERWEAPON_MESSAGE, message);
 
         return 0;
     }
 
-    static int Lua_Disable_House_Super_Weapon(lua_State* _) {
-        return Lua_Send_House_Super_Weapon_Message(
-            "Lua_Enable_House_Super_Weapon_Message",
+    static int DisableHouseSuperWeaponLua(lua_State* _) {
+        return SendHouseSuperWeaponMessageLua(
+            "DisableHouseSuperWeaponLua",
             "disableSuperWeaponForHouse",
             DISABLE_SUPERWEAPON
         );
     }
 
-    static int Lua_Charge_House_Super_Weapon(lua_State* _) {
-        return Lua_Send_House_Super_Weapon_Message(
-            "Lua_Enable_House_Super_Weapon_Message",
+    static int ChargeHouseSuperWeaponLua(lua_State* _) {
+        return SendHouseSuperWeaponMessageLua(
+            "ChargeHouseSuperWeaponLua",
             "chargeSuperWeaponForHouse",
             CHARGE_SUPERWEAPON
         );
     }
 
-    static int Lua_Enable_House_Super_Weapon(lua_State* _) {
-        return Lua_Send_House_Super_Weapon_Message(
-            "Lua_Enable_House_Super_Weapon_Message",
+    static int EnableHouseSuperWeaponLua(lua_State* _) {
+        return SendHouseSuperWeaponMessageLua(
+            "EnableHouseSuperWeaponLua",
             "enableSuperWeaponForHouse",
             ENABLE_SUPERWEAPON
         );
     }
 
-    static int Lua_Modifiy_House_Credits(lua_State* _)
+    static int ModifiyHouseCreditsLua(lua_State* _)
     {
-        auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Modify_House_Credits called from Lua");
+        auto& lua = NcoLuaRuntime().GetState();
+        LogTrace("Lua_Modify_House_Credits called from Lua");
 
-        int argCount = luaState.GetStackTop();
-
-        if (argCount < 2)
-        {
-            luaState.RaiseError("modifyHouseCredits requires exactly two arguments");
-            return 0;
-        }
-
-        bool invalidValue = false;
-        auto houseType = Lua_Parse_House_Type(1, "modifyHouseCredits", &invalidValue);
-
-        if (invalidValue)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
         {
             return 0;
         }
 
-        if (!luaState.IsNumber(2))
+        auto& houseTypeResult = ParseHouseTypeLua(lua, 1, "modifyHouseCredits");
+
+        if (houseTypeResult.IsErrorResult())
         {
-            luaState.RaiseError("modifyHouseCredits parmeter `creditsModifier` must be a number");
-            return 0;
-        }
+            lua.RaiseError(houseTypeResult);
 
-        bool housePresent = false;
-        auto& creditsModifierResult = luaState.ReadInteger(2);
-        auto house = Get_House_By_Type(houseType, &housePresent);
-
-        if (!housePresent)
-        {
-            Log_Error("Ignoring modifyHouseCredits call as house '%s' is not in the current game", House_Type_To_String(houseType));
-
-            delete &creditsModifierResult;
+            delete &houseTypeResult;
 
             return 0;
         }
 
-        house->Credits += creditsModifierResult.GetValue();
+        auto houseType = houseTypeResult.GetValue();
 
-        luaState.WriteInteger(house->Credits);
+        delete &houseTypeResult;
+
+        auto& creditsModifierResult = lua.ReadInteger(2);
+
+        auto house = GetHouseByType(houseType);
+        auto creditsModifier = creditsModifierResult.GetValue();
 
         delete &creditsModifierResult;
+
+        if (house == NULL)
+        {
+            lua.RaiseError("House '%s' is not in the current game", HouseTypeToString(houseType));
+
+            return 0;
+        }
+
+        house->Credits += creditsModifier;
+
+        lua.WriteInteger(house->Credits);
 
         return 1;
     }
 
     static int Lua_Get_Active_Houses(lua_State* _)
     {
-        auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Get_Active_Houses called from Lua");
+        auto& lua = NcoLuaRuntime().GetState();
+        LogTrace("Lua_Get_Active_Houses called from Lua");
 
         auto activeHousesCount = Houses.Count();
         auto houses = std::vector<const char*>();
@@ -303,112 +303,102 @@ private:
             auto house = Houses.Raw_Ptr(i);
 
             houses.push_back(
-                House_Type_To_String(house->Class->House)
+                HouseTypeToString(house->Class->House)
             );
         }
 
-        luaState.WriteArray(houses);
+        lua.WriteArray(houses);
 
         return 1;
     }
 
-    static int Lua_Get_Player_Base_House(lua_State* _)
+    static int GetPlayerBaseHouseLua(lua_State* _)
     {
-        auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Get_Player_House called from Lua");
+        auto& lua = NcoLuaRuntime().GetState();
+        LogTrace("GetPlayerBaseHouseLua called from Lua");
 
-        auto playerBaseHouse = House_Type_To_String(PlayerPtr->ActLike);
+        auto playerBaseHouse = HouseTypeToString(PlayerPtr->ActLike);
 
-        luaState.WriteString(playerBaseHouse);
+        lua.WriteString(playerBaseHouse);
 
         return 1;
     }
 
-    static int Lua_Get_Player_House(lua_State* _)
+    static int GetPlayerHouseLua(lua_State* _)
     {
-        auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Get_Player_House called from Lua");
+        auto& lua = NcoLuaRuntime().GetState();
+        LogTrace("GetPlayerHouseLua called from Lua");
 
-        auto playerHouse = House_Type_To_String(PlayerPtr->Class->House);
+        auto playerHouse = HouseTypeToString(PlayerPtr->Class->House);
 
-        luaState.WriteString(playerHouse);
+        lua.WriteString(playerHouse);
 
         return 1;
     }
 
-    static int Lua_Hide_Map(lua_State* _)
+    static int HideMapLua(lua_State* _)
     {
-        Log_Trace("Lua_Hide_Map called from Lua");
+        LogTrace("HideMapLua called from Lua");
 
-        Push_Hide_Map_Ui_Message();
+        PushHideMapUiMessage();
 
         return 0;
     }
 
-    static int Lua_Reveal_Map(lua_State* _)
+    static int RevealMapLua(lua_State* _)
     {
-        Log_Trace("Lua_Reveal_Map called from Lua");
+        LogTrace("RevealMapLua called from Lua");
 
-        Push_Reveal_Map_Ui_Message();
+        PushRevealMapUiMessage();
 
         return 0;
     }
 
-    static int Lua_Refresh_Map(lua_State* _)
+    static int RefreshMapLua(lua_State* _)
     {
-        Log_Trace("Lua_Refresh_Map called from Lua");
+        LogTrace("Lua_Refresh_Map called from Lua");
 
-        Push_Refresh_Map_Ui_Message();
+        PushRefreshMapUiMessage();
 
         return 0;
     }
 
-    static int Lua_Refresh_Sidebar(lua_State* _)
+    static int RefreshSidebarLua(lua_State* _)
     {
-        Log_Trace("Lua_Refresh_Sidebar called from Lua");
+        LogTrace("Lua_Refresh_Sidebar called from Lua");
 
-        Push_Refresh_Sidebar_Ui_Message();
+        PushRefreshSidebarUiMessage();
 
         return 0;
     }
 
-    static int Lua_Show_Game_Message(lua_State* _)
+    static int ShowGameMessageLua(lua_State* _)
     {
-        auto& luaState = NcoLuaRuntime().GetState();
-        Log_Trace("Lua_Show_Game_Message called from Lua");
+        auto& lua = NcoLuaRuntime().GetState();
+        LogTrace("Lua_Show_Game_Message called from Lua");
 
-        int argCount = luaState.GetStackTop();
-
-        if (argCount < 2)
+        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
         {
-            luaState.RaiseError("showGameMessage requires exactly two arguments");
             return 0;
         }
 
-        if (!luaState.IsNumber(2))
-        {
-            luaState.RaiseError("showGameMessage parameter `durationInSeconds` must be a number");
-            return 0;
-        }
+        auto& messageResult = lua.ReadString(1);
 
-        auto& messageResult = luaState.ReadString(1);
-        auto& durationInSecondsResult = luaState.ReadDouble(2);
-
-        if (messageResult.IsErrorResult() || messageResult.GetValue() == NULL)
-        {
-            luaState.RaiseError("showGameMessage parameter `message` was nil");
-            return 0;
-        }
+        auto message = messageResult.GetValue();
+        auto& durationInSecondsResult = lua.ReadDouble(2);
+        
+        delete &messageResult;
 
         if (durationInSecondsResult.GetValue() < 0.1)
         {
-            luaState.RaiseError("showGameMessage parameter `durationInSeconds` must be equal to or greater than 0.1 (100ms)");
+            delete &durationInSecondsResult;
+
+            lua.RaiseError("showGameMessage parameter `durationInSeconds` must be equal to or greater than 0.1 (100ms)");
             return 0;
         }
 
-        Push_Show_Notification_Ui_Message(messageResult.GetValue(), durationInSecondsResult.GetValue());
+        PushShowNotificationUiMessage(message, durationInSecondsResult.GetValue());
 
-        delete &messageResult;
         delete &durationInSecondsResult;
 
         return 0;
@@ -419,102 +409,115 @@ private:
         WithName("Game");
         WithDescription("Game info and control functions");
 
-        WithFunction("showGameMessage", Lua_Show_Game_Message, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
+        WithFunction("showGameMessage", ShowGameMessageLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Show the player an in-game message")
+             .WithParameter("message", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::String);
-            });
+             })
+             .WithParameter("durationInSeconds", [](LuaVariableInfo& p) {
+                p.WithDescription("Display the message for this many seconds; minimum value is `0.1`. Note: this function is async")
+                 .WithType(LuaType::Number);
+             });
         });
 
-        WithFunction("refreshSidebar", Lua_Refresh_Sidebar, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("refreshSidebar", RefreshSidebarLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Force a refresh of the sidebar; useful if you make a rule change that affects what the user can build and want to reflect that right away. Note: this function is async");
         });
 
-        WithFunction("revealEntireMap", Lua_Reveal_Map, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("revealEntireMap", RevealMapLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Reveal the entire map to the player; this is permanent unless you call `hideEntireMap`. Note: this function is async");
         });
 
-        WithFunction("hideEntireMap", Lua_Hide_Map, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("hideEntireMap", HideMapLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Hide any areas of the map without player units/buildings from the player. Note: this function is async");
         });
 
-        WithFunction("getPlayerHouse", Lua_Get_Player_House, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("getPlayerHouse", GetPlayerHouseLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Get the name of the current player house")
+             .WithReturnValue("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("The house name of the player (BADGUY, GOODGUY etc.)")
+                 .WithType(LuaType::String);
+             });
         });
 
-        WithFunction("getPlayerBaseHouse", Lua_Get_Player_Base_House, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("getPlayerBaseHouse", GetPlayerBaseHouseLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Get the name of the base house for the current player house. Every house has a base house which it acts like, usually NOD or GDI.")
+             .WithReturnValue("baseHouseName", [](LuaVariableInfo& p) {
+                p.WithDescription("The base house name of the player (BADGUY, GOODGUY etc.)")
+                 .WithType(LuaType::String);
+             });
         });
 
         WithFunction("getActiveHouses", Lua_Get_Active_Houses, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+            f.WithDescription("Get all houses that are active in the current scenario")
+             .WithReturnValue("activeHouseNames", [](LuaVariableInfo& p) {
+                p.WithDescription("List of strings, containing the names of active houses.")
+                 .WithType(LuaType::Table);
+             });
         });
 
-        WithFunction("modifyHouseCredits", Lua_Modifiy_House_Credits, [](LuaFunctionInfo& f) {
+        WithFunction("modifyHouseCredits", ModifiyHouseCreditsLua, [](LuaFunctionInfo& f) {
             f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to modify")
+                 .WithType(LuaType::String);
+             })
+             .WithParameter("amount", [](LuaVariableInfo& p) {
+                p.WithDescription("Amount of credits to either add or subtract for current house balance; use negative numbers to deduct credits.")
+                 .WithType(LuaType::Number);
+             });
         });
 
-        WithFunction("enableSuperweaponForHouse", Lua_Enable_House_Super_Weapon, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("enableSuperweaponForHouse", EnableHouseSuperWeaponLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Enable a superweapon for a given house. Note: this function is async")
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to enable superweapon for")
+                 .WithType(LuaType::String);
+             })
+             .WithParameter("superweaponName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the superweapon as it appears in the RULES.INI file")
+                 .WithType(LuaType::String);
+             });
         });
 
-        WithFunction("chargeSuperweaponForHouse", Lua_Charge_House_Super_Weapon, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("chargeSuperweaponForHouse", ChargeHouseSuperWeaponLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Charge a superweapon for a given house. Note: this function is async")
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to charge superweapon for")
+                 .WithType(LuaType::String);
+             })
+             .WithParameter("superweaponName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the superweapon as it appears in the RULES.INI file")
+                 .WithType(LuaType::String);
+             });
         });
 
-        WithFunction("disableSuperweaponForHouse", Lua_Disable_House_Super_Weapon, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("disableSuperweaponForHouse", DisableHouseSuperWeaponLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Disable a superweapon for a given house. Note: this function is async")
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the house to disable superweapon for")
+                 .WithType(LuaType::String);
+             })
+             .WithParameter("superweaponName", [](LuaVariableInfo& p) {
+                p.WithDescription("Name of the superweapon as it appears in the RULES.INI file")
+                 .WithType(LuaType::String);
+             });
         });
 
-        WithFunction("clearGameUiMessages", Lua_Clear_Game_Ui_Messages, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("clearGameUiMessages", ClearGameUiMessagesLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Cancel any pending async game UI changes (refresh sidebar, reveal map etc.)");
         });
 
-        WithFunction("clearGameLoopMessages", Lua_Clear_Game_Loop_Messages, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("clearGameLoopMessages", ClearGameLoopMessagesLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Cancel any pending async game events (on game tick etc.)");
         });
 
-        WithFunction("clearHouseMessages", Lua_Clear_House_Messages, [](LuaFunctionInfo& f) {
-            f.WithDescription("Write a info line to the log file")
-            .WithParameter("str", [](LuaVariableInfo& p) {
-                p.WithType(LuaType::String);
-            });
+        WithFunction("clearHouseMessages", ClearHouseMessagesLua, [](LuaFunctionInfo& f) {
+            f.WithDescription("Cancel any pending events for a given house (enable/disable superweapon etc.)")
+             .WithParameter("houseName", [](LuaVariableInfo& p) {
+                 p.WithDescription("Name of the house to cancelevents for")
+                  .WithType(LuaType::String);
+             });
         });
     }
 

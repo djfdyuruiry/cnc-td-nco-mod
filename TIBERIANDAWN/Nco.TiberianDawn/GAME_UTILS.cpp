@@ -1,35 +1,37 @@
 #include "../FUNCTION.H"
 #include "../DLLInterface.h"
 
-void Show_Game_Notification(char* message, float durationInSeconds)
+void ShowGameNotification(const char* message, float durationInSeconds)
 {
 	On_Message(message, durationInSeconds);
 }
 
-void Refresh_Game_Map()
+void RefreshGameMap()
 {
 	Map.Flag_To_Redraw(true);
 }
 
-void Refresh_Sidebar()
+void RefreshSidebar()
 {
-	for (auto index = 0; index < Buildings.Count(); index++) {
+	for (auto index = 0; index < Buildings.Count(); index++)
+	{
 		Buildings.Ptr(index)->Update_Buildables();
 	}
 
-	Refresh_Game_Map();
+	RefreshGameMap();
 }
 
-void Reveal_Entire_Map_To_Player()
+void RevealEntireMapToPlayer()
 {
-	for (auto c = 0; c < MAP_CELL_TOTAL; c++) {
+	for (auto c = 0; c < MAP_CELL_TOTAL; c++)
+	{
 		Map.Map_Cell(c, PlayerPtr, true);
 	}
 
-	Refresh_Game_Map();
+	RefreshGameMap();
 }
 
-void Hide_Entire_Map_From_Player()
+void HideEntireMapFromPlayer()
 {
 	for (auto c = 0; c < MAP_CELL_TOTAL; c++)
 	{
@@ -47,40 +49,40 @@ void Hide_Entire_Map_From_Player()
 	{
 		ObjectClass* object = Map.Layer[LAYER_GROUND][i];
 
-		if (object && object->Is_Techno() && ((TechnoClass*)object)->House == PlayerPtr)
+		if (object != NULL && object->Is_Techno() && ((TechnoClass*)object)->House == PlayerPtr)
 		{
 			object->Look();
 		}
 	}
 
-	Refresh_Game_Map();
+	RefreshGameMap();
 }
 
-bool Process_Game_Ui_Message(GameUiMessage uiMessage)
+bool ProcessGameUiMessage(GameUiMessage uiMessage)
 {
 	auto type = uiMessage.type;
 
 	if (type == SHOW_NOTIFICATION_MESSAGE && uiMessage.message != NULL)
 	{
-		Show_Game_Notification(uiMessage.message, uiMessage.durationInSeconds);
+		ShowGameNotification(uiMessage.message, uiMessage.durationInSeconds);
 
 		delete uiMessage.message;
 	}
 	else if (type == REFRESH_SIDEBAR_MESSAGE)
 	{
-		Refresh_Sidebar();
+		RefreshSidebar();
 	}
 	else if (type == REFRESH_MAP_MESSAGE)
 	{
-		Refresh_Game_Map();
+		RefreshGameMap();
 	}
 	else if (type == REVEAL_ENTIRE_MAP_MESSAGE)
 	{
-		Reveal_Entire_Map_To_Player();
+		RevealEntireMapToPlayer();
 	}
 	else if (type == HIDE_ENTIRE_MAP_MESSAGE)
 	{
-		Hide_Entire_Map_From_Player();
+		HideEntireMapFromPlayer();
 	}
 	else
 	{

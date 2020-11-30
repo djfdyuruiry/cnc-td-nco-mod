@@ -19,7 +19,7 @@ class BuildingApi : public TechnoTypeApi<BuildingTypeClass, StructType>
 {
 private:
 	BuildingApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi(strdup("Building"), rulesInfo, STRUCT_FIRST, getCount, Parse_Structure_Type, Structure_Type_To_String)
+		TechnoTypeApi(strdup("Building"), rulesInfo, STRUCT_FIRST, getCount, ParseStructureType, StructureTypeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BIBBED_RULE,
@@ -68,15 +68,15 @@ private:
 			PrimitiveTypeValidator<bool>::Build()
 		).WithFieldWrapper(
 			FACTORY_TYPE_RULE,
-			EXTRACTOR_BLD(Factory_Type_To_String((FactoryType)i.ToBuild)),
+			EXTRACTOR_BLD(FactoryTypeToString((FactoryType)i.ToBuild)),
 			[](BuildingTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.ToBuild = (RTTIType)Parse_Factory_Type(valueUpper, NULL);
+				i.ToBuild = (RTTIType)ParseFactoryType(valueUpper, NULL);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<FactoryType>::Build("Factory", Parse_Factory_Type)
+			ParseCheckValidator<FactoryType>::Build("Factory", ParseFactoryType)
 		).WithFieldWrapper(
 			STORAGE_CAPACITY_RULE,
 			SIMPLE_EXTRACTOR_BLD(Capacity),

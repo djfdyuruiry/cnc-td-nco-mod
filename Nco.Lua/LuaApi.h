@@ -72,7 +72,8 @@ public:
 	{
 		auto& functionInfo = LuaFunctionInfo::Build()
 			.WithName(name)
-			.WithImplementation(function);
+			.WithImplementation(function)
+			.WithParameterValidation();
 
 		if (functionInitialiser != NULL)
 		{
@@ -88,7 +89,8 @@ public:
 	{
 		auto& functionInfo = LuaFunctionInfo::Build()
 			.WithName(name)
-			.WithImplementation(object, methodProxy);
+			.WithImplementation(object, methodProxy)
+			.WithParameterValidation();
 
 		if (functionInitialiser != NULL)
 		{

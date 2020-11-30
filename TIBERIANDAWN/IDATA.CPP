@@ -1439,9 +1439,9 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 		return Pointers[type];
 	}
 
-	Log_Debug("Initialising infantry types");
+	LogDebug("Initialising infantry types");
 
-	auto infantryCount = Read_Infantry_Count();
+	auto infantryCount = ReadInfantryCount();
 
 	Pointers = new InfantryTypeClass const *[infantryCount]{
 		&E1,
@@ -1469,12 +1469,12 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 	return By_Type(type);
 }
 
-void InfantryTypeClass::Read_Infantry_Rules(InfantryTypeClass* infantry)
+void InfantryTypeClass::ReadInfantryRules(InfantryTypeClass* infantry)
 {
 	auto iniName = infantry->IniName;
 
-	Read_Object_Rules(infantry);
-	Read_Techno_Rules(infantry);
+	ReadObjectRules(infantry);
+	ReadTechnoRules(infantry);
 
 	infantry->IsCrushable = Read_Is_Crushable(iniName, infantry->IsCrushable);
 	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
@@ -1562,7 +1562,7 @@ InfantryTypeClass::InfantryTypeClass(
 
 NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(IniName);
 
-	Read_Infantry_Rules(this);
+	ReadInfantryRules(this);
 
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;
@@ -1846,7 +1846,7 @@ void InfantryTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void InfantryTypeClass::Prep_For_Add(void)
 {
-	char infantryCount = Read_Infantry_Count();
+	char infantryCount = ReadInfantryCount();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		Map.Add_To_List(&As_Reference(index));
@@ -1875,7 +1875,7 @@ void InfantryTypeClass::Prep_For_Add(void)
 InfantryType InfantryTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		char infantryCount = Read_Infantry_Count();
+		char infantryCount = ReadInfantryCount();
 
 		for (InfantryType classid = INFANTRY_FIRST; classid < infantryCount; classid++) {
 			if (stricmp(By_Type(classid)->IniName, name) == 0) {
@@ -1904,7 +1904,7 @@ InfantryType InfantryTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void InfantryTypeClass::One_Time(void)
 {
-	char infantryCount = Read_Infantry_Count();
+	char infantryCount = ReadInfantryCount();
 	InfantryType index;
 
 	for (index = INFANTRY_FIRST; index < infantryCount; index++) {
@@ -1961,7 +1961,7 @@ void InfantryTypeClass::Init(TheaterType theater)
 		return;
 	}
 
-	char infantryCount = Read_Infantry_Count();
+	char infantryCount = ReadInfantryCount();
 
 	for (InfantryType index = INFANTRY_FIRST; index < infantryCount; index++) {
 		InfantryTypeClass const *uclass = &As_Reference(index);

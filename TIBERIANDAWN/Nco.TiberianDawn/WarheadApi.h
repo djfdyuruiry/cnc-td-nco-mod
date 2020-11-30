@@ -26,7 +26,7 @@ class WarheadApi : public RulesSectionTypeWrapperApi<WarheadTypeClass, WarheadTy
 {
 protected:
 	WarheadApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi(strdup("Warhead"), rulesInfo, WARHEAD_FIRST, getCount, Parse_Warhead_Type, Warhead_Type_To_String)
+		RulesSectionTypeWrapperApi(strdup("Warhead"), rulesInfo, WARHEAD_FIRST, getCount, ParseWarheadType, WarheadTypeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WARHEAD_SPREAD_FACTOR_RULE,
@@ -102,7 +102,7 @@ protected:
 				strcpy(i.ModBaseIniName, strdup(va.Read<const char*>(l, si)));
 			},
 			LambdaValidator<const char*>::Build("String must be at most 32 characters long", [] (const char* v) {
-				return String_Is_Empty(v) || strlen(v) < 33;
+				return StringIsEmpty(v) || strlen(v) < 33;
 			})
 		);
 	}

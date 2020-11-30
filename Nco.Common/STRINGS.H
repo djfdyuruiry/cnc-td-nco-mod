@@ -2,39 +2,39 @@
 
 #include <stdlib.h>
 
-char* Allocate_String(unsigned int length);
+char* AllocateString(unsigned int length);
 
-bool Strings_Are_Equal(char* subject, char* expected);
+bool StringsAreEqual(char* subject, char* expected);
 
-bool Strings_Are_Equal(const char* subject, char* expected);
+bool StringsAreEqual(const char* subject, char* expected);
 
-bool Strings_Are_Equal(char* subject, const char* expected);
+bool StringsAreEqual(char* subject, const char* expected);
 
-bool Strings_Are_Equal(const char* subject, const char* expected);
+bool StringsAreEqual(const char* subject, const char* expected);
 
-bool String_Is_Empty(char* subject);
+bool StringIsEmpty(char* subject);
 
-bool String_Is_Empty(const char* subject);
+bool StringIsEmpty(const char* subject);
 
-bool String_Starts_With(char* subject, char* expected);
+bool StringStartsWith(char* subject, char* expected);
 
-bool String_Starts_With(const char* subject, char* expected);
+bool StringStartsWith(const char* subject, char* expected);
 
-bool String_Starts_With(char* subject, const char* expected);
+bool StringStartsWith(char* subject, const char* expected);
 
-bool String_Starts_With(const char* subject, const char* expected);
+bool StringStartsWith(const char* subject, const char* expected);
 
-void Convert_String_To_Upper_Case(char* subject);
+void ConvertStringToUpperCase(char* subject);
 
-char* Convert_String_To_Upper_Case(const char* subject);
+char* ConvertStringToUpperCase(const char* subject);
 
-char** Parse_Csv_String(const char* csvString, unsigned int entrySize, unsigned int* csvEntryCount, const char* seperator = ",");
+char** ParseCsvString(const char* csvString, unsigned int entrySize, unsigned int* csvEntryCount, const char* seperator = ",");
 
-char* FormatString(const char* format, int maxLength, va_list formatArgs);
+char* FormatString(const char* format, unsigned int maxLength, va_list formatArgs);
 
 char* FormatString(const char* format, va_list formatArgs);
 
-char* FormatString(const char* format, int maxLength, ...);
+char* FormatString(const char* format, unsigned int maxLength, ...);
 
 char* FormatString(const char* format, ...);
 

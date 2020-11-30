@@ -48,11 +48,11 @@ public:
 		{
 			if (!function->IsObjectMethod())
 			{
-				lua.WriteFunction(function->GetName(), function->GetFunction());
+				lua.WriteFunction(function->GetName(), function->GetFunction(), function);
 			}
 			else
 			{
-				lua.WriteMethod(function->GetName(), function->GetImplementationObject(), function->GetMethodProxy());
+				lua.WriteMethod(function->GetName(), function->GetImplementationObject(), function->GetMethodProxy(), function);
 			}
 		}
 
@@ -63,7 +63,7 @@ public:
 
 	ILuaRuntime& RegisterApi(const char* name, LuaApiInitialiser initialiser)
 	{
-		Log_Debug("Registering Lua API: %s", name);
+		LogDebug("Registering Lua API: %s", name);
 
 		auto& api = LuaApi::Build().WithName(name);
 
@@ -89,8 +89,9 @@ public:
 	{
 		if (!FileUtils::IsFile(filePath))
 		{
-			return LuaResult::Build(
-				FormatString("Lua script file was not found: '%s'", filePath)
+			return LuaResult::BuildWithError(
+				"Lua script file was not found: '%s'",
+				filePath
 			);
 		}
 

@@ -22,6 +22,7 @@
     <ClInclude Include="ILuaApi.h" />
     <ClInclude Include="LambdaValidator.h" />
     <ClInclude Include="LuaObjectUtils.h" />
+    <ClInclude Include="LuaParameterValidator.h" />
     <ClInclude Include="LuaRepl.h" />
     <ClInclude Include="LuaTypeWrapper.h" />
     <ClInclude Include="LuaValueAdapter.h" />
@@ -131,7 +132,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../lib/include;../Nco.Common</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -171,7 +172,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../lib/include;../Nco.Common</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>

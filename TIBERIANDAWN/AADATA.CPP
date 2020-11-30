@@ -263,9 +263,9 @@ AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 		return Pointers[type];
 	}
 
-	Log_Debug("Initialising Aircraft types");
+	LogDebug("Initialising Aircraft types");
 
-	auto aircraftCount = Read_Aircraft_Count();
+	auto aircraftCount = ReadAircraftCount();
 
 	Pointers = new AircraftTypeClass const* [aircraftCount] {
 		&TransportHeli,
@@ -376,14 +376,14 @@ AircraftTypeClass::AircraftTypeClass(
 	ROT = rot;
 
 NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(IniName);
-	Read_Aircraft_Rules(this);
+	ReadAircraftRules(this);
 }
-void AircraftTypeClass::Read_Aircraft_Rules(AircraftTypeClass* aircraft)
+void AircraftTypeClass::ReadAircraftRules(AircraftTypeClass* aircraft)
 {
 	auto iniName = aircraft->IniName;
 
-	Read_Object_Rules(aircraft);
-	Read_Techno_Rules(aircraft);
+	ReadObjectRules(aircraft);
+	ReadTechnoRules(aircraft);
 
 	aircraft->IsFixedWing = Read_Cant_Hover(iniName, aircraft->IsFixedWing);
 	aircraft->IsLandable = Read_Can_Land(iniName, aircraft->IsLandable);
@@ -416,7 +416,7 @@ void AircraftTypeClass::Add_Aircraft_Type(AircraftTypeClass* aircraftInstance)
 AircraftType AircraftTypeClass::From_Name(char const *name)
 {
 	if (name) {
-		char aircraftCount = Read_Aircraft_Count();
+		char aircraftCount = ReadAircraftCount();
 
 		for (AircraftType classid = AIRCRAFT_FIRST; classid < aircraftCount; classid++) {
 			if (stricmp(By_Type(classid)->IniName, name) == 0) {
@@ -446,7 +446,7 @@ AircraftType AircraftTypeClass::From_Name(char const *name)
 void AircraftTypeClass::One_Time(void)
 {
 	AircraftType index;
-	char aircraftCount = Read_Aircraft_Count();
+	char aircraftCount = ReadAircraftCount();
 
 	for (index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
@@ -517,7 +517,7 @@ ObjectClass * AircraftTypeClass::Create_One_Of(HouseClass * house) const
  *=============================================================================================*/
 void AircraftTypeClass::Prep_For_Add(void)
 {
-	char aircraftCount = Read_Aircraft_Count();
+	char aircraftCount = ReadAircraftCount();
 	for (AircraftType index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(&As_Reference(index));
@@ -772,7 +772,7 @@ void AircraftTypeClass::Init(TheaterType theater)
 			char buffer[_MAX_FNAME];
 			char fullname[_MAX_FNAME+_MAX_EXT];
 			void const * cameo_ptr;
-			char aircraftCount = Read_Aircraft_Count();
+			char aircraftCount = ReadAircraftCount();
 
 			for (index = AIRCRAFT_FIRST; index < aircraftCount; index++) {
 				AircraftTypeClass	const & uclass = As_Reference(index);

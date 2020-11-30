@@ -29,7 +29,7 @@ private:
 protected:
 	AircraftType ParseType(SectionName typeString, bool* parseError)
 	{
-		return Parse_Aircraft_Type(typeString, parseError, false);
+		return ParseAircraftType(typeString, parseError, false);
 	}
 
 	void AddRulesSection(SectionName typeString)
@@ -39,7 +39,7 @@ protected:
 
 	void ReadRulesAndAddType(AircraftTypeClass* type)
 	{
-		AircraftTypeClass::Read_Aircraft_Rules(type);
+		AircraftTypeClass::ReadAircraftRules(type);
 
 		AircraftTypeClass::Add_Aircraft_Type(type);
 	}

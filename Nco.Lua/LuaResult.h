@@ -21,14 +21,16 @@ public:
 		return *(new LuaResult());
 	}
 
-	static LuaResult& Build(char* error)
+	static LuaResult& BuildWithError(const char* error, ...)
 	{
-		return *(new LuaResult(error));
-	}
+		va_list formatArgs;
+		va_start(formatArgs, error);
 
-	static LuaResult& Build(const char* error)
-	{
-		return Build(strdup(error));
+		auto& instance = *(new LuaResult(FormatString(error, formatArgs)));
+
+		va_end(formatArgs);
+
+		return instance;
 	}
 
 	~LuaResult()
@@ -41,7 +43,7 @@ public:
 
 	bool IsErrorResult()
 	{
-		return !String_Is_Empty(error);
+		return !StringIsEmpty(error);
 	}
 
 	const char* GetError()

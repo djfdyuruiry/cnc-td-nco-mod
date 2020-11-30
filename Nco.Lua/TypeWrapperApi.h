@@ -86,7 +86,7 @@ protected:
 	{
 		if (!ValidateRule(ruleName))
 		{
-			return LuaResult::Build(FormatString("Rule not recognised: %s", ruleName));
+			return LuaResult::BuildWithError("Rule not recognised: %s", ruleName);
 		}
 
 		return technoTypeWrapper.ReadFieldValue(typeInstance, ruleName, lua);
@@ -96,7 +96,7 @@ protected:
 	{
 		if (!ValidateRule(ruleName))
 		{
-			return LuaResult::Build(FormatString("Rule not recognised: %s", ruleName));
+			return LuaResult::BuildWithError("Rule not recognised: %s", ruleName);
 		}
 
 		return technoTypeWrapper.WriteFieldValue(typeInstance, ruleName, lua, ruleValueStackIndex);

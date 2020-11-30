@@ -14,7 +14,7 @@ private:
 protected:
 	DWORD Run()
 	{
-		Process_Game_Loop_Messages();
+		ProcessGameLoopMessages();
 
 		return 0;
 	}

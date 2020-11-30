@@ -1,3 +1,6 @@
+#include <logger.h>
+#include <strings.h>
+
 #include "LuaType.h"
 
 LuaType* LuaType::Number;
@@ -19,7 +22,7 @@ const LuaType& LuaType::Parse(const char* typeName)
 
 	if (index == NameToType->end())
 	{
-		Log_Error("Failed to parse lua type: %s", typeName);
+		LogError("Failed to parse lua type: %s", typeName);
 
 		return *LuaType::Any;
 	}
@@ -53,4 +56,14 @@ void LuaType::InitIfRequired()
 	nameToType[HashUtils::HashString("table")] = LuaType::Table;
 	nameToType[HashUtils::HashString("nil")] = LuaType::Nil;
 	nameToType[HashUtils::HashString("any")] = LuaType::Any;
+}
+
+bool LuaType::AreEqual(const LuaType& expected, const LuaType& actual)
+{
+	return StringsAreEqual(expected.value, actual.value);
+}
+
+bool LuaType::AreEqual(const LuaType& expected, LuaType* actual)
+{
+	return StringsAreEqual(expected.value, actual->value);
 }

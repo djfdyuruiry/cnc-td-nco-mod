@@ -130,7 +130,7 @@ extern bool DLL_Export_Get_Input_Key_State(KeyNumType key);
 */
 int const TechnoClass::BodyShape[32] = {0,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
 
-void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
+void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
 {
 	auto iniName = type->IniName;
 
@@ -151,7 +151,7 @@ void TechnoTypeClass::Read_Techno_Rules(TechnoTypeClass* type)
 	type->HouseListCsv = NcoRulesRuntime().ReadRuleValue<char*>(iniName, HOUSES_RULE, type->HouseListCsv);
 
 	bool parseError = false;
-	auto parsedOwnable = Parse_House_Name_List_Csv(type->HouseListCsv, &parseError);
+	auto parsedOwnable = ParseHouseNameListCsv(type->HouseListCsv, &parseError);
 
 	auto ownable = parseError ? type->Ownable : parsedOwnable;
 
@@ -249,7 +249,7 @@ TechnoTypeClass::TechnoTypeClass(
 
 	FriendlyName = strdup(friendlyName);
 	Level = level;
-	Pre = Structure_Type_To_Prerequisite(pre, NULL, false);
+	Pre = StructureTypeToPrerequisite(pre, NULL, false);
 	IsTransporter = is_transporter;
 	TransportCapacity = IsTransporter ? DEFAULT_TRANSPORT_CAPACITY : 0;
 	IsBuildable = is_buildable;

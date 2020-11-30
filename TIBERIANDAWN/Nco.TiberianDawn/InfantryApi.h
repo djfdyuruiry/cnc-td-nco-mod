@@ -19,7 +19,7 @@ class InfantryApi : public TechnoTypeApi<InfantryTypeClass, InfantryType>
 {
 private:
 	InfantryApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi(strdup("Infantry"), rulesInfo, INFANTRY_FIRST, getCount, Parse_Infantry_Type, Infantry_Type_To_String)
+		TechnoTypeApi(strdup("Infantry"), rulesInfo, INFANTRY_FIRST, getCount, ParseInfantryType, InfantryTypeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			FEMALE_RULE,

@@ -5,7 +5,7 @@
 
 #include <HashUtils.h>
 #include <ILuaStateWrapper.h>
-#include <logger.h>
+#include <Logger.h>
 #include <strings.h>
 #include <utils.h>
 
@@ -81,14 +81,10 @@ private:
 		InitIfNeeded();
 
 		sectionKey = RuleHashUtils::BuildRuleKey(section);
-		uppercaseName = Convert_String_To_Upper_Case(name);
+		uppercaseName = ConvertStringToUpperCase(name);
 		key = RuleHashUtils::BuildRuleKey(section, name);
 
-		auto keyStr = Allocate_String(RULES_INI_ID_SIZE * 2 + 4);
-
-		sprintf(keyStr, "%s -> %s", section, name);
-
-		stringKey = keyStr;
+		stringKey = FormatString("%s -> %s", RULES_INI_ID_SIZE * 2 + 4, section, name);
 	}
 
 	void SetDefaultForRuleType()
@@ -155,7 +151,7 @@ private:
 		}
 		else if (type == BOOL_RULE)
 		{
-			sprintf(string, "%s", Convert_Boolean_To_String(ruleValue.Get<bool>()));
+			sprintf(string, "%s", ConvertBooleanToString(ruleValue.Get<bool>()));
 		}
 		else if (type == UNSIGNED_INT_RULE || IsExtendedType(UINT_TYPES, type))
 		{
@@ -213,7 +209,7 @@ public:
 			LONG_TYPES->push_back(ruleType);
 		}
 
-		Log_Error("Attempted to register extended rule value type, but C++ type used was unsupported. Rule type number: %d", ruleType);
+		LogError("Attempted to register extended rule value type, but C++ type used was unsupported. Rule type number: %d", ruleType);
 	}
 
 	~RulesIniRule()
@@ -227,6 +223,9 @@ public:
 		delete &valueToAllowAlways;
 
 		delete &validValues;
+
+		delete &uppercaseName;
+		delete &stringKey;
 	}
 
 	RulesIniRule& OfType(RulesIniType type)

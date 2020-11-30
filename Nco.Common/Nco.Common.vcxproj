@@ -19,7 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="logger.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LogLevel.cpp" />
     <ClCompile Include="strings.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
@@ -27,7 +28,7 @@
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="HashUtils.h" />
     <ClInclude Include="IniReader.h" />
-    <ClInclude Include="logger.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="TypePatterns.h" />
     <ClInclude Include="strings.h" />
@@ -112,7 +113,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>
@@ -153,7 +154,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>TRUE_FALSE_DEFINED;WIN32;NDEBUG;_WINDOWS;_USRDLL;TIBERIANDAWN_EXPORTS;TEST_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4244;4996</DisableSpecificWarnings>

@@ -25,7 +25,7 @@ class BulletApi : public RulesSectionTypeWrapperApi<BulletTypeClass, BulletType>
 {
 protected:
 	BulletApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi(strdup("Bullet"), rulesInfo, BULLET_FIRST, getCount, Parse_Bullet_Type, Bullet_Type_To_String)
+		RulesSectionTypeWrapperApi(strdup("Bullet"), rulesInfo, BULLET_FIRST, getCount, ParseBulletType, BulletTypeToString)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BULLET_HIGH_RULE,
@@ -89,15 +89,15 @@ protected:
 			PrimitiveTypeValidator<bool>::Build()
 		).WithFieldWrapper(
 			BULLET_WARHEAD_RULE,
-			EXTRACTOR_BLT(Warhead_Type_To_String(i.Warhead)),
+			EXTRACTOR_BLT(WarheadTypeToString(i.Warhead)),
 			[](BulletTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = Convert_String_To_Upper_Case(va.Read<const char*>(l, si));
+				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Warhead = Parse_Warhead_Type(valueUpper, NULL);
+				i.Warhead = ParseWarheadType(valueUpper, NULL);
 
 				delete valueUpper;
 			},
-			ParseCheckValidator<WarheadType>::Build("Warhead", Parse_Warhead_Type)
+			ParseCheckValidator<WarheadType>::Build("Warhead", ParseWarheadType)
 		).WithFieldWrapper(
 			BULLET_ARMING_RULE,
 			SIMPLE_EXTRACTOR_BLT(Arming),
@@ -146,7 +146,7 @@ protected:
 				strcpy(i.ModBaseIniName, strdup(va.Read<const char*>(l, si)));
 			},
 			LambdaValidator<const char*>::Build("String must be at most 32 characters long", [] (const char* v) {
-				return String_Is_Empty(v) || strlen(v) < 33;
+				return StringIsEmpty(v) || strlen(v) < 33;
 			})
 		);
 	}

@@ -432,7 +432,7 @@ short const *  Coord_Spillage_List(COORDINATE coord, int maxsize);
 /*
 **	DEBUG.CPP
 */
-void Log_Event(char const *text, ...);
+void LogEvent(char const *text, ...);
 void Debug_Key(unsigned input);
 void Self_Regulate(void);
 

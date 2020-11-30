@@ -55,7 +55,7 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
 
     if (loadFailed)
     {
-        Log_Error("Loading NCO lua library failed: %s", loadResult.GetError());
+        LogError("Loading NCO lua library failed: %s", loadResult.GetError());
     }
 
     delete &loadResult;
@@ -65,7 +65,7 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
 
 bool TiberianDawnNcoRuntime::InitialiseLuaApi()
 {
-    Log_Debug("Initialising Lua API functions");
+    LogDebug("Initialising Lua API functions");
 
     auto ncoLibLoadResult = LoadNcoLuaLib(luaRuntime);
 
@@ -119,7 +119,7 @@ bool TiberianDawnNcoRuntime::InitialiseLuaApi()
 
 bool TiberianDawnNcoRuntime::InitialiseLuaEvents()
 {
-    return Initialise_Events();
+    return InitialiseEvents();
 }
 
 void TiberianDawnNcoRuntime::RegisterMods()
@@ -148,7 +148,7 @@ void TiberianDawnNcoRuntime::RegisterThreads()
     }
 
     #ifndef TEST_CONSOLE
-    Start_Console_Output();
+    StartConsoleOutput();
     RegisterThread(LuaRepl::Build(luaRuntime));
     #endif
 }
@@ -169,9 +169,9 @@ bool TiberianDawnNcoRuntime::InternalShutdown()
         && rulesRuntime.LuaConsoleIsEnabled()
         )
     {
-        // TODO: fix if window closed during a mission that this is not called
         #ifndef TEST_CONSOLE
-        Stop_Console_Output();
+        // TODO: fix if window closed during a mission that this is not called
+        StopConsoleOutput();
         #endif
     }
 
@@ -201,7 +201,7 @@ void TiberianDawnNcoRuntime::Shutdown()
 
     if (!INSTANCE->InternalShutdown())
     {
-        Log_Error("NCO shutdown failed");
+        LogError("NCO shutdown failed");
     }
 
     delete INSTANCE;

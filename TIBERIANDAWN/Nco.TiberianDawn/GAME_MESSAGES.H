@@ -57,36 +57,35 @@ struct HouseMessage {
 };
 
 // message queuing
-void Push_Show_Notification_Ui_Message(const char* message, float durationInSeconds);
+void PushShowNotificationUiMessage(const char* message, float durationInSeconds);
 
-void Push_Refresh_Sidebar_Ui_Message();
+void PushRefreshSidebarUiMessage();
 
-void Push_Refresh_Map_Ui_Message();
+void PushRefreshMapUiMessage();
 
-void Push_Reveal_Map_Ui_Message();
+void PushRevealMapUiMessage();
 
-void Push_Hide_Map_Ui_Message();
+void PushHideMapUiMessage();
 
 // message handlers
-void Process_Game_Ui_Messages();
+void ProcessGameUiMessages();
 
-void Clear_Game_Ui_Messages();
+void ClearGameUiMessages();
 
 // game loop message handlers
-void Process_Game_Loop_Messages();
+void ProcessGameLoopMessages();
 
-void Push_Game_Loop_Message(GameLoopMessageType messageType);
+void PushGameLoopMessage(GameLoopMessageType messageType);
 
-bool Game_Loop_Messages_Pending();
+bool GameLoopMessagesPending();
 
-void Clear_Game_Loop_Messages();
+void ClearGameLoopMessages();
 
 // house message handlers
+void PushHouseMessage(HousesType houseType, HouseMessageType messageType, HouseMessage message);
 
-void Push_House_Message(HousesType houseType, HouseMessageType messageType, HouseMessage message);
+bool IsHouseMessagePresent(HousesType houseType, HouseMessageType messageType);
 
-bool Is_House_Message_Present(HousesType houseType, HouseMessageType messageType);
+HouseMessage PopHouseMessage(HousesType houseType, HouseMessageType messageType);
 
-HouseMessage Pop_House_Message(HousesType houseType, HouseMessageType messageType);
-
-void Clear_House_Messages(HousesType houseType);
+void ClearHouseMessages(HousesType houseType);

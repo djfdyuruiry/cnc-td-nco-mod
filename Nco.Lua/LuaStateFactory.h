@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-#include <logger.h>
+#include <Logger.h>
 #include <lua.hpp>
 #include <strings.h>
 
@@ -20,9 +20,9 @@ public:
 
 		luaL_openlibs(lua);
 
-		if (String_Is_Empty(libraryPath))
+		if (StringIsEmpty(libraryPath))
 		{
-			Log_Error("Blank library path passed to LuaStateFactory::Build - Lua state will likely be unusable");
+			LogError("Blank library path passed to LuaStateFactory::Build - Lua state will likely be unusable");
 
 			return lua;
 		}
@@ -30,7 +30,7 @@ public:
 		// update package path to include library path
 		auto packageScript = FormatString("package.path = [[%s\\lib\\?.lua;]] .. package.path", libraryPath);
 		
-		Log_Debug("Setting lua package path: %s", packageScript);
+		LogDebug("Setting lua package path: %s", packageScript);
 
 		luaL_dostring(lua, packageScript);
 

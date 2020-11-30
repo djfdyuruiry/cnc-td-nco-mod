@@ -21,9 +21,9 @@ private:
 
 	LuaResult& BuildResult(bool errorOccurredDuringExecution)
 	{
-		return LuaResult::Build(
-			errorOccurredDuringExecution ? GetLastError() : NULL
-		);
+		return errorOccurredDuringExecution 
+			? LuaResult::BuildWithError(GetLastError())
+			: LuaResult::Build();
 	}
 
 	bool IsType(int typeCode, int stackIndex)
@@ -75,7 +75,7 @@ public:
 	{
 		if (IsBool(stackIndex))
 		{
-			return Convert_Boolean_To_String(
+			return ConvertBooleanToString(
 				lua_toboolean(lua, stackIndex)
 			);
 		}
@@ -324,17 +324,21 @@ public:
 		lua_pushstring(lua, value);
 	}
 
-	void WriteFunction(const char* name, lua_CFunction function)
+	void WriteFunction(const char* name, lua_CFunction function, void* functionInfo)
 	{
-		lua_pushcfunction(lua, function);
+		lua_pushlightuserdata(lua, functionInfo);
+
+		lua_pushcclosure(lua, function, 1);
+
 		lua_setglobal(lua, name);
 	}
 
-	void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy)
+	void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy, void* functionInfo)
 	{
+		lua_pushlightuserdata(lua, functionInfo);
 		lua_pushlightuserdata(lua, objectPtr);
 
-		lua_pushcclosure(lua, methodProxy, 1);
+		lua_pushcclosure(lua, methodProxy, 2);
 
 		lua_setglobal(lua, name);
 	}
@@ -366,6 +370,11 @@ public:
 		va_end(formatArgs);
 
 		delete message;
+	}
+
+	void RaiseError(LuaResult& result)
+	{
+		RaiseError(result.GetError());
 	}
 
 	LuaResult& ExecuteScript(const char* script)

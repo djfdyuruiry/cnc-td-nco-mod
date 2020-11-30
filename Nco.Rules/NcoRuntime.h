@@ -31,14 +31,14 @@ private:
 		auto& scripts = rulesRuntime.GetLuaScripts();
 
 		for (auto scriptFile : scripts) {
-			auto scriptFilePath = Build_Mod_Data_File_Path(scriptFile);
+			auto scriptFilePath = BuildModDataFilePath(scriptFile);
 			auto& executeResult = luaRuntime.ExecuteFile(scriptFilePath);
 
 			if (executeResult.IsErrorResult())
 			{
-				Log_Error("Error loading rules lua script '%s': %s", scriptFilePath, executeResult.GetError());
+				LogError("Error loading rules lua script '%s': %s", scriptFilePath, executeResult.GetError());
 
-				delete& executeResult;
+				delete &executeResult;
 
 				executionOk = false;
 			}
@@ -56,19 +56,19 @@ private:
 
 		if (!InitialiseLuaApi())
 		{
-			Log_Error("Lua setup failed: API could not be initialised");
+			LogError("Lua setup failed: API could not be initialised");
 			return false;
 		}
 
 		if (!InitialiseLuaEvents())
 		{
-			Log_Error("Lua setup failed: events could not be initialised");
+			LogError("Lua setup failed: events could not be initialised");
 			return false;
 		}
 
 		if (!LoadLuaScripts())
 		{
-			Log_Error("Lua setup failed: script(s) from rules file could not be loaded");
+			LogError("Lua setup failed: script(s) from rules file could not be loaded");
 			return false;
 		}
 
@@ -90,7 +90,7 @@ protected:
 		luaRuntime(
 			LuaRuntime::Build(
 				LuaStateWrapper::Build(
-					LuaStateFactory::Build(Get_Mod_Data_Path())
+					LuaStateFactory::Build(GetModDataPath())
 				)
 			)
 		),
@@ -106,7 +106,7 @@ protected:
 
 	template<class T> NcoRuntime& RegisterThread(T& thread)
 	{
-		Log_Debug("Registering thread: %s", thread.GetName());
+		LogDebug("Registering thread: %s", thread.GetName());
 
 		threads.push_back(&thread);
 
@@ -181,50 +181,50 @@ protected:
 public:
 	template<class T> static bool Startup()
 	{
-		Log_Info("New Construction Options mod starting up");
+		LogInfo("New Construction Options mod starting up");
 
 		auto& runtime = T::GetInstance();
 
 		if (!runtime.RulesInitWasSuccessful())
 		{
-			Show_Error("NCO startup failed: rules INI failed validation.\n\nPlease check your rules are valid.");
+			ShowError("NCO startup failed: rules INI failed validation.\n\nPlease check your rules are valid.");
 			return false;
 		}
 
 		if (runtime.GetRulesRuntime().LuaIsEnabled() && !runtime.LuaInitWasSuccessful())
 		{
-			Show_Error("NCO startup failed: errors initialising Lua");
+			ShowError("NCO startup failed: errors initialising Lua");
 			return false;
 		}
 		else
 		{
-			Log_Warn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
+			LogWarn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
 		}
 
 		if (!runtime.GetModRuntime().InitaliseTypes())
 		{
-			Show_Error("NCO startup failed: mods types setup failed validation.\n\nPlease check your mode type rules are valid.");
+			ShowError("NCO startup failed: mods types setup failed validation.\n\nPlease check your mode type rules are valid.");
 			return false;
 		}
 
 		if (!runtime.StartThreadsIfRequired())
 		{
-			Show_Error("NCO startup failed: failed to start background threads");
+			ShowError("NCO startup failed: failed to start background threads");
 			return false;
 		}
 
-		Log_Info("New Construction Options mod has started successfully");
+		LogInfo("New Construction Options mod has started successfully");
 		return true;
 	}
 
 	template<class T> static void Shutdown()
 	{
-		Log_Info("New Construction Options mod shutting down");
+		LogInfo("New Construction Options mod shutting down");
 
 		T::Shutdown();
 
 		// this must be the last call - otherwise the file might be reopened by a log call
-		Close_Log_File_If_Open();
+		Logger::Shutdown();
 	}
 
 	~NcoRuntime()

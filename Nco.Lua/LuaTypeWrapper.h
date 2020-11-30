@@ -89,7 +89,7 @@ public:
 
 		if (extractors.find(fieldKey) == extractors.end())
 		{
-			return LuaResult::Build(FormatString("Reading field '%s' is currently not supported - no object field extractor configured", fieldName));
+			return LuaResult::BuildWithError("Reading field '%s' is currently not supported - no object field extractor configured", fieldName);
 		}
 
 		auto& adapter = BuildValueAdapater(fieldKey);
@@ -107,7 +107,7 @@ public:
 
 		if (injectors.find(fieldKey) == injectors.end())
 		{
-			return LuaResult::Build(FormatString("Writing field is currently not supported - no object field injector configured", fieldName));
+			return LuaResult::BuildWithError("Writing field is currently not supported - no object field injector configured", fieldName);
 		}
 
 		if (validators.find(fieldKey) != validators.end())
@@ -116,7 +116,7 @@ public:
 
 			if (validationResult.IsErrorResult())
 			{
-				auto& writeResult = LuaResult::Build(FormatString("Invalid value provided for field '%s': %s", fieldName, validationResult.GetError()));
+				auto& writeResult = LuaResult::BuildWithError("Invalid value provided for field '%s': %s", fieldName, validationResult.GetError());
 
 				delete &validationResult;
 
@@ -125,7 +125,7 @@ public:
 		}
 		else
 		{
-			Log_Warn("No validator configured for field '%s' - value will attempt to be set without validation", fieldName);
+			LogWarn("No validator configured for field '%s' - value will attempt to be set without validation", fieldName);
 		}
 
 		auto& adapter = BuildValueAdapater(fieldKey);

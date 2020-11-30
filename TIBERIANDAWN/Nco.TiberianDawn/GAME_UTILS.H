@@ -2,14 +2,14 @@
 
 #include "game_messages.h"
 
-void Show_Game_Notification(char* message, float durationInSeconds);
+void ShowGameNotification(const char* message, float durationInSeconds);
 
-void Refresh_Sidebar();
+void RefreshSidebar();
 
-void Refresh_Game_Map();
+void RefreshGameMap();
 
-void Reveal_Entire_Map_To_Player();
+void RevealEntireMapToPlayer();
 
-void Hide_Entire_Map_From_Player();
+void HideEntireMapFromPlayer();
 
-bool Process_Game_Ui_Message(GameUiMessage uiMessage);
+bool ProcessGameUiMessage(GameUiMessage uiMessage);

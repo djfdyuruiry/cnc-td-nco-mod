@@ -13,6 +13,7 @@ class LuaFunctionInfo
 private:
 	char* name;
 	char* description;
+	bool parameterValidationEnabled;
 
 	lua_CFunction luaFunction;
 
@@ -22,22 +23,14 @@ private:
 	std::vector<LuaVariableInfo*>& parameters;
 	std::vector<LuaVariableInfo*>& returnValues;
 
+	unsigned int requiredParameterCount;
+
 	LuaFunctionInfo() : parameters(*(new std::vector<LuaVariableInfo*>())),
 		returnValues(*(new std::vector<LuaVariableInfo*>())),
-		implementationObject(NULL)
+		implementationObject(NULL),
+		parameterValidationEnabled(false),
+		requiredParameterCount(0)
 	{
-	}
-
-	LuaVariableInfo& BuildVarInfo(char* name, LuaVariableInfoInitialiser initialiser)
-	{
-		auto& varInfo = LuaVariableInfo::Build().WithName(name);
-
-		if (initialiser != NULL)
-		{
-			initialiser(varInfo);
-		}
-
-		return varInfo;
 	}
 
 public:
@@ -78,7 +71,7 @@ public:
 
 	LuaFunctionInfo& WithImplementation(lua_CFunction impl)
 	{
-		this->luaFunction = impl;
+		luaFunction = impl;
 
 		return *this;
 	}
@@ -103,11 +96,19 @@ public:
 		return WithDescription(strdup(name));
 	}
 
-	LuaFunctionInfo& WithParameter(char* name, LuaVariableInfoInitialiser initialiser)
+	LuaFunctionInfo& WithParameter(char* name, LuaVariableInfoInitialiser initialiser, bool isOptional = false)
 	{
-		parameters.push_back(
-			&BuildVarInfo(name, initialiser)
-		);
+		auto& varInfo = LuaVariableInfo::BuildParameter(parameters.size() + 1)
+			.WithName(name);
+
+		if (initialiser != NULL)
+		{
+			initialiser(varInfo);
+		}
+
+		parameters.push_back(&varInfo);
+
+		requiredParameterCount++;
 
 		return *this;
 	}
@@ -117,11 +118,27 @@ public:
 		return WithParameter(strdup(name), initialiser);
 	}
 
+	LuaFunctionInfo& WithOptionalParameter(char* name, LuaVariableInfoInitialiser initialiser)
+	{
+		return WithParameter(strdup(name), initialiser, true);
+	}
+
+	LuaFunctionInfo& WithOptionalParameter(const char* name, LuaVariableInfoInitialiser initialiser)
+	{
+		return WithOptionalParameter(strdup(name), initialiser);
+	}
+
 	LuaFunctionInfo& WithReturnValue(char* name, LuaVariableInfoInitialiser initialiser)
 	{
-		returnValues.push_back(
-			&BuildVarInfo(name, initialiser)
-		);
+		auto& varInfo = LuaVariableInfo::BuildReturnValue(returnValues.size() + 1)
+			.WithName(name);
+
+		if (initialiser != NULL)
+		{
+			initialiser(varInfo);
+		}
+
+		returnValues.push_back(&varInfo);
 
 		return *this;
 	}
@@ -129,6 +146,13 @@ public:
 	LuaFunctionInfo& WithReturnValue(const char* name, LuaVariableInfoInitialiser initialiser)
 	{
 		return WithReturnValue(strdup(name), initialiser);
+	}
+
+	LuaFunctionInfo& WithParameterValidation()
+	{
+		parameterValidationEnabled = true;
+
+		return *this;
 	}
 
 	const char* GetName()
@@ -166,9 +190,30 @@ public:
 		return parameters;
 	}
 
+	bool HasParameters()
+	{
+		return parameters.size() > 0;
+	}
+
+	unsigned int GetRequiredParameterCount()
+	{
+		return requiredParameterCount;
+	}
+
 	const std::vector<LuaVariableInfo*>& GetReturnValues()
 	{
 		return returnValues;
+	}
+
+	bool HasReturnValues()
+	{
+		return returnValues.size() > 0;
+	}
+
+
+	bool ParameterValidationIsEnabled()
+	{
+		return parameterValidationEnabled;
 	}
 
 	int Call(lua_State* lua)

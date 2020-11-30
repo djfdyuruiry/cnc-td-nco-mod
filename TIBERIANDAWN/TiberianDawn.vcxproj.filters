@@ -47,6 +47,9 @@
     <Filter Include="Source Files\Nco.TiberianDawn\Utils">
       <UniqueIdentifier>{71dcc86d-b462-42e6-ad2b-d6f92f73da2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Nco.TiberianDawn\Lua\Api\Types">
+      <UniqueIdentifier>{f76e6134-a372-4fa6-bddf-bf35fd72bb8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="COORDA.ASM">
@@ -688,31 +691,10 @@
     <ClInclude Include="DLLInterfaceVersion.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\AircraftApi.h">
-      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\BuildingApi.h">
-      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\BulletApi.h">
-      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="Nco.TiberianDawn\GameApi.h">
       <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
     </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\InfantryApi.h">
-      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
-    </ClInclude>
     <ClInclude Include="Nco.TiberianDawn\InfoApi.h">
-      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\TechnoTypeApi.h">
-      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\WarheadApi.h">
-      <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
-    </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\WeaponApi.h">
       <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
     </ClInclude>
     <ClInclude Include="Nco.TiberianDawn\AircraftTypeMod.h">
@@ -816,6 +798,27 @@
     </ClInclude>
     <ClInclude Include="Nco.TiberianDawn\UtilApi.h">
       <Filter>Source Files\Nco.TiberianDawn\Lua\Api</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\AircraftApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\BuildingApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\BulletApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\InfantryApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TechnoTypeApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\WarheadApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\WeaponApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
