@@ -82,7 +82,7 @@ static void TestLuaEvents()
 
 	LogInfo("Testing setting rules from save load event handler");
 
-	OnSaveLoad(HouseTypeToString(HOUSE_GOOD), 4);
+	OnSaveLoad(NcoTypeConverter().ToString(HOUSE_GOOD).GetValue(), 4);
 
 	LogInfo("Testing game tick event handler");
 
