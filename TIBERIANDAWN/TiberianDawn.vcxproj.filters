@@ -820,9 +820,6 @@
     <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeConverter.h">
       <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\parse.h">
-      <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Nco.TiberianDawn\UnitApi.h">
       <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
     </ClInclude>
@@ -1429,8 +1426,11 @@
     <ClCompile Include="Nco.TiberianDawn\tiberian_dawn_rule_types.cpp">
       <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClCompile>
-    <ClCompile Include="Nco.TiberianDawn\parse.cpp">
+    <ClCompile Include="Nco.TiberianDawn\TiberianDawnTypeConverter.cpp">
       <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TiberianDawnRulesReader.cpp">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

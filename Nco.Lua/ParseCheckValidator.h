@@ -32,22 +32,22 @@ public:
 
 	Result& IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
-		auto& result = lua.ReadString(stackIndex);
+		auto& stringResult = lua.ReadString(stackIndex);
 
-		if (result.IsErrorResult())
+		if (stringResult.IsErrorResult())
 		{
-			return result;
+			return stringResult;
 		}
 
-		auto valueUpper = ConvertStringToUpperCase(result.GetValue());
+		auto valueUpper = ConvertStringToUpperCase(stringResult.GetValue());
 
-		delete &result;
+		delete &stringResult;
 
 		auto& parseResult = *parser(valueUpper);
 
 		if (parseResult.IsErrorResult())
 		{
-			auto error = FormatString("Unable to parse string '%s' as %s type instance: %s", valueUpper, titleCaseTypeName, result.GetError());
+			auto error = FormatString("Unable to parse string '%s' as %s type instance: %s", valueUpper, titleCaseTypeName, parseResult.GetError());
 
 			delete valueUpper;
 			delete &parseResult;

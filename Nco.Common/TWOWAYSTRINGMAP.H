@@ -6,6 +6,7 @@
 #include "HashUtils.h"
 #include "ResultWithValue.h"
 #include "strings.h"
+#include "TypeUtils.h"
 #include "utils.h"
 
 template <class T> class TwoWayStringMap
@@ -20,7 +21,7 @@ private:
 		keyToValueMap(*(new std::map<StringHash, T>())),
 		valueToKeyMap(*(new std::map<T, const char*>()))
 	{
-		for (auto& [ value, key ] : typeMap)
+		for (auto& [value, key] : typeMap)
 		{
 			AddKey(key, value);
 		}

@@ -8,7 +8,6 @@
 #include "../TYPE.H"
 
 #include "IRulesIniSection.h"
-#include "parse.h"
 #include "rules_ini_aircraft.h"
 #include "TechnoTypeApi.h"
 #include "TiberianDawnNcoRuntime.h"

@@ -4,7 +4,6 @@
 
 #include "../DEFINES.H"
 
-#include "parse.h"
 #include "tiberian_dawn_rule_types.h"
 #include "TiberianDawnTypeConverter.h"
 
@@ -64,7 +63,7 @@ private:
 			rule,
 			"houses",
 			[&](const char* typeString) {
-				return &ParseHouseNameListCsv(typeString);
+				return &typeConverter.ParseHouseNameListCsv(typeString);
 			},
 			(int)HOUSEF_NONE
 		);

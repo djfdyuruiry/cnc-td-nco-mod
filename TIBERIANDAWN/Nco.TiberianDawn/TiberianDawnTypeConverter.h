@@ -5,12 +5,17 @@
 #include <ResultWithValue.h>
 #include <strings.h>
 #include <TwoWayStringMap.h>
+#include <TypeUtils.h>
 
 #include "../DEFINES.H"
+
+#include "tiberian_dawn_rules.h"
 
 class TiberianDawnTypeConverter
 {
 private:
+	static const auto HOUSE_NAME_MAX_LENGTH = 8;
+
 	TwoWayStringMap<DiffType>& difficultyMap;
 	TwoWayStringMap<HousesType>& housesMap;
 	TwoWayStringMap<ArmorType>& armorMap;
@@ -30,6 +35,7 @@ private:
 	TwoWayStringMap<InfantryType>& infantryModsMap;
 	TwoWayStringMap<UnitType>& unitMap;
 	TwoWayStringMap<UnitType>& unitModsMap;
+	std::map<long, StructType>& prereqToStructMap;
 
 	TiberianDawnTypeConverter() :
 		difficultyMap(
@@ -328,7 +334,33 @@ private:
 				}
 			)
 		),
-		unitModsMap(TwoWayStringMap<UnitType>::Build("Unit"))
+		unitModsMap(TwoWayStringMap<UnitType>::Build("Unit")),
+		prereqToStructMap(TypeUtils::InitMapAsRef<long, StructType>({
+			{ STRUCTF_NONE, STRUCT_NONE },
+			{ STRUCTF_ADVANCED_POWER, STRUCT_ADVANCED_POWER },
+			{ STRUCTF_REPAIR, STRUCT_REPAIR },
+			{ STRUCTF_EYE, STRUCT_EYE },
+			{ STRUCTF_TEMPLE, STRUCT_TEMPLE },
+			{ STRUCTF_HAND, STRUCT_HAND },
+			{ STRUCTF_BIO_LAB, STRUCT_BIO_LAB },
+			{ STRUCTF_OBELISK, STRUCT_OBELISK },
+			{ STRUCTF_ATOWER, STRUCT_ATOWER },
+			{ STRUCTF_WEAP, STRUCT_WEAP },
+			{ STRUCTF_GTOWER, STRUCT_GTOWER },
+			{ STRUCTF_RADAR, STRUCT_RADAR },
+			{ STRUCTF_TURRET, STRUCT_TURRET },
+			{ STRUCTF_CONST, STRUCT_CONST },
+			{ STRUCTF_REFINERY, STRUCT_REFINERY },
+			{ STRUCTF_STORAGE, STRUCT_STORAGE },
+			{ STRUCTF_HELIPAD, STRUCT_HELIPAD },
+			{ STRUCTF_SAM, STRUCT_SAM },
+			{ STRUCTF_AIRSTRIP, STRUCT_AIRSTRIP },
+			{ STRUCTF_POWER, STRUCT_POWER },
+			{ STRUCTF_HOSPITAL, STRUCT_HOSPITAL },
+			{ STRUCTF_BARRACKS, STRUCT_BARRACKS },
+			{ STRUCTF_TANKER, STRUCT_TANKER },
+			{ STRUCTF_MISSION, STRUCT_MISSION }
+		}))
 	{
 	}
 
@@ -340,24 +372,24 @@ public:
 
 	~TiberianDawnTypeConverter()
 	{
-		delete &difficultyMap;
-		delete &housesMap;
-		delete &armorMap;
-		delete &unitSpeedMap;
-		delete &factoryTypeMap;
-		delete &warheadModsMap;
-		delete &bulletMap;
-		delete &bulletModsMap;
-		delete &weaponMap;
-		delete &weaponModsMap;
-		delete &aircraftMap;
-		delete &aircraftModsMap;
-		delete &structMap;
-		delete &structModsMap;
-		delete &infantryMap;
-		delete &infantryModsMap;
-		delete &unitMap;
-		delete &unitModsMap;
+		delete& difficultyMap;
+		delete& housesMap;
+		delete& armorMap;
+		delete& unitSpeedMap;
+		delete& factoryTypeMap;
+		delete& warheadModsMap;
+		delete& bulletMap;
+		delete& bulletModsMap;
+		delete& weaponMap;
+		delete& weaponModsMap;
+		delete& aircraftMap;
+		delete& aircraftModsMap;
+		delete& structMap;
+		delete& structModsMap;
+		delete& infantryMap;
+		delete& infantryModsMap;
+		delete& unitMap;
+		delete& unitModsMap;
 	}
 
 	template <class T> TwoWayStringMap<T>& GetTypeMap()
@@ -456,7 +488,7 @@ public:
 			|| std::is_same<T, StructType>()
 			|| std::is_same<T, InfantryType>()
 			|| std::is_same<T, UnitType>()
-		)
+			)
 		{
 			if (result.IsErrorResult() && !ignoreModTypes)
 			{
@@ -479,7 +511,7 @@ public:
 			value = parseResult.GetValue();
 		}
 
-		delete &parseResult;
+		delete& parseResult;
 
 		return value;
 	}
@@ -496,7 +528,7 @@ public:
 			|| std::is_same<T, StructType>()
 			|| std::is_same<T, InfantryType>()
 			|| std::is_same<T, UnitType>()
-		)
+			)
 		{
 			if (result.IsErrorResult() && !ignoreModTypes)
 			{
@@ -515,9 +547,19 @@ public:
 
 		auto valueString = stringResult.GetValue();
 
-		delete &stringResult;
+		delete& stringResult;
 
 		return StringIsEmpty(valueString) ? defaultValueString : valueString;
 	}
+
+	ResultWithValue<int>& ParseHouseNameListCsv(char* houseListCsv, bool ignoreModTypes = false);
+
+	ResultWithValue<int>& ParseHouseNameListCsv(const char* houseListCsv, bool ignoreModTypes = false);
+
+	StructType PrerequisiteToStructureType(long prerequisite);
+
+	const char* PrerequisiteToString(long prerequisite);
+
+	ResultWithValue<long>& StructureTypeToPrerequisite(StructType structType, bool ignoreModTypes = false);
 
 };

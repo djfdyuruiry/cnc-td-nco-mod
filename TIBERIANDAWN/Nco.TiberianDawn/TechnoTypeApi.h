@@ -11,7 +11,6 @@
 #include "../DEFINES.H"
 #include "../TYPE.H"
 
-#include "parse.h"
 #include "rules_ini_generic.h"
 #include "TiberianDawnNcoRuntime.h"
 
@@ -55,14 +54,14 @@ protected:
 			NumbericRangeValidator<unsigned char>::Build(0, 99)
 		).WithFieldWrapper(
 			PREREQUISITE_RULE,
-			EXTRACTOR_T(PrerequisiteToString(i.Pre)),
+			EXTRACTOR_T(NcoTypeConverter().PrerequisiteToString(i.Pre)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				auto structType = NcoTypeConverter().ParseOrDefault(
 					va.Read<const char*>(l, si),
-					PrerequisiteToStructureType(i.Pre)
+					NcoTypeConverter().PrerequisiteToStructureType(i.Pre)
 				);
 
-				auto& preReqResult = StructureTypeToPrerequisite(structType);
+				auto& preReqResult = NcoTypeConverter().StructureTypeToPrerequisite(structType);
 
 				if (!preReqResult.IsErrorResult())
 				{
@@ -106,7 +105,7 @@ protected:
 			SIMPLE_EXTRACTOR_T(HouseListCsv),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				auto houseListCsv = va.Read<const char*>(l, si);
-				auto& houseListResult = ParseHouseNameListCsv(houseListCsv);
+				auto& houseListResult = NcoTypeConverter().ParseHouseNameListCsv(houseListCsv);
 
 				if (!houseListResult.IsErrorResult())
 				{
@@ -117,7 +116,7 @@ protected:
 				delete &houseListResult;
 			},
 			ParseCheckValidator<int>::Build("House List", [](auto stringValue) {
-				return &ParseHouseNameListCsv(stringValue);
+				return &NcoTypeConverter().ParseHouseNameListCsv(stringValue);
 			})
 		).WithFieldWrapper(
 			PRIMARY_WEAPON_RULE,

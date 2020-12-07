@@ -7,7 +7,6 @@
 
 #include "../TYPE.H"
 
-#include "parse.h"
 #include "rules_ini_unit.h"
 #include "TechnoTypeApi.h"
 #include "TiberianDawnNcoRuntime.h"

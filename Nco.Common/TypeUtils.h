@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <type_traits>
 
 class TypeUtils final
@@ -32,6 +33,18 @@ public:
 		{
 			return (T)NULL;
 		}
+	}
+
+	template<class T, class U> static std::map<T, U>& InitMapAsRef(std::map<T, U> valueMap)
+	{
+		auto& refMap = *(new std::map<T, U>());
+
+		for (auto& [k, v] : valueMap)
+		{
+			refMap[k] = v;
+		}
+
+		return refMap;
 	}
 
 };

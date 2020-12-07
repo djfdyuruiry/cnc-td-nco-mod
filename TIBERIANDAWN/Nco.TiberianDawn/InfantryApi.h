@@ -6,7 +6,6 @@
 #include "../TYPE.H"
 
 #include "IRulesIniSection.h"
-#include "parse.h"
 #include "rules_ini_infantry.h"
 #include "TechnoTypeApi.h"
 

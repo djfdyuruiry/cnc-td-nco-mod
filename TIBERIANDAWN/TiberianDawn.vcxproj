@@ -426,7 +426,6 @@
     <ClInclude Include="MOUSE.H" />
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
-    <ClInclude Include="Nco.TiberianDawn\parse.h" />
     <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeConverter.h" />
     <ClInclude Include="Nco.TiberianDawn\UnitApi.h" />
     <ClInclude Include="NOSEQCON.H" />
@@ -642,7 +641,7 @@
     <ClCompile Include="MPLAYER.CPP" />
     <ClCompile Include="MSGBOX.CPP" />
     <ClCompile Include="MSGLIST.CPP" />
-    <ClCompile Include="Nco.TiberianDawn\parse.cpp" />
+    <ClCompile Include="Nco.TiberianDawn\TiberianDawnTypeConverter.cpp" />
     <ClCompile Include="NETDLG.CPP" />
     <ClCompile Include="NOSEQCON.CPP" />
     <ClCompile Include="NULLCONN.CPP" />
@@ -691,6 +690,7 @@
     <ClCompile Include="TERRAIN.CPP" />
     <ClCompile Include="TEXTBTN.CPP" />
     <ClCompile Include="THEME.CPP" />
+    <ClCompile Include="TiberianDawnRulesReader.cpp" />
     <ClCompile Include="TOGGLE.CPP" />
     <ClCompile Include="TRIGGER.CPP" />
     <ClCompile Include="TURRET.CPP" />

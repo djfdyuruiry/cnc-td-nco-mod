@@ -40,4 +40,4 @@ if exist "%outDir%log" rmdir /Q /S "%outDir%log"
 
 mkdir "%outDir%log"
 
-::"%~dp0update-default-rules.bat"
+"%~dp0update-default-rules.bat"

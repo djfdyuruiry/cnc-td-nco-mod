@@ -7,7 +7,6 @@
 
 #include "game_messages.h"
 #include "lua_events.h"
-#include "parse.h"
 #include "nco.h"
 
 static bool ExecuteLuaFile(const char* filePath)

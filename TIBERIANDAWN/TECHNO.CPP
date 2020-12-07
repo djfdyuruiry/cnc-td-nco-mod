@@ -150,7 +150,7 @@ void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
 	type->Reward = Read_Reward(iniName, type->Reward);
 	type->HouseListCsv = NcoRulesRuntime().ReadRuleValue<char*>(iniName, HOUSES_RULE, type->HouseListCsv);
 
-	auto& parsedOwnableResult = ParseHouseNameListCsv(type->HouseListCsv);
+	auto& parsedOwnableResult = NcoTypeConverter().ParseHouseNameListCsv(type->HouseListCsv);
 
 	auto ownable = parsedOwnableResult.IsErrorResult() ? type->Ownable : parsedOwnableResult.GetValue();
 
@@ -251,7 +251,7 @@ TechnoTypeClass::TechnoTypeClass(
 	FriendlyName = strdup(friendlyName);
 	Level = level;
 
-	auto& preResult = StructureTypeToPrerequisite(pre);
+	auto& preResult = NcoTypeConverter().StructureTypeToPrerequisite(pre);
 
 	if (!preResult.IsErrorResult())
 	{

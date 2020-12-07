@@ -12,7 +12,6 @@
 #include "../DEFINES.H"
 #include "../TYPE.H"
 
-#include "parse.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_warhead.h"
