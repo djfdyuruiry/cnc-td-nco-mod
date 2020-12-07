@@ -10,16 +10,10 @@
 #include <Result.h>
 #include "TypeApi.h"
 
-#define EXTRACTOR(it, f) [](it& i, ILuaStateWrapper& l, LuaValueAdapter& va) { \
-	auto& r = f; \
-\
-	va.Write(l, r.GetValue()); \
-\
-	delete &r; \
-}
-#define BOOL_EXTRACTOR(it, f) [](it& i, ILuaStateWrapper& l, LuaValueAdapter& va) { va.Write(l, (bool)i.f);  }
+#define EXTRACTOR(it, f) [](it& i, ILuaStateWrapper& l, LuaValueAdapter& va) { va.Write(l, f); }
+#define BOOL_EXTRACTOR(it, f) [](it& i, ILuaStateWrapper& l, LuaValueAdapter& va) { va.Write(l, (bool)i.f); }
 #define INJECTOR(it, t, f) [](it& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) { f = va.Read<t>(l, si); } 
-#define SIMPLE_EXTRACTOR(it, f)  [](it& i, ILuaStateWrapper& l, LuaValueAdapter& va)  { va.Write(l, i.f); }
+#define SIMPLE_EXTRACTOR(it, f) EXTRACTOR(it, i.f)
 #define SIMPLE_INJECTOR(it, t, f) INJECTOR(it, t, i.f) 
 
 template<class T, class U> class TypeWrapperApi : public TypeApi<T>
@@ -90,7 +84,7 @@ protected:
 	{
 		auto& parseResult = *typeParser(name);
 
-		auto type = parseResult.GetType();
+		auto type = parseResult.GetValue();
 
 		delete &parseResult;
 

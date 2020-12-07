@@ -4,6 +4,7 @@
 
 #include "../DEFINES.H"
 
+#include "tiberian_dawn_rules.h"
 #include "TiberianDawnNcoRuntime.h"
 
 static const auto HOUSE_NAME_MAX_LENGTH = 8;
@@ -202,4 +203,21 @@ const char* PrerequisiteToString(long prerequisite)
     delete &result;
 
     return prereqString;
+}
+
+ResultWithValue<long>& StructureTypeToPrerequisite(StructType structType, bool ignoreModTypes)
+{
+    if (structType == STRUCT_NONE)
+    {
+        return ResultWithValue<long>::BuildWithValue(STRUCTF_NONE);
+    }
+
+    auto structCount = ignoreModTypes ? STRUCT_COUNT : ReadBuildingCount();
+
+    if (structType < STRUCT_FIRST || structType > structCount - 1)
+    {
+        return ResultWithValue<long>::BuildWithError("Structure type was not recognised: %d", structType);
+    }
+
+    return ResultWithValue<long>::BuildWithValue(1L << structType);
 }

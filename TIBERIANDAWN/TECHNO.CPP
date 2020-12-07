@@ -150,10 +150,11 @@ void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
 	type->Reward = Read_Reward(iniName, type->Reward);
 	type->HouseListCsv = NcoRulesRuntime().ReadRuleValue<char*>(iniName, HOUSES_RULE, type->HouseListCsv);
 
-	bool parseError = false;
-	auto parsedOwnable = ParseHouseNameListCsv(type->HouseListCsv, &parseError);
+	auto& parsedOwnableResult = ParseHouseNameListCsv(type->HouseListCsv);
 
-	auto ownable = parseError ? type->Ownable : parsedOwnable;
+	auto ownable = parsedOwnableResult.IsErrorResult() ? type->Ownable : parsedOwnableResult.GetValue();
+
+	delete &parsedOwnableResult;
 
 	type->Ownable = NcoRulesRuntime().ReadRuleValue<int>(iniName, OWNER_RULE, ownable);
 
@@ -249,7 +250,20 @@ TechnoTypeClass::TechnoTypeClass(
 
 	FriendlyName = strdup(friendlyName);
 	Level = level;
-	Pre = StructureTypeToPrerequisite(pre, NULL, false);
+
+	auto& preResult = StructureTypeToPrerequisite(pre);
+
+	if (!preResult.IsErrorResult())
+	{
+		Pre = preResult.GetValue();
+	}
+	else
+	{
+		ShowError(preResult.GetError());
+	}
+
+	delete &preResult;
+
 	IsTransporter = is_transporter;
 	TransportCapacity = IsTransporter ? DEFAULT_TRANSPORT_CAPACITY : 0;
 	IsBuildable = is_buildable;

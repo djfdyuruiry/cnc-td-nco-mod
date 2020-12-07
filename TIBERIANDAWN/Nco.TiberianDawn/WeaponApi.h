@@ -5,6 +5,7 @@
 #include <NumericRangeValidator.h>
 #include <ParseCheckValidator.h>
 #include <RulesSectionTypeWrapperApi.h>
+#include <TiberianDawnNcoRuntime.h>
 
 #include "../DEFINES.H"
 #include "../TYPE.H"
@@ -33,22 +34,18 @@ protected:
 				return &NcoTypeConverter().Parse<WeaponType>(typeString);
 			},
 			[](auto type) {
-				return &NcoTypeConverter().ToString<WeaponType>(type);
+				return &NcoTypeConverter().ToString(type);
 			}
 		)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WEAPON_PROJECTILE_RULE,
-			EXTRACTOR_WEAP(NcoTypeConverter().ToString<BulletType>(i.Projectile)),
+			EXTRACTOR_WEAP(NcoTypeConverter().ToStringOrDefault<BulletType>(i.Projectile)),
 			[](WeaponTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				auto& result = NcoTypeConverter().Parse<BulletType>(valueUpper);
-
-				i.Projectile = result.GetValue();
-
-				delete valueUpper;
-				delete &result;
+				i.Projectile = NcoTypeConverter().ParseOrDefault<BulletType>(
+					va.Read<const char*>(l, si),
+					i.Projectile
+				);
 			},
 			ParseCheckValidator<BulletType>::Build("Bullet", [](auto value)
 			{

@@ -38,14 +38,12 @@ private:
             );
         }
 
-        bool parseError = false;
-        auto upperHouseTypeString = ConvertStringToUpperCase(houseTypeString);
-        auto houseType = ParseHouseType(upperHouseTypeString, &parseError);
+        auto& houseTypeResult = NcoTypeConverter().Parse<HousesType>(houseTypeString);
 
-        delete upperHouseTypeString;
-
-        if (parseError)
+        if (houseTypeResult.IsErrorResult())
         {
+            delete &houseTypeResult;
+
             return ResultWithValue<HousesType>::BuildWithError(
                 "%s parameter `houseName` was not a valid house: %s",
                 callingFunctionName,
@@ -53,7 +51,7 @@ private:
             );
         }
 
-        return ResultWithValue<HousesType>::BuildWithValue(houseType);
+        return houseTypeResult;
     }
 
     static int ClearHouseMessagesLua(lua_State* _)
@@ -278,7 +276,7 @@ private:
 
         if (house == NULL)
         {
-            lua.RaiseError("House '%s' is not in the current game", HouseTypeToString(houseType));
+            lua.RaiseError("House '%s' is not in the current game", NcoTypeConverter().ToStringOrDefault(houseType));
 
             return 0;
         }
@@ -303,7 +301,7 @@ private:
             auto house = Houses.Raw_Ptr(i);
 
             houses.push_back(
-                HouseTypeToString(house->Class->House)
+                NcoTypeConverter().ToStringOrDefault(house->Class->House)
             );
         }
 
@@ -317,7 +315,7 @@ private:
         auto& lua = NcoLuaRuntime().GetState();
         LogTrace("GetPlayerBaseHouseLua called from Lua");
 
-        auto playerBaseHouse = HouseTypeToString(PlayerPtr->ActLike);
+        auto playerBaseHouse = NcoTypeConverter().ToStringOrDefault(PlayerPtr->ActLike);
 
         lua.WriteString(playerBaseHouse);
 
@@ -329,7 +327,7 @@ private:
         auto& lua = NcoLuaRuntime().GetState();
         LogTrace("GetPlayerHouseLua called from Lua");
 
-        auto playerHouse = HouseTypeToString(PlayerPtr->Class->House);
+        auto playerHouse = NcoTypeConverter().ToStringOrDefault(PlayerPtr->Class->House);
 
         lua.WriteString(playerHouse);
 

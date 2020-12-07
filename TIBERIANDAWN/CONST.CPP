@@ -121,9 +121,9 @@ WeaponTypeClass::WeaponTypeClass(
 
 	IsModType = false;
 
-	auto weaponTypeStr = WeaponTypeToString(Type);
+	auto weaponTypeStr = NcoTypeConverter().ToStringOrDefault(Type);
 
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(weaponTypeStr);
+	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(weaponTypeStr);
 
 	ReadWeaponRules(this);
 }
@@ -173,7 +173,7 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 
 void WeaponTypeClass::ReadWeaponRules(WeaponTypeClass* weapon)
 {
-	auto iniName = WeaponTypeToString(weapon->Type);
+	auto iniName = NcoTypeConverter().ToStringOrDefault(weapon->Type);
 
 	weapon->Projectile = NcoRulesRuntime().ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
 	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
@@ -240,7 +240,7 @@ WarheadTypeClass::WarheadTypeClass(
 
 	IsModType = false;
 
-	auto warheadTypeString = WarheadTypeToString(type);
+	auto warheadTypeString = NcoTypeConverter().ToStringOrDefault(type);
 
 NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(warheadTypeString);
 	ReadWarheadRules(this);
@@ -248,7 +248,7 @@ NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSect
 
 void WarheadTypeClass::ReadWarheadRules(WarheadTypeClass* warhead)
 {
-	auto iniName = WarheadTypeToString(warhead->Type);
+	auto iniName = NcoTypeConverter().ToStringOrDefault(warhead->Type);
 
 	warhead->FriendlyName = NcoRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
 	warhead->SpreadFactor = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);

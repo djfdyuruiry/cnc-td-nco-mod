@@ -16,6 +16,7 @@
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
 #include "rules_ini_warhead.h"
+#include "TiberianDawnNcoRuntime.h"
 
 #define EXTRACTOR_WAR(f) EXTRACTOR(WarheadTypeClass, f)
 #define INJECTOR_WAR(t, f) INJECTOR(WarheadTypeClass, t, f)
@@ -26,7 +27,18 @@ class WarheadApi : public RulesSectionTypeWrapperApi<WarheadTypeClass, WarheadTy
 {
 protected:
 	WarheadApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi(strdup("Warhead"), rulesInfo, WARHEAD_FIRST, getCount, ParseWarheadType, WarheadTypeToString)
+		RulesSectionTypeWrapperApi(
+			strdup("Warhead"),
+			rulesInfo,
+			WARHEAD_FIRST,
+			getCount,
+			[](auto typeString) {
+				return &NcoTypeConverter().Parse<WarheadType>(typeString);
+			},
+			[](auto type) {
+				return &NcoTypeConverter().ToString(type);
+			}
+		)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WARHEAD_SPREAD_FACTOR_RULE,

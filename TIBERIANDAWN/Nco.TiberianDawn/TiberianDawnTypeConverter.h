@@ -279,7 +279,7 @@ private:
 					{ INFANTRY_E3, "E3" },
 					{ INFANTRY_E4, "E4" },
 					{ INFANTRY_E5, "E5" },
-					{ INFANTRY_E7, "E7" },
+					{ INFANTRY_E7, "E6" },
 					{ INFANTRY_RAMBO, "RMBO" },
 					{ INFANTRY_C1, "C1" },
 					{ INFANTRY_C2, "C2" },
@@ -469,6 +469,21 @@ public:
 		return result;
 	}
 
+	template <class T> T ParseOrDefault(const char* stringValue, T defaultValue, bool ignoreModTypes = false)
+	{
+		auto& parseResult = Parse<T>(stringValue, ignoreModTypes);
+		T value = defaultValue;
+
+		if (!parseResult.IsErrorResult())
+		{
+			value = parseResult.GetValue();
+		}
+
+		delete &parseResult;
+
+		return value;
+	}
+
 	template <class T> ResultWithValue<const char*>& ToString(T value, bool ignoreModTypes = false)
 	{
 		auto& result = GetTypeMap<T>().GetKeyForValue(value);
@@ -492,6 +507,17 @@ public:
 		}
 
 		return result;
+	}
+
+	template <class T> const char* ToStringOrDefault(T value, const char* defaultValueString = "", bool ignoreModTypes = false)
+	{
+		auto& stringResult = ToString(value, ignoreModTypes);
+
+		auto valueString = stringResult.GetValue();
+
+		delete &stringResult;
+
+		return StringIsEmpty(valueString) ? defaultValueString : valueString;
 	}
 
 };

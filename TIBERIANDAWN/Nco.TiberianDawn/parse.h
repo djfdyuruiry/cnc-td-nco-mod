@@ -12,3 +12,5 @@ ResultWithValue<int>& ParseHouseNameListCsv(const char* houseListCsv, bool ignor
 StructType PrerequisiteToStructureType(long prerequisite);
 
 const char * PrerequisiteToString(long prerequisite);
+
+ResultWithValue<long>& StructureTypeToPrerequisite(StructType structType, bool ignoreModTypes = false);

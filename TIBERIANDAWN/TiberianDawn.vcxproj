@@ -428,6 +428,7 @@
     <ClInclude Include="MSGLIST.H" />
     <ClInclude Include="Nco.TiberianDawn\parse.h" />
     <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeConverter.h" />
+    <ClInclude Include="Nco.TiberianDawn\UnitApi.h" />
     <ClInclude Include="NOSEQCON.H" />
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />

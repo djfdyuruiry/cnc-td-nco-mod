@@ -13,6 +13,7 @@
 
 #include "parse.h"
 #include "rules_ini_generic.h"
+#include "TiberianDawnNcoRuntime.h"
 
 #define EXTRACTOR_T(f) EXTRACTOR(T, f)
 #define INJECTOR_T(t, f) INJECTOR(T, t, f)
@@ -26,10 +27,21 @@ protected:
 		char* typeName,
 		IRulesIniSection& rulesInfo,
 		U first,
-		std::function<int(void)> getCount,
-		U(*typeParser)(const char*, bool*, bool),
-		const char*(*typeToString)(U, bool)
-	) : RulesSectionTypeWrapperApi(typeName, rulesInfo, first, getCount, typeParser, typeToString)
+		std::function<int(void)> getCount
+	) : RulesSectionTypeWrapperApi(
+		typeName,
+		rulesInfo,
+		first,
+		getCount,
+		[](auto stringValue)
+		{
+			return &NcoTypeConverter().Parse<U>(stringValue);
+		},
+		[](auto value)
+		{
+			return &NcoTypeConverter().ToString(value);
+		}
+	)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BUILD_LEVEL_RULE,
@@ -45,16 +57,23 @@ protected:
 			PREREQUISITE_RULE,
 			EXTRACTOR_T(PrerequisiteToString(i.Pre)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Pre = StructureTypeToPrerequisite(
-					ParseStructureType(valueUpper, NULL),
-					NULL
+				auto structType = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					PrerequisiteToStructureType(i.Pre)
 				);
 
-				delete valueUpper;
+				auto& preReqResult = StructureTypeToPrerequisite(structType);
+
+				if (!preReqResult.IsErrorResult())
+				{
+					i.Pre = preReqResult.GetValue();
+				}
+
+				delete &preReqResult;
 			},
-			ParseCheckValidator<StructType>::Build("Building", ParseStructureType)
+			ParseCheckValidator<StructType>::Build("Building", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<StructType>(stringValue);
+			})
 		).WithFieldWrapper(
 			COST_RULE,
 			SIMPLE_EXTRACTOR_T(Cost),
@@ -86,49 +105,58 @@ protected:
 			std::vector<const char*> { OWNER_RULE, HOUSES_RULE },
 			SIMPLE_EXTRACTOR_T(HouseListCsv),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
+				auto houseListCsv = va.Read<const char*>(l, si);
+				auto& houseListResult = ParseHouseNameListCsv(houseListCsv);
 
-				i.Ownable = ParseHouseNameListCsv(valueUpper, NULL);
-				i.HouseListCsv = strdup(valueUpper);
+				if (!houseListResult.IsErrorResult())
+				{
+					i.Ownable = houseListResult.GetValue();
+					i.HouseListCsv = strdup(houseListCsv);
+				}
 
-				delete valueUpper;
+				delete &houseListResult;
 			},
-			ParseCheckValidator<int>::Build("House List", ParseHouseNameListCsv)
+			ParseCheckValidator<int>::Build("House List", [](auto stringValue) {
+				return &ParseHouseNameListCsv(stringValue);
+			})
 		).WithFieldWrapper(
 			PRIMARY_WEAPON_RULE,
-			EXTRACTOR_T(WeaponTypeToString(i.Primary)),
+			EXTRACTOR_T(NcoTypeConverter().ToStringOrDefault(i.Primary)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Primary = ParseWeaponType(valueUpper, NULL);
-
-				delete valueUpper;
+				i.Primary = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					i.Primary
+				);
 
 				i.Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
 			},
-			ParseCheckValidator<WeaponType>::Build("Weapon", ParseWeaponType)
+			ParseCheckValidator<WeaponType>::Build("Weapon", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<WeaponType>(stringValue);
+			})
 		).WithFieldWrapper(
 			SECONDARY_WEAPON_RULE,
-			EXTRACTOR_T(WeaponTypeToString(i.Secondary)),
+			EXTRACTOR_T(NcoTypeConverter().ToStringOrDefault(i.Secondary)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Secondary = ParseWeaponType(valueUpper, NULL);
-
-				delete valueUpper;
+				i.Secondary = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					i.Secondary
+				);
 			},
-			ParseCheckValidator<WeaponType>::Build("Weapon", ParseWeaponType)
+			ParseCheckValidator<WeaponType>::Build("Weapon", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<WeaponType>(stringValue);
+			})
 		).WithFieldWrapper(
 			ARMOR_RULE,
-			EXTRACTOR_T(ArmorTypeToString(i.Armor)),
+			EXTRACTOR_T(NcoTypeConverter().ToStringOrDefault(i.Armor)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Armor = ParseArmorType(valueUpper, NULL);
-
-				delete valueUpper;
+				i.Armor = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					i.Armor
+				);
 			},
-			ParseCheckValidator<ArmorType>::Build("Armor", ParseArmorType)
+			ParseCheckValidator<ArmorType>::Build("Armor", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<ArmorType>(stringValue);
+			})
 		).WithFieldWrapper(
 			AMMO_RULE,
 			SIMPLE_EXTRACTOR_T(MaxAmmo),
