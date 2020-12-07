@@ -2,6 +2,7 @@
 
 #include <IRulesRuntime.h>
 #include <NcoGameMod.h>
+#include <TwoWayStringMap.h>
 
 template<class T, class U> class TiberianDawnTypeMod : public NcoGameMod<T, U>
 {
@@ -12,14 +13,16 @@ protected:
 		RuleName modTypesRuleName,
 		RuleName modTypeCountRuleName,
 		const RulesIniRuleKey& typeCountRuleKey,
-		T totalTypeCount
+		T totalTypeCount,
+		TwoWayStringMap<T>& typeModMap
 	) : NcoGameMod(
 			runtime,
 			modTypeName,
 			modTypesRuleName,
 			modTypeCountRuleName,
 			typeCountRuleKey,
-			totalTypeCount
+			totalTypeCount,
+			typeModMap
 		)
 	{
 	}

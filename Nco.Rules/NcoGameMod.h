@@ -3,6 +3,9 @@
 #include <map>
 #include <vector>
 
+#include <ResultWithValue.h>
+#include <TwoWayStringMap.h>
+
 #include "IGameMod.h"
 #include "IRulesRuntime.h"
 #include "rules_ini_mods.h"
@@ -21,6 +24,8 @@ protected:
 
 	T originalTypeCount;
 
+	TwoWayStringMap<T>& typeModMap;
+
 	bool initialised;
 	std::map<T, U*>& modTypeInstances;
 	std::vector<char*>& modTypes;
@@ -31,7 +36,8 @@ protected:
 		RuleName modTypesRuleName,
 		RuleName modTypeCountRuleName,
 		const RulesIniRuleKey& typeCountRuleKey,
-		T totalTypeCount
+		T totalTypeCount,
+		TwoWayStringMap<T>& typeModMap
 	)
 		: runtime(runtime),
 		typeName(modTypeName),
@@ -40,6 +46,7 @@ protected:
 		modTypeCountRule(modTypeCountRuleName),
 		typeCountRule(typeCountRuleKey),
 		originalTypeCount(totalTypeCount),
+		typeModMap(typeModMap),
 		initialised(false),
 		modTypeInstances(*(new std::map<T, U*>())),
 		modTypes(*(new std::vector<char*>))
@@ -61,7 +68,7 @@ protected:
 		return typeClone;
 	}
 
-	virtual T ParseType(SectionName typeString, bool* parseError) = 0;
+	virtual ResultWithValue<T>& ParseType(SectionName typeString) = 0;
 
 	bool SetupNewType(SectionName typeString, T type, SectionName baseTypeString)
 	{
@@ -75,18 +82,26 @@ protected:
 		LogInfo("Setting up new mod %s type: %s", typeName, typeString);
 
 		bool parseError = false;
-		auto baseType = ParseType(baseTypeString, &parseError);
+		auto& baseTypeResult = ParseType(baseTypeString);
 
-		if (parseError)
+		if (baseTypeResult.IsErrorResult())
 		{
+			delete &baseTypeResult;
+
 			return false;
 		}
+
+		auto baseType = baseTypeResult.GetValue();
+
+		delete &baseTypeResult;
 
 		LogInfo("Mod %s type base: %s", typeName, baseTypeString);
 
 		auto typeClone = CloneType(baseTypeString, typeString, baseType, type);
 
 		modTypeInstances[type] = typeClone;
+
+		typeModMap.AddKey(typeString, type);
 
 		ReadRulesAndAddType(typeClone);
 

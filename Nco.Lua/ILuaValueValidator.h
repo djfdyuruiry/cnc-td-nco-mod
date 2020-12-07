@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ILuaStateWrapper.h"
-#include "LuaResult.h"
+#include <Result.h>
 
 class ILuaValueValidator
 {
@@ -11,6 +11,6 @@ protected:
 	}
 
 public:
-	virtual LuaResult& IsValid(ILuaStateWrapper& lua, int stackIndex) = 0;
+	virtual Result& IsValid(ILuaStateWrapper& lua, int stackIndex) = 0;
 
 };

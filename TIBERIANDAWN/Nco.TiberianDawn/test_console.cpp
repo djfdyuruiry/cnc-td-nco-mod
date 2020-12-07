@@ -169,6 +169,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 		return 1;
 	}
 
+	puts(NcoTypeConverter().ToString(HOUSE_BAD).GetValue());
+
 	Parse_Command_Line(commandLine);
 
 	TestSpecialRules();

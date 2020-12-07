@@ -21,15 +21,16 @@ private:
 			NEW_AIRCRAFT_RULE,
 			NEW_AIRCRAFT_COUNT_RULE,
 			*AIRCRAFT_COUNT_RULE_KEY,
-			AIRCRAFT_COUNT
+			AIRCRAFT_COUNT,
+			NcoTypeConverter().GetModTypeMap<AircraftType>()
 		  )
 	{
 	}
 
 protected:
-	AircraftType ParseType(SectionName typeString, bool* parseError)
+	ResultWithValue<AircraftType>& ParseType(SectionName typeString)
 	{
-		return ParseAircraftType(typeString, parseError, false);
+		return NcoTypeConverter().Parse<AircraftType>(typeString);
 	}
 
 	void AddRulesSection(SectionName typeString)

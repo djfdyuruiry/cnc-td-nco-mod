@@ -30,6 +30,9 @@
     <ClInclude Include="IniReader.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Optional.h" />
+    <ClInclude Include="Result.h" />
+    <ClInclude Include="ResultWithValue.h" />
+    <ClInclude Include="TwoWayStringMap.h" />
     <ClInclude Include="TypePatterns.h" />
     <ClInclude Include="strings.h" />
     <ClInclude Include="TypeUtils.h" />

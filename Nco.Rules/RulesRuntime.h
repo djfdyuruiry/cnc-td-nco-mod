@@ -25,6 +25,7 @@ private:
 	IRulesIniReader* rulesReader;
 
 	std::function<void(IRulesIni&)> extensionSectionsSetup;
+	std::function<IRulesIniReader*(IRulesIni*)> rulesReaderBuilder;
 
 	bool luaIsEnabled;
 	bool luaConsoleIsEnabled;
@@ -33,10 +34,15 @@ private:
 	const char* logFilePath;
 	std::vector<const char*>& luaScripts;
 
-	RulesRuntime(unsigned int gameTicksPerSecond, std::function<void(IRulesIni&)> extensionSectionsSetup) :
+	RulesRuntime(
+		unsigned int gameTicksPerSecond,
+		std::function<void(IRulesIni&)> extensionSectionsSetup,
+		std::function<IRulesIniReader*(IRulesIni*)> rulesReaderBuilder
+	) :
 		rules(NULL),
 		rulesReader(NULL),
 		extensionSectionsSetup(extensionSectionsSetup),
+		rulesReaderBuilder(rulesReaderBuilder),
 		tickIntervalInMillis(ONE_SEC_IN_MILLIS / gameTicksPerSecond),
 		luaScripts(*(new std::vector<const char*>()))
 	{
@@ -164,9 +170,13 @@ private:
 	}
 
 public:
-	static RulesRuntime& Build(unsigned int gameTicksPerSecond, std::function<void(IRulesIni&)> extensionSectionsSetup)
+	static RulesRuntime& Build(
+		unsigned int gameTicksPerSecond,
+		std::function<void(IRulesIni&)> extensionSectionsSetup,
+		std::function<IRulesIniReader*(IRulesIni*)> rulesReaderBuilder
+	)
 	{
-		return *(new RulesRuntime(gameTicksPerSecond, extensionSectionsSetup));
+		return *(new RulesRuntime(gameTicksPerSecond, extensionSectionsSetup, rulesReaderBuilder));
 	}
 
 	~RulesRuntime()
@@ -195,7 +205,7 @@ public:
 
 		DefineRulesSections();
 
-		rulesReader = &(T::Build(*rules));
+		rulesReader = rulesReaderBuilder(rules);
 
 		ReadLogSettings();
 		ReadLuaSettings();

@@ -2,7 +2,7 @@
 
 #include <lua.hpp>
 
-#include "LuaResult.h"
+#include <Result.h>
 #include "PrimitiveTypeValidator.h"
 
 template<class T = LUA_INTEGER> class NumbericRangeValidator : public PrimitiveTypeValidator<T>
@@ -21,7 +21,7 @@ public:
 		return *(new NumbericRangeValidator(minInclusive, maxInclusive));
 	}
 
-	LuaResult& IsValid(ILuaStateWrapper& lua, int stackIndex)
+	Result& IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
 		auto& primitiveResult = PrimitiveTypeValidator::IsValid(lua, stackIndex);
 
@@ -45,10 +45,10 @@ public:
 
 		if (value >= minInclusive && value <= maxInclusive)
 		{
-			return LuaResult::Build();
+			return Result::Build();
 		}
 
-		return LuaResult::BuildWithError("Number must be in the range %d-%d (inclusive)", minInclusive, maxInclusive);
+		return Result::BuildWithError("Number must be in the range %d-%d (inclusive)", minInclusive, maxInclusive);
 	}
 
 };

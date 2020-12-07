@@ -15,6 +15,7 @@
 #include "rules_ini_weapon.h"
 
 #define EXTRACTOR_WEAP(f) EXTRACTOR(WeaponTypeClass, f)
+#define BOOL_EXTRACTOR_WEAP(f) BOOL_EXTRACTOR(WeaponTypeClass, f)
 #define INJECTOR_WEAP(t, f) INJECTOR(WeaponTypeClass, t, f)
 #define SIMPLE_EXTRACTOR_WEAP(f) SIMPLE_EXTRACTOR(WeaponTypeClass, f)
 #define SIMPLE_INJECTOR_WEAP(t, f) SIMPLE_INJECTOR(WeaponTypeClass, t, f)
@@ -23,19 +24,36 @@ class WeaponApi : public RulesSectionTypeWrapperApi<WeaponTypeClass, WeaponType>
 {
 protected:
 	WeaponApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi(strdup("Weapon"), rulesInfo, WEAPON_FIRST, getCount, ParseWeaponType, WeaponTypeToString)
+		RulesSectionTypeWrapperApi(
+			strdup("Weapon"),
+			rulesInfo,
+			WEAPON_FIRST,
+			getCount,
+			[](auto typeString) { 
+				return &NcoTypeConverter().Parse<WeaponType>(typeString);
+			},
+			[](auto type) {
+				return &NcoTypeConverter().ToString<WeaponType>(type);
+			}
+		)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			WEAPON_PROJECTILE_RULE,
-			EXTRACTOR_WEAP(BulletTypeToString(i.Projectile)),
+			EXTRACTOR_WEAP(NcoTypeConverter().ToString<BulletType>(i.Projectile)),
 			[](WeaponTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
 				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
 
-				i.Projectile = ParseBulletType(valueUpper, NULL);
+				auto& result = NcoTypeConverter().Parse<BulletType>(valueUpper);
+
+				i.Projectile = result.GetValue();
 
 				delete valueUpper;
+				delete &result;
 			},
-			ParseCheckValidator<BulletType>::Build("Bullet", ParseBulletType)
+			ParseCheckValidator<BulletType>::Build("Bullet", [](auto value)
+			{
+				return &NcoTypeConverter().Parse<BulletType>(value);
+			})
 		).WithFieldWrapper(
 			WEAPON_DAMAGE_RULE,
 			SIMPLE_EXTRACTOR_WEAP(Attack),
@@ -60,7 +78,7 @@ protected:
 			PrimitiveTypeValidator<const char*>::Build()
 		).WithFieldWrapper(
 			IS_MOD_TYPE_RULE,
-			EXTRACTOR_WEAP((bool)i.IsModType),
+			BOOL_EXTRACTOR_WEAP(IsModType),
 			SIMPLE_INJECTOR_WEAP(bool, IsModType),
 			PrimitiveTypeValidator<bool>::Build()
 		).WithFieldWrapper(

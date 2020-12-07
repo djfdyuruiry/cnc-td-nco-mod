@@ -16,15 +16,16 @@ private:
 			NEW_BUILDINGS_RULE,
 			NEW_BUILDING_COUNT_RULE,
 			*BUILDING_COUNT_RULE_KEY,
-			STRUCT_COUNT
+			STRUCT_COUNT,
+			NcoTypeConverter().GetModTypeMap<StructType>()
 		  )
 	{
 	}
 
 protected:
-	StructType ParseType(SectionName typeString, bool* parseError)
+	ResultWithValue<StructType>& ParseType(SectionName typeString)
 	{
-		return ParseStructureType(typeString, parseError, false);
+		return NcoTypeConverter().Parse<StructType>(typeString);
 	}
 
 	void AddRulesSection(SectionName typeString)

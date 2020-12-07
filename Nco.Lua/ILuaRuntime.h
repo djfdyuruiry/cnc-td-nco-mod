@@ -4,7 +4,7 @@
 
 #include "ILuaApi.h"
 #include "ILuaStateWrapper.h"
-#include "LuaResult.h"
+#include <Result.h>
 
 typedef void (*LuaApiInitialiser)(ILuaApi&);
 
@@ -16,8 +16,8 @@ public:
 	
 	virtual const std::vector<ILuaApi*>& GetApis() = 0;
 
-	virtual LuaResult& ExecuteScript(const char* script) = 0;
-	virtual LuaResult& ExecuteFile(const char* filePath) = 0;
+	virtual Result& ExecuteScript(const char* script) = 0;
+	virtual Result& ExecuteFile(const char* filePath) = 0;
 
 	virtual ILuaStateWrapper& GetState() = 0;
 };

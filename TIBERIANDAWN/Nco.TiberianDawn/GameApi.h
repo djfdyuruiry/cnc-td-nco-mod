@@ -19,7 +19,7 @@
 class GameApi : public LuaApi
 {
 private:
-    static LuaResultWithValue<HousesType>& ParseHouseTypeLua(
+    static ResultWithValue<HousesType>& ParseHouseTypeLua(
         ILuaStateWrapper& lua,
         int index,
         const char* callingFunctionName
@@ -32,7 +32,7 @@ private:
 
         if (StringIsEmpty(houseTypeString))
         {
-            return LuaResultWithValue<HousesType>::BuildWithError(
+            return ResultWithValue<HousesType>::BuildWithError(
                 "%s parameter `houseName` was blank",
                 callingFunctionName
             );
@@ -46,14 +46,14 @@ private:
 
         if (parseError)
         {
-            return LuaResultWithValue<HousesType>::BuildWithError(
+            return ResultWithValue<HousesType>::BuildWithError(
                 "%s parameter `houseName` was not a valid house: %s",
                 callingFunctionName,
                 houseTypeString
             );
         }
 
-        return LuaResultWithValue<HousesType>::BuildWithValue(houseType);
+        return ResultWithValue<HousesType>::BuildWithValue(houseType);
     }
 
     static int ClearHouseMessagesLua(lua_State* _)
@@ -113,7 +113,7 @@ private:
         return NULL;
     }
 
-    static LuaResultWithValue<SuperweaponType>& ParseSuperweaponTypeLua(ILuaStateWrapper& lua, int index, const char* callingFunctionName)
+    static ResultWithValue<SuperweaponType>& ParseSuperweaponTypeLua(ILuaStateWrapper& lua, int index, const char* callingFunctionName)
     {
         auto& superWeaponNameResult = lua.ReadString(index);
         auto name = superWeaponNameResult.GetValue();
@@ -122,7 +122,7 @@ private:
 
         if (StringIsEmpty(name))
         {
-            return LuaResultWithValue<SuperweaponType>::BuildWithError(
+            return ResultWithValue<SuperweaponType>::BuildWithError(
                 "%s parameter `superWeaponName` was empty",
                 callingFunctionName
             );
@@ -147,7 +147,7 @@ private:
         {
             delete uppercaseName;
 
-            return LuaResultWithValue<SuperweaponType>::BuildWithError(
+            return ResultWithValue<SuperweaponType>::BuildWithError(
                 "%s parameter `superWeaponName` was not recognised as a superweapon name: %s",
                 callingFunctionName,
                 name
@@ -156,7 +156,7 @@ private:
 
         delete uppercaseName;
 
-        return LuaResultWithValue<SuperweaponType>::BuildWithValue(weapon);
+        return ResultWithValue<SuperweaponType>::BuildWithValue(weapon);
     }
 
     static int SendHouseSuperWeaponMessageLua(

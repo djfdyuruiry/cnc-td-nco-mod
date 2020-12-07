@@ -16,15 +16,16 @@ private:
 			NEW_WEAPONS_RULE,
 			NEW_WEAPON_COUNT_RULE,
 			*WEAPON_COUNT_RULE_KEY,
-			WEAPON_COUNT
+			WEAPON_COUNT,
+			NcoTypeConverter().GetModTypeMap<WeaponType>()
 		  )
 	{
 	}
 
 protected:
-	WeaponType ParseType(SectionName typeString, bool* parseError)
+	ResultWithValue<WeaponType>& ParseType(SectionName typeString)
 	{
-		return ParseWeaponType(typeString, parseError, true);
+		return NcoTypeConverter().Parse<WeaponType>(typeString);
 	}
 
 	void AddRulesSection(SectionName typeString)

@@ -4591,7 +4591,15 @@ int BuildingTypeClass::Full_Name(void) const
 {
 	if (::Scenario == 3 && Type == STRUCT_MISSION && NcoRulesRuntime().ReadRuleValue<bool>(RENAME_TECH_CENTER_TO_PRISON_RULE_KEY))
 	{
-		LogDebug("Renaming %s to TXT_PRISON", StructureTypeToString(STRUCT_MISSION));
+		auto& toStringResult = NcoTypeConverter().ToString<StructType>(STRUCT_MISSION);
+
+		if (!toStringResult.IsErrorResult())
+		{
+			LogDebug("Renaming %s to TXT_PRISON", toStringResult.GetValue());
+		}
+
+		delete &toStringResult;
+
 		return(TXT_PRISON);
 	}
 

@@ -5,8 +5,11 @@
 #include <type_traits>
 #include <vector>
 
-#include "LuaResult.h"
-#include "LuaResultWithValue.h"
+#include <lua.hpp>
+
+#include <Result.h>
+#include <ResultWithValue.h>
+
 #include "LuaType.h"
 
 class ILuaStateWrapper
@@ -46,19 +49,19 @@ public:
 	virtual int GetTableSize(int stackIndex) = 0;
 	virtual void IterateOverTable(int stackIndex, std::function<void()> iterateAction) = 0;
 
-	virtual LuaResultWithValue<int>& ReadInteger(int stackIndex) = 0;
-	virtual LuaResultWithValue<long long>& ReadBigInteger(int stackIndex) = 0;
-	virtual LuaResultWithValue<double>& ReadDouble(int stackIndex) = 0;
-	virtual LuaResultWithValue<bool>& ReadBool(int stackIndex) = 0;
-	virtual LuaResultWithValue<const char*>& ReadString(int stackIndex) = 0;
-	virtual LuaResultWithValue<void*>& ReadUserData(int stackIndex) = 0;
+	virtual ResultWithValue<int>& ReadInteger(int stackIndex) = 0;
+	virtual ResultWithValue<long long>& ReadBigInteger(int stackIndex) = 0;
+	virtual ResultWithValue<double>& ReadDouble(int stackIndex) = 0;
+	virtual ResultWithValue<bool>& ReadBool(int stackIndex) = 0;
+	virtual ResultWithValue<const char*>& ReadString(int stackIndex) = 0;
+	virtual ResultWithValue<void*>& ReadUserData(int stackIndex) = 0;
 
-	virtual LuaResultWithValue<int>& ReadInteger() = 0;
-	virtual LuaResultWithValue<long long>& ReadBigInteger() = 0;
-	virtual LuaResultWithValue<double>& ReadDouble() = 0;
-	virtual LuaResultWithValue<bool>& ReadBool() = 0;
-	virtual LuaResultWithValue<const char*>& ReadString() = 0;
-	virtual LuaResultWithValue<void*>& ReadUserData() = 0;
+	virtual ResultWithValue<int>& ReadInteger() = 0;
+	virtual ResultWithValue<long long>& ReadBigInteger() = 0;
+	virtual ResultWithValue<double>& ReadDouble() = 0;
+	virtual ResultWithValue<bool>& ReadBool() = 0;
+	virtual ResultWithValue<const char*>& ReadString() = 0;
+	virtual ResultWithValue<void*>& ReadUserData() = 0;
 
 	template<class T> std::vector<T>& ReadArray(int stackIndex)
 	{
@@ -142,7 +145,7 @@ public:
 		return ReadObject<T>(GetStackTop());
 	}
 
-	template<class T> LuaResultWithValue<T>& PullValue(int stackIndex)
+	template<class T> ResultWithValue<T>& PullValue(int stackIndex)
 	{
 		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
 		{
@@ -173,11 +176,11 @@ public:
 		}
 		else
 		{
-			return LuaResultWithValue<T>::BuildWithError("No read method defined for value type");
+			return ResultWithValue<T>::BuildWithError("No read method defined for value type");
 		}
 	}
 
-	template<class T> LuaResultWithValue<T>& PullValue()
+	template<class T> ResultWithValue<T>& PullValue()
 	{
 		return PullValue(GetStackTop());
 	}
@@ -270,9 +273,9 @@ public:
 	virtual void ClearStack() = 0;
 
 	virtual void RaiseError(const char* messageFormat, ...) = 0;
-	virtual void RaiseError(LuaResult& result) = 0;
+	virtual void RaiseError(Result& result) = 0;
 
-	virtual LuaResult& ExecuteScript(const char* script) = 0;
-	virtual LuaResult& ExecuteFile(const char* filePath) = 0;
+	virtual Result& ExecuteScript(const char* script) = 0;
+	virtual Result& ExecuteFile(const char* filePath) = 0;
 
 };

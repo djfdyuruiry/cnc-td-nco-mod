@@ -16,15 +16,16 @@ private:
 			NEW_WARHEADS_RULE,
 			NEW_WARHEAD_COUNT_RULE,
 			*WARHEAD_COUNT_RULE_KEY,
-			WARHEAD_COUNT
+			WARHEAD_COUNT,
+			NcoTypeConverter().GetModTypeMap<WarheadType>()
 		  )
 	{
 	}
 
 protected:
-	WarheadType ParseType(SectionName typeString, bool* parseError)
+	ResultWithValue<WarheadType>& ParseType(SectionName typeString)
 	{
-		return ParseWarheadType(typeString, parseError, false);
+		return NcoTypeConverter().Parse<WarheadType>(typeString);
 	}
 
 	void AddRulesSection(SectionName typeString)

@@ -3,7 +3,7 @@
 #include <functional>
 
 #include "ILuaValueValidator.h"
-#include "LuaResult.h"
+#include <Result.h>
 
 template<class T> class LambdaValidator : public ILuaValueValidator
 {
@@ -34,7 +34,7 @@ public:
 		}
 	}
 
-	LuaResult& IsValid(ILuaStateWrapper& lua, int stackIndex)
+	Result& IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
 		auto& result = lua.PullValue<T>(stackIndex);
 
@@ -49,10 +49,10 @@ public:
 
 		if (isValid)
 		{
-			return LuaResult::Build();
+			return Result::Build();
 		}
 
-		return LuaResult::BuildWithError(failureMessage);
+		return Result::BuildWithError(failureMessage);
 	}
 
 };

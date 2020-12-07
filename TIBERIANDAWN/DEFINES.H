@@ -1000,13 +1000,13 @@ typedef enum UnitType : char{
 	UNIT_MTANK=1,					// Medium tank (M1).
 	UNIT_LTANK=2,					// Light tank ('Bradly').
 	UNIT_STANK=3,					// Stealth tank (Romulan).
-	UNIT_FTANK=4, 				// Flame thrower tank.
+	UNIT_FTANK=4,                   // Flame thrower tank.
 	UNIT_VICE=5,					// Visceroid
-	UNIT_APC=6,					// APC.
+	UNIT_APC=6,					    // APC.
 	UNIT_MLRS=7,					// MLRS rocket launcher.
 	UNIT_JEEP=8,					// 4x4 jeep replacement.
 	UNIT_BUGGY=9,					// Rat patrol dune buggy type.
-	UNIT_HARVESTER=10,			// Resource gathering vehicle.
+	UNIT_HARVESTER=10,			    // Resource gathering vehicle.
 	UNIT_ARTY=11,					// Artillery unit.
 	UNIT_MSAM=12,					// Anti-Aircraft vehicle.
 	UNIT_HOVER=13,					// Hovercraft.

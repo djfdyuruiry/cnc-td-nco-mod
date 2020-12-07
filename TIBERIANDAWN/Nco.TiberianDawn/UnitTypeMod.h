@@ -16,15 +16,16 @@ private:
 			NEW_UNITS_RULE,
 			NEW_UNIT_COUNT_RULE,
 			*UNIT_COUNT_RULE_KEY,
-			UNIT_COUNT
+			UNIT_COUNT,
+			NcoTypeConverter().GetModTypeMap<UnitType>()
 		)
 	{
 	}
 
 protected:
-	UnitType ParseType(SectionName typeString, bool* parseError)
+	ResultWithValue<UnitType>& ParseType(SectionName typeString)
 	{
-		return ParseUnitType(typeString, parseError, false);
+		return NcoTypeConverter().Parse<UnitType>(typeString);
 	}
 
 	void AddRulesSection(SectionName typeString)

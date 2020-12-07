@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ILuaValueValidator.h"
-#include "LuaResult.h"
+#include <Result.h>
 
 template<class T> class PrimitiveTypeValidator : public ILuaValueValidator
 {
@@ -16,7 +16,7 @@ public:
 		return *(new PrimitiveTypeValidator());
 	}
 
-	LuaResult& IsValid(ILuaStateWrapper& lua, int stackIndex)
+	Result& IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
 		auto isValid = false;
 		const char* error;
@@ -54,10 +54,10 @@ public:
 
 		if (isValid)
 		{
-			return LuaResult::Build();
+			return Result::Build();
 		}
 
-		return LuaResult::BuildWithError(error);
+		return Result::BuildWithError(error);
 	}
 
 };

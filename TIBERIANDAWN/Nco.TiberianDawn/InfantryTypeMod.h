@@ -16,15 +16,16 @@ private:
 			NEW_INFANTRY_RULE,
 			NEW_INFANTRY_COUNT_RULE,
 			*INFANTRY_COUNT_RULE_KEY,
-			INFANTRY_COUNT
+			INFANTRY_COUNT,
+			NcoTypeConverter().GetModTypeMap<InfantryType>()
 		  )
 	{
 	}
 
 protected:
-	InfantryType ParseType(SectionName typeString, bool* parseError)
+	ResultWithValue<InfantryType>& ParseType(SectionName typeString)
 	{
-		return ParseInfantryType(typeString, parseError, false);
+		return NcoTypeConverter().Parse<InfantryType>(typeString);
 	}
 
 	void AddRulesSection(SectionName typeString)

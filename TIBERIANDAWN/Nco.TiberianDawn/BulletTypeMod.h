@@ -16,15 +16,16 @@ private:
 			NEW_BULLETS_RULE,
 			NEW_BULLET_COUNT_RULE,
 			*BULLET_COUNT_RULE_KEY,
-			BULLET_COUNT
+			BULLET_COUNT,
+			NcoTypeConverter().GetModTypeMap<BulletType>()
 		  )
 	{
 	}
 
 protected:
-	BulletType ParseType(SectionName typeString, bool* parseError)
+	ResultWithValue<BulletType>& ParseType(SectionName typeString)
 	{
-		return ParseBulletType(typeString, parseError, false);
+		return NcoTypeConverter().Parse<BulletType>(typeString);
 	}
 
 	void AddRulesSection(SectionName typeString)

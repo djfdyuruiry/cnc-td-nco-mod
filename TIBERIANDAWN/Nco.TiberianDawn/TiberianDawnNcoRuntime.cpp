@@ -211,3 +211,8 @@ TiberianDawnRulesInfo& TiberianDawnNcoRuntime::GetRulesInfo()
 {
     return rulesInfo;
 }
+
+TiberianDawnTypeConverter& TiberianDawnNcoRuntime::GetTypeConverter()
+{
+    return typeConverter;
+}

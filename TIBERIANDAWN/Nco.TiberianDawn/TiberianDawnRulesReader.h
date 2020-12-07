@@ -6,11 +6,14 @@
 
 #include "parse.h"
 #include "tiberian_dawn_rule_types.h"
+#include "TiberianDawnTypeConverter.h"
 
 class TiberianDawnRulesReader : public RulesIniReader
 {
 private:
-	TiberianDawnRulesReader(IRulesIni& rules) : RulesIniReader(rules)
+	TiberianDawnTypeConverter& typeConverter;
+
+	TiberianDawnRulesReader(IRulesIni& rules, TiberianDawnTypeConverter& typeConverter) : RulesIniReader(rules), typeConverter(typeConverter)
 	{
 	}
 
@@ -29,20 +32,23 @@ private:
 
 		ConvertStringToUpperCase(structValueStr);
 
-		bool parseError = false;
-		auto structValue = ParseStructureType(structValueStr, &parseError);
+		auto& structResult = typeConverter.Parse<StructType>(structValueStr);
 
 		delete &structValueStrOptional;
 
-		if (parseError)
+		if (structResult.IsErrorResult())
 		{
 			// unable to parse entry as a structure type
 			rulesIni.MarkAsInvalid();
 
-			ShowError("Failed to parse prerequisite for [%s]: %s", rule.GetStringKey(), structValueStr);
+			ShowError("Failed to parse prerequisite '%s' for [%s]: %s", structValueStr, rule.GetStringKey(), structResult.GetError());
 
 			return STRUCTF_NONE;
 		}
+
+		auto structValue = structResult.GetValue();
+
+		delete &structResult;
 
 		if (structValue == STRUCT_NONE)
 		{
@@ -54,70 +60,84 @@ private:
 
 	int ReadHouseListRule(RulesIniRule& rule)
 	{
-		return GetParsedStringRule(
+		return GetParsedStringRule<int>(
 			rule,
 			"houses",
-			&ParseHouseNameListCsv,
+			[&](const char* typeString) {
+				return &ParseHouseNameListCsv(typeString);
+			},
 			(int)HOUSEF_NONE
 		);
 	}
 
 	WeaponType ReadWeaponRule(RulesIniRule& rule)
 	{
-		return GetParsedStringRule(
+		return GetParsedStringRule<WeaponType>(
 			rule,
 			"weapon",
-			&ParseWeaponType,
+			[&](const char* typeString) {
+				return &typeConverter.Parse<WeaponType>(typeString);
+			},
 			WEAPON_NONE
 		);
 	}
 
 	ArmorType ReadArmorRule(RulesIniRule& rule)
 	{
-		return GetParsedStringRule(
+		return GetParsedStringRule<ArmorType>(
 			rule,
 			"armor",
-			&ParseArmorType,
+			[&](const char* typeString) {
+				return &typeConverter.Parse<ArmorType>(typeString);
+			},
 			ARMOR_NONE
 		);
 	}
 
 	SpeedType ReadUnitSpeedRule(RulesIniRule& rule)
 	{
-		return GetParsedStringRule(
+		return GetParsedStringRule<SpeedType>(
 			rule,
 			"unit speed",
-			&ParseUnitSpeedType,
+			[&](const char* typeString) {
+				return &typeConverter.Parse<SpeedType>(typeString);
+			},
 			SPEED_NONE
 		);
 	}
 
 	FactoryType ReadFactoryRule(RulesIniRule& rule)
 	{
-		return GetParsedStringRule(
+		return GetParsedStringRule<FactoryType>(
 			rule,
 			"factory type",
-			&ParseFactoryType,
+			[&](const char* typeString) {
+				return &typeConverter.Parse<FactoryType>(typeString);
+			},
 			FACTORY_TYPE_NONE
 		);
 	}
 
 	WarheadType ReadWarheadRule(RulesIniRule& rule)
 	{
-		return GetParsedStringRule(
+		return GetParsedStringRule<WarheadType>(
 			rule,
 			"warhead",
-			&ParseWarheadType,
+			[&](const char* typeString) {
+				return &typeConverter.Parse<WarheadType>(typeString);
+			},
 			WARHEAD_NONE
 		);
 	}
 
 	BulletType ReadBulletRule(RulesIniRule& rule)
 	{
-		return GetParsedStringRule(
+		return GetParsedStringRule<BulletType>(
 			rule,
 			"bullet",
-			&ParseBulletType,
+			[&](const char* typeString) {
+				return &typeConverter.Parse<BulletType>(typeString);
+			},
 			BULLET_NONE
 		);
 	}
@@ -183,9 +203,9 @@ private:
 	}
 
 public:
-	static TiberianDawnRulesReader& Build(IRulesIni& rules)
+	static TiberianDawnRulesReader& Build(IRulesIni& rules, TiberianDawnTypeConverter& typeConverter)
 	{
-		return *(new TiberianDawnRulesReader(rules));
+		return *(new TiberianDawnRulesReader(rules, typeConverter));
 	}
 
 };

@@ -8,7 +8,7 @@
 
 #include "LuaApi.h"
 #include "LuaObjectUtils.h"
-#include "LuaResult.h"
+#include <Result.h>
 #include "LuaStateWrapper.h"
 #include "TypeApiParameters.h"
 
@@ -205,9 +205,9 @@ protected:
 
 	virtual T& ParseType(const char* typeName) = 0;
 
-	virtual LuaResult& ReadRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName) = 0;
+	virtual Result& ReadRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName) = 0;
 
-	virtual LuaResult& WriteRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName, int ruleValueStackIndex) = 0;
+	virtual Result& WriteRule(ILuaStateWrapper& lua, T& typeInstance, const char* ruleName, int ruleValueStackIndex) = 0;
 
 public:
 	~TypeApi()

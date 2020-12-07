@@ -19,11 +19,11 @@ private:
 		LuaType::InitIfRequired();
 	}
 
-	LuaResult& BuildResult(bool errorOccurredDuringExecution)
+	Result& BuildResult(bool errorOccurredDuringExecution)
 	{
 		return errorOccurredDuringExecution 
-			? LuaResult::BuildWithError(GetLastError())
-			: LuaResult::Build();
+			? Result::BuildWithError(GetLastError())
+			: Result::Build();
 	}
 
 	bool IsType(int typeCode, int stackIndex)
@@ -197,104 +197,104 @@ public:
 		lua_pop(lua, 1);
 	}
 
-	LuaResultWithValue<int>& ReadInteger(int stackIndex)
+	ResultWithValue<int>& ReadInteger(int stackIndex)
 	{
 		if (!lua_isinteger(lua, stackIndex))
 		{
-			return LuaResultWithValue<int>::BuildWithError("Value is not an integer");
+			return ResultWithValue<int>::BuildWithError("Value is not an integer");
 		}
 
-		return LuaResultWithValue<int>::BuildWithValue(
+		return ResultWithValue<int>::BuildWithValue(
 			luaL_checkinteger(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<long long>& ReadBigInteger(int stackIndex)
+	ResultWithValue<long long>& ReadBigInteger(int stackIndex)
 	{
 		if (!lua_isinteger(lua, stackIndex))
 		{
-			return LuaResultWithValue<long long>::BuildWithError("Value is not an integer");
+			return ResultWithValue<long long>::BuildWithError("Value is not an integer");
 		}
 
-		return LuaResultWithValue<long long>::BuildWithValue(
+		return ResultWithValue<long long>::BuildWithValue(
 			luaL_checkinteger(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<double>& ReadDouble(int stackIndex)
+	ResultWithValue<double>& ReadDouble(int stackIndex)
 	{
 		if (!lua_isnumber(lua, stackIndex))
 		{
-			return LuaResultWithValue<double>::BuildWithError("Value is not a double");
+			return ResultWithValue<double>::BuildWithError("Value is not a double");
 		}
 
-		return LuaResultWithValue<double>::BuildWithValue(
+		return ResultWithValue<double>::BuildWithValue(
 			luaL_checknumber(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<bool>& ReadBool(int stackIndex)
+	ResultWithValue<bool>& ReadBool(int stackIndex)
 	{
 		if (!lua_isboolean(lua, stackIndex))
 		{
-			return LuaResultWithValue<bool>::BuildWithError("Value is not a boolean");
+			return ResultWithValue<bool>::BuildWithError("Value is not a boolean");
 		}
 
-		return LuaResultWithValue<bool>::BuildWithValue(
+		return ResultWithValue<bool>::BuildWithValue(
 			lua_toboolean(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<const char*>& ReadString(int stackIndex)
+	ResultWithValue<const char*>& ReadString(int stackIndex)
 	{
 		if (!lua_isstring(lua, stackIndex))
 		{
-			return LuaResultWithValue<const char*>::BuildWithError("Value is not a string");
+			return ResultWithValue<const char*>::BuildWithError("Value is not a string");
 		}
 
-		return LuaResultWithValue<const char*>::BuildWithValue(
+		return ResultWithValue<const char*>::BuildWithValue(
 			luaL_checkstring(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<void*>& ReadUserData(int stackIndex)
+	ResultWithValue<void*>& ReadUserData(int stackIndex)
 	{
 		if (!lua_isuserdata(lua, stackIndex))
 		{
-			return LuaResultWithValue<void*>::BuildWithError("Value is not userdata");
+			return ResultWithValue<void*>::BuildWithError("Value is not userdata");
 		}
 
-		return LuaResultWithValue<void*>::BuildWithValue(
+		return ResultWithValue<void*>::BuildWithValue(
 			lua_touserdata(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<int>& ReadInteger()
+	ResultWithValue<int>& ReadInteger()
 	{
 		return ReadInteger(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<long long>& ReadBigInteger()
+	ResultWithValue<long long>& ReadBigInteger()
 	{
 		return ReadBigInteger(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<double>& ReadDouble()
+	ResultWithValue<double>& ReadDouble()
 	{
 		return ReadDouble(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<bool>& ReadBool()
+	ResultWithValue<bool>& ReadBool()
 	{
 		return ReadBool(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<const char*>& ReadString()
+	ResultWithValue<const char*>& ReadString()
 	{
 		return ReadString(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<void*>& ReadUserData()
+	ResultWithValue<void*>& ReadUserData()
 	{
 		return ReadUserData(GetStackTop());
 	}
@@ -372,19 +372,19 @@ public:
 		delete message;
 	}
 
-	void RaiseError(LuaResult& result)
+	void RaiseError(Result& result)
 	{
 		RaiseError(result.GetError());
 	}
 
-	LuaResult& ExecuteScript(const char* script)
+	Result& ExecuteScript(const char* script)
 	{
 		return BuildResult(
 			luaL_dostring(lua, script)
 		);
 	}
 
-	LuaResult& ExecuteFile(const char* filePath)
+	Result& ExecuteFile(const char* filePath)
 	{
 		return BuildResult(
 			luaL_dofile(lua, filePath)

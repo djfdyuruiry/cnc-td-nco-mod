@@ -80,16 +80,16 @@ public:
 		return apis;
 	};
 
-	LuaResult& ExecuteScript(const char* script)
+	Result& ExecuteScript(const char* script)
 	{
 		return lua.ExecuteScript(script);
 	}
 
-	LuaResult& ExecuteFile(const char* filePath)
+	Result& ExecuteFile(const char* filePath)
 	{
 		if (!FileUtils::IsFile(filePath))
 		{
-			return LuaResult::BuildWithError(
+			return Result::BuildWithError(
 				"Lua script file was not found: '%s'",
 				filePath
 			);

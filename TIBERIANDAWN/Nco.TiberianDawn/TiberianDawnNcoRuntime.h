@@ -7,11 +7,13 @@
 #include "TiberianDawnRuleSectionBuilder.h"
 #include "TiberianDawnRulesInfo.h"
 #include "TiberianDawnRulesReader.h"
+#include "TiberianDawnTypeConverter.h"
 
 #define TdNcoRuntime() TiberianDawnNcoRuntime::GetInstance()
 #define NcoRulesRuntime() TdNcoRuntime().GetRulesRuntime()
 #define NcoLuaRuntime() TdNcoRuntime().GetLuaRuntime()
 #define NcoModsRuntime() TdNcoRuntime().GetModRuntime()
+#define NcoTypeConverter() TdNcoRuntime().GetTypeConverter()
 
 class TiberianDawnNcoRuntime final : public NcoRuntime
 {
@@ -19,12 +21,13 @@ private:
 	static TiberianDawnNcoRuntime* INSTANCE;
 
     TiberianDawnRulesInfo& rulesInfo;
+    TiberianDawnTypeConverter& typeConverter;
 
     TiberianDawnNcoRuntime() :
         NcoRuntime(
             RulesRuntime<TiberianDawnRulesReader>::Build(
                 TICKS_PER_SECOND,
-                [](IRulesIni& r)
+                [](auto& r)
                 {
                     r << TiberianDawnRuleSectionBuilder::BuildModRules()
                       << TiberianDawnRuleSectionBuilder::BuildGameRules()
@@ -32,10 +35,15 @@ private:
                       << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(AIRSTRIKE_SECTION_NAME, 8u)
                       << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(ION_CANNON_SECTION_NAME, 10u)
                       << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(NUCLEAR_STRIKE_SECTION_NAME, 14u);
+                },
+                [&](auto rules)
+                {
+                    return &TiberianDawnRulesReader::Build(*rules, typeConverter);
                 }
             )
         ),
-        rulesInfo(TiberianDawnRulesInfo::BuildRuleInfo(rulesRuntime))
+        rulesInfo(TiberianDawnRulesInfo::BuildRuleInfo(rulesRuntime)),
+        typeConverter(TiberianDawnTypeConverter::Build())
     {
     }
 
@@ -59,8 +67,11 @@ public:
     ~TiberianDawnNcoRuntime()
     {
         delete &rulesInfo;
+        delete &typeConverter;
     }
 
 	TiberianDawnRulesInfo& GetRulesInfo();
+
+    TiberianDawnTypeConverter& GetTypeConverter();
 
 };

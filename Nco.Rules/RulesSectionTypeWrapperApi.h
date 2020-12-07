@@ -28,8 +28,8 @@ protected:
 		IRulesIniSection& rulesInfo,
 		U first,
 		std::function<int(void)> getCount,
-		PARSER(U, typeParser),
-		SERIALISER(U, typeToString)
+		std::function<ResultWithValue<U>*(const char*)> typeParser,
+		std::function<ResultWithValue<const char*>*(U)> typeToString
 	) :
 		TypeWrapperApi(typeName, first, getCount, typeParser, typeToString),
 		rulesInfo(rulesInfo)

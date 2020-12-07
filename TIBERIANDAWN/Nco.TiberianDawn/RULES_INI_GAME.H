@@ -88,7 +88,7 @@
 // level specific rules
 #define SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE "SetBuildLevelTo1InGdiScenario2"
 
-#define RENAME_TECH_CENTER_TO_PRISON_RULE "RenameTechCenterToPrisionInScenario3"
+#define RENAME_TECH_CENTER_TO_PRISON_RULE "RenameTechCenterToPrisionInNodScenario3"
 
 #define HIDE_E3_FROM_GDI_RULE "HideBazookaFromGdiUntilSenario8"
 

@@ -31,8 +31,6 @@
     <ClInclude Include="ILuaValueValidator.h" />
     <ClInclude Include="LuaApi.h" />
     <ClInclude Include="LuaFunctionInfo.h" />
-    <ClInclude Include="LuaResult.h" />
-    <ClInclude Include="LuaResultWithValue.h" />
     <ClInclude Include="LuaRuntime.h" />
     <ClInclude Include="LuaStateFactory.h" />
     <ClInclude Include="LuaStateWrapper.h" />

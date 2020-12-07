@@ -9,7 +9,7 @@
 
 #include "ILuaStateWrapper.h"
 #include "ILuaValueValidator.h"
-#include "LuaResult.h"
+#include <Result.h>
 #include "LuaValueAdapter.h"
 
 #define LuaFieldExtractor std::function<void(T&, ILuaStateWrapper&, LuaValueAdapter&)>
@@ -83,13 +83,13 @@ public:
 		return LuaValueAdapter::Build(*validators[fieldKey]);
 	}
 
-	LuaResult& ReadFieldValue(T& typeInstance, const char* fieldName, ILuaStateWrapper& lua)
+	Result& ReadFieldValue(T& typeInstance, const char* fieldName, ILuaStateWrapper& lua)
 	{
 		auto fieldKey = HashUtils::HashString(fieldName);
 
 		if (extractors.find(fieldKey) == extractors.end())
 		{
-			return LuaResult::BuildWithError("Reading field '%s' is currently not supported - no object field extractor configured", fieldName);
+			return Result::BuildWithError("Reading field '%s' is currently not supported - no object field extractor configured", fieldName);
 		}
 
 		auto& adapter = BuildValueAdapater(fieldKey);
@@ -98,16 +98,16 @@ public:
 
 		delete &adapter;
 
-		return LuaResult::Build();
+		return Result::Build();
 	}
 
-	LuaResult& WriteFieldValue(T& typeInstance, const char* fieldName, ILuaStateWrapper& lua, int stackIndex)
+	Result& WriteFieldValue(T& typeInstance, const char* fieldName, ILuaStateWrapper& lua, int stackIndex)
 	{
 		auto fieldKey = HashUtils::HashString(fieldName);
 
 		if (injectors.find(fieldKey) == injectors.end())
 		{
-			return LuaResult::BuildWithError("Writing field is currently not supported - no object field injector configured", fieldName);
+			return Result::BuildWithError("Writing field is currently not supported - no object field injector configured", fieldName);
 		}
 
 		if (validators.find(fieldKey) != validators.end())
@@ -116,7 +116,7 @@ public:
 
 			if (validationResult.IsErrorResult())
 			{
-				auto& writeResult = LuaResult::BuildWithError("Invalid value provided for field '%s': %s", fieldName, validationResult.GetError());
+				auto& writeResult = Result::BuildWithError("Invalid value provided for field '%s': %s", fieldName, validationResult.GetError());
 
 				delete &validationResult;
 
@@ -134,7 +134,7 @@ public:
 		
 		delete &adapter;
 
-		return LuaResult::Build();
+		return Result::Build();
 	}
 
 };

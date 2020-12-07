@@ -1,6 +1,10 @@
 #pragma once
 
+#include <functional>
+
 #include <Logger.h>
+#include <ResultWithValue.h>
+#include <TwoWayStringMap.h>
 #include <TypePatterns.h>
 
 #include "IRulesIni.h"
@@ -17,7 +21,7 @@ protected:
 	template<class T> T GetParsedStringRule(
 		RulesIniRule& rule,
 		const char* typeName,
-		PARSER(T, parser),
+		std::function<ResultWithValue<T>*(const char *)> parser,
 		T defaultValue
 	)
 	{
@@ -32,19 +36,24 @@ protected:
 
 		ConvertStringToUpperCase(stringValue);
 
-		bool parseError = false;
-		auto parsedValue = parser(stringValue, &parseError, parseError);
+		auto& parseResult = *parser(stringValue);
 
-		if (parseError)
+		if (parseResult.IsErrorResult())
 		{
 			rulesIni.MarkAsInvalid();
 
-			ShowError("Failed to parse %s for [%s]: %s", typeName, rule.GetStringKey(), stringValue);
+			ShowError("Failed to parse value '%s' as %s for [%s]: %s", stringValue, typeName, rule.GetStringKey(), parseResult.GetError());
+
+			delete &parseResult;
 
 			return rule.GetDefaultValueOr<T>(defaultValue);
 		}
 
-		return parsedValue;
+		auto value = parseResult.GetValue();
+
+		delete &parseResult;
+
+		return value;
 	}
 
 	// TODO: move all these private converters into seperate classes with a interface and mapping from type to converter
