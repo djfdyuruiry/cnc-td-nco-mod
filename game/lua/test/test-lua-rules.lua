@@ -1,54 +1,19 @@
 local typeAreas =
-  {
-    warheads = {
-      getTypes = getWarheadTypes,
-      getRuleNames = getWarheadRuleNames,
-      getRuleValue = getWarheadRule,
-      setRuleValue = setWarheadRule
-    },
-    bullets = {
-      getTypes = getBulletTypes,
-      getRuleNames = getBulletRuleNames,
-      getRuleValue = getBulletRule,
-      setRuleValue = setBulletRule
-    },
-    weapons = {
-      getTypes = getWeaponTypes,
-      getRuleNames = getWeaponRuleNames,
-      getRuleValue = getWeaponRule,
-      setRuleValue = setWeaponRule
-    },
-    building = {
-      getTypes = getBuildingTypes,
-      getRuleNames = getBuildingRuleNames,
-      getRuleValue = getBuildingRule,
-      setRuleValue = setBuildingRule
-    },
-    infantry = {
-      getTypes = getInfantryTypes,
-      getRuleNames = getInfantryRuleNames,
-      getRuleValue = getInfantryRule,
-      setRuleValue = setInfantryRule
-    },
-    unit = {
-      getTypes = getUnitTypes,
-      getRuleNames = getUnitRuleNames,
-      getRuleValue = getUnitRule,
-      setRuleValue = setUnitRule
-    },
-    aircraft = {
-      getTypes = getAircraftTypes,
-      getRuleNames = getAircraftRuleNames,
-      getRuleValue = getAircraftRule,
-      setRuleValue = setAircraftRule
-    }
-  }
+{
+  "Warheads",
+  "Bullets",
+  "Weapons",
+  "Buildings",
+  "Infantry",
+  "Units",
+  "Aircraft"
+}
 
 function main()
-  local oldLogLevel = getLogLevel()
-  setLogLevel("info");
+  local oldLogLevel = Nco.Utils.getLogLevel()
+  Nco.Utils.setLogLevel("info");
 
-  log(">Testing Lua API get/set rules")
+  Nco.Utils.log(">Testing Lua API get/set rules")
 
   local areasProcessed = 0
   local typesProcessed = 0
@@ -62,20 +27,20 @@ function main()
   local validationFailed = false
 
   local status, err = pcall(function()
-    log(">>Testing get/set game rules")
+    Nco.Utils.log(">>Testing get/set game rules")
 
-    for _, gameRule in ipairs(getGameRuleNames()) do
-        log("Game rule: %s", gameRule)
+    for _, gameRule in ipairs(Nco.Game.getRuleNames()) do
+        Nco.Utils.log("Game rule: %s", gameRule)
 
-        local ruleValue = getGameRule(gameRule)
+        local ruleValue = Nco.Game.getRule(gameRule)
 
         gameRulesRead = gameRulesRead + 1
 
-        setGameRule(gameRule, ruleValue)
+        Nco.Game.setRule(gameRule, ruleValue)
 
         gameRulesWritten = gameRulesWritten + 1
 
-        local newRuleValue = getGameRule(gameRule)
+        local newRuleValue = Nco.Game.getRule(gameRule)
 
         if newRuleValue ~= ruleValue then
           showError("Validation of game rule value failed %s\nExpected: %s - Got: %s", gameRule, tostring(ruleValue), tostring(newRuleValue))
@@ -85,14 +50,16 @@ function main()
         end
     end
 
-    for area, typeArea in pairs(typeAreas) do
-      log(">>Testing %s get/set rules", area)
+    for _, area in ipairs(typeAreas) do
+      Nco.Utils.log(">>Testing %s get/set rules", area)
+
+      local typeArea = Nco[area]
 
       for _, areaType in ipairs(typeArea.getTypes()) do
-        log(">>>Testing type %s get/set rules", areaType)
+        Nco.Utils.log(">>>Testing type %s get/set rules", areaType)
 
         for _, ruleName in ipairs(typeArea.getRuleNames()) do
-          local ruleValue = typeArea.getRuleValue(areaType, ruleName)
+          local ruleValue = typeArea.getRule(areaType, ruleName)
 
           rulesRead = rulesRead + 1
 
@@ -102,11 +69,11 @@ function main()
             goto areaRule
           end
 
-          typeArea.setRuleValue(areaType, ruleName, ruleValue)
+          typeArea.setRule(areaType, ruleName, ruleValue)
 
           rulesWritten = rulesWritten + 1
 
-          local newRuleValue = typeArea.getRuleValue(areaType, ruleName) 
+          local newRuleValue = typeArea.getRule(areaType, ruleName) 
 
           if newRuleValue ~= ruleValue then
             showError("Validation of type rule value failed %s -> %s\nExpected: %s - Got: %s", areaType, ruleName, tostring(ruleValue), tostring(newRuleValue))
@@ -127,9 +94,9 @@ function main()
 
   status  = status and not validationFailed
 
-  setLogLevel(oldLogLevel);
+  Nco.Utils.setLogLevel(oldLogLevel);
 
-  log(
+  Nco.Utils.log(
     [[Test Lua API rules result: %s
 
   Areas processed: %d

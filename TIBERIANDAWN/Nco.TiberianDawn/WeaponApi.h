@@ -25,7 +25,7 @@ class WeaponApi : public RulesSectionTypeWrapperApi<WeaponTypeClass, WeaponType>
 protected:
 	WeaponApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
 		RulesSectionTypeWrapperApi(
-			strdup("Weapon"),
+			strdup("Weapons"),
 			rulesInfo,
 			WEAPON_FIRST,
 			getCount,

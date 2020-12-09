@@ -65,7 +65,7 @@ protected:
 		typeToString(typeToString),
 		technoTypeWrapper(LuaTypeWrapper<T>::Build())
 	{
-		WithMethod(FormatString("get%sTypes", titleCaseTypeName), this, GetTypesProxy)
+		WithMethod("getTypes", this, GetTypesProxy)
 			.WithDescription(FormatString("Get a list of all %s types (including mod types)", titleCaseTypeName));
 	}
 

@@ -54,15 +54,15 @@ private:
 			return true;
 		}
 
-		if (!InitialiseLuaApi())
+		if (!InitialiseLuaCppApi())
 		{
-			LogError("Lua setup failed: API could not be initialised");
+			LogError("Lua setup failed: c++ APIs could not be initialised");
 			return false;
 		}
 
-		if (!InitialiseLuaEvents())
+		if (!InitialiseLuaNativeApi())
 		{
-			LogError("Lua setup failed: events could not be initialised");
+			LogError("Lua setup failed: native APIs could not be initialised");
 			return false;
 		}
 
@@ -99,8 +99,8 @@ protected:
 	{
 	}
 
-	virtual bool InitialiseLuaApi() = 0;
-	virtual bool InitialiseLuaEvents() = 0;
+	virtual bool InitialiseLuaCppApi() = 0;
+	virtual bool InitialiseLuaNativeApi() = 0;
 	virtual void RegisterMods() = 0;
 	virtual void RegisterThreads() = 0;
 

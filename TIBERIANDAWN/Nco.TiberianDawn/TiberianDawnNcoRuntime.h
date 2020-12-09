@@ -47,9 +47,9 @@ private:
     {
     }
 
-    bool InitialiseLuaApi();
+    bool InitialiseLuaCppApi();
 
-    bool InitialiseLuaEvents();
+    bool InitialiseLuaNativeApi();
 
     void RegisterMods();
 

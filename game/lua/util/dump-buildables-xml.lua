@@ -27,34 +27,13 @@ local footer = [[
 
 local typeAreas =
 {
-  Infantry = {
-    getTypes = getInfantryTypes,
-    getRuleNames = getInfantryRuleNames,
-    getRuleValue = getInfantryRule
-  },
-  Units = {
-    getTypes = getUnitTypes,
-    getRuleNames = getUnitRuleNames,
-    getRuleValue = getUnitRule
-  },
-  Aircraft = {
-    getTypes = getAircraftTypes,
-    getRuleNames = getAircraftRuleNames,
-    getRuleValue = getAircraftRule
-  },
-  Buildings = {
-    getTypes = getBuildingTypes,
-    getRuleNames = getBuildingRuleNames,
-    getRuleValue = getBuildingRule
-  }
-}
-
-local typeAreaOrder =
-{
+  "Warheads",
+  "Bullets",
+  "Weapons",
+  "Buildings",
   "Infantry",
-  "Aircraft",
   "Units",
-  "Buildings"
+  "Aircraft"
 }
 
 local outputFileName = "CNCModGameCommands.xml"
@@ -82,14 +61,14 @@ local function dumpBuildablesForTypeArea(buildablesFile, typeAreaName, typeArea)
 end
 
 local function dumpRules()
-  log("Write XML buildable file to %s", outputFileName)
+  Nco.Utils.log("Write XML buildable file to %s", outputFileName)
 
   buildablesFile = io.open(outputFileName, "a+")
 
   buildablesFile:write(header);
 
-  for _, areaName in ipairs(typeAreaOrder) do
-    dumpBuildablesForTypeArea(buildablesFile, areaName, typeAreas[areaName])
+  for _, areaName in ipairs(typeAreas) do
+    dumpBuildablesForTypeArea(buildablesFile, areaName, Nco[areaName])
   end
 
   buildablesFile:write(footer);
@@ -108,7 +87,7 @@ local function main()
     error(string.format("XML buildables dump failed: %s", err))
   end
 
-  log("XML buildables dump complete, see results @ %s", outputFileName)
+  Nco.Utils.log("XML buildables dump complete, see results @ %s", outputFileName)
 end
 
 main()

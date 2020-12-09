@@ -20,7 +20,7 @@ class UnitApi : public TechnoTypeApi<UnitTypeClass, UnitType>
 {
 private:
 	UnitApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi(strdup("Unit"), rulesInfo, UNIT_FIRST, getCount)
+		TechnoTypeApi(strdup("Units"), rulesInfo, UNIT_FIRST, getCount)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			CAN_BE_FOUND_IN_CRATE_RULE,

@@ -170,12 +170,12 @@ protected:
 
 	TypeApi(char* typeName) : typeName(typeName), titleCaseTypeName(ToTitleCase(typeName))
 	{
-		WithName(FormatString("%s rules", titleCaseTypeName));
+		WithName(typeName);
 		WithDescription(FormatString("%s rule info and control functions", titleCaseTypeName));
 
 		auto name = titleCaseTypeName;
 
-		WithMethod(FormatString("get%sRule", titleCaseTypeName), this, ReadRuleValueApiProxy)
+		WithMethod("getRule", this, ReadRuleValueApiProxy)
 			.WithDescription(FormatString("Set a rule for a given %s", titleCaseTypeName))
 			.WithParameter("ruleName", [](LuaVariableInfo& vi) {
 				vi.WithDescription("The name as it appears in RULES.INI")
@@ -187,7 +187,7 @@ protected:
 			});
 		
 
-		WithMethod(FormatString("set%sRule", titleCaseTypeName), this, WriteRuleValueApiProxy)
+		WithMethod("setRule", this, WriteRuleValueApiProxy)
 			.WithDescription(FormatString("Get a rule for a given", titleCaseTypeName))
 			.WithParameter("ruleName", [](LuaVariableInfo& vi) {
 				vi.WithDescription("The name as it appears in RULES.INI")

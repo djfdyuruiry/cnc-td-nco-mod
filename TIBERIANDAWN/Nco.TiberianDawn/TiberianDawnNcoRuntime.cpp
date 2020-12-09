@@ -3,6 +3,7 @@
 #include <IRulesIniSection.h>
 #include <RuleSectionApi.h>
 #include <LuaRepl.h>
+#include <utils.h>
 
 #include "../FUNCTION.H"
 
@@ -55,7 +56,8 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
 
     if (loadFailed)
     {
-        LogError("Loading NCO lua library failed: %s", loadResult.GetError());
+        // TODO: show error getting rubbish data for error even know it's present and fine
+        ShowError("Loading NCO lua library failed: %s", loadResult.GetError());
     }
 
     delete &loadResult;
@@ -63,11 +65,9 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
     return !loadFailed;
 }
 
-bool TiberianDawnNcoRuntime::InitialiseLuaApi()
+bool TiberianDawnNcoRuntime::InitialiseLuaCppApi()
 {
     LogDebug("Initialising Lua API functions");
-
-    auto ncoLibLoadResult = LoadNcoLuaLib(luaRuntime);
 
     RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetNcoRules());
     RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetEnhancementRules());
@@ -114,12 +114,12 @@ bool TiberianDawnNcoRuntime::InitialiseLuaApi()
 
     luaRuntime.RegisterApi(InfoApi::Build(luaRuntime));
 
-    return ncoLibLoadResult;
+    return true;
 }
 
-bool TiberianDawnNcoRuntime::InitialiseLuaEvents()
+bool TiberianDawnNcoRuntime::InitialiseLuaNativeApi()
 {
-    return InitialiseEvents();
+    return LoadNcoLuaLib(luaRuntime);
 }
 
 void TiberianDawnNcoRuntime::RegisterMods()

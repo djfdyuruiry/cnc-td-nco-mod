@@ -197,6 +197,18 @@ public:
 		lua_pop(lua, 1);
 	}
 
+	Result& PushGlobalOntoStack(const char* variable)
+	{
+		if (StringIsEmpty(variable))
+		{
+			return Result::BuildWithError("Variable name passed to LuaStateWrapper::PushGlobalOntoStack was null or blank");
+		}
+
+		lua_getglobal(lua, variable);
+
+		return Result::Build();
+	}
+
 	ResultWithValue<int>& ReadInteger(int stackIndex)
 	{
 		if (!lua_isinteger(lua, stackIndex))
@@ -324,23 +336,19 @@ public:
 		lua_pushstring(lua, value);
 	}
 
-	void WriteFunction(const char* name, lua_CFunction function, void* functionInfo)
+	void WriteFunction(lua_CFunction function, void* functionInfo)
 	{
 		lua_pushlightuserdata(lua, functionInfo);
 
 		lua_pushcclosure(lua, function, 1);
-
-		lua_setglobal(lua, name);
 	}
 
-	void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy, void* functionInfo)
+	void WriteMethod(void* objectPtr, lua_CFunction methodProxy, void* functionInfo)
 	{
 		lua_pushlightuserdata(lua, functionInfo);
 		lua_pushlightuserdata(lua, objectPtr);
 
 		lua_pushcclosure(lua, methodProxy, 2);
-
-		lua_setglobal(lua, name);
 	}
 
 	void WriteNil()

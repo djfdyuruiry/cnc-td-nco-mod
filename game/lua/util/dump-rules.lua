@@ -1,51 +1,5 @@
 local typeAreas =
 {
-  Warheads = {
-    getTypes = getWarheadTypes,
-    getRuleNames = getWarheadRuleNames,
-    getRuleValue = getWarheadRule,
-    setRuleValue = setWarheadRule
-  },
-  Bullets = {
-    getTypes = getBulletTypes,
-    getRuleNames = getBulletRuleNames,
-    getRuleValue = getBulletRule,
-    setRuleValue = setBulletRule
-  },
-  Weapons = {
-    getTypes = getWeaponTypes,
-    getRuleNames = getWeaponRuleNames,
-    getRuleValue = getWeaponRule,
-    setRuleValue = setWeaponRule
-  },
-  Buildings = {
-    getTypes = getBuildingTypes,
-    getRuleNames = getBuildingRuleNames,
-    getRuleValue = getBuildingRule,
-    rules = {}
-  },
-  Infantry = {
-    getTypes = getInfantryTypes,
-    getRuleNames = getInfantryRuleNames,
-    getRuleValue = getInfantryRule,
-    rules = {}
-  },
-  Units = {
-    getTypes = getUnitTypes,
-    getRuleNames = getUnitRuleNames,
-    getRuleValue = getUnitRule,
-    rules = {}
-  },
-  Aircraft = {
-    getTypes = getAircraftTypes,
-    getRuleNames = getAircraftRuleNames,
-    getRuleValue = getAircraftRule,
-    rules = {}
-  }
-}
-
-local typeAreaOrder =
-{
   "Warheads",
   "Bullets",
   "Weapons",
@@ -65,10 +19,10 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   rulesFile:write(string.format("[%s]\n", typeAreaName))
   idx=1
 
-  log("Creating list %s", typeAreaName)
+  Nco.Utils.log("Creating list %s", typeAreaName)
 
   for _, areaType in ipairs(typeArea.getTypes()) do
-    local isModType = typeArea.getRuleValue(areaType, "IsModType")
+    local isModType = typeArea.getRule(areaType, "IsModType")
 
     if not isModType then
       rulesFile:write(string.format("%s=%s\n",tostring(idx),areaType))
@@ -80,10 +34,10 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   rulesFile:write("\n")
 
   for _, areaType in ipairs(typeArea.getTypes()) do
-    log("Checking areaType %s", areaType)
+    Nco.Utils.log("Checking areaType %s", areaType)
 
-    local friendlyName = typeArea.getRuleValue(areaType, "FriendlyName")
-    local isModType = typeArea.getRuleValue(areaType, "IsModType")
+    local friendlyName = typeArea.getRule(areaType, "FriendlyName")
+    local isModType = typeArea.getRule(areaType, "IsModType")
 
     if isModType then
       goto areaType
@@ -92,14 +46,14 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
     rulesFile:write(string.format("; %s\n", friendlyName))
     rulesFile:write(string.format("[%s]\n", areaType))
 
-    log("[%s]", areaType)
+    Nco.Utils.log("[%s]", areaType)
 
     for _, ruleName in ipairs(typeArea.getRuleNames()) do
       if ruleName == "IsModType" or ruleName == "Owner" or ruleName == "BaseType" or ruleName == "Image" then
         goto areaRule
       end
 
-      local ruleValue = typeArea.getRuleValue(areaType, ruleName)
+      local ruleValue = typeArea.getRule(areaType, ruleName)
       local postfix = ""
 
       if ruleName == "FriendlyName" and ruleValue:find("'") then
@@ -125,7 +79,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
 end
 
 local function dumpRules()
-  log("Dumping rules ini to %s", outputFileName)
+  Nco.Utils.log("Dumping rules ini to %s", outputFileName)
 
   if not os.execute(string.format("copy RULES-BASE.INI %s", outputFileName)) then
     error("Failed to copy RULES-BASE.INI")
@@ -133,16 +87,16 @@ local function dumpRules()
 
   rulesFile = io.open(outputFileName, "a+")
 
-  for _, areaName in ipairs(typeAreaOrder) do
-    log("Dumping %s", areaName)
-    dumpRulesForTypeArea(rulesFile, areaName, typeAreas[areaName])
+  for _, areaName in ipairs(typeAreas) do
+    Nco.Utils.log("Dumping %s", areaName)
+    dumpRulesForTypeArea(rulesFile, areaName, Nco[areaName])
   end
 end
 
 local function main()
   os.remove(outputFileName)
 
-  setLogLevel("info");
+  Nco.Utils.setLogLevel("info");
 
   local _, err = pcall(dumpRules)
 
@@ -150,13 +104,13 @@ local function main()
     rulesFile:close()
   end
 
-  setLogLevel("debug");
+  Nco.Utils.setLogLevel("debug");
 
   if err then
     error(string.format("Lua rules dump failed: %s", err))
   end
 
-  log("Rules ini dump complete, see results @ %s", outputFileName)
+  Nco.Utils.log("Rules ini dump complete, see results @ %s", outputFileName)
 end
 
 main()

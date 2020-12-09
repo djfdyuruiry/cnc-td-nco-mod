@@ -49,6 +49,8 @@ public:
 	virtual int GetTableSize(int stackIndex) = 0;
 	virtual void IterateOverTable(int stackIndex, std::function<void()> iterateAction) = 0;
 
+	virtual Result& PushGlobalOntoStack(const char* variable) = 0;
+
 	virtual ResultWithValue<int>& ReadInteger(int stackIndex) = 0;
 	virtual ResultWithValue<long long>& ReadBigInteger(int stackIndex) = 0;
 	virtual ResultWithValue<double>& ReadDouble(int stackIndex) = 0;
@@ -190,8 +192,8 @@ public:
 	virtual void WriteNumber(double value) = 0;
 	virtual void WriteBool(bool value) = 0;
 	virtual void WriteString(const char* value) = 0;
-	virtual void WriteFunction(const char* name, lua_CFunction function, void* functionInfo) = 0;
-	virtual void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy, void* functionInfo) = 0;
+	virtual void WriteFunction(lua_CFunction function, void* functionInfo) = 0;
+	virtual void WriteMethod(void* objectPtr, lua_CFunction methodProxy, void* functionInfo) = 0;
 	virtual void WriteNil() = 0;
 	virtual void WriteTable(unsigned int expectedSize = 0) = 0;
 

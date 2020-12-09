@@ -180,7 +180,7 @@ private:
 
     UtilApi()
     {
-        WithName("utils");
+        WithName("Utils");
 
         WithDescription("Utility functions");
 

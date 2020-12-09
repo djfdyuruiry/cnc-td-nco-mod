@@ -6,11 +6,10 @@
 #include "lua_events.h"
 #include "TiberianDawnNcoRuntime.h"
 
-static auto FIRE_EVENT_FORMAT = "Game.Events.fire('%s', %s)";
+static auto FIRE_EVENT_FORMAT = "Nco.Events.fire('%s', %s)";
 static const auto MAX_EVENT_ARGS_LENGTH = 1024;
 static const auto LUA_EVENT_COUNT = 3u;
 
-static bool EVENTS_INITIALISED = false;
 static const char** LUA_EVENTS = NULL;
 
 static void FireLuaEvent(const char* name, const char* argumentFormat = "nil", ...)
@@ -49,31 +48,6 @@ static void FireLuaEvent(const char* name, const char* argumentFormat = "nil", .
 
     delete &executeResult;
 }
-
-bool InitialiseEvents()
-{
-    if (EVENTS_INITIALISED)
-    {
-        LogWarn("Attempted to initialise Lua events more than once, ignoring");
-        return true;
-    }
-
-    LogTrace("Initialising Lua events");
-
-    auto& executeResult = NcoLuaRuntime().ExecuteScript("Game.Events.initHandlers()");
-    auto error = executeResult.IsErrorResult();
-
-    if (error)
-    {
-        ShowError("Error initialising event handlers: %s", executeResult.GetError());
-    }
-
-    delete &executeResult;
-
-    EVENTS_INITIALISED = true;
-
-    return !error;
-};
 
 int GetEventCount()
 {

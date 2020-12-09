@@ -19,7 +19,6 @@ private:
 
 	LuaRuntime(ILuaStateWrapper& lua) : lua(lua), apis(*(new std::vector<ILuaApi*>()))
 	{
-
 		LuaType::InitIfRequired();
 
 		RegisterApi(ReflectionApi::Build(*this));
@@ -44,17 +43,36 @@ public:
 
 	ILuaRuntime& RegisterApi(ILuaApi& api)
 	{
+		auto& ncoTableResult = lua.PushGlobalOntoStack("Nco");
+
+		if (ncoTableResult.IsErrorResult())
+		{
+			ShowError("Failed to get Nco global table from lua state: %s", ncoTableResult.GetError());
+
+			delete &ncoTableResult;
+
+			return *this;
+		}
+
+		delete &ncoTableResult;
+
+		lua.WriteTable();
+
 		for (auto function : api.GetFunctions())
 		{
 			if (!function->IsObjectMethod())
 			{
-				lua.WriteFunction(function->GetName(), function->GetFunction(), function);
+				lua.WriteFunction(function->GetFunction(), function);
 			}
 			else
 			{
-				lua.WriteMethod(function->GetName(), function->GetImplementationObject(), function->GetMethodProxy(), function);
+				lua.WriteMethod(function->GetImplementationObject(), function->GetMethodProxy(), function);
 			}
+
+			lua.SetTableIndex(function->GetName());
 		}
+
+		lua.SetTableIndex(api.GetName());
 
 		apis.push_back(&api);
 

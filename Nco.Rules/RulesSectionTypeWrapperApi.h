@@ -34,7 +34,7 @@ protected:
 		TypeWrapperApi(typeName, first, getCount, typeParser, typeToString),
 		rulesInfo(rulesInfo)
 	{
-		WithMethod(FormatString("get%sRuleNames", titleCaseTypeName), this, GetSectionRulesProxy)
+		WithMethod("getRuleNames", this, GetSectionRulesProxy)
 			.WithDescription(FormatString("Get a list of %s rules", titleCaseTypeName));
 	}
 

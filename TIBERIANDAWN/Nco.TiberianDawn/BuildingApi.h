@@ -20,7 +20,7 @@ class BuildingApi : public TechnoTypeApi<BuildingTypeClass, StructType>
 {
 private:
 	BuildingApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi(strdup("Building"), rulesInfo, STRUCT_FIRST, getCount)
+		TechnoTypeApi(strdup("Buildings"), rulesInfo, STRUCT_FIRST, getCount)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BIBBED_RULE,

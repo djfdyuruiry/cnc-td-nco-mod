@@ -25,7 +25,7 @@ class BulletApi : public RulesSectionTypeWrapperApi<BulletTypeClass, BulletType>
 protected:
 	BulletApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
 		RulesSectionTypeWrapperApi(
-			strdup("Bullet"),
+			strdup("Bullets"),
 			rulesInfo,
 			BULLET_FIRST,
 			getCount,

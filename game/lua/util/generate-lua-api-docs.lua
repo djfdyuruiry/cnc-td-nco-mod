@@ -37,7 +37,7 @@ end
 local main = function()
   local output = ""
   local outputFile = "lua-api.md"
-  local apis = getApis()
+  local apis = Nco.Reflection.getApis()
 
   local appendToOutput = function(format, ...)
     output = output .. string.format(format, ...) .. "\n"
