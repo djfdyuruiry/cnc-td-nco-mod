@@ -1,13 +1,4 @@
-local typeAreas =
-{
-  "Warheads",
-  "Bullets",
-  "Weapons",
-  "Buildings",
-  "Infantry",
-  "Units",
-  "Aircraft"
-}
+local typeAreas = Nco.Info.getTypeNames()
 
 local outputFileName = "RULES-DEFAULT.INI"
 local rulesFile = nil

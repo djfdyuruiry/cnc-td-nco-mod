@@ -1,37 +1,41 @@
-local TypeInstanceRuleProxy = function(typeApi, instanceName, ruleName)
+local function TypeInstanceRuleProxy(getRule, setRule, ruleName)
   return setmetatable(
     {},
     {
       __call = function(_, ruleValue)
         if ruleValue == nil then
-          return typeApi.getRule(instanceName, ruleName)
+          return getRule(ruleName)
         end
 
-        return typeApi.setRule(instanceName, ruleName, ruleValue)
+        return setRule(ruleName, ruleValue)
       end
     }
   )
 end
 
-local TypeInstanceProxy = function(typeApi, instanceName)
+local function TypeInstanceProxy(typeApi, instanceName)  
+  local function getRule(...)
+    return typeApi.getRule(instanceName, ...)
+  end
+
+  local function setRule(...)
+    return typeApi.setRule(instanceName, ...)
+  end
+
   return setmetatable(
     {
-      getRule = function(...)
-        return typeApi.getRule(instanceName, ...)
-      end,
-      setRule = function(...)
-        return typeApi.setRule(instanceName, ...)
-      end
+      getRule = getRule,
+      setRule = setRule
     },
     {
       __index = function(_, ruleName)
-        return TypeInstanceRuleProxy(typeApi, instanceName, ruleName)
+        return TypeInstanceRuleProxy(getRule, setRule, ruleName)
       end
     }
   )
 end
 
-local TypeApiProxy = function(typeApi)
+local function TypeApiProxy(typeApi)
   return setmetatable(
     typeApi,
     {

@@ -1,3 +1,5 @@
+local setfenv = require("setfenv")
+
 return 
 {
   log = function(message, ...)
@@ -10,5 +12,15 @@ return
 
   showError = function(message, ...)
     Nco.Utils.showErrorString(string.format(message, ...))
+  end,
+
+  errorFormat = function(errorMessageFormat, ...)
+    error(string.format(errorMessageFormat, ...))
+  end,
+
+  with = function(context, handler)
+    setfenv(handler, context)
+
+    return handler()
   end
 }

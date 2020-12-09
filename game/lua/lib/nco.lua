@@ -2,37 +2,27 @@ local Utils = require("nco.Utils")
 local Events = require("nco.EventBus")
 local TypeApiProxy = require("nco.TypeApiProxy")
 
-local typeAreas =
-{
-  "Warheads",
-  "Bullets",
-  "Weapons",
-  "Buildings",
-  "Infantry",
-  "Units",
-  "Aircraft"
-}
-
-local loadNativeTypeApiMixin = function()
-  for _, typeArea in ipairs(typeAreas) do
-    Nco[typeArea] = TypeApiProxy(Nco[typeArea])
+local function loadNativeTypeApiMixin()
+  for _, type in ipairs(Nco.Info.getTypeNames()) do
+    Nco[type] = TypeApiProxy(Nco[type])
   end
 end
 
-local loadNativeUtilApiMixin = function()
+local function loadNativeUtilApiMixin()
   -- overwrite print builtin to enable output
   _G.__print = _G.print
   _G.print = Utils.print
 
+  -- 'with' syntax sugar
+  _G.with = Utils.with
+
   -- inject native utils into existing C++ API
   for name, func in pairs(Utils) do
-    if type(Nco.Utils[name]) ~= "function" then
-      Nco.Utils[name] = func
-    end
+    Nco.Utils[name] = Nco.Utils[name] and Nco.Utils[name] or func
   end
 end
 
-local loadNativeApis = function()
+local function loadNativeApis()
   loadNativeUtilApiMixin()
 
   Nco.Events = Events()

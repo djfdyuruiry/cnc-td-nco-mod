@@ -372,24 +372,25 @@ public:
 
 	~TiberianDawnTypeConverter()
 	{
-		delete& difficultyMap;
-		delete& housesMap;
-		delete& armorMap;
-		delete& unitSpeedMap;
-		delete& factoryTypeMap;
-		delete& warheadModsMap;
-		delete& bulletMap;
-		delete& bulletModsMap;
-		delete& weaponMap;
-		delete& weaponModsMap;
-		delete& aircraftMap;
-		delete& aircraftModsMap;
-		delete& structMap;
-		delete& structModsMap;
-		delete& infantryMap;
-		delete& infantryModsMap;
-		delete& unitMap;
-		delete& unitModsMap;
+		delete &difficultyMap;
+		delete &housesMap;
+		delete &armorMap;
+		delete &unitSpeedMap;
+		delete &factoryTypeMap;
+		delete &warheadModsMap;
+		delete &bulletMap;
+		delete &bulletModsMap;
+		delete &weaponMap;
+		delete &weaponModsMap;
+		delete &aircraftMap;
+		delete &aircraftModsMap;
+		delete &structMap;
+		delete &structModsMap;
+		delete &infantryMap;
+		delete &infantryModsMap;
+		delete &unitMap;
+		delete &unitModsMap;
+		delete &prereqToStructMap;
 	}
 
 	template <class T> TwoWayStringMap<T>& GetTypeMap()

@@ -25,16 +25,7 @@ local footer = [[
 
 ]]
 
-local typeAreas =
-{
-  "Warheads",
-  "Bullets",
-  "Weapons",
-  "Buildings",
-  "Infantry",
-  "Units",
-  "Aircraft"
-}
+local typeAreas = Nco.Info.getTypeNames()
 
 local outputFileName = "CNCModGameCommands.xml"
 local buildablesFile = nil

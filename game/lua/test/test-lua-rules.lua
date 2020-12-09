@@ -1,14 +1,3 @@
-local typeAreas =
-{
-  "Warheads",
-  "Bullets",
-  "Weapons",
-  "Buildings",
-  "Infantry",
-  "Units",
-  "Aircraft"
-}
-
 function main()
   local oldLogLevel = Nco.Utils.getLogLevel()
   Nco.Utils.setLogLevel("info");
@@ -50,7 +39,7 @@ function main()
         end
     end
 
-    for _, area in ipairs(typeAreas) do
+    for _, area in ipairs(Nco.Info.getTypeNames()) do
       Nco.Utils.log(">>Testing %s get/set rules", area)
 
       local typeArea = Nco[area]

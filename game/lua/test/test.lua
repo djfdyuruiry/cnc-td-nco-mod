@@ -4,52 +4,66 @@ function printMinigunnerWeapon()
   Nco.Utils.log("E1 primary weapon is: %s", weapon)
 end
 
-function testRules (isScenarioFour)
+function testRules ()
   printMinigunnerWeapon()
 
   local scenarioNumber = 1;
   local buildLevel = 1;
 
-  Nco.Infantry.setRule("E1", "CanCapture", true)
+  Nco.Infantry.E1.CanCapture(true)
 
-  Nco.Infantry.setRule("E3", "ScenarioLevel", scenarioNumber)
-  Nco.Infantry.setRule("E3", "BuildLevel", buildLevel)
+  with(Nco.Infantry.E3, function()
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+  end)
 
-  Nco.Infantry.setRule("E6", "ScenarioLevel", scenarioNumber)
-  Nco.Infantry.setRule("E6", "BuildLevel", buildLevel)
+  with(Nco.Infantry.E6, function()
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+  end)
 
-  Nco.Infantry.setRule("RMBO", "Buildable", true)
-  Nco.Infantry.setRule("RMBO", "ScenarioLevel", scenarioNumber)
-  Nco.Infantry.setRule("RMBO", "BuildLevel", buildLevel)
-  Nco.Infantry.setRule("RMBO", "PrimaryWeapon", "obelisk_laser")
-  Nco.Infantry.setRule("RMBO", "Prerequisite", "none")
+  with(Nco.Infantry.RMBO, function()
+    Buildable(true)
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+    PrimaryWeapon("obelisk_laser")
+    Prerequisite("none")
+  end)
 
-  Nco.Units.setRule("JEEP", "Speed", 100)
-  Nco.Units.setRule("JEEP", "CanCrushInfantry", true)
-  Nco.Units.setRule("JEEP", "CanTransportInfantry", true)
-  Nco.Units.setRule("JEEP", "TransportCapacity", 10)
+  with(Nco.Units.JEEP, function()
+    Speed(100)
+    CanCrushInfantry(true)
+    CanTransportInfantry(true)
+    TransportCapacity(10)
+  end)
 
-  Nco.Units.setRule("FTNK", "ScenarioLevel", scenarioNumber)
-  Nco.Units.setRule("FTNK", "BuildLevel", buildLevel)
+  with(Nco.Units.FTNK, function()
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+  end)
 
-  Nco.Units.setRule("MCV", "CanCloak", true)
+  Nco.Units.MCV.CanCloak(true)
 
-  Nco.Units.setRule("BOAT", "CanCloak", true)
+  Nco.Units.BOAT.CanCloak(true)
 
-  Nco.Units.setRule("HTNK", "ScenarioLevel", scenarioNumber)
-  Nco.Units.setRule("HTNK", "BuildLevel", buildLevel)
-  Nco.Units.setRule("HTNK", "Cost", 10)
+  with(Nco.Units.HTNK, function()
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+    Cost(10)
+  end)
 
-  Nco.Buildings.setRule("BIO", "Buildable", true)
-  Nco.Buildings.setRule("BIO", "ScenarioLevel", scenarioNumber)
-  Nco.Buildings.setRule("BIO", "BuildLevel", buildLevel)
-  Nco.Buildings.setRule("BIO", "Prerequisite", "none")
+  with(Nco.Buildings.BIO, function()
+    Buildable(true)
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+    Prerequisite("none")
+  end)
 
-  Nco.Buildings.setRule("NUKE", "Bibbed", false)
+  Nco.Buildings.NUKE.Bibbed(false)
 
-  Nco.Buildings.setRule("GUN", "Captureable", true) 
+  Nco.Buildings.GUN.Captureable(true) 
 
-  Nco.Infantry.setRule("E2", "PrimaryWeapon", "TOWTWO")
+  Nco.Infantry.E2.PrimaryWeapon("TOWTWO")
 
   printMinigunnerWeapon()
 end

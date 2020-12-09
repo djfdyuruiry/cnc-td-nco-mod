@@ -1,4 +1,4 @@
-local EventProxy = function(eventBus, eventName)
+local function EventProxy(eventBus, eventName)
   return setmetatable(
     {},
     {
@@ -9,40 +9,43 @@ local EventProxy = function(eventBus, eventName)
   )
 end
 
-local EventBus = function()
+local function EventBus()
   local names = Nco.Info.getEventNames()
   local handlers = {}
-  
-  local index = function(self, onEventName, ...)
+
+  local function index(self, onEventName, ...)
     local eventNameUpperCamelCase = onEventName:gsub([[^on]], "")
-    local eventName = string.format("%s%s", eventNameUpperCamelCase:sub(0, 1), eventNameUpperCamelCase:sub(2))
+    local eventName = string.format(
+      "%s%s",
+      eventNameUpperCamelCase:sub(0, 1),
+      eventNameUpperCamelCase:sub(2)
+    )
 
     return EventProxy(self, eventName)
   end
 
-  local registerHandler = function (eventName, handler)
+  local function validateEventName(caller, eventName)
     if type(eventName) ~= "string" then
-      error("eventName passed to registerHandler was not a string")
+      Nco.Utils.errorFormat("eventName passed to %s was not a string", caller)
     elseif eventName == "" then
-      error("eventName passed to registerHandler was empty")
+      Nco.Utils.errorFormat("eventName passed to %s was empty", caller)
     elseif type(handlers[eventName]) ~= "table" then
-      error(string.format("eventName passed to registerHandler was not a recognised event: %s", eventName))
-    elseif type(handler) ~= "function" then
+      Nco.Utils.errorFormat("eventName passed to %s was not a recognised event: %s", caller, eventName)
+    end
+  end
+
+  local function registerHandler(eventName, handler)
+    validateEventName("registerHandler", eventName)
+
+    if type(handler) ~= "function" then
       error("handler passed to registerHandler was not a function")
-      return
     end
 
     table.insert(handlers[eventName], handler)
   end
 
-  local fire = function(eventName, ...)
-    if type(eventName) ~= "string" then
-      error("eventName passed to fire was not a string")
-    elseif eventName == "" then
-      error("eventName passed to fire was empty")
-    elseif type(handlers[eventName]) ~= "table" then
-      error(string.format("eventName passed to fire was not a recognised event: %s", eventName))
-    end
+  local function fire(eventName, ...)
+    validateEventName("fire", eventName)
 
     for _, handler in ipairs(handlers[eventName]) do
       local ok, err = pcall(handler, ...)
