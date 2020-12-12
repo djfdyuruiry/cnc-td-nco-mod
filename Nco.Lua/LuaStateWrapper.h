@@ -32,6 +32,16 @@ private:
 	}
 
 protected:
+	void PushOntoStack(int stackIndex)
+	{
+		lua_pushvalue(lua, stackIndex);
+	}
+
+	void PopFromStack(int stackIndex)
+	{
+		lua_pop(lua, stackIndex);
+	}
+
 	void SetIndex(int tableIndex, int index)
 	{
 		lua_rawseti(lua, tableIndex, index);
@@ -40,6 +50,11 @@ protected:
 	void SetIndex(int tableIndex, const char* index)
 	{
 		lua_setfield(lua, tableIndex, index);
+	}
+
+	bool PopKeyValuePair(int tableIndex)
+	{
+		return lua_next(lua, tableIndex) != 0;
 	}
 
 public:
@@ -175,26 +190,37 @@ public:
 		return lua_rawlen(lua, stackIndex);
 	}
 
-	void IterateOverTable(int stackIndex, std::function<void()> iterateAction)
+	Result& IterateOverTable(int stackIndex, std::function<void(int, int, const LuaType&)> iterateAction)
 	{
-		lua_pushvalue(lua, stackIndex);
-		lua_pushnil(lua);
-
-		auto valIndex = -2;
-
-		while (lua_next(lua, valIndex))
+		if (!IsTable(stackIndex))
 		{
-			lua_pushvalue(lua, valIndex);
-
-			if (iterateAction != NULL)
-			{
-				iterateAction();
-			}
-
-			lua_pop(lua, 2);
+			return Result::BuildWithError("Value at stack index '%d' was not a table", stackIndex);
 		}
 
-		lua_pop(lua, 1);
+		lua_pushvalue(lua, stackIndex);
+
+		WriteNil();
+
+		auto keyIndex = -2;
+		auto valIndex = -1;
+
+		while (PopKeyValuePair(-2))
+		{
+			auto valType = GetLuaType(valIndex);
+
+			iterateAction(keyIndex, valIndex, valType);
+
+			PopFromStack(1);
+		}
+
+		PopFromStack(1);
+
+		return Result::Build();
+	}
+
+	Result& IterateOverTable(std::function<void(int, int, const LuaType&)> iterateAction)
+	{
+		return IterateOverTable(GetStackTop(), iterateAction);
 	}
 
 	Result& PushGlobalOntoStack(const char* variable)
@@ -209,9 +235,31 @@ public:
 		return Result::Build();
 	}
 
+	Result& PushTableFieldOntoStack(int stackIndex, const char* field)
+	{
+		if (StringIsEmpty(field))
+		{
+			return Result::BuildWithError("Field passed to ILuaStateWrapper::ReadTableField was null or empty");
+		}
+
+		if (!IsTable(stackIndex))
+		{
+			return Result::BuildWithError("Attempted to read field '%s' from a non-table value", field);
+		}
+
+		lua_getfield(lua, stackIndex, field);
+
+		return Result::Build();
+	}
+
+	Result& PushTableFieldOntoStack(const char* field)
+	{
+		return PushTableFieldOntoStack(GetStackTop(), field);
+	}
+
 	ResultWithValue<int>& ReadInteger(int stackIndex)
 	{
-		if (!lua_isinteger(lua, stackIndex))
+		if (!IsInt(stackIndex))
 		{
 			return ResultWithValue<int>::BuildWithError("Value is not an integer");
 		}
@@ -223,7 +271,7 @@ public:
 
 	ResultWithValue<long long>& ReadBigInteger(int stackIndex)
 	{
-		if (!lua_isinteger(lua, stackIndex))
+		if (!IsInt(stackIndex))
 		{
 			return ResultWithValue<long long>::BuildWithError("Value is not an integer");
 		}
@@ -235,7 +283,7 @@ public:
 
 	ResultWithValue<double>& ReadDouble(int stackIndex)
 	{
-		if (!lua_isnumber(lua, stackIndex))
+		if (!IsNumber(stackIndex))
 		{
 			return ResultWithValue<double>::BuildWithError("Value is not a double");
 		}
@@ -247,7 +295,7 @@ public:
 
 	ResultWithValue<bool>& ReadBool(int stackIndex)
 	{
-		if (!lua_isboolean(lua, stackIndex))
+		if (!IsBool(stackIndex))
 		{
 			return ResultWithValue<bool>::BuildWithError("Value is not a boolean");
 		}
@@ -259,7 +307,7 @@ public:
 
 	ResultWithValue<const char*>& ReadString(int stackIndex)
 	{
-		if (!lua_isstring(lua, stackIndex))
+		if (!IsString(stackIndex))
 		{
 			return ResultWithValue<const char*>::BuildWithError("Value is not a string");
 		}

@@ -102,6 +102,16 @@ public:
 		return *this;
 	}
 
+	LuaFunctionInfo& WithVirtualFunction(const char* name)
+	{
+		auto& functionInfo = LuaFunctionInfo::BuildVirutal()
+			.WithName(name);
+
+		functions.push_back(&functionInfo);
+
+		return functionInfo;
+	}
+
 	LuaFunctionInfo& WithFunction(const char* name, lua_CFunction function)
 	{
 		WithFunction(name, function, NULL);

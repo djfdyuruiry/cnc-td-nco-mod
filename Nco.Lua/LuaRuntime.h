@@ -9,6 +9,7 @@
 #include "ILuaRuntime.h"
 #include "ILuaStateWrapper.h"
 #include "LuaApi.h"
+#include "LuaObjectUtils.h"
 #include "ReflectionApi.h"
 
 class LuaRuntime : public ILuaRuntime

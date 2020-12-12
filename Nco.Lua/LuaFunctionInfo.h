@@ -17,6 +17,7 @@ private:
 
 	lua_CFunction luaFunction;
 
+	bool isVirtual;
 	void* implementationObject;
 	lua_CFunction methodProxy;
 
@@ -25,8 +26,9 @@ private:
 
 	unsigned int requiredParameterCount;
 
-	LuaFunctionInfo() : parameters(*(new std::vector<LuaVariableInfo*>())),
+	LuaFunctionInfo(bool isVirtual = false) : parameters(*(new std::vector<LuaVariableInfo*>())),
 		returnValues(*(new std::vector<LuaVariableInfo*>())),
+		isVirtual(isVirtual),
 		implementationObject(NULL),
 		parameterValidationEnabled(false),
 		requiredParameterCount(0)
@@ -37,6 +39,11 @@ public:
 	static LuaFunctionInfo& Build()
 	{
 		return *(new LuaFunctionInfo());
+	}
+
+	static LuaFunctionInfo& BuildVirutal()
+	{
+		return *(new LuaFunctionInfo(true));
 	}
 
 	~LuaFunctionInfo()
@@ -73,6 +80,8 @@ public:
 	{
 		luaFunction = impl;
 
+		isVirtual = false;
+
 		return *this;
 	}
 
@@ -80,6 +89,8 @@ public:
 	{
 		implementationObject = object;
 		methodProxy = objectMethodProxy;
+
+		isVirtual = false;
 
 		return *this;
 	}
@@ -93,10 +104,10 @@ public:
 
 	LuaFunctionInfo& WithDescription(const char* description)
 	{
-		return WithDescription(strdup(name));
+		return WithDescription(strdup(description));
 	}
 
-	LuaFunctionInfo& WithParameter(char* name, LuaVariableInfoInitialiser initialiser, bool isOptional = false)
+	LuaVariableInfo& WithParameter(char* name, LuaVariableInfoInitialiser initialiser, bool isOptional = false)
 	{
 		auto& varInfo = LuaVariableInfo::BuildParameter(parameters.size() + 1)
 			.WithName(name);
@@ -108,44 +119,58 @@ public:
 
 		parameters.push_back(&varInfo);
 
-		requiredParameterCount++;
+		if (!isOptional)
+		{
+			requiredParameterCount++;
+		}
 
-		return *this;
+		return varInfo;
+	}
+
+	LuaVariableInfo& WithParameter(const char* name)
+	{
+		return WithParameter(strdup(name), NULL);
 	}
 
 	LuaFunctionInfo& WithParameter(const char* name, LuaVariableInfoInitialiser initialiser)
 	{
-		return WithParameter(strdup(name), initialiser);
+		WithParameter(strdup(name), initialiser);
+
+		return *this;
 	}
 
-	LuaFunctionInfo& WithOptionalParameter(char* name, LuaVariableInfoInitialiser initialiser)
+	LuaVariableInfo& WithOptionalParameter(const char* name)
 	{
-		return WithParameter(strdup(name), initialiser, true);
+		return WithParameter(strdup(name), NULL, true);
 	}
 
 	LuaFunctionInfo& WithOptionalParameter(const char* name, LuaVariableInfoInitialiser initialiser)
 	{
-		return WithOptionalParameter(strdup(name), initialiser);
+		WithParameter(strdup(name), initialiser, true);
+
+		return *this;
 	}
 
-	LuaFunctionInfo& WithReturnValue(char* name, LuaVariableInfoInitialiser initialiser)
+	LuaVariableInfo& WithReturnValue(const char* name)
 	{
 		auto& varInfo = LuaVariableInfo::BuildReturnValue(returnValues.size() + 1)
 			.WithName(name);
+
+		returnValues.push_back(&varInfo);
+
+		return varInfo;
+	}
+
+	LuaFunctionInfo& WithReturnValue(const char* name, LuaVariableInfoInitialiser initialiser)
+	{
+		auto& varInfo = WithReturnValue(name);
 
 		if (initialiser != NULL)
 		{
 			initialiser(varInfo);
 		}
 
-		returnValues.push_back(&varInfo);
-
 		return *this;
-	}
-
-	LuaFunctionInfo& WithReturnValue(const char* name, LuaVariableInfoInitialiser initialiser)
-	{
-		return WithReturnValue(strdup(name), initialiser);
 	}
 
 	LuaFunctionInfo& WithParameterValidation()
@@ -163,6 +188,11 @@ public:
 	const char* GetDescription()
 	{
 		return description;
+	}
+
+	bool IsVirtual()
+	{
+		return isVirtual;
 	}
 
 	bool IsObjectMethod()

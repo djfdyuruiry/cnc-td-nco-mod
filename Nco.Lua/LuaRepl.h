@@ -25,6 +25,11 @@ private:
 
 	bool PrintLuaOutput(const char* output)
 	{
+		if (StringIsEmpty(output))
+		{
+			return true;
+		}
+
 		auto length = strlen(output);
 
 		if (!WriteConsole(stdOut, output, length, NULL, NULL))
@@ -72,7 +77,7 @@ private:
 
 			auto indent = RepeatString("  ", depth + 1);
 
-			luaRuntime.GetState().IterateOverTable(stackIndex, [&]() {
+			auto& tableResult = luaRuntime.GetState().IterateOverTable(stackIndex, [&](auto keyIndex, auto valueIndex, auto& _) {
 				index++;
 
 				if (!printStatus)
@@ -82,18 +87,23 @@ private:
 
 				printStatus = index == 0 ? PrintLuaOutput(indent) : PrintLuaOutput(",\r\n") && PrintLuaOutput(indent);
 
-				if (printStatus && !luaState.IsInt(-1))
+				if (printStatus && !luaState.IsInt(keyIndex))
 				{
 					// print key if it is not a number index
-					printStatus = printStatus && PrintLuaOutput(luaState.ToString(-1)) 
-						&& PrintLuaOutput(" = \r\n")
-						&& PrintLuaOutput(indent);
+					printStatus = printStatus && PrintLuaOutput(luaState.ToString(keyIndex))
+						&& PrintLuaOutput(" = ");
+				}
+
+				if (luaState.IsTable(valueIndex))
+				{
+					printStatus = printStatus && PrintLuaOutput("\r\n") && PrintLuaOutput(indent);
 				}
 
 				// output value
-				printStatus = printStatus && OutputLuaResult(-2, depth + 1);
+				printStatus = printStatus && OutputLuaResult(valueIndex, depth + 1);
 			});
 
+			delete &tableResult;
 			delete indent;
 
 			indent = RepeatString("  ", depth);

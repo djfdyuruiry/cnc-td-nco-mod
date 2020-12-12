@@ -98,6 +98,13 @@ public:
 		return *this;
 	}
 
+	LuaVariableInfo& WithType(const LuaType& type)
+	{
+		this->type = &((LuaType&)type);
+
+		return *this;
+	}
+
 	const char* GetName()
 	{
 		return name;
