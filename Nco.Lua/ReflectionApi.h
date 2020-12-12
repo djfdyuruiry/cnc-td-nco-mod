@@ -24,6 +24,11 @@ private:
 		return LUA_METHOD_PROXY(ReflectionApi, RegisterApiLua);
 	}
 
+	static int RegisterApiFunctionsLuaProxy(lua_State* lua)
+	{
+		return LUA_METHOD_PROXY(ReflectionApi, RegisterApiFunctionsLua);
+	}
+
 	ReflectionApi(ILuaRuntime& runtime) : runtime(runtime)
 	{
 		WithName("Reflection");
@@ -45,15 +50,31 @@ private:
 \n\
   'name' - API name \n\
   'description' - API description \n\
-  'functions' - table containing API functions, each item should be a table containing: \n\
-    'name' - function name \n\
+  'functions' - dictionary containing API functions, each item should be a table containing: \n\
 	'description' - function description \n\
-    'parameters' - table containing function parameters, each item should be a table containing: \n\
-      'name' - parameter name \n\
+    'parameters' - dictionary containing function parameters, each item should be a table containing: \n\
       'description' - parameter description \n\
       'type' - parameter lua type (table, number etc.) \n\
-    'returnValues' - table containing function return value(s), each item should be a table containing: \n\
-      'name' - return value name \n\
+    'returnValues' - dictionary containing function return value(s), each item should be a table containing: \n\
+      'description' - parameter description \n\
+      'type' - parameter lua type (table, number etc.)")
+				 .WithType(LuaType::Table);
+			 });
+		});
+
+		WithMethod("registerApiFunctions", this, RegisterApiFunctionsLuaProxy, [](LuaFunctionInfo& f) {
+			f.WithDescription("Add additional methods to an existing API in the reflection registry")
+			 .WithParameter("apiName", [](LuaVariableInfo& r) {
+				r.WithDescription("Name of the API to add new methods to, case sensitive")
+			     .WithType(LuaType::String);
+			 })
+			 .WithParameter("functions", [](LuaVariableInfo& r) {
+				r.WithDescription("Dictionary containing API functions, each item should be a table containing: \n\
+	'description' - function description \n\
+    'parameters' - dictionary containing function parameters, each item should be a table containing: \n\
+      'description' - parameter description \n\
+      'type' - parameter lua type (table, number etc.) \n\
+    'returnValues' - dictionary containing function return value(s), each item should be a table containing: \n\
       'description' - parameter description \n\
       'type' - parameter lua type (table, number etc.)")
 				 .WithType(LuaType::Table);
@@ -67,20 +88,20 @@ private:
 
 		for (auto variable : variables)
 		{
-		lua.WriteTable();
+			lua.WriteTable();
 
-		lua.PushTableEntry("description", variable->GetDescription());
+			lua.PushTableEntry("description", variable->GetDescription());
 
-		if (&variable->GetType() != NULL)
-		{
-			lua.PushTableEntry("type", variable->GetType().value);
-		}
-		else
-		{
-			lua.PushTableEntry("type", LuaType::Any->value);
-		}
+			if (&variable->GetType() != NULL)
+			{
+				lua.PushTableEntry("type", variable->GetType().value);
+			}
+			else
+			{
+				lua.PushTableEntry("type", LuaType::Any->value);
+			}
 
-		lua.SetTableIndex(variable->GetName());
+			lua.SetTableIndex(variable->GetName());
 		}
 
 		lua.SetTableIndex(name);
@@ -245,6 +266,35 @@ private:
 		}
 
 		delete &apiTableResult;
+
+		return 0;
+	}
+
+	int RegisterApiFunctionsLua(ILuaStateWrapper& lua)
+	{
+		auto& apiNameResult = lua.ReadString(1);
+
+		auto apiFound = false;
+		auto apiName = apiNameResult.GetValue();
+
+		delete &apiNameResult;
+
+		for (auto api : runtime.GetApis())
+		{
+			if (StringsAreEqual(apiName, api->GetName()))
+			{
+				apiFound = true;
+
+				ReadApiFunctions(lua, *api, 2);
+
+				break;
+			}
+		}
+
+		if (!apiFound)
+		{
+			lua.RaiseError("No API is currently registered with the given name: %s", apiName);
+		}
 
 		return 0;
 	}

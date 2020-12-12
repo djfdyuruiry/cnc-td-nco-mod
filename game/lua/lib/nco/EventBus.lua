@@ -1,3 +1,5 @@
+local eventNames = Nco.Info.getEventNames()
+
 local function EventProxy(eventBus, eventName)
   return setmetatable(
     {},
@@ -10,16 +12,10 @@ local function EventProxy(eventBus, eventName)
 end
 
 local function EventBus()
-  local names = Nco.Info.getEventNames()
   local handlers = {}
 
   local function index(self, onEventName, ...)
-    local eventNameUpperCamelCase = onEventName:gsub([[^on]], "")
-    local eventName = string.format(
-      "%s%s",
-      eventNameUpperCamelCase:sub(0, 1),
-      eventNameUpperCamelCase:sub(2)
-    )
+    local eventName = onEventName:gsub([[^on]], "")
 
     return EventProxy(self, eventName)
   end
@@ -34,16 +30,6 @@ local function EventBus()
     end
   end
 
-  local function registerHandler(eventName, handler)
-    validateEventName("registerHandler", eventName)
-
-    if type(handler) ~= "function" then
-      error("handler passed to registerHandler was not a function")
-    end
-
-    table.insert(handlers[eventName], handler)
-  end
-
   local function fire(eventName, ...)
     validateEventName("fire", eventName)
 
@@ -56,13 +42,27 @@ local function EventBus()
     end
   end
 
-  for _, e in ipairs(names) do
+  local function registerHandler(eventName, handler)
+    validateEventName("registerHandler", eventName)
+
+    if type(handler) ~= "function" then
+      error("handler passed to registerHandler was not a function")
+    end
+
+    table.insert(handlers[eventName], handler)
+  end
+
+  local function getEventNames()
+    return eventNames
+  end
+
+  for _, e in ipairs(eventNames) do
     handlers[e] = {}
   end
 
   return setmetatable( 
     {
-      names = names,
+      getEventNames = getEventNames,
       registerHandler = registerHandler,
       fire = fire
     },
@@ -71,5 +71,49 @@ local function EventBus()
     }
   )
 end
+
+local function buildEventApiInfo()
+  local eventApi =
+  {
+    name = "Events",
+    description = "Register event handlers and get info on game events",
+    functions =
+    {
+      getEventNames =
+      {
+        description = "Get a list of game events",
+        returnValues =
+        {
+          eventNames = 
+          {
+            description = "Table containing names of game events as strings",
+            type = "table"
+          }
+        }
+      }
+    }
+  }
+
+  for _, e in ipairs(eventNames) do
+    local eventFunction = string.format("on%s", e)
+
+    eventApi.functions[eventFunction] =
+    {
+      description = string.format("Register an event handler that will be called on %s", e),
+      parameters =
+      {
+        eventHandler =
+        {
+          description = "Function which is called with event parameters when event is fired",
+          type = "function"
+        }
+      }
+    }
+  end
+
+  return eventApi
+end
+
+Nco.Reflection.registerApi(buildEventApiInfo())
 
 return EventBus
