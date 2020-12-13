@@ -1429,9 +1429,6 @@
     <ClCompile Include="Nco.TiberianDawn\TiberianDawnTypeConverter.cpp">
       <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="TiberianDawnRulesReader.cpp">
-      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="win32lib\FACINGFF.ASM">

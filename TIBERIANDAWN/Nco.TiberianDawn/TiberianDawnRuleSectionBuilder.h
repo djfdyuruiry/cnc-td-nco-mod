@@ -45,6 +45,14 @@ private:
 					 .WithMax(UCHAR_MAX);
 	}
 
+	static IRulesIniSection& BuildInfantryAndUnitSharedRules(IRulesIniSection& s)
+	{
+		return s << EXPLODES_UPON_DEATH_RULE << BOOL_RULE
+	      << DEATH_EXPLOSION_ANIMATION_RULE << ANIMATION_RULE
+		  << DEATH_EXPLOSION_WARHEAD_RULE << WARHEAD_RULE
+		  << DEATH_EXPLOSION_DAMAGE_RULE << UNSIGNED_INT_RULE;
+	}
+
 	static IRulesIniSection& BuildUnitAndAircraftSharedRules(IRulesIniSection& s)
 	{
 		return s << BuildRateOfTurnRule(s)
@@ -181,6 +189,7 @@ public:
 				  << TIBERIUM_GROWTH_RATE_RULE << DOUBLE_RULE << 1.0
 				  << TIBERIUM_SPREAD_RATE_RULE << DOUBLE_RULE << 1.0
 				  << TIBERIUM_INFANTRY_DAMAGE_RULE << UNSIGNED_INT_RULE << 2u
+				  << TIBERIUM_BLOSSOM_TREE_DAMAGE_RULE << UNSIGNED_INT_RULE << 5u
 
 				  << CREDITS_PER_TIBERIUM_SCOOP_RULE << UNSIGNED_INT_RULE << 25u
 				  << MAX_HARVESTER_CAPACITY_RULE << UNSIGNED_INT_RULE << 28u
@@ -234,6 +243,26 @@ public:
 		return RulesIniSection::BuildSection(name)
 			.WithDefaultType(UNSIGNED_INT_RULE)
 			<< SUPERWEAPON_RECHARGE_TIME_RULE << rechargeTime;
+	}
+
+	static IRulesIniSection& BuildAirstrikeRules()
+	{
+		return TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(AIRSTRIKE_SECTION_NAME, 8u);
+	}
+
+	static IRulesIniSection& BuildIonCannonRules()
+	{
+		return TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(ION_CANNON_SECTION_NAME, 10u)
+			<< SUPERWEAPON_DAMAGE_RULE << 600u;
+	}
+
+	static IRulesIniSection& BuildNuclearStrikeRules()
+	{
+		return TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(NUCLEAR_STRIKE_SECTION_NAME, 14u)
+			<< SUPERWEAPON_DAMAGE_RULE << 1000u
+			<< SUPERWEAPON_DAMAGE_RADIUS_RULE << 4u
+			<< SUPERWEAPON_MULTIPLAYER_DAMAGE_RULE << 200u
+			<< SUPERWEAPON_MULTIPLAYER_DAMAGE_RADIUS_RULE << 3u;
 	}
 
 	static IRulesIniSection& BuildWeaponSection(SectionName name)
@@ -310,6 +339,7 @@ public:
 			.WithDefaultType(BOOL_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << BuildGenericRules(s)
+				  << BuildInfantryAndUnitSharedRules(s)
 				  << CRUSHABLE_RULE << BOOL_RULE
 				  << FEMALE_RULE
 				  << CRAWLING_RULE
@@ -328,6 +358,7 @@ public:
 			.WithDefaultType(BOOL_RULE)
 			.WithRules([](IRulesIniSection& s) {
 				s << BuildGenericRules(s)
+				  << BuildInfantryAndUnitSharedRules(s)
 				  << BuildUnitAndAircraftSharedRules(s)
 				  << BuildNonInfantrySharedRules(s)
 				  << CAN_BE_FOUND_IN_CRATE_RULE

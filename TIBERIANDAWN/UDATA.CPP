@@ -149,7 +149,9 @@ static UnitTypeClass const UnitFTank(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
-	MISSION_HUNT							// ORDERS:		Default order to give new unit.
+	MISSION_HUNT,							// ORDERS:		Default order to give new unit.
+	WARHEAD_FIRE,
+	200
 );
 
 // Stealth tank
@@ -471,7 +473,7 @@ static UnitTypeClass const UnitSAM(
 	TXT_MSAM,								// NAME:			Text name of this unit type.
 	TXT_MSAM_STRING,
 	"MLRS",									// NAME:			Text name of this unit type.
-	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
+	ANIM_NAPALM3,							// EXPLOSION:	Type of explosion when destroyed.
 	7,								// Build level.
 	STRUCT_ATOWER,			// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
@@ -514,7 +516,9 @@ static UnitTypeClass const UnitSAM(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
-	MISSION_HUNT							// ORDERS:		Default order to give new unit.
+	MISSION_HUNT,							// ORDERS:		Default order to give new unit.
+	WARHEAD_FIRE,
+	200
 );
 
 // Artillery
@@ -1269,7 +1273,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				MPHType maxSpeed,
 				unsigned rot,
 				int toffset,
-				MissionType order) :
+				MissionType order,
+				WarheadType deathExplosionWarhead,
+				unsigned int deathExplosionDamage) :
 					TechnoTypeClass(name,
 										friendlyName,
 										ininame,
@@ -1303,9 +1309,12 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										ownable,
 										houseListCsv,
 										primary,secondary,
-										armor)
+										armor,
+										true,
+										exp,
+										deathExplosionWarhead,
+										deathExplosionDamage)
 {
-	Explosion = exp;
 	IsChunkyShape = is_chunky;
 	Mission = order;
 	TurretOffset = toffset;

@@ -141,6 +141,18 @@ private:
 		);
 	}
 
+	AnimType ReadAnimationRule(RulesIniRule& rule)
+	{
+		return GetParsedStringRule<AnimType>(
+			rule,
+			"animation",
+			[&](const char* typeString) {
+				return &typeConverter.Parse<AnimType>(typeString);
+			},
+			ANIM_NONE
+		);
+	}
+
 	bool SetDefaultRuleValue(RulesIniRule& rule)
 	{
 		auto ruleType = rule.GetType();
@@ -191,6 +203,12 @@ private:
 		{
 			rule.SetValue(
 				ReadPrerequisiteRule(rule)
+			);
+		}
+		else if (ruleType == ANIMATION_RULE)
+		{
+			rule.SetValue(
+				ReadAnimationRule(rule)
 			);
 		}
 		else

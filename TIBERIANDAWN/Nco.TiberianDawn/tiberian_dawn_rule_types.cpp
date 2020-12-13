@@ -19,4 +19,6 @@ void RegisterTiberianDawnRuleTypes()
 	RegisterRuleType<unsigned int>(ARMOR_TYPE_RULE);
 
 	RegisterRuleType<long>(PREREQ_RULE);
+
+	RegisterRuleType<>(ANIMATION_RULE);
 }

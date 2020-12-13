@@ -56,7 +56,6 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
 
     if (loadFailed)
     {
-        // TODO: show error getting rubbish data for error even know it's present and fine
         ShowError("Loading NCO lua library failed: %s", loadResult.GetError());
     }
 

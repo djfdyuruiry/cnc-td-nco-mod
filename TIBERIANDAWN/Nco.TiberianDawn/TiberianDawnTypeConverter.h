@@ -36,6 +36,7 @@ private:
 	TwoWayStringMap<UnitType>& unitMap;
 	TwoWayStringMap<UnitType>& unitModsMap;
 	std::map<long, StructType>& prereqToStructMap;
+	TwoWayStringMap<AnimType>& animationMap;
 
 	TiberianDawnTypeConverter() :
 		difficultyMap(
@@ -109,6 +110,7 @@ private:
 			TwoWayStringMap<WarheadType>::Build(
 				"Warhead",
 				{
+					{ WARHEAD_NONE, "NONE" },
 					{ WARHEAD_SA, "SA" },
 					{ WARHEAD_HE, "HE" },
 					{ WARHEAD_AP, "AP" },
@@ -360,7 +362,100 @@ private:
 			{ STRUCTF_BARRACKS, STRUCT_BARRACKS },
 			{ STRUCTF_TANKER, STRUCT_TANKER },
 			{ STRUCTF_MISSION, STRUCT_MISSION }
-		}))
+		})),
+		animationMap(
+			TwoWayStringMap<AnimType>::Build(
+				"Animation",
+				{
+					{ ANIM_NONE, "NONE" },
+					{ ANIM_FBALL1, "FBALL1" },
+					{ ANIM_GRENADE, "GRENADE" },
+					{ ANIM_FRAG1, "FRAG1" },
+					{ ANIM_FRAG2, "FRAG2" },
+					{ ANIM_VEH_HIT1, "VEH_HIT1" },
+					{ ANIM_VEH_HIT2, "VEH_HIT2" },
+					{ ANIM_VEH_HIT3, "VEH_HIT3" },
+					{ ANIM_ART_EXP1, "ART_EXP1" },
+					{ ANIM_NAPALM1, "NAPALM1" },
+					{ ANIM_NAPALM2, "NAPALM2" },
+					{ ANIM_NAPALM3, "NAPALM3" },
+					{ ANIM_SMOKE_PUFF, "SMOKE_PUFF" },
+					{ ANIM_PIFF, "PIFF" },
+					{ ANIM_PIFFPIFF, "PIFFPIFF" },
+					{ ANIM_FLAME_N, "FLAME_N" },
+					{ ANIM_FLAME_NE, "FLAME_NE" },
+					{ ANIM_FLAME_E, "FLAME_E" },
+					{ ANIM_FLAME_SE, "FLAME_SE" },
+					{ ANIM_FLAME_S, "FLAME_S" },
+					{ ANIM_FLAME_SW, "FLAME_SW" },
+					{ ANIM_FLAME_W, "FLAME_W" },
+					{ ANIM_FLAME_NW, "FLAME_NW" },
+					{ ANIM_CHEM_N, "CHEM_N" },
+					{ ANIM_CHEM_NE, "CHEM_NE" },
+					{ ANIM_CHEM_E, "CHEM_E" },
+					{ ANIM_CHEM_SE, "CHEM_SE" },
+					{ ANIM_CHEM_S, "CHEM_S" },
+					{ ANIM_CHEM_SW, "CHEM_SW" },
+					{ ANIM_CHEM_W, "CHEM_W" },
+					{ ANIM_CHEM_NW, "CHEM_NW" },
+					{ ANIM_FIRE_SMALL, "FIRE_SMALL" },
+					{ ANIM_FIRE_MED, "FIRE_MED" },
+					{ ANIM_FIRE_MED2, "FIRE_MED2" },
+					{ ANIM_FIRE_TINY, "FIRE_TINY" },
+					{ ANIM_MUZZLE_FLASH, "MUZZLE_FLASH" },
+					{ ANIM_SMOKE_M, "SMOKE_M" },
+					{ ANIM_BURN_SMALL, "BURN_SMALL" },
+					{ ANIM_BURN_MED, "BURN_MED" },
+					{ ANIM_BURN_BIG, "BURN_BIG" },
+					{ ANIM_ON_FIRE_SMALL, "ON_FIRE_SMALL" },
+					{ ANIM_ON_FIRE_MED, "ON_FIRE_MED" },
+					{ ANIM_ON_FIRE_BIG, "ON_FIRE_BIG" },
+					{ ANIM_SAM_N, "SAM_N" },
+					{ ANIM_SAM_NE, "SAM_NE" },
+					{ ANIM_SAM_E, "SAM_E" },
+					{ ANIM_SAM_SE, "SAM_SE" },
+					{ ANIM_SAM_S, "SAM_S" },
+					{ ANIM_SAM_SW, "SAM_SW" },
+					{ ANIM_SAM_W, "SAM_W" },
+					{ ANIM_SAM_NW, "SAM_NW" },
+					{ ANIM_GUN_N, "GUN_N" },
+					{ ANIM_GUN_NE, "GUN_NE" },
+					{ ANIM_GUN_E, "GUN_E" },
+					{ ANIM_GUN_SE, "GUN_SE" },
+					{ ANIM_GUN_S, "GUN_S" },
+					{ ANIM_GUN_SW, "GUN_SW" },
+					{ ANIM_GUN_W, "GUN_W" },
+					{ ANIM_GUN_NW, "GUN_NW" },
+					{ ANIM_LZ_SMOKE, "LZ_SMOKE" },
+					{ ANIM_ION_CANNON, "ION_CANNON" },
+					{ ANIM_ATOM_BLAST, "ATOM_BLAST" },
+					{ ANIM_CRATE_DEVIATOR, "CRATE_DEVIATOR" },
+					{ ANIM_CRATE_DOLLAR, "CRATE_DOLLAR" },
+					{ ANIM_CRATE_EARTH, "CRATE_EARTH" },
+					{ ANIM_CRATE_EMPULSE, "CRATE_EMPULSE" },
+					{ ANIM_CRATE_INVUN, "CRATE_INVUN" },
+					{ ANIM_CRATE_MINE, "CRATE_MINE" },
+					{ ANIM_CRATE_RAPID, "CRATE_RAPID" },
+					{ ANIM_CRATE_STEALTH, "CRATE_STEALTH" },
+					{ ANIM_CRATE_MISSILE, "CRATE_MISSILE" },
+					{ ANIM_ATOM_DOOR, "ATOM_DOOR" },
+					{ ANIM_MOVE_FLASH, "MOVE_FLASH" },
+					{ ANIM_OILFIELD_BURN, "OILFIELD_BURN" },
+					{ ANIM_TRIC_DIE, "TRIC_DIE" },
+					{ ANIM_TREX_DIE, "TREX_DIE" },
+					{ ANIM_STEG_DIE, "STEG_DIE" },
+					{ ANIM_RAPT_DIE, "RAPT_DIE" },
+					{ ANIM_CHEM_BALL, "CHEM_BALL" },
+					{ ANIM_FLAG, "FLAG" },
+					{ ANIM_BEACON, "BEACON" },
+					{ ANIM_FIRE_SMALL_VIRTUAL, "FIRE_SMALL_VIRTUAL" },
+					{ ANIM_FIRE_MED_VIRTUAL, "FIRE_MED_VIRTUAL" },
+					{ ANIM_FIRE_MED2_VIRTUAL, "FIRE_MED2_VIRTUAL" },
+					{ ANIM_FIRE_TINY_VIRTUAL, "FIRE_TINY_VIRTUAL" },
+					{ ANIM_BEACON_VIRTUAL, "BEACON_VIRTUAL" }
+				}
+			)
+		)
 	{
 	}
 
@@ -391,6 +486,7 @@ public:
 		delete &unitMap;
 		delete &unitModsMap;
 		delete &prereqToStructMap;
+		delete &animationMap;
 	}
 
 	template <class T> TwoWayStringMap<T>& GetTypeMap()
@@ -443,6 +539,10 @@ public:
 		{
 			return unitMap;
 		}
+		else if constexpr (std::is_same<T, AnimType>())
+		{
+			return animationMap;
+		}
 	}
 
 	template <class T> TwoWayStringMap<T>& GetModTypeMap()
@@ -489,7 +589,7 @@ public:
 			|| std::is_same<T, StructType>()
 			|| std::is_same<T, InfantryType>()
 			|| std::is_same<T, UnitType>()
-			)
+		)
 		{
 			if (result.IsErrorResult() && !ignoreModTypes)
 			{

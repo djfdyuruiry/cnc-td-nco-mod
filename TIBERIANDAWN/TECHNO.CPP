@@ -171,6 +171,11 @@ void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
 	type->IsNominal = NcoRulesRuntime().ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, type->IsNominal);
 	type->IsFlammable = Read_Is_Flammable(iniName, type->IsFlammable);
 
+	type->ExplodesUponDeath = NcoRulesRuntime().ReadRuleValue<bool>(iniName, EXPLODES_UPON_DEATH_RULE, type->ExplodesUponDeath);
+	type->DeathExplosionAnimation = NcoRulesRuntime().ReadRuleValue<AnimType>(iniName, DEATH_EXPLOSION_ANIMATION_RULE, type->DeathExplosionAnimation);
+	type->DeathExplosionWarhead = NcoRulesRuntime().ReadRuleValue<WarheadType>(iniName, DEATH_EXPLOSION_WARHEAD_RULE, type->DeathExplosionWarhead);
+	type->DeathExplosionDamage = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, DEATH_EXPLOSION_DAMAGE_RULE, type->DeathExplosionDamage);
+
 	type->Calculate_Risk();
 }
 
@@ -224,7 +229,11 @@ TechnoTypeClass::TechnoTypeClass(
 		const char* houseListCsv,
 		WeaponType primary,
 		WeaponType secondary,
-		ArmorType armor) :
+		ArmorType armor,
+		bool explodesUponDeath,
+		AnimType deathExplosionAnimation,
+		WarheadType deathExplosionWarhead,
+		unsigned int deathExplosionDamage) :
 	ObjectTypeClass(true,
 					is_flammable,
 					is_crushable,
@@ -286,6 +295,11 @@ TechnoTypeClass::TechnoTypeClass(
 	IsTurretEquipped = is_turret_equipped;
 	IsNominal = is_nominal;
 
+	ExplodesUponDeath = explodesUponDeath;
+	DeathExplosionAnimation = deathExplosionAnimation;
+	DeathExplosionWarhead = deathExplosionWarhead;
+	DeathExplosionDamage = deathExplosionDamage;
+
 	Calculate_Risk();
 }
 
@@ -298,7 +312,7 @@ void TechnoTypeClass::Calculate_Risk(void) const
 	auto ref = (TechnoTypeClass*)this;
 
 	// TODO: read some `Game` rule to allow modifying the outcome of this calculation
-//	ref->Risk = (WeaponTypeClass::As_Reference(Primary).Attack * (WeaponTypeClass::As_Reference(Primary).Range >> 4)) / WeaponTypeClass::As_Reference(Primary).ROF;
+	//ref->Risk = (WeaponTypeClass::As_Reference(Primary).Attack * (WeaponTypeClass::As_Reference(Primary).Range >> 4)) / WeaponTypeClass::As_Reference(Primary).ROF;
 }
 
 /***********************************************************************************************

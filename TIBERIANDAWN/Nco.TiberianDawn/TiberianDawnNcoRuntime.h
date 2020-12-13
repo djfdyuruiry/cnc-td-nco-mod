@@ -32,9 +32,9 @@ private:
                     r << TiberianDawnRuleSectionBuilder::BuildModRules()
                       << TiberianDawnRuleSectionBuilder::BuildGameRules()
 
-                      << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(AIRSTRIKE_SECTION_NAME, 8u)
-                      << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(ION_CANNON_SECTION_NAME, 10u)
-                      << TiberianDawnRuleSectionBuilder::BuildSuperweaponRules(NUCLEAR_STRIKE_SECTION_NAME, 14u);
+                      << TiberianDawnRuleSectionBuilder::BuildAirstrikeRules()
+                      << TiberianDawnRuleSectionBuilder::BuildIonCannonRules()
+                      << TiberianDawnRuleSectionBuilder::BuildNuclearStrikeRules();
                 },
                 [&](auto rules)
                 {

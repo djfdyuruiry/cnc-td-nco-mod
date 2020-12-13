@@ -24,6 +24,8 @@
 
 #define TIBERIUM_INFANTRY_DAMAGE_RULE "TiberiumInfantryDamage"
 
+#define TIBERIUM_BLOSSOM_TREE_DAMAGE_RULE "TiberiumBlossomTreeDamage"
+
 // harvesting rules
 #define CREDITS_PER_TIBERIUM_SCOOP_RULE "CreditsPerTiberiumScoop"
 

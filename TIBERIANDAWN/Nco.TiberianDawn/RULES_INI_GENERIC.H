@@ -59,6 +59,14 @@
 
 #define TRANSPORTER_RULE "CanTransportInfantry"
 
+#define EXPLODES_UPON_DEATH_RULE "ExplodesUponDeath"
+
+#define DEATH_EXPLOSION_ANIMATION_RULE "DeathExplosionAnimation"
+
+#define DEATH_EXPLOSION_WARHEAD_RULE "DeathExplosionWarhead"
+
+#define DEATH_EXPLOSION_DAMAGE_RULE "DeathExplosionDamage"
+
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
 

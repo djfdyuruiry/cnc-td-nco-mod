@@ -196,7 +196,11 @@ static InfantryTypeClass const E2(
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	WEAPON_GRENADE,
 	WEAPON_NONE,
-	MPH_SLOW_ISH  // Maximum speed of infantry.
+	MPH_SLOW_ISH,  // Maximum speed of infantry.
+	true,
+	ANIM_ART_EXP1,
+	WARHEAD_HE,
+	30u
 );
 
 
@@ -340,7 +344,11 @@ static InfantryTypeClass const E4(
 	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD,					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	WEAPON_FLAMETHROWER,WEAPON_NONE,
-	MPH_SLOW_ISH // Maximum speed of infantry.
+	MPH_SLOW_ISH, // Maximum speed of infantry.
+	true,
+	ANIM_NAPALM1,
+	WARHEAD_FIRE,
+	80
 );
 
 // Chemwarrior
@@ -410,7 +418,11 @@ static InfantryTypeClass const E5(
 	HOUSEF_BAD | HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP,					// Who can own this infantry unit.
 	"BADGUY,MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
 	WEAPON_CHEMSPRAY,WEAPON_NONE,
-	MPH_SLOW // Maximum speed of infantry.
+	MPH_SLOW, // Maximum speed of infantry.
+	true,
+	ANIM_CHEM_BALL,
+	WARHEAD_HE,
+	80
 );
 
 // Engineer
@@ -1532,15 +1544,21 @@ InfantryTypeClass::InfantryTypeClass(
 						int reward,
 						int ownable,
 						const char* houseListCsv,
-						WeaponType primary, WeaponType secondary,
-						MPHType maxspeed)
+						WeaponType primary,
+						WeaponType secondary,
+						MPHType maxspeed,
+						bool explodesUponDeath,
+						AnimType deathExplosionAnimation,
+						WarheadType deathExplosionWarhead,
+						unsigned int deathExplosionDamage)
 	: TechnoTypeClass(name, friendlyName, ininame, level, pre,
 							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
 							is_theater, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable, houseListCsv,
 							primary, secondary,
-							ARMOR_NONE)
+							ARMOR_NONE,
+							explodesUponDeath, deathExplosionAnimation, deathExplosionWarhead, deathExplosionDamage)
 {
 	Type = type;
 	FireLaunch = firelaunch;

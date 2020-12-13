@@ -11,5 +11,6 @@ const RulesIniType FACTORY_RULE_TYPE = RULE_TYPE_EXTENSION(4);
 const RulesIniType WARHEAD_RULE = RULE_TYPE_EXTENSION(5);
 const RulesIniType BULLET_RULE = RULE_TYPE_EXTENSION(6);
 const RulesIniType PREREQ_RULE = RULE_TYPE_EXTENSION(7);
+const RulesIniType ANIMATION_RULE = RULE_TYPE_EXTENSION(8);
 
 void RegisterTiberianDawnRuleTypes();

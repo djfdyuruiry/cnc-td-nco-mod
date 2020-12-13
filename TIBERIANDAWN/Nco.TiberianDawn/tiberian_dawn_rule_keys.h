@@ -14,6 +14,8 @@ extern const RulesIniRuleKey* WEAPON_COUNT_RULE_KEY;
 // game rules
 extern const RulesIniRuleKey* MAX_BUILD_DISTANCE_RULE_KEY;
 
+extern const RulesIniRuleKey* TIBERIUM_BLOSSOM_TREE_DAMAGE_RULE_KEY;
+
 extern const RulesIniRuleKey* CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY;
 extern const RulesIniRuleKey* MAX_HARVESTER_CAPACITY_RULE_KEY;
 

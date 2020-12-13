@@ -690,7 +690,6 @@
     <ClCompile Include="TERRAIN.CPP" />
     <ClCompile Include="TEXTBTN.CPP" />
     <ClCompile Include="THEME.CPP" />
-    <ClCompile Include="TiberianDawnRulesReader.cpp" />
     <ClCompile Include="TOGGLE.CPP" />
     <ClCompile Include="TRIGGER.CPP" />
     <ClCompile Include="TURRET.CPP" />

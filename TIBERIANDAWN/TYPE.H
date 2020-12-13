@@ -371,6 +371,11 @@ class TechnoTypeClass : public ObjectTypeClass
 
 		unsigned int TransportCapacity;
 
+		bool ExplodesUponDeath;
+		AnimType DeathExplosionAnimation;
+		WarheadType DeathExplosionWarhead;
+		unsigned int DeathExplosionDamage;
+
 		//--------------------------------------------------------------------
 		TechnoTypeClass(
 				int name,
@@ -407,7 +412,11 @@ class TechnoTypeClass : public ObjectTypeClass
 				const char * houseListCsv,
 				WeaponType primary,
 				WeaponType secondary,
-				ArmorType armor);
+				ArmorType armor,
+				bool explodesUponDeath = false,
+				AnimType deathExplosionAnimation = ANIM_NONE,
+				WarheadType deathExplosionWarhead = WARHEAD_NONE,
+				unsigned int deathExplosionDamage = 0);
 
 		static void ReadTechnoRules(TechnoTypeClass* type);
 
@@ -1089,11 +1098,6 @@ private:
 		MissionType Mission;
 
 		/*
-		**	This is the default explosion to use when this vehicle is destroyed.
-		*/
-		AnimType Explosion;
-
-		/*
 		**	The width or height of the largest dimension for this unit.
 		*/
 		int MaxSize;
@@ -1153,7 +1157,9 @@ private:
 						MPHType maxSpeed,
 						unsigned rot,
 						int toffset,
-						MissionType order);
+						MissionType order,
+						WarheadType deathExplosionWarhead = WARHEAD_NONE,
+						unsigned int deathExplosionDamage = 0);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_UNITTYPE;};
 
 		static UnitType  From_Name(char const *name);
@@ -1295,7 +1301,11 @@ class InfantryTypeClass : public TechnoTypeClass
 						const char* houseListCsv,
 						WeaponType primary,
 						WeaponType secondary,
-						MPHType maxSpeed);
+						MPHType maxSpeed,
+						bool explodesUponDeath = false,
+						AnimType deathExplosionAnimation = ANIM_NONE,
+						WarheadType deathExplosionWarhead = WARHEAD_NONE,
+						unsigned int deathExplosionDamage = 0);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_INFANTRYTYPE;};
 
 		static InfantryType  From_Name(char const *name);

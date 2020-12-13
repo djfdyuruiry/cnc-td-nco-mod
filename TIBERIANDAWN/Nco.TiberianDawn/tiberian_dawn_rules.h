@@ -53,6 +53,8 @@
 // game lookups
 #define Read_Build_Distance_Game_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(MAX_BUILD_DISTANCE_RULE_KEY)
 
+#define Read_Blossom_Tree_Damage_Game_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(TIBERIUM_BLOSSOM_TREE_DAMAGE_RULE_KEY)
+
 #define Read_Credits_Per_Scoop_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(CREDITS_PER_TIBERIUM_SCOOP_RULE_KEY)
 
 #define Read_Harvester_Capacity_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(MAX_HARVESTER_CAPACITY_RULE_KEY)
@@ -85,6 +87,9 @@
 #define Read_Max_Iq_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(IQ_SECTION_NAME, MAX_IQ_RULE)
 
 #define ReadIqRule(entry) NcoRulesRuntime().ReadRuleValue<unsigned int>(IQ_SECTION_NAME, entry)
+
+// superwepaon lookups
+#define Read_Superweapon_Rule(superwepon, entry) NcoRulesRuntime().ReadRuleValue<unsigned int>(superwepon, entry)
 
 // weapon lookups
 #define Read_Weapon_Damage(bulletType, defaultValue) (unsigned char) NcoRulesRuntime().ReadRuleValue<unsigned int>(bulletType, WEAPON_DAMAGE_RULE, defaultValue)

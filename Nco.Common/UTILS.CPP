@@ -29,9 +29,7 @@ void ShowError(const char* messageFormat, ...)
 	va_list formatArgs;
 	va_start(formatArgs, messageFormat);
 
-	auto formattedMessageBuffer = FormatString(messageFormat, GetLogger().GetLogLineLength, formatArgs);
-
-	va_end(formatArgs);
+	auto formattedMessageBuffer = FormatString(messageFormat, GetLogger().GetLogLineLength(), formatArgs);
 
 	LogError(formattedMessageBuffer);
 
@@ -44,6 +42,8 @@ void ShowError(const char* messageFormat, ...)
 		MB_OK | MB_ICONSTOP
 	);
 	#endif
+
+	va_end(formatArgs);
 
 	delete formattedMessageBuffer;
 }

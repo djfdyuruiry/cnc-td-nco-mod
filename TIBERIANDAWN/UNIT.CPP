@@ -895,6 +895,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 
 	/*
 	**	Remember if this object was selected. If it was and it gets destroyed and it has
+	* 
 	**	passengers that pop out, then the passengers will inherit the select state.
 	*/
 	bool select = (Is_Selected_By_Player() && Is_Owned_By_Player());			// Fox for GlyphX multiplayer. ST - 4/16/2019 9:46AM
@@ -907,40 +908,33 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 
 	if (res == RESULT_DESTROYED) {
 		Death_Announcement(source);
-		if (Class->Explosion != ANIM_NONE) {
-			AnimType anim = Class->Explosion;
+
+		if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
+			Sound_Effect(VOC_DINODIE1, Coord);
+		}
+
+		auto explosionAnim = Class->DeathExplosionAnimation;
+
+		if (Class->ExplodesUponDeath) {
+			new AnimClass(explosionAnim, Coord);
 
 			/*
-			**	SSM launchers will really explode big if they are carrying
-			**	missiles at the time of the explosion.
+			**	SSM launchers will only really explode upon death if 
+			**  they are carrying missiles at the time of the death.
 			*/
-			if (*this == UNIT_MSAM && Ammo) {
-				anim = ANIM_NAPALM3;
+			if (Class->Type != UNIT_MSAM || Ammo) {
+				Explosion_Damage(Coord, Class->DeathExplosionDamage, source, Class->DeathExplosionWarhead);
 			}
+		}
 
-			if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
-				Sound_Effect(VOC_DINODIE1, Coord);
-			}
-
-			new AnimClass(anim, Coord);
-
-			/*
-			**	When the flame tank blows up, it really blows up. It is
-			**	equivalent to a napalm strike.
-			*/
-			if (Class->Explosion == ANIM_NAPALM3) {
-				Explosion_Damage(Coord, 200, source, WARHEAD_FIRE);
-			}
-
-			/*
-			**	Very strong units that have an explosion will also rock the
-			**	screen when they are destroyed.
-			*/
-			if (Class->MaxStrength > 400) {
-				Shake_The_Screen(3, Owner());
-				if (source && Owner() != source->Owner()) {
-					Shake_The_Screen(3, source->Owner());
-				}
+		/*
+		**	Very strong units that have an explosion will also rock the
+		**	screen when they are destroyed.
+		*/
+		if (Class->MaxStrength > 400) {
+			Shake_The_Screen(3, Owner());
+			if (source && Owner() != source->Owner()) {
+				Shake_The_Screen(3, source->Owner());
 			}
 		}
 

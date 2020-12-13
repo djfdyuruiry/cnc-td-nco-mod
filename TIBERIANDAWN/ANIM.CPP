@@ -1059,13 +1059,16 @@ void AnimClass::Middle(void)
 			if (!building) building = (BuildingClass *)backup;
 		}
 
-		int radius = 3;
-		int rawdamage = 200;
+		int radius = Read_Superweapon_Rule(NUCLEAR_STRIKE_SECTION_NAME, SUPERWEAPON_MULTIPLAYER_DAMAGE_RADIUS_RULE);
+		int rawdamage = Read_Superweapon_Rule(NUCLEAR_STRIKE_SECTION_NAME, SUPERWEAPON_MULTIPLAYER_DAMAGE_RULE);
+
 		if (GameToPlay == GAME_NORMAL) {
-			radius = 4;
-			rawdamage = 1000;
+			radius = Read_Superweapon_Rule(NUCLEAR_STRIKE_SECTION_NAME, SUPERWEAPON_DAMAGE_RADIUS_RULE);
+			rawdamage = Read_Superweapon_Rule(NUCLEAR_STRIKE_SECTION_NAME, SUPERWEAPON_DAMAGE_RULE);
+
 			Fade_Palette_To(WhitePalette, 30, NULL);
 		}
+
 		for (int x = -radius; x <= radius; x++) {
 			for (int y = -radius; y <= radius; y++) {
 				int xpos = Cell_X(cell) + x;
@@ -1174,7 +1177,9 @@ void AnimClass::Middle(void)
 
 					if (!building) building = (BuildingClass *)backup;
 				}
-				Explosion_Damage(Center_Coord(), 600, building, WARHEAD_PB);
+				auto ionCannonDamage = Read_Superweapon_Rule(ION_CANNON_SECTION_NAME, SUPERWEAPON_DAMAGE_RULE);
+
+				Explosion_Damage(Center_Coord(), ionCannonDamage, building, WARHEAD_PB);
 			}
 			break;
 
