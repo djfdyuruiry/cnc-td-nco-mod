@@ -23,6 +23,58 @@ private:
 	{
 	}
 
+	bool OutputLuaTable(ILuaStateWrapper& luaState, int stackIndex, unsigned int depth)
+	{		
+		auto index = -1;
+		auto printStatus = PrintLuaOutput("{\r\n");
+
+		if (!printStatus)
+		{
+			return false;
+		}
+
+		auto indent = RepeatString("  ", depth + 1);
+
+		auto& tableResult = luaRuntime.GetState().IterateOverTable(stackIndex, [&](auto keyIndex, auto valueIndex, auto& _) {
+			index++;
+
+			if (!printStatus)
+			{
+				return;
+			}
+
+			printStatus = index == 0 ? PrintLuaOutput(indent) : PrintLuaOutput(",\r\n") && PrintLuaOutput(indent);
+
+			if (printStatus && !luaState.IsInt(keyIndex))
+			{
+				// print key if it is not a number index
+				printStatus = printStatus && PrintLuaOutput(luaState.ToString(keyIndex))
+					&& PrintLuaOutput(" = ");
+			}
+
+			if (luaState.IsTable(valueIndex))
+			{
+				printStatus = printStatus && PrintLuaOutput("\r\n") && PrintLuaOutput(indent);
+			}
+
+			// output value
+			printStatus = printStatus && OutputLuaResult(valueIndex, depth + 1);
+		});
+
+		delete &tableResult;
+		delete indent;
+
+		indent = RepeatString("  ", depth);
+
+		printStatus = printStatus && PrintLuaOutput("\r\n") 
+			&& PrintLuaOutput(indent)
+			&& PrintLuaOutput("}");
+
+		delete indent;
+
+		return printStatus;
+	}
+
 	bool PrintLuaOutput(const char* output)
 	{
 		if (StringIsEmpty(output))
@@ -67,54 +119,7 @@ private:
 
 		if (LuaType::AreEqual(luaType, LuaType::Table))
 		{
-			auto index = -1;
-			auto printStatus = PrintLuaOutput("{\r\n");
-
-			if (!printStatus)
-			{
-				return false;
-			}
-
-			auto indent = RepeatString("  ", depth + 1);
-
-			auto& tableResult = luaRuntime.GetState().IterateOverTable(stackIndex, [&](auto keyIndex, auto valueIndex, auto& _) {
-				index++;
-
-				if (!printStatus)
-				{
-					return;
-				}
-
-				printStatus = index == 0 ? PrintLuaOutput(indent) : PrintLuaOutput(",\r\n") && PrintLuaOutput(indent);
-
-				if (printStatus && !luaState.IsInt(keyIndex))
-				{
-					// print key if it is not a number index
-					printStatus = printStatus && PrintLuaOutput(luaState.ToString(keyIndex))
-						&& PrintLuaOutput(" = ");
-				}
-
-				if (luaState.IsTable(valueIndex))
-				{
-					printStatus = printStatus && PrintLuaOutput("\r\n") && PrintLuaOutput(indent);
-				}
-
-				// output value
-				printStatus = printStatus && OutputLuaResult(valueIndex, depth + 1);
-			});
-
-			delete &tableResult;
-			delete indent;
-
-			indent = RepeatString("  ", depth);
-
-			printStatus = printStatus && PrintLuaOutput("\r\n") 
-				&& PrintLuaOutput(indent)
-				&& PrintLuaOutput("}");
-
-			delete indent;
-
-			return printStatus;
+			return OutputLuaTable(luaState, stackIndex, depth);
 		}
 		
 		if (valueAsString != NULL)

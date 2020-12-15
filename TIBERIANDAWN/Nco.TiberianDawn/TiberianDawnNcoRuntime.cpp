@@ -1,8 +1,8 @@
 #pragma once
 
 #include <IRulesIniSection.h>
-#include <RuleSectionApi.h>
 #include <LuaRepl.h>
+#include <RulesApi.h>
 #include <utils.h>
 
 #include "../FUNCTION.H"
@@ -39,11 +39,6 @@ template<class T> static void RegisterApi(ILuaRuntime& luaRuntime)
     luaRuntime.RegisterApi(T::Build());
 }
 
-template<class T> void RegisterApi(ILuaRuntime& luaRuntime, IRulesIniSection& ruleInfo)
-{
-    luaRuntime.RegisterApi(T::Build(ruleInfo));
-}
-
 template<class T> void RegisterApi(ILuaRuntime& luaRuntime, IRulesIniSection& ruleInfo, std::function<int(void)> getCount)
 {
     luaRuntime.RegisterApi(T::Build(ruleInfo, getCount));
@@ -68,10 +63,8 @@ bool TiberianDawnNcoRuntime::InitialiseLuaCppApi()
 {
     LogDebug("Initialising Lua API functions");
 
-    RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetNcoRules());
-    RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetEnhancementRules());
-    RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetGameRules());
-
+    luaRuntime.RegisterApi(RulesApi::Build(rulesRuntime));
+    
     RegisterApi<InfantryApi>(
         luaRuntime,
         rulesInfo.GetInfantryRules(),

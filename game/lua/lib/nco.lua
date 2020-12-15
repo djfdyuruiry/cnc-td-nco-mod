@@ -1,10 +1,12 @@
 local Utils = require("nco.Utils")
 local Events = require("nco.EventBus")
-local TypeApiProxy = require("nco.TypeApiProxy")
+local RulesApiProxy = require("nco.RulesApiProxy")
 
-local function loadNativeTypeApiMixin()
+local function loadNativeApiMixins()
+  Nco.Rules = RulesApiProxy(Nco.Rules)
+
   for _, type in ipairs(Nco.Info.getTypeNames()) do
-    Nco[type] = TypeApiProxy(Nco[type])
+    Nco[type] = RulesApiProxy(Nco[type])
   end
 end
 
@@ -27,7 +29,7 @@ local function loadNativeApis()
 
   Nco.Events = Events()
 
-  loadNativeTypeApiMixin()
+  loadNativeApiMixins()
 end
 
 loadNativeApis()

@@ -69,19 +69,22 @@ private:
 		sectionKeys.push_back(key);
 	}
 
-	void ValidateStringRuleValue(RulesIniRule& rule, char* valueBuffer)
+	void ValidateStringRuleValue(RulesIniRule& rule, const char* valueBuffer)
 	{
 		auto valueIsValid = false;
 		auto validValues = rule.GetValidValues<const char*>();
+		auto upperValue = ConvertStringToUpperCase(valueBuffer);
 
 		for (auto validValue : validValues)
 		{
-			if (StringsAreEqual(valueBuffer, validValue))
+			if (StringsAreEqual(upperValue, validValue))
 			{
 				valueIsValid = true;
 				break;
 			}
 		}
+
+		delete upperValue;
 
 		if (valueIsValid)
 		{
@@ -216,8 +219,6 @@ public:
 			return defaultCopy;
 		}
 
-		strupr(valueBuffer);
-
 		if(rule.HasValidValues())
 		{
 			ValidateStringRuleValue(rule, valueBuffer);
@@ -306,9 +307,19 @@ public:
 		return sections.find(key) != sections.end();
 	}
 
+	bool HasSection(const char* key)
+	{
+		return HasSection(RuleHashUtils::BuildRuleKey(key));
+	}
+
 	bool HasSectionForRule(RulesIniRule& rule)
 	{
 		return HasSection(rule.GetSectionKey());
+	}
+
+	const std::vector<const char*>& GetSectionNames()
+	{
+		return sectionNames;
 	}
 
 	IRulesIniSection& GetSectionForRule(RulesIniRule& rule)

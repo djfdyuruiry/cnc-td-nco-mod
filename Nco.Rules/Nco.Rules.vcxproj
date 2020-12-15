@@ -45,7 +45,7 @@
     <ClInclude Include="RulesIniSectionBuilder.h" />
     <ClInclude Include="RulesIniTypes.h" />
     <ClInclude Include="RulesRuntime.h" />
-    <ClInclude Include="RuleSectionApi.h" />
+    <ClInclude Include="RulesApi.h" />
     <ClInclude Include="RulesSectionTypeWrapperApi.h" />
     <ClInclude Include="rules_ini_ai.h" />
     <ClInclude Include="rules_ini_difficulty.h" />

@@ -18,6 +18,11 @@ public:
 		return *(new ResultWithValue<T>(value));
 	}
 
+	static ResultWithValue& BuildWithError()
+	{
+		return *(new ResultWithValue<T>(TypeUtils::GetDefaultValue<T>()));
+	}
+
 	static ResultWithValue& BuildWithError(char* error)
 	{
 		return *(new ResultWithValue<T>(TypeUtils::GetDefaultValue<T>(), error));

@@ -61,7 +61,7 @@ protected:
 	{
 		auto defaultValue = rule.GetDefaultValueOr(false);
 
-		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		auto& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
@@ -90,7 +90,7 @@ protected:
 		LogTrace("Resolving rule value: %s", rule.GetStringKey());
 		LogTrace("Default value: %u", defaultValue);
 
-		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		auto& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
@@ -103,7 +103,7 @@ protected:
 
 		auto ruleValueStr = ruleValueOptional.Get<char*>();
 
-		bool isValid = IsUnsignedIntString(ruleValueStr);
+		auto isValid = IsUnsignedIntString(ruleValueStr);
 
 		if (!isValid)
 		{
@@ -183,7 +183,7 @@ protected:
 
 		auto ruleValueStr = ruleValueOptional.Get<char*>();
 
-		bool isValid = IsDoubleString(ruleValueStr);
+		auto isValid = IsDoubleString(ruleValueStr);
 
 		if (!isValid)
 		{
@@ -289,7 +289,7 @@ public:
 			rulesIni << key.Section;
 		}
 
-		IRulesIniSection& section = rulesIni[key.SectionKey];
+		auto& section = rulesIni[key.SectionKey];
 
 		if (!section.HasRule(key.RuleKey))
 		{
@@ -301,9 +301,8 @@ public:
 
 	RulesIniRule& GetRule(SectionName section, RuleName ruleName)
 	{
-		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
-
-		RulesIniRule& rule = GetRule(key);
+		auto& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
+		auto& rule = GetRule(key);
 
 		delete &key;
 

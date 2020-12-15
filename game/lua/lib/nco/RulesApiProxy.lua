@@ -1,4 +1,4 @@
-local function TypeInstanceRuleProxy(getRule, setRule, ruleName)
+local function RulesSectionRuleProxy(getRule, setRule, ruleName)
   return setmetatable(
     {},
     {
@@ -13,13 +13,13 @@ local function TypeInstanceRuleProxy(getRule, setRule, ruleName)
   )
 end
 
-local function TypeInstanceProxy(typeApi, instanceName)  
+local function RulesSectionProxy(api, sectionName)  
   local function getRule(...)
-    return typeApi.getRule(instanceName, ...)
+    return api.getRule(sectionName, ...)
   end
 
   local function setRule(...)
-    return typeApi.setRule(instanceName, ...)
+    return api.setRule(sectionName, ...)
   end
 
   return setmetatable(
@@ -29,21 +29,21 @@ local function TypeInstanceProxy(typeApi, instanceName)
     },
     {
       __index = function(_, ruleName)
-        return TypeInstanceRuleProxy(getRule, setRule, ruleName)
+        return RulesSectionRuleProxy(getRule, setRule, ruleName)
       end
     }
   )
 end
 
-local function TypeApiProxy(typeApi)
+local function RulesApiProxy(api)
   return setmetatable(
-    typeApi,
+    api,
     {
-      __index = function(_, typeInstance)
-        return TypeInstanceProxy(typeApi, typeInstance)
+      __index = function(_, sectionName)
+        return RulesSectionProxy(api, sectionName)
       end
     }
   )
 end
 
-return TypeApiProxy
+return RulesApiProxy

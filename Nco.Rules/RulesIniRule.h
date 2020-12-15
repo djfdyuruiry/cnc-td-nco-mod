@@ -507,8 +507,4 @@ public:
 		WriteRuleValueToString(string, value);
 	}
 
-	void Dispose()
-	{
-
-	}
 };
