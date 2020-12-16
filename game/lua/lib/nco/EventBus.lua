@@ -23,7 +23,7 @@ local function EventBus()
   local function validateEventName(caller, eventName)
     if type(eventName) ~= "string" then
       Nco.Utils.errorFormat("eventName passed to %s was not a string", caller)
-    elseif eventName == "" then
+    elseif eventName:gsub(" ", "") == "" then
       Nco.Utils.errorFormat("eventName passed to %s was empty", caller)
     elseif type(handlers[eventName]) ~= "table" then
       Nco.Utils.errorFormat("eventName passed to %s was not a recognised event: %s", caller, eventName)
