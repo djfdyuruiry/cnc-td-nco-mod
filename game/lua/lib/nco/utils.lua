@@ -97,12 +97,19 @@ return
   end,
 
   printString = function(message, ...)
-    io.write(
-      string.format(
-        "%s\n",
-        string.format(message, ...)
-      )
-    )
+    local output = message
+    
+    if type(message) == "string" then
+      output = string.format(message, ...)
+    end
+
+    if output == message then
+      _G.__print(output, ...)
+
+      return
+    end
+
+    _G.__print(output)
   end,
 
   readString = function(format)

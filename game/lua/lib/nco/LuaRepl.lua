@@ -76,13 +76,17 @@ local function LuaRepl()
     end
 
     local execStatus, execErrOrReturnVal = pcall(evalFunc)
-    local output = execStatus and execErrOrReturnVal or string.format("Error: %s", tostring(execErrOrReturnVal))
+    local output = execErrOrReturnVal
+
+    if not execStatus then
+      output = string.format("Error: %s", tostring(execErrOrReturnVal))
+    end
 
     writeReplOutput(output, 0)
   end
 
   local function repl()
-    io.write("# ")
+    io.write("> ")
 
     local evalString = io.read("*l")
 
@@ -116,8 +120,20 @@ local function LuaRepl()
   end
 
   local function enter()
+    Nco.Utils.toggleConsoleLog()
+
+		print([[
+=======================
+  NCO Mod Lua Console  
+=======================
+
+Help: https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/09.-Lua-Scripting-API
+]])
+
     while(repl()) do
     end
+
+    Nco.Utils.toggleConsoleLog()
   end
 
   return

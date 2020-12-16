@@ -156,10 +156,6 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 {
 	StartConsoleOutput();
 
-	puts("========================");
-	puts("  NCO Mod: Test Console  ");
-	puts("=========================");
-
 	if (!NcoStartup())
 	{
 		NcoShutdown();
@@ -171,6 +167,10 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 	}
 
 	Parse_Command_Line(commandLine);
+
+	puts("========================");
+	puts("  NCO Mod: Test Console  ");
+	puts("=========================");
 
 	TestSpecialRules();
 
