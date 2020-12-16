@@ -84,14 +84,27 @@ local function LuaRepl()
   local function repl()
     io.write("# ")
 
-    local evalString = tostring(io.read("*l"))
-    local trimmedEvalString = evalString:gsub([[^\s*]], ""):gsub([[\s*$]], "")
+    local evalString = io.read("*l")
+
+    if evalString == nil then
+      return true
+    end
+
+    local trimmedEvalString = evalString:gsub([[^%s*]], ""):gsub([[%s*$]], "")
+
+    if trimmedEvalString == "" then
+      return true
+    end
 
     if trimmedEvalString == "exit" then
       return false
     end
 
     if trimmedEvalString ~= "clear" then
+      if not (evalString):match([[^%s*return]]) then
+        evalString = string.format("return %s", evalString)
+      end
+
       evaluateReplInput(evalString)
     else
       os.execute("cls")
@@ -103,10 +116,6 @@ local function LuaRepl()
   end
 
   local function enter()
-    print("------------")
-    print("  Lua REPL  ")
-    print("------------")
-
     while(repl()) do
     end
   end

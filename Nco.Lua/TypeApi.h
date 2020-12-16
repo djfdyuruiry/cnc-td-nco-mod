@@ -74,9 +74,9 @@ private:
 		if (!ValidateRule(ruleNameParameterResult.GetValue()))
 		{
 			luaState.RaiseError(
-				"rule name type passed to %s%sRule was not recognised for this type: %s",
+				"rule name '%s' passed to %sRule was not recognised for this type: %s",
+				ruleNameParameterResult.GetValue(),
 				operation,
-				titleCaseTypeName,
 				titleCaseTypeName
 			);
 

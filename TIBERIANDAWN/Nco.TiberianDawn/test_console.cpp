@@ -1,7 +1,6 @@
 #ifdef TEST_CONSOLE
 
 #include <Logger.h>
-#include <LuaRepl.h>
 
 #include "../DllInterface.h"
 
@@ -116,11 +115,14 @@ static void Parse_Command_Line(const char* commandLine)
 
 		exit(1);
 		#else
-		auto& luaRepl = LuaRepl::Build(NcoLuaRuntime());
+		auto& replResult = NcoLuaRuntime().ExecuteScript("Nco.LuaRepl.enter()");
 
-		luaRepl.Enter();
+		if (replResult.IsErrorResult())
+		{
+			ShowError("Lua REPL Error: %s", replResult.GetError());
 
-		delete &luaRepl;
+			exit(1);
+		}
 
 		exit(0);
 		#endif

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <IRulesIniSection.h>
-#include <LuaRepl.h>
+#include <LuaReplThread.h>
 #include <RulesApi.h>
 #include <utils.h>
 
@@ -141,7 +141,7 @@ void TiberianDawnNcoRuntime::RegisterThreads()
 
     #ifndef TEST_CONSOLE
     StartConsoleOutput();
-    RegisterThread(LuaRepl::Build(luaRuntime));
+    RegisterThread(LuaReplThread::Build(luaRuntime.GetState()));
     #endif
 }
 

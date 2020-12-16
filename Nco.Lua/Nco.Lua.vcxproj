@@ -23,7 +23,7 @@
     <ClInclude Include="LambdaValidator.h" />
     <ClInclude Include="LuaObjectUtils.h" />
     <ClInclude Include="LuaParameterValidator.h" />
-    <ClInclude Include="LuaRepl.h" />
+    <ClInclude Include="LuaReplThread.h" />
     <ClInclude Include="LuaTypeWrapper.h" />
     <ClInclude Include="LuaValueAdapter.h" />
     <ClInclude Include="ILuaRuntime.h" />

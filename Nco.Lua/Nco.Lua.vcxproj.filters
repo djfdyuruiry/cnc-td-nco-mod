@@ -87,13 +87,13 @@
     <ClInclude Include="ParseCheckValidator.h">
       <Filter>Header Files\Api\ValueValidators</Filter>
     </ClInclude>
-    <ClInclude Include="LuaRepl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ReflectionApi.h">
       <Filter>Header Files\Api</Filter>
     </ClInclude>
     <ClInclude Include="LuaParameterValidator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaReplThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
-local Utils = require("nco.Utils")
 local Events = require("nco.EventBus")
+local LuaRepl = require("nco.LuaRepl")
 local RulesApiProxy = require("nco.RulesApiProxy")
+local Utils = require("nco.Utils")
 
 local function loadNativeApiMixins()
   Nco.Rules = RulesApiProxy(Nco.Rules)
@@ -13,7 +14,11 @@ end
 local function loadNativeUtilApiMixin()
   -- overwrite print builtin to enable output
   _G.__print = _G.print
-  _G.print = Utils.print
+  _G.print = Utils.printString
+
+  -- overwrite io read builtin to enable input
+  io.__read = io.read
+  io.read = Utils.readString
 
   -- 'with' syntax sugar
   _G.with = Utils.with
@@ -28,6 +33,7 @@ local function loadNativeApis()
   loadNativeUtilApiMixin()
 
   Nco.Events = Events()
+  Nco.LuaRepl = LuaRepl()
 
   loadNativeApiMixins()
 end

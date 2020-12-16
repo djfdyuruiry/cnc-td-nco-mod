@@ -15,7 +15,7 @@ Nco.Reflection.registerApiFunctions(
         }
       }
     },
-    print =
+    printString =
     {
       description = "Write a line to standard out using string.format style formatting",
       parameters =
@@ -23,6 +23,18 @@ Nco.Reflection.registerApiFunctions(
         message = 
         {
           description = "Message format to output, pass one or more parameters after this to provide format values",
+          type = "string"
+        }
+      }
+    },
+    readString =
+    {
+      description = "Read a line from standard in using io.read format",
+      parameters =
+      {
+        format = 
+        {
+          description = "Format to read, defaults to '*l'",
           type = "string"
         }
       }
@@ -84,8 +96,21 @@ return
     Nco.Utils.logString(string.format(message, ...))
   end,
 
-  print = function(message, ...)
-    Nco.Utils.printString(string.format(message, ...))
+  printString = function(message, ...)
+    io.write(
+      string.format(
+        "%s\n",
+        string.format(message, ...)
+      )
+    )
+  end,
+
+  readString = function(format)
+    if format == nil or format == "*l" or format == "*L" then
+      return Nco.Utils.readString()
+    end
+
+    error(string.format("Format not supported by readString: %s", format))
   end,
 
   showError = function(message, ...)

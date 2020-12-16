@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #include <ILuaStateWrapper.h>
@@ -138,24 +139,39 @@ private:
         return 0;
     }
 
-    static int Lua_Print(lua_State* _)
+    int ReadString(ILuaStateWrapper& lua)
     {
-        auto& luaState = NcoLuaRuntime().GetState();
-        auto argCount = luaState.GetStackTop();
+        auto stdIn = GetStdHandle(STD_INPUT_HANDLE);
 
-        if (argCount > 0)
+        if (!Win32HandleIsValid(stdIn))
         {
-            auto& printMessageResult = luaState.ReadString(1);
+            lua.RaiseError("Failed to open standard input stream");
 
-            if (!printMessageResult.IsErrorResult())
-            {
-                puts(printMessageResult.GetValue());
-            }
-
-            delete &printMessageResult;
+            return 0;
         }
 
-        return 0;
+        auto input = AllocateString(2048);
+
+        // read input
+        DWORD charsRead;
+
+        if (!ReadConsole(stdIn, input, 2048, &charsRead, NULL))
+        {
+            WithWin32ErrorMessage([&](auto e) {
+                lua.RaiseError("Error reading from standard input: %s", e);
+            });
+
+            return 0;
+        }
+
+        lua.WriteString(input);
+
+        return 1;
+    }
+
+    static int LuaReadString(lua_State* lua)
+    {
+        return LUA_METHOD_PROXY(UtilApi, ReadString);
     }
 
     static int Lua_Log(lua_State* _)
@@ -190,14 +206,14 @@ private:
                 p.WithType(LuaType::String);
              });
         });
-         
-        WithFunction("printString", Lua_Print, [](LuaFunctionInfo& f) {
-            f.WithDescription("Print a string to standard out")
-             .WithOptionalParameter("str", [](LuaVariableInfo& p) {
+
+        WithMethod("readString", this, LuaReadString, [](LuaFunctionInfo& f) {
+            f.WithDescription("Read a line from standard input")
+             .WithReturnValue("str", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::String);
              });
         });
-         
+
         WithFunction("showErrorString", Lua_ShowError, [](LuaFunctionInfo& f) {
             f.WithDescription("Display an error to the user in a message box")
              .WithParameter("errorString", [](LuaVariableInfo& p) {
