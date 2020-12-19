@@ -319,13 +319,11 @@ class TechnoTypeClass : public ObjectTypeClass
 		long Pre;
 
 		/*
-		**	The risk and reward values are used to determine targets and paths
-		**	toward targets. When heading toward a target, a path of least
-		**	risk will be followed. When picking a target, the object of
-		**	greatest reward will be selected. The values assigned are
-		** arbitrary.
+		**	The reward value is used to determine targets.
+		**  When picking a target, the object of greatest reward 
+		**  will be selected. The values assigned are arbitrary.
 		*/
-		int Risk,Reward;
+		int Reward;
 
 		/*
 		**	This value indicates the maximum speed that this object can achieve.
@@ -420,7 +418,7 @@ class TechnoTypeClass : public ObjectTypeClass
 
 		static void ReadTechnoRules(TechnoTypeClass* type);
 
-		virtual void Calculate_Risk(void) const;
+		virtual int Calculate_Risk(void) const;
 		virtual int  Raw_Cost(void) const;
 		virtual int  Max_Passengers(void) const;
 		virtual int  Repair_Cost(void) const;

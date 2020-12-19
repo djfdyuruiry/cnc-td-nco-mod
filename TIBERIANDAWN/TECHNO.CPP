@@ -175,8 +175,6 @@ void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
 	type->DeathExplosionAnimation = NcoRulesRuntime().ReadRuleValue<AnimType>(iniName, DEATH_EXPLOSION_ANIMATION_RULE, type->DeathExplosionAnimation);
 	type->DeathExplosionWarhead = NcoRulesRuntime().ReadRuleValue<WarheadType>(iniName, DEATH_EXPLOSION_WARHEAD_RULE, type->DeathExplosionWarhead);
 	type->DeathExplosionDamage = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, DEATH_EXPLOSION_DAMAGE_RULE, type->DeathExplosionDamage);
-
-	type->Calculate_Risk();
 }
 
 /***********************************************************************************************
@@ -250,13 +248,6 @@ TechnoTypeClass::TechnoTypeClass(
 {
 	CameoData = NULL;
 
-	/*
-	** Units risk value is based on the type of weapon he has and the
-	** rate of fire it shoots at.
-	*/
-	risk = risk;
-	Risk = 0;
-
 	FriendlyName = strdup(friendlyName);
 	Level = level;
 
@@ -299,20 +290,20 @@ TechnoTypeClass::TechnoTypeClass(
 	DeathExplosionAnimation = deathExplosionAnimation;
 	DeathExplosionWarhead = deathExplosionWarhead;
 	DeathExplosionDamage = deathExplosionDamage;
-
-	Calculate_Risk();
 }
 
-void TechnoTypeClass::Calculate_Risk(void) const
+int TechnoTypeClass::Calculate_Risk(void) const
 {
 	if (Primary == WEAPON_NONE) {
-		return;
+		return 0;
 	}
 
-	auto ref = (TechnoTypeClass*)this;
-
 	// TODO: read some `Game` rule to allow modifying the outcome of this calculation
-	//ref->Risk = (WeaponTypeClass::As_Reference(Primary).Attack * (WeaponTypeClass::As_Reference(Primary).Range >> 4)) / WeaponTypeClass::As_Reference(Primary).ROF;
+	auto& weapon = WeaponTypeClass::As_Reference(Primary);
+	auto attackRangeRisk = weapon.Attack * (weapon.Range >> 4);
+	auto rateOfFire = weapon.ROF;
+
+	return rateOfFire < 1 ? attackRangeRisk : attackRangeRisk / rateOfFire;
 }
 
 /***********************************************************************************************
@@ -4086,7 +4077,7 @@ bool TechnoClass::Is_Techno(void) const
  *=============================================================================================*/
 int TechnoClass::Risk(void) const
 {
-	return(Techno_Type_Class()->Risk);
+	return(Techno_Type_Class()->Calculate_Risk());
 }
 
 
