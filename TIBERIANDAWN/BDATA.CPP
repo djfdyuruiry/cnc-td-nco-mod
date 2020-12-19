@@ -3724,7 +3724,7 @@ BuildingTypeClass::BuildingTypeClass(
 	Anims[BSTATE_AUX2].Count = 1;
 	Anims[BSTATE_AUX2].Rate = 0;
 
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(IniName);
+	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(IniName);
 
 	ReadBuildingRules(this);
 }

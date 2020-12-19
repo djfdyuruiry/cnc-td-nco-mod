@@ -92,14 +92,17 @@ bool ObjectClass::Is_Infantry(void) const
 	return(false);
 }
 
-void ObjectTypeClass::ReadObjectRules(ObjectTypeClass* type)
+void ObjectTypeClass::ReadObjectRules(ObjectTypeClass* type, const char* iniName)
 {
 	if (!type->LoadObjectRules)
 	{
 		return;
 	}
 
-	auto iniName = type->IniName;
+	if (iniName == NULL) 
+	{
+		iniName = type->IniName;
+	}
 
 	type->Armor = Read_Armor(iniName, type->Armor);
 	type->MaxStrength = Read_Strength(iniName, type->MaxStrength);

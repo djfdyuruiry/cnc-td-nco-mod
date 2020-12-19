@@ -1578,7 +1578,7 @@ InfantryTypeClass::InfantryTypeClass(
 	IsImmuneToTiberium = type == INFANTRY_E5;
 	HasC4Charges = Type == INFANTRY_RAMBO;
 
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(IniName);
+	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(IniName);
 
 	ReadInfantryRules(this);
 

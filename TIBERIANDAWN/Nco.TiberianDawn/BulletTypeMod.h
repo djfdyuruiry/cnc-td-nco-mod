@@ -33,6 +33,15 @@ protected:
 		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(typeString);
 	}
 
+	BulletTypeClass* CloneType(const char* baseTypeString, const char* typeString, BulletType baseType, BulletType type)
+	{
+		auto newType = TiberianDawnTypeMod::CloneType(baseTypeString, typeString, baseType, type);
+
+		strcpy(newType->RulesName, typeString);
+
+		return newType;
+	}
+
 	void ReadRulesAndAddType(BulletTypeClass* type)
 	{
 		BulletTypeClass::ReadBulletRules(type);

@@ -194,7 +194,7 @@ class ObjectTypeClass : public AbstractTypeClass
 
 		static void One_Time(void);
 
-		static void ReadObjectRules(ObjectTypeClass* type);
+		static void ReadObjectRules(ObjectTypeClass* type, const char* iniName = NULL);
 
 		virtual int  Max_Pips(void) const;
 		virtual void  Dimensions(int &width, int &height) const;
@@ -1461,7 +1461,7 @@ class BulletTypeClass : public ObjectTypeClass
 		*/
 		int Range;
 
-		char* Image;
+		char* RulesName;
 
 		char* FriendlyName;
 
@@ -1478,8 +1478,8 @@ class BulletTypeClass : public ObjectTypeClass
 		//---------------------------------------------------------------------
 		BulletTypeClass(
 			BulletType type,
-			char const* ininame,
-			char const* image,
+			const char* rulesName,
+			const char* ininame,
 			const char* friendlyName,
 			bool is_high,
 			bool is_homing,

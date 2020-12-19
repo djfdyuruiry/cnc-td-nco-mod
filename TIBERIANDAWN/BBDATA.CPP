@@ -574,8 +574,8 @@ BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
  *=============================================================================================*/
 BulletTypeClass::BulletTypeClass(
 	BulletType type,
-	char const* ininame,
-	char const *image,
+	const char* rulesName,
+	const char* ininame,
 	const char* friendlyName,
 	bool is_high,
 	bool is_homing, 
@@ -600,10 +600,10 @@ BulletTypeClass::BulletTypeClass(
 	Type = type;
 	Explosion = explosion;
 
+	RulesName = strdup(rulesName);
 	IniName = strdup(ininame);
-	Image = strdup(image);
-
 	FriendlyName = strdup(friendlyName);
+
 	IsHigh = is_high;
 	IsAntiAircraft = is_antiaircraft;
 	IsTranslucent = is_translucent;
@@ -623,19 +623,18 @@ BulletTypeClass::BulletTypeClass(
 	Arming = arming;
 	Range = range;
 
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(IniName);
+	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(RulesName);
 
 	ReadBulletRules(this);
 }
 
 void BulletTypeClass::ReadBulletRules(BulletTypeClass* bullet)
 {
-	auto iniName = bullet->IniName;
+	auto iniName = bullet->RulesName;
 
-	ReadObjectRules(bullet);
+	ReadObjectRules(bullet, iniName);
 	
 	bullet->FriendlyName = NcoRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
-	bullet->Image = NcoRulesRuntime().ReadRuleValue<char*>(iniName, IMAGE_RULE, bullet->Image);
 	bullet->IsHigh = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, bullet->IsHigh);
 	bullet->IsAntiAircraft = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_ANTI_AIRCRAFT_RULE, bullet->IsAntiAircraft);
 	bullet->IsTranslucent = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_TRANSLUCENT_RULE, bullet->IsTranslucent);
@@ -712,6 +711,25 @@ void BulletTypeClass::One_Time(void)
 				LogTrace("BulletTypeClass::One_Time retrieve from mix %s", fullname);
 
 				((void const *&)bullet->ImageData) = MixFileClass::Retrieve(fullname);
+			}
+
+			if (bullet->ImageData == NULL) {
+				iniName = bullet->Image;
+
+				_makepath(fullname, NULL, NULL, iniName, ".SHP");
+
+				RawFileClass file(fullname);
+
+				if (file.Is_Available()) {
+					LogTrace("BulletTypeClass::One_Time loading file %s", file);
+
+					((void const*&)bullet->ImageData) = Load_Alloc_Data(file);
+				}
+				else {
+					LogTrace("BulletTypeClass::One_Time retrieve from mix %s", fullname);
+
+					((void const*&)bullet->ImageData) = MixFileClass::Retrieve(fullname);
+				}
 			}
 		}
 	}

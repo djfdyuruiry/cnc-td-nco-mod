@@ -242,7 +242,7 @@ WarheadTypeClass::WarheadTypeClass(
 
 	auto warheadTypeString = NcoTypeConverter().ToStringOrDefault(type);
 
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(warheadTypeString);
+	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(warheadTypeString);
 	ReadWarheadRules(this);
 }
 

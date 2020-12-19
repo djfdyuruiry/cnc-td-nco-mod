@@ -1,5 +1,7 @@
 #pragma once
 
+#define BULLET_RULES_NAME "RulesName"
+
 #define BULLET_HIGH_RULE "High"
 
 #define BULLET_ANTI_AIRCRAFT_RULE "AntiAircraft"

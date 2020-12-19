@@ -1335,7 +1335,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	ROT = rot;
 	CanSelfRepair = Type == UNIT_HTANK;
 
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildUnitSection(IniName);
+	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildUnitSection(IniName);
 
 	ReadUnitRules(this);
 }

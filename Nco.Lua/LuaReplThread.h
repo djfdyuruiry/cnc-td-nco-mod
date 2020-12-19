@@ -14,6 +14,7 @@ private:
 	}
 
 protected:
+	// TODO: fix crash on mission restart
 	DWORD Run()
 	{
 		auto& luaReplResult = lua.ExecuteScript("Nco.LuaRepl.enter()");
@@ -22,7 +23,7 @@ protected:
 		{
 			ShowError("Lua REPL exited with an error: %sr", luaReplResult.GetError());
 
-			delete& luaReplResult;
+			delete &luaReplResult;
 
 			return 1;
 		}

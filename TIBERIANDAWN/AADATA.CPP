@@ -375,7 +375,7 @@ AircraftTypeClass::AircraftTypeClass(
 	IsRotorEquipped = is_rotorequipped;
 	ROT = rot;
 
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(IniName);
+	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(IniName);
 	ReadAircraftRules(this);
 }
 void AircraftTypeClass::ReadAircraftRules(AircraftTypeClass* aircraft)
