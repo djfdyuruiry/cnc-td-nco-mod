@@ -77,7 +77,7 @@ public:
 		return threadRunning;
 	}
 
-	bool Stop()
+	virtual bool Stop()
 	{
 		if (!threadRunning)
 		{

@@ -387,15 +387,23 @@ void StartConsoleOutput()
 		&& !AttachConsole(GetCurrentProcessId()))
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			LogError("Error opening Win32 console: %s", e);
+			ShowError("Error opening Win32 console: %s", e);
 		});
 
 		exit(1);
 	}
 
-	freopen("CON", "w", stdout);
-	freopen("CON", "w", stderr);
-	freopen("CON", "w", stdin);
+	if (!freopen("CON", "w", stdout)
+		|| !freopen("CON", "w", stderr)
+		|| !freopen("CON", "w", stdin)
+	)
+	{
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Error opening std err/out/in handle(s): %s", e);
+		});
+
+		exit(1);
+	}
 
 	CONSOLE_OPEN = true;
 #endif
@@ -414,12 +422,20 @@ void StopConsoleOutput()
 
 	if (!FreeConsole())
 	{
-		LogError("Error closing Win32 console: %s", GetWin32ErrorMessage());
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Error closing Win32 console: %s", e);
+		});
 	}
 
-	fclose(stdout);
-	fclose(stderr);
-	fclose(stdin);
+	if (!fclose(stdout)
+		|| !fclose(stderr)
+		|| !fclose(stdin)
+	)
+	{
+		WithWin32ErrorMessage([&](auto e) {
+			LogError("Error closing in/out streams: %s", e);
+		});
+	}
 
 	CONSOLE_OPEN = false;
 #endif

@@ -155,6 +155,8 @@ void TiberianDawnNcoRuntime::Initialise()
 
 bool TiberianDawnNcoRuntime::InternalShutdown()
 {
+    auto result = NcoRuntime::InternalShutdown();
+    
     if (
         rulesRuntime.LuaIsEnabled()
         && LuaInitWasSuccessful()
@@ -162,12 +164,11 @@ bool TiberianDawnNcoRuntime::InternalShutdown()
         )
     {
         #ifndef TEST_CONSOLE
-        // TODO: fix if window closed during a mission that this is not called
         StopConsoleOutput();
         #endif
     }
 
-    return NcoRuntime::InternalShutdown();
+    return result;
 }
 
 TiberianDawnNcoRuntime* TiberianDawnNcoRuntime::INSTANCE = NULL;
@@ -197,6 +198,7 @@ void TiberianDawnNcoRuntime::Shutdown()
     }
 
     delete INSTANCE;
+    INSTANCE = NULL;
 }
 
 TiberianDawnRulesInfo& TiberianDawnNcoRuntime::GetRulesInfo()

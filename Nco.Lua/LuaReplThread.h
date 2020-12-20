@@ -17,18 +17,7 @@ protected:
 	// TODO: fix crash on mission restart
 	DWORD Run()
 	{
-		auto& luaReplResult = lua.ExecuteScript("Nco.LuaRepl.enter()");
-
-		if (luaReplResult.IsErrorResult())
-		{
-			ShowError("Lua REPL exited with an error: %sr", luaReplResult.GetError());
-
-			delete &luaReplResult;
-
-			return 1;
-		}
-
-		delete& luaReplResult;
+		delete &lua.ExecuteScript("Nco.LuaRepl.enter()");
 
 		return 0;
 	}
@@ -37,6 +26,23 @@ public:
 	static LuaReplThread& Build(ILuaStateWrapper& lua)
 	{
 		return *(new LuaReplThread(lua));
+	}
+
+	virtual bool Stop()
+	{
+		if (threadRunning)
+		{
+			auto& exitResult = lua.ExecuteScript("Nco.LuaRepl.exit()");
+
+			if (exitResult.IsErrorResult())
+			{
+				LogError("Failed to exit Lua REPL: %s", exitResult.GetError());
+			}
+
+			delete &exitResult;
+		}
+
+		return Thread::Stop();
 	}
 
 };

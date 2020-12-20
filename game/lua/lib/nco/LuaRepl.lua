@@ -1,5 +1,7 @@
 local function LuaRepl()
   local writeReplOutput
+  local running = false
+  local externalExitRequested = false
 
   local function writeTableEntry(key, value, depth)
     if type(key) == "string" then
@@ -91,13 +93,13 @@ local function LuaRepl()
     local evalString = io.read("*l")
 
     if evalString == nil then
-      return true
+      return not externalExitRequested
     end
 
     local trimmedEvalString = evalString:gsub([[^%s*]], ""):gsub([[%s*$]], "")
 
     if trimmedEvalString == "" then
-      return true
+      return not externalExitRequested
     end
 
     if trimmedEvalString == "exit" then
@@ -116,10 +118,16 @@ local function LuaRepl()
 
     io.write("\n")
 
-    return true
+    return not externalExitRequested
   end
 
   local function enter()
+    if running then
+      return
+    end
+
+    running = true
+
     Nco.Utils.toggleConsoleLog()
 
 		print([[
@@ -134,11 +142,23 @@ Help: https://github.com/djfdyuruiry/cnc-td-nco-mod/wiki/09.-Lua-Scripting-API
     end
 
     Nco.Utils.toggleConsoleLog()
+
+    running = false
+    externalExitRequested = false
+  end
+
+  local function exit()
+    if not running or externalExitRequested then
+      return
+    end
+
+    externalExitRequested = true
   end
 
   return
   {
-    enter = enter
+    enter = enter,
+    exit = exit
   }
 end
 
