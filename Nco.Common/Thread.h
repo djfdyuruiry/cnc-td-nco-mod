@@ -103,4 +103,14 @@ public:
 
 		return !threadRunning;
 	}
+
+	virtual bool StopIfRunning()
+	{
+		if (!threadRunning)
+		{
+			return true;
+		}
+
+		return Stop();
+	}
 };

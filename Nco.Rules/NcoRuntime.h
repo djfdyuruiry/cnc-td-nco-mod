@@ -169,7 +169,7 @@ protected:
 
 		for (auto thread : threads)
 		{
-			if (!thread->Stop())
+			if (!thread->StopIfRunning())
 			{
 				shutdownSuccess = false;
 			}

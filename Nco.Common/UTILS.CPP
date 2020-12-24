@@ -15,7 +15,6 @@ static const auto INT_MIN_STRING_LENGTH = 11u;
 static const auto MOD_FILE_NAME_LENGTH = 17u;
 
 static char* MOD_DATA_PATH = NULL;
-static bool CONSOLE_OPEN = false;
 
 void ShowError(const char* messageFormat, ...)
 {
@@ -376,36 +375,43 @@ void StartConsoleOutput()
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console allocation");
 #else
-	if (CONSOLE_OPEN)
-	{
-		LogWarn("Attempt to open Win32 console when it was already open detected, ignoring");
-		return;
-	}
+	StopConsoleOutput();
 
-	if (!AttachConsole(ATTACH_PARENT_PROCESS)
-		&& !AllocConsole()
-		&& !AttachConsole(GetCurrentProcessId()))
-	{
-		WithWin32ErrorMessage([&](auto e) {
-			ShowError("Error opening Win32 console: %s", e);
-		});
-
-		exit(1);
-	}
-
-	if (!freopen("CON", "w", stdout)
-		|| !freopen("CON", "w", stderr)
-		|| !freopen("CON", "w", stdin)
+	if (
+		!AllocConsole()
+		&& !AttachConsole(GetCurrentProcessId())
+		&& !AttachConsole(ATTACH_PARENT_PROCESS)
 	)
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			ShowError("Error opening std err/out/in handle(s): %s", e);
+			ShowError("Error opening Win32 console: %s", e);
+
+			StopConsoleOutput();
 		});
 
-		exit(1);
+		return;
 	}
 
-	CONSOLE_OPEN = true;
+	auto stdOutOpen = freopen("CON", "w", stdout);
+	auto stdErrOpen = freopen("CON", "w", stderr);
+	auto stdInOpen = freopen("CON", "w", stdin);
+
+	if (stdOutOpen && stdErrOpen && stdInOpen)
+	{
+		return;
+	}
+
+	WithWin32ErrorMessage([&](auto e) {
+		ShowError(
+			"Error opening stream(s):\nSTDOUT Open: %s\nSTDERR Open: %s\nSTDERR Open: %s\n%s",
+			ConvertBooleanToString(stdInOpen),
+			ConvertBooleanToString(stdErrOpen),
+			ConvertBooleanToString(stdOutOpen),
+			e
+		);
+
+		StopConsoleOutput();
+	});
 #endif
 }
 
@@ -414,30 +420,29 @@ void StopConsoleOutput()
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console stop");
 #else
-	if (!CONSOLE_OPEN)
-	{
-		LogWarn("Attempt to close Win32 console when it was not alreday open detected, ignoring");
-		return;
-	}
-
 	if (!FreeConsole())
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			ShowError("Error closing Win32 console: %s", e);
+			LogWarn("Error closing Win32 console: %s", e);
 		});
 	}
 
-	if (!fclose(stdout)
-		|| !fclose(stderr)
-		|| !fclose(stdin)
-	)
+	auto stdOutClosed = fclose(stdout);
+	auto stdErrClosed = fclose(stderr);
+	auto stdInClosed = fclose(stdin);
+
+	if (!stdOutClosed || !stdErrClosed || !stdInClosed)
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			LogError("Error closing in/out streams: %s", e);
+			LogWarn(
+				"Error closing stream(s):\nSTDOUT Closed: %s\nSTDERR Closed: %s\nSTDERR Closed: %s\n%s",
+				ConvertBooleanToString(stdOutClosed),
+				ConvertBooleanToString(stdErrClosed),
+				ConvertBooleanToString(stdInClosed),
+				e
+			);
 		});
 	}
-
-	CONSOLE_OPEN = false;
 #endif
 }
 
