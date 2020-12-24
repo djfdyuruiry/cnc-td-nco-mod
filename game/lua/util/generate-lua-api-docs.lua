@@ -62,7 +62,7 @@ local main = function()
 
   appendToOutput("")
 
-  print(">Building API sections")
+  print("> Building API sections")
 
   for apiName, api in pairs(apis) do
     print("  > Building section for API: %s...", apiName)

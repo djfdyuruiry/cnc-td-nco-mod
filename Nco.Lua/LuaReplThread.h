@@ -17,7 +17,15 @@ protected:
 	// TODO: fix crash on mission restart
 	DWORD Run()
 	{
+		#ifndef TEST_CONSOLE
 		delete &lua.ExecuteScript("Nco.LuaRepl.enter()");
+		#else
+		// dummy repl thread for test console
+		while (true)
+		{
+			Sleep(10);
+		}
+		#endif
 
 		return 0;
 	}

@@ -25,7 +25,7 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   rulesFile:write("\n")
 
   for _, areaType in ipairs(typeArea.getTypes()) do
-    Nco.Utils.log("Checking areaType %s", areaType)
+    Nco.Utils.log("Writing %s rules", areaType)
 
     local friendlyName = typeArea.getRule(areaType, "FriendlyName")
     local isModType = typeArea.getRule(areaType, "IsModType")
@@ -87,6 +87,7 @@ end
 local function main()
   os.remove(outputFileName)
 
+  local oldLogLevel = Nco.Utils.getLogLevel()
   Nco.Utils.setLogLevel("info");
 
   local _, err = pcall(dumpRules)
@@ -95,7 +96,7 @@ local function main()
     rulesFile:close()
   end
 
-  Nco.Utils.setLogLevel("debug");
+  Nco.Utils.setLogLevel(oldLogLevel);
 
   if err then
     error(string.format("Lua rules dump failed: %s", err))

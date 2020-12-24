@@ -139,10 +139,8 @@ void TiberianDawnNcoRuntime::RegisterThreads()
         return;
     }
 
-    #ifndef TEST_CONSOLE
     StartConsoleOutput();
     RegisterThread(LuaReplThread::Build(luaRuntime.GetState()));
-    #endif
 }
 
 void TiberianDawnNcoRuntime::Initialise()

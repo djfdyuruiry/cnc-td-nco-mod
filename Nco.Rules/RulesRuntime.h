@@ -78,16 +78,15 @@ private:
 
 	void ReadLogSettings()
 	{
-		LogInfo("Parsing log level and file path from rules ini");
-
 		auto logLevelBuffer = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogLevel");
-
-		ConvertStringToUpperCase(logLevelBuffer);
 
 		currentLogLevel = ParseLogLevel(logLevelBuffer);
 		logFilePath = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile");
 
 		delete logLevelBuffer;
+
+		GetLogger().SetLogLevel(currentLogLevel);
+		GetLogger().SetLogFilePath(logFilePath);
 	}
 
 	void DefineRulesSections() {
@@ -104,7 +103,6 @@ private:
 						   LogLevelToString(TRACE)
 					   })
 					   .WithDefault("OFF")
-
 				  << "LogFile"  
 				  << LUA_SCRIPTS_RULE
 				  << ENABLE_LUA_SCRIPTS_RULE  << BOOL_RULE << true

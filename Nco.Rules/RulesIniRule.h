@@ -111,6 +111,40 @@ private:
 		}
 	}
 
+	template<class T> bool ReadValueFromLuaState(ILuaStateWrapper& luaState, int stackIndex)
+	{	
+		auto& result = luaState.PullValue<T>(stackIndex);
+
+		if (result.IsErrorResult())
+		{
+			luaState.RaiseError("Error setting value for rule %s: %s", GetStringKey(), result.GetError());
+
+			delete &result;
+
+			return false;
+		}
+
+		auto value = result.GetValue();
+
+		if constexpr (std::is_same<T, unsigned char>())
+		{
+			if (value < 0)
+			{
+				luaState.RaiseError("Value for rule %s must be an integer with a value of at least zero", GetStringKey());
+
+				delete &result;
+
+				return false;
+			}
+		}
+
+		SetValue<T>(value);
+
+		delete &result;
+
+		return true;
+	}
+
 	void PushRuleValueOntoLuaState(ILuaStateWrapper& luaState, Optional& ruleValue)
 	{
 		if (type == INT_RULE || IsExtendedType(INT_TYPES, type))
@@ -135,7 +169,7 @@ private:
 		}
 		else if (type == STRING_RULE)
 		{
-			luaState.PushValue(ruleValue.Get<char*>());
+			luaState.PushValue(ruleValue.Get<const char*>());
 		}
 		else
 		{
@@ -417,84 +451,49 @@ public:
 
 	bool SetValueFromLuaState(ILuaStateWrapper& luaState, int index)
 	{
+		if (type == NO_RULE_TYPE)
+		{
+			luaState.RaiseError("Rule %s has no type, so value cannot be set", GetStringKey());
+			return false;
+		}
+
 		if (luaState.IsNil(index))
 		{
 			luaState.RaiseError("Value for rule %s must not be nil", GetStringKey());
 			return false;
 		}
 
-		if (type != BOOL_RULE && !luaState.IsNumber(index))
-		{
-			luaState.RaiseError("Value for rule %s must be an integer", GetStringKey());
-			return false;
-		}
-
-		auto setOk = true;
-
 		if (type == INT_RULE || IsExtendedType(INT_TYPES, type))
 		{
-			auto& result = luaState.ReadInteger(index);
-
-			SetValue<int>(result.GetValue());
-
-			delete &result;
+			return ReadValueFromLuaState<int>(luaState, index);
 		}
-		else if (type == BOOL_RULE)
+		
+		if (type == UNSIGNED_INT_RULE || IsExtendedType(UINT_TYPES, type))
 		{
-			if (!luaState.IsBool(index))
-			{
-				luaState.RaiseError("Value for rule %s must be a boolean", GetStringKey());
-				return false;
-			}
-
-			auto& result = luaState.ReadBool(index);
-
-			SetValue<bool>(result.GetValue());
-
-			delete &result;
+			return ReadValueFromLuaState<unsigned int>(luaState, index);
 		}
-		else if (type == UNSIGNED_INT_RULE || IsExtendedType(UINT_TYPES, type))
+		
+		if (type == DOUBLE_RULE || type == FIXED_RULE)
 		{
-			auto& result = luaState.ReadInteger(index);
-			auto value = result.GetValue();
-
-			if (value < 0)
-			{
-				luaState.RaiseError("Value for rule %s must be an integer with a value of at least zero", GetStringKey());
-
-				delete &result;
-
-				return false;
-			}
-
-			SetValue<unsigned int>((unsigned int)value);
-
-			delete &result;
+			return ReadValueFromLuaState<double>(luaState, index);
 		}
-		else if (type == DOUBLE_RULE || type == FIXED_RULE)
+		
+		if (IsExtendedType(LONG_TYPES, type))
 		{
-			auto& result = luaState.ReadDouble(index);
-
-			SetValue<double>(result.GetValue());
-
-			delete &result;
+			return ReadValueFromLuaState<long>(luaState, index);
 		}
-		else if (IsExtendedType(LONG_TYPES, type))
+
+		if (type == BOOL_RULE)
 		{
-			auto& result = luaState.ReadInteger(index);
-
-			SetValue<long>((long)result.GetValue());
-
-			delete &result;
+			return ReadValueFromLuaState<bool>(luaState, index);
 		}
-		else
+
+		if (type == STRING_RULE)
 		{
-			luaState.RaiseError("Unable to convert value for rule %s to a lua type", GetStringKey());
-
-			setOk = false;
+			return ReadValueFromLuaState<const char*>(luaState, index);
 		}
 
-		return setOk;
+		return false;
 	}
 
 	void WriteDefaultValueToString(char* string)

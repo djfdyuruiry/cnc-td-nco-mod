@@ -1,6 +1,9 @@
-local function RulesSectionRuleProxy(getRule, setRule, ruleName)
+local function RulesSectionRuleProxy(getRule, setRule, ruleName, sectionName)
   return setmetatable(
-    {},
+    {
+      name = ruleName,
+      sectionName = sectionName
+    },
     {
       __call = function(_, ruleValue)
         if ruleValue == nil then
@@ -22,14 +25,20 @@ local function RulesSectionProxy(api, sectionName)
     return api.setRule(sectionName, ...)
   end
 
+  local function getRuleNames(...)
+    return Nco.Rules.getRuleNames(sectionName, ...)
+  end
+
   return setmetatable(
     {
+      name = sectionName,
       getRule = getRule,
-      setRule = setRule
+      setRule = setRule,
+      getRuleNames = getRuleNames
     },
     {
       __index = function(_, ruleName)
-        return RulesSectionRuleProxy(getRule, setRule, ruleName)
+        return RulesSectionRuleProxy(getRule, setRule, ruleName, sectionName)
       end
     }
   )

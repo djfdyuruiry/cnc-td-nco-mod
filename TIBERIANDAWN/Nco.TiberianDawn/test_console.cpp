@@ -23,13 +23,20 @@ static bool ExecuteLuaFile(const char* filePath)
 	return !isError;
 }
 
-static void TestLuaRules() {
+static bool TestLuaRules() {
 	LogInfo("Testing Lua rules");
 
-	if (!("test-lua-rules.lua"))
+	auto& testResult = NcoLuaRuntime().ExecuteFile("test-lua-rules.lua");
+
+	if (testResult.IsErrorResult())
 	{
-		LogError("Lua rules test script failed");
+		LogError("Lua rules test script failed: %s", testResult.GetError());
+		return false;
 	}
+
+	delete &testResult;
+
+	return true;
 }
 
 static void GenerateApiDocs() {
@@ -154,8 +161,6 @@ static void Parse_Command_Line(const char* commandLine)
 /// </summary>
 int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int windowState)
 {
-	StartConsoleOutput();
-
 	if (!NcoStartup())
 	{
 		NcoShutdown();
@@ -166,6 +171,8 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 		return 1;
 	}
 
+	GetLogger().SetLogLevel(DEBUG);
+
 	Parse_Command_Line(commandLine);
 
 	puts("========================");
@@ -174,16 +181,17 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 
 	TestSpecialRules();
 
-	TestLuaRules();
+	if (TestLuaRules())
+	{
+		DumpRules();
 
-	DumpRules();
+		GenerateApiDocs();
 
-	GenerateApiDocs();
+		// mock DLL interface event handler
+		Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
 
-	// mock DLL interface event handler
-	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
-
-	TestLuaEvents();
+		TestLuaEvents();
+	}
 
 	NcoShutdown();
 

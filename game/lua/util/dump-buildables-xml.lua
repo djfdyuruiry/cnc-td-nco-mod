@@ -68,11 +68,16 @@ end
 local function main()
   os.remove(outputFileName)
 
+  local oldLogLevel = Nco.Utils.getLogLevel()
+  Nco.Utils.setLogLevel("info");
+
   local _, err = pcall(dumpRules)
 
   if buildablesFile then
     buildablesFile:close()
   end
+
+  Nco.Utils.setLogLevel(oldLogLevel);
 
   if err then
     error(string.format("XML buildables dump failed: %s", err))

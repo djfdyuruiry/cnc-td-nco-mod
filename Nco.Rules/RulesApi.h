@@ -77,8 +77,12 @@ private:
                  .WithType(LuaType::Table);
             });
 
-        WithMethod("getSectionRuleNames", this, GetSectionRuleNamesLua)
+        WithMethod("getRuleNames", this, GetSectionRuleNamesLua)
             .WithDescription("Get a list of entries in a given section")
+            .WithParameter("sectionName", [](auto& p) {
+                p.WithDescription("The section name as it appears in RULES.INI")
+                 .WithType(LuaType::String);
+            })
             .WithReturnValue("ruleNames", [](auto& p) {
                 p.WithDescription("Table containing the entry names as strings")
                  .WithType(LuaType::Table);

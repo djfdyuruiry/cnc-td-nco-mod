@@ -12,9 +12,6 @@ const char* Logger::LOG_FORMAT = NULL;
 
 void Logger::LoadDefaultLogFilePath()
 {
-#ifdef TEST_CONSOLE
-	logFilePath = strdup("log\\nco.log");
-#else
 	auto documentsPath = AllocateString(MAX_PATH);
 	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, documentsPath);
 
@@ -44,7 +41,6 @@ void Logger::LoadDefaultLogFilePath()
 	logFilePath = FormatString("%s\\nco.log", MAX_PATH, cncPath);
 
 	delete cncPath;
-#endif	
 }
 
 void Logger::OpenLogFile()
@@ -67,7 +63,7 @@ void Logger::OpenLogFile()
 
 		WithWin32ErrorMessage([&](auto e) {
 			ShowError("Failed to close handle for log file '%s': %s", logFilePath, e);
-			});
+		});
 	}
 }
 
