@@ -16,7 +16,7 @@ static const auto MOD_FILE_NAME_LENGTH = 17u;
 
 static char* MOD_DATA_PATH = NULL;
 
-void ShowError(const char* messageFormat, ...)
+void ShowError(const char* messageFormat, va_list formatArgs)
 {
 	if (StringIsEmpty(messageFormat))
 	{
@@ -24,9 +24,6 @@ void ShowError(const char* messageFormat, ...)
 
 		return;
 	}
-
-	va_list formatArgs;
-	va_start(formatArgs, messageFormat);
 
 	auto formattedMessageBuffer = FormatString(messageFormat, GetLogger().GetLogLineLength(), formatArgs);
 
@@ -42,9 +39,32 @@ void ShowError(const char* messageFormat, ...)
 	);
 	#endif
 
-	va_end(formatArgs);
-
 	delete formattedMessageBuffer;
+}
+
+void ShowError(const char* messageFormat, ...)
+{
+	va_list formatArgs;
+	va_start(formatArgs, messageFormat);
+
+	ShowError(messageFormat, formatArgs);
+
+	va_end(formatArgs);
+}
+
+void ShowErrorAndExit(const char* messageFormat, va_list formatArgs)
+{
+	ShowError(messageFormat, formatArgs);
+
+	exit(1);
+}
+
+void ShowErrorAndExit(const char* messageFormat, ...)
+{
+	va_list formatArgs;
+	va_start(formatArgs, messageFormat);
+
+	ShowErrorAndExit(messageFormat, formatArgs);
 }
 
 const char* GetEnvVar(const char* envVarName, bool* valueFound) {
@@ -331,10 +351,8 @@ const char* GetModDataPath()
 	)
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			ShowError("Unable to get handle on module: %s", e);
+			ShowErrorAndExit("Unable to get handle on NCO DLL: %s", e);
 		});
-
-		exit(1);
 	}
 
 	auto modDllPath = AllocateString(MAX_PATH);
@@ -342,10 +360,8 @@ const char* GetModDataPath()
 	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			ShowError("Unable to get mod data path: %s", e);
+			ShowErrorAndExit("Unable to get mod data path: %s", e);
 		});
-
-		exit(1);
 	}
 
 	auto modDllPathLength = strlen(modDllPath);

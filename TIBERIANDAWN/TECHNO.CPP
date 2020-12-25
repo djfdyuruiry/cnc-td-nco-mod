@@ -130,7 +130,7 @@ extern bool DLL_Export_Get_Input_Key_State(KeyNumType key);
 */
 int const TechnoClass::BodyShape[32] = {0,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
 
-void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
+void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type, bool isInfantry, bool isUnit, bool isAircraft)
 {
 	auto iniName = type->IniName;
 
@@ -138,10 +138,6 @@ void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
 	type->FriendlyName = NcoRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, type->FriendlyName);
 	type->Level = Read_Build_Level(iniName, type->Level);
 	type->Pre = NcoRulesRuntime().ReadRuleValue<long>(iniName, PREREQUISITE_RULE, type->Pre);
-	type->IsTransporter = Read_Is_Transport(iniName, type->IsTransporter);
-	type->TransportCapacity = type->IsTransporter
-		? NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity)
-		: 0;
 	type->IsBuildable = Read_Is_Buildable(iniName, type->IsBuildable);
 	type->MaxAmmo = Read_Ammo(iniName, type->MaxAmmo);
 	type->SightRange = Read_Sight_Range(iniName, type->SightRange);
@@ -162,19 +158,34 @@ void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
 	type->Secondary = Read_Secondary_Weapon(iniName, type->Secondary);
 	type->MaxSpeed = Read_Speed(iniName, type->MaxSpeed);
 	type->IsScanner = NcoRulesRuntime().ReadRuleValue<bool>(iniName, DETECT_CLOAKED_OBJECTS_RULE, type->IsScanner);
-	type->IsRepairable = NcoRulesRuntime().ReadRuleValue<bool>(iniName, REPAIRABLE_RULE, type->IsRepairable);
-	type->IsCrew = NcoRulesRuntime().ReadRuleValue<bool>(iniName, HAS_CREW_RULE, type->IsCrew);
 	type->IsLeader = NcoRulesRuntime().ReadRuleValue<bool>(iniName, LEADER_RULE, type->IsLeader);
 	type->IsTwoShooter = NcoRulesRuntime().ReadRuleValue<bool>(iniName, TWO_SHOOTER_RULE, type->IsTwoShooter);
 	type->IsTheater = NcoRulesRuntime().ReadRuleValue<bool>(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
-	type->IsTurretEquipped = NcoRulesRuntime().ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
 	type->IsNominal = NcoRulesRuntime().ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, type->IsNominal);
 	type->IsFlammable = Read_Is_Flammable(iniName, type->IsFlammable);
 
-	type->ExplodesUponDeath = NcoRulesRuntime().ReadRuleValue<bool>(iniName, EXPLODES_UPON_DEATH_RULE, type->ExplodesUponDeath);
-	type->DeathExplosionAnimation = NcoRulesRuntime().ReadRuleValue<AnimType>(iniName, DEATH_EXPLOSION_ANIMATION_RULE, type->DeathExplosionAnimation);
-	type->DeathExplosionWarhead = NcoRulesRuntime().ReadRuleValue<WarheadType>(iniName, DEATH_EXPLOSION_WARHEAD_RULE, type->DeathExplosionWarhead);
-	type->DeathExplosionDamage = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, DEATH_EXPLOSION_DAMAGE_RULE, type->DeathExplosionDamage);
+	if (!isInfantry)
+	{
+		type->IsTurretEquipped = NcoRulesRuntime().ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
+		type->IsCrew = NcoRulesRuntime().ReadRuleValue<bool>(iniName, HAS_CREW_RULE, type->IsCrew);
+		type->IsRepairable = NcoRulesRuntime().ReadRuleValue<bool>(iniName, REPAIRABLE_RULE, type->IsRepairable);
+	}
+
+	if (isInfantry || isUnit)
+	{
+		type->ExplodesUponDeath = NcoRulesRuntime().ReadRuleValue<bool>(iniName, EXPLODES_UPON_DEATH_RULE, type->ExplodesUponDeath);
+		type->DeathExplosionAnimation = NcoRulesRuntime().ReadRuleValue<AnimType>(iniName, DEATH_EXPLOSION_ANIMATION_RULE, type->DeathExplosionAnimation);
+		type->DeathExplosionWarhead = NcoRulesRuntime().ReadRuleValue<WarheadType>(iniName, DEATH_EXPLOSION_WARHEAD_RULE, type->DeathExplosionWarhead);
+		type->DeathExplosionDamage = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, DEATH_EXPLOSION_DAMAGE_RULE, type->DeathExplosionDamage);
+	}
+
+	if (isUnit || isAircraft)
+	{
+		type->IsTransporter = Read_Is_Transport(iniName, type->IsTransporter);
+		type->TransportCapacity = type->IsTransporter
+			? NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity)
+			: 0;
+	}
 }
 
 /***********************************************************************************************

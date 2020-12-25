@@ -27,7 +27,7 @@ private:
 		{
 			lua.RaiseError("[lua->c++ object proxy] Failed to get %s pointer: %s", name, objectResult.GetError());
 
-			delete& objectResult;
+			delete &objectResult;
 
 			return 0;
 		}
@@ -40,7 +40,7 @@ private:
 		{
 			lua.RaiseError("[lua->c++ object proxy error] %s pointer stored in userdata was NULL", name);
 
-			delete& lua;
+			delete &lua;
 
 			return NULL;
 		}

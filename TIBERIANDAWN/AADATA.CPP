@@ -383,7 +383,7 @@ void AircraftTypeClass::ReadAircraftRules(AircraftTypeClass* aircraft)
 	auto iniName = aircraft->IniName;
 
 	ReadObjectRules(aircraft);
-	ReadTechnoRules(aircraft);
+	ReadTechnoRules(aircraft, false, false, true);
 
 	aircraft->IsFixedWing = Read_Cant_Hover(iniName, aircraft->IsFixedWing);
 	aircraft->IsLandable = Read_Can_Land(iniName, aircraft->IsLandable);

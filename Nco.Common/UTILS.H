@@ -3,7 +3,13 @@
 #include <functional>
 #include <windows.h>
 
+void ShowError(const char* messageFormat, va_list formatArgs);
+
 void ShowError(const char* messageFormat, ...);
+
+void ShowErrorAndExit(const char* messageFormat, va_list formatArgs);
+
+void ShowErrorAndExit(const char* messageFormat, ...);
 
 const char* GetEnvVar(const char* envVarName, bool* valueFound);
 

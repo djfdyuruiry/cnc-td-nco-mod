@@ -68,5 +68,8 @@
     <ClInclude Include="TwoWayStringMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LogLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

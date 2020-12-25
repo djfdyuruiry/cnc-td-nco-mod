@@ -29,6 +29,7 @@
     <ClInclude Include="HashUtils.h" />
     <ClInclude Include="IniReader.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="LogLevel.h" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="ResultWithValue.h" />

@@ -39,21 +39,6 @@ private:
 			BOOL_EXTRACTOR_AIR(IsRotorEquipped),
 			SIMPLE_INJECTOR_AIR(bool, IsRotorEquipped),
 			PrimitiveTypeValidator<bool>::Build()
-		).WithFieldWrapper(
-			RATE_OF_TURN_RULE,
-			SIMPLE_EXTRACTOR_AIR(ROT),
-			SIMPLE_INJECTOR_AIR(unsigned char, ROT),
-			NumbericRangeValidator<>::Build(0, UCHAR_MAX)
-		).WithFieldWrapper(
-			TRANSPORT_CAPACITY_RULE,
-			SIMPLE_EXTRACTOR_AIR(TransportCapacity),
-			SIMPLE_INJECTOR_AIR(unsigned int, TransportCapacity),
-			NumbericRangeValidator<>::Build(0, UINT_MAX)
-		).WithFieldWrapper(
-			TRANSPORT_CAPACITY_RULE,
-			SIMPLE_EXTRACTOR_AIR(TransportCapacity),
-			SIMPLE_INJECTOR_AIR(unsigned int, TransportCapacity),
-			NumbericRangeValidator<>::Build(0, UINT_MAX)
 		);
 	}
 

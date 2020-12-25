@@ -45,6 +45,8 @@ static void GenerateApiDocs() {
 	if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
 	{
 		LogError("Lua API docs generation script failed");
+
+		exit(1);
 	}
 }
 
@@ -54,6 +56,8 @@ static void DumpRules() {
 	if (!ExecuteLuaFile("dump-rules.lua"))
 	{
 		LogError("Rule dumping script failed");
+
+		exit(1);
 	}
 }
 
@@ -136,11 +140,7 @@ static void Parse_Command_Line(const char* commandLine)
 	}
 	else if (StringStartsWith(commandLine, "--dump-rules"))
 	{
-		if (!ExecuteLuaFile("dump-rules.lua"))
-		{
-			puts("ERROR: Failed to dump rules file");
-			exit(1);
-		}
+		DumpRules();
 
 		exit(0);
 	}

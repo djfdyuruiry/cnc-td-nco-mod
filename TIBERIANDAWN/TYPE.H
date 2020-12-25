@@ -416,7 +416,7 @@ class TechnoTypeClass : public ObjectTypeClass
 				WarheadType deathExplosionWarhead = WARHEAD_NONE,
 				unsigned int deathExplosionDamage = 0);
 
-		static void ReadTechnoRules(TechnoTypeClass* type);
+		static void ReadTechnoRules(TechnoTypeClass* type, bool isInfantry, bool isUnit, bool isAircraft);
 
 		virtual int Calculate_Risk(void) const;
 		virtual int  Raw_Cost(void) const;

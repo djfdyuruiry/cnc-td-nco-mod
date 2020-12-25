@@ -3734,7 +3734,7 @@ void BuildingTypeClass::ReadBuildingRules(BuildingTypeClass* building)
 	auto iniName = building->IniName;
 
 	ReadObjectRules(building);
-	ReadTechnoRules(building);
+	ReadTechnoRules(building, false, false, false);
 
 	building->IsBibbed = Read_Is_Bibbed(iniName, building->IsBibbed);
 	building->IsWall = Read_Is_Wall(iniName, building->IsWall);

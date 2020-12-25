@@ -298,7 +298,7 @@ private:
 					{ INFANTRY_C7, "C7" },
 					{ INFANTRY_C8, "C8" },
 					{ INFANTRY_C9, "C9" },
-					{ INFANTRY_C10, "NIKOOMBA" },
+					{ INFANTRY_C10, "C10" },
 					{ INFANTRY_MOEBIUS, "MOEBIUS" },
 					{ INFANTRY_DELPHI, "DELPHI" },
 					{ INFANTRY_CHAN, "CHAN" }

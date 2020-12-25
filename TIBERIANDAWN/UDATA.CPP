@@ -1745,7 +1745,7 @@ void UnitTypeClass::ReadUnitRules(UnitTypeClass* unit)
 	auto iniName = unit->IniName;
 
 	ReadObjectRules(unit);
-	ReadTechnoRules(unit);
+	ReadTechnoRules(unit, false, true, false);
 
 	unit->IsCrateGoodie = Read_Can_Be_Found_In_Crate(iniName, unit->IsCrateGoodie);
 	unit->IsPieceOfEight = Read_Limited_Facings(iniName, unit->IsPieceOfEight);

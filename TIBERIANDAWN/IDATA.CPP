@@ -1486,7 +1486,7 @@ void InfantryTypeClass::ReadInfantryRules(InfantryTypeClass* infantry)
 	auto iniName = infantry->IniName;
 
 	ReadObjectRules(infantry);
-	ReadTechnoRules(infantry);
+	ReadTechnoRules(infantry, true, false, false);
 
 	infantry->IsCrushable = Read_Is_Crushable(iniName, infantry->IsCrushable);
 	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);

@@ -12,46 +12,50 @@ const char* Logger::LOG_FORMAT = NULL;
 
 void Logger::LoadDefaultLogFilePath()
 {
-	auto documentsPath = AllocateString(MAX_PATH);
-	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, documentsPath);
+	auto logFilePath = AllocateString(MAX_PATH);
+	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, logFilePath);
 
 	if (FAILED(result))
 	{
 		ShowError("Failed to read user documents path, logging to file will be disabled");
 		failedToOpenLogFile = true;
 
+		delete logFilePath;
+
 		return;
 	}
 
-	auto cncPath = FormatString("%s\\CnCRemastered", MAX_PATH, documentsPath);
+	strcat(logFilePath, "\\CnCRemastered");
 
-	delete documentsPath;
-
-	if (!FileUtils::IsDirectory(cncPath))
+	if (!FileUtils::IsDirectory(logFilePath))
 	{
 		failedToOpenLogFile = true;
 
-		LogError("CNC Remastered document path has not been created yet, logging to file will be disabled. Path: %s", cncPath);
+		LogError("CNC Remastered document path has not been created yet, logging to file will be disabled. Path: %s", logFilePath);
 
-		delete cncPath;
+		delete logFilePath;
 
 		return;
 	}
 
-	logFilePath = FormatString("%s\\nco.log", MAX_PATH, cncPath);
-
-	delete cncPath;
+	this->logFilePath = strcat(logFilePath, "\\nco.log");
 }
 
 void Logger::OpenLogFile()
 {
-	if (Win32HandleIsValid(logFileHandle) || failedToOpenLogFile) {
+	if (Win32HandleIsValid(logFileHandle) || failedToOpenLogFile)
+	{
 		return;
 	}
 
 	if (StringIsEmpty(logFilePath))
 	{
 		LoadDefaultLogFilePath();
+
+		if (failedToOpenLogFile || StringIsEmpty(logFilePath))
+		{
+			return;
+		}
 	}
 
 	bool errorOccurred = false;
@@ -77,8 +81,8 @@ void Logger::CloseLogFileIfOpen()
 	if (!CloseWin32HandleIfValid(logFileHandle))
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			ShowError("Failed to close handle for log file '%s': %s", logFilePath, e);
-			});
+			LogError("Failed to close handle for log file '%s': %s", logFilePath, e);
+		});
 	}
 
 	logFileHandle = NULL;
@@ -88,7 +92,10 @@ Logger::~Logger()
 {
 	CloseLogFileIfOpen();
 
-	delete logFilePath;
+	if (logFilePath != NULL)
+	{
+		delete logFilePath;
+	}
 }
 
 void Logger::Log(LogLevel logLevel, const char* messageFormat, ...)

@@ -47,10 +47,12 @@ public:
 
 	static void Shutdown()
 	{
-		if (INSTANCE != NULL)
+		if (INSTANCE == NULL)
 		{
-			delete INSTANCE;
+			return;
 		}
+
+		delete INSTANCE;
 
 		INSTANCE = NULL;
 	}

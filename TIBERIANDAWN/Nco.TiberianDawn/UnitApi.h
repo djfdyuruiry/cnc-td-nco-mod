@@ -99,51 +99,7 @@ private:
 			ParseCheckValidator<SpeedType>::Build("Unit Speed", [](auto stringValue) {
 				return &NcoTypeConverter().Parse<SpeedType>(stringValue);
 			})
-		).WithFieldWrapper(
-			RATE_OF_TURN_RULE,
-			SIMPLE_EXTRACTOR_UNT(ROT),
-			SIMPLE_INJECTOR_UNT(unsigned char, ROT),
-			NumbericRangeValidator<>::Build(0, UCHAR_MAX)
-		).WithFieldWrapper(
-			TRANSPORT_CAPACITY_RULE,
-			SIMPLE_EXTRACTOR_UNT(TransportCapacity),
-			SIMPLE_INJECTOR_UNT(unsigned int, TransportCapacity),
-			NumbericRangeValidator<>::Build(0, UINT_MAX)
-		).WithFieldWrapper(
-			EXPLODES_UPON_DEATH_RULE,
-			EXTRACTOR_UNT((bool)i.ExplodesUponDeath),
-			SIMPLE_INJECTOR_UNT(bool, ExplodesUponDeath),
-			PrimitiveTypeValidator<bool>::Build()
-		).WithFieldWrapper(
-			DEATH_EXPLOSION_ANIMATION_RULE,
-			EXTRACTOR_UNT(NcoTypeConverter().ToStringOrDefault(i.DeathExplosionAnimation)),
-			[](UnitTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				i.DeathExplosionAnimation = NcoTypeConverter().ParseOrDefault(
-					va.Read<const char*>(l, si),
-					i.DeathExplosionAnimation
-				);
-			},
-			ParseCheckValidator<AnimType>::Build("Animation", [](auto valueString) {
-				return &NcoTypeConverter().Parse<AnimType>(valueString);
-			})
-		).WithFieldWrapper(
-			DEATH_EXPLOSION_WARHEAD_RULE,
-			EXTRACTOR_UNT(NcoTypeConverter().ToStringOrDefault(i.DeathExplosionWarhead)),
-			[](UnitTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				i.DeathExplosionWarhead = NcoTypeConverter().ParseOrDefault(
-					va.Read<const char*>(l, si),
-					i.DeathExplosionWarhead
-				);
-			},
-			ParseCheckValidator<WarheadType>::Build("Warhead", [](auto valueString) {
-				return &NcoTypeConverter().Parse<WarheadType>(valueString);
-			})
-		).WithFieldWrapper(
-			DEATH_EXPLOSION_DAMAGE_RULE,
-			SIMPLE_EXTRACTOR_UNT(DeathExplosionDamage),
-			SIMPLE_INJECTOR_UNT(unsigned int, DeathExplosionDamage),
-			NumbericRangeValidator<>::Build(0, UINT_MAX)
-		);;
+		);
 	}
 
 public:

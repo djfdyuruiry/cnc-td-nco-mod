@@ -60,40 +60,6 @@ private:
 			EXTRACTOR_INF((bool)i.HasC4Charges),
 			SIMPLE_INJECTOR_INF(bool, HasC4Charges),
 			PrimitiveTypeValidator<bool>::Build()
-		).WithFieldWrapper(
-			EXPLODES_UPON_DEATH_RULE,
-			EXTRACTOR_INF((bool)i.ExplodesUponDeath),
-			SIMPLE_INJECTOR_INF(bool, ExplodesUponDeath),
-			PrimitiveTypeValidator<bool>::Build()
-		).WithFieldWrapper(
-			DEATH_EXPLOSION_ANIMATION_RULE,
-			EXTRACTOR_INF(NcoTypeConverter().ToStringOrDefault(i.DeathExplosionAnimation)),
-			[](InfantryTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				i.DeathExplosionAnimation = NcoTypeConverter().ParseOrDefault(
-					va.Read<const char*>(l, si),
-					i.DeathExplosionAnimation
-				);
-			},
-			ParseCheckValidator<AnimType>::Build("Animation", [](auto valueString) {
-				return &NcoTypeConverter().Parse<AnimType>(valueString);
-			})
-		).WithFieldWrapper(
-			DEATH_EXPLOSION_WARHEAD_RULE,
-			EXTRACTOR_INF(NcoTypeConverter().ToStringOrDefault(i.DeathExplosionWarhead)),
-			[](InfantryTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				i.DeathExplosionWarhead = NcoTypeConverter().ParseOrDefault(
-					va.Read<const char*>(l, si),
-					i.DeathExplosionWarhead
-				);
-			},
-			ParseCheckValidator<WarheadType>::Build("Warhead", [](auto valueString) {
-				return &NcoTypeConverter().Parse<WarheadType>(valueString);
-			})
-		).WithFieldWrapper(
-			DEATH_EXPLOSION_DAMAGE_RULE,
-			SIMPLE_EXTRACTOR_INF(DeathExplosionDamage),
-			SIMPLE_INJECTOR_INF(unsigned int, DeathExplosionDamage),
-			NumbericRangeValidator<>::Build(0, UINT_MAX)
 		);
 	}
 
