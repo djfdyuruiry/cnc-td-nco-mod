@@ -44,9 +44,7 @@ static void GenerateApiDocs() {
 
 	if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
 	{
-		LogError("Lua API docs generation script failed");
-
-		exit(1);
+		ShowErrorAndExit("Lua API docs generation script failed");
 	}
 }
 
@@ -55,9 +53,7 @@ static void DumpRules() {
 
 	if (!ExecuteLuaFile("dump-rules.lua"))
 	{
-		LogError("Rule dumping script failed");
-
-		exit(1);
+		ShowErrorAndExit("Rule dumping script failed");
 	}
 }
 
@@ -122,17 +118,13 @@ static void Parse_Command_Line(const char* commandLine)
 	if (StringStartsWith(commandLine, "--lua-repl"))
 	{
 		#ifdef CI_ENV
-		puts("ERROR: CI environment detected - Lua REPL not supported");
-
-		exit(1);
+		ShowErrorAndExit("ERROR: CI environment detected - Lua REPL not supported");
 		#else
 		auto& replResult = NcoLuaRuntime().ExecuteScript("Nco.LuaRepl.enter()");
 
 		if (replResult.IsErrorResult())
 		{
-			ShowError("Lua REPL Error: %s", replResult.GetError());
-
-			exit(1);
+			ShowErrorAndExit("Lua REPL Error: %s", replResult.GetError());
 		}
 
 		exit(0);
@@ -148,8 +140,7 @@ static void Parse_Command_Line(const char* commandLine)
 	{
 		if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
 		{
-			puts("ERROR: Failed to generate api docs");
-			exit(1);
+			ShowErrorAndExit("ERROR: Failed to generate api docs");
 		}
 
 		exit(0);

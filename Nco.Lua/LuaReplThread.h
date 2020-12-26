@@ -14,7 +14,6 @@ private:
 	}
 
 protected:
-	// TODO: fix crash on mission restart
 	DWORD Run()
 	{
 		#ifndef TEST_CONSOLE

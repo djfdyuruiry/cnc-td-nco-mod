@@ -206,7 +206,7 @@ public:
 
 		while (PopKeyValuePair(-2))
 		{
-			auto valType = GetLuaType(valIndex);
+			auto& valType = GetLuaType(valIndex);
 
 			iterateAction(keyIndex, valIndex, valType);
 
@@ -239,7 +239,7 @@ public:
 	{
 		if (StringIsEmpty(field))
 		{
-			return Result::BuildWithError("Field passed to ILuaStateWrapper::ReadTableField was null or empty");
+			return Result::BuildWithError("Field passed to ILuaStateWrapper::PushTableFieldOntoStack was null or empty");
 		}
 
 		if (!IsTable(stackIndex))

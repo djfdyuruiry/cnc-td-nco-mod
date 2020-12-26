@@ -48,9 +48,9 @@ private:
 	static IRulesIniSection& BuildInfantryAndUnitSharedRules(IRulesIniSection& s)
 	{
 		return s << EXPLODES_UPON_DEATH_RULE << BOOL_RULE
-	      << DEATH_EXPLOSION_ANIMATION_RULE << ANIMATION_RULE
-		  << DEATH_EXPLOSION_WARHEAD_RULE << WARHEAD_RULE
-		  << DEATH_EXPLOSION_DAMAGE_RULE << UNSIGNED_INT_RULE;
+	      		 << DEATH_EXPLOSION_ANIMATION_RULE << ANIMATION_RULE
+		  		 << DEATH_EXPLOSION_WARHEAD_RULE << WARHEAD_RULE
+		  		 << DEATH_EXPLOSION_DAMAGE_RULE << UNSIGNED_INT_RULE;
 	}
 
 	static IRulesIniSection& BuildUnitAndAircraftSharedRules(IRulesIniSection& s)

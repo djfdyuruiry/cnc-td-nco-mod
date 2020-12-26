@@ -118,18 +118,6 @@ public:
 
 	virtual Result& PushTableFieldOntoStack(const char* field) = 0;
 
-	template<class T> ResultWithValue<T>& ReadTableField(int stackIndex, const char* field)
-	{
-		auto& fieldResult = PushTableFieldOntoStack(stackIndex, field);
-
-		if (!fieldResult)
-		{
-			fieldResult.c
-		}
-
-		return PullValue<T>();
-	}
-
 	virtual ResultWithValue<int>& ReadInteger(int stackIndex) = 0;
 	virtual ResultWithValue<long long>& ReadBigInteger(int stackIndex) = 0;
 	virtual ResultWithValue<double>& ReadDouble(int stackIndex) = 0;

@@ -348,7 +348,7 @@ static InfantryTypeClass const E4(
 	true,
 	ANIM_NAPALM1,
 	WARHEAD_FIRE,
-	80
+	80u
 );
 
 // Chemwarrior
@@ -422,7 +422,7 @@ static InfantryTypeClass const E5(
 	true,
 	ANIM_CHEM_BALL,
 	WARHEAD_HE,
-	80
+	80u
 );
 
 // Engineer

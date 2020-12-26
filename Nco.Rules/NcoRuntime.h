@@ -56,7 +56,7 @@ private:
 
 		if (!InitialiseLuaCppApi())
 		{
-			LogError("Lua setup failed: c++ APIs could not be initialised");
+			LogError("Lua setup failed: C++ APIs could not be initialised");
 			return false;
 		}
 

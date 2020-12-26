@@ -151,7 +151,7 @@ static UnitTypeClass const UnitFTank(
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT,							// ORDERS:		Default order to give new unit.
 	WARHEAD_FIRE,
-	200
+	200u
 );
 
 // Stealth tank
@@ -518,7 +518,7 @@ static UnitTypeClass const UnitSAM(
 	0,							// Turret center offset along body centerline.
 	MISSION_HUNT,							// ORDERS:		Default order to give new unit.
 	WARHEAD_FIRE,
-	200
+	200u
 );
 
 // Artillery

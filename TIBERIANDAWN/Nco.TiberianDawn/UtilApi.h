@@ -161,10 +161,14 @@ private:
                 lua.RaiseError("Error reading from standard input: %s", e);
             });
 
+            CloseWin32HandleIfValid(stdIn);
+
             return 0;
         }
 
         lua.WriteString(input);
+
+        CloseWin32HandleIfValid(stdIn);
 
         return 1;
     }
