@@ -103,7 +103,7 @@ private:
 						   LogLevelToString(TRACE)
 					   })
 					   .WithDefault("OFF")
-				  << "LogFile"  
+				  << s.BuildRule("LogFile").WithDefault("log\\nco.log")
 				  << LUA_SCRIPTS_RULE
 				  << ENABLE_LUA_SCRIPTS_RULE  << BOOL_RULE << true
 				  << ENABLE_LUA_CONSOLE_RULE  << BOOL_RULE;

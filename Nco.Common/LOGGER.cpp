@@ -1,4 +1,3 @@
-#include <shlobj.h>
 #include <string>
 #include <windows.h>
 
@@ -10,37 +9,6 @@
 Logger* Logger::INSTANCE = NULL;
 const char* Logger::LOG_FORMAT = NULL;
 
-void Logger::LoadDefaultLogFilePath()
-{
-	auto logFilePath = AllocateString(MAX_PATH);
-	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, logFilePath);
-
-	if (FAILED(result))
-	{
-		ShowError("Failed to read user documents path, logging to file will be disabled");
-		failedToOpenLogFile = true;
-
-		delete logFilePath;
-
-		return;
-	}
-
-	strcat(logFilePath, "\\CnCRemastered");
-
-	if (!FileUtils::IsDirectory(logFilePath))
-	{
-		failedToOpenLogFile = true;
-
-		LogError("CNC Remastered document path has not been created yet, logging to file will be disabled. Path: %s", logFilePath);
-
-		delete logFilePath;
-
-		return;
-	}
-
-	this->logFilePath = strcat(logFilePath, "\\nco.log");
-}
-
 void Logger::OpenLogFile()
 {
 	if (Win32HandleIsValid(logFileHandle) || failedToOpenLogFile)
@@ -50,7 +18,7 @@ void Logger::OpenLogFile()
 
 	if (StringIsEmpty(logFilePath))
 	{
-		LoadDefaultLogFilePath();
+		logFilePath = strdup("log\\nco.log");
 
 		if (failedToOpenLogFile || StringIsEmpty(logFilePath))
 		{

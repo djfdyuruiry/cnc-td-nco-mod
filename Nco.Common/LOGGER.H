@@ -27,8 +27,6 @@ private:
 	{
 	}
 
-	void LoadDefaultLogFilePath();
-
 	void OpenLogFile();
 
 	void CloseLogFileIfOpen();
