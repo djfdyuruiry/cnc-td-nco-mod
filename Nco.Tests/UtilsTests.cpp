@@ -165,10 +165,10 @@ namespace Unit
 					);
 				}
 
-				TEST_METHOD(When_IsBooleanString_IsCalled_WithLoweraseStringContainingTrue_ThenFalseIsReturned)
+				TEST_METHOD(When_IsBooleanString_IsCalled_WithLoweraseStringContainingTrue_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
-						false,
+						true,
 						IsBooleanString("true")
 					);
 				}
@@ -181,10 +181,10 @@ namespace Unit
 					);
 				}
 
-				TEST_METHOD(When_IsBooleanString_IsCalled_WithLoweraseStringContainingFalse_ThenFalseIsReturned)
+				TEST_METHOD(When_IsBooleanString_IsCalled_WithLoweraseStringContainingFalse_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
-						false,
+						true,
 						IsBooleanString("false")
 					);
 				}
