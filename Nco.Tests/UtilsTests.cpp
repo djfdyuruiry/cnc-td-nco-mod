@@ -222,21 +222,21 @@ namespace Unit
 					Assert::AreEqual(false, parseError);
 				}
 
-				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingTrue_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingTrue_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
-						false,
+						true,
 						ParseBoolean("true", NULL)
 					);
 				}
 
-				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingTrue_ThenParseErrorIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingTrue_ThenParseErrorIsNotReturned)
 				{
 					bool parseError = false;
 
 					ParseBoolean("true", &parseError);
 
-					Assert::AreEqual(true, parseError);
+					Assert::AreEqual(false, parseError);
 				}
 
 				TEST_METHOD(When_ParseBoolean_IsCalled_WithUppercaseStringContainingFalse_ThenFalseIsReturned)
@@ -264,13 +264,13 @@ namespace Unit
 					);
 				}
 
-				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingFalse_ThenParseErrorIsReturned)
+				TEST_METHOD(When_ParseBoolean_IsCalled_WithLowercaseStringContainingFalse_ThenParseErrorIsNotReturned)
 				{
 					bool parseError = false;
 
 					ParseBoolean("false", &parseError);
 
-					Assert::AreEqual(true, parseError);
+					Assert::AreEqual(false, parseError);
 				}
 
 				TEST_METHOD(When_ParseBoolean_IsCalled_WithNullString_ThenFalseIsReturned)
@@ -315,10 +315,10 @@ namespace Unit
 					);
 				}
 
-				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithLowercaseStringContainingTrueAndDefaultOfFalse_ThenFalseIsReturned)
+				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithLowercaseStringContainingTrueAndDefaultOfFalse_ThenTrueIsReturned)
 				{
 					Assert::AreEqual(
-						false,
+						true,
 						ParseBooleanOrDefault("true", false)
 					);
 				}
@@ -331,10 +331,10 @@ namespace Unit
 					);
 				}
 
-				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithLowercaseStringContainingFalseAndDefaultOfTrue_ThenTrueIsReturned)
+				TEST_METHOD(When_ParseBooleanOrDefault_IsCalled_WithLowercaseStringContainingFalseAndDefaultOfTrue_ThenFalseIsReturned)
 				{
 					Assert::AreEqual(
-						true,
+						false,
 						ParseBooleanOrDefault("false", true)
 					);
 				}
