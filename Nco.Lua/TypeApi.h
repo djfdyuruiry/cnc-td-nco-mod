@@ -49,51 +49,55 @@ private:
 			return TypeApiParameters<T>::BuildInvalid();
 		}
 
-		if (!ValidateTypeName(typeInstanceNameResult.GetValue()))
-		{
-			delete &typeInstanceNameResult;
+		auto typeInstanceName = typeInstanceNameResult.GetValue();
 
-			luaState.RaiseError("%sRule argument `typeName` was not recognised as a valid '%s' type", operation, titleCaseTypeName);
+		delete &typeInstanceNameResult;
+
+		if (!ValidateTypeName(typeInstanceName))
+		{
+			luaState.RaiseError(
+				"%sRule argument `typeName` was not recognised as a valid '%s' type: %s",
+				operation,
+				titleCaseTypeName,
+				typeInstanceName
+			);
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
 
-		auto& typeInstance = ParseType(typeInstanceNameResult.GetValue());
+		auto& typeInstance = ParseType(typeInstanceName);
 		auto& ruleNameParameterResult = luaState.ReadString(2);
 
 		if (ruleNameParameterResult.IsErrorResult() || StringIsEmpty(ruleNameParameterResult.GetValue()))
 		{
 			luaState.RaiseError("%sRule argument `ruleName` was nil or blank", operation);
 
-			delete &typeInstanceNameResult;
 			delete &ruleNameParameterResult;
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
 
-		if (!ValidateRule(ruleNameParameterResult.GetValue()))
+		auto ruleParameterName = ruleNameParameterResult.GetValue();
+
+		delete &ruleNameParameterResult;
+
+		if (!ValidateRule(ruleParameterName))
 		{
 			luaState.RaiseError(
 				"rule passed to %sRule was not recognised for type '%s': %s",
 				operation,
 				titleCaseTypeName,
-				ruleNameParameterResult.GetValue()
+				ruleParameterName
 			);
-
-			delete &typeInstanceNameResult;
-			delete &ruleNameParameterResult;
 
 			return TypeApiParameters<T>::BuildInvalid();
 		}
 
 		auto& params = TypeApiParameters<T>::BuildValid(
-			typeInstanceNameResult.GetValue(),
-			ruleNameParameterResult.GetValue(),
+			typeInstanceName,
+			ruleParameterName,
 			&typeInstance
 		);
-
-		delete &typeInstanceNameResult;
-		delete &ruleNameParameterResult;
 
 		return params;
 	}
@@ -199,8 +203,6 @@ protected:
 	{
 		WithName(typeName);
 		WithDescription(FormatString("%s rule info and control functions", titleCaseTypeName));
-
-		auto name = titleCaseTypeName;
 
 		WithMethod("getRule", this, ReadRuleValueApiProxy)
 			.WithDescription(FormatString("Set a rule for a given %s", titleCaseTypeName))

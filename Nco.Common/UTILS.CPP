@@ -27,8 +27,6 @@ void ShowError(const char* messageFormat, va_list formatArgs)
 
 	auto formattedMessageBuffer = FormatString(messageFormat, GetLogger().GetLogLineLength(), formatArgs);
 
-	LogError(formattedMessageBuffer);
-
 	// we don't want a message box blocking an automated test
 	#ifndef CI_ENV
 	MessageBox(
@@ -38,6 +36,8 @@ void ShowError(const char* messageFormat, va_list formatArgs)
 		MB_OK | MB_ICONSTOP
 	);
 	#endif
+
+	LogError(formattedMessageBuffer);
 
 	delete formattedMessageBuffer;
 }
@@ -135,7 +135,7 @@ void WithWin32ErrorMessage(std::function<void(const char*)> handler)
 	delete error;
 }
 
-bool IsIntString(char* numberValue)
+bool IsIntString(const char* numberValue)
 {
 	if (StringIsEmpty(numberValue))
 	{
@@ -149,23 +149,7 @@ bool IsIntString(char* numberValue)
 	return !StringsAreEqual(numberValue, remainder);
 }
 
-bool IsIntString(const char* numberValue)
-{
-	if (StringIsEmpty(numberValue))
-	{
-		return false;
-	}
-
-	auto numberValueStr = strdup(numberValue);
-
-	auto result = IsIntString(numberValueStr);
-
-	delete numberValueStr;
-
-	return result;
-}
-
-bool IsUnsignedIntString(char* numberValue)
+bool IsUnsignedIntString(const char* numberValue)
 {
 	if (StringIsEmpty(numberValue))
 	{
@@ -179,23 +163,7 @@ bool IsUnsignedIntString(char* numberValue)
 	return !StringsAreEqual(numberValue, remainder);
 }
 
-bool IsUnsignedIntString(const char* numberValue)
-{
-	if (StringIsEmpty(numberValue))
-	{
-		return false;
-	}
-
-	auto numberValueStr = strdup(numberValue);
-
-	auto result = IsUnsignedIntString(numberValueStr);
-
-	delete numberValueStr;
-
-	return result;
-}
-
-bool IsDoubleString(char* numberValue)
+bool IsDoubleString(const char* numberValue)
 {
 	if (StringIsEmpty(numberValue))
 	{
@@ -223,18 +191,19 @@ char* ConvertNumberToString(int number)
 	return numberBuffer;
 }
 
-bool IsBooleanString(char* booleanValue)
+bool IsBooleanString(const char* booleanValue)
 {
-	if (StringIsEmpty(booleanValue)
-		|| (!StringsAreEqual(booleanValue, "TRUE") && !StringsAreEqual(booleanValue, "FALSE")))
-	{
-		return false;
-	}
+	auto booleanValueUpper = ConvertStringToUpperCase(booleanValue);
 
-	return true;
+	auto isValid = !StringIsEmpty(booleanValueUpper)
+		&& (StringsAreEqual(booleanValueUpper, "TRUE") || StringsAreEqual(booleanValueUpper, "FALSE"));
+
+	delete booleanValueUpper;
+
+	return isValid;
 }
 
-bool ParseBoolean(char* booleanValue, bool* parseError)
+bool ParseBoolean(const char* booleanValue, bool* parseError)
 {
 	if (!IsBooleanString(booleanValue))
 	{
@@ -246,31 +215,16 @@ bool ParseBoolean(char* booleanValue, bool* parseError)
 		return false;
 	}
 
-	return StringsAreEqual(booleanValue, "TRUE");
+	auto booleanValueUpper = ConvertStringToUpperCase(booleanValue);
+
+	auto boolValue = StringsAreEqual(booleanValueUpper, "TRUE");
+
+	delete booleanValueUpper;
+
+	return boolValue;
 }
 
-bool ParseBoolean(const char* booleanValue, bool* parseError)
-{
-	if (StringIsEmpty(booleanValue))
-	{
-		if (parseError != NULL)
-		{
-			*parseError = true;
-		}
-
-		return false;
-	}
-
-	auto booleanValueStr = strdup(booleanValue);
-
-	auto result = ParseBoolean(booleanValueStr, parseError);
-
-	delete booleanValueStr;
-
-	return result;
-}
-
-bool ParseBooleanOrDefault(char* booleanValue, bool default)
+bool ParseBooleanOrDefault(const char* booleanValue, bool default)
 {
 	bool parseError = false;
 
@@ -282,22 +236,6 @@ bool ParseBooleanOrDefault(char* booleanValue, bool default)
 	}
 
 	return value;
-}
-
-bool ParseBooleanOrDefault(const char* booleanValue, bool default)
-{
-	if (StringIsEmpty(booleanValue))
-	{
-		return default;
-	}
-
-	auto booleanValueStr = strdup(booleanValue);
-
-	auto result = ParseBooleanOrDefault(booleanValueStr, default);
-
-	delete booleanValueStr;
-
-	return result;
 }
 
 const char* ConvertBooleanToString(bool booleanValue)
@@ -339,6 +277,8 @@ const char* GetModDataPath()
 		return MOD_DATA_PATH;
 	}
 
+	MOD_DATA_PATH = AllocateString(MAX_PATH);
+
 	HMODULE moduleHandle;
 
 	if (
@@ -346,37 +286,26 @@ const char* GetModDataPath()
 			GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
 			(LPCSTR)&GetModDataPath,
 			&moduleHandle
-		)
-		|| !Win32HandleIsValid(moduleHandle)
+		)															  // get nco dll/exe handle...
+		|| !Win32HandleIsValid(moduleHandle)						  // then check exe/dll handle is valid...
+		|| !GetModuleFileName(moduleHandle, MOD_DATA_PATH, MAX_PATH)  // and finally, get path to dll/exe using handle
 	)
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			ShowErrorAndExit("Unable to get handle on NCO DLL: %s", e);
+			ShowErrorAndExit("Unable to get NCO mod data path: %s", e);
 		});
 	}
-
-	auto modDllPath = AllocateString(MAX_PATH);
-
-	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
+	else
 	{
-		WithWin32ErrorMessage([&](auto e) {
-			ShowErrorAndExit("Unable to get mod data path: %s", e);
-		});
+		// remove exe/dll filename
+		auto moduleDirectoryPath = ExtractSubstring(MOD_DATA_PATH, strlen(MOD_DATA_PATH) - MOD_FILE_NAME_LENGTH);
+
+		delete MOD_DATA_PATH;
+
+		MOD_DATA_PATH = moduleDirectoryPath;
 	}
 
-	auto modDllPathLength = strlen(modDllPath);
-	auto modPathLength = modDllPathLength - MOD_FILE_NAME_LENGTH;
-
-	MOD_DATA_PATH = AllocateString(MAX_PATH);
-
-	for (auto c = 0u; c < modPathLength; c++)
-	{
-		MOD_DATA_PATH[c] = modDllPath[c];
-	}
-
-	delete modDllPath;
-
-	LogInfo("Resolved mod data path: %s", MOD_DATA_PATH);
+	LogInfo("Resolved NCO mod data path: %s", MOD_DATA_PATH);
 
 	return MOD_DATA_PATH;
 }
@@ -433,9 +362,10 @@ void StartConsoleOutput()
 
 void StopConsoleOutput()
 {
-#ifdef CI_ENV
+#ifdef CI_ENV 
 	puts("WARNING: CI environment detected - skipped windows console stop");
 #else
+	#ifndef TEST_CONSOLE
 	if (!FreeConsole())
 	{
 		WithWin32ErrorMessage([&](auto e) {
@@ -450,7 +380,7 @@ void StopConsoleOutput()
 	if (!stdOutClosed || !stdErrClosed || !stdInClosed)
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			LogWarn(
+			ShowError(
 				"Error closing stream(s):\nSTDOUT Closed: %s\nSTDERR Closed: %s\nSTDERR Closed: %s\n%s",
 				ConvertBooleanToString(stdOutClosed),
 				ConvertBooleanToString(stdErrClosed),
@@ -459,6 +389,7 @@ void StopConsoleOutput()
 			);
 		});
 	}
+	#endif
 #endif
 }
 

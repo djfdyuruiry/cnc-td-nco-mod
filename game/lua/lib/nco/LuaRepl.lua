@@ -107,10 +107,6 @@ local function LuaRepl()
     end
 
     if trimmedEvalString ~= "clear" then
-      if not (evalString):match([[^%s*return]]) then
-        evalString = string.format("return %s", evalString)
-      end
-
       evaluateReplInput(evalString)
     else
       os.execute("cls")

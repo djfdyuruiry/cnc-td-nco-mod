@@ -89,11 +89,8 @@ private:
         }
 
         auto logLevelStr = logLevelStrResult.GetValue();
-        auto logLevelUpper = ConvertStringToUpperCase(logLevelStr);
 
-        auto logLevel = ParseLogLevel(logLevelUpper);
-
-        delete logLevelUpper;
+        auto logLevel = ParseLogLevel(logLevelStr);
 
         GetLogger().SetLogLevel(logLevel);
 
@@ -141,32 +138,25 @@ private:
 
     int ReadString(ILuaStateWrapper& lua)
     {
-        auto stdIn = GetStdHandle(STD_INPUT_HANDLE);
-
-        if (!Win32HandleIsValid(stdIn))
-        {
-            lua.RaiseError("Failed to open standard input stream");
-
-            return 0;
-        }
-
         auto input = AllocateString(2048);
 
         // read input
         DWORD charsRead;
 
-        if (!ReadConsole(stdIn, input, 2048, &charsRead, NULL))
+        if (!ReadConsole(GetStdHandle(STD_INPUT_HANDLE), input, 2048, &charsRead, NULL))
         {
             WithWin32ErrorMessage([&](auto e) {
                 lua.RaiseError("Error reading from standard input: %s", e);
             });
 
-            CloseWin32HandleIfValid(stdIn);
-
             return 0;
         }
 
-        lua.WriteString(input);
+        auto trimmedInput = ExtractSubstring(input, charsRead);
+
+        delete input;
+
+        lua.WriteString(trimmedInput);
 
         return 1;
     }

@@ -213,7 +213,7 @@ private:
             return 0;
         }
 
-        auto &rule = *(sectionRuleResult.GetValue());
+        auto& rule = *(sectionRuleResult.GetValue());
 
         delete &sectionRuleResult;
 
@@ -235,7 +235,10 @@ private:
 
     int GetSectionNames(ILuaStateWrapper& lua)
     {
-        lua.WriteArray(rulesRuntime.GetRules().GetSectionNames());
+        lua.WriteArray(
+            rulesRuntime.GetRules()
+                .GetSectionNames()
+        );
 
         return 1;
     }

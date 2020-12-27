@@ -383,7 +383,7 @@ private:
 
         auto message = messageResult.GetValue();
         auto& durationInSecondsResult = lua.ReadDouble(2);
-        
+
         delete &messageResult;
 
         if (durationInSecondsResult.GetValue() < 0.1)
@@ -391,6 +391,7 @@ private:
             delete &durationInSecondsResult;
 
             lua.RaiseError("showGameMessage parameter `durationInSeconds` must be equal to or greater than 0.1 (100ms)");
+
             return 0;
         }
 

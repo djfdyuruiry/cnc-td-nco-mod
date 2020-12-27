@@ -25,16 +25,16 @@ protected:
 		T defaultValue
 	)
 	{
-		auto stringValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		auto& stringValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!stringValueOptional.Present())
 		{
+			delete &stringValueOptional;
+
 			return rule.GetDefaultValueOr<T>(defaultValue);
 		}
 
 		auto stringValue = stringValueOptional.Get<char*>();
-
-		ConvertStringToUpperCase(stringValue);
 
 		auto& parseResult = *parser(stringValue);
 
@@ -43,20 +43,21 @@ protected:
 			rulesIni.MarkAsInvalid();
 
 			ShowError("Failed to parse value '%s' as %s for [%s]: %s", stringValue, typeName, rule.GetStringKey(), parseResult.GetError());
-
+			
+			delete &stringValueOptional;
 			delete &parseResult;
 
 			return rule.GetDefaultValueOr<T>(defaultValue);
 		}
 
 		auto value = parseResult.GetValue();
-
+		
+		delete &stringValueOptional;
 		delete &parseResult;
 
 		return value;
 	}
 
-	// TODO: move all these private converters into seperate classes with a interface and mapping from type to converter
 	bool ReadBoolRule(RulesIniRule& rule)
 	{
 		auto defaultValue = rule.GetDefaultValueOr(false);
@@ -74,9 +75,7 @@ protected:
 
 		auto ruleValue = ruleValueOptional.Get<char*>();
 
-		ConvertStringToUpperCase(ruleValue);
-
-		auto boolValue = StringsAreEqual(ruleValue, "TRUE");
+		auto boolValue = ParseBooleanOrDefault(ruleValue, defaultValue);
 
 		delete &ruleValueOptional;
 
@@ -115,7 +114,6 @@ protected:
 				ruleValueStr
 			);
 
-			delete ruleValueStr;
 			delete &ruleValueOptional;
 
 			return defaultValue;
@@ -123,7 +121,7 @@ protected:
 
 		auto ruleValue = strtoul(ruleValueStr, NULL, 10);
 
-		LogTrace("Rules ini value: %s", ruleValueStr);
+		delete &ruleValueOptional;
 
 		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<unsigned int>())
 		{
@@ -141,14 +139,12 @@ protected:
 					maxValueInclusive,
 					ruleValue
 				);
+
 			}
 		}
 
 		LogTrace("Resolved value: %u", ruleValue);
 		LogDebug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
-
-		delete ruleValueStr;
-		delete &ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -195,7 +191,6 @@ protected:
 				ruleValueStr
 			);
 
-			delete ruleValueStr;
 			delete &ruleValueOptional;
 
 			return defaultValue;
@@ -203,7 +198,7 @@ protected:
 
 		auto ruleValue = strtod(ruleValueStr, NULL);
 
-		LogTrace("Rules ini value: %s", ruleValueStr);
+		delete &ruleValueOptional;
 
 		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<double>())
 		{
@@ -226,9 +221,6 @@ protected:
 
 		LogTrace("Resolved value: %f", ruleValue);
 		LogDebug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
-
-		delete ruleValueStr;
-		delete &ruleValueOptional;
 
 		return ruleValue;
 	}

@@ -30,10 +30,7 @@ protected:
 public:
 	~Thread()
 	{
-		if (threadRunning)
-		{
-			Stop();
-		}
+		StopIfRunning();
 	}
 
 	const char* GetName()

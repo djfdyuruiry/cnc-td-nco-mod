@@ -81,6 +81,31 @@ private:
 		});
 	}
 
+	int WriteVariableTable(ILuaStateWrapper& lua, LuaVariableInfo* variable)
+	{
+		lua.WriteTable();
+
+		lua.PushTableEntry("name", variable->GetName());
+		lua.PushTableEntry("description", variable->GetDescription());
+
+		if (&variable->GetType() != NULL)
+		{
+			lua.PushTableEntry("type", variable->GetType().value);
+		}
+		else
+		{
+			lua.PushTableEntry("type", LuaType::Any->value);
+		}
+
+		auto index = variable->IsParameter()
+			? variable->GetParameterIndex()
+			: variable->GetReturnValueIndex();
+
+		lua.PushTableEntry("index", index);
+
+		return index;
+	}
+
 	void WriteVariableInfo(
 		const char* name,
 		const std::vector<LuaVariableInfo*>& variables,
@@ -92,44 +117,14 @@ private:
 
 		for (auto variable : variables)
 		{
-			lua.WriteTable();
+			WriteVariableTable(lua, variable);
 
-			lua.PushTableEntry("name", variable->GetName());
-			lua.PushTableEntry("description", variable->GetDescription());
-
-			if (&variable->GetType() != NULL)
-			{
-				lua.PushTableEntry("type", variable->GetType().value);
-			}
-			else
-			{
-				lua.PushTableEntry("type", LuaType::Any->value);
-			}
-
-			auto index = variable->IsParameter()
-				? variable->GetParameterIndex()
-				: variable->GetReturnValueIndex();
-
-			lua.PushTableEntry("index", index);
-
+			// index by name
 			lua.SetTableIndex(variable->GetName());
 
-			lua.WriteTable();
+			auto index = WriteVariableTable(lua, variable);
 
-			lua.PushTableEntry("name", variable->GetName());
-			lua.PushTableEntry("description", variable->GetDescription());
-
-			if (&variable->GetType() != NULL)
-			{
-				lua.PushTableEntry("type", variable->GetType().value);
-			}
-			else
-			{
-				lua.PushTableEntry("type", LuaType::Any->value);
-			}
-
-			lua.PushTableEntry("index", index);
-
+			// index by ordered index
 			lua.SetTableIndex(index);
 		}
 
@@ -291,6 +286,8 @@ private:
 		}
 		else
 		{
+			delete &newApi;
+
 			lua.RaiseError("Parameter 'api' must be a table with at least one field, 'name' - which should be a string.");
 		}
 

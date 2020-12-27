@@ -8,62 +8,34 @@
 #include "lua_events.h"
 #include "nco.h"
 
-static bool ExecuteLuaFile(const char* filePath)
+static void ExecuteLuaFile(const char* filePath)
 {
 	auto& executeResult = NcoLuaRuntime().ExecuteFile(filePath);
-	auto isError = executeResult.IsErrorResult();
 
-	if (isError)
+	if (executeResult.IsErrorResult())
 	{
-		LogError("%s script error: %s", filePath, executeResult.GetError());
+		ShowErrorAndExit("%s script error: %s", filePath, executeResult.GetError());
 	}
 
 	delete &executeResult;
-
-	return !isError;
 }
 
-static bool TestLuaRules() {
+static void TestLuaRules() {
 	LogInfo("Testing Lua rules");
 
-	auto& testResult = NcoLuaRuntime().ExecuteFile("test-lua-rules.lua");
-
-	if (testResult.IsErrorResult())
-	{
-		LogError("Lua rules test script failed: %s", testResult.GetError());
-
-		delete &testResult;
-
-		return false;
-	}
-
-	delete &testResult;
-
-	return true;
+	ExecuteLuaFile("test-lua-rules.lua");
 }
 
 static void GenerateApiDocs() {
 	LogInfo("Generating Lua API docs");
 
-	if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
-	{
-		ShowErrorAndExit("Lua API docs generation script failed");
-	}
+	ExecuteLuaFile("generate-lua-api-docs.lua");
 }
 
 static void DumpRules() {
 	LogInfo("Dumping all rules");
 
-	if (!ExecuteLuaFile("dump-rules.lua"))
-	{
-		ShowErrorAndExit("Rule dumping script failed");
-	}
-}
-
-static void TestSpecialRules() {
-	LogInfo("Testing special rules");
-
-	SpecialClass().Init();
+	ExecuteLuaFile("dump-rules.lua");
 }
 
 static void TestGameLoopMessage(GameLoopMessageType message)
@@ -78,9 +50,24 @@ static void TestGameLoopMessage(GameLoopMessageType message)
 	ProcessGameUiMessages();
 }
 
+static void Game_Event_Callback(const EventCallbackStruct& event)
+{
+	if (event.EventType == CALLBACK_EVENT_MESSAGE)
+	{
+		LogInfo(
+			"Game message emitted for %f seconds: %s",
+			event.Message.TimeoutSeconds,
+			event.Message.Message
+		);
+	}
+}
+
 static void TestLuaEvents()
 {
 	LogDebug("Test Console: Testing Lua Events");
+
+	// mock DLL interface event handler
+	Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
 
 	LogInfo("Testing setting rules from scenario start event handler");
 
@@ -95,18 +82,6 @@ static void TestLuaEvents()
 	TestGameLoopMessage(GAME_TICK_ELAPSED);
 }
 
-static void Game_Event_Callback(const EventCallbackStruct& event)
-{
-	if (event.EventType == CALLBACK_EVENT_MESSAGE)
-	{
-		LogInfo(
-			"Game message emitted for %f seconds: %s",
-			event.Message.TimeoutSeconds,
-			event.Message.Message
-		);
-	}
-}
-
 static void Pause()
 {
 	#ifndef CI_ENV
@@ -114,13 +89,33 @@ static void Pause()
 	#endif
 }
 
-static void Parse_Command_Line(const char* commandLine)
+static void RunTests()
+{
+	puts("========================");
+	puts("  NCO Mod: Test Console  ");
+	puts("=========================");
+
+	TestLuaRules();
+
+	DumpRules();
+	GenerateApiDocs();
+
+	TestLuaEvents();
+
+	NcoShutdown();
+
+	puts("Test Console: finishing normally");
+	Pause();
+}
+
+static int Parse_Command_Line(const char* commandLine)
 {
 	if (StringStartsWith(commandLine, "--lua-repl"))
 	{
 		#ifdef CI_ENV
 		ShowErrorAndExit("ERROR: CI environment detected - Lua REPL not supported");
 		#else
+
 		auto& replResult = NcoLuaRuntime().ExecuteScript("Nco.LuaRepl.enter()");
 
 		if (replResult.IsErrorResult())
@@ -128,24 +123,22 @@ static void Parse_Command_Line(const char* commandLine)
 			ShowErrorAndExit("Lua REPL Error: %s", replResult.GetError());
 		}
 
-		exit(0);
 		#endif
 	}
 	else if (StringStartsWith(commandLine, "--dump-rules"))
 	{
 		DumpRules();
-
-		exit(0);
 	}
 	else if (StringStartsWith(commandLine, "--generate-api-docs"))
 	{
-		if (!ExecuteLuaFile("generate-lua-api-docs.lua"))
-		{
-			ShowErrorAndExit("ERROR: Failed to generate api docs");
-		}
-
-		exit(0);
+		ExecuteLuaFile("generate-lua-api-docs.lua");
 	}
+	else
+	{
+		RunTests();
+	}
+
+	return 0;
 }
 
 /// <summary>
@@ -155,45 +148,10 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR comma
 {
 	if (!NcoStartup())
 	{
-		NcoShutdown();
-
-		puts("Test Console: ERROR! NcoStartup failed - bailing out!");
-		Pause();
-
-		return 1;
+		ShowErrorAndExit("Test Console: ERROR! NcoStartup failed - bailing out!");
 	}
 
-	GetLogger().SetLogLevel(DEBUG);
-
-	Parse_Command_Line(commandLine);
-
-	puts("========================");
-	puts("  NCO Mod: Test Console  ");
-	puts("=========================");
-
-	TestSpecialRules();
-
-	if (TestLuaRules())
-	{
-		DumpRules();
-
-		GenerateApiDocs();
-
-		// mock DLL interface event handler
-		Add_Event_Callback_Proxy((CNC_Event_Callback_Type)&Game_Event_Callback);
-
-		TestLuaEvents();
-	}
-
-	NcoShutdown();
-
-	puts("Test Console: finishing normally");
-
-	Pause();
-
-	StopConsoleOutput();
-
-	return 0;
+	return Parse_Command_Line(commandLine);
 }
 
 #endif

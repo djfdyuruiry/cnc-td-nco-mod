@@ -7,6 +7,22 @@ local validationErrors = 0
 
 local validationFailed = false
 
+local sectionsToTest =
+{
+  "Nco",
+  "Enhancements",
+  "Mods",
+  "Game",
+  "Easy",
+  "Normal",
+  "Hard",
+  "AI",
+  "IQ",
+  "AirStrike",
+  "IonCannon",
+  "NuclearStrike"
+}
+
 local function testRule(rule)
   local ruleValue = rule()
 
@@ -61,7 +77,7 @@ local function testTypeRules()
 end
 
 local function testGenericRules()
-  for _, sectionName in ipairs(Nco.Rules.getSectionNames()) do
+  for _, sectionName in ipairs(sectionsToTest) do
     testSectionRules(Nco.Rules[sectionName])
   end
 end

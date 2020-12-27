@@ -17,16 +17,20 @@ public:
 
 		if (validateResult.IsErrorResult())
 		{
-			auto& readResult = ResultWithValue<T>::BuildWithError(FormatString("Lua value provided was invalid: %s", result.GetError());
+			auto& readResult = ResultWithValue<T>::BuildWithError(
+				"Lua value provided was invalid: %s", validateResult.GetError()
+			);
 
 			delete &validateResult;
 
 			return readResult;
 		}
 
+		delete &validateResult;
+
 		auto value = lua.PullValue<T>(stackIndex);
 
-		return ResultWithValue<T>::Build(value);
+		return ResultWithValue<T>::BuildWithValue(value);
 	}
 
 };

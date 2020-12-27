@@ -48,8 +48,15 @@ public:
 
 	~LuaFunctionInfo()
 	{
-		delete name;
-		delete description;
+		if (name != NULL)
+		{
+			delete name;
+		}
+
+		if (description != NULL)
+		{
+			delete description;
+		}
 
 		for (auto parameter : parameters) {
 			delete parameter;
@@ -240,7 +247,6 @@ public:
 		return returnValues.size() > 0;
 	}
 
-
 	bool ParameterValidationIsEnabled()
 	{
 		return parameterValidationEnabled;
@@ -248,7 +254,7 @@ public:
 
 	int Call(lua_State* lua)
 	{
-		if (luaFunction == NULL)
+		if (luaFunction == NULL || lua == NULL)
 		{
 			return 0;
 		}

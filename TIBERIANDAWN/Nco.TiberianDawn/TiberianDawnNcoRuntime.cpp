@@ -161,9 +161,7 @@ bool TiberianDawnNcoRuntime::InternalShutdown()
         && rulesRuntime.LuaConsoleIsEnabled()
         )
     {
-        #ifndef TEST_CONSOLE
         StopConsoleOutput();
-        #endif
     }
 
     return result;

@@ -39,6 +39,8 @@ private:
 
 		if (!FileUtils::IsFile(fullRulesFilePath))
 		{
+			LogDebug("Rules file was not found (or was a directory): %s", fullRulesFilePath);
+
 			delete fullRulesFilePath;
 
 			return *this;
@@ -48,8 +50,15 @@ private:
 
 		delete fullRulesFilePath;
 
-		if (rulesIniBuffer == NULL)
+		if (StringIsEmpty(rulesIniBuffer))
 		{
+			if (rulesIniBuffer != NULL)
+			{
+				delete rulesIniBuffer;
+			}
+
+			LogDebug("Rules file was empty: %s", rulesFileName);
+
 			return *this;
 		}
 
@@ -69,7 +78,7 @@ private:
 		sectionKeys.push_back(key);
 	}
 
-	void ValidateStringRuleValue(RulesIniRule& rule, const char* valueBuffer)
+	bool ValidateStringRuleValue(RulesIniRule& rule, const char* valueBuffer)
 	{
 		auto valueIsValid = false;
 		auto validValues = rule.GetValidValues<const char*>();
@@ -88,7 +97,7 @@ private:
 
 		if (valueIsValid)
 		{
-			return;
+			return true;
 		}
 
 		rulesAreValid = false;
@@ -117,6 +126,8 @@ private:
 		);
 
 		delete validValuesCsv;
+
+		return false;
 	}
 
 public:
@@ -145,6 +156,11 @@ public:
 		
 		delete &sectionNames;
 		delete &sectionKeys;
+
+		if (sectionInStream != NULL)
+		{
+			delete sectionInStream;
+		}
 	}
 
 	IRulesIni& AndThenFrom(const char* rulesFilePath)
@@ -166,12 +182,13 @@ public:
 	{
 		LogTrace("Resolving optional rule value: %s", rule.GetStringKey());
 
-		bool valueFound = false;
-		Optional& valueBufferOptional = Optional::BuildOptional();
-		auto valueBuffer = AllocateString(RULES_STRING_LENGTH);
+		auto& valueBufferOptional = Optional::BuildOptional();
 
 		for (auto reader: rulesIniReaders)
 		{
+			bool valueFound = false;
+			auto valueBuffer = AllocateString(RULES_STRING_LENGTH);
+
 			reader->ReadString(
 				rule.GetSection(),
 				rule.GetName(),
@@ -185,6 +202,8 @@ public:
 				valueBufferOptional.Set<char*>(valueBuffer);
 				break;
 			}
+
+			delete valueBuffer;
 		}
 
 		return valueBufferOptional;
@@ -197,15 +216,15 @@ public:
 		LogTrace("Resolving rule value: %s", rule.GetStringKey());
 		LogTrace("Default value: %s", defaultValue);
 
-		auto valueBufferOptional = ReadOptionalStringRule(rule);
+		auto& valueBufferOptional = ReadOptionalStringRule(rule);
 
 		if (!valueBufferOptional.Present())
 		{
 			LogTrace("No rules ini value found, default will be returned");
 
-			auto defaultCopy = strdup(rule.GetDefaultValueOr(defaultValue));
+			delete &valueBufferOptional;
 
-			return defaultCopy;
+			return defaultValue;
 		}
 
 		auto valueBuffer = valueBufferOptional.Get<char*>();
@@ -214,14 +233,20 @@ public:
 		{
 			LogTrace("Resolved rule value was empty, default will be returned");
 
-			auto defaultCopy = strdup(rule.GetDefaultValueOr(defaultValue));
+			delete &valueBufferOptional;
 
-			return defaultCopy;
+			return defaultValue;
 		}
 
-		if(rule.HasValidValues())
+		if (rule.HasValidValues() && ! ValidateStringRuleValue(rule, valueBuffer))
 		{
-			ValidateStringRuleValue(rule, valueBuffer);
+			MarkAsInvalid();
+
+			LogError("Resolved rule value was not valid, default will be returned");
+
+			delete &valueBufferOptional;
+
+			return defaultValue;
 		}
 
 		LogTrace("Resolved value: %s", valueBuffer);
@@ -235,7 +260,7 @@ public:
 		LogTrace("Resolving optional rule value: %s", rule.GetStringKey());
 
 		bool valueFound = false;
-		Optional& valueOptional = Optional::BuildOptional();
+		auto& valueOptional = Optional::BuildOptional();
 
 		for (auto reader : rulesIniReaders)
 		{
@@ -264,11 +289,13 @@ public:
 
 		bool valueFound = false;
 
-		auto ruleValueOptional = ReadOptionalIntRule(rule);
+		auto& ruleValueOptional = ReadOptionalIntRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
 			LogTrace("No rules ini value found, default will be used");
+
+			delete &ruleValueOptional;
 
 			return defaultValue;
 		}
@@ -284,7 +311,7 @@ public:
 
 			if (ruleValue < minValueInclusive || ruleValue > maxValueInclusive)
 			{
-				rulesAreValid = false;
+				MarkAsInvalid();
 
 				ShowError(
 					"Rule [%s] must be between %d and %d (inclusive). Value provided: %d",
@@ -293,6 +320,12 @@ public:
 					maxValueInclusive,
 					ruleValue
 				);
+
+				LogError("Rules ini value invalid, default will be used");
+
+				delete &ruleValueOptional;
+
+				return defaultValue;
 			}
 		}
 
@@ -362,7 +395,7 @@ public:
 
 	IRulesIni& operator<<(RulesIniRule& rule)
 	{
-		IRulesIniSection& section = RulesIniSection::BuildSection(rule.GetSection());
+		auto& section = RulesIniSection::BuildSection(rule.GetSection());
 
 		section << rule;
 

@@ -17,7 +17,7 @@ protected:
 	DWORD Run()
 	{
 		#ifndef TEST_CONSOLE
-		delete &lua.ExecuteScript("Nco.LuaRepl.enter()");
+		lua.ExecuteScript("Nco.LuaRepl.enter()");
 		#else
 		// dummy repl thread for test console
 		while (true)

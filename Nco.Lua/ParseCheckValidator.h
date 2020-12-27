@@ -39,23 +39,29 @@ public:
 			return stringResult;
 		}
 
-		auto valueUpper = ConvertStringToUpperCase(stringResult.GetValue());
+		auto value = stringResult.GetValue();
+		auto valueUpper = ConvertStringToUpperCase(value);
 
 		delete &stringResult;
 
 		auto& parseResult = *parser(valueUpper);
 
+		delete valueUpper;
+
 		if (parseResult.IsErrorResult())
 		{
-			auto error = FormatString("Unable to parse string '%s' as %s type instance: %s", valueUpper, titleCaseTypeName, parseResult.GetError());
+			auto error = FormatString(
+				"Unable to parse string '%s' as %s type instance: %s",
+				value,
+				titleCaseTypeName,
+				parseResult.GetError()
+			);
 
-			delete valueUpper;
 			delete &parseResult;
 
 			return Result::BuildWithError(error);
 		}
 
-		delete valueUpper;
 		delete &parseResult;
 
 		return Result::Build();

@@ -19,11 +19,6 @@ void Logger::OpenLogFile()
 	if (StringIsEmpty(logFilePath))
 	{
 		logFilePath = strdup("log\\nco.log");
-
-		if (failedToOpenLogFile || StringIsEmpty(logFilePath))
-		{
-			return;
-		}
 	}
 
 	bool errorOccurred = false;

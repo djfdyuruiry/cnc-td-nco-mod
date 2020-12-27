@@ -42,6 +42,8 @@ private:
 
 				executionOk = false;
 			}
+			
+			delete &executeResult;
 		}
 
 		return executionOk;
@@ -229,16 +231,15 @@ public:
 
 	~NcoRuntime()
 	{
-		delete &rulesRuntime;
-		delete &luaRuntime;
-		delete &modRuntime;
-
 		for (auto thread : threads)
 		{
 			delete thread;
 		}
 
 		delete &threads;
+		delete &modRuntime;
+		delete &luaRuntime;
+		delete &rulesRuntime;
 	}
 
 	bool RulesInitWasSuccessful()

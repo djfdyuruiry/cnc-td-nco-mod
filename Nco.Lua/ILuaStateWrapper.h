@@ -240,7 +240,7 @@ public:
 
 		if (valueResult.IsErrorResult())
 		{
-			delete& valueResult;
+			delete &valueResult;
 
 			return;
 		}

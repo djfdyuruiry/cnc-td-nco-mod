@@ -52,6 +52,13 @@ public:
 		}
 
 		delete &rules;
+		delete &ruleNames;
+		delete &ruleKeys;
+
+		if (ruleInStream != NULL)
+		{
+			delete ruleInStream;
+		}
 	}
 
 	RulesIniSection& WithDefaultType(RulesIniType type)

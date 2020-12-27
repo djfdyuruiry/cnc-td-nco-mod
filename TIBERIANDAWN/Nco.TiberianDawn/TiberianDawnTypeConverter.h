@@ -472,6 +472,7 @@ public:
 		delete &armorMap;
 		delete &unitSpeedMap;
 		delete &factoryTypeMap;
+		delete &warheadMap;
 		delete &warheadModsMap;
 		delete &bulletMap;
 		delete &bulletModsMap;
@@ -593,7 +594,7 @@ public:
 		{
 			if (result.IsErrorResult() && !ignoreModTypes)
 			{
-				delete& result;
+				delete &result;
 
 				return GetModTypeMap<T>().GetValueForKey(stringValue);
 			}
@@ -633,7 +634,7 @@ public:
 		{
 			if (result.IsErrorResult() && !ignoreModTypes)
 			{
-				delete& result;
+				delete &result;
 
 				return GetModTypeMap<T>().GetKeyForValue(value);
 			}

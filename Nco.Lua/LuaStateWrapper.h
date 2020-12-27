@@ -68,6 +68,7 @@ public:
 		if (stateOwner && lua != NULL)
 		{
 			lua_close(lua);
+			lua = NULL;
 		}
 	}
 

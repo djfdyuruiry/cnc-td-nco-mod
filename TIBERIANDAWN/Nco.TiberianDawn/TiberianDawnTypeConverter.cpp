@@ -3,6 +3,11 @@
 
 ResultWithValue<int>& TiberianDawnTypeConverter::ParseHouseNameListCsv(char* houseListCsv, bool ignoreModTypes)
 {
+	if (StringIsEmpty(houseListCsv))
+	{
+		return ResultWithValue<int>::BuildWithError("CSV passed to ParseHouseNameListCsv was null or empty");
+	}
+
 	auto houseNameListSize = 0u;
 	auto houseNameList = ParseCsvString(houseListCsv, HOUSE_NAME_MAX_LENGTH, &houseNameListSize);
 
@@ -57,11 +62,6 @@ ResultWithValue<int>& TiberianDawnTypeConverter::ParseHouseNameListCsv(char* hou
 
 ResultWithValue<int>& TiberianDawnTypeConverter::ParseHouseNameListCsv(const char* houseListCsv, bool ignoreModTypes)
 {
-	if (StringIsEmpty(houseListCsv))
-	{
-		return ResultWithValue<int>::BuildWithError("CSV passed to ParseHouseNameListCsv was null or empty");
-	}
-
 	auto houseTypeCsvStr = strdup(houseListCsv);
 
 	auto& result = ParseHouseNameListCsv(houseTypeCsvStr, ignoreModTypes);
@@ -87,15 +87,15 @@ const char* TiberianDawnTypeConverter::PrerequisiteToString(long prerequisite)
 {
 	auto& result = NcoTypeConverter().ToString<StructType>(
 		PrerequisiteToStructureType(prerequisite)
-		);
+	);
 
 	if (result.IsErrorResult())
 	{
 		ShowError("Failed to convert prerequisite to string, returning STRUCT_NONE: %s", result.GetError());
 
-		delete& result;
+		delete &result;
 
-		NcoTypeConverter().ToString(STRUCT_NONE);
+		result = NcoTypeConverter().ToString(STRUCT_NONE);
 	}
 
 	auto prereqString = result.GetValue();

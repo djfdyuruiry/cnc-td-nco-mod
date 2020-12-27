@@ -83,8 +83,6 @@ private:
 		currentLogLevel = ParseLogLevel(logLevelBuffer);
 		logFilePath = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile");
 
-		delete logLevelBuffer;
-
 		GetLogger().SetLogLevel(currentLogLevel);
 		GetLogger().SetLogFilePath(logFilePath);
 	}

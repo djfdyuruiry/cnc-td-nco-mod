@@ -122,6 +122,8 @@ public:
 
 				return writeResult;
 			}
+
+			delete &validationResult;
 		}
 		else
 		{

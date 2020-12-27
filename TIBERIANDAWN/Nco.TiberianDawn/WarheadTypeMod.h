@@ -36,13 +36,14 @@ protected:
 	WarheadTypeClass* CloneType(const char* baseTypeString, const char* typeString, WarheadType baseType, WarheadType type)
 	{
 		auto newType = TiberianDawnTypeMod::CloneType(baseTypeString, typeString, baseType, type);
+		auto newModifier = new unsigned[ARMOR_COUNT];
 
-		auto modifierSize = sizeof(unsigned) * ARMOR_COUNT;
-		auto modifier = newType->Modifier;
-		
-		newType->Modifier = (unsigned*)malloc(modifierSize);
+		for (auto i = 0u; i < ARMOR_COUNT; i++)
+		{
+			newModifier[i] = newType->Modifier[i];
+		}
 
-		memcpy(newType->Modifier, modifier, modifierSize);
+		newType->Modifier = newModifier;
 
 		return newType;
 	}
