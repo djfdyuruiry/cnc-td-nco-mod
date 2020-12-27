@@ -47,17 +47,16 @@ private:
 			f.WithDescription("Add a new API to the reflection registry")
 			 .WithParameter("api", [](LuaVariableInfo& r) {
 				r.WithDescription("Table containing: \n\
-\n\
-  'name' - API name \n\
-  'description' - API description \n\
-  'functions' - dictionary containing API functions, each item should be a table containing: \n\
-	'description' - function description \n\
-    'parameters' - dictionary containing function parameters, each item should be a table containing: \n\
-      'description' - parameter description \n\
-      'type' - parameter lua type (table, number etc.) \n\
-    'returnValues' - dictionary containing function return value(s), each item should be a table containing: \n\
-      'description' - parameter description \n\
-      'type' - parameter lua type (table, number etc.)")
+	- `name`: API name \n\
+    - `description`: API description \n\
+    - `functions`: dictionary containing API functions, each item - should be a table containing: \n\
+      - `description`: function description \n\
+        - `parameters`: dictionary containing function parameters, each item should be a table containing: \n\
+          - `description`: parameter description \n\
+          - `type`: parameter lua type (table, number etc.) \n\
+        - `returnValues`: dictionary containing function return value(s), each item should be a table containing: \n\
+          - `description`: parameter description \n\
+          - `type`: parameter lua type (table, number etc.)")
 				 .WithType(LuaType::Table);
 			 });
 		});
@@ -70,19 +69,24 @@ private:
 			 })
 			 .WithParameter("functions", [](LuaVariableInfo& r) {
 				r.WithDescription("Dictionary containing API functions, each item should be a table containing: \n\
-	'description' - function description \n\
-    'parameters' - dictionary containing function parameters, each item should be a table containing: \n\
-      'description' - parameter description \n\
-      'type' - parameter lua type (table, number etc.) \n\
-    'returnValues' - dictionary containing function return value(s), each item should be a table containing: \n\
-      'description' - parameter description \n\
-      'type' - parameter lua type (table, number etc.)")
+	- `description`: function description \n\
+      - `parameters`: dictionary containing function parameters, each item should be a table containing: \n\
+      - `description`: parameter description \n\
+      - `type`: parameter lua type (table, number etc.) \n\
+    - `returnValues`: dictionary containing function return value(s), each item should be a table containing: \n\
+      - `description`: parameter description \n\
+      - `type`: parameter lua type (table, number etc.)")
 				 .WithType(LuaType::Table);
 			 });
 		});
 	}
 
-	void WriteVariableInfo(const char* name, const std::vector<LuaVariableInfo*>& variables, ILuaStateWrapper& lua)
+	void WriteVariableInfo(
+		const char* name,
+		const std::vector<LuaVariableInfo*>& variables,
+		ILuaStateWrapper& lua,
+		bool variablesAreParameters = true
+	)
 	{
 		lua.WriteTable();
 
@@ -90,6 +94,7 @@ private:
 		{
 			lua.WriteTable();
 
+			lua.PushTableEntry("name", variable->GetName());
 			lua.PushTableEntry("description", variable->GetDescription());
 
 			if (&variable->GetType() != NULL)
@@ -101,7 +106,31 @@ private:
 				lua.PushTableEntry("type", LuaType::Any->value);
 			}
 
+			auto index = variable->IsParameter()
+				? variable->GetParameterIndex()
+				: variable->GetReturnValueIndex();
+
+			lua.PushTableEntry("index", index);
+
 			lua.SetTableIndex(variable->GetName());
+
+			lua.WriteTable();
+
+			lua.PushTableEntry("name", variable->GetName());
+			lua.PushTableEntry("description", variable->GetDescription());
+
+			if (&variable->GetType() != NULL)
+			{
+				lua.PushTableEntry("type", variable->GetType().value);
+			}
+			else
+			{
+				lua.PushTableEntry("type", LuaType::Any->value);
+			}
+
+			lua.PushTableEntry("index", index);
+
+			lua.SetTableIndex(index);
 		}
 
 		lua.SetTableIndex(name);

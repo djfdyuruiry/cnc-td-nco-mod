@@ -31,6 +31,9 @@ static bool TestLuaRules() {
 	if (testResult.IsErrorResult())
 	{
 		LogError("Lua rules test script failed: %s", testResult.GetError());
+
+		delete &testResult;
+
 		return false;
 	}
 
@@ -60,9 +63,7 @@ static void DumpRules() {
 static void TestSpecialRules() {
 	LogInfo("Testing special rules");
 
-	auto special = SpecialClass();
-
-	special.Init();
+	SpecialClass().Init();
 }
 
 static void TestGameLoopMessage(GameLoopMessageType message)

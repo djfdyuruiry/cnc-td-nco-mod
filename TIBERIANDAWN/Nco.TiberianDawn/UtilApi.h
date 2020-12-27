@@ -168,8 +168,6 @@ private:
 
         lua.WriteString(input);
 
-        CloseWin32HandleIfValid(stdIn);
-
         return 1;
     }
 
