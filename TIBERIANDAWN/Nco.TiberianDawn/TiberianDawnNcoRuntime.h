@@ -59,6 +59,18 @@ private:
 
     bool InternalShutdown();
 
+    template<class T, class U> void InjectRulesForType(T first, T count, std::function<void(const char*, U*)> injector)
+    {
+        for (auto t = first; t < count; t++)
+        {
+            auto typeString = typeConverter.ToStringOrDefault<T>(t, "", true);
+
+            injector(typeString, (U*)U::By_Type(t));
+        }
+    }
+
+    void InjectRules();
+
 public:
     static TiberianDawnNcoRuntime& GetInstance();
 

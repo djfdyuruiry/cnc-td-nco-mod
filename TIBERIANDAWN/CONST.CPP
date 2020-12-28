@@ -120,27 +120,16 @@ WeaponTypeClass::WeaponTypeClass(
 	Type = owner;
 
 	IsModType = false;
-
-	auto weaponTypeStr = NcoTypeConverter().ToStringOrDefault(Type);
-
-	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(weaponTypeStr);
-
-	ReadWeaponRules(this);
 }
 
 WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 {
 	if (Pointers != NULL)
 	{
-		LogTrace("Weapon lookup by type: %d", type);
 		return Pointers[type];
 	}
 
-	LogTrace("WeaponTypeClass::ByType Initializing Weapons");
-	
-	auto weaponCount = ReadWeaponCount();
-
-	Pointers = new WeaponTypeClass const* [weaponCount] {
+	Pointers = new WeaponTypeClass const* [256] {
 		&WEP_RIFLE,
 		&WEP_CHAIN_GUN,
 		&WEP_PISTOL,
@@ -239,11 +228,6 @@ WarheadTypeClass::WarheadTypeClass(
 	Type = type;
 
 	IsModType = false;
-
-	auto warheadTypeString = NcoTypeConverter().ToStringOrDefault(type);
-
-	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(warheadTypeString);
-	ReadWarheadRules(this);
 }
 
 void WarheadTypeClass::ReadWarheadRules(WarheadTypeClass* warhead)
@@ -280,9 +264,7 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 		return Pointers[type];
 	}
 
-	auto warheadCount = ReadWarheadCount();
-
-	Pointers = new WarheadTypeClass const* [warheadCount] {
+	Pointers = new WarheadTypeClass const* [256] {
 		&WH_SA,
 		&WH_HE,
 		&WH_AP,

@@ -53,7 +53,7 @@
 
 #include "function.h"
 
-int FactoryClass::STEP_COUNT = Read_Total_Production_Steps_Rule();
+int FactoryClass::STEP_COUNT = 108;
 
 /***********************************************************************************************
  * FactoryClass::Validate -- validates factory pointer										   *
@@ -111,7 +111,7 @@ FactoryClass::FactoryClass(void)
 	Balance		= 0;
 	SpecialItem = SPC_NONE;
 	Object 		= NULL;
-	House			= NULL;
+	House		= NULL;
 	Set_Rate(0);
 	Set_Stage(0);
 }

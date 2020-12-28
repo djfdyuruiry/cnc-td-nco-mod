@@ -3494,16 +3494,10 @@ BuildingTypeClass const** BuildingTypeClass::Pointers = NULL;
 BuildingTypeClass const* BuildingTypeClass::By_Type(StructType type)
 {
 	if (Pointers != NULL) {
-		//Log_Trace("Building lookup by type: %d", type);
-
 		return Pointers[type];
 	}
 
-	LogDebug("Initialising Building types");
-
-	auto BuildingCount = ReadBuildingCount();
-
-	Pointers = new BuildingTypeClass const* [BuildingCount] {
+	Pointers = new BuildingTypeClass const* [256] {
 		&ClassWeapon,			//	STRUCT_WEAP
 		&ClassGTower,			//	STRUCT_GTOWER
 		&ClassATower,			//	STRUCT_ATOWER
@@ -3723,10 +3717,6 @@ BuildingTypeClass::BuildingTypeClass(
 	Anims[BSTATE_AUX2].Start = 0;
 	Anims[BSTATE_AUX2].Count = 1;
 	Anims[BSTATE_AUX2].Rate = 0;
-
-	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(IniName);
-
-	ReadBuildingRules(this);
 }
 
 void BuildingTypeClass::ReadBuildingRules(BuildingTypeClass* building)

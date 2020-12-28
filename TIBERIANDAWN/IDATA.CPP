@@ -1446,16 +1446,10 @@ InfantryTypeClass const** InfantryTypeClass::Pointers = NULL;
 InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 {
 	if (Pointers != NULL) {
-		//Log_Trace("Infantry lookup by type: %d", type);
-
 		return Pointers[type];
 	}
 
-	LogDebug("Initialising infantry types");
-
-	auto infantryCount = ReadInfantryCount();
-
-	Pointers = new InfantryTypeClass const *[infantryCount]{
+	Pointers = new InfantryTypeClass const* [256] {
 		&E1,
 		&E2,
 		&E3,
@@ -1577,10 +1571,6 @@ InfantryTypeClass::InfantryTypeClass(
 
 	IsImmuneToTiberium = type == INFANTRY_E5;
 	HasC4Charges = Type == INFANTRY_RAMBO;
-
-	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(IniName);
-
-	ReadInfantryRules(this);
 
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;

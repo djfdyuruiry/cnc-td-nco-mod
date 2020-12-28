@@ -259,15 +259,10 @@ AircraftTypeClass const** AircraftTypeClass::Pointers = NULL;
 AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 {
 	if (Pointers != NULL) {
-		//Log_Trace("Aircraft lookup by type: %d", type);
 		return Pointers[type];
 	}
 
-	LogDebug("Initialising Aircraft types");
-
-	auto aircraftCount = ReadAircraftCount();
-
-	Pointers = new AircraftTypeClass const* [aircraftCount] {
+	Pointers = new AircraftTypeClass const* [256] {
 		&TransportHeli,
 		& AttackPlane,
 		& AttackHeli,
@@ -374,9 +369,6 @@ AircraftTypeClass::AircraftTypeClass(
 	IsLandable = is_landable;
 	IsRotorEquipped = is_rotorequipped;
 	ROT = rot;
-
-	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(IniName);
-	ReadAircraftRules(this);
 }
 void AircraftTypeClass::ReadAircraftRules(AircraftTypeClass* aircraft)
 {

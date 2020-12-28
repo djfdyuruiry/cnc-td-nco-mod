@@ -317,6 +317,7 @@ class TechnoTypeClass : public ObjectTypeClass
 		*/
 		unsigned char Level;
 		long Pre;
+		StructType PreAsStruct;
 
 		/*
 		**	The reward value is used to determine targets.

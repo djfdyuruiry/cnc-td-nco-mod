@@ -527,11 +527,7 @@ BulletTypeClass const* BulletTypeClass::By_Type(BulletType type)
 		return Pointers[type];
 	}
 
-	LogDebug("Initialising Bullet types");
-
-	auto BulletCount = ReadBulletCount();
-
-	Pointers = new BulletTypeClass const* [BulletCount] {
+	Pointers = new BulletTypeClass const* [256] {
 		&ClassSniper,		//	BULLET_SNIPER
 		&ClassBullet,		//	BULLET_BULLET
 		&ClassAPDS,			//	BULLET_APDS
@@ -622,10 +618,6 @@ BulletTypeClass::BulletTypeClass(
 	ROT = rot;
 	Arming = arming;
 	Range = range;
-
-	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(RulesName);
-
-	ReadBulletRules(this);
 }
 
 void BulletTypeClass::ReadBulletRules(BulletTypeClass* bullet)

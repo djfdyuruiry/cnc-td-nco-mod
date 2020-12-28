@@ -122,12 +122,16 @@ protected:
 		return RegisterThread<T>(thread);
 	}
 
+	virtual void InjectRules() = 0;
+
 	virtual void Initialise()
 	{
 		EnhancementKeys::InitIfNeeded();
 
 		rulesInitSuccessful = rulesRuntime.LoadRulesIfRequired();
 		luaInitSuccessful = LoadLuaComponents();
+
+		InjectRules();
 
 		InitialiseMods();
 		RegisterThreads();

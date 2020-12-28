@@ -261,8 +261,11 @@ TechnoTypeClass::TechnoTypeClass(
 
 	FriendlyName = strdup(friendlyName);
 	Level = level;
+	PreAsStruct = pre;
 
-	auto& preResult = NcoTypeConverter().StructureTypeToPrerequisite(pre);
+	auto& typeConverter = TiberianDawnTypeConverter::Build();
+
+	auto& preResult = typeConverter.StructureTypeToPrerequisite(pre, true);
 
 	if (!preResult.IsErrorResult())
 	{
@@ -274,6 +277,7 @@ TechnoTypeClass::TechnoTypeClass(
 	}
 
 	delete &preResult;
+	delete &typeConverter;
 
 	IsTransporter = is_transporter;
 	TransportCapacity = IsTransporter ? DEFAULT_TRANSPORT_CAPACITY : 0;

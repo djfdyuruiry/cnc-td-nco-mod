@@ -1334,10 +1334,6 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	Speed = speed;
 	ROT = rot;
 	CanSelfRepair = Type == UNIT_HTANK;
-
-	NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildUnitSection(IniName);
-
-	ReadUnitRules(this);
 }
 
 
@@ -1702,16 +1698,10 @@ BuildingClass * UnitTypeClass::Who_Can_Build_Me(bool intheory, bool legal, House
 UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 {
 	if (Pointers != NULL) {
-		//Log_Trace("Unit lookup by type: %d", type);
-
 		return Pointers[type];
 	}
 
-	LogDebug("UTC Initialising unit types");
-
-	auto unitCount = ReadUnitCount();
-
-	Pointers = new UnitTypeClass const* [unitCount] {
+	Pointers = new UnitTypeClass const* [256] {
 		&UnitHTank,		
 		&UnitMTank,		
 		&UnitLTank,		

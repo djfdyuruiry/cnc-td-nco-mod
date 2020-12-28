@@ -42,6 +42,8 @@ class FactoryClass : private StageClass
 	friend class DLLExportClass;		// ST - 1/29/2019 11:04AM
 
 	public:
+		static int STEP_COUNT; // Number of steps to break production down into.
+
 		FactoryClass(void);
 		~FactoryClass(void);
 		static void * operator new(size_t size);
@@ -93,8 +95,6 @@ class FactoryClass : private StageClass
 		unsigned IsActive:1;
 
 	protected:
-		static int STEP_COUNT; // Number of steps to break production down into.
-
 		int Cost_Per_Tick(void);
 
 	private:
