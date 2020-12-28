@@ -9,6 +9,8 @@
 Logger* Logger::INSTANCE = NULL;
 const char* Logger::LOG_FORMAT = NULL;
 
+bool Logger::LOGGER_DISABLED = true;
+
 void Logger::OpenLogFile()
 {
 	if (Win32HandleIsValid(logFileHandle) || failedToOpenLogFile)
@@ -36,15 +38,18 @@ void Logger::OpenLogFile()
 
 void Logger::CloseLogFileIfOpen()
 {
-	if (Win32HandleIsValid(logFileHandle))
+	if (!Win32HandleIsValid(logFileHandle))
 	{
-		LogDebug("Closing handle for log file: %s", logFilePath);
+		logFileHandle = NULL;
+		return;
 	}
+
+	LogDebug("Closing handle for log file: %s", logFilePath);
 
 	if (!CloseWin32HandleIfValid(logFileHandle))
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			LogError("Failed to close handle for log file '%s': %s", logFilePath, e);
+			ShowError("Failed to close handle for log file '%s': %s", logFilePath, e);
 		});
 	}
 
@@ -63,7 +68,7 @@ Logger::~Logger()
 
 void Logger::Log(LogLevel logLevel, const char* messageFormat, ...)
 {
-	if (logLevel > this->logLevel)
+	if (LOGGER_DISABLED || logLevel > this->logLevel)
 	{
 		return;
 	}

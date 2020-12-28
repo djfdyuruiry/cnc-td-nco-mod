@@ -373,22 +373,9 @@ void StopConsoleOutput()
 		});
 	}
 
-	auto stdOutClosed = fclose(stdout);
-	auto stdErrClosed = fclose(stderr);
-	auto stdInClosed = fclose(stdin);
-
-	if (!stdOutClosed || !stdErrClosed || !stdInClosed)
-	{
-		WithWin32ErrorMessage([&](auto e) {
-			ShowError(
-				"Error closing stream(s):\nSTDOUT Closed: %s\nSTDERR Closed: %s\nSTDERR Closed: %s\n%s",
-				ConvertBooleanToString(stdOutClosed),
-				ConvertBooleanToString(stdErrClosed),
-				ConvertBooleanToString(stdInClosed),
-				e
-			);
-		});
-	}
+	fclose(stdout);
+	fclose(stderr);
+	fclose(stdin);
 	#endif
 #endif
 }

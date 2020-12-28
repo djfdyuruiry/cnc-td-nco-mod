@@ -183,6 +183,8 @@ protected:
 public:
 	template<class T> static bool Startup()
 	{
+		Logger::Enable();
+
 		LogInfo("New Construction Options mod starting up");
 
 		auto& runtime = T::GetInstance();
@@ -227,6 +229,7 @@ public:
 
 		// this must be the last call - otherwise the file might be reopened by a log call
 		Logger::Shutdown();
+		Logger::Disable();
 	}
 
 	~NcoRuntime()

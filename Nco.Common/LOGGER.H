@@ -14,6 +14,8 @@ private:
 	static const auto LOG_SPACING_LENGTH = 4u;
 	static const auto LOG_FORMAT_LENGTH = LOG_TIMESTAMP_LENGTH + LOG_SPACING_LENGTH + LOG_LEVEL_LENGTH + LOG_LINE_LENGTH;
 
+	static bool LOGGER_DISABLED;
+
 	static Logger* INSTANCE;
 
 	LogLevel logLevel;
@@ -58,6 +60,16 @@ public:
 	static unsigned int GetLogLineLength()
 	{
 		return LOG_LINE_LENGTH;
+	}
+
+	static void Enable()
+	{
+		LOGGER_DISABLED = false;
+	}
+
+	static void Disable()
+	{
+		LOGGER_DISABLED = true;
 	}
 
 	~Logger();

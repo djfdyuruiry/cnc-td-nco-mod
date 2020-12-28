@@ -259,8 +259,12 @@ void WarheadTypeClass::ReadWarheadRules(WarheadTypeClass* warhead)
 	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
 	{
 		auto modifierRule = Map_Armor_Modifier_To_Warhead_Rule(armorType);
+		auto defaultModifierValue = warhead->Modifier[armorType];
+		auto modifierRuleValue = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, modifierRule, defaultModifierValue);
 
-		warhead->Modifier[armorType] = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, modifierRule, warhead->Modifier[armorType]);
+		warhead->Modifier[armorType] = modifierRuleValue;
+
+		LogTrace("Warhead '%s' armor modifier: %s=%u (default=%u)", iniName, modifierRule, modifierRuleValue, defaultModifierValue);
 	}
 }
 
@@ -273,24 +277,24 @@ WarheadTypeClass const* WarheadTypeClass::By_Type(WarheadType type)
 {
 	if (Pointers != NULL)
 	{
-		//Log_Trace("Warhead lookup by type: %d", type);
 		return Pointers[type];
 	}
-	LogTrace("WTC By_Type Initialize Watheads");
+
 	auto warheadCount = ReadWarheadCount();
+
 	Pointers = new WarheadTypeClass const* [warheadCount] {
 		&WH_SA,
-			& WH_HE,
-			& WH_AP,
-			& WH_FIRE,
-			& WH_LASER,
-			& WH_PB,
-			& WH_FIST,
-			& WH_FOOT,
-			& WH_HOLLOW_POINT,
-			& WH_SPORE,
-			& WH_HEADBUTT,
-			& WH_FEEDME,
+		&WH_HE,
+		&WH_AP,
+		&WH_FIRE,
+		&WH_LASER,
+		&WH_PB,
+		&WH_FIST,
+		&WH_FOOT,
+		&WH_HOLLOW_POINT,
+		&WH_SPORE,
+		&WH_HEADBUTT,
+		&WH_FEEDME,
 	};
 
 	return By_Type(type);
