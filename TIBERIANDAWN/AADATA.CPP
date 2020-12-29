@@ -384,10 +384,10 @@ void AircraftTypeClass::Read_Rules(IRulesIniReader& reader)
 	ObjectTypeClass::Read_Rules(reader);
 	TechnoTypeClass::Read_Rules(reader);
 
-	IsFixedWing = Read_Cant_Hover(iniName, IsFixedWing);
-	IsLandable = Read_Can_Land(iniName, IsLandable);
-	IsRotorEquipped = Read_Has_Rotor(iniName, IsRotorEquipped);
-	ROT = Read_Rate_Of_Turn(iniName, ROT);
+	IsFixedWing = reader.ReadRuleValue<bool>(iniName, CANT_HOVER_RULE, IsFixedWing);
+	IsLandable = reader.ReadRuleValue<bool>(iniName, CAN_LAND_RULE, IsLandable);
+	IsRotorEquipped = reader.ReadRuleValue<bool>(iniName, HAS_ROTOR_RULE, IsRotorEquipped);
+	ROT = reader.ReadRuleValue<unsigned int>(iniName, RATE_OF_TURN_RULE, ROT);
 }
 
 void AircraftTypeClass::Add_Aircraft_Type(AircraftTypeClass* aircraftInstance)

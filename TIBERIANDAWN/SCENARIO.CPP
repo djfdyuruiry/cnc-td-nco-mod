@@ -799,7 +799,12 @@ void Fixup_Scenario(void)
 	if (GameToPlay == GAME_NORMAL && Scenario == 72) {
 		((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA)).Primary = WEAPON_OBELISK_LASER;
 	} else {
-		((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA)).Primary = Read_Primary_Weapon("ORCA", WEAPON_DRAGON);
+		((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA)).Primary = 
+			NcoRulesRuntime().ReadRuleValue<WeaponType>(
+				NcoTypeConverter().ToStringOrDefault(AIRCRAFT_ORCA),
+				PRIMARY_WEAPON_RULE,
+				WEAPON_DRAGON
+			);
 	}
 
 	/*
