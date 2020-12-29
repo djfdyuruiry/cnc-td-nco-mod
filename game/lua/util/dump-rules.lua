@@ -25,14 +25,15 @@ local function dumpRulesForTypeArea(rulesFile, typeAreaName, typeArea)
   rulesFile:write("\n")
 
   for _, areaType in ipairs(typeArea.getTypes()) do
-    Nco.Utils.log("Writing %s rules", areaType)
-
-    local friendlyName = typeArea.getRule(areaType, "FriendlyName")
     local isModType = typeArea.getRule(areaType, "IsModType")
 
     if isModType then
       goto areaType
     end
+
+    Nco.Utils.log("Writing %s rules", areaType)
+
+    local friendlyName = typeArea.getRule(areaType, "FriendlyName")
 
     rulesFile:write(string.format("; %s\n", friendlyName))
     rulesFile:write(string.format("[%s]\n", areaType))
