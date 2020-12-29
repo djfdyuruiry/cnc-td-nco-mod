@@ -6,10 +6,9 @@
 #include "strings.h"
 #include "utils.h"
 
-Logger* Logger::INSTANCE = NULL;
-const char* Logger::LOG_FORMAT = NULL;
-
+const char* Logger::LOG_FORMAT = "%02d-%02d-%04d %02d:%02d:%02d.%03d - %s %s\n";
 bool Logger::LOGGER_DISABLED = true;
+Logger* Logger::INSTANCE = NULL;
 
 void Logger::OpenLogFile()
 {

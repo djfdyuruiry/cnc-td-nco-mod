@@ -7,7 +7,7 @@ class LuaVariableInfo
 private:
 	char* name;
 	char* description;
-	LuaType* type;
+	const LuaType* type;
 	
 	bool isParameter;
 	bool isOptional;
@@ -19,7 +19,7 @@ private:
 	LuaVariableInfo() :
 		name(NULL),
 		description(NULL),
-		type(LuaType::Any),
+		type(&LuaType::Any),
 		isParameter(false),
 		isReturnValue(false),
 		parameterIndex(0),

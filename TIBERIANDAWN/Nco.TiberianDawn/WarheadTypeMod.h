@@ -15,7 +15,7 @@ private:
 			"Warhead",
 			NEW_WARHEADS_RULE,
 			NEW_WARHEAD_COUNT_RULE,
-			*WARHEAD_COUNT_RULE_KEY,
+			WARHEAD_COUNT_RULE_KEY,
 			WARHEAD_COUNT,
 			NcoTypeConverter().GetModTypeMap<WarheadType>()
 		  )

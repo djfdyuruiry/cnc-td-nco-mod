@@ -826,6 +826,9 @@
     <ClInclude Include="Nco.TiberianDawn\RulesInjector.h">
       <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\enhancement_keys.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">
@@ -1431,6 +1434,9 @@
     </ClCompile>
     <ClCompile Include="Nco.TiberianDawn\TiberianDawnTypeConverter.cpp">
       <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Nco.TiberianDawn\enhancement_keys.cpp">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

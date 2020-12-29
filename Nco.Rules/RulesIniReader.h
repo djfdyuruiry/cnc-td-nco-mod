@@ -5,7 +5,6 @@
 #include <Logger.h>
 #include <ResultWithValue.h>
 #include <TwoWayStringMap.h>
-#include <TypePatterns.h>
 
 #include "IRulesIni.h"
 #include "IRulesIniReader.h"

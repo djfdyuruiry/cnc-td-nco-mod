@@ -15,7 +15,7 @@ private:
 			"Infantry",
 			NEW_INFANTRY_RULE,
 			NEW_INFANTRY_COUNT_RULE,
-			*INFANTRY_COUNT_RULE_KEY,
+			INFANTRY_COUNT_RULE_KEY,
 			INFANTRY_COUNT,
 			NcoTypeConverter().GetModTypeMap<InfantryType>()
 		  )

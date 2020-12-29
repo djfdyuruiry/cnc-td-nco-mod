@@ -1,25 +1,23 @@
 #pragma once
 
-#include <EnhancementKeys.h>
-#include <RulesIniRuleKey.h>
-
+#include "enhancement_keys.h"
 #include "tiberian_dawn_rule_keys.h"
 #include "TiberianDawnNcoRuntime.h"
 
 // enhancement lookups
-#define Read_Rally_Points_Rule() NcoRulesRuntime().ReadRuleValue<bool>(EnhancementKeys::RALLY_POINTS_RULE_KEY)
+#define Read_Rally_Points_Rule() NcoRulesRuntime().ReadRuleValue<bool>(RALLY_POINTS_RULE_KEY)
 
-#define Read_A_Star_Path_Finding_Rule() NcoRulesRuntime().ReadRuleValue<bool>(EnhancementKeys::A_STAR_PATH_FINDING_RULE_KEY)
+#define Read_A_Star_Path_Finding_Rule() NcoRulesRuntime().ReadRuleValue<bool>(A_STAR_PATH_FINDING_RULE_KEY)
 
-#define Read_Commando_Guard_Rule() NcoRulesRuntime().ReadRuleValue<bool>(EnhancementKeys::COMMANDO_GUARD_RULE_KEY)
+#define Read_Commando_Guard_Rule() NcoRulesRuntime().ReadRuleValue<bool>(COMMANDO_GUARD_RULE_KEY)
 
-#define Read_Ai_Harvesters_Per_Refinery_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(EnhancementKeys::AI_HARVESTERS_PER_REFINERY_RULE_KEY)
+#define Read_Ai_Harvesters_Per_Refinery_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(AI_HARVESTERS_PER_REFINERY_RULE_KEY)
 
-#define Read_Human_Harvesters_Per_Refinery_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(EnhancementKeys::HUMAN_HARVESTERS_PER_REFINERY_RULE_KEY)
+#define Read_Human_Harvesters_Per_Refinery_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(HUMAN_HARVESTERS_PER_REFINERY_RULE_KEY)
 
-#define Read_Multi_Wall_Length_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(EnhancementKeys::MULTI_WALL_LENGTH_RULE_KEY)
+#define Read_Multi_Wall_Length_Rule() NcoRulesRuntime().ReadRuleValue<unsigned int>(MULTI_WALL_LENGTH_RULE_KEY)
 
-#define Read_Full_Cost_Multi_Wall_Length_Rule() NcoRulesRuntime().ReadRuleValue<bool>(EnhancementKeys::FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)
+#define Read_Full_Cost_Multi_Wall_Length_Rule() NcoRulesRuntime().ReadRuleValue<bool>(FULL_COST_MULTI_WALLS_LENGTH_RULE_KEY)
 
 // mod lookups
 #define ReadNewAircraftCount() (char)NcoRulesRuntime().ReadRuleValue<unsigned int>(MOD_RULES_SECTION_NAME, NEW_AIRCRAFT_COUNT_RULE)

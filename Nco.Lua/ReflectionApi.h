@@ -94,7 +94,7 @@ private:
 		}
 		else
 		{
-			lua.PushTableEntry("type", LuaType::Any->value);
+			lua.PushTableEntry("type", LuaType::Any.value);
 		}
 
 		auto index = variable->IsParameter()

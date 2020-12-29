@@ -426,6 +426,7 @@
     <ClInclude Include="MOUSE.H" />
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
+    <ClInclude Include="Nco.TiberianDawn\enhancement_keys.h" />
     <ClInclude Include="Nco.TiberianDawn\RulesInjector.h" />
     <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeConverter.h" />
     <ClInclude Include="Nco.TiberianDawn\UnitApi.h" />
@@ -642,6 +643,7 @@
     <ClCompile Include="MPLAYER.CPP" />
     <ClCompile Include="MSGBOX.CPP" />
     <ClCompile Include="MSGLIST.CPP" />
+    <ClCompile Include="Nco.TiberianDawn\enhancement_keys.cpp" />
     <ClCompile Include="Nco.TiberianDawn\TiberianDawnTypeConverter.cpp" />
     <ClCompile Include="NETDLG.CPP" />
     <ClCompile Include="NOSEQCON.CPP" />

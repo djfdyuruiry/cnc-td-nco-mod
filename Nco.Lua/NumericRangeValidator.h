@@ -3,6 +3,7 @@
 #include <lua.hpp>
 
 #include <Result.h>
+
 #include "PrimitiveTypeValidator.h"
 
 template<class T = LUA_INTEGER> class NumbericRangeValidator : public PrimitiveTypeValidator<T>
@@ -43,12 +44,12 @@ public:
 	
 		delete &valueResult;
 
-		if (value >= minInclusive && value <= maxInclusive)
+		if (value < minInclusive && value > maxInclusive)
 		{
-			return Result::Build();
+			return Result::BuildWithError("Number must be in the range %d-%d (inclusive)", minInclusive, maxInclusive);
 		}
 
-		return Result::BuildWithError("Number must be in the range %d-%d (inclusive)", minInclusive, maxInclusive);
+		return Result::Build();
 	}
 
 };

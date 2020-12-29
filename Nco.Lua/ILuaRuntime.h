@@ -1,12 +1,13 @@
 #pragma once
 
+#include <functional>
 #include <vector>
 
 #include "ILuaApi.h"
 #include "ILuaStateWrapper.h"
 #include <Result.h>
 
-typedef void (*LuaApiInitialiser)(ILuaApi&);
+#define LuaApiInitialiser std::function<void(ILuaApi&)>
 
 class ILuaRuntime
 {

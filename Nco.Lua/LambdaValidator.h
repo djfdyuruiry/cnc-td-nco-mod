@@ -47,12 +47,12 @@ public:
 
 		delete &result;
 
-		if (isValid)
+		if (!isValid)
 		{
-			return Result::Build();
+			return Result::BuildWithError(failureMessage);
 		}
 
-		return Result::BuildWithError(failureMessage);
+		return Result::Build();
 	}
 
 };

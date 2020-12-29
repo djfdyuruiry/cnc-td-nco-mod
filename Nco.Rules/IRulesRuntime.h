@@ -36,11 +36,6 @@ public:
 		return GetBaseRulesReader().ReadRuleValue<T>(key);
 	}
 
-	template<class T> T ReadRuleValue(const RulesIniRuleKey* key)
-	{
-		return ReadRuleValue<T>(*key);
-	}
-
 	virtual bool LuaIsEnabled() = 0;
 
 	virtual bool LuaConsoleIsEnabled() = 0;

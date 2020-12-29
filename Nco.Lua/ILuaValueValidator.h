@@ -1,7 +1,8 @@
 #pragma once
 
-#include "ILuaStateWrapper.h"
 #include <Result.h>
+
+#include "ILuaStateWrapper.h"
 
 class ILuaValueValidator
 {

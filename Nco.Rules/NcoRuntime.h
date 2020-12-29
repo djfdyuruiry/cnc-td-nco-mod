@@ -10,7 +10,6 @@
 #include <Thread.h>
 #include <Utils.h>
 
-#include "EnhancementKeys.h"
 #include "GameModsRuntime.h"
 #include "IRulesRuntime.h"
 #include "RulesRuntime.h"
@@ -88,6 +87,10 @@ protected:
 	std::vector<Thread*>& threads;
 
 	NcoRuntime(IRulesRuntime& rulesRuntime) :
+		rulesInitSuccessful(false),
+		luaInitSuccessful(false),
+		modTypesInitialised(false),
+		threadsStarted(false),
 		rulesRuntime(rulesRuntime),
 		luaRuntime(
 			LuaRuntime::Build(
@@ -126,8 +129,6 @@ protected:
 
 	virtual void Initialise()
 	{
-		EnhancementKeys::InitIfNeeded();
-
 		rulesInitSuccessful = rulesRuntime.LoadRulesIfRequired();
 		luaInitSuccessful = LoadLuaComponents();
 
@@ -204,7 +205,7 @@ public:
 			ShowError("NCO startup failed: errors initialising Lua");
 			return false;
 		}
-		else
+		else if (!runtime.GetRulesRuntime().LuaIsEnabled())
 		{
 			LogWarn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
 		}

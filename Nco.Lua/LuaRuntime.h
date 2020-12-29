@@ -20,8 +20,6 @@ private:
 
 	LuaRuntime(ILuaStateWrapper& lua) : lua(lua), apis(*(new std::vector<ILuaApi*>()))
 	{
-		LuaType::InitIfRequired();
-
 		RegisterApi(ReflectionApi::Build(*this));
 	}
 

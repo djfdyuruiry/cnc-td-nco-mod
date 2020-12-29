@@ -33,7 +33,7 @@
         .GetRulesRuntime() \
         .ReadRuleValue<unsigned int>(key);
 
-#define ReadTypeCountLambda(key) []() { return ReadTypeCount(*key); }
+#define ReadTypeCountLambda(key) []() { return ReadTypeCount(key); }
 
 template<class T> static void RegisterApi(ILuaRuntime& luaRuntime)
 {
@@ -146,7 +146,6 @@ void TiberianDawnNcoRuntime::RegisterThreads()
 
 void TiberianDawnNcoRuntime::Initialise()
 {
-    InitaliseTiberianDawnRuleKeys();
     RegisterTiberianDawnRuleTypes();
 
     NcoRuntime::Initialise();

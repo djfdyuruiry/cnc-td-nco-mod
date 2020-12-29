@@ -38,7 +38,6 @@ public:
 	{
 		if (INSTANCE == NULL)
 		{
-			LOG_FORMAT = "%02d-%02d-%04d %02d:%02d:%02d.%03d - %s %s\n";
 			INSTANCE = new Logger();
 		}
 

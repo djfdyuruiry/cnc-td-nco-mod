@@ -2,7 +2,6 @@
 
 #include <LuaObjectUtils.h>
 #include <TypeWrapperApi.h>
-#include <TypePatterns.h>
 
 #include "IRulesIniSection.h"
 

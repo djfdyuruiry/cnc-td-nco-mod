@@ -3,7 +3,6 @@
 #include <functional>
 #include <vector>
 
-#include <TypePatterns.h>
 
 #include "LuaObjectUtils.h"
 #include "LuaTypeWrapper.h"

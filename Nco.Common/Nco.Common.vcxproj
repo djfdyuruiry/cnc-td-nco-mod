@@ -34,7 +34,6 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="ResultWithValue.h" />
     <ClInclude Include="TwoWayStringMap.h" />
-    <ClInclude Include="TypePatterns.h" />
     <ClInclude Include="strings.h" />
     <ClInclude Include="TypeUtils.h" />
     <ClInclude Include="utils.h" />

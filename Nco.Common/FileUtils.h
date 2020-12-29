@@ -135,14 +135,21 @@ public:
 
 		DWORD written;
 
-		// TODO: consider dealing with return val
-		WriteFile(
+		auto writeStatus = WriteFile(
 			file,
 			data,
 			strlen(data),
 			&written,
 			NULL
 		);
+
+		if (!writeStatus)
+		{
+			WithWin32ErrorMessage([&](auto e)
+			{
+				ShowError("Failed to write text to file: %s", e);
+			});
+		}
 	}
 
 };

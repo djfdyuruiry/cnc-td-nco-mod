@@ -12,21 +12,24 @@ private:
 	}
 
 public:
+	static const LuaType& Number;
+	static const LuaType& Bool;
+	static const LuaType& String;
+	static const LuaType& Function;
+	static const LuaType& Table;
+	static const LuaType& Nil;
+	static const LuaType& Any;
+
+	static const std::map<StringHash, const LuaType*>& NameToType;
+
 	const char* value;
 
-	static LuaType* Number;
-	static LuaType* Bool;
-	static LuaType* String;
-	static LuaType* Function;
-	static LuaType* Table;
-	static LuaType* Nil;
-	static LuaType* Any;
-
-	static std::map<StringHash, LuaType*>* NameToType;
+	static LuaType& Build(const char* typeName)
+	{
+		return *(new LuaType(typeName));
+	}
 
 	static const LuaType& Parse(const char* typeName);
-
-	static void InitIfRequired();
 
 	static bool AreEqual(const LuaType& expected, const LuaType& actual);
 

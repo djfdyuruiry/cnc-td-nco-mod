@@ -15,7 +15,7 @@ private:
 			"Building",
 			NEW_BUILDINGS_RULE,
 			NEW_BUILDING_COUNT_RULE,
-			*BUILDING_COUNT_RULE_KEY,
+			BUILDING_COUNT_RULE_KEY,
 			STRUCT_COUNT,
 			NcoTypeConverter().GetModTypeMap<StructType>()
 		  )

@@ -15,7 +15,7 @@ private:
 			"Bullet",
 			NEW_BULLETS_RULE,
 			NEW_BULLET_COUNT_RULE,
-			*BULLET_COUNT_RULE_KEY,
+			BULLET_COUNT_RULE_KEY,
 			BULLET_COUNT,
 			NcoTypeConverter().GetModTypeMap<BulletType>()
 		  )

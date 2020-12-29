@@ -15,7 +15,7 @@ private:
 			"Weapon",
 			NEW_WEAPONS_RULE,
 			NEW_WEAPON_COUNT_RULE,
-			*WEAPON_COUNT_RULE_KEY,
+			WEAPON_COUNT_RULE_KEY,
 			WEAPON_COUNT,
 			NcoTypeConverter().GetModTypeMap<WeaponType>()
 		  )

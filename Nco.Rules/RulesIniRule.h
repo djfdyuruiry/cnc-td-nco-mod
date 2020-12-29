@@ -16,9 +16,9 @@
 class RulesIniRule
 {
 private:
-	static std::vector<RulesIniType>* INT_TYPES;
-	static std::vector<RulesIniType>* UINT_TYPES;
-	static std::vector<RulesIniType>* LONG_TYPES;
+	static std::vector<RulesIniType>& INT_TYPES;
+	static std::vector<RulesIniType>& UINT_TYPES;
+	static std::vector<RulesIniType>& LONG_TYPES;
 
 	SectionName section;
 	RuleName name;
@@ -39,23 +39,9 @@ private:
 	Optional& valueToAllowAlways;
 	std::vector<const char*>& validValues;
 
-	static void InitIfNeeded()
+	static bool IsExtendedType(std::vector<RulesIniType>& extendedTypes, RulesIniType type)
 	{
-		if (INT_TYPES != NULL && UINT_TYPES != NULL && LONG_TYPES != NULL)
-		{
-			return;
-		}
-
-		INT_TYPES = new std::vector<RulesIniType>();
-		UINT_TYPES = new std::vector<RulesIniType>();
-		LONG_TYPES = new std::vector<RulesIniType>();
-	}
-
-	static bool IsExtendedType(std::vector<RulesIniType>* extendedTypes, RulesIniType type)
-	{
-		InitIfNeeded();
-
-		for (auto intType : *extendedTypes)
+		for (auto intType : extendedTypes)
 		{
 			if (type == intType)
 			{
@@ -78,8 +64,6 @@ private:
 		  valueToAllowAlways(Optional::BuildOptional()),
 		  validValues(*(new std::vector<const char*>()))
 	{
-		InitIfNeeded();
-
 		sectionKey = RuleHashUtils::BuildRuleKey(section);
 		uppercaseName = ConvertStringToUpperCase(name);
 		key = RuleHashUtils::BuildRuleKey(section, name);
@@ -228,19 +212,17 @@ public:
 
 	template<class T> static void RegisterExtendedType(RulesIniType ruleType)
 	{
-		InitIfNeeded();
-
 		if constexpr (std::is_same_v<T, int>)
 		{
-			INT_TYPES->push_back(ruleType);
+			INT_TYPES.push_back(ruleType);
 		}
 		else if constexpr (std::is_same_v<T, unsigned int>)
 		{
-			UINT_TYPES->push_back(ruleType);
+			UINT_TYPES.push_back(ruleType);
 		}
 		else if constexpr (std::is_same_v<T, long>)
 		{
-			LONG_TYPES->push_back(ruleType);
+			LONG_TYPES.push_back(ruleType);
 		}
 
 		LogError("Attempted to register extended rule value type, but C++ type used was unsupported. Rule type number: %d", ruleType);

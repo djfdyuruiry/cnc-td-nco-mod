@@ -44,9 +44,6 @@
     <ClInclude Include="IniReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TypePatterns.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>

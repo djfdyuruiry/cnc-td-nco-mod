@@ -20,7 +20,7 @@ private:
 			"Aircraft",
 			NEW_AIRCRAFT_RULE,
 			NEW_AIRCRAFT_COUNT_RULE,
-			*AIRCRAFT_COUNT_RULE_KEY,
+			AIRCRAFT_COUNT_RULE_KEY,
 			AIRCRAFT_COUNT,
 			NcoTypeConverter().GetModTypeMap<AircraftType>()
 		  )

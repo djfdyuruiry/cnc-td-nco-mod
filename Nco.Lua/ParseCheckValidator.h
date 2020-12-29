@@ -1,10 +1,9 @@
 #pragma once
 
-#include <TypePatterns.h>
+#include <Result.h>
 #include <strings.h>
 
 #include "ILuaValueValidator.h"
-#include <Result.h>
 
 template<class T> class ParseCheckValidator : public ILuaValueValidator
 {

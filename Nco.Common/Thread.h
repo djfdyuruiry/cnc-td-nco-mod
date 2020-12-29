@@ -56,7 +56,7 @@ public:
 			NULL
 		);
 
-		threadRunning = threadHandle != NULL && threadHandle != INVALID_HANDLE_VALUE;
+		threadRunning = Win32HandleIsValid(threadHandle);
 
 		if (!threadRunning)
 		{

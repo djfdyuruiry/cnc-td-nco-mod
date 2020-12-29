@@ -27,7 +27,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EnhancementKeys.h" />
     <ClInclude Include="GameModsRuntime.h" />
     <ClInclude Include="IGameMod.h" />
     <ClInclude Include="IRulesIni.h" />
@@ -55,7 +54,6 @@
     <ClInclude Include="rules_ini_nco.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EnhancementKeys.cpp" />
     <ClCompile Include="RulesIniRule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,12 +1,13 @@
 #pragma once
 
+#include <functional>
 #include <vector>
 
 #include <lua.hpp>
 
 #include "LuaVariableInfo.h"
 
-typedef void (*LuaVariableInfoInitialiser)(LuaVariableInfo&);
+#define LuaVariableInfoInitialiser std::function<void(LuaVariableInfo&)>
 
 class LuaFunctionInfo
 {
