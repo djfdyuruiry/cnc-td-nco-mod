@@ -823,6 +823,9 @@
     <ClInclude Include="Nco.TiberianDawn\UnitApi.h">
       <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
     </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RulesInjector.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AADATA.CPP">

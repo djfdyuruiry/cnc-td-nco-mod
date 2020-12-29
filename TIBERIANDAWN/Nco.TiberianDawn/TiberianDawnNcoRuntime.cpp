@@ -19,6 +19,7 @@
 #include "InfantryTypeMod.h"
 #include "InfoApi.h"
 #include "lua_events.h"
+#include "RulesInjector.h"
 #include "TiberianDawnNcoRuntime.h"
 #include "UnitApi.h"
 #include "UnitTypeMod.h"
@@ -151,93 +152,22 @@ void TiberianDawnNcoRuntime::Initialise()
     NcoRuntime::Initialise();
 }
 
-static void InjectIqRules(IRulesRuntime& r)
-{
-    Rule.MaxIQ = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, MAX_IQ_RULE);
-    Rule.IQSuperWeapons = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_SUPER_WEAPONS_RULE);
-    Rule.IQProduction = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_PRODUCTION_RULE);
-    Rule.IQGuardArea = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_GUARD_AREA_RULE);
-    Rule.IQRepairSell = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_REPAIR_SELL_RULE);
-    Rule.IQCrush = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_CRUSH_RULE);
-    Rule.IQScatter = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_SCATTER_RULE);
-    Rule.IQContentScan = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_CONTENT_SCAN_RULE);
-    Rule.IQAircraft = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_AIRCRAFT_RULE);
-    Rule.IQHarvester = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_HARVESTER_RULE);
-    Rule.IQSellBack = r.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_SELL_BACK_RULE);
-}
-
-static void InjectAiRules(IRulesRuntime& r)
-{
-    Rule.AttackInterval = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, ATTACK_INTERVAL_RULE);
-    Rule.BaseSizeAdd = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, BASE_SIZE_ADD_RULE);
-    Rule.PowerSurplus = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, POWER_SURPLUS_RULE);
-    Rule.AttackDelay = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, ATTACK_DELAY_RULE);
-    Rule.PowerEmergencyFraction = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, POWER_EMERGENCY_FRACTION_RULE);
-    Rule.HelipadRatio = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, HELIPAD_RATIO_RULE);
-    Rule.HelipadLimit = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, HELIPAD_LIMIT_RULE);
-    Rule.AARatio = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, AA_RATIO_RULE);
-    Rule.AALimit = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, AA_LIMIT_RULE);
-    Rule.DefenseRatio = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, DEFENSE_RATIO_RULE);
-    Rule.DefenseLimit = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, DEFENSE_LIMIT_RULE);
-    Rule.WarRatio = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, WAR_RATIO_RULE);
-    Rule.WarLimit = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, WAR_LIMIT_RULE);
-    Rule.BarracksRatio = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, BARRACKS_RATIO_RULE);
-    Rule.BarracksLimit = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, BARRACKS_LIMIT_RULE);
-    Rule.RefineryRatio = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, REFINERY_RATIO_RULE);
-    Rule.RefineryLimit = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, REFINERY_LIMIT_RULE);
-    Rule.AirstripRatio = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, AIRSTRIP_RATIO_RULE);
-    Rule.AirstripLimit = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, AIRSTRIP_LIMIT_RULE);
-    Rule.InfantryReserve = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, INFANTRY_RESERVE_RULE);
-    Rule.InfantryBaseMult = r.ReadRuleValue<unsigned int>(AI_SECTION_NAME, INFANTRY_BASE_MULT_RULE);
-    Rule.IsComputerParanoid = r.ReadRuleValue<bool>(AI_SECTION_NAME, PARANOID_RULE);
-}
-
 void TiberianDawnNcoRuntime::InjectRules()
 {
-    InjectRulesForType<WarheadType, WarheadTypeClass>(WARHEAD_FIRST, WARHEAD_COUNT, [&](auto typeString, auto instance)
-    {
-        rulesRuntime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(typeString);
-        WarheadTypeClass::ReadWarheadRules(instance);
-    });
+    auto& rulesInjector = RulesInjector::Build(rulesRuntime.GetRules(), *rulesReader);
 
-    InjectRulesForType<BulletType, BulletTypeClass>(BULLET_FIRST, BULLET_COUNT, [&](auto typeString, auto instance)
-    {
-        rulesRuntime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(instance->RulesName);
-        BulletTypeClass::ReadBulletRules(instance);
-    });
+    rulesInjector.InjectTypeRules<WarheadType, WarheadTypeClass>(WARHEAD_FIRST, WARHEAD_COUNT);
+    rulesInjector.InjectTypeRules<BulletType, BulletTypeClass>(BULLET_FIRST, BULLET_COUNT);
+    rulesInjector.InjectTypeRules<WeaponType, WeaponTypeClass>(WEAPON_FIRST, WEAPON_COUNT);
+    rulesInjector.InjectTypeRules<InfantryType, InfantryTypeClass>(INFANTRY_FIRST, INFANTRY_COUNT);
+    rulesInjector.InjectTypeRules<UnitType, UnitTypeClass>(UNIT_FIRST, UNIT_COUNT);
+    rulesInjector.InjectTypeRules<AircraftType, AircraftTypeClass>(AIRCRAFT_FIRST, AIRCRAFT_COUNT);
+    rulesInjector.InjectTypeRules<StructType, BuildingTypeClass>(STRUCT_FIRST, STRUCT_COUNT);
 
-    InjectRulesForType<WeaponType, WeaponTypeClass>(WEAPON_FIRST, WEAPON_COUNT, [&](auto typeString, auto instance)
-    {
-        rulesRuntime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(typeString);
-        WeaponTypeClass::ReadWeaponRules(instance);
-    });
+    rulesInjector.InjectAiRules(Rule);
+    rulesInjector.InjectIqRules(Rule);
 
-    InjectRulesForType<InfantryType, InfantryTypeClass>(INFANTRY_FIRST, INFANTRY_COUNT, [&](auto typeString, auto instance)
-    {
-        rulesRuntime.GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(instance->IniName);
-        InfantryTypeClass::ReadInfantryRules(instance);
-    });
-
-    InjectRulesForType<UnitType, UnitTypeClass>(UNIT_FIRST, UNIT_COUNT, [&](auto _, auto instance)
-    {
-        rulesRuntime.GetRules() << TiberianDawnRuleSectionBuilder::BuildUnitSection(instance->IniName);
-        UnitTypeClass::ReadUnitRules(instance);
-    });
-
-    InjectRulesForType<AircraftType, AircraftTypeClass>(AIRCRAFT_FIRST, AIRCRAFT_COUNT, [&](auto _, auto instance)
-    {
-        rulesRuntime.GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(instance->IniName);
-        AircraftTypeClass::ReadAircraftRules(instance);
-    });
-
-    InjectRulesForType<StructType, BuildingTypeClass>(STRUCT_FIRST, STRUCT_COUNT, [&](auto _, auto instance)
-    {
-        rulesRuntime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(instance->IniName);
-        BuildingTypeClass::ReadBuildingRules(instance);
-    });
-
-    InjectAiRules(rulesRuntime);
-    InjectIqRules(rulesRuntime);
+    delete &rulesInjector;
 
     FactoryClass::STEP_COUNT = rulesRuntime.ReadRuleValue<unsigned int>(TOTAL_PRODUCTION_STEPS_RULE_KEY);
 }

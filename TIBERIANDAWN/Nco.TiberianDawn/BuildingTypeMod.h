@@ -23,21 +23,9 @@ private:
 	}
 
 protected:
-	ResultWithValue<StructType>& ParseType(SectionName typeString)
+	void AddType(BuildingTypeClass* instance)
 	{
-		return NcoTypeConverter().Parse<StructType>(typeString);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(typeString);
-	}
-
-	void ReadRulesAndAddType(BuildingTypeClass* type)
-	{
-		BuildingTypeClass::ReadBuildingRules(type);
-
-		BuildingTypeClass::Add_Building_Type(type);
+		BuildingTypeClass::Add_Building_Type(instance);
 	}
 
 public:

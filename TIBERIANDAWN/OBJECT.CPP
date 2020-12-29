@@ -92,20 +92,22 @@ bool ObjectClass::Is_Infantry(void) const
 	return(false);
 }
 
-void ObjectTypeClass::ReadObjectRules(ObjectTypeClass* type, const char* iniName)
+const char* ObjectTypeClass::Get_Rules_Name()
 {
-	if (!type->LoadObjectRules)
+	return IniName;
+}
+
+void ObjectTypeClass::Read_Rules(IRulesIniReader& reader)
+{
+	if (!LoadObjectRules)
 	{
 		return;
 	}
 
-	if (iniName == NULL) 
-	{
-		iniName = type->IniName;
-	}
+	auto iniName = Get_Rules_Name();
 
-	type->Armor = Read_Armor(iniName, type->Armor);
-	type->MaxStrength = Read_Strength(iniName, type->MaxStrength);
+	Armor = reader.ReadRuleValue<ArmorType>(iniName, ARMOR_RULE, Armor);
+	MaxStrength = (unsigned short)reader.ReadRuleValue<unsigned int>(iniName, STRENGTH_RULE, MaxStrength);
 }
 
 /***********************************************************************************************

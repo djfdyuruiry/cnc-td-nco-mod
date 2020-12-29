@@ -23,16 +23,6 @@ private:
 	}
 
 protected:
-	ResultWithValue<BulletType>& ParseType(SectionName typeString)
-	{
-		return NcoTypeConverter().Parse<BulletType>(typeString);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(typeString);
-	}
-
 	BulletTypeClass* CloneType(const char* baseTypeString, const char* typeString, BulletType baseType, BulletType type)
 	{
 		auto newType = TiberianDawnTypeMod::CloneType(baseTypeString, typeString, baseType, type);
@@ -42,11 +32,9 @@ protected:
 		return newType;
 	}
 
-	void ReadRulesAndAddType(BulletTypeClass* type)
+	void AddType(BulletTypeClass* instance)
 	{
-		BulletTypeClass::ReadBulletRules(type);
-
-		BulletTypeClass::Add_Bullet_Type(type);
+		BulletTypeClass::Add_Bullet_Type(instance);
 	}
 
 public:

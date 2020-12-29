@@ -1313,7 +1313,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										true,
 										exp,
 										deathExplosionWarhead,
-										deathExplosionDamage)
+										deathExplosionDamage,
+										false,
+										true)
 {
 	IsChunkyShape = is_chunky;
 	Mission = order;
@@ -1729,28 +1731,28 @@ UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 	return By_Type(type);
 }
 
-void UnitTypeClass::ReadUnitRules(UnitTypeClass* unit)
+void UnitTypeClass::Read_Rules(IRulesIniReader& reader)
 {
 	LogTrace("UnitTypeClass::ReadUnitRules");
-	auto iniName = unit->IniName;
+	auto iniName = Get_Rules_Name();
 
-	ReadObjectRules(unit);
-	ReadTechnoRules(unit, false, true, false);
+	ObjectTypeClass::Read_Rules(reader);
+	TechnoTypeClass::Read_Rules(reader);
 
-	unit->IsCrateGoodie = Read_Can_Be_Found_In_Crate(iniName, unit->IsCrateGoodie);
-	unit->IsPieceOfEight = Read_Limited_Facings(iniName, unit->IsPieceOfEight);
-	unit->IsCrusher = Read_Can_Crush_Infantry(iniName, unit->IsCrusher);
-	unit->IsToHarvest = Read_Can_Harvest(iniName, unit->IsToHarvest);
-	unit->IsRadarEquipped = Read_Radar_Equipped(iniName, unit->IsRadarEquipped);
-	unit->IsFireAnim = Read_Has_Fire_Animation(iniName, unit->IsFireAnim);
-	unit->IsLockTurret = Read_Lock_Turret(iniName, unit->IsLockTurret);
-	unit->IsTracked = Read_Has_Tracks(iniName, unit->IsTracked);
-	unit->IsGigundo = Read_Is_Huge(iniName, unit->IsGigundo);
-	unit->IsCloakable = Read_Can_Cloak(iniName, unit->IsCloakable);
-	unit->IsAnimating = Read_Has_Constant_Animation(iniName, unit->IsAnimating);
-	unit->Speed = Read_Unit_Speed(iniName, unit->Speed);
-	unit->ROT = Read_Rate_Of_Turn(iniName, unit->ROT);
-	unit->CanSelfRepair = NcoRulesRuntime().ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, unit->CanSelfRepair);
+	IsCrateGoodie = reader.ReadRuleValue<bool>(iniName, CAN_BE_FOUND_IN_CRATE_RULE, IsCrateGoodie);
+	IsPieceOfEight = reader.ReadRuleValue<bool>(iniName, LIMITED_FACINGS_RULE, IsPieceOfEight);
+	IsCrusher = reader.ReadRuleValue<bool>(iniName, CAN_CRUSH_INFANTRY_RULE, IsCrusher);
+	IsToHarvest = reader.ReadRuleValue<bool>(iniName, CAN_HARVEST_RULE, IsToHarvest);
+	IsRadarEquipped = reader.ReadRuleValue<bool>(iniName, RADAR_EQUIPPED_RULE, IsRadarEquipped);
+	IsFireAnim = reader.ReadRuleValue<bool>(iniName, HAS_FIRE_ANIMATION_RULE, IsFireAnim);
+	IsLockTurret = reader.ReadRuleValue<bool>(iniName, LOCK_TURRET_RULE, IsLockTurret);
+	IsTracked = reader.ReadRuleValue<bool>(iniName, HAS_TRACKS_RULE, IsTracked);
+	IsGigundo = reader.ReadRuleValue<bool>(iniName, HUGE_RULE, IsGigundo);
+	IsCloakable = reader.ReadRuleValue<bool>(iniName, CAN_CLOAK_RULE, IsCloakable);
+	IsAnimating = reader.ReadRuleValue<bool>(iniName, CONSTANT_ANIMATION_RULE, IsAnimating);
+	Speed = reader.ReadRuleValue<SpeedType>(iniName, UNIT_SPEED_RULE, Speed);
+	ROT = reader.ReadRuleValue<unsigned int>(iniName, RATE_OF_TURN_RULE, ROT);
+	CanSelfRepair = reader.ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, CanSelfRepair);
 }
 
 void UnitTypeClass::Add_Unit_Type(UnitTypeClass* unitInstance)

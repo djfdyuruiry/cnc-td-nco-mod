@@ -21,6 +21,7 @@ private:
 	static TiberianDawnNcoRuntime* INSTANCE;
 
     TiberianDawnRulesInfo& rulesInfo;
+    TiberianDawnRulesReader* rulesReader;
     TiberianDawnTypeConverter& typeConverter;
 
     TiberianDawnNcoRuntime() :
@@ -38,7 +39,9 @@ private:
                 },
                 [&](auto rules)
                 {
-                    return &TiberianDawnRulesReader::Build(*rules, typeConverter);
+                    rulesReader = &TiberianDawnRulesReader::Build(*rules, typeConverter);
+
+                    return rulesReader;
                 }
             )
         ),
@@ -58,16 +61,6 @@ private:
     void Initialise();
 
     bool InternalShutdown();
-
-    template<class T, class U> void InjectRulesForType(T first, T count, std::function<void(const char*, U*)> injector)
-    {
-        for (auto t = first; t < count; t++)
-        {
-            auto typeString = typeConverter.ToStringOrDefault<T>(t, "", true);
-
-            injector(typeString, (U*)U::By_Type(t));
-        }
-    }
 
     void InjectRules();
 

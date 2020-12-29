@@ -23,21 +23,9 @@ private:
 	}
 
 protected:
-	ResultWithValue<WeaponType>& ParseType(SectionName typeString)
+	void AddType(WeaponTypeClass* instance)
 	{
-		return NcoTypeConverter().Parse<WeaponType>(typeString);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(typeString);
-	}
-
-	void ReadRulesAndAddType(WeaponTypeClass* type)
-	{
-		WeaponTypeClass::ReadWeaponRules(type);
-
-		WeaponTypeClass::Add_Weapon_Type(type);
+		WeaponTypeClass::Add_Weapon_Type(instance);
 	}
 
 public:

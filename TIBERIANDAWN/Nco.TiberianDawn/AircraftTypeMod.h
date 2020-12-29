@@ -28,21 +28,9 @@ private:
 	}
 
 protected:
-	ResultWithValue<AircraftType>& ParseType(SectionName typeString)
+	void AddType(AircraftTypeClass* instance)
 	{
-		return NcoTypeConverter().Parse<AircraftType>(typeString);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(typeString);
-	}
-
-	void ReadRulesAndAddType(AircraftTypeClass* type)
-	{
-		AircraftTypeClass::ReadAircraftRules(type);
-
-		AircraftTypeClass::Add_Aircraft_Type(type);
+		AircraftTypeClass::Add_Aircraft_Type(instance);
 	}
 
 public:

@@ -38,6 +38,8 @@
 #include	"mission.h"
 #include	"target.h"
 
+#include <IRulesIniReader.h>
+
 class MapEditClass;
 class HouseClass;
 
@@ -194,7 +196,8 @@ class ObjectTypeClass : public AbstractTypeClass
 
 		static void One_Time(void);
 
-		static void ReadObjectRules(ObjectTypeClass* type, const char* iniName = NULL);
+		virtual const char* Get_Rules_Name();
+		virtual void Read_Rules(IRulesIniReader& reader);
 
 		virtual int  Max_Pips(void) const;
 		virtual void  Dimensions(int &width, int &height) const;
@@ -375,6 +378,10 @@ class TechnoTypeClass : public ObjectTypeClass
 		WarheadType DeathExplosionWarhead;
 		unsigned int DeathExplosionDamage;
 
+		bool IsInfantry;
+		bool IsUnit;
+		bool IsAircraft;
+
 		//--------------------------------------------------------------------
 		TechnoTypeClass(
 				int name,
@@ -415,9 +422,12 @@ class TechnoTypeClass : public ObjectTypeClass
 				bool explodesUponDeath = false,
 				AnimType deathExplosionAnimation = ANIM_NONE,
 				WarheadType deathExplosionWarhead = WARHEAD_NONE,
-				unsigned int deathExplosionDamage = 0);
+				unsigned int deathExplosionDamage = 0,
+				bool isInfantry = false,
+				bool isUnit = false,
+				bool isAircraft = false);
 
-		static void ReadTechnoRules(TechnoTypeClass* type, bool isInfantry, bool isUnit, bool isAircraft);
+		virtual void Read_Rules(IRulesIniReader& reader);
 
 		virtual int Calculate_Risk(void) const;
 		virtual int  Raw_Cost(void) const;
@@ -502,7 +512,9 @@ public:
 
 	static WeaponTypeClass const& As_Reference(WeaponType type) { return *By_Type(type); };
 
-	static void ReadWeaponRules(WeaponTypeClass* type);
+	virtual const char* Get_Rules_Name();
+	virtual void Read_Rules(IRulesIniReader& reader);
+
 	static void Add_Weapon_Type(WeaponTypeClass* type);
 	
 	virtual RTTIType  What_Am_I(void) const { return RTTI_NONE; };
@@ -590,7 +602,10 @@ public:
 		bool isTiberiumDestroyer,
 		unsigned armorModifiers[ARMOR_COUNT]
 	);
-	static void ReadWarheadRules(WarheadTypeClass* type);
+	
+	virtual const char* Get_Rules_Name();
+	virtual void Read_Rules(IRulesIniReader& reader);
+
 	static void Add_Warhead_Type(WarheadTypeClass* type);
 	virtual RTTIType  What_Am_I(void) const { return RTTI_NONE; };
 	static void  Init(TheaterType) {};
@@ -910,7 +925,8 @@ class BuildingTypeClass : public TechnoTypeClass {
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BUILDINGTYPE;};
 		operator StructType(void) const {return(Type);};
 
-		static void ReadBuildingRules(BuildingTypeClass* type);
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Building_Type(BuildingTypeClass* type);
 		
 		static BuildingTypeClass const &  As_Reference(StructType type) { return *By_Type(type); };
@@ -1168,7 +1184,8 @@ private:
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
-		static void ReadUnitRules(UnitTypeClass* type);
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Unit_Type(UnitTypeClass* type);
 
 		virtual void  Dimensions(int &width, int &height) const;
@@ -1314,7 +1331,8 @@ class InfantryTypeClass : public TechnoTypeClass
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
-		static void ReadInfantryRules(InfantryTypeClass* infantry);
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Infantry_Type(InfantryTypeClass* infantryObject);
 
 		char* Resolve_Ini_Name();
@@ -1499,7 +1517,9 @@ class BulletTypeClass : public ObjectTypeClass
 			WarheadType warhead,
 			AnimType explosion);
 
-		static void ReadBulletRules(BulletTypeClass* type);
+		virtual const char* Get_Rules_Name();
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Bullet_Type(BulletTypeClass* type);
 
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
@@ -1954,7 +1974,8 @@ class AircraftTypeClass : public TechnoTypeClass
 				MissionType deforder);
 		virtual RTTIType  What_Am_I(void) const;
 
-		static void ReadAircraftRules(AircraftTypeClass* type);
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Aircraft_Type(AircraftTypeClass* type);
 
 		static AircraftType  From_Name(char const *name);

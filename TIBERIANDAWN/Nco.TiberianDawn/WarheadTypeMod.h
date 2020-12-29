@@ -23,16 +23,6 @@ private:
 	}
 
 protected:
-	ResultWithValue<WarheadType>& ParseType(SectionName typeString)
-	{
-		return NcoTypeConverter().Parse<WarheadType>(typeString);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(typeString);
-	}
-
 	WarheadTypeClass* CloneType(const char* baseTypeString, const char* typeString, WarheadType baseType, WarheadType type)
 	{
 		auto newType = TiberianDawnTypeMod::CloneType(baseTypeString, typeString, baseType, type);
@@ -41,6 +31,11 @@ protected:
 		for (auto i = 0u; i < ARMOR_COUNT; i++)
 		{
 			newModifier[i] = newType->Modifier[i];
+
+			auto a = newModifier[i];
+			auto b = newType->Modifier[i];
+
+			LogTrace("%u -> %u", a, b);
 		}
 
 		newType->Modifier = newModifier;
@@ -48,11 +43,9 @@ protected:
 		return newType;
 	}
 
-	void ReadRulesAndAddType(WarheadTypeClass* type)
+	void AddType(WarheadTypeClass* instance)
 	{
-		WarheadTypeClass::ReadWarheadRules(type);
-
-		WarheadTypeClass::Add_Warhead_Type(type);
+		WarheadTypeClass::Add_Warhead_Type(instance);
 	}
 
 public:

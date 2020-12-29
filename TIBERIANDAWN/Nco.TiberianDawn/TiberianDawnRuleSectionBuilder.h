@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+
 #include <rules_ini_mods.h>
 #include <RulesIniSection.h>
 
@@ -411,5 +413,37 @@ public:
 				  << POWER_OUTPUT_RULE << UNSIGNED_INT_RULE
 				  << POWER_INPUT_RULE << UNSIGNED_INT_RULE;
 			});
+	}
+
+	template<class T> static IRulesIniSection& BuildSectionForType(const char* name)
+	{
+		if constexpr (std::is_same_v<T, WarheadTypeClass>)
+		{
+			return BuildWarheadSection(name);
+		}
+		else if constexpr (std::is_same_v<T, BulletTypeClass>)
+		{
+			return BuildBulletSection(name);
+		}
+		else if constexpr (std::is_same_v<T, WeaponTypeClass>)
+		{
+			return BuildWeaponSection(name);
+		}
+		else if constexpr (std::is_same_v<T, InfantryTypeClass>)
+		{
+			return BuildInfantrySection(name);
+		}
+		else if constexpr (std::is_same_v<T, UnitTypeClass>)
+		{
+			return BuildUnitSection(name);
+		}
+		else if constexpr (std::is_same_v<T, AircraftTypeClass>)
+		{
+			return BuildAircraftSection(name);
+		}
+		else if constexpr (std::is_same_v<T, BuildingTypeClass>)
+		{
+			return BuildBuildingSection(name);
+		}
 	}
 };

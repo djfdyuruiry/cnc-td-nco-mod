@@ -23,21 +23,9 @@ private:
 	}
 
 protected:
-	ResultWithValue<UnitType>& ParseType(SectionName typeString)
+	void AddType(UnitTypeClass* instance)
 	{
-		return NcoTypeConverter().Parse<UnitType>(typeString);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildUnitSection(typeString);
-	}
-
-	void ReadRulesAndAddType(UnitTypeClass* type)
-	{
-		UnitTypeClass::ReadUnitRules(type);
-
-		UnitTypeClass::Add_Unit_Type(type);
+		UnitTypeClass::Add_Unit_Type(instance);
 	}
 
 public:

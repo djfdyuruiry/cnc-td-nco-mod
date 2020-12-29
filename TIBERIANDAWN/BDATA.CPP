@@ -3719,25 +3719,25 @@ BuildingTypeClass::BuildingTypeClass(
 	Anims[BSTATE_AUX2].Rate = 0;
 }
 
-void BuildingTypeClass::ReadBuildingRules(BuildingTypeClass* building)
+void BuildingTypeClass::Read_Rules(IRulesIniReader& reader)
 {
-	auto iniName = building->IniName;
+	auto iniName = Get_Rules_Name();
 
-	ReadObjectRules(building);
-	ReadTechnoRules(building, false, false, false);
+	ObjectTypeClass::Read_Rules(reader);
+	TechnoTypeClass::Read_Rules(reader);
 
-	building->IsBibbed = Read_Is_Bibbed(iniName, building->IsBibbed);
-	building->IsWall = Read_Is_Wall(iniName, building->IsWall);
-	building->IsFactory = Read_Is_Factory(iniName, building->IsFactory);
-	building->IsSimpleDamage = Read_Use_Simple_Damage(iniName, building->IsSimpleDamage);
-	building->IsCaptureable = Read_Is_Captureable(iniName, building->IsCaptureable);
-	building->IsRegulated = Read_Is_Fixed_Speed(iniName, building->IsRegulated);
-	building->IsUnsellable = Read_Is_Unsellable(iniName, building->IsUnsellable);
-	building->ToBuild = Read_Factory_Type(iniName, (FactoryType)building->ToBuild);
-	building->Capacity = Read_Storage_Capacity(iniName, building->Capacity);
-	building->Power = Read_Power_Output(iniName, building->Power);
-	building->Drain = Read_Power_Input(iniName, building->Drain);
-	building->IsSturdy = Read_Is_Sturdy(iniName, building->IsSturdy);
+	IsBibbed = reader.ReadRuleValue<bool>(iniName, BIBBED_RULE, IsBibbed);
+	IsWall = reader.ReadRuleValue<bool>(iniName, WALL_RULE, IsWall);
+	IsFactory = reader.ReadRuleValue<bool>(iniName, FACTORY_RULE, IsFactory);
+	IsSimpleDamage = reader.ReadRuleValue<bool>(iniName, SIMPLE_DAMAGE_RULE, IsSimpleDamage);
+	IsCaptureable = reader.ReadRuleValue<bool>(iniName, CAPTUREABLE_RULE, IsCaptureable);
+	IsRegulated = reader.ReadRuleValue<bool>(iniName, FIXED_SPEED_ANIMATION_RULE, IsRegulated);
+	IsUnsellable = reader.ReadRuleValue<bool>(iniName, UNSELLABLE_RULE, IsUnsellable);
+	ToBuild = (RTTIType)reader.ReadRuleValue<FactoryType>(iniName, FACTORY_TYPE_RULE, (FactoryType)ToBuild);
+	Capacity = reader.ReadRuleValue<unsigned int>(iniName, STORAGE_CAPACITY_RULE, Capacity);
+	Power = reader.ReadRuleValue<unsigned int>(iniName, POWER_OUTPUT_RULE, Power);
+	Drain = reader.ReadRuleValue<unsigned int>(iniName, POWER_INPUT_RULE, Drain);
+	IsSturdy = reader.ReadRuleValue<bool>(iniName, STURDY_RULE, IsSturdy);
 }
 
 void BuildingTypeClass::Add_Building_Type(BuildingTypeClass* buildingInstance)

@@ -160,14 +160,21 @@ WeaponTypeClass const* WeaponTypeClass::By_Type(WeaponType type)
 	return By_Type(type);
 }
 
-void WeaponTypeClass::ReadWeaponRules(WeaponTypeClass* weapon)
+const char* WeaponTypeClass::Get_Rules_Name()
 {
-	auto iniName = NcoTypeConverter().ToStringOrDefault(weapon->Type);
+	auto rulesName = NcoTypeConverter().ToStringOrDefault(Type);
 
-	weapon->Projectile = NcoRulesRuntime().ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, weapon->Projectile);
-	weapon->Attack = Read_Weapon_Damage(iniName, weapon->Attack);
-	weapon->ROF = Read_Weapon_Rate_Of_Fire(iniName, weapon->ROF);
-	weapon->Range = Read_Weapon_Range(iniName, weapon->Range);
+	return rulesName;
+}
+
+void WeaponTypeClass::Read_Rules(IRulesIniReader& reader)
+{
+	auto iniName = Get_Rules_Name();
+
+	Projectile = reader.ReadRuleValue<BulletType>(iniName, WEAPON_PROJECTILE_RULE, Projectile);
+	Attack = reader.ReadRuleValue<unsigned int>(iniName, WEAPON_DAMAGE_RULE, Attack);
+	ROF = reader.ReadRuleValue<unsigned int>(iniName, WEAPON_RATE_OF_FIRE_RULE, ROF);
+	Range = reader.ReadRuleValue<unsigned int>(iniName, WEAPON_RANGE_RULE, Range);
 }
 
 void WeaponTypeClass::Add_Weapon_Type(WeaponTypeClass* WeaponInstance)
@@ -230,23 +237,30 @@ WarheadTypeClass::WarheadTypeClass(
 	IsModType = false;
 }
 
-void WarheadTypeClass::ReadWarheadRules(WarheadTypeClass* warhead)
+const char* WarheadTypeClass::Get_Rules_Name()
 {
-	auto iniName = NcoTypeConverter().ToStringOrDefault(warhead->Type);
+	auto rulesName = NcoTypeConverter().ToStringOrDefault(Type);
 
-	warhead->FriendlyName = NcoRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, warhead->FriendlyName);
-	warhead->SpreadFactor = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, warhead->SpreadFactor);
-	warhead->IsWallDestroyer = NcoRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, warhead->IsWallDestroyer);
-	warhead->IsWoodDestroyer = NcoRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, warhead->IsWoodDestroyer);
-	warhead->IsTiberiumDestroyer = NcoRulesRuntime().ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, warhead->IsTiberiumDestroyer);
+	return rulesName;
+}
+
+void WarheadTypeClass::Read_Rules(IRulesIniReader& reader)
+{
+	auto iniName = Get_Rules_Name();
+
+	FriendlyName = reader.ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, FriendlyName);
+	SpreadFactor = reader.ReadRuleValue<unsigned int>(iniName, WARHEAD_SPREAD_FACTOR_RULE, SpreadFactor);
+	IsWallDestroyer = reader.ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WALLS_RULE, IsWallDestroyer);
+	IsWoodDestroyer = reader.ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_WOOD_RULE, IsWoodDestroyer);
+	IsTiberiumDestroyer = reader.ReadRuleValue<bool>(iniName, WARHEAD_DESTORY_TIBERIUM_RULE, IsTiberiumDestroyer);
 
 	for (auto armorType = ARMOR_FIRST; armorType < ARMOR_COUNT; armorType++)
 	{
 		auto modifierRule = Map_Armor_Modifier_To_Warhead_Rule(armorType);
-		auto defaultModifierValue = warhead->Modifier[armorType];
-		auto modifierRuleValue = NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, modifierRule, defaultModifierValue);
+		auto defaultModifierValue = Modifier[armorType];
+		auto modifierRuleValue = reader.ReadRuleValue<unsigned int>(iniName, modifierRule, defaultModifierValue);
 
-		warhead->Modifier[armorType] = modifierRuleValue;
+		Modifier[armorType] = modifierRuleValue;
 
 		LogTrace("Warhead '%s' armor modifier: %s=%u (default=%u)", iniName, modifierRule, modifierRuleValue, defaultModifierValue);
 	}

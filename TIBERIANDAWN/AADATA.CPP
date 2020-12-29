@@ -360,7 +360,14 @@ AircraftTypeClass::AircraftTypeClass(
 										houseListCsv,
 										primary,
 										secondary,
-						                armor)
+						                armor,
+										false,
+										ANIM_NONE,
+										WARHEAD_NONE,
+										0u,
+										false,
+										false,
+										true)
 {
 	IsRotorCustom = is_rotorcustom;
 	Type = airtype;
@@ -370,17 +377,17 @@ AircraftTypeClass::AircraftTypeClass(
 	IsRotorEquipped = is_rotorequipped;
 	ROT = rot;
 }
-void AircraftTypeClass::ReadAircraftRules(AircraftTypeClass* aircraft)
+void AircraftTypeClass::Read_Rules(IRulesIniReader& reader)
 {
-	auto iniName = aircraft->IniName;
+	auto iniName = Get_Rules_Name();
 
-	ReadObjectRules(aircraft);
-	ReadTechnoRules(aircraft, false, false, true);
+	ObjectTypeClass::Read_Rules(reader);
+	TechnoTypeClass::Read_Rules(reader);
 
-	aircraft->IsFixedWing = Read_Cant_Hover(iniName, aircraft->IsFixedWing);
-	aircraft->IsLandable = Read_Can_Land(iniName, aircraft->IsLandable);
-	aircraft->IsRotorEquipped = Read_Has_Rotor(iniName, aircraft->IsRotorEquipped);
-	aircraft->ROT = Read_Rate_Of_Turn(iniName, aircraft->ROT);
+	IsFixedWing = Read_Cant_Hover(iniName, IsFixedWing);
+	IsLandable = Read_Can_Land(iniName, IsLandable);
+	IsRotorEquipped = Read_Has_Rotor(iniName, IsRotorEquipped);
+	ROT = Read_Rate_Of_Turn(iniName, ROT);
 }
 
 void AircraftTypeClass::Add_Aircraft_Type(AircraftTypeClass* aircraftInstance)

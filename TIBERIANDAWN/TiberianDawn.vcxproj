@@ -426,6 +426,7 @@
     <ClInclude Include="MOUSE.H" />
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
+    <ClInclude Include="Nco.TiberianDawn\RulesInjector.h" />
     <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeConverter.h" />
     <ClInclude Include="Nco.TiberianDawn\UnitApi.h" />
     <ClInclude Include="NOSEQCON.H" />

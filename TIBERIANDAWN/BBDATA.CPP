@@ -620,32 +620,36 @@ BulletTypeClass::BulletTypeClass(
 	Range = range;
 }
 
-void BulletTypeClass::ReadBulletRules(BulletTypeClass* bullet)
+const char* BulletTypeClass::Get_Rules_Name()
 {
-	auto iniName = bullet->RulesName;
+	return RulesName;
+}
 
-	ReadObjectRules(bullet, iniName);
-	
-	bullet->FriendlyName = NcoRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, bullet->FriendlyName);
-	bullet->IsHigh = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, bullet->IsHigh);
-	bullet->IsAntiAircraft = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_ANTI_AIRCRAFT_RULE, bullet->IsAntiAircraft);
-	bullet->IsTranslucent = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_TRANSLUCENT_RULE, bullet->IsTranslucent);
-	bullet->IsArcing = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_ARCING_RULE, bullet->IsArcing);
-	bullet->IsHoming = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_HOMING_RULE, bullet->IsHoming);
-	bullet->IsDropping = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_DROPPING_RULE, bullet->IsDropping);
-	bullet->IsInvisible = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_INVISIBLE_RULE, bullet->IsInvisible);
-	bullet->IsProximityArmed = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_PROXIMITY_ARMED_RULE, bullet->IsProximityArmed);
-	bullet->IsFlameEquipped = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_FLAME_EQUIPPED_RULE, bullet->IsFlameEquipped);
-	bullet->IsFueled = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_FUELED_RULE, bullet->IsFueled);
-	bullet->IsFaceless = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_FACELESS_RULE, bullet->IsFaceless);
-	bullet->IsInaccurate = NcoRulesRuntime().ReadRuleValue<bool>(iniName, BULLET_INACCURATE_RULE, bullet->IsInaccurate);
+void BulletTypeClass::Read_Rules(IRulesIniReader& reader)
+{
+	auto iniName = Get_Rules_Name();
 
-	bullet->Warhead = NcoRulesRuntime().ReadRuleValue<WarheadType>(iniName, BULLET_WARHEAD_RULE, bullet->Warhead);
-	bullet->MaxSpeed = Read_Speed(iniName, bullet->MaxSpeed);
-	bullet->ROT = Read_Rate_Of_Turn(iniName, bullet->ROT);
-	bullet->Arming = NcoRulesRuntime().ReadRuleValue<int>(iniName, BULLET_ARMING_RULE, bullet->Arming);
-	bullet->Range = NcoRulesRuntime().ReadRuleValue<int>(iniName, BULLET_RANGE_RULE, bullet->Range);
+	ObjectTypeClass::Read_Rules(reader);
 
+	FriendlyName = reader.ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, FriendlyName);
+	IsHigh = reader.ReadRuleValue<bool>(iniName, BULLET_HIGH_RULE, IsHigh);
+	IsAntiAircraft = reader.ReadRuleValue<bool>(iniName, BULLET_ANTI_AIRCRAFT_RULE, IsAntiAircraft);
+	IsTranslucent = reader.ReadRuleValue<bool>(iniName, BULLET_TRANSLUCENT_RULE, IsTranslucent);
+	IsArcing = reader.ReadRuleValue<bool>(iniName, BULLET_ARCING_RULE, IsArcing);
+	IsHoming = reader.ReadRuleValue<bool>(iniName, BULLET_HOMING_RULE, IsHoming);
+	IsDropping = reader.ReadRuleValue<bool>(iniName, BULLET_DROPPING_RULE, IsDropping);
+	IsInvisible = reader.ReadRuleValue<bool>(iniName, BULLET_INVISIBLE_RULE, IsInvisible);
+	IsProximityArmed = reader.ReadRuleValue<bool>(iniName, BULLET_PROXIMITY_ARMED_RULE, IsProximityArmed);
+	IsFlameEquipped = reader.ReadRuleValue<bool>(iniName, BULLET_FLAME_EQUIPPED_RULE, IsFlameEquipped);
+	IsFueled = reader.ReadRuleValue<bool>(iniName, BULLET_FUELED_RULE, IsFueled);
+	IsFaceless = reader.ReadRuleValue<bool>(iniName, BULLET_FACELESS_RULE, IsFaceless);
+	IsInaccurate = reader.ReadRuleValue<bool>(iniName, BULLET_INACCURATE_RULE, IsInaccurate);
+
+	Warhead = reader.ReadRuleValue<WarheadType>(iniName, BULLET_WARHEAD_RULE, Warhead);
+	MaxSpeed = (MPHType) reader.ReadRuleValue<unsigned int>(iniName, SPEED_RULE, MaxSpeed);
+	ROT = (unsigned) reader.ReadRuleValue<unsigned int>(iniName, RATE_OF_TURN_RULE, ROT);
+	Arming = reader.ReadRuleValue<int>(iniName, BULLET_ARMING_RULE, Arming);
+	Range = reader.ReadRuleValue<int>(iniName, BULLET_RANGE_RULE, Range);
 }
 
 void BulletTypeClass::Add_Bullet_Type(BulletTypeClass* bulletInstance)

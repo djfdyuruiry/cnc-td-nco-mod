@@ -1475,22 +1475,22 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 	return By_Type(type);
 }
 
-void InfantryTypeClass::ReadInfantryRules(InfantryTypeClass* infantry)
+void InfantryTypeClass::Read_Rules(IRulesIniReader& reader)
 {
-	auto iniName = infantry->IniName;
+	auto iniName = Get_Rules_Name();
 
-	ReadObjectRules(infantry);
-	ReadTechnoRules(infantry, true, false, false);
+	ObjectTypeClass::Read_Rules(reader);
+	TechnoTypeClass::Read_Rules(reader);
 
-	infantry->IsCrushable = Read_Is_Crushable(iniName, infantry->IsCrushable);
-	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
-	infantry->IsCrawling = Read_Is_Crawling(iniName, infantry->IsCrawling);
-	infantry->IsCapture = Read_Can_Capture_Buildings(iniName, infantry->IsCapture);
-	infantry->IsFraidyCat = Read_Is_Fraidy_Cat(iniName, infantry->IsFraidyCat);
-	infantry->IsCivilian = Read_Is_Civilian(iniName, infantry->IsCivilian);
-	infantry->IsAvoidingTiberium = Read_Avoids_Tiberium(iniName, infantry->IsAvoidingTiberium);
-	infantry->IsImmuneToTiberium = NcoRulesRuntime().ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
-	infantry->HasC4Charges = NcoRulesRuntime().ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
+	IsCrushable = reader.ReadRuleValue<bool>(iniName, CRUSHABLE_RULE, IsCrushable);
+	IsFemale = reader.ReadRuleValue<bool>(iniName, FEMALE_RULE, IsFemale);
+	IsCrawling = reader.ReadRuleValue<bool>(iniName, CRAWLING_RULE, IsCrawling);
+	IsCapture = reader.ReadRuleValue<bool>(iniName, CAN_CAPTURE_RULE, IsCapture);
+	IsFraidyCat = reader.ReadRuleValue<bool>(iniName, FRAIDY_CAT_RULE, IsFraidyCat);
+	IsCivilian = reader.ReadRuleValue<bool>(iniName, CIVILIAN_RULE, IsCivilian);
+	IsAvoidingTiberium = reader.ReadRuleValue<bool>(iniName, AVOIDS_TIBERIUM_RULE, IsAvoidingTiberium);
+	IsImmuneToTiberium = reader.ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, IsImmuneToTiberium);
+	HasC4Charges = reader.ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, HasC4Charges);
 }
 
 void InfantryTypeClass::Add_Infantry_Type(InfantryTypeClass* infantryInstance)
@@ -1552,7 +1552,7 @@ InfantryTypeClass::InfantryTypeClass(
 							scenario, risk, reward, ownable, houseListCsv,
 							primary, secondary,
 							ARMOR_NONE,
-							explodesUponDeath, deathExplosionAnimation, deathExplosionWarhead, deathExplosionDamage)
+							explodesUponDeath, deathExplosionAnimation, deathExplosionWarhead, deathExplosionDamage, true)
 {
 	Type = type;
 	FireLaunch = firelaunch;
