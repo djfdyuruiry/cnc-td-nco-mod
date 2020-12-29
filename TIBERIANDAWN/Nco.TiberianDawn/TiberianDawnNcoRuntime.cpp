@@ -154,6 +154,8 @@ void TiberianDawnNcoRuntime::Initialise()
 
 void TiberianDawnNcoRuntime::InjectRules()
 {
+    LogInfo("Injecting rules into Tiberian Dawn game engine");
+
     auto& rulesInjector = RulesInjector::Build(rulesRuntime.GetRules(), *rulesReader);
 
     rulesInjector.InjectTypeRules<WarheadType, WarheadTypeClass>(WARHEAD_FIRST, WARHEAD_COUNT);

@@ -31,11 +31,6 @@ protected:
 		for (auto i = 0u; i < ARMOR_COUNT; i++)
 		{
 			newModifier[i] = newType->Modifier[i];
-
-			auto a = newModifier[i];
-			auto b = newType->Modifier[i];
-
-			LogTrace("%u -> %u", a, b);
 		}
 
 		newType->Modifier = newModifier;

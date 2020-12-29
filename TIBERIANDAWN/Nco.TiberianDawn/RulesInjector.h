@@ -8,14 +8,17 @@
 #include "rules_ini_ai.h"
 #include "rules_ini_iq.h"
 #include "TiberianDawnRuleSectionBuilder.h"
+#include "TiberianDawnTypeConverter.h"
 
 class RulesInjector
 {
 private:
 	IRulesIni& rules;
     IRulesIniReader& rulesReader;
-
-	RulesInjector(IRulesIni& rules, IRulesIniReader& rulesReader) : rules(rules), rulesReader(rulesReader)
+ 
+	RulesInjector(IRulesIni& rules, IRulesIniReader& rulesReader) :
+        rules(rules),
+        rulesReader(rulesReader)
 	{
 	}
 
@@ -33,8 +36,11 @@ public:
 		for (auto t = first; t < count; t++)
 		{
 			auto& instance = (U&)U::As_Reference(t);
+            auto typeName = instance.Get_Rules_Name();
 
-			rules << TiberianDawnRuleSectionBuilder::BuildSectionForType<U>(instance.Get_Rules_Name());
+            LogDebug("Injecting rules for type: %s", typeName);
+
+			rules << TiberianDawnRuleSectionBuilder::BuildSectionForType<U>(typeName);
 
 			instance.Read_Rules(rulesReader);
 		}
@@ -42,6 +48,8 @@ public:
 
     void InjectIqRules(RulesClass rulesClassInstance)
     {
+        LogDebug("Injecting IQ rules");
+
         rulesClassInstance.MaxIQ = rulesReader.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, MAX_IQ_RULE);
         rulesClassInstance.IQSuperWeapons = rulesReader.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_SUPER_WEAPONS_RULE);
         rulesClassInstance.IQProduction = rulesReader.ReadRuleValue<unsigned int>(IQ_SECTION_NAME, IQ_PRODUCTION_RULE);
@@ -57,6 +65,8 @@ public:
 
     void InjectAiRules(RulesClass rulesClassInstance)
     {
+        LogDebug("Injecting AI rules");
+
         rulesClassInstance.AttackInterval = rulesReader.ReadRuleValue<unsigned int>(AI_SECTION_NAME, ATTACK_INTERVAL_RULE);
         rulesClassInstance.BaseSizeAdd = rulesReader.ReadRuleValue<unsigned int>(AI_SECTION_NAME, BASE_SIZE_ADD_RULE);
         rulesClassInstance.PowerSurplus = rulesReader.ReadRuleValue<unsigned int>(AI_SECTION_NAME, POWER_SURPLUS_RULE);
