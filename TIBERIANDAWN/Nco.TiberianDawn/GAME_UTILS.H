@@ -12,4 +12,4 @@ void RevealEntireMapToPlayer();
 
 void HideEntireMapFromPlayer();
 
-bool ProcessGameUiMessage(GameUiMessage uiMessage);
+bool ProcessGameUiMessage(GameUiMessage& uiMessage);

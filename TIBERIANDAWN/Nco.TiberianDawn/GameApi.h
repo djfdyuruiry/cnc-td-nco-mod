@@ -15,71 +15,65 @@
 #include "rules_ini_superweapon.h"
 #include "TiberianDawnNcoRuntime.h"
 
+#define GAME_API_METHOD(f, fl) static int f(lua_State* lua) \
+    { \
+        return LUA_METHOD_PROXY(GameApi, fl); \
+    }
+
 class GameApi : public LuaApi
 {
 private:
-    static ResultWithValue<HousesType>& ParseHouseTypeLua(
-        ILuaStateWrapper& lua,
-        int index,
-        const char* callingFunctionName
-    )
+    GAME_API_METHOD(ShowGameMessageProxy, ShowGameMessageLua)
+
+    static int HideMapLua(lua_State* _)
     {
-        auto& houseTypeStringResult = lua.ReadString(index);
-        auto houseTypeString = houseTypeStringResult.GetValue();
-        
-        delete &houseTypeStringResult;
+        LogTrace("HideMapLua called from Lua");
 
-        if (StringIsEmpty(houseTypeString))
-        {
-            return ResultWithValue<HousesType>::BuildWithError(
-                "%s parameter `houseName` was blank",
-                callingFunctionName
-            );
-        }
-
-        auto& houseTypeResult = NcoTypeConverter().Parse<HousesType>(houseTypeString);
-
-        if (houseTypeResult.IsErrorResult())
-        {
-            delete &houseTypeResult;
-
-            return ResultWithValue<HousesType>::BuildWithError(
-                "%s parameter `houseName` was not a valid house: %s",
-                callingFunctionName,
-                houseTypeString
-            );
-        }
-
-        return houseTypeResult;
-    }
-
-    static int ClearHouseMessagesLua(lua_State* _)
-    {
-        auto& lua = NcoLuaRuntime().GetState();
-        LogTrace("Lua_Clear_House_Messages called from Lua");
-
-        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
-        {
-            return 0;
-        }
-
-        auto& houseResult = ParseHouseTypeLua(lua, 1, "clearHouseMessages");
-
-        if (houseResult.IsErrorResult())
-        {
-            lua.RaiseError(houseResult.GetError());
-
-            delete &houseResult;
-
-            return 0;
-        }
-
-        ClearHouseMessages(houseResult.GetValue());
-        
-        delete &houseResult;
+        PushHideMapUiMessage();
 
         return 0;
     }
+
+    static int RevealMapLua(lua_State* _)
+    {
+        LogTrace("RevealMapLua called from Lua");
+
+        PushRevealMapUiMessage();
+
+        return 0;
+    }
+
+    static int RefreshMapLua(lua_State* _)
+    {
+        LogTrace("Lua_Refresh_Map called from Lua");
+
+        PushRefreshMapUiMessage();
+
+        return 0;
+    }
+
+    static int RefreshSidebarLua(lua_State* _)
+    {
+        LogTrace("Lua_Refresh_Sidebar called from Lua");
+
+        PushRefreshSidebarUiMessage();
+
+        return 0;
+    }
+
+    GAME_API_METHOD(GetPlayerHouse, GetPlayerBaseHouseLua)
+
+    GAME_API_METHOD(GetPlayerBaseHouse, GetPlayerBaseHouseLua)
+
+    GAME_API_METHOD(GetActiveHouses, GetActiveHousesLua)
+
+    GAME_API_METHOD(ModifiyHouseCredits, ModifiyHouseCreditsLua)
+
+    GAME_API_METHOD(EnableHouseSuperWeapon, EnableHouseSuperWeaponLua)
+
+    GAME_API_METHOD(ChargeHouseSuperWeapon, ChargeHouseSuperWeaponLua)
+
+    GAME_API_METHOD(DisableHouseSuperWeapon, DisableHouseSuperWeaponLua)
 
     static int ClearGameLoopMessagesLua(lua_State* _)
     {
@@ -95,7 +89,154 @@ private:
         return 0;
     }
 
-    static HouseClass* GetHouseByType(HousesType houseType)
+    GAME_API_METHOD(ClearHouseMessagesProxy, ClearHouseMessagesLua)
+
+    ResultWithValue<HousesType>& ParseHouseTypeLua(
+        ILuaStateWrapper& lua,
+        int index,
+        const char* callingFunctionName
+    )
+    {
+        auto& houseTypeStringResult = lua.ReadString(index);
+        auto houseTypeString = houseTypeStringResult.GetValue();
+
+        delete& houseTypeStringResult;
+
+        if (StringIsEmpty(houseTypeString))
+        {
+            return ResultWithValue<HousesType>::BuildWithError(
+                "%s parameter `houseName` was blank",
+                callingFunctionName
+            );
+        }
+
+        auto& houseTypeResult = NcoTypeConverter().Parse<HousesType>(houseTypeString);
+
+        if (houseTypeResult.IsErrorResult())
+        {
+            delete& houseTypeResult;
+
+            return ResultWithValue<HousesType>::BuildWithError(
+                "%s parameter `houseName` was not a valid house: %s",
+                callingFunctionName,
+                houseTypeString
+            );
+        }
+
+        return houseTypeResult;
+    }
+
+    int ShowGameMessageLua(ILuaStateWrapper& lua)
+    {
+        LogTrace("Lua_Show_Game_Message called from Lua");
+
+        auto& messageResult = lua.ReadString(1);
+
+        auto message = messageResult.GetValue();
+        auto& durationInSecondsResult = lua.ReadDouble(2);
+
+        delete& messageResult;
+
+        if (durationInSecondsResult.GetValue() < 0.1)
+        {
+            delete& durationInSecondsResult;
+
+            lua.RaiseError("showGameMessage parameter `durationInSeconds` must be equal to or greater than 0.1 (100ms)");
+
+            return 0;
+        }
+
+        PushShowNotificationUiMessage(message, durationInSecondsResult.GetValue());
+
+        delete& durationInSecondsResult;
+
+        return 0;
+    }
+
+    int GetActiveHousesLua(ILuaStateWrapper& lua)
+    {
+        LogTrace("Lua_Get_Active_Houses called from Lua");
+
+        auto activeHousesCount = Houses.Count();
+        auto houses = std::vector<const char*>();
+
+        for (auto i = 0; i < activeHousesCount; i++)
+        {
+            auto house = Houses.Raw_Ptr(i);
+
+            houses.push_back(
+                NcoTypeConverter().ToStringOrDefault(house->Class->House)
+            );
+        }
+
+        lua.WriteArray(houses);
+
+        return 1;
+    }
+
+    int GetPlayerBaseHouseLua(ILuaStateWrapper& lua)
+    {
+        LogTrace("GetPlayerBaseHouseLua called from Lua");
+
+        auto playerBaseHouse = NcoTypeConverter().ToStringOrDefault(PlayerPtr->ActLike);
+
+        lua.WriteString(playerBaseHouse);
+
+        return 1;
+    }
+
+    int GetPlayerHouseLua(ILuaStateWrapper& lua)
+    {
+        LogTrace("GetPlayerHouseLua called from Lua");
+
+        auto playerHouse = NcoTypeConverter().ToStringOrDefault(PlayerPtr->Class->House);
+
+        lua.WriteString(playerHouse);
+
+        return 1;
+    }
+
+    int ModifiyHouseCreditsLua(ILuaStateWrapper& lua)
+    {
+        LogTrace("Lua_Modify_House_Credits called from Lua");
+
+        auto& houseTypeResult = ParseHouseTypeLua(lua, 1, "modifyHouseCredits");
+
+        if (houseTypeResult.IsErrorResult())
+        {
+            lua.RaiseError(houseTypeResult);
+
+            delete& houseTypeResult;
+
+            return 0;
+        }
+
+        auto houseType = houseTypeResult.GetValue();
+
+        delete& houseTypeResult;
+
+        auto& creditsModifierResult = lua.ReadInteger(2);
+
+        auto house = GetHouseByType(houseType);
+        auto creditsModifier = creditsModifierResult.GetValue();
+
+        delete& creditsModifierResult;
+
+        if (house == NULL)
+        {
+            lua.RaiseError("House '%s' is not in the current game", NcoTypeConverter().ToStringOrDefault(houseType));
+
+            return 0;
+        }
+
+        house->Credits += creditsModifier;
+
+        lua.WriteInteger(house->Credits);
+
+        return 1;
+    }
+
+    HouseClass* GetHouseByType(HousesType houseType)
     {
         for (auto i = 0; i < Houses.Count(); i++)
         {
@@ -110,7 +251,7 @@ private:
         return NULL;
     }
 
-    static ResultWithValue<SuperweaponType>& ParseSuperweaponTypeLua(ILuaStateWrapper& lua, int index, const char* callingFunctionName)
+    ResultWithValue<SuperweaponType>& ParseSuperweaponTypeLua(ILuaStateWrapper& lua, int index, const char* callingFunctionName)
     {
         auto& superWeaponNameResult = lua.ReadString(index);
         auto name = superWeaponNameResult.GetValue();
@@ -156,18 +297,13 @@ private:
         return ResultWithValue<SuperweaponType>::BuildWithValue(weapon);
     }
 
-    static int SendHouseSuperWeaponMessageLua(
+    int SendHouseSuperWeaponMessageLua(
+        ILuaStateWrapper& lua,
         const char* callingFunctionName,
         const char* callingLuaFunctionName,
         SuperweaponMessageType messageType
     ) {
-        auto& lua = NcoLuaRuntime().GetState();
         LogTrace("%s called from Lua", callingFunctionName);
-
-        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
-        {
-            return 0;
-        }
 
         auto& houseResult = ParseHouseTypeLua(lua, 1, callingLuaFunctionName);
 
@@ -206,7 +342,7 @@ private:
             oneTime = lua.ReadBool(3).GetValue();
         }
 
-        HouseMessage message{};
+        auto& message = HouseMessage{};
 
         message.oneTime = oneTime;
         message.superweapon = superweapon;
@@ -217,197 +353,62 @@ private:
         return 0;
     }
 
-    static int DisableHouseSuperWeaponLua(lua_State* _) {
+    int EnableHouseSuperWeaponLua(ILuaStateWrapper& lua) {
         return SendHouseSuperWeaponMessageLua(
-            "DisableHouseSuperWeaponLua",
-            "disableSuperWeaponForHouse",
-            DISABLE_SUPERWEAPON
-        );
-    }
-
-    static int ChargeHouseSuperWeaponLua(lua_State* _) {
-        return SendHouseSuperWeaponMessageLua(
-            "ChargeHouseSuperWeaponLua",
-            "chargeSuperWeaponForHouse",
-            CHARGE_SUPERWEAPON
-        );
-    }
-
-    static int EnableHouseSuperWeaponLua(lua_State* _) {
-        return SendHouseSuperWeaponMessageLua(
+            lua,
             "EnableHouseSuperWeaponLua",
             "enableSuperWeaponForHouse",
             ENABLE_SUPERWEAPON
         );
     }
 
-    static int ModifiyHouseCreditsLua(lua_State* _)
+    int ChargeHouseSuperWeaponLua(ILuaStateWrapper& lua) {
+        return SendHouseSuperWeaponMessageLua(
+            lua,
+            "ChargeHouseSuperWeaponLua",
+            "chargeSuperWeaponForHouse",
+            CHARGE_SUPERWEAPON
+        );
+    }
+
+    int DisableHouseSuperWeaponLua(ILuaStateWrapper& lua) {
+        return SendHouseSuperWeaponMessageLua(
+            lua,
+            "DisableHouseSuperWeaponLua",
+            "disableSuperWeaponForHouse",
+            DISABLE_SUPERWEAPON
+        );
+    }
+
+    int ClearHouseMessagesLua(ILuaStateWrapper& lua)
     {
-        auto& lua = NcoLuaRuntime().GetState();
-        LogTrace("Lua_Modify_House_Credits called from Lua");
+        LogTrace("Lua_Clear_House_Messages called from Lua");
 
-        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
+        auto& houseResult = ParseHouseTypeLua(lua, 1, "clearHouseMessages");
+
+        if (houseResult.IsErrorResult())
         {
-            return 0;
-        }
+            lua.RaiseError(houseResult.GetError());
 
-        auto& houseTypeResult = ParseHouseTypeLua(lua, 1, "modifyHouseCredits");
-
-        if (houseTypeResult.IsErrorResult())
-        {
-            lua.RaiseError(houseTypeResult);
-
-            delete &houseTypeResult;
-
-            return 0;
-        }
-
-        auto houseType = houseTypeResult.GetValue();
-
-        delete &houseTypeResult;
-
-        auto& creditsModifierResult = lua.ReadInteger(2);
-
-        auto house = GetHouseByType(houseType);
-        auto creditsModifier = creditsModifierResult.GetValue();
-
-        delete &creditsModifierResult;
-
-        if (house == NULL)
-        {
-            lua.RaiseError("House '%s' is not in the current game", NcoTypeConverter().ToStringOrDefault(houseType));
+            delete& houseResult;
 
             return 0;
         }
 
-        house->Credits += creditsModifier;
+        ClearHouseMessages(houseResult.GetValue());
 
-        lua.WriteInteger(house->Credits);
-
-        return 1;
-    }
-
-    static int Lua_Get_Active_Houses(lua_State* _)
-    {
-        auto& lua = NcoLuaRuntime().GetState();
-        LogTrace("Lua_Get_Active_Houses called from Lua");
-
-        auto activeHousesCount = Houses.Count();
-        auto houses = std::vector<const char*>();
-
-        for (auto i = 0; i < activeHousesCount; i++)
-        {
-            auto house = Houses.Raw_Ptr(i);
-
-            houses.push_back(
-                NcoTypeConverter().ToStringOrDefault(house->Class->House)
-            );
-        }
-
-        lua.WriteArray(houses);
-
-        return 1;
-    }
-
-    static int GetPlayerBaseHouseLua(lua_State* _)
-    {
-        auto& lua = NcoLuaRuntime().GetState();
-        LogTrace("GetPlayerBaseHouseLua called from Lua");
-
-        auto playerBaseHouse = NcoTypeConverter().ToStringOrDefault(PlayerPtr->ActLike);
-
-        lua.WriteString(playerBaseHouse);
-
-        return 1;
-    }
-
-    static int GetPlayerHouseLua(lua_State* _)
-    {
-        auto& lua = NcoLuaRuntime().GetState();
-        LogTrace("GetPlayerHouseLua called from Lua");
-
-        auto playerHouse = NcoTypeConverter().ToStringOrDefault(PlayerPtr->Class->House);
-
-        lua.WriteString(playerHouse);
-
-        return 1;
-    }
-
-    static int HideMapLua(lua_State* _)
-    {
-        LogTrace("HideMapLua called from Lua");
-
-        PushHideMapUiMessage();
+        delete& houseResult;
 
         return 0;
     }
 
-    static int RevealMapLua(lua_State* _)
-    {
-        LogTrace("RevealMapLua called from Lua");
-
-        PushRevealMapUiMessage();
-
-        return 0;
-    }
-
-    static int RefreshMapLua(lua_State* _)
-    {
-        LogTrace("Lua_Refresh_Map called from Lua");
-
-        PushRefreshMapUiMessage();
-
-        return 0;
-    }
-
-    static int RefreshSidebarLua(lua_State* _)
-    {
-        LogTrace("Lua_Refresh_Sidebar called from Lua");
-
-        PushRefreshSidebarUiMessage();
-
-        return 0;
-    }
-
-    static int ShowGameMessageLua(lua_State* _)
-    {
-        auto& lua = NcoLuaRuntime().GetState();
-        LogTrace("Lua_Show_Game_Message called from Lua");
-
-        if (!LuaObjectUtils::ValidateCurrentFunctionParameters(lua))
-        {
-            return 0;
-        }
-
-        auto& messageResult = lua.ReadString(1);
-
-        auto message = messageResult.GetValue();
-        auto& durationInSecondsResult = lua.ReadDouble(2);
-
-        delete &messageResult;
-
-        if (durationInSecondsResult.GetValue() < 0.1)
-        {
-            delete &durationInSecondsResult;
-
-            lua.RaiseError("showGameMessage parameter `durationInSeconds` must be equal to or greater than 0.1 (100ms)");
-
-            return 0;
-        }
-
-        PushShowNotificationUiMessage(message, durationInSecondsResult.GetValue());
-
-        delete &durationInSecondsResult;
-
-        return 0;
-    }
 
     GameApi()
     {
         WithName("Game");
         WithDescription("Game info and control functions");
 
-        WithFunction("showGameMessage", ShowGameMessageLua, [](LuaFunctionInfo& f) {
+        WithMethod("showGameMessage", this, ShowGameMessageProxy, [](LuaFunctionInfo& f) {
             f.WithDescription("Show the player an in-game message")
              .WithParameter("message", [](LuaVariableInfo& p) {
                 p.WithType(LuaType::String);
@@ -430,7 +431,7 @@ private:
             f.WithDescription("Hide any areas of the map without player units/buildings from the player. Note: this function is async");
         });
 
-        WithFunction("getPlayerHouse", GetPlayerHouseLua, [](LuaFunctionInfo& f) {
+        WithMethod("getPlayerHouse", this, GetPlayerHouse, [](LuaFunctionInfo& f) {
             f.WithDescription("Get the name of the current player house")
              .WithReturnValue("houseName", [](LuaVariableInfo& p) {
                 p.WithDescription("The house name of the player (BADGUY, GOODGUY etc.)")
@@ -438,7 +439,7 @@ private:
              });
         });
 
-        WithFunction("getPlayerBaseHouse", GetPlayerBaseHouseLua, [](LuaFunctionInfo& f) {
+        WithMethod("getPlayerBaseHouse", this, GetPlayerBaseHouse, [](LuaFunctionInfo& f) {
             f.WithDescription("Get the name of the base house for the current player house. Every house has a base house which it acts like, usually NOD or GDI.")
              .WithReturnValue("baseHouseName", [](LuaVariableInfo& p) {
                 p.WithDescription("The base house name of the player (BADGUY, GOODGUY etc.)")
@@ -446,7 +447,7 @@ private:
              });
         });
 
-        WithFunction("getActiveHouses", Lua_Get_Active_Houses, [](LuaFunctionInfo& f) {
+        WithMethod("getActiveHouses", this, GetActiveHouses, [](LuaFunctionInfo& f) {
             f.WithDescription("Get all houses that are active in the current scenario")
              .WithReturnValue("activeHouseNames", [](LuaVariableInfo& p) {
                 p.WithDescription("List of strings, containing the names of active houses.")
@@ -454,7 +455,7 @@ private:
              });
         });
 
-        WithFunction("modifyHouseCredits", ModifiyHouseCreditsLua, [](LuaFunctionInfo& f) {
+        WithMethod("modifyHouseCredits", this, ModifiyHouseCredits, [](LuaFunctionInfo& f) {
             f.WithDescription("Write a info line to the log file")
              .WithParameter("houseName", [](LuaVariableInfo& p) {
                 p.WithDescription("Name of the house to modify")
@@ -466,7 +467,7 @@ private:
              });
         });
 
-        WithFunction("enableSuperweaponForHouse", EnableHouseSuperWeaponLua, [](LuaFunctionInfo& f) {
+        WithMethod("enableSuperweaponForHouse", this, EnableHouseSuperWeapon, [](LuaFunctionInfo& f) {
             f.WithDescription("Enable a superweapon for a given house. Note: this function is async")
              .WithParameter("houseName", [](LuaVariableInfo& p) {
                 p.WithDescription("Name of the house to enable superweapon for")
@@ -478,7 +479,7 @@ private:
              });
         });
 
-        WithFunction("chargeSuperweaponForHouse", ChargeHouseSuperWeaponLua, [](LuaFunctionInfo& f) {
+        WithMethod("chargeSuperweaponForHouse", this, ChargeHouseSuperWeapon, [](LuaFunctionInfo& f) {
             f.WithDescription("Charge a superweapon for a given house. Note: this function is async")
              .WithParameter("houseName", [](LuaVariableInfo& p) {
                 p.WithDescription("Name of the house to charge superweapon for")
@@ -490,7 +491,7 @@ private:
              });
         });
 
-        WithFunction("disableSuperweaponForHouse", DisableHouseSuperWeaponLua, [](LuaFunctionInfo& f) {
+        WithMethod("disableSuperweaponForHouse", this, DisableHouseSuperWeapon, [](LuaFunctionInfo& f) {
             f.WithDescription("Disable a superweapon for a given house. Note: this function is async")
              .WithParameter("houseName", [](LuaVariableInfo& p) {
                 p.WithDescription("Name of the house to disable superweapon for")
@@ -510,7 +511,7 @@ private:
             f.WithDescription("Cancel any pending async game events (on game tick etc.)");
         });
 
-        WithFunction("clearHouseMessages", ClearHouseMessagesLua, [](LuaFunctionInfo& f) {
+        WithMethod("clearHouseMessages", this, ClearHouseMessagesProxy, [](LuaFunctionInfo& f) {
             f.WithDescription("Cancel any pending events for a given house (enable/disable superweapon etc.)")
              .WithParameter("houseName", [](LuaVariableInfo& p) {
                  p.WithDescription("Name of the house to cancelevents for")
