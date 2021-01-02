@@ -1,7 +1,8 @@
 #pragma once
 
+#include <Result.h>
+
 #include "ILuaValueValidator.h"
-#include "LuaResult.h"
 
 template<class T> class PrimitiveTypeValidator : public ILuaValueValidator
 {
@@ -16,7 +17,7 @@ public:
 		return *(new PrimitiveTypeValidator());
 	}
 
-	LuaResult& IsValid(ILuaStateWrapper& lua, int stackIndex)
+	Result& IsValid(ILuaStateWrapper& lua, int stackIndex)
 	{
 		auto isValid = false;
 		const char* error;
@@ -52,12 +53,12 @@ public:
 			error = "C++ type not matched for lua type validation";
 		}
 
-		if (isValid)
+		if (!isValid)
 		{
-			return LuaResult::Build();
+			return Result::BuildWithError(error);
 		}
 
-		return LuaResult::BuildWithError(error);
+		return Result::Build();
 	}
 
 };

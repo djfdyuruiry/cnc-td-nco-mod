@@ -1,8 +1,9 @@
 #pragma once
 
 #include <IRulesIniSection.h>
-#include <RuleSectionApi.h>
-#include <LuaRepl.h>
+#include <LuaReplThread.h>
+#include <RulesApi.h>
+#include <utils.h>
 
 #include "../FUNCTION.H"
 
@@ -18,6 +19,7 @@
 #include "InfantryTypeMod.h"
 #include "InfoApi.h"
 #include "lua_events.h"
+#include "RulesInjector.h"
 #include "TiberianDawnNcoRuntime.h"
 #include "UnitApi.h"
 #include "UnitTypeMod.h"
@@ -31,16 +33,11 @@
         .GetRulesRuntime() \
         .ReadRuleValue<unsigned int>(key);
 
-#define ReadTypeCountLambda(key) []() { return ReadTypeCount(*key); }
+#define ReadTypeCountLambda(key) []() { return ReadTypeCount(key); }
 
 template<class T> static void RegisterApi(ILuaRuntime& luaRuntime)
 {
     luaRuntime.RegisterApi(T::Build());
-}
-
-template<class T> void RegisterApi(ILuaRuntime& luaRuntime, IRulesIniSection& ruleInfo)
-{
-    luaRuntime.RegisterApi(T::Build(ruleInfo));
 }
 
 template<class T> void RegisterApi(ILuaRuntime& luaRuntime, IRulesIniSection& ruleInfo, std::function<int(void)> getCount)
@@ -55,7 +52,7 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
 
     if (loadFailed)
     {
-        LogError("Loading NCO lua library failed: %s", loadResult.GetError());
+        ShowError("Loading NCO lua library failed: %s", loadResult.GetError());
     }
 
     delete &loadResult;
@@ -63,16 +60,12 @@ static bool LoadNcoLuaLib(ILuaRuntime& luaRuntime)
     return !loadFailed;
 }
 
-bool TiberianDawnNcoRuntime::InitialiseLuaApi()
+bool TiberianDawnNcoRuntime::InitialiseLuaCppApi()
 {
     LogDebug("Initialising Lua API functions");
 
-    auto ncoLibLoadResult = LoadNcoLuaLib(luaRuntime);
-
-    RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetNcoRules());
-    RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetEnhancementRules());
-    RegisterApi<RuleSectionApi>(luaRuntime, rulesInfo.GetGameRules());
-
+    luaRuntime.RegisterApi(RulesApi::Build(rulesRuntime));
+    
     RegisterApi<InfantryApi>(
         luaRuntime,
         rulesInfo.GetInfantryRules(),
@@ -114,12 +107,12 @@ bool TiberianDawnNcoRuntime::InitialiseLuaApi()
 
     luaRuntime.RegisterApi(InfoApi::Build(luaRuntime));
 
-    return ncoLibLoadResult;
+    return true;
 }
 
-bool TiberianDawnNcoRuntime::InitialiseLuaEvents()
+bool TiberianDawnNcoRuntime::InitialiseLuaNativeApi()
 {
-    return InitialiseEvents();
+    return LoadNcoLuaLib(luaRuntime);
 }
 
 void TiberianDawnNcoRuntime::RegisterMods()
@@ -147,35 +140,53 @@ void TiberianDawnNcoRuntime::RegisterThreads()
         return;
     }
 
-    #ifndef TEST_CONSOLE
     StartConsoleOutput();
-    RegisterThread(LuaRepl::Build(luaRuntime));
-    #endif
+    RegisterThread(LuaReplThread::Build(luaRuntime.GetState()));
 }
 
 void TiberianDawnNcoRuntime::Initialise()
 {
-    InitaliseTiberianDawnRuleKeys();
     RegisterTiberianDawnRuleTypes();
 
     NcoRuntime::Initialise();
 }
 
+void TiberianDawnNcoRuntime::InjectRules()
+{
+    LogInfo("Injecting rules into Tiberian Dawn game engine");
+
+    auto& rulesInjector = RulesInjector::Build(rulesRuntime.GetRules(), *rulesReader);
+
+    rulesInjector.InjectTypeRules<WarheadType, WarheadTypeClass>(WARHEAD_FIRST, WARHEAD_COUNT);
+    rulesInjector.InjectTypeRules<BulletType, BulletTypeClass>(BULLET_FIRST, BULLET_COUNT);
+    rulesInjector.InjectTypeRules<WeaponType, WeaponTypeClass>(WEAPON_FIRST, WEAPON_COUNT);
+    rulesInjector.InjectTypeRules<InfantryType, InfantryTypeClass>(INFANTRY_FIRST, INFANTRY_COUNT);
+    rulesInjector.InjectTypeRules<UnitType, UnitTypeClass>(UNIT_FIRST, UNIT_COUNT);
+    rulesInjector.InjectTypeRules<AircraftType, AircraftTypeClass>(AIRCRAFT_FIRST, AIRCRAFT_COUNT);
+    rulesInjector.InjectTypeRules<StructType, BuildingTypeClass>(STRUCT_FIRST, STRUCT_COUNT);
+
+    rulesInjector.InjectAiRules(Rule);
+    rulesInjector.InjectIqRules(Rule);
+
+    delete &rulesInjector;
+
+    FactoryClass::STEP_COUNT = rulesRuntime.ReadRuleValue<unsigned int>(TOTAL_PRODUCTION_STEPS_RULE_KEY);
+}
+
 bool TiberianDawnNcoRuntime::InternalShutdown()
 {
+    auto result = NcoRuntime::InternalShutdown();
+    
     if (
         rulesRuntime.LuaIsEnabled()
         && LuaInitWasSuccessful()
         && rulesRuntime.LuaConsoleIsEnabled()
         )
     {
-        #ifndef TEST_CONSOLE
-        // TODO: fix if window closed during a mission that this is not called
         StopConsoleOutput();
-        #endif
     }
 
-    return NcoRuntime::InternalShutdown();
+    return result;
 }
 
 TiberianDawnNcoRuntime* TiberianDawnNcoRuntime::INSTANCE = NULL;
@@ -205,9 +216,15 @@ void TiberianDawnNcoRuntime::Shutdown()
     }
 
     delete INSTANCE;
+    INSTANCE = NULL;
 }
 
 TiberianDawnRulesInfo& TiberianDawnNcoRuntime::GetRulesInfo()
 {
     return rulesInfo;
+}
+
+TiberianDawnTypeConverter& TiberianDawnNcoRuntime::GetTypeConverter()
+{
+    return typeConverter;
 }

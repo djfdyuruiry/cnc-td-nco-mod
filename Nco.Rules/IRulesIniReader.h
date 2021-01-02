@@ -38,7 +38,6 @@ public:
 
 		auto ruleType = rule.GetType();
 
-
 		if (ruleType == STRING_RULE)
 		{
 			rule.SetValue(
@@ -94,7 +93,7 @@ public:
 
 	template<class T> T ReadRuleValue(SectionName section, RuleName ruleName)
 	{
-		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
+		auto& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
 
 		auto ruleValue = ReadRuleValue<T>(key);
 
@@ -105,7 +104,7 @@ public:
 
 	template<class T> T ReadRuleValue(SectionName section, RuleName ruleName, T defaultValue)
 	{
-		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
+		auto& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
 
 		RulesIniRule& rule = GetRule(key);
 

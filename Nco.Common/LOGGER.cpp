@@ -1,4 +1,3 @@
-#include <shlobj.h>
 #include <string>
 #include <windows.h>
 
@@ -7,55 +6,20 @@
 #include "strings.h"
 #include "utils.h"
 
+const char* Logger::LOG_FORMAT = "%02d-%02d-%04d %02d:%02d:%02d.%03d - %s %s\n";
+bool Logger::LOGGER_DISABLED = true;
 Logger* Logger::INSTANCE = NULL;
-const char* Logger::LOG_FORMAT = NULL;
-
-void Logger::LoadDefaultLogFilePath()
-{
-#ifdef TEST_CONSOLE
-	logFilePath = strdup("log\\nco.log");
-#else
-	auto documentsPath = AllocateString(MAX_PATH);
-	auto result = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, documentsPath);
-
-	if (FAILED(result))
-	{
-		ShowError("Failed to read user documents path, logging to file will be disabled");
-		failedToOpenLogFile = true;
-
-		return;
-	}
-
-	auto cncPath = FormatString("%s\\CnCRemastered", MAX_PATH, documentsPath);
-
-	delete documentsPath;
-
-	if (!FileUtils::IsDirectory(cncPath))
-	{
-		failedToOpenLogFile = true;
-
-		LogError("CNC Remastered document path has not been created yet, logging to file will be disabled. Path: %s", cncPath);
-
-		delete cncPath;
-
-		return;
-	}
-
-	logFilePath = FormatString("%s\\nco.log", MAX_PATH, cncPath);
-
-	delete cncPath;
-#endif	
-}
 
 void Logger::OpenLogFile()
 {
-	if (Win32HandleIsValid(logFileHandle) || failedToOpenLogFile) {
+	if (Win32HandleIsValid(logFileHandle) || failedToOpenLogFile)
+	{
 		return;
 	}
 
 	if (StringIsEmpty(logFilePath))
 	{
-		LoadDefaultLogFilePath();
+		logFilePath = strdup("log\\nco.log");
 	}
 
 	bool errorOccurred = false;
@@ -67,22 +31,25 @@ void Logger::OpenLogFile()
 
 		WithWin32ErrorMessage([&](auto e) {
 			ShowError("Failed to close handle for log file '%s': %s", logFilePath, e);
-			});
+		});
 	}
 }
 
 void Logger::CloseLogFileIfOpen()
 {
-	if (Win32HandleIsValid(logFileHandle))
+	if (!Win32HandleIsValid(logFileHandle))
 	{
-		LogDebug("Closing handle for log file: %s", logFilePath);
+		logFileHandle = NULL;
+		return;
 	}
+
+	LogDebug("Closing handle for log file: %s", logFilePath);
 
 	if (!CloseWin32HandleIfValid(logFileHandle))
 	{
 		WithWin32ErrorMessage([&](auto e) {
 			ShowError("Failed to close handle for log file '%s': %s", logFilePath, e);
-			});
+		});
 	}
 
 	logFileHandle = NULL;
@@ -92,12 +59,15 @@ Logger::~Logger()
 {
 	CloseLogFileIfOpen();
 
-	delete logFilePath;
+	if (logFilePath != NULL)
+	{
+		delete logFilePath;
+	}
 }
 
 void Logger::Log(LogLevel logLevel, const char* messageFormat, ...)
 {
-	if (logLevel > this->logLevel)
+	if (LOGGER_DISABLED || logLevel > this->logLevel)
 	{
 		return;
 	}

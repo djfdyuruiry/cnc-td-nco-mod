@@ -4,8 +4,6 @@ const auto ON_SCENARIO_START_EVENT = "ScenarioStart";
 const auto ON_SAVE_LOAD_EVENT = "SaveLoad";
 const auto ON_GAME_TICK_EVENT = "GameTick";
 
-bool InitialiseEvents();
-
 int GetEventCount();
 
 const char** GetEventNames();

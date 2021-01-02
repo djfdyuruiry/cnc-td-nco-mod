@@ -1,5 +1,7 @@
 local header = [[This page details all the functions that are available in Lua scripts.
 
+All APIs are found inside the `Nco` global table, so to use the `Units` API for example you would use `Nco.Units.doSomething(...)`.
+
 The unit/infantry/building names and rule names/values used in Lua can all be found [here](01.-RULES.INI-Full-Guide).
 
 **Note: Parameter values are not case sensitive**
@@ -8,25 +10,71 @@ The unit/infantry/building names and rule names/values used in Lua can all be fo
 
 local apiHeader = [[----
 
-## %s
+## `Nco.{{apiName}}`
 
-%s
+{{apiDescription}}
 
 ]]
 
 local functionTemplate = [[----
 
-### `%s`
+### `{{functionName}}`
 
-%s
+{{functionDescription}}
 
 ```lua
--- TODO: example field
+Nco.{{apiName}}.{{functionName}}({{exampleParameters}})
 ```
-
 ]]
 
-local hasKeys = function(tbl)
+local function renderTemplate(template, context)
+  if type(template) ~= "string" then
+    error("renderTemplate parameter 'template' must be a string")
+  end
+
+  if type(context) ~= "table" then
+    error("renderTemplate parameter 'context' must be a table")
+  end
+
+  local result = template
+
+  for variable, rawValue in pairs(context) do
+    local value = rawValue
+
+    if type(value) == "nil" then
+      value = ""
+    elseif type(val) == "function" then
+      value = rawValue(context)
+    end
+
+    result = result:gsub(
+      string.format("{{%s}}", variable),
+      tostring(value)
+    )
+  end
+
+  return result
+end
+
+local function generateExampleValueForParameter(name, info)
+  if info.type == "any" then
+    return [["value"]]
+  elseif info.type == "number" then
+    return "1"
+  elseif info.type == "string" then
+    return string.format([["%s"]], name)
+  elseif info.type == "bool" then
+    return "true"
+  elseif info.type == "table" then
+    return [["{}"]]
+  elseif info.type == "function" then
+    return string.format("function(...)\n  -- %s code here\nend", name)
+  end
+
+  return "nil"
+end
+
+local function hasKeys(tbl)
   for k, v in pairs(tbl) do
       return true
   end
@@ -34,12 +82,12 @@ local hasKeys = function(tbl)
   return false
 end
 
-local main = function()
+local function main()
   local output = ""
   local outputFile = "lua-api.md"
-  local apis = getApis()
+  local apis = Nco.Reflection.getApis()
 
-  local appendToOutput = function(format, ...)
+  local function appendToOutput(format, ...)
     output = output .. string.format(format, ...) .. "\n"
   end
 
@@ -47,8 +95,6 @@ local main = function()
   print("")
 
   appendToOutput(header)
-
-  -- TODO: output events api function (this is maintained in Lua not C++)
 
   print("> Building index")
 
@@ -62,12 +108,20 @@ local main = function()
 
   appendToOutput("")
 
-  print(">Building API sections")
+  print("> Building API sections")
 
   for apiName, api in pairs(apis) do
     print("  > Building section for API: %s...", apiName)
 
-    appendToOutput(apiHeader, apiName, api.description)
+    local context = 
+    {
+      apiName = apiName,
+      apiDescription = api.description
+    }
+
+    appendToOutput(
+      renderTemplate(apiHeader, context)
+    )
 
     for funcName, func in pairs(api.functions) do
       appendToOutput([[- [%s](#%s)]], funcName, funcName)
@@ -78,13 +132,40 @@ local main = function()
     for funcName, func in pairs(api.functions) do
       print("    > Building section for API function: %s...", funcName)
 
-      appendToOutput(functionTemplate, funcName, func.description)
+      context.functionName = funcName
+      context.functionDescription = func.description
+
+      local exampleParameters = ""
+
+      if hasKeys(func.parameters) then
+        local firstParam = true
+
+        for _, param in ipairs(func.parameters) do
+          local n = param.name
+
+          if not firstParam then
+            exampleParameters = exampleParameters .. ", "
+          end
+
+          exampleParameters = exampleParameters .. generateExampleValueForParameter(n, param)
+
+          firstParam = false
+        end
+      end
+
+      context.exampleParameters = exampleParameters
+
+      appendToOutput(
+        renderTemplate(functionTemplate, context)
+      )
 
       if hasKeys(func.parameters) then
         appendToOutput("Parameters:")
 
-        for paramName, param in pairs(func.parameters) do
-          appendToOutput("  - `%s` [%s] - %s", paramName, param.type, param.description)
+        for _, param in ipairs(func.parameters) do
+          local n = param.name
+
+          appendToOutput("  - `%s` [%s] - %s", n, param.type, param.description)
         end
       else
         appendToOutput("Parameters: none")
@@ -95,7 +176,9 @@ local main = function()
       if hasKeys(func.returnValues) then
         appendToOutput("Return value(s):")
 
-        for valueName, returnValue in pairs(func.returnValues) do
+        for _, returnValue in ipairs(func.returnValues) do
+          local valueName = returnValue.name
+
           appendToOutput("  - `%s` [%s] - %s", valueName, returnValue.type, returnValue.description)
         end
       else

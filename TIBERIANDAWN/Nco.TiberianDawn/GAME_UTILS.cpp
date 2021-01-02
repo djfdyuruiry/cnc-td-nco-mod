@@ -58,7 +58,7 @@ void HideEntireMapFromPlayer()
 	RefreshGameMap();
 }
 
-bool ProcessGameUiMessage(GameUiMessage uiMessage)
+bool ProcessGameUiMessage(GameUiMessage& uiMessage)
 {
 	auto type = uiMessage.type;
 

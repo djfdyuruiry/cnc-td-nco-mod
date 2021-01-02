@@ -38,6 +38,8 @@
 #include	"mission.h"
 #include	"target.h"
 
+#include <IRulesIniReader.h>
+
 class MapEditClass;
 class HouseClass;
 
@@ -194,7 +196,8 @@ class ObjectTypeClass : public AbstractTypeClass
 
 		static void One_Time(void);
 
-		static void ReadObjectRules(ObjectTypeClass* type);
+		virtual const char* Get_Rules_Name();
+		virtual void Read_Rules(IRulesIniReader& reader);
 
 		virtual int  Max_Pips(void) const;
 		virtual void  Dimensions(int &width, int &height) const;
@@ -317,15 +320,14 @@ class TechnoTypeClass : public ObjectTypeClass
 		*/
 		unsigned char Level;
 		long Pre;
+		StructType PreAsStruct;
 
 		/*
-		**	The risk and reward values are used to determine targets and paths
-		**	toward targets. When heading toward a target, a path of least
-		**	risk will be followed. When picking a target, the object of
-		**	greatest reward will be selected. The values assigned are
-		** arbitrary.
+		**	The reward value is used to determine targets.
+		**  When picking a target, the object of greatest reward 
+		**  will be selected. The values assigned are arbitrary.
 		*/
-		int Risk,Reward;
+		int Reward;
 
 		/*
 		**	This value indicates the maximum speed that this object can achieve.
@@ -371,6 +373,15 @@ class TechnoTypeClass : public ObjectTypeClass
 
 		unsigned int TransportCapacity;
 
+		bool ExplodesUponDeath;
+		AnimType DeathExplosionAnimation;
+		WarheadType DeathExplosionWarhead;
+		unsigned int DeathExplosionDamage;
+
+		bool IsInfantry;
+		bool IsUnit;
+		bool IsAircraft;
+
 		//--------------------------------------------------------------------
 		TechnoTypeClass(
 				int name,
@@ -407,11 +418,18 @@ class TechnoTypeClass : public ObjectTypeClass
 				const char * houseListCsv,
 				WeaponType primary,
 				WeaponType secondary,
-				ArmorType armor);
+				ArmorType armor,
+				bool explodesUponDeath = false,
+				AnimType deathExplosionAnimation = ANIM_NONE,
+				WarheadType deathExplosionWarhead = WARHEAD_NONE,
+				unsigned int deathExplosionDamage = 0,
+				bool isInfantry = false,
+				bool isUnit = false,
+				bool isAircraft = false);
 
-		static void ReadTechnoRules(TechnoTypeClass* type);
+		virtual void Read_Rules(IRulesIniReader& reader);
 
-		virtual void Calculate_Risk(void) const;
+		virtual int Calculate_Risk(void) const;
 		virtual int  Raw_Cost(void) const;
 		virtual int  Max_Passengers(void) const;
 		virtual int  Repair_Cost(void) const;
@@ -494,7 +512,9 @@ public:
 
 	static WeaponTypeClass const& As_Reference(WeaponType type) { return *By_Type(type); };
 
-	static void ReadWeaponRules(WeaponTypeClass* type);
+	virtual const char* Get_Rules_Name();
+	virtual void Read_Rules(IRulesIniReader& reader);
+
 	static void Add_Weapon_Type(WeaponTypeClass* type);
 	
 	virtual RTTIType  What_Am_I(void) const { return RTTI_NONE; };
@@ -582,7 +602,10 @@ public:
 		bool isTiberiumDestroyer,
 		unsigned armorModifiers[ARMOR_COUNT]
 	);
-	static void ReadWarheadRules(WarheadTypeClass* type);
+	
+	virtual const char* Get_Rules_Name();
+	virtual void Read_Rules(IRulesIniReader& reader);
+
 	static void Add_Warhead_Type(WarheadTypeClass* type);
 	virtual RTTIType  What_Am_I(void) const { return RTTI_NONE; };
 	static void  Init(TheaterType) {};
@@ -902,7 +925,8 @@ class BuildingTypeClass : public TechnoTypeClass {
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BUILDINGTYPE;};
 		operator StructType(void) const {return(Type);};
 
-		static void ReadBuildingRules(BuildingTypeClass* type);
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Building_Type(BuildingTypeClass* type);
 		
 		static BuildingTypeClass const &  As_Reference(StructType type) { return *By_Type(type); };
@@ -1089,11 +1113,6 @@ private:
 		MissionType Mission;
 
 		/*
-		**	This is the default explosion to use when this vehicle is destroyed.
-		*/
-		AnimType Explosion;
-
-		/*
 		**	The width or height of the largest dimension for this unit.
 		*/
 		int MaxSize;
@@ -1153,7 +1172,9 @@ private:
 						MPHType maxSpeed,
 						unsigned rot,
 						int toffset,
-						MissionType order);
+						MissionType order,
+						WarheadType deathExplosionWarhead = WARHEAD_NONE,
+						unsigned int deathExplosionDamage = 0);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_UNITTYPE;};
 
 		static UnitType  From_Name(char const *name);
@@ -1163,7 +1184,8 @@ private:
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
-		static void ReadUnitRules(UnitTypeClass* type);
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Unit_Type(UnitTypeClass* type);
 
 		virtual void  Dimensions(int &width, int &height) const;
@@ -1295,7 +1317,11 @@ class InfantryTypeClass : public TechnoTypeClass
 						const char* houseListCsv,
 						WeaponType primary,
 						WeaponType secondary,
-						MPHType maxSpeed);
+						MPHType maxSpeed,
+						bool explodesUponDeath = false,
+						AnimType deathExplosionAnimation = ANIM_NONE,
+						WarheadType deathExplosionWarhead = WARHEAD_NONE,
+						unsigned int deathExplosionDamage = 0);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_INFANTRYTYPE;};
 
 		static InfantryType  From_Name(char const *name);
@@ -1305,7 +1331,8 @@ class InfantryTypeClass : public TechnoTypeClass
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
-		static void ReadInfantryRules(InfantryTypeClass* infantry);
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Infantry_Type(InfantryTypeClass* infantryObject);
 
 		char* Resolve_Ini_Name();
@@ -1451,7 +1478,7 @@ class BulletTypeClass : public ObjectTypeClass
 		*/
 		int Range;
 
-		char* Image;
+		char* RulesName;
 
 		char* FriendlyName;
 
@@ -1468,8 +1495,8 @@ class BulletTypeClass : public ObjectTypeClass
 		//---------------------------------------------------------------------
 		BulletTypeClass(
 			BulletType type,
-			char const* ininame,
-			char const* image,
+			const char* rulesName,
+			const char* ininame,
 			const char* friendlyName,
 			bool is_high,
 			bool is_homing,
@@ -1490,7 +1517,9 @@ class BulletTypeClass : public ObjectTypeClass
 			WarheadType warhead,
 			AnimType explosion);
 
-		static void ReadBulletRules(BulletTypeClass* type);
+		virtual const char* Get_Rules_Name();
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Bullet_Type(BulletTypeClass* type);
 
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
@@ -1945,7 +1974,8 @@ class AircraftTypeClass : public TechnoTypeClass
 				MissionType deforder);
 		virtual RTTIType  What_Am_I(void) const;
 
-		static void ReadAircraftRules(AircraftTypeClass* type);
+		virtual void Read_Rules(IRulesIniReader& reader);
+
 		static void Add_Aircraft_Type(AircraftTypeClass* type);
 
 		static AircraftType  From_Name(char const *name);

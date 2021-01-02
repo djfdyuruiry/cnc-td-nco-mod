@@ -15,28 +15,17 @@ private:
 			"Building",
 			NEW_BUILDINGS_RULE,
 			NEW_BUILDING_COUNT_RULE,
-			*BUILDING_COUNT_RULE_KEY,
-			STRUCT_COUNT
+			BUILDING_COUNT_RULE_KEY,
+			STRUCT_COUNT,
+			NcoTypeConverter().GetModTypeMap<StructType>()
 		  )
 	{
 	}
 
 protected:
-	StructType ParseType(SectionName typeString, bool* parseError)
+	void AddType(BuildingTypeClass* instance)
 	{
-		return ParseStructureType(typeString, parseError, false);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBuildingSection(typeString);
-	}
-
-	void ReadRulesAndAddType(BuildingTypeClass* type)
-	{
-		BuildingTypeClass::ReadBuildingRules(type);
-
-		BuildingTypeClass::Add_Building_Type(type);
+		BuildingTypeClass::Add_Building_Type(instance);
 	}
 
 public:

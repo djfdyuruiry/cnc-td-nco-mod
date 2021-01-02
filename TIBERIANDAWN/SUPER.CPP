@@ -80,7 +80,7 @@ SuperClass::SuperClass(const char* type, int rechargeTimeInMins, VoxType ready, 
 	VoxImpatient = impatient;
 	VoxSuspend = suspend;
 
-	auto resolvedTimeInMins = NcoRulesRuntime().ReadRuleValue<unsigned int>(type, SUPERWEAPON_RECHARGE_TIME_RULE);
+	auto resolvedTimeInMins = Read_Superweapon_Rule(type, SUPERWEAPON_RECHARGE_TIME_RULE);
 
 	RechargeTime = resolvedTimeInMins * TICKS_PER_MINUTE;
 }	

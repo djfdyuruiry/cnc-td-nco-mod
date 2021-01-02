@@ -1,7 +1,10 @@
 #pragma once
 
+#include <functional>
+
 #include <Logger.h>
-#include <TypePatterns.h>
+#include <ResultWithValue.h>
+#include <TwoWayStringMap.h>
 
 #include "IRulesIni.h"
 #include "IRulesIniReader.h"
@@ -17,42 +20,48 @@ protected:
 	template<class T> T GetParsedStringRule(
 		RulesIniRule& rule,
 		const char* typeName,
-		PARSER(T, parser),
+		std::function<ResultWithValue<T>*(const char *)> parser,
 		T defaultValue
 	)
 	{
-		auto stringValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		auto& stringValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!stringValueOptional.Present())
 		{
+			delete &stringValueOptional;
+
 			return rule.GetDefaultValueOr<T>(defaultValue);
 		}
 
 		auto stringValue = stringValueOptional.Get<char*>();
 
-		ConvertStringToUpperCase(stringValue);
+		auto& parseResult = *parser(stringValue);
 
-		bool parseError = false;
-		auto parsedValue = parser(stringValue, &parseError, parseError);
-
-		if (parseError)
+		if (parseResult.IsErrorResult())
 		{
 			rulesIni.MarkAsInvalid();
 
-			ShowError("Failed to parse %s for [%s]: %s", typeName, rule.GetStringKey(), stringValue);
+			ShowError("Failed to parse value '%s' as %s for [%s]: %s", stringValue, typeName, rule.GetStringKey(), parseResult.GetError());
+			
+			delete &stringValueOptional;
+			delete &parseResult;
 
 			return rule.GetDefaultValueOr<T>(defaultValue);
 		}
 
-		return parsedValue;
+		auto value = parseResult.GetValue();
+		
+		delete &stringValueOptional;
+		delete &parseResult;
+
+		return value;
 	}
 
-	// TODO: move all these private converters into seperate classes with a interface and mapping from type to converter
 	bool ReadBoolRule(RulesIniRule& rule)
 	{
 		auto defaultValue = rule.GetDefaultValueOr(false);
 
-		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		auto& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
@@ -65,9 +74,7 @@ protected:
 
 		auto ruleValue = ruleValueOptional.Get<char*>();
 
-		ConvertStringToUpperCase(ruleValue);
-
-		auto boolValue = StringsAreEqual(ruleValue, "TRUE");
+		auto boolValue = ParseBooleanOrDefault(ruleValue, defaultValue);
 
 		delete &ruleValueOptional;
 
@@ -81,7 +88,7 @@ protected:
 		LogTrace("Resolving rule value: %s", rule.GetStringKey());
 		LogTrace("Default value: %u", defaultValue);
 
-		Optional& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
+		auto& ruleValueOptional = rulesIni.ReadOptionalStringRule(rule);
 
 		if (!ruleValueOptional.Present())
 		{
@@ -94,7 +101,7 @@ protected:
 
 		auto ruleValueStr = ruleValueOptional.Get<char*>();
 
-		bool isValid = IsUnsignedIntString(ruleValueStr);
+		auto isValid = IsUnsignedIntString(ruleValueStr);
 
 		if (!isValid)
 		{
@@ -106,7 +113,6 @@ protected:
 				ruleValueStr
 			);
 
-			delete ruleValueStr;
 			delete &ruleValueOptional;
 
 			return defaultValue;
@@ -114,7 +120,7 @@ protected:
 
 		auto ruleValue = strtoul(ruleValueStr, NULL, 10);
 
-		LogTrace("Rules ini value: %s", ruleValueStr);
+		delete &ruleValueOptional;
 
 		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<unsigned int>())
 		{
@@ -132,14 +138,12 @@ protected:
 					maxValueInclusive,
 					ruleValue
 				);
+
 			}
 		}
 
 		LogTrace("Resolved value: %u", ruleValue);
 		LogDebug("Setting rule [%s] = %u", rule.GetStringKey(), ruleValue);
-
-		delete ruleValueStr;
-		delete &ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -174,7 +178,7 @@ protected:
 
 		auto ruleValueStr = ruleValueOptional.Get<char*>();
 
-		bool isValid = IsDoubleString(ruleValueStr);
+		auto isValid = IsDoubleString(ruleValueStr);
 
 		if (!isValid)
 		{
@@ -186,7 +190,6 @@ protected:
 				ruleValueStr
 			);
 
-			delete ruleValueStr;
 			delete &ruleValueOptional;
 
 			return defaultValue;
@@ -194,7 +197,7 @@ protected:
 
 		auto ruleValue = strtod(ruleValueStr, NULL);
 
-		LogTrace("Rules ini value: %s", ruleValueStr);
+		delete &ruleValueOptional;
 
 		if (!rule.HasValueToAllowAlways() || ruleValue != rule.GetValueToAllowAlways<double>())
 		{
@@ -217,9 +220,6 @@ protected:
 
 		LogTrace("Resolved value: %f", ruleValue);
 		LogDebug("Setting rule [%s] = %f", rule.GetStringKey(), ruleValue);
-
-		delete ruleValueStr;
-		delete &ruleValueOptional;
 
 		return ruleValue;
 	}
@@ -280,7 +280,7 @@ public:
 			rulesIni << key.Section;
 		}
 
-		IRulesIniSection& section = rulesIni[key.SectionKey];
+		auto& section = rulesIni[key.SectionKey];
 
 		if (!section.HasRule(key.RuleKey))
 		{
@@ -292,9 +292,8 @@ public:
 
 	RulesIniRule& GetRule(SectionName section, RuleName ruleName)
 	{
-		const RulesIniRuleKey& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
-
-		RulesIniRule& rule = GetRule(key);
+		auto& key = RulesIniRuleKey::BuildRuleKey(section, ruleName);
+		auto& rule = GetRule(key);
 
 		delete &key;
 

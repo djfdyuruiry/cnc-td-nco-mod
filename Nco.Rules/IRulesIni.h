@@ -31,7 +31,11 @@ public:
 
 	virtual bool HasSection(StringHash key) = 0;
 
+	virtual bool HasSection(const char* key) = 0;
+
 	virtual bool HasSectionForRule(RulesIniRule& rule) = 0;
+
+	virtual const std::vector<const char*>& GetSectionNames() = 0;
 
 	virtual IRulesIniSection& GetSectionForRule(RulesIniRule& rule) = 0;
 

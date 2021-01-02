@@ -11,8 +11,8 @@
 #include "../DEFINES.H"
 #include "../TYPE.H"
 
-#include "parse.h"
 #include "rules_ini_generic.h"
+#include "TiberianDawnNcoRuntime.h"
 
 #define EXTRACTOR_T(f) EXTRACTOR(T, f)
 #define INJECTOR_T(t, f) INJECTOR(T, t, f)
@@ -26,10 +26,21 @@ protected:
 		char* typeName,
 		IRulesIniSection& rulesInfo,
 		U first,
-		std::function<int(void)> getCount,
-		U(*typeParser)(const char*, bool*, bool),
-		const char*(*typeToString)(U, bool)
-	) : RulesSectionTypeWrapperApi(typeName, rulesInfo, first, getCount, typeParser, typeToString)
+		std::function<int(void)> getCount
+	) : RulesSectionTypeWrapperApi(
+		typeName,
+		rulesInfo,
+		first,
+		getCount,
+		[](auto stringValue)
+		{
+			return &NcoTypeConverter().Parse<U>(stringValue);
+		},
+		[](auto value)
+		{
+			return &NcoTypeConverter().ToString(value);
+		}
+	)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BUILD_LEVEL_RULE,
@@ -43,18 +54,25 @@ protected:
 			NumbericRangeValidator<unsigned char>::Build(0, 99)
 		).WithFieldWrapper(
 			PREREQUISITE_RULE,
-			EXTRACTOR_T(PrerequisiteToString(i.Pre)),
+			EXTRACTOR_T(NcoTypeConverter().PrerequisiteToString(i.Pre)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Pre = StructureTypeToPrerequisite(
-					ParseStructureType(valueUpper, NULL),
-					NULL
+				auto structType = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					NcoTypeConverter().PrerequisiteToStructureType(i.Pre)
 				);
 
-				delete valueUpper;
+				auto& preReqResult = NcoTypeConverter().StructureTypeToPrerequisite(structType);
+
+				if (!preReqResult.IsErrorResult())
+				{
+					i.Pre = preReqResult.GetValue();
+				}
+
+				delete &preReqResult;
 			},
-			ParseCheckValidator<StructType>::Build("Building", ParseStructureType)
+			ParseCheckValidator<StructType>::Build("Building", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<StructType>(stringValue);
+			})
 		).WithFieldWrapper(
 			COST_RULE,
 			SIMPLE_EXTRACTOR_T(Cost),
@@ -86,49 +104,58 @@ protected:
 			std::vector<const char*> { OWNER_RULE, HOUSES_RULE },
 			SIMPLE_EXTRACTOR_T(HouseListCsv),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
+				auto houseListCsv = va.Read<const char*>(l, si);
+				auto& houseListResult = NcoTypeConverter().ParseHouseNameListCsv(houseListCsv);
 
-				i.Ownable = ParseHouseNameListCsv(valueUpper, NULL);
-				i.HouseListCsv = strdup(valueUpper);
+				if (!houseListResult.IsErrorResult())
+				{
+					i.Ownable = houseListResult.GetValue();
+					i.HouseListCsv = strdup(houseListCsv);
+				}
 
-				delete valueUpper;
+				delete &houseListResult;
 			},
-			ParseCheckValidator<int>::Build("House List", ParseHouseNameListCsv)
+			ParseCheckValidator<int>::Build("House List", [](auto stringValue) {
+				return &NcoTypeConverter().ParseHouseNameListCsv(stringValue);
+			})
 		).WithFieldWrapper(
 			PRIMARY_WEAPON_RULE,
-			EXTRACTOR_T(WeaponTypeToString(i.Primary)),
+			EXTRACTOR_T(NcoTypeConverter().ToStringOrDefault(i.Primary)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Primary = ParseWeaponType(valueUpper, NULL);
-
-				delete valueUpper;
+				i.Primary = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					i.Primary
+				);
 
 				i.Calculate_Risk(); // make sure the Risk value now reflects the new primary weapon
 			},
-			ParseCheckValidator<WeaponType>::Build("Weapon", ParseWeaponType)
+			ParseCheckValidator<WeaponType>::Build("Weapon", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<WeaponType>(stringValue);
+			})
 		).WithFieldWrapper(
 			SECONDARY_WEAPON_RULE,
-			EXTRACTOR_T(WeaponTypeToString(i.Secondary)),
+			EXTRACTOR_T(NcoTypeConverter().ToStringOrDefault(i.Secondary)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Secondary = ParseWeaponType(valueUpper, NULL);
-
-				delete valueUpper;
+				i.Secondary = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					i.Secondary
+				);
 			},
-			ParseCheckValidator<WeaponType>::Build("Weapon", ParseWeaponType)
+			ParseCheckValidator<WeaponType>::Build("Weapon", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<WeaponType>(stringValue);
+			})
 		).WithFieldWrapper(
 			ARMOR_RULE,
-			EXTRACTOR_T(ArmorTypeToString(i.Armor)),
+			EXTRACTOR_T(NcoTypeConverter().ToStringOrDefault(i.Armor)),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Armor = ParseArmorType(valueUpper, NULL);
-
-				delete valueUpper;
+				i.Armor = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					i.Armor
+				);
 			},
-			ParseCheckValidator<ArmorType>::Build("Armor", ParseArmorType)
+			ParseCheckValidator<ArmorType>::Build("Armor", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<ArmorType>(stringValue);
+			})
 		).WithFieldWrapper(
 			AMMO_RULE,
 			SIMPLE_EXTRACTOR_T(MaxAmmo),
@@ -180,26 +207,6 @@ protected:
 			SIMPLE_INJECTOR_T(bool, IsModType),
 			PrimitiveTypeValidator<bool>::Build()
 		).WithFieldWrapper(
-			HAS_CREW_RULE,
-			EXTRACTOR_T((bool)i.IsCrew),
-			SIMPLE_INJECTOR_T(bool, IsCrew),
-			PrimitiveTypeValidator<bool>::Build()
-		).WithFieldWrapper(
-			TURRET_EQUIPPED_RULE,
-			EXTRACTOR_T((bool)i.IsTurretEquipped),
-			SIMPLE_INJECTOR_T(bool, IsTurretEquipped),
-			PrimitiveTypeValidator<bool>::Build()
-		).WithFieldWrapper(
-			REPAIRABLE_RULE,
-			EXTRACTOR_T((bool)i.IsRepairable),
-			SIMPLE_INJECTOR_T(bool, IsRepairable),
-			PrimitiveTypeValidator<bool>::Build()
-		).WithFieldWrapper(
-			TRANSPORTER_RULE,
-			EXTRACTOR_T((bool)i.IsTransporter),
-			SIMPLE_INJECTOR_T(bool, IsTransporter),
-			PrimitiveTypeValidator<bool>::Build()
-		).WithFieldWrapper(
 			BASE_TYPE_RULE,
 			SIMPLE_EXTRACTOR_T(ModBaseIniName),
 			[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
@@ -223,6 +230,85 @@ protected:
 			},
 			PrimitiveTypeValidator<const char*>::Build()
 		);
+
+		if constexpr (!std::is_same<U, InfantryType>())
+		{
+			technoTypeWrapper.WithFieldWrapper(
+				HAS_CREW_RULE,
+				EXTRACTOR_T((bool)i.IsCrew),
+				SIMPLE_INJECTOR_T(bool, IsCrew),
+				PrimitiveTypeValidator<bool>::Build()
+			).WithFieldWrapper(
+				TURRET_EQUIPPED_RULE,
+				EXTRACTOR_T((bool)i.IsTurretEquipped),
+				SIMPLE_INJECTOR_T(bool, IsTurretEquipped),
+				PrimitiveTypeValidator<bool>::Build()
+			).WithFieldWrapper(
+				REPAIRABLE_RULE,
+				EXTRACTOR_T((bool)i.IsRepairable),
+				SIMPLE_INJECTOR_T(bool, IsRepairable),
+				PrimitiveTypeValidator<bool>::Build()
+			);
+		}
+
+		if constexpr (std::is_same<U, InfantryType>() || std::is_same<U, UnitType>())
+		{
+			technoTypeWrapper.WithFieldWrapper(
+				EXPLODES_UPON_DEATH_RULE,
+				EXTRACTOR_T((bool)i.ExplodesUponDeath),
+				SIMPLE_INJECTOR_T(bool, ExplodesUponDeath),
+				PrimitiveTypeValidator<bool>::Build()
+			).WithFieldWrapper(
+				DEATH_EXPLOSION_ANIMATION_RULE,
+				EXTRACTOR_T(NcoTypeConverter().ToStringOrDefault(i.DeathExplosionAnimation)),
+				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
+					i.DeathExplosionAnimation = NcoTypeConverter().ParseOrDefault(
+						va.Read<const char*>(l, si),
+						i.DeathExplosionAnimation
+					);
+				},
+				ParseCheckValidator<AnimType>::Build("Animation", [](auto valueString) {
+					return &NcoTypeConverter().Parse<AnimType>(valueString);
+				})
+			).WithFieldWrapper(
+				DEATH_EXPLOSION_WARHEAD_RULE,
+				EXTRACTOR_T(NcoTypeConverter().ToStringOrDefault(i.DeathExplosionWarhead)),
+				[](T& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
+					i.DeathExplosionWarhead = NcoTypeConverter().ParseOrDefault(
+						va.Read<const char*>(l, si),
+						i.DeathExplosionWarhead
+					);
+				},
+				ParseCheckValidator<WarheadType>::Build("Warhead", [](auto valueString) {
+					return &NcoTypeConverter().Parse<WarheadType>(valueString);
+				})
+			).WithFieldWrapper(
+				DEATH_EXPLOSION_DAMAGE_RULE,
+				SIMPLE_EXTRACTOR_T(DeathExplosionDamage),
+				SIMPLE_INJECTOR_T(unsigned int, DeathExplosionDamage),
+				NumbericRangeValidator<>::Build(0, UINT_MAX)
+			);
+		}
+
+		if constexpr (std::is_same<U, UnitType>() || std::is_same<U, AircraftType>())
+		{
+			technoTypeWrapper.WithFieldWrapper(
+				RATE_OF_TURN_RULE,
+				SIMPLE_EXTRACTOR_T(ROT),
+				SIMPLE_INJECTOR_T(unsigned char, ROT),
+				NumbericRangeValidator<>::Build(0, UCHAR_MAX)
+			).WithFieldWrapper(
+				TRANSPORTER_RULE,
+				EXTRACTOR_T((bool)i.IsTransporter),
+				SIMPLE_INJECTOR_T(bool, IsTransporter),
+				PrimitiveTypeValidator<bool>::Build()
+			).WithFieldWrapper(
+				TRANSPORT_CAPACITY_RULE,
+				SIMPLE_EXTRACTOR_T(TransportCapacity),
+				SIMPLE_INJECTOR_T(unsigned int, TransportCapacity),
+				NumbericRangeValidator<>::Build(0, UINT_MAX)
+			);
+		}
 	}
 
 };

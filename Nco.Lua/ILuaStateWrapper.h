@@ -5,15 +5,22 @@
 #include <type_traits>
 #include <vector>
 
-#include "LuaResult.h"
-#include "LuaResultWithValue.h"
+#include <lua.hpp>
+
+#include <Result.h>
+#include <ResultWithValue.h>
+
 #include "LuaType.h"
 
 class ILuaStateWrapper
 {
 protected:
+	virtual void PushOntoStack(int stackIndex) = 0;
+	virtual void PopFromStack(int stackIndex) = 0;
+
 	virtual void SetIndex(int tableIndex, int index) = 0;
 	virtual void SetIndex(int tableIndex, const char* index) = 0;
+	virtual bool PopKeyValuePair(int tableIndex) = 0;
 
 public:
 	virtual int GetStackTop() = 0;
@@ -44,21 +51,86 @@ public:
 	virtual bool IsNil() = 0;
 
 	virtual int GetTableSize(int stackIndex) = 0;
-	virtual void IterateOverTable(int stackIndex, std::function<void()> iterateAction) = 0;
 
-	virtual LuaResultWithValue<int>& ReadInteger(int stackIndex) = 0;
-	virtual LuaResultWithValue<long long>& ReadBigInteger(int stackIndex) = 0;
-	virtual LuaResultWithValue<double>& ReadDouble(int stackIndex) = 0;
-	virtual LuaResultWithValue<bool>& ReadBool(int stackIndex) = 0;
-	virtual LuaResultWithValue<const char*>& ReadString(int stackIndex) = 0;
-	virtual LuaResultWithValue<void*>& ReadUserData(int stackIndex) = 0;
+	virtual Result& IterateOverTable(int stackIndex, std::function<void(int, int, const LuaType&)> iterateAction) = 0;
 
-	virtual LuaResultWithValue<int>& ReadInteger() = 0;
-	virtual LuaResultWithValue<long long>& ReadBigInteger() = 0;
-	virtual LuaResultWithValue<double>& ReadDouble() = 0;
-	virtual LuaResultWithValue<bool>& ReadBool() = 0;
-	virtual LuaResultWithValue<const char*>& ReadString() = 0;
-	virtual LuaResultWithValue<void*>& ReadUserData() = 0;
+	virtual Result& IterateOverTable(std::function<void(int, int, const LuaType&)> iterateAction) = 0;
+	
+	template<class T> Result& IterateOverTable(int stackIndex, std::function<void(T, int, const LuaType&)> iterateAction)
+	{
+		if (!IsTable(stackIndex))
+		{
+			return Result::BuildWithError("Value at stack index '%d' was not a table", stackIndex);
+		}
+
+		PushOntoStack(stackIndex);
+
+		WriteNil();
+
+		auto keyIndex = -2;
+		auto valIndex = -1;
+
+		while (PopKeyValuePair(-2))
+		{
+			auto& keyResult = PullValue<T>(keyIndex);
+
+			if (keyResult.IsErrorResult())
+			{
+				delete &keyResult;
+
+				if constexpr (std::is_same_v<T, const char*>)
+				{
+					return Result::BuildWithError("Unable to read table key");
+				}
+				else if constexpr (std::is_same_v<T, int>)
+				{
+					return Result::BuildWithError("Unable to read table index");
+				}
+				else
+				{
+					return Result::BuildWithError("Unable to read table key/index");
+				}
+			}
+
+			auto key = keyResult.GetValue();
+			auto valType = GetLuaType(valIndex);
+
+			delete &keyResult;
+
+			iterateAction(key, valIndex, valType);
+
+			PopFromStack(1);
+		}
+
+		PopFromStack(1);
+
+		return Result::Build();
+	}
+
+	template<class T> Result& IterateOverTable(std::function<void(T, int, const LuaType&)> iterateAction)
+	{
+		return IterateOverTable<T>(GetStackTop(), iterateAction);
+	}
+
+	virtual Result& PushGlobalOntoStack(const char* variable) = 0;
+
+	virtual Result& PushTableFieldOntoStack(int stackIndex, const char* field) = 0;
+
+	virtual Result& PushTableFieldOntoStack(const char* field) = 0;
+
+	virtual ResultWithValue<int>& ReadInteger(int stackIndex) = 0;
+	virtual ResultWithValue<long long>& ReadBigInteger(int stackIndex) = 0;
+	virtual ResultWithValue<double>& ReadDouble(int stackIndex) = 0;
+	virtual ResultWithValue<bool>& ReadBool(int stackIndex) = 0;
+	virtual ResultWithValue<const char*>& ReadString(int stackIndex) = 0;
+	virtual ResultWithValue<void*>& ReadUserData(int stackIndex) = 0;
+
+	virtual ResultWithValue<int>& ReadInteger() = 0;
+	virtual ResultWithValue<long long>& ReadBigInteger() = 0;
+	virtual ResultWithValue<double>& ReadDouble() = 0;
+	virtual ResultWithValue<bool>& ReadBool() = 0;
+	virtual ResultWithValue<const char*>& ReadString() = 0;
+	virtual ResultWithValue<void*>& ReadUserData() = 0;
 
 	template<class T> std::vector<T>& ReadArray(int stackIndex)
 	{
@@ -70,18 +142,17 @@ public:
 		auto& array = *new std::vector<T>(GetTableSize(stackIndex));
 		auto hasError = false;
 
-		IterateOverTable(stackIndex, [&]() {
+		auto& tableResult = IterateOverTable<int>(stackIndex, [&](auto key, auto valueIndex, auto& _) {
 			if (hasError)
 			{
 				return;
 			}
 
-			auto& idxResult = ReadInteger(-1);
-			auto& valueResult = PullValue<T>(-2);
+			auto& valueResult = PullValue<T>(valueIndex);
 
-			if (!idxResult.IsErrorResult() && !valueResult.IsErrorResult())
+			if (!valueResult.IsErrorResult())
 			{
-				auto vectorIdx = idxResult.GetValue() - 1;
+				auto vectorIdx = key - 1;
 
 				array[vectorIdx] = valueResult.GetValue();
 			}
@@ -90,9 +161,10 @@ public:
 				hasError = true;
 			}
 
-			delete &idxResult;
 			delete &valueResult;
 		});
+
+		delete &tableResult;
 
 		return array;
 	}
@@ -102,51 +174,16 @@ public:
 		return ReadArray<T>(GetStackTop());
 	}
 
-	template<class T> std::map<const char*, T>& ReadObject(int stackIndex)
-	{
-		auto& object = *new std::map<const char*, T>();
-		auto hasError = false;
-
-		if (!IsTable(stackIndex))
-		{
-			return object;
-		}
-
-		IterateOverTable([]() {
-			if (hasError)
-			{
-				return;
-			}
-
-			auto& keyResult = ToString(-1);
-			auto& valueResult = PullValue(-2);
-
-			if (!keyResult.IsErrorResult() && !valueResult.IsErrorResult())
-			{
-				object[keyResult.GetValue()] = valueResult.GetValue();
-			}
-			else
-			{
-				hasError = true;
-			}
-
-			delete* keyResult;
-			delete* valueResult;
-		});
-
-		return object;
-	}
-
-	template<class T> std::map<const char*, T>& ReadObject()
-	{
-		return ReadObject<T>(GetStackTop());
-	}
-
-	template<class T> LuaResultWithValue<T>& PullValue(int stackIndex)
+	template<class T> ResultWithValue<T>& PullValue(int stackIndex)
 	{
 		if constexpr (std::is_same_v<T, char*> || std::is_same_v<T, const char*>)
 		{
-			return ReadString(stackIndex).ConvertType<T>();
+			auto& result = ReadString(stackIndex);
+			auto& convertedResult = result.ConvertType<T>();
+
+			delete &result;
+
+			return convertedResult;
 		}
 		else if constexpr (
 			std::is_same_v<T, char> || std::is_same_v<T, unsigned char>
@@ -154,18 +191,33 @@ public:
 			|| std::is_same_v<T, int> || std::is_same_v<T, unsigned int>
 		)
 		{
-			return ReadInteger(stackIndex).ConvertType<T>();
+			auto& result = ReadInteger(stackIndex);
+			auto& convertedResult = result.ConvertType<T>();
+
+			delete &result;
+
+			return convertedResult;
 		}
 		else if constexpr (
 			std::is_same_v<T, long> || std::is_same_v<T, unsigned long>
 			|| std::is_same_v<T, long long> || std::is_same_v<T, unsigned long long>
 		)
 		{
-			return ReadBigInteger(stackIndex).ConvertType<T>();
+			auto& result = ReadBigInteger(stackIndex);
+			auto& convertedResult = result.ConvertType<T>();
+
+			delete &result;
+
+			return convertedResult;
 		}
 		else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, float>)
 		{
-			return ReadDouble(stackIndex).ConvertType<T>();
+			auto& result = ReadDouble(stackIndex);
+			auto& convertedResult = result.ConvertType<T>();
+
+			delete &result;
+
+			return convertedResult;
 		}
 		else if constexpr (std::is_same_v<T, bool>)
 		{
@@ -173,13 +225,34 @@ public:
 		}
 		else
 		{
-			return LuaResultWithValue<T>::BuildWithError("No read method defined for value type");
+			return ResultWithValue<T>::BuildWithError("No read method defined for value type");
 		}
 	}
 
-	template<class T> LuaResultWithValue<T>& PullValue()
+	template<class T> ResultWithValue<T>& PullValue()
 	{
 		return PullValue(GetStackTop());
+	}
+
+	template<class T> void PullOptionalValue(int stackIndex, std::function<void(T)> valueHandler)
+	{
+		auto& valueResult = PullValue<T>(stackIndex);
+
+		if (valueResult.IsErrorResult())
+		{
+			delete &valueResult;
+
+			return;
+		}
+
+		valueHandler(valueResult.GetValue());
+
+		delete& valueResult;
+	}
+
+	template<class T> void PullOptionalValue(std::function<void(T)> valueHandler)
+	{
+		return PullOptionalValue<T>(GetStackTop(), valueHandler);
 	}
 
 	virtual void WriteInteger(int value) = 0;
@@ -187,8 +260,8 @@ public:
 	virtual void WriteNumber(double value) = 0;
 	virtual void WriteBool(bool value) = 0;
 	virtual void WriteString(const char* value) = 0;
-	virtual void WriteFunction(const char* name, lua_CFunction function, void* functionInfo) = 0;
-	virtual void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy, void* functionInfo) = 0;
+	virtual void WriteFunction(lua_CFunction function, void* functionInfo) = 0;
+	virtual void WriteMethod(void* objectPtr, lua_CFunction methodProxy, void* functionInfo) = 0;
 	virtual void WriteNil() = 0;
 	virtual void WriteTable(unsigned int expectedSize = 0) = 0;
 
@@ -270,9 +343,9 @@ public:
 	virtual void ClearStack() = 0;
 
 	virtual void RaiseError(const char* messageFormat, ...) = 0;
-	virtual void RaiseError(LuaResult& result) = 0;
+	virtual void RaiseError(Result& result) = 0;
 
-	virtual LuaResult& ExecuteScript(const char* script) = 0;
-	virtual LuaResult& ExecuteFile(const char* filePath) = 0;
+	virtual Result& ExecuteScript(const char* script) = 0;
+	virtual Result& ExecuteFile(const char* filePath) = 0;
 
 };

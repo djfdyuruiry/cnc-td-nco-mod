@@ -14,6 +14,8 @@ private:
 	static const auto LOG_SPACING_LENGTH = 4u;
 	static const auto LOG_FORMAT_LENGTH = LOG_TIMESTAMP_LENGTH + LOG_SPACING_LENGTH + LOG_LEVEL_LENGTH + LOG_LINE_LENGTH;
 
+	static bool LOGGER_DISABLED;
+
 	static Logger* INSTANCE;
 
 	LogLevel logLevel;
@@ -27,8 +29,6 @@ private:
 	{
 	}
 
-	void LoadDefaultLogFilePath();
-
 	void OpenLogFile();
 
 	void CloseLogFileIfOpen();
@@ -38,7 +38,6 @@ public:
 	{
 		if (INSTANCE == NULL)
 		{
-			LOG_FORMAT = "%02d-%02d-%04d %02d:%02d:%02d.%03d - %s %s\n";
 			INSTANCE = new Logger();
 		}
 
@@ -47,10 +46,12 @@ public:
 
 	static void Shutdown()
 	{
-		if (INSTANCE != NULL)
+		if (INSTANCE == NULL)
 		{
-			delete INSTANCE;
+			return;
 		}
+
+		delete INSTANCE;
 
 		INSTANCE = NULL;
 	}
@@ -58,6 +59,16 @@ public:
 	static unsigned int GetLogLineLength()
 	{
 		return LOG_LINE_LENGTH;
+	}
+
+	static void Enable()
+	{
+		LOGGER_DISABLED = false;
+	}
+
+	static void Disable()
+	{
+		LOGGER_DISABLED = true;
 	}
 
 	~Logger();

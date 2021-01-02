@@ -1,78 +1,92 @@
 function printMinigunnerWeapon()
-  local weapon = getInfantryRule("E1", "PrimaryWeapon")
+  local weapon = Nco.Infantry.getRule("E1", "PrimaryWeapon")
 
-  log("E1 primary weapon is: %s", weapon)
+  Nco.Utils.log("E1 primary weapon is: %s", weapon)
 end
 
-function testRules (isScenarioFour)
+function testRules ()
   printMinigunnerWeapon()
 
   local scenarioNumber = 1;
   local buildLevel = 1;
 
-  setInfantryRule("E1", "CanCapture", true)
+  Nco.Infantry.E1.CanCapture(true)
 
-  setInfantryRule("E3", "ScenarioLevel", scenarioNumber)
-  setInfantryRule("E3", "BuildLevel", buildLevel)
+  with(Nco.Infantry.E3, function()
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+  end)
 
-  setInfantryRule("E6", "ScenarioLevel", scenarioNumber)
-  setInfantryRule("E6", "BuildLevel", buildLevel)
+  with(Nco.Infantry.E6, function()
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+  end)
 
-  setInfantryRule("RMBO", "Buildable", true)
-  setInfantryRule("RMBO", "ScenarioLevel", scenarioNumber)
-  setInfantryRule("RMBO", "BuildLevel", buildLevel)
-  setInfantryRule("RMBO", "PrimaryWeapon", "obelisk_laser")
-  setInfantryRule("RMBO", "Prerequisite", "none")
+  with(Nco.Infantry.RMBO, function()
+    Buildable(true)
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+    PrimaryWeapon("obelisk_laser")
+    Prerequisite("none")
+  end)
 
-  setUnitRule("JEEP", "Speed", 100)
-  setUnitRule("JEEP", "CanCrushInfantry", true)
-  setUnitRule("JEEP", "CanTransportInfantry", true)
-  setUnitRule("JEEP", "TransportCapacity", 10)
+  with(Nco.Units.JEEP, function()
+    Speed(100)
+    CanCrushInfantry(true)
+    CanTransportInfantry(true)
+    TransportCapacity(10)
+  end)
 
-  setUnitRule("FTNK", "ScenarioLevel", scenarioNumber)
-  setUnitRule("FTNK", "BuildLevel", buildLevel)
+  with(Nco.Units.FTNK, function()
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+  end)
 
-  setUnitRule("MCV", "CanCloak", true)
+  Nco.Units.MCV.CanCloak(true)
 
-  setUnitRule("BOAT", "CanCloak", true)
+  Nco.Units.BOAT.CanCloak(true)
 
-  setUnitRule("HTNK", "ScenarioLevel", scenarioNumber)
-  setUnitRule("HTNK", "BuildLevel", buildLevel)
-  setUnitRule("HTNK", "Cost", 10)
+  with(Nco.Units.HTNK, function()
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+    Cost(10)
+  end)
 
-  setBuildingRule("BIO", "Buildable", true)
-  setBuildingRule("BIO", "ScenarioLevel", scenarioNumber)
-  setBuildingRule("BIO", "BuildLevel", buildLevel)
-  setBuildingRule("BIO", "Prerequisite", "none")
+  with(Nco.Buildings.BIO, function()
+    Buildable(true)
+    ScenarioLevel(scenarioNumber)
+    BuildLevel(buildLevel)
+    Prerequisite("none")
+  end)
 
-  setBuildingRule("NUKE", "Bibbed", false)
+  Nco.Buildings.NUKE.Bibbed(false)
 
-  setBuildingRule("GUN", "Captureable", true) 
+  Nco.Buildings.GUN.Captureable(true) 
 
-  setInfantryRule("E2", "PrimaryWeapon", "TOWTWO")
+  Nco.Infantry.E2.PrimaryWeapon("TOWTWO")
 
   printMinigunnerWeapon()
 end
 
-onScenarioStart(function(name)
-  log("Scenario received: %s", name)
+Nco.Events.onScenarioStart(function(name)
+  Nco.Utils.log("Scenario received: %s", name)
 
   testRules()
 end)
 
-onSaveLoad(function(house, scenario)
-  log("Save game loading for %s scenario %d", house, scenario)
+Nco.Events.onSaveLoad(function(house, scenario)
+  Nco.Utils.log("Save game loading for %s scenario %d", house, scenario)
 
   testRules()
 end)
 
 local lastMessageTime = 0
 
-onGameTick(function()
-  local now = getNowInEpochMillis()
+Nco.Events.onGameTick(function()
+  local now = Nco.Utils.getNowInEpochMillis()
 
   if now - lastMessageTime >= 30000 then -- every 30 seconds
-    showGameMessage(string.format("[%d] Peace through power!", now), 3)
+    Nco.Game.showGameMessage(string.format("[%d] Peace through power!", now), 3)
 
     lastMessageTime = now
   end

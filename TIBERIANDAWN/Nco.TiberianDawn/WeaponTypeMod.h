@@ -15,28 +15,17 @@ private:
 			"Weapon",
 			NEW_WEAPONS_RULE,
 			NEW_WEAPON_COUNT_RULE,
-			*WEAPON_COUNT_RULE_KEY,
-			WEAPON_COUNT
+			WEAPON_COUNT_RULE_KEY,
+			WEAPON_COUNT,
+			NcoTypeConverter().GetModTypeMap<WeaponType>()
 		  )
 	{
 	}
 
 protected:
-	WeaponType ParseType(SectionName typeString, bool* parseError)
+	void AddType(WeaponTypeClass* instance)
 	{
-		return ParseWeaponType(typeString, parseError, true);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWeaponSection(typeString);
-	}
-
-	void ReadRulesAndAddType(WeaponTypeClass* type)
-	{
-		WeaponTypeClass::ReadWeaponRules(type);
-
-		WeaponTypeClass::Add_Weapon_Type(type);
+		WeaponTypeClass::Add_Weapon_Type(instance);
 	}
 
 public:

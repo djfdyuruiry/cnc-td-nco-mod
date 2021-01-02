@@ -426,6 +426,10 @@
     <ClInclude Include="MOUSE.H" />
     <ClInclude Include="MSGBOX.H" />
     <ClInclude Include="MSGLIST.H" />
+    <ClInclude Include="Nco.TiberianDawn\enhancement_keys.h" />
+    <ClInclude Include="Nco.TiberianDawn\RulesInjector.h" />
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeConverter.h" />
+    <ClInclude Include="Nco.TiberianDawn\UnitApi.h" />
     <ClInclude Include="NOSEQCON.H" />
     <ClInclude Include="NULLCONN.H" />
     <ClInclude Include="NULLMGR.H" />
@@ -639,6 +643,8 @@
     <ClCompile Include="MPLAYER.CPP" />
     <ClCompile Include="MSGBOX.CPP" />
     <ClCompile Include="MSGLIST.CPP" />
+    <ClCompile Include="Nco.TiberianDawn\enhancement_keys.cpp" />
+    <ClCompile Include="Nco.TiberianDawn\TiberianDawnTypeConverter.cpp" />
     <ClCompile Include="NETDLG.CPP" />
     <ClCompile Include="NOSEQCON.CPP" />
     <ClCompile Include="NULLCONN.CPP" />
@@ -766,7 +772,6 @@
     <ClInclude Include="Nco.TiberianDawn\UtilApi.h" />
     <ClInclude Include="Nco.TiberianDawn\lua_events.h" />
     <ClInclude Include="Nco.TiberianDawn\nco.h" />
-    <ClInclude Include="Nco.TiberianDawn\parse.h" />
     <ClInclude Include="Nco.TiberianDawn\rules_ini_aircraft.h" />
     <ClInclude Include="Nco.TiberianDawn\rules_ini_building.h" />
     <ClInclude Include="Nco.TiberianDawn\rules_ini_bullet.h" />
@@ -796,7 +801,6 @@
     <ClCompile Include="Nco.TiberianDawn\game_messages.cpp" />
     <ClCompile Include="Nco.TiberianDawn\game_utils.cpp" />
     <ClCompile Include="Nco.TiberianDawn\lua_events.cpp" />
-    <ClCompile Include="Nco.TiberianDawn\parse.cpp" />
     <ClCompile Include="Nco.TiberianDawn\rules_ini_warhead.cpp" />
     <ClCompile Include="Nco.TiberianDawn\test_console.cpp" />
     <ClCompile Include="Nco.TiberianDawn\TiberianDawnNcoRuntime.cpp" />

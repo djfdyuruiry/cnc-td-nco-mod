@@ -20,28 +20,17 @@ private:
 			"Aircraft",
 			NEW_AIRCRAFT_RULE,
 			NEW_AIRCRAFT_COUNT_RULE,
-			*AIRCRAFT_COUNT_RULE_KEY,
-			AIRCRAFT_COUNT
+			AIRCRAFT_COUNT_RULE_KEY,
+			AIRCRAFT_COUNT,
+			NcoTypeConverter().GetModTypeMap<AircraftType>()
 		  )
 	{
 	}
 
 protected:
-	AircraftType ParseType(SectionName typeString, bool* parseError)
+	void AddType(AircraftTypeClass* instance)
 	{
-		return ParseAircraftType(typeString, parseError, false);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(typeString);
-	}
-
-	void ReadRulesAndAddType(AircraftTypeClass* type)
-	{
-		AircraftTypeClass::ReadAircraftRules(type);
-
-		AircraftTypeClass::Add_Aircraft_Type(type);
+		AircraftTypeClass::Add_Aircraft_Type(instance);
 	}
 
 public:

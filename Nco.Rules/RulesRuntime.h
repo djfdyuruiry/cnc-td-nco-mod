@@ -25,6 +25,7 @@ private:
 	IRulesIniReader* rulesReader;
 
 	std::function<void(IRulesIni&)> extensionSectionsSetup;
+	std::function<IRulesIniReader*(IRulesIni*)> rulesReaderBuilder;
 
 	bool luaIsEnabled;
 	bool luaConsoleIsEnabled;
@@ -33,10 +34,15 @@ private:
 	const char* logFilePath;
 	std::vector<const char*>& luaScripts;
 
-	RulesRuntime(unsigned int gameTicksPerSecond, std::function<void(IRulesIni&)> extensionSectionsSetup) :
+	RulesRuntime(
+		unsigned int gameTicksPerSecond,
+		std::function<void(IRulesIni&)> extensionSectionsSetup,
+		std::function<IRulesIniReader*(IRulesIni*)> rulesReaderBuilder
+	) :
 		rules(NULL),
 		rulesReader(NULL),
 		extensionSectionsSetup(extensionSectionsSetup),
+		rulesReaderBuilder(rulesReaderBuilder),
 		tickIntervalInMillis(ONE_SEC_IN_MILLIS / gameTicksPerSecond),
 		luaScripts(*(new std::vector<const char*>()))
 	{
@@ -72,16 +78,13 @@ private:
 
 	void ReadLogSettings()
 	{
-		LogInfo("Parsing log level and file path from rules ini");
-
 		auto logLevelBuffer = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogLevel");
-
-		ConvertStringToUpperCase(logLevelBuffer);
 
 		currentLogLevel = ParseLogLevel(logLevelBuffer);
 		logFilePath = rulesReader->ReadRuleValue<char*>(NCO_RULES_SECTION_NAME, "LogFile");
 
-		delete logLevelBuffer;
+		GetLogger().SetLogLevel(currentLogLevel);
+		GetLogger().SetLogFilePath(logFilePath);
 	}
 
 	void DefineRulesSections() {
@@ -98,8 +101,7 @@ private:
 						   LogLevelToString(TRACE)
 					   })
 					   .WithDefault("OFF")
-
-				  << "LogFile"  
+				  << s.BuildRule("LogFile").WithDefault("log\\nco.log")
 				  << LUA_SCRIPTS_RULE
 				  << ENABLE_LUA_SCRIPTS_RULE  << BOOL_RULE << true
 				  << ENABLE_LUA_CONSOLE_RULE  << BOOL_RULE;
@@ -164,9 +166,13 @@ private:
 	}
 
 public:
-	static RulesRuntime& Build(unsigned int gameTicksPerSecond, std::function<void(IRulesIni&)> extensionSectionsSetup)
+	static RulesRuntime& Build(
+		unsigned int gameTicksPerSecond,
+		std::function<void(IRulesIni&)> extensionSectionsSetup,
+		std::function<IRulesIniReader*(IRulesIni*)> rulesReaderBuilder
+	)
 	{
-		return *(new RulesRuntime(gameTicksPerSecond, extensionSectionsSetup));
+		return *(new RulesRuntime(gameTicksPerSecond, extensionSectionsSetup, rulesReaderBuilder));
 	}
 
 	~RulesRuntime()
@@ -195,7 +201,7 @@ public:
 
 		DefineRulesSections();
 
-		rulesReader = &(T::Build(*rules));
+		rulesReader = rulesReaderBuilder(rules);
 
 		ReadLogSettings();
 		ReadLuaSettings();

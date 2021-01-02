@@ -2,12 +2,12 @@
 
 #include "ILuaStateWrapper.h"
 #include "ILuaValueValidator.h"
-#include "LuaResultWithValue.h"
+#include <ResultWithValue.h>
 
 template<class T> class LuaValueUtils
 {
 public:
-	static LuaResultWithValue<T> ValidateAndReadValue(
+	static ResultWithValue<T> ValidateAndReadValue(
 		ILuaStateWrapper& lua,
 		int stackIndex,
 		ILuaValueValidator& validator
@@ -17,16 +17,20 @@ public:
 
 		if (validateResult.IsErrorResult())
 		{
-			auto& readResult = LuaResultWithValue<T>::BuildWithError(FormatString("Lua value provided was invalid: %s", result.GetError());
+			auto& readResult = ResultWithValue<T>::BuildWithError(
+				"Lua value provided was invalid: %s", validateResult.GetError()
+			);
 
 			delete &validateResult;
 
 			return readResult;
 		}
 
+		delete &validateResult;
+
 		auto value = lua.PullValue<T>(stackIndex);
 
-		return LuaResultWithValue<T>::Build(value);
+		return ResultWithValue<T>::BuildWithValue(value);
 	}
 
 };

@@ -7,9 +7,9 @@
 
 #include "../TYPE.H"
 
-#include "parse.h"
 #include "rules_ini_unit.h"
 #include "TechnoTypeApi.h"
+#include "TiberianDawnNcoRuntime.h"
 
 #define EXTRACTOR_UNT(f) EXTRACTOR(UnitTypeClass, f)
 #define INJECTOR_UNT(t, f) INJECTOR(UnitTypeClass, t, f)
@@ -20,7 +20,7 @@ class UnitApi : public TechnoTypeApi<UnitTypeClass, UnitType>
 {
 private:
 	UnitApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		TechnoTypeApi(strdup("Unit"), rulesInfo, UNIT_FIRST, getCount, ParseUnitType, UnitTypeToString)
+		TechnoTypeApi(strdup("Units"), rulesInfo, UNIT_FIRST, getCount)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			CAN_BE_FOUND_IN_CRATE_RULE,
@@ -89,25 +89,16 @@ private:
 			PrimitiveTypeValidator<bool>::Build()
 		).WithFieldWrapper(
 			UNIT_SPEED_RULE,
-			EXTRACTOR_UNT(UnitSpeedTypeToString(i.Speed)),
+			EXTRACTOR_UNT(NcoTypeConverter().ToStringOrDefault(i.Speed)),
 			[](UnitTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Speed = ParseUnitSpeedType(valueUpper, NULL);
-
-				delete valueUpper;
+				i.Speed = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					i.Speed
+				);
 			},
-			ParseCheckValidator<SpeedType>::Build("Unit Speed", ParseUnitSpeedType)
-		).WithFieldWrapper(
-			RATE_OF_TURN_RULE,
-			SIMPLE_EXTRACTOR_UNT(ROT),
-			SIMPLE_INJECTOR_UNT(unsigned char, ROT),
-			NumbericRangeValidator<>::Build(0, UCHAR_MAX)
-		).WithFieldWrapper(
-			TRANSPORT_CAPACITY_RULE,
-			SIMPLE_EXTRACTOR_UNT(TransportCapacity),
-			SIMPLE_INJECTOR_UNT(unsigned int, TransportCapacity),
-			NumbericRangeValidator<>::Build(0, UINT_MAX)
+			ParseCheckValidator<SpeedType>::Build("Unit Speed", [](auto stringValue) {
+				return &NcoTypeConverter().Parse<SpeedType>(stringValue);
+			})
 		);
 	}
 

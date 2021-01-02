@@ -572,7 +572,9 @@ void TerrainClass::AI(void)
 				*/
 				if (IsSporing) {
 					if (Fetch_Stage() >= Get_Build_Frame_Count(Class->Get_Image_Data())-1) {
-						Explosion_Damage(Sort_Y(), 5, NULL, WARHEAD_SPORE);
+						auto blossomTreeDamage = Read_Blossom_Tree_Damage_Game_Rule();
+
+						Explosion_Damage(Sort_Y(), blossomTreeDamage, NULL, WARHEAD_SPORE);
 						Set_Stage(FIRST_SPORE_STAGE);
 						if (Random() & 1) {
 							IsSporing = false;

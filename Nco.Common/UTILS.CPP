@@ -15,9 +15,8 @@ static const auto INT_MIN_STRING_LENGTH = 11u;
 static const auto MOD_FILE_NAME_LENGTH = 17u;
 
 static char* MOD_DATA_PATH = NULL;
-static bool CONSOLE_OPEN = false;
 
-void ShowError(const char* messageFormat, ...)
+void ShowError(const char* messageFormat, va_list formatArgs)
 {
 	if (StringIsEmpty(messageFormat))
 	{
@@ -26,14 +25,7 @@ void ShowError(const char* messageFormat, ...)
 		return;
 	}
 
-	va_list formatArgs;
-	va_start(formatArgs, messageFormat);
-
-	auto formattedMessageBuffer = FormatString(messageFormat, GetLogger().GetLogLineLength, formatArgs);
-
-	va_end(formatArgs);
-
-	LogError(formattedMessageBuffer);
+	auto formattedMessageBuffer = FormatString(messageFormat, GetLogger().GetLogLineLength(), formatArgs);
 
 	// we don't want a message box blocking an automated test
 	#ifndef CI_ENV
@@ -45,7 +37,34 @@ void ShowError(const char* messageFormat, ...)
 	);
 	#endif
 
+	LogError(formattedMessageBuffer);
+
 	delete formattedMessageBuffer;
+}
+
+void ShowError(const char* messageFormat, ...)
+{
+	va_list formatArgs;
+	va_start(formatArgs, messageFormat);
+
+	ShowError(messageFormat, formatArgs);
+
+	va_end(formatArgs);
+}
+
+void ShowErrorAndExit(const char* messageFormat, va_list formatArgs)
+{
+	ShowError(messageFormat, formatArgs);
+
+	exit(1);
+}
+
+void ShowErrorAndExit(const char* messageFormat, ...)
+{
+	va_list formatArgs;
+	va_start(formatArgs, messageFormat);
+
+	ShowErrorAndExit(messageFormat, formatArgs);
 }
 
 const char* GetEnvVar(const char* envVarName, bool* valueFound) {
@@ -116,7 +135,7 @@ void WithWin32ErrorMessage(std::function<void(const char*)> handler)
 	delete error;
 }
 
-bool IsIntString(char* numberValue)
+bool IsIntString(const char* numberValue)
 {
 	if (StringIsEmpty(numberValue))
 	{
@@ -130,23 +149,7 @@ bool IsIntString(char* numberValue)
 	return !StringsAreEqual(numberValue, remainder);
 }
 
-bool IsIntString(const char* numberValue)
-{
-	if (StringIsEmpty(numberValue))
-	{
-		return false;
-	}
-
-	auto numberValueStr = strdup(numberValue);
-
-	auto result = IsIntString(numberValueStr);
-
-	delete numberValueStr;
-
-	return result;
-}
-
-bool IsUnsignedIntString(char* numberValue)
+bool IsUnsignedIntString(const char* numberValue)
 {
 	if (StringIsEmpty(numberValue))
 	{
@@ -160,23 +163,7 @@ bool IsUnsignedIntString(char* numberValue)
 	return !StringsAreEqual(numberValue, remainder);
 }
 
-bool IsUnsignedIntString(const char* numberValue)
-{
-	if (StringIsEmpty(numberValue))
-	{
-		return false;
-	}
-
-	auto numberValueStr = strdup(numberValue);
-
-	auto result = IsUnsignedIntString(numberValueStr);
-
-	delete numberValueStr;
-
-	return result;
-}
-
-bool IsDoubleString(char* numberValue)
+bool IsDoubleString(const char* numberValue)
 {
 	if (StringIsEmpty(numberValue))
 	{
@@ -204,18 +191,19 @@ char* ConvertNumberToString(int number)
 	return numberBuffer;
 }
 
-bool IsBooleanString(char* booleanValue)
+bool IsBooleanString(const char* booleanValue)
 {
-	if (StringIsEmpty(booleanValue)
-		|| (!StringsAreEqual(booleanValue, "TRUE") && !StringsAreEqual(booleanValue, "FALSE")))
-	{
-		return false;
-	}
+	auto booleanValueUpper = ConvertStringToUpperCase(booleanValue);
 
-	return true;
+	auto isValid = !StringIsEmpty(booleanValueUpper)
+		&& (StringsAreEqual(booleanValueUpper, "TRUE") || StringsAreEqual(booleanValueUpper, "FALSE"));
+
+	delete booleanValueUpper;
+
+	return isValid;
 }
 
-bool ParseBoolean(char* booleanValue, bool* parseError)
+bool ParseBoolean(const char* booleanValue, bool* parseError)
 {
 	if (!IsBooleanString(booleanValue))
 	{
@@ -227,31 +215,16 @@ bool ParseBoolean(char* booleanValue, bool* parseError)
 		return false;
 	}
 
-	return StringsAreEqual(booleanValue, "TRUE");
+	auto booleanValueUpper = ConvertStringToUpperCase(booleanValue);
+
+	auto boolValue = StringsAreEqual(booleanValueUpper, "TRUE");
+
+	delete booleanValueUpper;
+
+	return boolValue;
 }
 
-bool ParseBoolean(const char* booleanValue, bool* parseError)
-{
-	if (StringIsEmpty(booleanValue))
-	{
-		if (parseError != NULL)
-		{
-			*parseError = true;
-		}
-
-		return false;
-	}
-
-	auto booleanValueStr = strdup(booleanValue);
-
-	auto result = ParseBoolean(booleanValueStr, parseError);
-
-	delete booleanValueStr;
-
-	return result;
-}
-
-bool ParseBooleanOrDefault(char* booleanValue, bool default)
+bool ParseBooleanOrDefault(const char* booleanValue, bool default)
 {
 	bool parseError = false;
 
@@ -263,22 +236,6 @@ bool ParseBooleanOrDefault(char* booleanValue, bool default)
 	}
 
 	return value;
-}
-
-bool ParseBooleanOrDefault(const char* booleanValue, bool default)
-{
-	if (StringIsEmpty(booleanValue))
-	{
-		return default;
-	}
-
-	auto booleanValueStr = strdup(booleanValue);
-
-	auto result = ParseBooleanOrDefault(booleanValueStr, default);
-
-	delete booleanValueStr;
-
-	return result;
 }
 
 const char* ConvertBooleanToString(bool booleanValue)
@@ -320,6 +277,8 @@ const char* GetModDataPath()
 		return MOD_DATA_PATH;
 	}
 
+	MOD_DATA_PATH = AllocateString(MAX_PATH);
+
 	HMODULE moduleHandle;
 
 	if (
@@ -327,41 +286,26 @@ const char* GetModDataPath()
 			GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
 			(LPCSTR)&GetModDataPath,
 			&moduleHandle
-		)
-		|| !Win32HandleIsValid(moduleHandle)
+		)															  // get nco dll/exe handle...
+		|| !Win32HandleIsValid(moduleHandle)						  // then check exe/dll handle is valid...
+		|| !GetModuleFileName(moduleHandle, MOD_DATA_PATH, MAX_PATH)  // and finally, get path to dll/exe using handle
 	)
 	{
 		WithWin32ErrorMessage([&](auto e) {
-			ShowError("Unable to get handle on module: %s", e);
+			ShowErrorAndExit("Unable to get NCO mod data path: %s", e);
 		});
-
-		exit(1);
 	}
-
-	auto modDllPath = AllocateString(MAX_PATH);
-
-	if (!GetModuleFileName(moduleHandle, modDllPath, MAX_PATH))
+	else
 	{
-		WithWin32ErrorMessage([&](auto e) {
-			ShowError("Unable to get mod data path: %s", e);
-		});
+		// remove exe/dll filename
+		auto moduleDirectoryPath = ExtractSubstring(MOD_DATA_PATH, strlen(MOD_DATA_PATH) - MOD_FILE_NAME_LENGTH);
 
-		exit(1);
+		delete MOD_DATA_PATH;
+
+		MOD_DATA_PATH = moduleDirectoryPath;
 	}
 
-	auto modDllPathLength = strlen(modDllPath);
-	auto modPathLength = modDllPathLength - MOD_FILE_NAME_LENGTH;
-
-	MOD_DATA_PATH = AllocateString(MAX_PATH);
-
-	for (auto c = 0u; c < modPathLength; c++)
-	{
-		MOD_DATA_PATH[c] = modDllPath[c];
-	}
-
-	delete modDllPath;
-
-	LogInfo("Resolved mod data path: %s", MOD_DATA_PATH);
+	LogInfo("Resolved NCO mod data path: %s", MOD_DATA_PATH);
 
 	return MOD_DATA_PATH;
 }
@@ -376,52 +320,63 @@ void StartConsoleOutput()
 #ifdef CI_ENV
 	puts("WARNING: CI environment detected - skipped windows console allocation");
 #else
-	if (CONSOLE_OPEN)
+	StopConsoleOutput();
+
+	if (
+		!AllocConsole()
+		&& !AttachConsole(GetCurrentProcessId())
+		&& !AttachConsole(ATTACH_PARENT_PROCESS)
+	)
 	{
-		LogWarn("Attempt to open Win32 console when it was already open detected, ignoring");
+		WithWin32ErrorMessage([&](auto e) {
+			ShowError("Error opening Win32 console: %s", e);
+
+			StopConsoleOutput();
+		});
+
 		return;
 	}
 
-	if (!AttachConsole(ATTACH_PARENT_PROCESS)
-		&& !AllocConsole()
-		&& !AttachConsole(GetCurrentProcessId()))
-	{
-		WithWin32ErrorMessage([&](auto e) {
-			LogError("Error opening Win32 console: %s", e);
-		});
+	auto stdOutOpen = freopen("CON", "w", stdout);
+	auto stdErrOpen = freopen("CON", "w", stderr);
+	auto stdInOpen = freopen("CON", "w", stdin);
 
-		exit(1);
+	if (stdOutOpen && stdErrOpen && stdInOpen)
+	{
+		return;
 	}
 
-	freopen("CON", "w", stdout);
-	freopen("CON", "w", stderr);
-	freopen("CON", "w", stdin);
+	WithWin32ErrorMessage([&](auto e) {
+		ShowError(
+			"Error opening stream(s):\nSTDOUT Open: %s\nSTDERR Open: %s\nSTDERR Open: %s\n%s",
+			ConvertBooleanToString(stdInOpen),
+			ConvertBooleanToString(stdErrOpen),
+			ConvertBooleanToString(stdOutOpen),
+			e
+		);
 
-	CONSOLE_OPEN = true;
+		StopConsoleOutput();
+	});
 #endif
 }
 
 void StopConsoleOutput()
 {
-#ifdef CI_ENV
+#ifdef CI_ENV 
 	puts("WARNING: CI environment detected - skipped windows console stop");
 #else
-	if (!CONSOLE_OPEN)
-	{
-		LogWarn("Attempt to close Win32 console when it was not alreday open detected, ignoring");
-		return;
-	}
-
+	#ifndef TEST_CONSOLE
 	if (!FreeConsole())
 	{
-		LogError("Error closing Win32 console: %s", GetWin32ErrorMessage());
+		WithWin32ErrorMessage([&](auto e) {
+			LogWarn("Error closing Win32 console: %s", e);
+		});
 	}
 
 	fclose(stdout);
 	fclose(stderr);
 	fclose(stdin);
-
-	CONSOLE_OPEN = false;
+	#endif
 #endif
 }
 

@@ -772,9 +772,6 @@
     <ClInclude Include="Nco.TiberianDawn\GameMessagesThread.h">
       <Filter>Source Files\Nco.TiberianDawn\Lua\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Nco.TiberianDawn\parse.h">
-      <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Nco.TiberianDawn\nco.h">
       <Filter>Source Files\Nco.TiberianDawn</Filter>
     </ClInclude>
@@ -819,6 +816,18 @@
     </ClInclude>
     <ClInclude Include="Nco.TiberianDawn\WeaponApi.h">
       <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\TiberianDawnTypeConverter.h">
+      <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\UnitApi.h">
+      <Filter>Source Files\Nco.TiberianDawn\Lua\Api\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\RulesInjector.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Nco.TiberianDawn\enhancement_keys.h">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1414,9 +1423,6 @@
     <ClCompile Include="Nco.TiberianDawn\TiberianDawnNcoRuntime.cpp">
       <Filter>Source Files\Nco.TiberianDawn</Filter>
     </ClCompile>
-    <ClCompile Include="Nco.TiberianDawn\parse.cpp">
-      <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Nco.TiberianDawn\test_console.cpp">
       <Filter>Source Files\Nco.TiberianDawn</Filter>
     </ClCompile>
@@ -1424,6 +1430,12 @@
       <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClCompile>
     <ClCompile Include="Nco.TiberianDawn\tiberian_dawn_rule_types.cpp">
+      <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="Nco.TiberianDawn\TiberianDawnTypeConverter.cpp">
+      <Filter>Source Files\Nco.TiberianDawn\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Nco.TiberianDawn\enhancement_keys.cpp">
       <Filter>Source Files\Nco.TiberianDawn\Rules</Filter>
     </ClCompile>
   </ItemGroup>

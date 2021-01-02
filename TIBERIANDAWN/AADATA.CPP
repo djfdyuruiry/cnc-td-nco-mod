@@ -259,15 +259,10 @@ AircraftTypeClass const** AircraftTypeClass::Pointers = NULL;
 AircraftTypeClass const* AircraftTypeClass::By_Type(AircraftType type)
 {
 	if (Pointers != NULL) {
-		//Log_Trace("Aircraft lookup by type: %d", type);
 		return Pointers[type];
 	}
 
-	LogDebug("Initialising Aircraft types");
-
-	auto aircraftCount = ReadAircraftCount();
-
-	Pointers = new AircraftTypeClass const* [aircraftCount] {
+	Pointers = new AircraftTypeClass const* [256] {
 		&TransportHeli,
 		& AttackPlane,
 		& AttackHeli,
@@ -365,7 +360,14 @@ AircraftTypeClass::AircraftTypeClass(
 										houseListCsv,
 										primary,
 										secondary,
-						                armor)
+						                armor,
+										false,
+										ANIM_NONE,
+										WARHEAD_NONE,
+										0u,
+										false,
+										false,
+										true)
 {
 	IsRotorCustom = is_rotorcustom;
 	Type = airtype;
@@ -374,21 +376,18 @@ AircraftTypeClass::AircraftTypeClass(
 	IsLandable = is_landable;
 	IsRotorEquipped = is_rotorequipped;
 	ROT = rot;
-
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildAircraftSection(IniName);
-	ReadAircraftRules(this);
 }
-void AircraftTypeClass::ReadAircraftRules(AircraftTypeClass* aircraft)
+void AircraftTypeClass::Read_Rules(IRulesIniReader& reader)
 {
-	auto iniName = aircraft->IniName;
+	auto iniName = Get_Rules_Name();
 
-	ReadObjectRules(aircraft);
-	ReadTechnoRules(aircraft);
+	ObjectTypeClass::Read_Rules(reader);
+	TechnoTypeClass::Read_Rules(reader);
 
-	aircraft->IsFixedWing = Read_Cant_Hover(iniName, aircraft->IsFixedWing);
-	aircraft->IsLandable = Read_Can_Land(iniName, aircraft->IsLandable);
-	aircraft->IsRotorEquipped = Read_Has_Rotor(iniName, aircraft->IsRotorEquipped);
-	aircraft->ROT = Read_Rate_Of_Turn(iniName, aircraft->ROT);
+	IsFixedWing = reader.ReadRuleValue<bool>(iniName, CANT_HOVER_RULE, IsFixedWing);
+	IsLandable = reader.ReadRuleValue<bool>(iniName, CAN_LAND_RULE, IsLandable);
+	IsRotorEquipped = reader.ReadRuleValue<bool>(iniName, HAS_ROTOR_RULE, IsRotorEquipped);
+	ROT = reader.ReadRuleValue<unsigned int>(iniName, RATE_OF_TURN_RULE, ROT);
 }
 
 void AircraftTypeClass::Add_Aircraft_Type(AircraftTypeClass* aircraftInstance)

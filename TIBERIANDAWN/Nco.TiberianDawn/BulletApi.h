@@ -1,20 +1,19 @@
 #pragma once
 
+#include <IRulesIniSection.h>
 #include <LambdaValidator.h>
 #include <LuaValueAdapter.h>
 #include <NumericRangeValidator.h>
-
 #include <ParseCheckValidator.h>
+#include <RulesSectionTypeWrapperApi.h>
 
 #include "../DEFINES.H"
 #include "../TYPE.H"
 
-#include "IRulesIniSection.h"
-#include "parse.h"
 #include "rules_ini_bullet.h"
 #include "rules_ini_generic.h"
 #include "rules_ini_mods.h"
-#include "RulesSectionTypeWrapperApi.h"
+#include "TiberianDawnNcoRuntime.h"
 
 #define EXTRACTOR_BLT(f) EXTRACTOR(BulletTypeClass, f)
 #define INJECTOR_BLT(t, f) INJECTOR(BulletTypeClass, t, f)
@@ -25,7 +24,18 @@ class BulletApi : public RulesSectionTypeWrapperApi<BulletTypeClass, BulletType>
 {
 protected:
 	BulletApi(IRulesIniSection& rulesInfo, std::function<int(void)> getCount) :
-		RulesSectionTypeWrapperApi(strdup("Bullet"), rulesInfo, BULLET_FIRST, getCount, ParseBulletType, BulletTypeToString)
+		RulesSectionTypeWrapperApi(
+			strdup("Bullets"),
+			rulesInfo,
+			BULLET_FIRST,
+			getCount,
+			[](auto typeString) {
+				return &NcoTypeConverter().Parse<BulletType>(typeString);
+			},
+			[](auto type) {
+				return &NcoTypeConverter().ToString(type);
+			}
+		)
 	{
 		technoTypeWrapper.WithFieldWrapper(
 			BULLET_HIGH_RULE,
@@ -89,15 +99,16 @@ protected:
 			PrimitiveTypeValidator<bool>::Build()
 		).WithFieldWrapper(
 			BULLET_WARHEAD_RULE,
-			EXTRACTOR_BLT(WarheadTypeToString(i.Warhead)),
+			EXTRACTOR_BLT(NcoTypeConverter().ToStringOrDefault(i.Warhead)),
 			[](BulletTypeClass& i, ILuaStateWrapper& l, LuaValueAdapter& va, int si) {
-				auto valueUpper = ConvertStringToUpperCase(va.Read<const char*>(l, si));
-
-				i.Warhead = ParseWarheadType(valueUpper, NULL);
-
-				delete valueUpper;
+				i.Warhead = NcoTypeConverter().ParseOrDefault(
+					va.Read<const char*>(l, si),
+					i.Warhead
+				);
 			},
-			ParseCheckValidator<WarheadType>::Build("Warhead", ParseWarheadType)
+			ParseCheckValidator<WarheadType>::Build("Warhead", [](auto valueString) {
+				return &NcoTypeConverter().Parse<WarheadType>(valueString);
+			})
 		).WithFieldWrapper(
 			BULLET_ARMING_RULE,
 			SIMPLE_EXTRACTOR_BLT(Arming),

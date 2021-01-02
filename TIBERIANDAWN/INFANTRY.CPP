@@ -427,21 +427,12 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 		Commence();
 
 		/*
-		**	Flame thrower infantry always go out with a bang.
+		**	Some infantry types go out with a bang.
 		*/
-		if (*this == INFANTRY_E4) {
-			new AnimClass(ANIM_NAPALM1, Coord);
-			Explosion_Damage(Coord, 80, 0, WARHEAD_FIRE);
-		}
+		if (Class->ExplodesUponDeath) {
+			new AnimClass(Class->DeathExplosionAnimation, Coord);
 
-		if (*this == INFANTRY_E2) {
-			new AnimClass(ANIM_ART_EXP1, Coord);
-			Explosion_Damage(Coord, 30, 0, WARHEAD_HE);
-		}
-
-		if (*this == INFANTRY_E5) {
-			new AnimClass(ANIM_CHEM_BALL, Coord);
-			Explosion_Damage(Coord, 80, 0, WARHEAD_HE);
+			Explosion_Damage(Coord, Class->DeathExplosionDamage, 0, Class->DeathExplosionWarhead);
 		}
 
 		VocType sound;

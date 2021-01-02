@@ -7,9 +7,8 @@ class Optional
 private:
 	void* data;
 
-	Optional()
+	Optional() : data(NULL)
 	{
-		data = NULL;
 	}
 
 public:
@@ -50,8 +49,8 @@ public:
 			delete data;
 		}
 
-		data = calloc(1, sizeof(T));
+		data = malloc(sizeof(T));
 
-		*(T*)data = value;
+		memcpy(data, &value, sizeof(T));
 	}
 };

@@ -51,16 +51,26 @@
 
 #define IS_MOD_TYPE_RULE "IsModType"
 
+// shared non-infantry rules
 #define HAS_CREW_RULE "HasCrew"
 
 #define TURRET_EQUIPPED_RULE "TurretEquipped"
 
 #define REPAIRABLE_RULE "Repairable"
 
-#define TRANSPORTER_RULE "CanTransportInfantry"
+// shared infantry/unit rules
+#define EXPLODES_UPON_DEATH_RULE "ExplodesUponDeath"
+
+#define DEATH_EXPLOSION_ANIMATION_RULE "DeathExplosionAnimation"
+
+#define DEATH_EXPLOSION_WARHEAD_RULE "DeathExplosionWarhead"
+
+#define DEATH_EXPLOSION_DAMAGE_RULE "DeathExplosionDamage"
 
 // shared unit/aircraft rules
 #define RATE_OF_TURN_RULE "RateOfTurn"
+
+#define TRANSPORTER_RULE "CanTransportInfantry"
 
 #define TRANSPORT_CAPACITY_RULE "TransportCapacity"
 

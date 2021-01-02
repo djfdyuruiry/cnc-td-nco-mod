@@ -15,28 +15,26 @@ private:
 			"Bullet",
 			NEW_BULLETS_RULE,
 			NEW_BULLET_COUNT_RULE,
-			*BULLET_COUNT_RULE_KEY,
-			BULLET_COUNT
+			BULLET_COUNT_RULE_KEY,
+			BULLET_COUNT,
+			NcoTypeConverter().GetModTypeMap<BulletType>()
 		  )
 	{
 	}
 
 protected:
-	BulletType ParseType(SectionName typeString, bool* parseError)
+	BulletTypeClass* CloneType(const char* baseTypeString, const char* typeString, BulletType baseType, BulletType type)
 	{
-		return ParseBulletType(typeString, parseError, false);
+		auto newType = TiberianDawnTypeMod::CloneType(baseTypeString, typeString, baseType, type);
+
+		strcpy(newType->RulesName, typeString);
+
+		return newType;
 	}
 
-	void AddRulesSection(SectionName typeString)
+	void AddType(BulletTypeClass* instance)
 	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildBulletSection(typeString);
-	}
-
-	void ReadRulesAndAddType(BulletTypeClass* type)
-	{
-		BulletTypeClass::ReadBulletRules(type);
-
-		BulletTypeClass::Add_Bullet_Type(type);
+		BulletTypeClass::Add_Bullet_Type(instance);
 	}
 
 public:

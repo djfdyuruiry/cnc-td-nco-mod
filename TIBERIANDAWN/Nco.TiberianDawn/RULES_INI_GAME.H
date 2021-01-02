@@ -24,6 +24,8 @@
 
 #define TIBERIUM_INFANTRY_DAMAGE_RULE "TiberiumInfantryDamage"
 
+#define TIBERIUM_BLOSSOM_TREE_DAMAGE_RULE "TiberiumBlossomTreeDamage"
+
 // harvesting rules
 #define CREDITS_PER_TIBERIUM_SCOOP_RULE "CreditsPerTiberiumScoop"
 
@@ -88,7 +90,7 @@
 // level specific rules
 #define SET_GDI_SCENARIO_2_BUILD_LEVEL_RULE "SetBuildLevelTo1InGdiScenario2"
 
-#define RENAME_TECH_CENTER_TO_PRISON_RULE "RenameTechCenterToPrisionInScenario3"
+#define RENAME_TECH_CENTER_TO_PRISON_RULE "RenameTechCenterToPrisionInNodScenario3"
 
 #define HIDE_E3_FROM_GDI_RULE "HideBazookaFromGdiUntilSenario8"
 

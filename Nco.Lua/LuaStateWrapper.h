@@ -16,14 +16,13 @@ private:
 
 	LuaStateWrapper(lua_State* lua, bool stateOwner) : lua(lua), stateOwner(stateOwner)
 	{
-		LuaType::InitIfRequired();
 	}
 
-	LuaResult& BuildResult(bool errorOccurredDuringExecution)
+	Result& BuildResult(bool errorOccurredDuringExecution)
 	{
 		return errorOccurredDuringExecution 
-			? LuaResult::BuildWithError(GetLastError())
-			: LuaResult::Build();
+			? Result::BuildWithError(GetLastError())
+			: Result::Build();
 	}
 
 	bool IsType(int typeCode, int stackIndex)
@@ -32,6 +31,16 @@ private:
 	}
 
 protected:
+	void PushOntoStack(int stackIndex)
+	{
+		lua_pushvalue(lua, stackIndex);
+	}
+
+	void PopFromStack(int stackIndex)
+	{
+		lua_pop(lua, stackIndex);
+	}
+
 	void SetIndex(int tableIndex, int index)
 	{
 		lua_rawseti(lua, tableIndex, index);
@@ -40,6 +49,11 @@ protected:
 	void SetIndex(int tableIndex, const char* index)
 	{
 		lua_setfield(lua, tableIndex, index);
+	}
+
+	bool PopKeyValuePair(int tableIndex)
+	{
+		return lua_next(lua, tableIndex) != 0;
 	}
 
 public:
@@ -53,6 +67,7 @@ public:
 		if (stateOwner && lua != NULL)
 		{
 			lua_close(lua);
+			lua = NULL;
 		}
 	}
 
@@ -175,126 +190,171 @@ public:
 		return lua_rawlen(lua, stackIndex);
 	}
 
-	void IterateOverTable(int stackIndex, std::function<void()> iterateAction)
+	Result& IterateOverTable(int stackIndex, std::function<void(int, int, const LuaType&)> iterateAction)
 	{
+		if (!IsTable(stackIndex))
+		{
+			return Result::BuildWithError("Value at stack index '%d' was not a table", stackIndex);
+		}
+
 		lua_pushvalue(lua, stackIndex);
-		lua_pushnil(lua);
 
-		auto valIndex = -2;
+		WriteNil();
 
-		while (lua_next(lua, valIndex))
+		auto keyIndex = -2;
+		auto valIndex = -1;
+
+		while (PopKeyValuePair(-2))
 		{
-			lua_pushvalue(lua, valIndex);
+			auto& valType = GetLuaType(valIndex);
 
-			if (iterateAction != NULL)
-			{
-				iterateAction();
-			}
+			iterateAction(keyIndex, valIndex, valType);
 
-			lua_pop(lua, 2);
+			PopFromStack(1);
 		}
 
-		lua_pop(lua, 1);
+		PopFromStack(1);
+
+		return Result::Build();
 	}
 
-	LuaResultWithValue<int>& ReadInteger(int stackIndex)
+	Result& IterateOverTable(std::function<void(int, int, const LuaType&)> iterateAction)
 	{
-		if (!lua_isinteger(lua, stackIndex))
+		return IterateOverTable(GetStackTop(), iterateAction);
+	}
+
+	Result& PushGlobalOntoStack(const char* variable)
+	{
+		if (StringIsEmpty(variable))
 		{
-			return LuaResultWithValue<int>::BuildWithError("Value is not an integer");
+			return Result::BuildWithError("Variable name passed to LuaStateWrapper::PushGlobalOntoStack was null or blank");
 		}
 
-		return LuaResultWithValue<int>::BuildWithValue(
+		lua_getglobal(lua, variable);
+
+		return Result::Build();
+	}
+
+	Result& PushTableFieldOntoStack(int stackIndex, const char* field)
+	{
+		if (StringIsEmpty(field))
+		{
+			return Result::BuildWithError("Field passed to ILuaStateWrapper::PushTableFieldOntoStack was null or empty");
+		}
+
+		if (!IsTable(stackIndex))
+		{
+			return Result::BuildWithError("Attempted to read field '%s' from a non-table value", field);
+		}
+
+		lua_getfield(lua, stackIndex, field);
+
+		return Result::Build();
+	}
+
+	Result& PushTableFieldOntoStack(const char* field)
+	{
+		return PushTableFieldOntoStack(GetStackTop(), field);
+	}
+
+	ResultWithValue<int>& ReadInteger(int stackIndex)
+	{
+		if (!IsInt(stackIndex))
+		{
+			return ResultWithValue<int>::BuildWithError("Value is not an integer");
+		}
+
+		return ResultWithValue<int>::BuildWithValue(
 			luaL_checkinteger(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<long long>& ReadBigInteger(int stackIndex)
+	ResultWithValue<long long>& ReadBigInteger(int stackIndex)
 	{
-		if (!lua_isinteger(lua, stackIndex))
+		if (!IsInt(stackIndex))
 		{
-			return LuaResultWithValue<long long>::BuildWithError("Value is not an integer");
+			return ResultWithValue<long long>::BuildWithError("Value is not an integer");
 		}
 
-		return LuaResultWithValue<long long>::BuildWithValue(
+		return ResultWithValue<long long>::BuildWithValue(
 			luaL_checkinteger(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<double>& ReadDouble(int stackIndex)
+	ResultWithValue<double>& ReadDouble(int stackIndex)
 	{
-		if (!lua_isnumber(lua, stackIndex))
+		if (!IsNumber(stackIndex))
 		{
-			return LuaResultWithValue<double>::BuildWithError("Value is not a double");
+			return ResultWithValue<double>::BuildWithError("Value is not a double");
 		}
 
-		return LuaResultWithValue<double>::BuildWithValue(
+		return ResultWithValue<double>::BuildWithValue(
 			luaL_checknumber(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<bool>& ReadBool(int stackIndex)
+	ResultWithValue<bool>& ReadBool(int stackIndex)
 	{
-		if (!lua_isboolean(lua, stackIndex))
+		if (!IsBool(stackIndex))
 		{
-			return LuaResultWithValue<bool>::BuildWithError("Value is not a boolean");
+			return ResultWithValue<bool>::BuildWithError("Value is not a boolean");
 		}
 
-		return LuaResultWithValue<bool>::BuildWithValue(
+		return ResultWithValue<bool>::BuildWithValue(
 			lua_toboolean(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<const char*>& ReadString(int stackIndex)
+	ResultWithValue<const char*>& ReadString(int stackIndex)
 	{
-		if (!lua_isstring(lua, stackIndex))
+		if (!IsString(stackIndex))
 		{
-			return LuaResultWithValue<const char*>::BuildWithError("Value is not a string");
+			return ResultWithValue<const char*>::BuildWithError("Value is not a string");
 		}
 
-		return LuaResultWithValue<const char*>::BuildWithValue(
+		return ResultWithValue<const char*>::BuildWithValue(
 			luaL_checkstring(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<void*>& ReadUserData(int stackIndex)
+	ResultWithValue<void*>& ReadUserData(int stackIndex)
 	{
 		if (!lua_isuserdata(lua, stackIndex))
 		{
-			return LuaResultWithValue<void*>::BuildWithError("Value is not userdata");
+			return ResultWithValue<void*>::BuildWithError("Value is not userdata");
 		}
 
-		return LuaResultWithValue<void*>::BuildWithValue(
+		return ResultWithValue<void*>::BuildWithValue(
 			lua_touserdata(lua, stackIndex)
 		);
 	}
 
-	LuaResultWithValue<int>& ReadInteger()
+	ResultWithValue<int>& ReadInteger()
 	{
 		return ReadInteger(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<long long>& ReadBigInteger()
+	ResultWithValue<long long>& ReadBigInteger()
 	{
 		return ReadBigInteger(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<double>& ReadDouble()
+	ResultWithValue<double>& ReadDouble()
 	{
 		return ReadDouble(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<bool>& ReadBool()
+	ResultWithValue<bool>& ReadBool()
 	{
 		return ReadBool(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<const char*>& ReadString()
+	ResultWithValue<const char*>& ReadString()
 	{
 		return ReadString(lua_gettop(lua));
 	}
 
-	LuaResultWithValue<void*>& ReadUserData()
+	ResultWithValue<void*>& ReadUserData()
 	{
 		return ReadUserData(GetStackTop());
 	}
@@ -324,23 +384,19 @@ public:
 		lua_pushstring(lua, value);
 	}
 
-	void WriteFunction(const char* name, lua_CFunction function, void* functionInfo)
+	void WriteFunction(lua_CFunction function, void* functionInfo)
 	{
 		lua_pushlightuserdata(lua, functionInfo);
 
 		lua_pushcclosure(lua, function, 1);
-
-		lua_setglobal(lua, name);
 	}
 
-	void WriteMethod(const char* name, void* objectPtr, lua_CFunction methodProxy, void* functionInfo)
+	void WriteMethod(void* objectPtr, lua_CFunction methodProxy, void* functionInfo)
 	{
 		lua_pushlightuserdata(lua, functionInfo);
 		lua_pushlightuserdata(lua, objectPtr);
 
 		lua_pushcclosure(lua, methodProxy, 2);
-
-		lua_setglobal(lua, name);
 	}
 
 	void WriteNil()
@@ -372,19 +428,19 @@ public:
 		delete message;
 	}
 
-	void RaiseError(LuaResult& result)
+	void RaiseError(Result& result)
 	{
 		RaiseError(result.GetError());
 	}
 
-	LuaResult& ExecuteScript(const char* script)
+	Result& ExecuteScript(const char* script)
 	{
 		return BuildResult(
 			luaL_dostring(lua, script)
 		);
 	}
 
-	LuaResult& ExecuteFile(const char* filePath)
+	Result& ExecuteFile(const char* filePath)
 	{
 		return BuildResult(
 			luaL_dofile(lua, filePath)

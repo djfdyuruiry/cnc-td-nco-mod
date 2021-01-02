@@ -4,6 +4,7 @@
 #include <ILuaStateWrapper.h>
 #include <ILuaRuntime.h>
 #include <LuaRuntime.h>
+#include <LuaStateFactory.h>
 #include <LuaStateWrapper.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -56,7 +57,7 @@ namespace Integration
 			public:
 				TEST_METHOD_INITIALIZE(Setup)
 				{
-					luaState = luaL_newstate();
+					luaState = LuaStateFactory::Build(".\\");
 
 					luaWrapper = &LuaStateWrapper::Build(luaState);
 					luaRuntime = &LuaRuntime::Build(*luaWrapper);
@@ -64,7 +65,6 @@ namespace Integration
 
 				TEST_METHOD_CLEANUP(TearDown)
 				{
-					lua_close(luaState);
 					delete luaWrapper;
 				}
 
@@ -90,7 +90,7 @@ namespace Integration
 				{
 					RegisterTestApi();
 
-					luaWrapper->ExecuteScript("return addNumbers(4365.513, 82)");
+					luaWrapper->ExecuteScript("return Nco.testy.addNumbers(4365.513, 82)");
 
 					auto sumResult = luaWrapper->ReadDouble();
 

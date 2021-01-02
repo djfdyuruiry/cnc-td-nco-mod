@@ -15,42 +15,32 @@ private:
 			"Warhead",
 			NEW_WARHEADS_RULE,
 			NEW_WARHEAD_COUNT_RULE,
-			*WARHEAD_COUNT_RULE_KEY,
-			WARHEAD_COUNT
+			WARHEAD_COUNT_RULE_KEY,
+			WARHEAD_COUNT,
+			NcoTypeConverter().GetModTypeMap<WarheadType>()
 		  )
 	{
 	}
 
 protected:
-	WarheadType ParseType(SectionName typeString, bool* parseError)
-	{
-		return ParseWarheadType(typeString, parseError, false);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildWarheadSection(typeString);
-	}
-
 	WarheadTypeClass* CloneType(const char* baseTypeString, const char* typeString, WarheadType baseType, WarheadType type)
 	{
 		auto newType = TiberianDawnTypeMod::CloneType(baseTypeString, typeString, baseType, type);
+		auto newModifier = new unsigned[ARMOR_COUNT];
 
-		auto modifierSize = sizeof(unsigned) * ARMOR_COUNT;
-		auto modifier = newType->Modifier;
-		
-		newType->Modifier = (unsigned*)malloc(modifierSize);
+		for (auto i = 0u; i < ARMOR_COUNT; i++)
+		{
+			newModifier[i] = newType->Modifier[i];
+		}
 
-		memcpy(newType->Modifier, modifier, modifierSize);
+		newType->Modifier = newModifier;
 
 		return newType;
 	}
 
-	void ReadRulesAndAddType(WarheadTypeClass* type)
+	void AddType(WarheadTypeClass* instance)
 	{
-		WarheadTypeClass::ReadWarheadRules(type);
-
-		WarheadTypeClass::Add_Warhead_Type(type);
+		WarheadTypeClass::Add_Warhead_Type(instance);
 	}
 
 public:

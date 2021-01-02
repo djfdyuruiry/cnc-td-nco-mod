@@ -3,7 +3,13 @@
 #include <functional>
 #include <windows.h>
 
+void ShowError(const char* messageFormat, va_list formatArgs);
+
 void ShowError(const char* messageFormat, ...);
+
+void ShowErrorAndExit(const char* messageFormat, va_list formatArgs);
+
+void ShowErrorAndExit(const char* messageFormat, ...);
 
 const char* GetEnvVar(const char* envVarName, bool* valueFound);
 
@@ -13,27 +19,19 @@ char* GetWin32ErrorMessage();
 
 void WithWin32ErrorMessage(std::function<void(const char*)> handler);
 
-bool IsIntString(char* numberValue);
-
 bool IsIntString(const char* numberValue);
-
-bool IsUnsignedIntString(char* numberValue);
 
 bool IsUnsignedIntString(const char* numberValue);
 
-bool IsDoubleString(char* numberValue);
+bool IsDoubleString(const char* numberValue);
 
 int ParseNumber(char character);
 
 char* ConvertNumberToString(int number);
 
-bool IsBooleanString(char* booleanValue);
-
-bool ParseBoolean(char* booleanValue, bool* parseError);
+bool IsBooleanString(const char* booleanValue);
 
 bool ParseBoolean(const char* booleanValue, bool* parseError);
-
-bool ParseBooleanOrDefault(char* booleanValue, bool default);
 
 bool ParseBooleanOrDefault(const char* booleanValue, bool default);
 

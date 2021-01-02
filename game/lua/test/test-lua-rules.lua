@@ -1,158 +1,124 @@
-local typeAreas =
-  {
-    warheads = {
-      getTypes = getWarheadTypes,
-      getRuleNames = getWarheadRuleNames,
-      getRuleValue = getWarheadRule,
-      setRuleValue = setWarheadRule
-    },
-    bullets = {
-      getTypes = getBulletTypes,
-      getRuleNames = getBulletRuleNames,
-      getRuleValue = getBulletRule,
-      setRuleValue = setBulletRule
-    },
-    weapons = {
-      getTypes = getWeaponTypes,
-      getRuleNames = getWeaponRuleNames,
-      getRuleValue = getWeaponRule,
-      setRuleValue = setWeaponRule
-    },
-    building = {
-      getTypes = getBuildingTypes,
-      getRuleNames = getBuildingRuleNames,
-      getRuleValue = getBuildingRule,
-      setRuleValue = setBuildingRule
-    },
-    infantry = {
-      getTypes = getInfantryTypes,
-      getRuleNames = getInfantryRuleNames,
-      getRuleValue = getInfantryRule,
-      setRuleValue = setInfantryRule
-    },
-    unit = {
-      getTypes = getUnitTypes,
-      getRuleNames = getUnitRuleNames,
-      getRuleValue = getUnitRule,
-      setRuleValue = setUnitRule
-    },
-    aircraft = {
-      getTypes = getAircraftTypes,
-      getRuleNames = getAircraftRuleNames,
-      getRuleValue = getAircraftRule,
-      setRuleValue = setAircraftRule
-    }
-  }
+local areasProcessed = 0
+local typesProcessed = 0
+local sectionsProcessed = 0
+local rulesRead = 0
+local rulesWritten = 0
+local validationErrors = 0
 
-function main()
-  local oldLogLevel = getLogLevel()
-  setLogLevel("info");
+local validationFailed = false
 
-  log(">Testing Lua API get/set rules")
+local sectionsToTest =
+{
+  "Nco",
+  "Enhancements",
+  "Mods",
+  "Game",
+  "Easy",
+  "Normal",
+  "Hard",
+  "AI",
+  "IQ",
+  "AirStrike",
+  "IonCannon",
+  "NuclearStrike"
+}
 
-  local areasProcessed = 0
-  local typesProcessed = 0
-  local rulesRead = 0
-  local rulesWritten = 0
-  local gameRulesRead = 0
-  local gameRulesWritten = 0
-  local validationErrors = 0
-  local gameRuleValidationErrors = 0
+local function testRule(rule)
+  local ruleValue = rule()
 
-  local validationFailed = false
+  rulesRead = rulesRead + 1
 
-  local status, err = pcall(function()
-    log(">>Testing get/set game rules")
+  rule(ruleValue)
 
-    for _, gameRule in ipairs(getGameRuleNames()) do
-        log("Game rule: %s", gameRule)
+  rulesWritten = rulesWritten + 1
 
-        local ruleValue = getGameRule(gameRule)
+  local newRuleValue = rule()
 
-        gameRulesRead = gameRulesRead + 1
+  if newRuleValue == ruleValue then
+    return
+  end
 
-        setGameRule(gameRule, ruleValue)
+  showError(
+    "Validation of rule value failed: %s -> %s\nExpected: %s - Got: %s",
+    rule.sectionName,
+    rule.name,
+    tostring(ruleValue),
+    tostring(newRuleValue)
+  )
 
-        gameRulesWritten = gameRulesWritten + 1
+  validationFailed = true
+  ruleValidationErrors = ruleValidationErrors + 1
+end
 
-        local newRuleValue = getGameRule(gameRule)
+local function testSectionRules(section)
+  Nco.Utils.log(">> Testing get/set '%s' rules", section.name)
 
-        if newRuleValue ~= ruleValue then
-          showError("Validation of game rule value failed %s\nExpected: %s - Got: %s", gameRule, tostring(ruleValue), tostring(newRuleValue))
+  for _, ruleName in ipairs(section.getRuleNames()) do
+    testRule(section[ruleName])
+  end
 
-          validationFailed = true
-          gameRuleValidationErrors = gameRuleValidationErrors + 1
-        end
+  sectionsProcessed = sectionsProcessed + 1
+end
+
+local function testTypeRules()
+  for _, area in ipairs(Nco.Info.getTypeNames()) do
+    Nco.Utils.log(">> Testing rules for '%s' types", area)
+
+    local typeArea = Nco[area]
+
+    for _, areaType in ipairs(typeArea.getTypes()) do
+      testSectionRules(typeArea[areaType])
+      
+      typesProcessed = typesProcessed + 1
     end
 
-    for area, typeArea in pairs(typeAreas) do
-      log(">>Testing %s get/set rules", area)
+    areasProcessed = areasProcessed + 1
+  end
+end
 
-      for _, areaType in ipairs(typeArea.getTypes()) do
-        log(">>>Testing type %s get/set rules", areaType)
+local function testGenericRules()
+  for _, sectionName in ipairs(sectionsToTest) do
+    testSectionRules(Nco.Rules[sectionName])
+  end
+end
 
-        for _, ruleName in ipairs(typeArea.getRuleNames()) do
-          local ruleValue = typeArea.getRuleValue(areaType, ruleName)
+local function main()
+  local oldLogLevel = Nco.Utils.getLogLevel()
+  Nco.Utils.setLogLevel("info");
 
-          rulesRead = rulesRead + 1
+  Nco.Utils.log("> Testing Lua API get/set rules")
 
-          if ruleValue == nil then
-            log (">>>WARNING: Rule '%s' returned nil, skipping set rule validation test", ruleName)
-
-            goto areaRule
-          end
-
-          typeArea.setRuleValue(areaType, ruleName, ruleValue)
-
-          rulesWritten = rulesWritten + 1
-
-          local newRuleValue = typeArea.getRuleValue(areaType, ruleName) 
-
-          if newRuleValue ~= ruleValue then
-            showError("Validation of type rule value failed %s -> %s\nExpected: %s - Got: %s", areaType, ruleName, tostring(ruleValue), tostring(newRuleValue))
-
-            validationFailed = true
-            validationErrors = validationErrors + 1
-          end
-
-          ::areaRule::
-        end
-
-        typesProcessed = typesProcessed + 1
-      end
-
-      areasProcessed = areasProcessed + 1
-    end
+  local execStatus, err = pcall(function()
+    testGenericRules()
+    testTypeRules()
   end)
 
-  status  = status and not validationFailed
+  local testStatus = execStatus and not validationFailed
 
-  setLogLevel(oldLogLevel);
-
-  log(
+  Nco.Utils.log(
     [[Test Lua API rules result: %s
 
-  Areas processed: %d
-  Types processed: %d
+  Sections Processed: %d
   Rules read: %d
   Rules written: %d
 
-  Game rules read: %d
-  Game rules written: %d
+  Type API Areas processed: %d
+  Types processed: %d
 
   Validation errors: %d
 ]],
-    status and "PASS" or "FAIL",
-    areasProcessed,
-    typesProcessed,
+    testStatus and "PASS" or "FAIL",
+    sectionsProcessed,
     rulesRead,
     rulesWritten,
-    gameRulesRead,
-    gameRulesWritten,
+    areasProcessed,
+    typesProcessed,
     validationErrors
   )
 
-  if not status then
+  Nco.Utils.setLogLevel(oldLogLevel);
+
+  if not testStatus then
     error(err)
   end
 end

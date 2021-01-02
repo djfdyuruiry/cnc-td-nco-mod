@@ -4,10 +4,12 @@
 
 #include <lua.hpp>
 
+#include <ResultWithValue.h>
+
 #include "LuaStateWrapper.h"
 #include "LuaParameterValidator.h"
 
-#define LUA_METHOD_PROXY(t, m) LuaObjectUtils::BootstrapMethodCall<t>(lua, [](ILuaStateWrapper& l, t& a) { \
+#define LUA_METHOD_PROXY(t, m) LuaObjectUtils::BootstrapMethodCall<t>(lua, [](auto& l, auto& a) { \
 	return a.m(l); \
 })
 
@@ -18,18 +20,18 @@ private:
 	{
 	}
 
-	template<class T> static T* ReadUserData(ILuaStateWrapper& lua, const char* name, int upvalueIndex)
+	template<class T> static ResultWithValue<T*>& ReadUserData(ILuaStateWrapper& lua, const char* name, int upvalueIndex)
 	{
 		auto objectStackIndex = lua.GetUpvalueStackIndex(upvalueIndex);
 		auto& objectResult = lua.ReadUserData(objectStackIndex);
 
 		if (objectResult.IsErrorResult())
 		{
-			lua.RaiseError("[lua->c++ object proxy] Failed to get %s pointer: %s", name, objectResult.GetError());
+			auto& result = ResultWithValue<T*>::BuildWithError("Failed to get % s pointer : % s", name, objectResult.GetError());
 
-			delete& objectResult;
+			delete &objectResult;
 
-			return 0;
+			return result;
 		}
 
 		auto object = objectResult.GetValue();
@@ -38,18 +40,14 @@ private:
 
 		if (object == NULL)
 		{
-			lua.RaiseError("[lua->c++ object proxy error] %s pointer stored in userdata was NULL", name);
-
-			delete& lua;
-
-			return NULL;
+			return ResultWithValue<T*>::BuildWithError("%s pointer stored in userdata was NULL", name);
 		}
 
-		return (T*)object;
+		return ResultWithValue<T*>::BuildWithValue((T*)object);
 	}
 
 public:
-	static LuaFunctionInfo* GetCurrentFunctionInfo(ILuaStateWrapper& lua)
+	static ResultWithValue<LuaFunctionInfo*>& GetCurrentFunctionInfo(ILuaStateWrapper& lua)
 	{
 		return ReadUserData<LuaFunctionInfo>(lua, "function info", 1);
 	}
@@ -62,10 +60,21 @@ public:
 
 	static bool ValidateCurrentFunctionParameters(ILuaStateWrapper& lua)
 	{
-		auto functionInfo = GetCurrentFunctionInfo(lua);
+		auto& functionInfoResult = GetCurrentFunctionInfo(lua);
+		auto result = false;
 
-		return functionInfo != NULL
-			&& ValidateFunctionParameters(lua, *functionInfo);
+		if (functionInfoResult.IsErrorResult())
+		{
+			lua.RaiseError("[Lua->C++ API] %s", functionInfoResult.GetError());
+		}
+		else
+		{
+			result = ValidateFunctionParameters(lua, *functionInfoResult.GetValue());
+		}
+
+		delete &functionInfoResult;
+
+		return result;
 	}
 
 	template<class T> static int BootstrapMethodCall(
@@ -78,12 +87,20 @@ public:
 
 		if (ValidateCurrentFunctionParameters(lua))
 		{
-			auto object = ReadUserData<T>(lua, "object", 2);
+			auto& objectResult = ReadUserData<T>(lua, "object", 2);
 
-			if (object != NULL)
+			if (!objectResult.IsErrorResult())
 			{
-				result = handler(lua, *object);
+				auto& object = *(objectResult.GetValue());
+
+				result = handler(lua, object);
 			}
+			else
+			{
+				lua.RaiseError("[Lua->C++ API Object Proxy] %s", objectResult.GetError());
+			}
+
+			delete &objectResult;
 		}
 
 		delete &lua;

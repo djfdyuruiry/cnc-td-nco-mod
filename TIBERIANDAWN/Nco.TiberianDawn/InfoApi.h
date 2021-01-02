@@ -9,6 +9,11 @@
 class InfoApi : public LuaApi
 {
 private:
+    static int GetTypeNamesProxy(lua_State* lua)
+    {
+        return LUA_METHOD_PROXY(InfoApi, GetTypeNamesLua);
+    }
+
     static int GetEventNamesProxy(lua_State* lua)
     {
         return LUA_METHOD_PROXY(InfoApi, GetEventNamesLua);
@@ -28,6 +33,14 @@ private:
                  .WithType(LuaType::Table);
              });
         });
+
+        WithMethod("getTypeNames", this, GetTypeNamesProxy, [](LuaFunctionInfo& f) {
+            f.WithDescription("Get a list of types in the game (units, infantry etc.)")
+             .WithReturnValue("eventNames", [](LuaVariableInfo& v) {
+                v.WithDescription("Table of strings containing the names of game types")
+                 .WithType(LuaType::Table);
+             });
+        });
     }
 
     int GetEventNamesLua(ILuaStateWrapper& lua)
@@ -41,6 +54,24 @@ private:
         }
 
         lua.WriteArray(events);
+
+        return 1;
+    }
+
+    int GetTypeNamesLua(ILuaStateWrapper& lua)
+    {
+        std::vector<const char*> names =
+        {
+            "Warheads",
+            "Bullets",
+            "Weapons",
+            "Buildings",
+            "Infantry",
+            "Units",
+            "Aircraft"
+        };
+
+        lua.WriteArray(names);
 
         return 1;
     }

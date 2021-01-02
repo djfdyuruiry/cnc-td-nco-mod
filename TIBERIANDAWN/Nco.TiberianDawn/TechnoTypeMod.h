@@ -13,14 +13,16 @@ protected:
 		RuleName modTypesRuleName,
 		RuleName modTypeCountRuleName,
 		const RulesIniRuleKey& typeCountRuleKey,
-		T totalTypeCount
+		T totalTypeCount,
+		TwoWayStringMap<T>& typeModMap
 	) : TiberianDawnTypeMod(
 		runtime,
 		modTypeName,
 		modTypesRuleName,
 		modTypeCountRuleName,
 		typeCountRuleKey,
-		totalTypeCount
+		totalTypeCount,
+		typeModMap
 	)
 	{
 	}

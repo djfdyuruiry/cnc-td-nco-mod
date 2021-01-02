@@ -87,14 +87,8 @@
     <ClInclude Include="NcoRuntime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RuleSectionApi.h">
-      <Filter>Header Files\Lua</Filter>
-    </ClInclude>
     <ClInclude Include="RulesSectionTypeWrapperApi.h">
       <Filter>Header Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="EnhancementKeys.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameModsRuntime.h">
       <Filter>Header Files\Mods</Filter>
@@ -102,12 +96,12 @@
     <ClInclude Include="IGameMod.h">
       <Filter>Header Files\Mods</Filter>
     </ClInclude>
+    <ClInclude Include="RulesApi.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RulesIniRule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnhancementKeys.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

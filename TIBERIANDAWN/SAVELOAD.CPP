@@ -463,7 +463,11 @@ bool Load_Game(const char *file_name)
 
 	Call_Back();
 
-	OnSaveLoad(HouseTypeToString(house), scenario);
+	auto& houseResult = NcoTypeConverter().ToString(house);
+
+	OnSaveLoad(houseResult.GetValue(), scenario);
+
+	delete &houseResult;
 
 	/*
 	**	Load the map.  The map comes first, since it loads the Theater & init's

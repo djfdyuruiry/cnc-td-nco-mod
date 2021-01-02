@@ -10,7 +10,6 @@
 #include <Thread.h>
 #include <Utils.h>
 
-#include "EnhancementKeys.h"
 #include "GameModsRuntime.h"
 #include "IRulesRuntime.h"
 #include "RulesRuntime.h"
@@ -42,6 +41,8 @@ private:
 
 				executionOk = false;
 			}
+			
+			delete &executeResult;
 		}
 
 		return executionOk;
@@ -54,15 +55,15 @@ private:
 			return true;
 		}
 
-		if (!InitialiseLuaApi())
+		if (!InitialiseLuaCppApi())
 		{
-			LogError("Lua setup failed: API could not be initialised");
+			LogError("Lua setup failed: C++ APIs could not be initialised");
 			return false;
 		}
 
-		if (!InitialiseLuaEvents())
+		if (!InitialiseLuaNativeApi())
 		{
-			LogError("Lua setup failed: events could not be initialised");
+			LogError("Lua setup failed: native APIs could not be initialised");
 			return false;
 		}
 
@@ -86,6 +87,10 @@ protected:
 	std::vector<Thread*>& threads;
 
 	NcoRuntime(IRulesRuntime& rulesRuntime) :
+		rulesInitSuccessful(false),
+		luaInitSuccessful(false),
+		modTypesInitialised(false),
+		threadsStarted(false),
 		rulesRuntime(rulesRuntime),
 		luaRuntime(
 			LuaRuntime::Build(
@@ -99,8 +104,8 @@ protected:
 	{
 	}
 
-	virtual bool InitialiseLuaApi() = 0;
-	virtual bool InitialiseLuaEvents() = 0;
+	virtual bool InitialiseLuaCppApi() = 0;
+	virtual bool InitialiseLuaNativeApi() = 0;
 	virtual void RegisterMods() = 0;
 	virtual void RegisterThreads() = 0;
 
@@ -120,12 +125,14 @@ protected:
 		return RegisterThread<T>(thread);
 	}
 
+	virtual void InjectRules() = 0;
+
 	virtual void Initialise()
 	{
-		EnhancementKeys::InitIfNeeded();
-
 		rulesInitSuccessful = rulesRuntime.LoadRulesIfRequired();
 		luaInitSuccessful = LoadLuaComponents();
+
+		InjectRules();
 
 		InitialiseMods();
 		RegisterThreads();
@@ -169,7 +176,7 @@ protected:
 
 		for (auto thread : threads)
 		{
-			if (!thread->Stop())
+			if (!thread->StopIfRunning())
 			{
 				shutdownSuccess = false;
 			}
@@ -181,6 +188,8 @@ protected:
 public:
 	template<class T> static bool Startup()
 	{
+		Logger::Enable();
+
 		LogInfo("New Construction Options mod starting up");
 
 		auto& runtime = T::GetInstance();
@@ -196,7 +205,7 @@ public:
 			ShowError("NCO startup failed: errors initialising Lua");
 			return false;
 		}
-		else
+		else if (!runtime.GetRulesRuntime().LuaIsEnabled())
 		{
 			LogWarn("Lua is not enabled in rules file - scripts will be ignored and NOT run");
 		}
@@ -225,20 +234,20 @@ public:
 
 		// this must be the last call - otherwise the file might be reopened by a log call
 		Logger::Shutdown();
+		Logger::Disable();
 	}
 
 	~NcoRuntime()
 	{
-		delete &rulesRuntime;
-		delete &luaRuntime;
-		delete &modRuntime;
-
 		for (auto thread : threads)
 		{
 			delete thread;
 		}
 
 		delete &threads;
+		delete &modRuntime;
+		delete &luaRuntime;
+		delete &rulesRuntime;
 	}
 
 	bool RulesInitWasSuccessful()

@@ -1859,6 +1859,8 @@ int FootClass::Rescue_Mission(TARGET tarcom)
  *=============================================================================================*/
 void FootClass::Death_Announcement(TechnoClass const * source) const
 {
+	// TODO: add lua event hook
+
 	// Changed for multiplayer. ST - 3/13/2019 5:36PM
 	if ((GameToPlay == GAME_GLYPHX_MULTIPLAYER && House->IsHuman) || (GameToPlay != GAME_GLYPHX_MULTIPLAYER && Is_Discovered_By_Player() || Is_Owned_By_Player())) { // ST
 		//if (Is_Discovered_By_Player() || Is_Owned_By_Player()) {

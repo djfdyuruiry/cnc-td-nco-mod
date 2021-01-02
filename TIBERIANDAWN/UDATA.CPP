@@ -149,7 +149,9 @@ static UnitTypeClass const UnitFTank(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
-	MISSION_HUNT							// ORDERS:		Default order to give new unit.
+	MISSION_HUNT,							// ORDERS:		Default order to give new unit.
+	WARHEAD_FIRE,
+	200u
 );
 
 // Stealth tank
@@ -471,7 +473,7 @@ static UnitTypeClass const UnitSAM(
 	TXT_MSAM,								// NAME:			Text name of this unit type.
 	TXT_MSAM_STRING,
 	"MLRS",									// NAME:			Text name of this unit type.
-	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
+	ANIM_NAPALM3,							// EXPLOSION:	Type of explosion when destroyed.
 	7,								// Build level.
 	STRUCT_ATOWER,			// Building prerequisite.
 		true,				// Can this be a goodie surprise from a crate?
@@ -514,7 +516,9 @@ static UnitTypeClass const UnitSAM(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,							// Turret center offset along body centerline.
-	MISSION_HUNT							// ORDERS:		Default order to give new unit.
+	MISSION_HUNT,							// ORDERS:		Default order to give new unit.
+	WARHEAD_FIRE,
+	200u
 );
 
 // Artillery
@@ -1269,7 +1273,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				MPHType maxSpeed,
 				unsigned rot,
 				int toffset,
-				MissionType order) :
+				MissionType order,
+				WarheadType deathExplosionWarhead,
+				unsigned int deathExplosionDamage) :
 					TechnoTypeClass(name,
 										friendlyName,
 										ininame,
@@ -1303,9 +1309,14 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										ownable,
 										houseListCsv,
 										primary,secondary,
-										armor)
+										armor,
+										true,
+										exp,
+										deathExplosionWarhead,
+										deathExplosionDamage,
+										false,
+										true)
 {
-	Explosion = exp;
 	IsChunkyShape = is_chunky;
 	Mission = order;
 	TurretOffset = toffset;
@@ -1325,10 +1336,6 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	Speed = speed;
 	ROT = rot;
 	CanSelfRepair = Type == UNIT_HTANK;
-
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildUnitSection(IniName);
-
-	ReadUnitRules(this);
 }
 
 
@@ -1693,16 +1700,10 @@ BuildingClass * UnitTypeClass::Who_Can_Build_Me(bool intheory, bool legal, House
 UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 {
 	if (Pointers != NULL) {
-		//Log_Trace("Unit lookup by type: %d", type);
-
 		return Pointers[type];
 	}
 
-	LogDebug("UTC Initialising unit types");
-
-	auto unitCount = ReadUnitCount();
-
-	Pointers = new UnitTypeClass const* [unitCount] {
+	Pointers = new UnitTypeClass const* [256] {
 		&UnitHTank,		
 		&UnitMTank,		
 		&UnitLTank,		
@@ -1730,28 +1731,28 @@ UnitTypeClass const* UnitTypeClass::By_Type(UnitType type)
 	return By_Type(type);
 }
 
-void UnitTypeClass::ReadUnitRules(UnitTypeClass* unit)
+void UnitTypeClass::Read_Rules(IRulesIniReader& reader)
 {
 	LogTrace("UnitTypeClass::ReadUnitRules");
-	auto iniName = unit->IniName;
+	auto iniName = Get_Rules_Name();
 
-	ReadObjectRules(unit);
-	ReadTechnoRules(unit);
+	ObjectTypeClass::Read_Rules(reader);
+	TechnoTypeClass::Read_Rules(reader);
 
-	unit->IsCrateGoodie = Read_Can_Be_Found_In_Crate(iniName, unit->IsCrateGoodie);
-	unit->IsPieceOfEight = Read_Limited_Facings(iniName, unit->IsPieceOfEight);
-	unit->IsCrusher = Read_Can_Crush_Infantry(iniName, unit->IsCrusher);
-	unit->IsToHarvest = Read_Can_Harvest(iniName, unit->IsToHarvest);
-	unit->IsRadarEquipped = Read_Radar_Equipped(iniName, unit->IsRadarEquipped);
-	unit->IsFireAnim = Read_Has_Fire_Animation(iniName, unit->IsFireAnim);
-	unit->IsLockTurret = Read_Lock_Turret(iniName, unit->IsLockTurret);
-	unit->IsTracked = Read_Has_Tracks(iniName, unit->IsTracked);
-	unit->IsGigundo = Read_Is_Huge(iniName, unit->IsGigundo);
-	unit->IsCloakable = Read_Can_Cloak(iniName, unit->IsCloakable);
-	unit->IsAnimating = Read_Has_Constant_Animation(iniName, unit->IsAnimating);
-	unit->Speed = Read_Unit_Speed(iniName, unit->Speed);
-	unit->ROT = Read_Rate_Of_Turn(iniName, unit->ROT);
-	unit->CanSelfRepair = NcoRulesRuntime().ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, unit->CanSelfRepair);
+	IsCrateGoodie = reader.ReadRuleValue<bool>(iniName, CAN_BE_FOUND_IN_CRATE_RULE, IsCrateGoodie);
+	IsPieceOfEight = reader.ReadRuleValue<bool>(iniName, LIMITED_FACINGS_RULE, IsPieceOfEight);
+	IsCrusher = reader.ReadRuleValue<bool>(iniName, CAN_CRUSH_INFANTRY_RULE, IsCrusher);
+	IsToHarvest = reader.ReadRuleValue<bool>(iniName, CAN_HARVEST_RULE, IsToHarvest);
+	IsRadarEquipped = reader.ReadRuleValue<bool>(iniName, RADAR_EQUIPPED_RULE, IsRadarEquipped);
+	IsFireAnim = reader.ReadRuleValue<bool>(iniName, HAS_FIRE_ANIMATION_RULE, IsFireAnim);
+	IsLockTurret = reader.ReadRuleValue<bool>(iniName, LOCK_TURRET_RULE, IsLockTurret);
+	IsTracked = reader.ReadRuleValue<bool>(iniName, HAS_TRACKS_RULE, IsTracked);
+	IsGigundo = reader.ReadRuleValue<bool>(iniName, HUGE_RULE, IsGigundo);
+	IsCloakable = reader.ReadRuleValue<bool>(iniName, CAN_CLOAK_RULE, IsCloakable);
+	IsAnimating = reader.ReadRuleValue<bool>(iniName, CONSTANT_ANIMATION_RULE, IsAnimating);
+	Speed = reader.ReadRuleValue<SpeedType>(iniName, UNIT_SPEED_RULE, Speed);
+	ROT = reader.ReadRuleValue<unsigned int>(iniName, RATE_OF_TURN_RULE, ROT);
+	CanSelfRepair = reader.ReadRuleValue<bool>(iniName, SELF_REPAIR_RULE, CanSelfRepair);
 }
 
 void UnitTypeClass::Add_Unit_Type(UnitTypeClass* unitInstance)

@@ -30,10 +30,7 @@ protected:
 public:
 	~Thread()
 	{
-		if (threadRunning)
-		{
-			Stop();
-		}
+		StopIfRunning();
 	}
 
 	const char* GetName()
@@ -59,7 +56,7 @@ public:
 			NULL
 		);
 
-		threadRunning = threadHandle != NULL && threadHandle != INVALID_HANDLE_VALUE;
+		threadRunning = Win32HandleIsValid(threadHandle);
 
 		if (!threadRunning)
 		{
@@ -77,7 +74,7 @@ public:
 		return threadRunning;
 	}
 
-	bool Stop()
+	virtual bool Stop()
 	{
 		if (!threadRunning)
 		{
@@ -102,5 +99,15 @@ public:
 		}
 
 		return !threadRunning;
+	}
+
+	virtual bool StopIfRunning()
+	{
+		if (!threadRunning)
+		{
+			return true;
+		}
+
+		return Stop();
 	}
 };

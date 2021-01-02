@@ -1,5 +1,8 @@
 #pragma once
 
+#include <map>
+#include <queue>
+
 #include "../HOUSES_TYPE.H"
 
 // Game Loop messages
@@ -56,6 +59,10 @@ struct HouseMessage {
 	bool oneTime;
 };
 
+extern std::queue<GameUiMessage>& GAME_UI_MESSAGE_QUEUE;
+extern std::queue<GameLoopMessage>& GAME_LOOP_MESSAGE_QUEUE;
+extern std::map<char, std::map<HouseMessageType, std::queue<HouseMessage>*>*>& HOUSE_MESSAGE_QUEUES;
+
 // message queuing
 void PushShowNotificationUiMessage(const char* message, float durationInSeconds);
 
@@ -82,7 +89,7 @@ bool GameLoopMessagesPending();
 void ClearGameLoopMessages();
 
 // house message handlers
-void PushHouseMessage(HousesType houseType, HouseMessageType messageType, HouseMessage message);
+void PushHouseMessage(HousesType houseType, HouseMessageType messageType, HouseMessage& message);
 
 bool IsHouseMessagePresent(HousesType houseType, HouseMessageType messageType);
 

@@ -196,7 +196,11 @@ static InfantryTypeClass const E2(
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,GOODGUY",
 	WEAPON_GRENADE,
 	WEAPON_NONE,
-	MPH_SLOW_ISH  // Maximum speed of infantry.
+	MPH_SLOW_ISH,  // Maximum speed of infantry.
+	true,
+	ANIM_ART_EXP1,
+	WARHEAD_HE,
+	30u
 );
 
 
@@ -340,7 +344,11 @@ static InfantryTypeClass const E4(
 	HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP | HOUSEF_BAD,					// Who can own this infantry unit.
 	"MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP,BADGUY",
 	WEAPON_FLAMETHROWER,WEAPON_NONE,
-	MPH_SLOW_ISH // Maximum speed of infantry.
+	MPH_SLOW_ISH, // Maximum speed of infantry.
+	true,
+	ANIM_NAPALM1,
+	WARHEAD_FIRE,
+	80u
 );
 
 // Chemwarrior
@@ -410,7 +418,11 @@ static InfantryTypeClass const E5(
 	HOUSEF_BAD | HOUSEF_MULTI1 | HOUSEF_MULTI2 | HOUSEF_MULTI3 | HOUSEF_MULTI4 | HOUSEF_MULTI5 | HOUSEF_MULTI6 | HOUSEF_JP,					// Who can own this infantry unit.
 	"BADGUY,MULTI1,MULTI2,MULTI3,MULTI4,MULTI5,MULTI6,JP",
 	WEAPON_CHEMSPRAY,WEAPON_NONE,
-	MPH_SLOW // Maximum speed of infantry.
+	MPH_SLOW, // Maximum speed of infantry.
+	true,
+	ANIM_CHEM_BALL,
+	WARHEAD_HE,
+	80u
 );
 
 // Engineer
@@ -1434,16 +1446,10 @@ InfantryTypeClass const** InfantryTypeClass::Pointers = NULL;
 InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 {
 	if (Pointers != NULL) {
-		//Log_Trace("Infantry lookup by type: %d", type);
-
 		return Pointers[type];
 	}
 
-	LogDebug("Initialising infantry types");
-
-	auto infantryCount = ReadInfantryCount();
-
-	Pointers = new InfantryTypeClass const *[infantryCount]{
+	Pointers = new InfantryTypeClass const* [256] {
 		&E1,
 		&E2,
 		&E3,
@@ -1469,22 +1475,22 @@ InfantryTypeClass const* InfantryTypeClass::By_Type(InfantryType type)
 	return By_Type(type);
 }
 
-void InfantryTypeClass::ReadInfantryRules(InfantryTypeClass* infantry)
+void InfantryTypeClass::Read_Rules(IRulesIniReader& reader)
 {
-	auto iniName = infantry->IniName;
+	auto iniName = Get_Rules_Name();
 
-	ReadObjectRules(infantry);
-	ReadTechnoRules(infantry);
+	ObjectTypeClass::Read_Rules(reader);
+	TechnoTypeClass::Read_Rules(reader);
 
-	infantry->IsCrushable = Read_Is_Crushable(iniName, infantry->IsCrushable);
-	infantry->IsFemale = Read_Is_Female(iniName, infantry->IsFemale);
-	infantry->IsCrawling = Read_Is_Crawling(iniName, infantry->IsCrawling);
-	infantry->IsCapture = Read_Can_Capture_Buildings(iniName, infantry->IsCapture);
-	infantry->IsFraidyCat = Read_Is_Fraidy_Cat(iniName, infantry->IsFraidyCat);
-	infantry->IsCivilian = Read_Is_Civilian(iniName, infantry->IsCivilian);
-	infantry->IsAvoidingTiberium = Read_Avoids_Tiberium(iniName, infantry->IsAvoidingTiberium);
-	infantry->IsImmuneToTiberium = NcoRulesRuntime().ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, infantry->IsImmuneToTiberium);
-	infantry->HasC4Charges = NcoRulesRuntime().ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, infantry->HasC4Charges);
+	IsCrushable = reader.ReadRuleValue<bool>(iniName, CRUSHABLE_RULE, IsCrushable);
+	IsFemale = reader.ReadRuleValue<bool>(iniName, FEMALE_RULE, IsFemale);
+	IsCrawling = reader.ReadRuleValue<bool>(iniName, CRAWLING_RULE, IsCrawling);
+	IsCapture = reader.ReadRuleValue<bool>(iniName, CAN_CAPTURE_RULE, IsCapture);
+	IsFraidyCat = reader.ReadRuleValue<bool>(iniName, FRAIDY_CAT_RULE, IsFraidyCat);
+	IsCivilian = reader.ReadRuleValue<bool>(iniName, CIVILIAN_RULE, IsCivilian);
+	IsAvoidingTiberium = reader.ReadRuleValue<bool>(iniName, AVOIDS_TIBERIUM_RULE, IsAvoidingTiberium);
+	IsImmuneToTiberium = reader.ReadRuleValue<bool>(iniName, IMMUNE_TO_TIBERIUM_RULE, IsImmuneToTiberium);
+	HasC4Charges = reader.ReadRuleValue<bool>(iniName, HAS_C4_CHARGES_RULE, HasC4Charges);
 }
 
 void InfantryTypeClass::Add_Infantry_Type(InfantryTypeClass* infantryInstance)
@@ -1532,15 +1538,21 @@ InfantryTypeClass::InfantryTypeClass(
 						int reward,
 						int ownable,
 						const char* houseListCsv,
-						WeaponType primary, WeaponType secondary,
-						MPHType maxspeed)
+						WeaponType primary,
+						WeaponType secondary,
+						MPHType maxspeed,
+						bool explodesUponDeath,
+						AnimType deathExplosionAnimation,
+						WarheadType deathExplosionWarhead,
+						unsigned int deathExplosionDamage)
 	: TechnoTypeClass(name, friendlyName, ininame, level, pre,
 							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
 							is_theater, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable, houseListCsv,
 							primary, secondary,
-							ARMOR_NONE)
+							ARMOR_NONE,
+							explodesUponDeath, deathExplosionAnimation, deathExplosionWarhead, deathExplosionDamage, true)
 {
 	Type = type;
 	FireLaunch = firelaunch;
@@ -1559,10 +1571,6 @@ InfantryTypeClass::InfantryTypeClass(
 
 	IsImmuneToTiberium = type == INFANTRY_E5;
 	HasC4Charges = Type == INFANTRY_RAMBO;
-
-NcoRulesRuntime().GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(IniName);
-
-	ReadInfantryRules(this);
 
 	for ( int i=0 ; i<DO_COUNT ; i++ ){
 		DoControls[i].Frame = *do_table++;

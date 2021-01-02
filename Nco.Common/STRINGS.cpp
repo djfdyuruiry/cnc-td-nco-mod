@@ -14,10 +14,9 @@ char* AllocateString(unsigned int length)
 		return strdup(EMPTY_STRING);
 	}
 
-	auto stringSizeInBytes = (length + 1) * sizeof(char);
-	auto string = (char*)malloc(stringSizeInBytes);
+	auto string = new char[length];
 
-	memset(string, 0, stringSizeInBytes);
+	string[0] = '\0';
 
 	return string;
 }
@@ -182,7 +181,7 @@ char* ConvertStringToUpperCase(const char* subject)
 {
 	if (StringIsEmpty(subject))
 	{
-		return strdup(EMPTY_STRING);
+		return strdup(subject);
 	}
 
 	auto uppercaseSubject = strdup(subject);
@@ -317,7 +316,12 @@ char* ExtractSubstring(const char* subject, int substringLength, int startIndex 
 
 	if (startIndex == 0 && substringLength == 0)
 	{
-		return strdup(EMPTY_STRING);
+		if (substringLength < 1)
+		{
+			return strdup(EMPTY_STRING);
+		}
+
+		return AllocateString(substringLength);
 	}
 
 	auto substring = AllocateString(substringLength);
@@ -333,7 +337,12 @@ char* RepeatString(const char* subject, unsigned int times)
 {
 	if (times == 0u)
 	{
-		return strdup(EMPTY_STRING);
+		if (subject == NULL)
+		{
+			return strdup(EMPTY_STRING);
+		}
+
+		return AllocateString(strlen(subject));
 	}
 
 	if (times == 1u)

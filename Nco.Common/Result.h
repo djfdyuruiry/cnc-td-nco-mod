@@ -1,39 +1,39 @@
 #pragma once
 
+#include <stdarg.h>
 #include <stdlib.h>
 
-#include <lua.hpp>
-#include <strings.h>
+#include "strings.h"
 
-class LuaResult
+class Result
 {
 private:
 	char* error;
 
 protected:
-	LuaResult(char* error = NULL) : error(error)
+	Result(char* error = NULL) : error(error)
 	{
 	}
 
 public:
-	static LuaResult& Build()
+	static Result& Build()
 	{
-		return *(new LuaResult());
+		return *(new Result());
 	}
 
-	static LuaResult& BuildWithError(const char* error, ...)
+	static Result& BuildWithError(const char* error, ...)
 	{
 		va_list formatArgs;
 		va_start(formatArgs, error);
 
-		auto& instance = *(new LuaResult(FormatString(error, formatArgs)));
+		auto& instance = *(new Result(FormatString(error, formatArgs)));
 
 		va_end(formatArgs);
 
 		return instance;
 	}
 
-	~LuaResult()
+	~Result()
 	{
 		if (error != NULL)
 		{

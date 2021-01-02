@@ -130,47 +130,62 @@ extern bool DLL_Export_Get_Input_Key_State(KeyNumType key);
 */
 int const TechnoClass::BodyShape[32] = {0,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
 
-void TechnoTypeClass::ReadTechnoRules(TechnoTypeClass* type)
+void TechnoTypeClass::Read_Rules(IRulesIniReader& reader)
 {
-	auto iniName = type->IniName;
+	auto iniName = Get_Rules_Name();
 
-	type->Image = NcoRulesRuntime().ReadRuleValue<char*>(iniName, IMAGE_RULE, type->Image);
-	type->FriendlyName = NcoRulesRuntime().ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, type->FriendlyName);
-	type->Level = Read_Build_Level(iniName, type->Level);
-	type->Pre = NcoRulesRuntime().ReadRuleValue<long>(iniName, PREREQUISITE_RULE, type->Pre);
-	type->IsTransporter = Read_Is_Transport(iniName, type->IsTransporter);
-	type->TransportCapacity = type->IsTransporter
-		? NcoRulesRuntime().ReadRuleValue<unsigned int>(iniName, TRANSPORT_CAPACITY_RULE, type->TransportCapacity)
-		: 0;
-	type->IsBuildable = Read_Is_Buildable(iniName, type->IsBuildable);
-	type->MaxAmmo = Read_Ammo(iniName, type->MaxAmmo);
-	type->SightRange = Read_Sight_Range(iniName, type->SightRange);
-	type->Cost = Read_Cost(iniName, type->Cost);
-	type->Scenario = Read_Scenario_Level(iniName, type->Scenario);
-	type->Reward = Read_Reward(iniName, type->Reward);
-	type->HouseListCsv = NcoRulesRuntime().ReadRuleValue<char*>(iniName, HOUSES_RULE, type->HouseListCsv);
+	Image = reader.ReadRuleValue<char*>(iniName, IMAGE_RULE, Image);
+	FriendlyName = reader.ReadRuleValue<char*>(iniName, FRIENDLY_NAME_RULE, FriendlyName);
+	Level = (unsigned) reader.ReadRuleValue<unsigned int>(iniName, BUILD_LEVEL_RULE, Level);
+	Pre = reader.ReadRuleValue<long>(iniName, PREREQUISITE_RULE, Pre);
+	IsBuildable = reader.ReadRuleValue<bool>(iniName, BUILDABLE_RULE, IsBuildable);
+	MaxAmmo = reader.ReadRuleValue<int>(iniName, AMMO_RULE, MaxAmmo);
+	SightRange = reader.ReadRuleValue<unsigned int>(iniName, SIGHT_RANGE_RULE, SightRange);
+	Cost = reader.ReadRuleValue<unsigned int>(iniName, COST_RULE, Cost);
+	Scenario = reader.ReadRuleValue<unsigned int>(iniName, SCENARIO_LEVEL_RULE, Scenario);
+	Reward = reader.ReadRuleValue<unsigned int>(iniName, REWARD_RULE, Reward);
+	HouseListCsv = reader.ReadRuleValue<char*>(iniName, HOUSES_RULE, HouseListCsv);
 
-	bool parseError = false;
-	auto parsedOwnable = ParseHouseNameListCsv(type->HouseListCsv, &parseError);
+	auto& parsedOwnableResult = NcoTypeConverter().ParseHouseNameListCsv(HouseListCsv);
 
-	auto ownable = parseError ? type->Ownable : parsedOwnable;
+	auto ownable = parsedOwnableResult.IsErrorResult() ? Ownable : parsedOwnableResult.GetValue();
 
-	type->Ownable = NcoRulesRuntime().ReadRuleValue<int>(iniName, OWNER_RULE, ownable);
+	delete &parsedOwnableResult;
 
-	type->Primary = Read_Primary_Weapon(iniName, type->Primary);
-	type->Secondary = Read_Secondary_Weapon(iniName, type->Secondary);
-	type->MaxSpeed = Read_Speed(iniName, type->MaxSpeed);
-	type->IsScanner = NcoRulesRuntime().ReadRuleValue<bool>(iniName, DETECT_CLOAKED_OBJECTS_RULE, type->IsScanner);
-	type->IsRepairable = NcoRulesRuntime().ReadRuleValue<bool>(iniName, REPAIRABLE_RULE, type->IsRepairable);
-	type->IsCrew = NcoRulesRuntime().ReadRuleValue<bool>(iniName, HAS_CREW_RULE, type->IsCrew);
-	type->IsLeader = NcoRulesRuntime().ReadRuleValue<bool>(iniName, LEADER_RULE, type->IsLeader);
-	type->IsTwoShooter = NcoRulesRuntime().ReadRuleValue<bool>(iniName, TWO_SHOOTER_RULE, type->IsTwoShooter);
-	type->IsTheater = NcoRulesRuntime().ReadRuleValue<bool>(iniName, HAS_THEATER_GFX_RULE, type->IsTheater);
-	type->IsTurretEquipped = NcoRulesRuntime().ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, type->IsTurretEquipped);
-	type->IsNominal = NcoRulesRuntime().ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, type->IsNominal);
-	type->IsFlammable = Read_Is_Flammable(iniName, type->IsFlammable);
+	Ownable = reader.ReadRuleValue<int>(iniName, OWNER_RULE, ownable);
 
-	type->Calculate_Risk();
+	Primary = reader.ReadRuleValue<WeaponType>(iniName, PRIMARY_WEAPON_RULE, Primary);
+	Secondary = reader.ReadRuleValue<WeaponType>(iniName, SECONDARY_WEAPON_RULE, Secondary);
+	MaxSpeed = (MPHType)reader.ReadRuleValue<unsigned int>(iniName, SPEED_RULE, MaxSpeed);
+	IsScanner = reader.ReadRuleValue<bool>(iniName, DETECT_CLOAKED_OBJECTS_RULE, IsScanner);
+	IsLeader = reader.ReadRuleValue<bool>(iniName, LEADER_RULE, IsLeader);
+	IsTwoShooter = reader.ReadRuleValue<bool>(iniName, TWO_SHOOTER_RULE, IsTwoShooter);
+	IsTheater = reader.ReadRuleValue<bool>(iniName, HAS_THEATER_GFX_RULE, IsTheater);
+	IsNominal = reader.ReadRuleValue<bool>(iniName, SHOW_NAME_RULE, IsNominal);
+	IsFlammable = reader.ReadRuleValue<bool>(iniName, FLAMMABLE_RULE, IsFlammable);
+
+	if (!IsInfantry)
+	{
+		IsTurretEquipped = reader.ReadRuleValue<bool>(iniName, TURRET_EQUIPPED_RULE, IsTurretEquipped);
+		IsCrew = reader.ReadRuleValue<bool>(iniName, HAS_CREW_RULE, IsCrew);
+		IsRepairable = reader.ReadRuleValue<bool>(iniName, REPAIRABLE_RULE, IsRepairable);
+	}
+
+	if (IsInfantry || IsUnit)
+	{
+		ExplodesUponDeath = reader.ReadRuleValue<bool>(iniName, EXPLODES_UPON_DEATH_RULE, ExplodesUponDeath);
+		DeathExplosionAnimation = reader.ReadRuleValue<AnimType>(iniName, DEATH_EXPLOSION_ANIMATION_RULE, DeathExplosionAnimation);
+		DeathExplosionWarhead = reader.ReadRuleValue<WarheadType>(iniName, DEATH_EXPLOSION_WARHEAD_RULE, DeathExplosionWarhead);
+		DeathExplosionDamage = reader.ReadRuleValue<unsigned int>(iniName, DEATH_EXPLOSION_DAMAGE_RULE, DeathExplosionDamage);
+	}
+
+	if (IsUnit || IsAircraft)
+	{
+		IsTransporter = reader.ReadRuleValue<bool>(iniName, TRANSPORTER_RULE, IsTransporter);
+		TransportCapacity = IsTransporter
+			? reader.ReadRuleValue<unsigned int>(iniName, TRANSPORT_CAPACITY_RULE, TransportCapacity)
+			: 0;
+	}
 }
 
 /***********************************************************************************************
@@ -223,7 +238,14 @@ TechnoTypeClass::TechnoTypeClass(
 		const char* houseListCsv,
 		WeaponType primary,
 		WeaponType secondary,
-		ArmorType armor) :
+		ArmorType armor,
+		bool explodesUponDeath,
+		AnimType deathExplosionAnimation,
+		WarheadType deathExplosionWarhead,
+		unsigned int deathExplosionDamage,
+		bool isInfantry,
+		bool isUnit,
+		bool isAircraft) :
 	ObjectTypeClass(true,
 					is_flammable,
 					is_crushable,
@@ -240,16 +262,26 @@ TechnoTypeClass::TechnoTypeClass(
 {
 	CameoData = NULL;
 
-	/*
-	** Units risk value is based on the type of weapon he has and the
-	** rate of fire it shoots at.
-	*/
-	risk = risk;
-	Risk = 0;
-
 	FriendlyName = strdup(friendlyName);
 	Level = level;
-	Pre = StructureTypeToPrerequisite(pre, NULL, false);
+	PreAsStruct = pre;
+
+	auto& typeConverter = TiberianDawnTypeConverter::Build();
+
+	auto& preResult = typeConverter.StructureTypeToPrerequisite(pre, true);
+
+	if (!preResult.IsErrorResult())
+	{
+		Pre = preResult.GetValue();
+	}
+	else
+	{
+		ShowError(preResult.GetError());
+	}
+
+	delete &preResult;
+	delete &typeConverter;
+
 	IsTransporter = is_transporter;
 	TransportCapacity = IsTransporter ? DEFAULT_TRANSPORT_CAPACITY : 0;
 	IsBuildable = is_buildable;
@@ -272,19 +304,28 @@ TechnoTypeClass::TechnoTypeClass(
 	IsTurretEquipped = is_turret_equipped;
 	IsNominal = is_nominal;
 
-	Calculate_Risk();
+	ExplodesUponDeath = explodesUponDeath;
+	DeathExplosionAnimation = deathExplosionAnimation;
+	DeathExplosionWarhead = deathExplosionWarhead;
+	DeathExplosionDamage = deathExplosionDamage;
+
+	IsInfantry = isInfantry;
+	IsUnit = isUnit;
+	IsAircraft = isAircraft;
 }
 
-void TechnoTypeClass::Calculate_Risk(void) const
+int TechnoTypeClass::Calculate_Risk(void) const
 {
 	if (Primary == WEAPON_NONE) {
-		return;
+		return 0;
 	}
 
-	auto ref = (TechnoTypeClass*)this;
-
 	// TODO: read some `Game` rule to allow modifying the outcome of this calculation
-//	ref->Risk = (WeaponTypeClass::As_Reference(Primary).Attack * (WeaponTypeClass::As_Reference(Primary).Range >> 4)) / WeaponTypeClass::As_Reference(Primary).ROF;
+	auto& weapon = WeaponTypeClass::As_Reference(Primary);
+	auto attackRangeRisk = weapon.Attack * (weapon.Range >> 4);
+	auto rateOfFire = weapon.ROF;
+
+	return rateOfFire < 1 ? attackRangeRisk : attackRangeRisk / rateOfFire;
 }
 
 /***********************************************************************************************
@@ -4058,7 +4099,7 @@ bool TechnoClass::Is_Techno(void) const
  *=============================================================================================*/
 int TechnoClass::Risk(void) const
 {
-	return(Techno_Type_Class()->Risk);
+	return(Techno_Type_Class()->Calculate_Risk());
 }
 
 

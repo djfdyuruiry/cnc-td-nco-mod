@@ -15,28 +15,17 @@ private:
 			"Infantry",
 			NEW_INFANTRY_RULE,
 			NEW_INFANTRY_COUNT_RULE,
-			*INFANTRY_COUNT_RULE_KEY,
-			INFANTRY_COUNT
+			INFANTRY_COUNT_RULE_KEY,
+			INFANTRY_COUNT,
+			NcoTypeConverter().GetModTypeMap<InfantryType>()
 		  )
 	{
 	}
 
 protected:
-	InfantryType ParseType(SectionName typeString, bool* parseError)
+	void AddType(InfantryTypeClass* instance)
 	{
-		return ParseInfantryType(typeString, parseError, false);
-	}
-
-	void AddRulesSection(SectionName typeString)
-	{
-		runtime.GetRules() << TiberianDawnRuleSectionBuilder::BuildInfantrySection(typeString);
-	}
-
-	void ReadRulesAndAddType(InfantryTypeClass* type)
-	{
-		InfantryTypeClass::ReadInfantryRules(type);
-
-		InfantryTypeClass::Add_Infantry_Type(type);
+		InfantryTypeClass::Add_Infantry_Type(instance);
 	}
 
 public:

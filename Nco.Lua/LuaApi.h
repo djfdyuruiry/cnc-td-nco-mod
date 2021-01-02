@@ -44,6 +44,11 @@ public:
 		delete &functions;
 	}
 
+	ILuaApi& WithName(const char* name)
+	{
+		return WithName(strdup(name));
+	}
+
 	ILuaApi& WithName(char* name)
 	{
 		this->name = name;
@@ -51,21 +56,16 @@ public:
 		return *this;
 	}
 
+	ILuaApi& WithDescription(const char* description)
+	{
+		return WithDescription(strdup(description));
+	}
+
 	ILuaApi& WithDescription(char* description)
 	{
 		this->description = description;
 
 		return *this;
-	}
-
-	ILuaApi& WithName(const char* name)
-	{
-		return WithName(strdup(name));
-	}
-
-	ILuaApi& WithDescription(const char* description)
-	{
-		return WithDescription(strdup(description));
 	}
 
 	ILuaApi& WithFunction(const char* name, lua_CFunction function, FunctionInitialiser functionInitialiser)
@@ -85,6 +85,23 @@ public:
 		return *this;
 	}
 
+	LuaFunctionInfo& WithFunction(const char* name, lua_CFunction function)
+	{
+		WithFunction(name, function, NULL);
+
+		return *functions.back();
+	}
+
+	LuaFunctionInfo& WithVirtualFunction(const char* name)
+	{
+		auto& functionInfo = LuaFunctionInfo::BuildVirutal()
+			.WithName(name);
+
+		functions.push_back(&functionInfo);
+
+		return functionInfo;
+	}
+
 	ILuaApi& WithMethod(const char* name, void* object, lua_CFunction methodProxy, FunctionInitialiser functionInitialiser)
 	{
 		auto& functionInfo = LuaFunctionInfo::Build()
@@ -100,13 +117,6 @@ public:
 		functions.push_back(&functionInfo);
 
 		return *this;
-	}
-
-	LuaFunctionInfo& WithFunction(const char* name, lua_CFunction function)
-	{
-		WithFunction(name, function, NULL);
-
-		return *functions.back();
 	}
 
 	LuaFunctionInfo& WithMethod(const char* name, void* object, lua_CFunction methodProxy)
