@@ -1,5 +1,7 @@
 @echo off
+
 call "%~dp0lib\log.bat" "INFO" "Running dump-rules.bat"
+
 pushd "%~dp0..\bin\Win32"
 
 if exist RULES-DEFAULT.INI (
@@ -14,6 +16,7 @@ if errorlevel 1 (
   popd
   exit 1
 )
+
 if not exist "%~dp0..\bin\Win32\RULES-DEFAULT.INI" (
   call "%~dp0lib\log.bat" "ERROR" "RULES-DEFAULT.INI was not generated!"
 
