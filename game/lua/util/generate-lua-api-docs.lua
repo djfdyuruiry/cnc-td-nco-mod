@@ -170,8 +170,13 @@ local function main()
 
         for _, param in ipairs(func.parameters) do
           local n = param.name
+          local description = ""
 
-          appendToOutput("  - `%s` [%s] - %s", n, param.type, param.description)
+          if param.description ~= nil then
+            description = string.format(" - %s", param.description)
+          end
+
+          appendToOutput("  - `%s` [%s]%s", n, param.type, description)
         end
       else
         appendToOutput("Parameters: none")
@@ -184,8 +189,13 @@ local function main()
 
         for _, returnValue in ipairs(func.returnValues) do
           local valueName = returnValue.name
+          local description = ""
 
-          appendToOutput("  - `%s` [%s] - %s", valueName, returnValue.type, returnValue.description)
+          if returnValue.description ~= nil then
+            description = string.format(" - %s", returnValue.description)
+          end
+
+          appendToOutput("  - `%s` [%s]%s", valueName, returnValue.type, description)
         end
       else
         appendToOutput("Return value(s): none")
