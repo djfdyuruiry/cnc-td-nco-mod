@@ -1,3 +1,5 @@
+local sortedPairs = require("sortedPairs")
+
 local header = [[This page details all the functions that are available in Lua scripts.
 
 All APIs are found inside the `Nco` global table, so to use the `Units` API for example you would use `Nco.Units.doSomething(...)`.
@@ -18,7 +20,7 @@ local apiHeader = [[----
 
 local functionTemplate = [[----
 
-### `{{functionName}}`
+### <a id="{{apiName}}_{{functionName}}"></a> `{{functionName}}`
 
 {{functionDescription}}
 
@@ -66,7 +68,7 @@ local function generateExampleValueForParameter(name, info)
   elseif info.type == "bool" then
     return "true"
   elseif info.type == "table" then
-    return [["{}"]]
+    return "{}"
   elseif info.type == "function" then
     return string.format("function(...)\n  -- %s code here\nend", name)
   end
@@ -87,6 +89,10 @@ local function main()
   local outputFile = "lua-api.md"
   local apis = Nco.Reflection.getApis()
 
+  for apiName, api in pairs(apis) do
+
+  end
+
   local function appendToOutput(format, ...)
     output = output .. string.format(format, ...) .. "\n"
   end
@@ -98,11 +104,11 @@ local function main()
 
   print("> Building index")
 
-  for apiName, api in pairs(apis) do
-    appendToOutput([[- [%s](#%s)]], apiName, apiName:gsub(" ", "-"))
+  for apiName, api in sortedPairs(apis) do
+    appendToOutput([[- [%s](#Nco%s)]], apiName, apiName:gsub(" ", "-"))
 
-    for funcName, func in pairs(api.functions) do
-      appendToOutput([[  - [%s](#%s)]], funcName, funcName)
+    for funcName, func in sortedPairs(api.functions) do
+      appendToOutput([[  - [%s](#%s_%s)]], funcName, apiName, funcName)
     end
   end
 
@@ -110,7 +116,7 @@ local function main()
 
   print("> Building API sections")
 
-  for apiName, api in pairs(apis) do
+  for apiName, api in sortedPairs(apis) do
     print("  > Building section for API: %s...", apiName)
 
     local context = 
@@ -123,13 +129,13 @@ local function main()
       renderTemplate(apiHeader, context)
     )
 
-    for funcName, func in pairs(api.functions) do
-      appendToOutput([[- [%s](#%s)]], funcName, funcName)
+    for funcName, func in sortedPairs(api.functions) do
+      appendToOutput([[- [%s](#%s_%s)]], funcName, apiName, funcName)
     end
 
     appendToOutput("")
 
-    for funcName, func in pairs(api.functions) do
+    for funcName, func in sortedPairs(api.functions) do
       print("    > Building section for API function: %s...", funcName)
 
       context.functionName = funcName

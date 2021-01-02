@@ -65,7 +65,7 @@ protected:
 		technoTypeWrapper(LuaTypeWrapper<T>::Build())
 	{
 		WithMethod("getTypes", this, GetTypesProxy)
-			.WithDescription(FormatString("Get a list of all %s types (including mod types)", titleCaseTypeName));
+			.WithDescription(FormatString("Get a list of all %s (including mod types)", titleCaseTypeName));
 	}
 
 	bool ValidateTypeName(const char* name)

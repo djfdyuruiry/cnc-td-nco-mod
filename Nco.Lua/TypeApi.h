@@ -205,9 +205,13 @@ protected:
 		WithDescription(FormatString("%s rule info and control functions", titleCaseTypeName));
 
 		WithMethod("getRule", this, ReadRuleValueApiProxy)
-			.WithDescription(FormatString("Set a rule for a given %s", titleCaseTypeName))
+			.WithDescription(FormatString("Get rules for %s", titleCaseTypeName))
+			.WithParameter("typeName", [&](LuaVariableInfo& vi) {
+				vi.WithDescription(FormatString("The name of one of the %s as it appears in RULES.INI", titleCaseTypeName))
+				  .WithType(LuaType::String);
+			})
 			.WithParameter("ruleName", [](LuaVariableInfo& vi) {
-				vi.WithDescription("The name as it appears in RULES.INI")
+				vi.WithDescription("The rule name as it appears in RULES.INI")
 				  .WithType(LuaType::String);
 			})
 			.WithReturnValue("ruleValue", [](LuaVariableInfo& vi) {
@@ -217,9 +221,13 @@ protected:
 		
 
 		WithMethod("setRule", this, WriteRuleValueApiProxy)
-			.WithDescription(FormatString("Get a rule for a given", titleCaseTypeName))
+			.WithDescription(FormatString("Set rules for %s", titleCaseTypeName))
+			.WithParameter("typeName", [&](LuaVariableInfo& vi) {
+				vi.WithDescription(FormatString("The name of one of the %s as it appears in RULES.INI", titleCaseTypeName))
+				  .WithType(LuaType::String);
+			})
 			.WithParameter("ruleName", [](LuaVariableInfo& vi) {
-				vi.WithDescription("The name as it appears in RULES.INI")
+				vi.WithDescription("The rule name as it appears in RULES.INI")
 				  .WithType(LuaType::String);
 			})
 			.WithParameter("ruleValue", [](LuaVariableInfo& vi) {
